@@ -28,6 +28,7 @@ pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;
 pub use working_memory::{
     ConsolidationEngine, ConsolidationPlan, MemoryId, MergeGroup, MergeStrategy,
-    NoOpActivationBooster, NoOpConsolidation, SessionId, WorkingMemoryActivationBooster,
-    WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
+    NoOpActivationBooster, NoOpConsolidation, NoOpReflectionEventRecorder, ReflectionEvent,
+    ReflectionEventId, ReflectionEventRecorder, ReflectionPayload, ReflectionSource, SessionId,
+    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };

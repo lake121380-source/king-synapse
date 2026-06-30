@@ -7,6 +7,7 @@ mod activation;
 mod buffer;
 mod consolidation;
 mod item;
+mod reflection;
 mod session;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
@@ -15,6 +16,10 @@ pub use consolidation::{
     ConsolidationEngine, ConsolidationPlan, MergeGroup, MergeStrategy, NoOpConsolidation,
 };
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
+pub use reflection::{
+    InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
+    ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
+};
 pub use session::SessionId;
 
 #[cfg(test)]
@@ -101,5 +106,56 @@ mod tests {
 
         assert!(!plan.is_empty());
         assert_eq!(plan.merge[0].strategy, MergeStrategy::Deduplicate);
+    }
+
+    #[test]
+    fn noop_reflection_recorder_drops_events() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload::default(),
+        );
+        let mut recorder = NoOpReflectionEventRecorder;
+
+        recorder.record(event);
+
+        assert!(recorder.events().is_empty());
+    }
+
+    #[test]
+    fn in_memory_reflection_stream_records_events() {
+        let session = SessionId::new();
+        let payload = ReflectionPayload {
+            promoted: vec!["mem-a".to_string()],
+            merged: Vec::new(),
+            discarded: vec!["mem-b".to_string()],
+        };
+        let event = ReflectionEvent::new(session, ReflectionSource::ConsolidationPlan, payload);
+        let mut stream = InMemoryReflectionEventStream::new();
+
+        stream.record(event);
+
+        assert_eq!(stream.events().len(), 1);
+        assert_eq!(stream.events()[0].session_id, session);
+        assert_eq!(
+            stream.events()[0].source,
+            ReflectionSource::ConsolidationPlan
+        );
+        assert_eq!(stream.events()[0].payload.promoted, vec!["mem-a"]);
+        assert_eq!(stream.events()[0].payload.discarded, vec!["mem-b"]);
+    }
+
+    #[test]
+    fn reflection_payload_empty_reports_structural_noop() {
+        let empty = ReflectionPayload::default();
+        let non_empty = ReflectionPayload {
+            promoted: vec!["mem-a".to_string()],
+            merged: Vec::new(),
+            discarded: Vec::new(),
+        };
+
+        assert!(empty.is_empty());
+        assert!(!non_empty.is_empty());
     }
 }
