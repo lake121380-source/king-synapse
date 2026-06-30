@@ -4,12 +4,21 @@ Current milestone
 
 ✓ Phase 1 — Capture Engine
 ✓ Phase 2 — Recall Platform (Recall API Freeze)
+✓ Phase 3 — Memory Evolution Contract (Architecture Freeze)
+
+Status
+
+Architecture Complete
+
+Contract Frozen
 
 Current focus
 
-▶ Phase 3 — Memory Evolution
+▶ Phase 4 — Adaptive Memory
 
 Phase 2 concluded with `v0.2.0-recall-api-freeze`. The Recall contract is now considered stable. Future work extends the platform rather than redesigning it.
+
+Phase 3 concluded with `v0.3.9-memory-evolution-freeze`. The Memory Evolution contract layer is now considered stable. Future work should extend these interfaces instead of changing them.
 
 ## Phase 3 Contract
 
@@ -23,55 +32,55 @@ Rules
 
 ## Phase 3 — Memory Evolution
 
+Status
+
+Architecture Complete / Contract Frozen
+
 Goal
 
 Enable memories to evolve over time without changing the Recall Platform.
 
-Epic 1
+Frozen layers
 
-Working Memory
+- Working Memory Buffer
+- Activation Booster
+- Consolidation Plan
+- Reflection Event
+- Hebbian Reinforcement Skeleton
 
-Session-scoped temporary memory
+Contract tags
 
-Consolidation into long-term memory
+```text
+v0.3.0  Working Memory Skeleton
+v0.3.2  Working Memory Activation
+v0.3.3  Consolidation Planning
+v0.3.4  Reflection Event
+v0.3.5  Hebbian Reinforcement Skeleton
+v0.3.9  Memory Evolution Contract Freeze
+```
 
-Epic 2
-
-ActivationBooster
-
-Graph activation
-
-Priming
-
-Hebbian weighting
-
-Epic 3
-
-Reflection Events
-
-LLM-generated reflections
-
-Event log
-
-No direct memory writes
-
-Epic 4
-
-Consolidator
-
-Nightly merge
-
-Deduplication
-
-Decay
-
-Archival
-
-## Phase 4 — Adaptive Recall
+## Phase 4 — Adaptive Memory
 
 Goal
 
-Improve recall quality through learned behavior while preserving the Recall contract.
+Turn the frozen memory-evolution contracts into adaptive behavior while preserving the Recall and Memory Evolution contracts.
+
+Focus
+
+- Rule consolidation
+- Rule reflection
+- Hebbian update planning
+- ACT-R-style decay tuning
+- Predictive recall
+- Parameter tuning
+- Learning-to-rank evaluation
+
+Contract rules
+
+1. Do not change Phase 2 Recall contracts without ADR approval.
+2. Do not change Phase 3 Memory Evolution contracts without ADR approval.
+3. Prefer strategy implementations over interface changes.
+4. Preserve `reference` and `multihop` benchmark baselines before merging behavior changes.
 
 ## Completed Milestones
 
@@ -86,3 +95,14 @@ Highlights
 • RecallHit Contract
 • RecallBooster Extension Point
 • Evaluation Harness
+
+v0.3.9-memory-evolution-freeze
+
+Highlights
+
+• WorkingMemoryBuffer
+• WorkingMemoryActivationBooster
+• ConsolidationPlan
+• ReflectionEvent
+• HebbianReinforcementEngine
+• Memory Evolution Contract
