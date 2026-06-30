@@ -50,6 +50,12 @@ enum Cmd {
         /// Also run the dense vector branch (loads the embedder; first run downloads the model).
         #[arg(long)]
         vectors: bool,
+        /// Attach the cross-encoder reranker (BGE-Reranker-Base, ~300MB on first run).
+        #[arg(long)]
+        rerank: bool,
+        /// Candidate pool size passed to the reranker before truncating to top-k.
+        #[arg(long, default_value = "50")]
+        rerank_pool: usize,
     },
     /// List recent memories.
     List {
@@ -134,6 +140,8 @@ fn main() -> Result<()> {
             kind,
             json,
             vectors,
+            rerank,
+            rerank_pool,
         } => {
             let q = RecallQuery {
                 query,
@@ -141,13 +149,25 @@ fn main() -> Result<()> {
                 scope_filter: scope.map(|s| Scope::from_str(&s)).transpose()?,
                 kind_filter: kind.map(|s| MemoryKind::from_str(&s)).transpose()?,
             };
-            let hits = if vectors {
-                let mut emb = synapse_core::Embedder::new().context("loading embedder")?;
-                RecallEngine::new(&mut store)
-                    .with_embedder(&mut emb)
-                    .recall(&q)?
+            let mut embedder = if vectors {
+                Some(synapse_core::Embedder::new().context("loading embedder")?)
             } else {
-                RecallEngine::new(&mut store).recall(&q)?
+                None
+            };
+            let mut reranker = if rerank {
+                Some(synapse_core::FastEmbedReranker::new().context("loading reranker")?)
+            } else {
+                None
+            };
+            let hits = {
+                let mut engine = RecallEngine::new(&mut store);
+                if let Some(e) = embedder.as_mut() {
+                    engine = engine.with_embedder(e);
+                }
+                if let Some(rr) = reranker.as_mut() {
+                    engine = engine.with_reranker(rr, rerank_pool);
+                }
+                engine.recall(&q)?
             };
             if json {
                 println!("{}", serde_json::to_string_pretty(&hits)?);
@@ -283,14 +303,22 @@ fn print_hit(h: &synapse_core::RecallHit) {
     if h.from_vector {
         sources.push('V');
     }
+    if h.rerank_score.is_some() {
+        sources.push('R');
+    }
+    let rerank = h
+        .rerank_score
+        .map(|s| format!(" rr={:.2}", s))
+        .unwrap_or_default();
     println!(
-        "[{:.3} {:<3}] {}  ({}/{}, {})  {}",
+        "[{:.3} {:<4}] {}  ({}/{}, {}){}  {}",
         h.score,
         sources,
         &h.memory.id[..8],
         h.memory.kind,
         h.memory.scope,
         when,
+        rerank,
         truncate(&h.memory.content, 100)
     );
 }

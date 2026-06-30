@@ -12,11 +12,13 @@ pub mod error;
 pub mod extract;
 pub mod model;
 pub mod recall;
+pub mod rerank;
 pub mod store;
 
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
-pub use recall::{QueryEmbedder, RecallEngine, RecallHit};
+pub use recall::{QueryEmbedder, RecallEngine, RecallHit, DEFAULT_RERANK_POOL};
+pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;

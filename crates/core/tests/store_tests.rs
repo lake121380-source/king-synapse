@@ -176,3 +176,67 @@ fn rrf_without_embedder_falls_back_to_two_branches() {
     assert!(!hits[0].from_vector);
     assert!(hits[0].from_fts || hits[0].from_entity);
 }
+
+/// Deterministic reranker that scores hits inversely to their input order
+/// (first hit gets the lowest logit), so the engine's final resort surfaces
+/// the previously-last candidate first.
+struct ReverseReranker;
+
+impl synapse_core::Reranker for ReverseReranker {
+    fn rerank(
+        &mut self,
+        _query: &str,
+        hits: &mut Vec<synapse_core::RecallHit>,
+    ) -> synapse_core::Result<()> {
+        let n = hits.len() as f32;
+        for (i, h) in hits.iter_mut().enumerate() {
+            // First hit (highest RRF rank) gets the lowest logit -> ends up
+            // last after the engine's score-based resort.
+            h.rerank_score = Some(i as f32 - n);
+        }
+        // Engine resorts by final score anyway, but we mirror what a real
+        // reranker would do: sort desc by score.
+        hits.sort_by(|a, b| {
+            let sa = a.rerank_score.unwrap_or(f32::NEG_INFINITY);
+            let sb = b.rerank_score.unwrap_or(f32::NEG_INFINITY);
+            sb.partial_cmp(&sa).unwrap_or(std::cmp::Ordering::Equal)
+        });
+        Ok(())
+    }
+}
+
+#[test]
+fn reranker_reorders_hits_and_stamps_score() {
+    let mut s = Store::open_in_memory().unwrap();
+    let a = add(&mut s, "pnpm install fails on Windows", MemoryKind::Failure);
+    let b = add(
+        &mut s,
+        "use corepack to fix pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    let c = add(&mut s, "Windows path separators in pnpm", MemoryKind::Fact);
+
+    let q = RecallQuery {
+        query: "pnpm windows".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    assert!(baseline.len() >= 2);
+    let baseline_top = baseline[0].memory.id.clone();
+
+    let mut rr = ReverseReranker;
+    let reranked = RecallEngine::new(&mut s)
+        .with_reranker(&mut rr, 50)
+        .recall(&q)
+        .unwrap();
+    assert!(reranked.iter().all(|h| h.rerank_score.is_some()));
+    // ReverseReranker should usually flip the top hit.
+    assert_ne!(
+        reranked[0].memory.id, baseline_top,
+        "reranker should reorder"
+    );
+    let _ = (a, b, c);
+}

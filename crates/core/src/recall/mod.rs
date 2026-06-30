@@ -9,12 +9,16 @@ mod rrf;
 
 use crate::error::Result;
 use crate::model::{Memory, MemoryKind, RecallQuery};
+use crate::rerank::Reranker;
 use crate::store::Store;
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 pub use rrf::{rrf_fuse, RrfInput, DEFAULT_RRF_K};
+
+/// Default number of candidates a reranker sees before truncating to top-k.
+pub const DEFAULT_RERANK_POOL: usize = 50;
 
 /// Anything that can turn a natural-language query into a dense vector.
 ///
@@ -32,7 +36,13 @@ impl QueryEmbedder for crate::embed::Embedder {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RecallHit {
     pub memory: Memory,
+    /// Final score after all modifiers (RRF or rerank x importance x decay).
     pub score: f32,
+    #[serde(default)]
+    pub rrf_score: f32,
+    /// Set when a `Reranker` ran over this hit.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rerank_score: Option<f32>,
     #[serde(default)]
     pub entity_hits: u32,
     #[serde(default)]
@@ -44,10 +54,12 @@ pub struct RecallHit {
 }
 
 /// Hybrid retriever. Owns no state of its own; borrows a Store and an
-/// optional embedder for the duration of a single recall.
+/// optional embedder/reranker for the duration of a single recall.
 pub struct RecallEngine<'a> {
     store: &'a mut Store,
     embedder: Option<&'a mut dyn QueryEmbedder>,
+    reranker: Option<&'a mut dyn Reranker>,
+    rerank_pool: usize,
 }
 
 impl<'a> RecallEngine<'a> {
@@ -55,6 +67,8 @@ impl<'a> RecallEngine<'a> {
         Self {
             store,
             embedder: None,
+            reranker: None,
+            rerank_pool: DEFAULT_RERANK_POOL,
         }
     }
 
@@ -63,33 +77,42 @@ impl<'a> RecallEngine<'a> {
         self
     }
 
+    /// Attach a cross-encoder reranker. The engine will fetch up to
+    /// `rerank_pool` candidates after RRF and let the reranker reorder them
+    /// before truncating to top-k.
+    pub fn with_reranker(mut self, reranker: &'a mut dyn Reranker, rerank_pool: usize) -> Self {
+        self.reranker = Some(reranker);
+        self.rerank_pool = rerank_pool.max(1);
+        self
+    }
+
     pub fn recall(&mut self, q: &RecallQuery) -> Result<Vec<RecallHit>> {
         let k = q.k.unwrap_or(8).max(1);
-        let limit_pool = (k * 4).max(20);
+        // If a reranker is attached we want to give it a bigger candidate
+        // pool than the caller-requested top-k.
+        let pool = if self.reranker.is_some() {
+            self.rerank_pool.max(k)
+        } else {
+            (k * 4).max(20)
+        };
         let scope_str = q.scope_filter.as_ref().map(|s| s.to_string());
         let kind_str = q.kind_filter.as_ref().map(|k| k.to_string());
 
         // 1. FTS branch
-        let fts_rows = self.store.search_fts(
-            &q.query,
-            scope_str.as_deref(),
-            kind_str.as_deref(),
-            limit_pool,
-        )?;
+        let fts_rows =
+            self.store
+                .search_fts(&q.query, scope_str.as_deref(), kind_str.as_deref(), pool)?;
 
         // 2. Entity branch
-        let entity_rows = self.store.search_entity(
-            &q.query,
-            scope_str.as_deref(),
-            kind_str.as_deref(),
-            limit_pool,
-        )?;
+        let entity_rows =
+            self.store
+                .search_entity(&q.query, scope_str.as_deref(), kind_str.as_deref(), pool)?;
 
         // 3. Vector branch (optional; only if an embedder is wired in)
         let vector_rows: Vec<(String, f64)> = match self.embedder.as_mut() {
             Some(emb) => {
                 let qv = emb.embed_query(&q.query)?;
-                self.store.search_vector(&qv, limit_pool)?
+                self.store.search_vector(&qv, pool)?
             }
             None => Vec::new(),
         };
@@ -115,14 +138,12 @@ impl<'a> RecallEngine<'a> {
         // Build RRF inputs: each branch contributes (id, rank).
         let fts_ids: Vec<String> = fts_rows.iter().map(|(m, _)| m.id.clone()).collect();
         let entity_ids: Vec<String> = entity_rows.iter().map(|(m, _)| m.id.clone()).collect();
-        // Filter vector rows to ids we actually have an active memory for.
         let vec_ids: Vec<String> = vector_rows
             .iter()
             .filter(|(id, _)| mem_cache.contains_key(id))
             .map(|(id, _)| id.clone())
             .collect();
 
-        // Entity hit counts, indexed by memory id.
         let entity_hits_by_id: HashMap<String, u32> = entity_rows
             .iter()
             .map(|(m, hits)| (m.id.clone(), *hits))
@@ -146,23 +167,18 @@ impl<'a> RecallEngine<'a> {
             DEFAULT_RRF_K,
         );
 
-        // Apply importance/confidence/decay as multiplicative modifiers,
-        // then take top-k.
-        let now = Utc::now().timestamp();
+        // Build hits in RRF order; `score` starts as RRF and is overwritten
+        // below by rerank or modifier passes.
         let mut hits: Vec<RecallHit> = fused
             .into_iter()
             .filter_map(|(id, rrf_score, sources)| {
                 let mem = mem_cache.remove(&id)?;
-                let age_days = ((now - mem.valid_from).max(0) as f32) / 86_400.0;
-                let decay = (-decay_lambda(mem.kind) * age_days).exp();
-                let score = (rrf_score as f32)
-                    * mem.importance.max(0.05)
-                    * mem.confidence.max(0.05)
-                    * decay;
                 let entity_hits = entity_hits_by_id.get(&mem.id).copied().unwrap_or(0);
                 Some(RecallHit {
                     memory: mem,
-                    score,
+                    score: rrf_score as f32,
+                    rrf_score: rrf_score as f32,
+                    rerank_score: None,
                     entity_hits,
                     from_fts: sources.contains(&"fts"),
                     from_entity: sources.contains(&"entity"),
@@ -170,6 +186,26 @@ impl<'a> RecallEngine<'a> {
                 })
             })
             .collect();
+
+        // Truncate to rerank pool before invoking the cross-encoder.
+        if self.reranker.is_some() {
+            hits.truncate(self.rerank_pool);
+        }
+
+        // Optional reranker pass: rewrites `rerank_score` and resorts.
+        if let Some(rr) = self.reranker.as_mut() {
+            rr.rerank(&q.query, &mut hits)?;
+        }
+
+        // Apply importance/confidence/decay as multiplicative modifiers on top
+        // of whichever ranking signal we have (rerank_score if present, else RRF).
+        let now = Utc::now().timestamp();
+        for h in hits.iter_mut() {
+            let base = h.rerank_score.map(sigmoid).unwrap_or(h.rrf_score);
+            let age_days = ((now - h.memory.valid_from).max(0) as f32) / 86_400.0;
+            let decay = (-decay_lambda(h.memory.kind) * age_days).exp();
+            h.score = base * h.memory.importance.max(0.05) * h.memory.confidence.max(0.05) * decay;
+        }
 
         hits.sort_by(|a, b| {
             b.score
@@ -184,6 +220,12 @@ impl<'a> RecallEngine<'a> {
         }
         Ok(hits)
     }
+}
+
+/// Squash a cross-encoder logit into (0,1) so it composes with the
+/// importance/confidence/decay modifiers the same way RRF scores do.
+fn sigmoid(x: f32) -> f32 {
+    1.0 / (1.0 + (-x).exp())
 }
 
 pub(crate) fn decay_lambda(kind: MemoryKind) -> f32 {
