@@ -118,4 +118,22 @@ kind = "fact"
 scope = "global"
 content = "OpenAI Tier 1 accounts cap GPT-4o at 30,000 tokens per minute and 500 requests per minute; bulk jobs need exponential backoff."
 
-queries = []
+[[queries]]
+query = "那个 Windows 上的包管理器建议是什么？"
+relevant = ["pnpm-win"]
+
+[[queries]]
+query = "它为什么会 silently 400？"
+relevant = ["axum-bad-extractor"]
+
+[[queries]]
+query = "那个 tokenizer 应该换成什么？"
+relevant = ["sqlite-fts-tokenize"]
+
+[[queries]]
+query = "它的默认 k 是多少？"
+relevant = ["rrf-k"]
+
+[[queries]]
+ query = "那个 reflection 应该算什么？"
+relevant = ["reflection-as-event"]

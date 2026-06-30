@@ -14,6 +14,7 @@ pub(crate) mod model;
 pub(crate) mod recall;
 pub(crate) mod rerank;
 pub(crate) mod store;
+pub mod working_memory;
 
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
@@ -25,3 +26,7 @@ pub use recall::{
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;
+pub use working_memory::{
+    ConsolidationPolicy, MemoryId, NoOpConsolidation, SessionId, WorkingMemoryBuffer,
+    WorkingMemoryEdge, WorkingMemoryItem,
+};

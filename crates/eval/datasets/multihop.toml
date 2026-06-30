@@ -118,4 +118,22 @@ kind = "fact"
 scope = "global"
 content = "OpenAI Tier 1 accounts cap GPT-4o at 30,000 tokens per minute and 500 requests per minute; bulk jobs need exponential backoff."
 
-queries = []
+[[queries]]
+query = "为了让中文 FTS 和多语言 embedding 一起正常工作，需要同时记住哪两个设置？"
+relevant = ["sqlite-fts-tokenize", "fastembed-prefix"]
+
+[[queries]]
+query = "如果 Axum 既要共享状态又要避免 400，应该同时遵守哪两条规则？"
+relevant = ["axum-state", "axum-bad-extractor"]
+
+[[queries]]
+query = "要解释 Windows 上的检索问题，应该同时查看哪条包管理器记忆和哪条卷挂载记忆？"
+relevant = ["pnpm-win", "docker-compose-volume"]
+
+[[queries]]
+ query = "为了避免向量检索误判，需要一起检查哪条维度约束和哪条前缀记忆？"
+ relevant = ["sqlite-vec-dim", "fastembed-prefix"]
+
+[[queries]]
+query = "如果既要避免 Go context 泄漏，又要处理大表维护，应该同时记住哪两条操作建议？"
+relevant = ["go-context-cancel", "postgres-vacuum"]
