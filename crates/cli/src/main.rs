@@ -55,6 +55,21 @@ enum Cmd {
     },
     /// Forget (invalidate) a memory by id.
     Forget { id: String },
+    /// List known entities (extracted from memory contents).
+    Entities {
+        #[arg(long, default_value = "50")]
+        limit: usize,
+        #[arg(long)]
+        json: bool,
+    },
+    /// Show memories that share entities with a given memory id (1-hop neighbors).
+    Neighbors {
+        id: String,
+        #[arg(long, short = 'k', default_value = "8")]
+        k: usize,
+        #[arg(long)]
+        json: bool,
+    },
     /// Show daemon stats.
     Stats,
     /// Show where the database is.
@@ -140,6 +155,36 @@ fn main() -> Result<()> {
         Cmd::Forget { id } => {
             store.invalidate(&id, "cli")?;
             println!("invalidated {}", id);
+        }
+        Cmd::Entities { limit, json } => {
+            let ents = store.list_entities(limit)?;
+            if json {
+                println!("{}", serde_json::to_string_pretty(&ents)?);
+            } else if ents.is_empty() {
+                println!("(no entities)");
+            } else {
+                for e in ents {
+                    println!("[{}] {}  ({})", e.kind, e.name, e.normalized);
+                }
+            }
+        }
+        Cmd::Neighbors { id, k, json } => {
+            let neighbors = store.neighbors(&id, k)?;
+            if json {
+                println!("{}", serde_json::to_string_pretty(&neighbors)?);
+            } else if neighbors.is_empty() {
+                println!("(no neighbors)");
+            } else {
+                for m in neighbors {
+                    println!(
+                        "{}  [{}/{}]  {}",
+                        &m.id[..8],
+                        m.kind,
+                        m.scope,
+                        truncate(&m.content, 90)
+                    );
+                }
+            }
         }
         Cmd::Stats => {
             let n = store.count()?;

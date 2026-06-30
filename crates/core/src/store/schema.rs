@@ -51,4 +51,24 @@ CREATE TABLE IF NOT EXISTS events (
 );
 CREATE INDEX IF NOT EXISTS idx_events_memory ON events(memory_id);
 CREATE INDEX IF NOT EXISTS idx_events_created ON events(created_at);
+
+CREATE TABLE IF NOT EXISTS entities (
+    id          TEXT PRIMARY KEY,
+    type        TEXT NOT NULL,
+    name        TEXT NOT NULL,
+    normalized  TEXT NOT NULL,
+    created_at  INTEGER NOT NULL,
+    UNIQUE(type, normalized)
+);
+CREATE INDEX IF NOT EXISTS idx_entities_norm ON entities(normalized);
+
+CREATE TABLE IF NOT EXISTS memory_entities (
+    memory_id  TEXT NOT NULL REFERENCES memories(id),
+    entity_id  TEXT NOT NULL REFERENCES entities(id),
+    edge       TEXT NOT NULL DEFAULT 'mentions',
+    weight     REAL NOT NULL DEFAULT 1.0,
+    PRIMARY KEY (memory_id, entity_id, edge)
+);
+CREATE INDEX IF NOT EXISTS idx_me_entity ON memory_entities(entity_id);
+CREATE INDEX IF NOT EXISTS idx_me_memory ON memory_entities(memory_id);
 ";

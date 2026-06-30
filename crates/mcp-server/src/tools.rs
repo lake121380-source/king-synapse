@@ -12,6 +12,8 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_recall(),
         descriptor_list(),
         descriptor_forget(),
+        descriptor_entities(),
+        descriptor_neighbors(),
     ]
 }
 
@@ -76,6 +78,34 @@ fn descriptor_forget() -> Value {
     })
 }
 
+fn descriptor_entities() -> Value {
+    json!({
+        "name": "synapse_entities",
+        "description": "List entities extracted from memories (libraries, commands, errors, files, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "limit": { "type": "integer", "minimum": 1, "maximum": 500, "default": 50 }
+            }
+        }
+    })
+}
+
+fn descriptor_neighbors() -> Value {
+    json!({
+        "name": "synapse_neighbors",
+        "description": "Return memories that share entities with the given memory id (1-hop graph expansion).",
+        "inputSchema": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": { "type": "string" },
+                "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 8 }
+            }
+        }
+    })
+}
+
 pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
     let name = params
         .get("name")
@@ -88,6 +118,8 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_recall" => do_recall(store, &args)?,
         "synapse_list_recent" => do_list(store, &args)?,
         "synapse_forget" => do_forget(store, &args)?,
+        "synapse_entities" => do_entities(store, &args)?,
+        "synapse_neighbors" => do_neighbors(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -182,4 +214,31 @@ fn do_forget(store: &StoreHandle, args: &Value) -> Result<Value> {
     let mut s = store.lock().unwrap();
     s.invalidate(&id, "mcp")?;
     Ok(json!({ "ok": true, "id": id }))
+}
+
+fn do_entities(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let limit = args
+        .get("limit")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(50);
+    let s = store.lock().unwrap();
+    let ents = s.list_entities(limit)?;
+    Ok(json!({ "entities": ents }))
+}
+
+fn do_neighbors(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let id = args
+        .get("id")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| anyhow::anyhow!("id required"))?
+        .to_string();
+    let k = args
+        .get("k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(8);
+    let s = store.lock().unwrap();
+    let neighbors = s.neighbors(&id, k)?;
+    Ok(json!({ "neighbors": neighbors }))
 }

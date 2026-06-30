@@ -1,13 +1,16 @@
 //! SQLite-backed storage for memories + append-only event log.
 //!
-//! Phase 0 retrieval is FTS5 BM25 keyword search with a scoring kicker
-//! (importance * confidence, exponential time decay).
-//! Vector index and spreading activation arrive in later phases.
+//! Phase 1 adds entity nodes and `MENTIONS` edges built automatically
+//! from extracted entities. Recall now does keyword + 1-hop entity
+//! expansion fused.
 
+mod branches;
 mod recall;
 mod schema;
 
+use crate::entity::{Entity, EntityRef, EntityType};
 use crate::error::Result;
+use crate::extract;
 use crate::model::{Memory, MemoryKind, RecallQuery, WriteInput};
 use chrono::Utc;
 use rusqlite::{params, Connection, OptionalExtension};
@@ -55,6 +58,8 @@ impl Store {
             last_accessed_at: None,
         };
 
+        let entities = extract::extract(&mem.content);
+
         let tx = self.conn.transaction()?;
         tx.execute(
             "INSERT INTO memories (id, kind, scope, content, source, confidence, importance, valid_from) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
@@ -70,6 +75,24 @@ impl Store {
             ],
         )?;
 
+        for er in &entities {
+            let normalized = er.normalized();
+            let etype = er.kind.to_string();
+            tx.execute(
+                "INSERT OR IGNORE INTO entities (id, type, name, normalized, created_at) VALUES (?1, ?2, ?3, ?4, ?5)",
+                params![Ulid::new().to_string(), etype, er.name, normalized, now],
+            )?;
+            let entity_id: String = tx.query_row(
+                "SELECT id FROM entities WHERE type = ?1 AND normalized = ?2",
+                params![etype, normalized],
+                |r| r.get(0),
+            )?;
+            tx.execute(
+                "INSERT OR IGNORE INTO memory_entities (memory_id, entity_id, edge, weight) VALUES (?1, ?2, 'mentions', 1.0)",
+                params![mem.id, entity_id],
+            )?;
+        }
+
         let event_id = Ulid::new().to_string();
         let payload = serde_json::to_string(&mem)?;
         tx.execute(
@@ -78,6 +101,66 @@ impl Store {
         )?;
         tx.commit()?;
         Ok(mem)
+    }
+
+    /// List all entities, most recently used first (Phase 1: created_at ordering).
+    pub fn list_entities(&self, limit: usize) -> Result<Vec<Entity>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT id, type, name, normalized, created_at FROM entities ORDER BY created_at DESC LIMIT ?1",
+        )?;
+        let rows = stmt
+            .query_map(params![limit as i64], |r| {
+                let kind_s: String = r.get(1)?;
+                let kind = EntityType::from_str(&kind_s).map_err(|e| {
+                    rusqlite::Error::FromSqlConversionFailure(
+                        1,
+                        rusqlite::types::Type::Text,
+                        Box::new(e),
+                    )
+                })?;
+                Ok(Entity {
+                    id: r.get(0)?,
+                    kind,
+                    name: r.get(2)?,
+                    normalized: r.get(3)?,
+                    created_at: r.get(4)?,
+                })
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
+    /// Return memories that share at least one entity with the given memory id.
+    /// Phase 1: simple 1-hop adjacency, ordered by number of shared entities.
+    pub fn neighbors(&self, memory_id: &str, limit: usize) -> Result<Vec<Memory>> {
+        let sql = "SELECT m.id, m.kind, m.scope, m.content, m.source, m.confidence, m.importance, m.valid_from, m.valid_to, m.superseded_by, m.access_count, m.last_accessed_at, COUNT(*) AS shared FROM memory_entities me1 JOIN memory_entities me2 ON me1.entity_id = me2.entity_id AND me2.memory_id != me1.memory_id JOIN memories m ON m.id = me2.memory_id WHERE me1.memory_id = ?1 AND m.valid_to IS NULL GROUP BY m.id ORDER BY shared DESC, m.valid_from DESC LIMIT ?2";
+        let mut stmt = self.conn.prepare(sql)?;
+        let rows = stmt
+            .query_map(params![memory_id, limit as i64], row_to_memory)?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
+    /// Find entities mentioned in a query string (returns IDs of entities that exist in store).
+    pub(crate) fn match_entities_in_query(&self, query: &str) -> Result<Vec<String>> {
+        let refs: Vec<EntityRef> = extract::extract(query);
+        if refs.is_empty() {
+            return Ok(Vec::new());
+        }
+        let mut ids = Vec::new();
+        let mut stmt = self
+            .conn
+            .prepare("SELECT id FROM entities WHERE type = ?1 AND normalized = ?2")?;
+        for er in refs {
+            let normalized = er.normalized();
+            let id: Option<String> = stmt
+                .query_row(params![er.kind.to_string(), normalized], |r| r.get(0))
+                .optional()?;
+            if let Some(id) = id {
+                ids.push(id);
+            }
+        }
+        Ok(ids)
     }
 
     pub fn get(&self, id: &str) -> Result<Option<Memory>> {
