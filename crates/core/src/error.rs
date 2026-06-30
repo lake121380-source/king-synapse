@@ -22,6 +22,10 @@ pub enum Error {
 
     #[error("not found: {0}")]
     NotFound(String),
+
+    #[allow(dead_code)]
+    #[error("embedder error: {0}")]
+    Embedder(String),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
