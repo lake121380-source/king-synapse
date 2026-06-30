@@ -80,6 +80,6 @@ impl EntityRef {
     }
 }
 
-pub fn normalize(s: &str) -> String {
+pub(crate) fn normalize(s: &str) -> String {
     s.trim().to_lowercase()
 }

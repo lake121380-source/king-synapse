@@ -156,8 +156,8 @@ fn rrf_pulls_in_vector_only_hit() {
     assert!(ids.contains(&m2.as_str()), "m2 expected from vector branch");
 
     let m2_hit = hits.iter().find(|h| h.memory.id == m2).unwrap();
-    assert!(m2_hit.from_vector);
-    assert!(!m2_hit.from_fts);
+    assert!(m2_hit.from_vector());
+    assert!(!m2_hit.from_fts());
 }
 
 #[test]
@@ -173,8 +173,8 @@ fn rrf_without_embedder_falls_back_to_two_branches() {
     };
     let hits = RecallEngine::new(&mut s).recall(&q).unwrap();
     assert_eq!(hits.len(), 1);
-    assert!(!hits[0].from_vector);
-    assert!(hits[0].from_fts || hits[0].from_entity);
+    assert!(!hits[0].from_vector());
+    assert!(hits[0].from_fts() || hits[0].from_entity());
 }
 
 /// Deterministic reranker that scores hits inversely to their input order
@@ -183,25 +183,9 @@ fn rrf_without_embedder_falls_back_to_two_branches() {
 struct ReverseReranker;
 
 impl synapse_core::Reranker for ReverseReranker {
-    fn rerank(
-        &mut self,
-        _query: &str,
-        hits: &mut Vec<synapse_core::RecallHit>,
-    ) -> synapse_core::Result<()> {
-        let n = hits.len() as f32;
-        for (i, h) in hits.iter_mut().enumerate() {
-            // First hit (highest RRF rank) gets the lowest logit -> ends up
-            // last after the engine's score-based resort.
-            h.rerank_score = Some(i as f32 - n);
-        }
-        // Engine resorts by final score anyway, but we mirror what a real
-        // reranker would do: sort desc by score.
-        hits.sort_by(|a, b| {
-            let sa = a.rerank_score.unwrap_or(f32::NEG_INFINITY);
-            let sb = b.rerank_score.unwrap_or(f32::NEG_INFINITY);
-            sb.partial_cmp(&sa).unwrap_or(std::cmp::Ordering::Equal)
-        });
-        Ok(())
+    fn rerank(&mut self, _query: &str, docs: &[&str]) -> synapse_core::Result<Vec<f32>> {
+        let n = docs.len() as f32;
+        Ok((0..docs.len()).map(|i| i as f32 - n).collect())
     }
 }
 
@@ -239,4 +223,65 @@ fn reranker_reorders_hits_and_stamps_score() {
         "reranker should reorder"
     );
     let _ = (a, b, c);
+}
+
+/// Invariant 3 of the recall pipeline: `NoOpBooster` is inert. Attaching it
+/// to a `RecallEngine` must not perturb hit order, score, or any of the
+/// per-hit provenance fields. This is the contract every `RecallBooster`
+/// implementer can copy as a baseline.
+#[test]
+fn noop_booster_preserves_pipeline_output() {
+    let mut s = Store::open_in_memory().unwrap();
+    add(&mut s, "axum middleware ordering tip", MemoryKind::Fact);
+    add(
+        &mut s,
+        "use corepack for pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    add(
+        &mut s,
+        "jwt refresh tokens should be rotated",
+        MemoryKind::Playbook,
+    );
+    add(
+        &mut s,
+        "rust traits cannot have async fn (stable)",
+        MemoryKind::Fact,
+    );
+
+    let q = RecallQuery {
+        query: "pnpm windows".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    let booster = synapse_core::NoOpBooster;
+    let boosted = RecallEngine::new(&mut s)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    assert_eq!(baseline.len(), boosted.len(), "length must match");
+    for (a, b) in baseline.iter().zip(boosted.iter()) {
+        assert_eq!(a.memory.id, b.memory.id, "order must match");
+        assert!(
+            (a.score - b.score).abs() < 1e-6,
+            "final score must match: {} vs {}",
+            a.score,
+            b.score
+        );
+        assert!(
+            (a.rrf_score - b.rrf_score).abs() < 1e-6,
+            "rrf score must match"
+        );
+        assert_eq!(a.activation_bonus, b.activation_bonus);
+        assert_eq!(a.sources, b.sources);
+        assert_eq!(a.fts_rank, b.fts_rank);
+        assert_eq!(a.entity_rank, b.entity_rank);
+        assert_eq!(a.vector_rank, b.vector_rank);
+        assert_eq!(a.entity_hits, b.entity_hits);
+        assert_eq!(a.rerank_score, b.rerank_score);
+    }
 }

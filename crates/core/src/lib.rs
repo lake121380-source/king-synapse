@@ -6,19 +6,22 @@
 //! be swapped or mocked.
 
 pub mod config;
-pub mod embed;
-pub mod entity;
-pub mod error;
-pub mod extract;
-pub mod model;
-pub mod recall;
-pub mod rerank;
-pub mod store;
+pub(crate) mod embed;
+pub(crate) mod entity;
+pub(crate) mod error;
+pub(crate) mod extract;
+pub(crate) mod model;
+pub(crate) mod recall;
+pub(crate) mod rerank;
+pub(crate) mod store;
 
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
-pub use recall::{QueryEmbedder, RecallEngine, RecallHit, DEFAULT_RERANK_POOL};
+pub use recall::{
+    BoosterContext, NoOpBooster, QueryEmbedder, RecallBooster, RecallEngine, RecallHit,
+    RecallSource, DEFAULT_RERANK_POOL,
+};
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;

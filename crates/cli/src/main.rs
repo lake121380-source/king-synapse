@@ -3,7 +3,8 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+    config::Config, MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store,
+    WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -56,6 +57,10 @@ enum Cmd {
         /// Candidate pool size passed to the reranker before truncating to top-k.
         #[arg(long, default_value = "50")]
         rerank_pool: usize,
+        /// Print full provenance for each hit: per-branch ranks, RRF score,
+        /// rerank logit, activation bonus, booster list, final score.
+        #[arg(long)]
+        explain: bool,
     },
     /// List recent memories.
     List {
@@ -142,6 +147,7 @@ fn main() -> Result<()> {
             vectors,
             rerank,
             rerank_pool,
+            explain,
         } => {
             let q = RecallQuery {
                 query,
@@ -159,6 +165,7 @@ fn main() -> Result<()> {
             } else {
                 None
             };
+            let booster_names: Vec<&'static str> = Vec::new();
             let hits = {
                 let mut engine = RecallEngine::new(&mut store);
                 if let Some(e) = embedder.as_mut() {
@@ -173,6 +180,10 @@ fn main() -> Result<()> {
                 println!("{}", serde_json::to_string_pretty(&hits)?);
             } else if hits.is_empty() {
                 println!("(no matches)");
+            } else if explain {
+                for (i, h) in hits.iter().enumerate() {
+                    print_hit_explain(i + 1, h, &booster_names);
+                }
             } else {
                 for h in hits {
                     print_hit(&h);
@@ -294,14 +305,8 @@ fn print_hit(h: &synapse_core::RecallHit) {
         .map(|t| t.format("%Y-%m-%d %H:%M").to_string())
         .unwrap_or_default();
     let mut sources = String::new();
-    if h.from_fts {
-        sources.push('F');
-    }
-    if h.from_entity {
-        sources.push('E');
-    }
-    if h.from_vector {
-        sources.push('V');
+    for s in &h.sources {
+        sources.push(s.glyph());
     }
     if h.rerank_score.is_some() {
         sources.push('R');
@@ -321,6 +326,56 @@ fn print_hit(h: &synapse_core::RecallHit) {
         rerank,
         truncate(&h.memory.content, 100)
     );
+}
+
+fn print_hit_explain(idx: usize, h: &RecallHit, booster_names: &[&'static str]) {
+    let when = Utc
+        .timestamp_opt(h.memory.valid_from, 0)
+        .single()
+        .map(|t| t.format("%Y-%m-%d %H:%M").to_string())
+        .unwrap_or_default();
+    println!(
+        "#{idx} {}  [{}/{}, {}]",
+        h.memory.id, h.memory.kind, h.memory.scope, when
+    );
+    println!("    {}", truncate(&h.memory.content, 120));
+    let mut srcs = String::new();
+    for s in &h.sources {
+        if !srcs.is_empty() {
+            srcs.push(' ');
+        }
+        srcs.push(s.glyph());
+    }
+    if srcs.is_empty() {
+        srcs.push('-');
+    }
+    println!("    Sources:          {}", srcs);
+    println!("    FTS Rank:         {}", fmt_rank(h.fts_rank));
+    println!(
+        "    Entity Rank:      {}  (hits={})",
+        fmt_rank(h.entity_rank),
+        h.entity_hits
+    );
+    println!("    Vector Rank:      {}", fmt_rank(h.vector_rank));
+    println!("    RRF Score:        {:.4}", h.rrf_score);
+    println!(
+        "    Rerank Score:     {}",
+        h.rerank_score
+            .map(|s| format!("{:.4}", s))
+            .unwrap_or_else(|| "-".into())
+    );
+    println!("    Activation Bonus: {:+.4}", h.activation_bonus);
+    if booster_names.is_empty() {
+        println!("    Boosters:         (none)");
+    } else {
+        println!("    Boosters:         {}", booster_names.join(", "));
+    }
+    println!("    Final Score:      {:.4}", h.score);
+    println!();
+}
+
+fn fmt_rank(r: Option<u32>) -> String {
+    r.map(|n| n.to_string()).unwrap_or_else(|| "-".into())
 }
 
 fn truncate(s: &str, max: usize) -> String {

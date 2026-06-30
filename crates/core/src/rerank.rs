@@ -1,25 +1,22 @@
 //! Cross-encoder rerankers for the recall pipeline.
 //!
 //! `Reranker` is a trait so we can swap in BGE / Jina / OpenAI / mock impls
-//! without touching `RecallEngine`. The recall flow is:
-//!   1. RRF fuses FTS + entity + vector hits (rank-only).
-//!   2. (optional) Reranker re-scores the top `rerank_pool` hits with a
-//!      cross-encoder and reorders them; the rest of the list is dropped.
-//!   3. RecallEngine applies importance/confidence/decay and returns top-k.
+//! without touching `RecallEngine`.
 //!
-//! Phase 2 step 5: ship `FastEmbedReranker` (BGE-Reranker-Base, ~300MB).
+//! Step 5.5 contract: rerankers do **not** see `RecallHit`. They take the
+//! query and a slice of document strings and return one score per slot.
+//! The engine writes those scores into hits and resorts. This isolates
+//! the trait from `RecallHit`'s frozen field set (ADR-003).
 
 use crate::error::{Error, Result};
-use crate::recall::RecallHit;
 use fastembed::{RerankInitOptions, RerankerModel, TextRerank};
 
-/// Anything that can score (query, document) pairs and reorder a candidate
-/// list. Implementations may write `rerank_score` into each hit and resort.
+/// Anything that can score (query, document) pairs.
 pub trait Reranker {
-    /// Rerank `hits` in place against `query`. Implementations should also
-    /// stamp `hit.rerank_score = Some(score)` so callers can see what the
-    /// model thought of each item.
-    fn rerank(&mut self, query: &str, hits: &mut Vec<RecallHit>) -> Result<()>;
+    /// Score every document against `query`. Output **must** be the same
+    /// length and order as `docs`; entries the model can't score should
+    /// be filled with `f32::NEG_INFINITY` so they sort to the bottom.
+    fn rerank(&mut self, query: &str, docs: &[&str]) -> Result<Vec<f32>>;
 }
 
 /// Default in-process reranker backed by `fastembed`. Lazy-loaded; first
@@ -56,29 +53,20 @@ impl FastEmbedReranker {
 }
 
 impl Reranker for FastEmbedReranker {
-    fn rerank(&mut self, query: &str, hits: &mut Vec<RecallHit>) -> Result<()> {
-        if hits.is_empty() {
-            return Ok(());
+    fn rerank(&mut self, query: &str, docs: &[&str]) -> Result<Vec<f32>> {
+        if docs.is_empty() {
+            return Ok(Vec::new());
         }
-        let docs: Vec<&str> = hits.iter().map(|h| h.memory.content.as_str()).collect();
         let results = self
             .inner
-            .rerank(query, &docs, false, None)
+            .rerank(query, docs, false, None)
             .map_err(|e| Error::Embedder(format!("rerank: {e}")))?;
-        let mut scores = vec![f32::NEG_INFINITY; hits.len()];
+        let mut scores = vec![f32::NEG_INFINITY; docs.len()];
         for r in &results {
             if let Some(slot) = scores.get_mut(r.index) {
                 *slot = r.score;
             }
         }
-        for (h, s) in hits.iter_mut().zip(scores.iter()) {
-            h.rerank_score = Some(*s);
-        }
-        hits.sort_by(|a, b| {
-            let sa = a.rerank_score.unwrap_or(f32::NEG_INFINITY);
-            let sb = b.rerank_score.unwrap_or(f32::NEG_INFINITY);
-            sb.partial_cmp(&sa).unwrap_or(std::cmp::Ordering::Equal)
-        });
-        Ok(())
+        Ok(scores)
     }
 }

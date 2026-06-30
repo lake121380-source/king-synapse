@@ -13,13 +13,13 @@ use fastembed::{EmbeddingModel, TextEmbedding, TextInitOptions};
 
 /// Multilingual E5 base: 768-d, ~470MB ONNX, covers CJK + EN well.
 /// Matches `schema::VEC_DIM`.
-pub const DEFAULT_MODEL: EmbeddingModel = EmbeddingModel::MultilingualE5Base;
-pub const DEFAULT_MODEL_NAME: &str = "multilingual-e5-base";
+pub(crate) const DEFAULT_MODEL: EmbeddingModel = EmbeddingModel::MultilingualE5Base;
+pub(crate) const DEFAULT_MODEL_NAME: &str = "multilingual-e5-base";
 pub const DEFAULT_DIM: usize = 768;
 
 /// E5 family expects "passage: " / "query: " prefixes for best recall.
-pub const PASSAGE_PREFIX: &str = "passage: ";
-pub const QUERY_PREFIX: &str = "query: ";
+pub(crate) const PASSAGE_PREFIX: &str = "passage: ";
+pub(crate) const QUERY_PREFIX: &str = "query: ";
 
 pub struct Embedder {
     inner: TextEmbedding,
