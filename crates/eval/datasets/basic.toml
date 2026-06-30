@@ -1,0 +1,211 @@
+[[memories]]
+key = "pnpm-win"
+kind = "preference"
+scope = "user"
+content = "Use pnpm instead of npm on Windows; npm symlinks break in PowerShell."
+
+[[memories]]
+key = "jwt-rs256"
+kind = "fact"
+scope = "global"
+content = "JWT tokens in the auth service use RS256 with a 4096-bit RSA key pair stored in Vault."
+
+[[memories]]
+key = "axum-state"
+kind = "playbook"
+scope = "project:king-synapse"
+content = "In Axum, share state across handlers by wrapping AppState in Arc and passing it via Router::with_state."
+
+[[memories]]
+key = "axum-bad-extractor"
+kind = "failure"
+scope = "project:king-synapse"
+content = "Putting Json<T> after Path<P> in an Axum handler returns 400 silently; body extractors must come last."
+
+[[memories]]
+key = "rust-clippy-bool-then"
+kind = "failure"
+scope = "global"
+content = "bool::then inside filter_map confuses clippy::redundant_closure; use .filter(...).map(...) instead."
+
+[[memories]]
+key = "sqlite-fts-tokenize"
+kind = "fact"
+scope = "global"
+content = "SQLite FTS5 with the porter tokenizer chokes on CJK input; switch to unicode61 with remove_diacritics=2 for multilingual."
+
+[[memories]]
+key = "sqlite-vec-dim"
+kind = "fact"
+scope = "project:king-synapse"
+content = "memory_vecs is declared as vec0(embedding float[768]); always validate Embedder.dim() matches VEC_DIM before put_embedding."
+
+[[memories]]
+key = "fastembed-prefix"
+kind = "fact"
+scope = "global"
+content = "Multilingual E5 needs explicit prefixes: 'passage: ' for documents and 'query: ' for user queries, otherwise recall drops 5-10 points."
+
+[[memories]]
+key = "rrf-k"
+kind = "fact"
+scope = "global"
+content = "Reciprocal Rank Fusion default k=60; smaller k punishes lower-ranked hits, larger k flattens the curve."
+
+[[memories]]
+key = "redis-eviction"
+kind = "fact"
+scope = "project:billing"
+content = "Production Redis is configured with maxmemory-policy allkeys-lru and 8GB cap; do not store anything you cannot regenerate."
+
+[[memories]]
+key = "react-strict-double-effect"
+kind = "fact"
+scope = "global"
+content = "React 18 StrictMode runs every useEffect twice in development; design effects to be idempotent or guard with a ref."
+
+[[memories]]
+key = "postgres-vacuum"
+kind = "playbook"
+scope = "project:billing"
+content = "When a Postgres table exceeds 100M rows, autovacuum lags; run VACUUM (ANALYZE) nightly and tune autovacuum_vacuum_scale_factor to 0.05."
+
+[[memories]]
+key = "docker-compose-volume"
+kind = "failure"
+scope = "global"
+content = "On Windows, Docker Compose bind mounts with Linux paths silently mount empty directories; use absolute Windows paths or named volumes."
+
+[[memories]]
+key = "go-context-cancel"
+kind = "playbook"
+scope = "global"
+content = "Always defer cancel() right after context.WithCancel(); leaking a context is one of the top sources of goroutine leaks in Go services."
+
+[[memories]]
+key = "user-prefers-cn"
+kind = "preference"
+scope = "user"
+content = "用户希望所有提交信息和注释使用英文，但讨论和说明可以用中文。"
+
+[[memories]]
+key = "user-no-emoji"
+kind = "preference"
+scope = "user"
+content = "User dislikes emojis in code, commits, and documentation. Never add them unprompted."
+
+[[memories]]
+key = "kuzu-dropped"
+kind = "state"
+scope = "project:king-synapse"
+content = "Kuzu graph layer was dropped from Phase 1; entity graph now lives in plain SQLite tables (entities, memory_entities)."
+
+[[memories]]
+key = "reflection-as-event"
+kind = "state"
+scope = "project:king-synapse"
+content = "Reflection in King Synapse is modeled as an Event in the event log, not as a separate Memory kind."
+
+[[memories]]
+key = "tauri-csp"
+kind = "failure"
+scope = "global"
+content = "Tauri v2 default CSP blocks inline styles; either move styles into .css files or set csp = null in tauri.conf.json (not recommended for prod)."
+
+[[memories]]
+key = "openai-rate-limit"
+kind = "fact"
+scope = "global"
+content = "OpenAI Tier 1 accounts cap GPT-4o at 30,000 tokens per minute and 500 requests per minute; bulk jobs need exponential backoff."
+
+[[queries]]
+query = "Should I use npm or pnpm on Windows?"
+relevant = ["pnpm-win"]
+
+[[queries]]
+query = "pnpm vs npm windows powershell symlinks"
+relevant = ["pnpm-win"]
+
+[[queries]]
+query = "Which signing algorithm does our JWT auth use?"
+relevant = ["jwt-rs256"]
+
+[[queries]]
+query = "RS256 RSA key for JWT"
+relevant = ["jwt-rs256"]
+
+[[queries]]
+query = "How do I pass shared state to Axum handlers?"
+relevant = ["axum-state"]
+
+[[queries]]
+query = "Axum AppState Router::with_state Arc"
+relevant = ["axum-state"]
+
+[[queries]]
+query = "clippy complains about bool::then in filter_map"
+relevant = ["rust-clippy-bool-then"]
+
+[[queries]]
+query = "rust filter map closure redundant"
+relevant = ["rust-clippy-bool-then"]
+
+[[queries]]
+query = "What is the default k for RRF?"
+relevant = ["rrf-k"]
+
+[[queries]]
+query = "Reciprocal Rank Fusion constant k=60"
+relevant = ["rrf-k"]
+
+[[queries]]
+query = "How is production Redis sized and what eviction policy?"
+relevant = ["redis-eviction"]
+
+[[queries]]
+query = "redis maxmemory allkeys-lru 8GB"
+relevant = ["redis-eviction"]
+
+[[queries]]
+query = "Why does my useEffect run twice in dev?"
+relevant = ["react-strict-double-effect"]
+
+[[queries]]
+query = "React 18 StrictMode double invocation"
+relevant = ["react-strict-double-effect"]
+
+[[queries]]
+query = "Postgres slow inserts on a giant table"
+relevant = ["postgres-vacuum"]
+
+[[queries]]
+query = "autovacuum_vacuum_scale_factor 100M rows"
+relevant = ["postgres-vacuum"]
+
+[[queries]]
+query = "Docker bind mount empty on Windows"
+relevant = ["docker-compose-volume"]
+
+[[queries]]
+query = "How do I avoid leaking a Go context?"
+relevant = ["go-context-cancel"]
+
+[[queries]]
+query = "Should I use emojis in commit messages?"
+relevant = ["user-no-emoji"]
+
+[[queries]]
+query = "Did we drop the Kuzu graph layer?"
+relevant = ["kuzu-dropped"]
+
+[[queries]]
+query = "Is reflection a memory or an event in our model?"
+relevant = ["reflection-as-event"]
+
+[[queries]]
+query = "How do I ensure comments and commits stay in English?"
+relevant = ["user-prefers-cn"]
+
+[[queries]]
+query = "What is the maximum rate limit for GPT-4o on Tier 1?"
+relevant = ["openai-rate-limit"]

@@ -4,6 +4,7 @@ use std::path::PathBuf;
 #[derive(Debug, Deserialize)]
 pub struct Dataset {
     pub memories: Vec<MemorySpec>,
+    #[serde(default)]
     pub queries: Vec<QuerySpec>,
 }
 
