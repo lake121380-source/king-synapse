@@ -6,7 +6,7 @@ use uuid::Uuid;
 
 pub type MemoryId = String;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct WorkingMemoryItem {
     pub id: Uuid,
     pub session_id: SessionId,

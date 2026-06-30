@@ -27,6 +27,7 @@ pub use recall::{
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;
 pub use working_memory::{
-    ConsolidationPolicy, MemoryId, NoOpActivationBooster, NoOpConsolidation, SessionId,
-    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
+    ConsolidationEngine, ConsolidationPlan, MemoryId, MergeGroup, MergeStrategy,
+    NoOpActivationBooster, NoOpConsolidation, SessionId, WorkingMemoryActivationBooster,
+    WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };

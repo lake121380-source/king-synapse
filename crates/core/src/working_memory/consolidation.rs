@@ -1,20 +1,41 @@
-use crate::model::Memory;
-use crate::working_memory::{SessionId, WorkingMemoryBuffer, WorkingMemoryItem};
+use crate::working_memory::{WorkingMemoryBuffer, WorkingMemoryItem};
+use serde::{Deserialize, Serialize};
 
-pub trait ConsolidationPolicy {
-    fn should_consolidate(item: &WorkingMemoryItem) -> bool;
+pub trait ConsolidationEngine {
+    fn consolidate(&self, session: &WorkingMemoryBuffer) -> ConsolidationPlan;
+}
 
-    fn consolidate(session: SessionId, buffer: &WorkingMemoryBuffer) -> Vec<Memory>;
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+pub struct ConsolidationPlan {
+    pub promote: Vec<WorkingMemoryItem>,
+    pub merge: Vec<MergeGroup>,
+    pub discard: Vec<WorkingMemoryItem>,
+}
+
+impl ConsolidationPlan {
+    pub fn is_empty(&self) -> bool {
+        self.promote.is_empty() && self.merge.is_empty() && self.discard.is_empty()
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct MergeGroup {
+    pub items: Vec<WorkingMemoryItem>,
+    pub strategy: MergeStrategy,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum MergeStrategy {
+    Deduplicate,
+    Union,
+    Compress,
 }
 
 pub struct NoOpConsolidation;
 
-impl ConsolidationPolicy for NoOpConsolidation {
-    fn should_consolidate(_item: &WorkingMemoryItem) -> bool {
-        false
-    }
-
-    fn consolidate(_session: SessionId, _buffer: &WorkingMemoryBuffer) -> Vec<Memory> {
-        Vec::new()
+impl ConsolidationEngine for NoOpConsolidation {
+    fn consolidate(&self, _session: &WorkingMemoryBuffer) -> ConsolidationPlan {
+        ConsolidationPlan::default()
     }
 }

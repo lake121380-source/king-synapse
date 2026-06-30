@@ -11,7 +11,9 @@ mod session;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
-pub use consolidation::{ConsolidationPolicy, NoOpConsolidation};
+pub use consolidation::{
+    ConsolidationEngine, ConsolidationPlan, MergeGroup, MergeStrategy, NoOpConsolidation,
+};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use session::SessionId;
 
@@ -74,11 +76,30 @@ mod tests {
 
     #[test]
     fn noop_consolidation_never_emits_memory() {
+        let buffer = WorkingMemoryBuffer::new();
+        let engine = NoOpConsolidation;
+        let plan = engine.consolidate(&buffer);
+
+        assert!(plan.is_empty());
+        assert!(plan.promote.is_empty());
+        assert!(plan.merge.is_empty());
+        assert!(plan.discard.is_empty());
+    }
+
+    #[test]
+    fn consolidation_plan_can_describe_lifecycle_actions_without_io() {
         let session = SessionId::new();
         let item = WorkingMemoryItem::new(session, "scratch", Vec::new(), Duration::from_secs(60));
-        let buffer = WorkingMemoryBuffer::new();
+        let plan = ConsolidationPlan {
+            promote: vec![item.clone()],
+            merge: vec![MergeGroup {
+                items: vec![item.clone()],
+                strategy: MergeStrategy::Deduplicate,
+            }],
+            discard: vec![item],
+        };
 
-        assert!(!NoOpConsolidation::should_consolidate(&item));
-        assert!(NoOpConsolidation::consolidate(session, &buffer).is_empty());
+        assert!(!plan.is_empty());
+        assert_eq!(plan.merge[0].strategy, MergeStrategy::Deduplicate);
     }
 }
