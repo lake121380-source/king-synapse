@@ -2,7 +2,7 @@
 
 > A persistently activated, decaying, reinforcing **associative memory network** for coding agents — so they stop repeating the same mistakes, stop re-learning your preferences, and stop forgetting where you left off.
 
-**Status:** Phase 0 — early development. Single-binary daemon, SQLite-backed, MCP-compatible.
+**Status:** Phase 3 — Memory Evolution planning. Recall Platform is frozen at `v0.2.0-recall-api-freeze`.
 
 ## Why
 
@@ -37,13 +37,14 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 What's **not yet** in Phase 0 (coming in later phases):
 - Vector embeddings (Phase 2)
 - Knowledge graph layer with Kuzu (Phase 1)
-- Spreading activation engine (Phase 2)
+- Recall API freeze and release note (Phase 2)
+- Spreading activation engine (Phase 3)
 - Failure / preference extractors (Phase 3)
 - Causal edges with 3-tier confidence (Phase 4)
 - Tauri UI (Phase 5)
 - Claude Code integration + multi-device sync (Phase 6)
 
-See `docs/ROADMAP.md` for the full plan.
+See `docs/ROADMAP.md` for the current roadmap and `RELEASE-v0.2.0.md` for the freeze announcement.
 
 ## Build
 
