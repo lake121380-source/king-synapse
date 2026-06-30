@@ -71,4 +71,24 @@ CREATE TABLE IF NOT EXISTS memory_entities (
 );
 CREATE INDEX IF NOT EXISTS idx_me_entity ON memory_entities(entity_id);
 CREATE INDEX IF NOT EXISTS idx_me_memory ON memory_entities(memory_id);
+
+CREATE TABLE IF NOT EXISTS embedding_state (
+    memory_id   TEXT PRIMARY KEY REFERENCES memories(id),
+    model       TEXT NOT NULL,
+    dim         INTEGER NOT NULL,
+    status      TEXT NOT NULL DEFAULT 'pending',
+    updated_at  INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_emb_status ON embedding_state(status);
 ";
+
+pub(crate) const VEC_DIM: usize = 768;
+
+pub(crate) fn vec_schema_sql() -> String {
+    format!(
+        "CREATE VIRTUAL TABLE IF NOT EXISTS memory_vecs USING vec0(
+            memory_id TEXT PRIMARY KEY,
+            embedding float[{VEC_DIM}]
+        );"
+    )
+}

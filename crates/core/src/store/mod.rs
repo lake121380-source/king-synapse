@@ -16,9 +16,21 @@ use chrono::Utc;
 use rusqlite::{params, Connection, OptionalExtension};
 use std::path::Path;
 use std::str::FromStr;
+use std::sync::Once;
 use ulid::Ulid;
 
 pub use recall::RecallHit;
+
+static SQLITE_VEC_INIT: Once = Once::new();
+
+fn register_sqlite_vec() {
+    SQLITE_VEC_INIT.call_once(|| unsafe {
+        #[allow(clippy::missing_transmute_annotations)]
+        rusqlite::ffi::sqlite3_auto_extension(Some(std::mem::transmute(
+            sqlite_vec::sqlite3_vec_init as *const (),
+        )));
+    });
+}
 
 pub struct Store {
     pub(crate) conn: Connection,
@@ -29,14 +41,18 @@ impl Store {
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)?;
         }
+        register_sqlite_vec();
         let conn = Connection::open(path)?;
         conn.execute_batch(schema::SCHEMA_SQL)?;
+        conn.execute_batch(&schema::vec_schema_sql())?;
         Ok(Store { conn })
     }
 
     pub fn open_in_memory() -> Result<Self> {
+        register_sqlite_vec();
         let conn = Connection::open_in_memory()?;
         conn.execute_batch(schema::SCHEMA_SQL)?;
+        conn.execute_batch(&schema::vec_schema_sql())?;
         Ok(Store { conn })
     }
 
@@ -99,8 +115,85 @@ impl Store {
             "INSERT INTO events (id, kind, memory_id, payload, actor, created_at) VALUES (?1, 'ADD', ?2, ?3, ?4, ?5)",
             params![event_id, mem.id, payload, mem.source.to_string(), now],
         )?;
+        tx.execute(
+            "INSERT OR IGNORE INTO embedding_state (memory_id, model, dim, status, updated_at) VALUES (?1, '', 0, 'pending', ?2)",
+            params![mem.id, now],
+        )?;
         tx.commit()?;
         Ok(mem)
+    }
+
+    /// Return memory ids that still need an embedding, oldest first.
+    pub fn pending_embeddings(&self, limit: usize) -> Result<Vec<(String, String)>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT m.id, m.content FROM embedding_state e JOIN memories m ON m.id = e.memory_id WHERE e.status = 'pending' AND m.valid_to IS NULL ORDER BY e.updated_at ASC LIMIT ?1",
+        )?;
+        let rows = stmt
+            .query_map(params![limit as i64], |r| {
+                Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?))
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
+    /// Persist a freshly computed embedding vector for a memory and mark it done.
+    pub fn put_embedding(&mut self, memory_id: &str, model: &str, vector: &[f32]) -> Result<()> {
+        let now = Utc::now().timestamp();
+        let bytes: Vec<u8> = vector.iter().flat_map(|v| v.to_le_bytes()).collect();
+        let tx = self.conn.transaction()?;
+        tx.execute(
+            "INSERT OR REPLACE INTO memory_vecs (memory_id, embedding) VALUES (?1, ?2)",
+            params![memory_id, bytes],
+        )?;
+        tx.execute(
+            "INSERT INTO embedding_state (memory_id, model, dim, status, updated_at) VALUES (?1, ?2, ?3, 'done', ?4) ON CONFLICT(memory_id) DO UPDATE SET model = excluded.model, dim = excluded.dim, status = 'done', updated_at = excluded.updated_at",
+            params![memory_id, model, vector.len() as i64, now],
+        )?;
+        tx.commit()?;
+        Ok(())
+    }
+
+    /// (done_count, pending_count) for embeddings.
+    pub fn embedding_stats(&self) -> Result<(i64, i64)> {
+        let done: i64 = self
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM embedding_state WHERE status = 'done'",
+                [],
+                |r| r.get(0),
+            )
+            .unwrap_or(0);
+        let pending: i64 = self
+            .conn
+            .query_row(
+                "SELECT COUNT(*) FROM embedding_state WHERE status = 'pending'",
+                [],
+                |r| r.get(0),
+            )
+            .unwrap_or(0);
+        Ok((done, pending))
+    }
+
+    /// Vector branch: nearest-neighbour search over memory_vecs (callers must pass an embedded query).
+    #[allow(dead_code)]
+    pub(crate) fn vector_neighbors(
+        &self,
+        query_vec: &[f32],
+        limit: usize,
+    ) -> Result<Vec<(String, f64)>> {
+        if query_vec.is_empty() {
+            return Ok(Vec::new());
+        }
+        let bytes: Vec<u8> = query_vec.iter().flat_map(|v| v.to_le_bytes()).collect();
+        let mut stmt = self.conn.prepare(
+            "SELECT memory_id, distance FROM memory_vecs WHERE embedding MATCH ?1 AND k = ?2 ORDER BY distance",
+        )?;
+        let rows = stmt
+            .query_map(params![bytes, limit as i64], |r| {
+                Ok((r.get::<_, String>(0)?, r.get::<_, f64>(1)?))
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
     }
 
     /// List all entities, most recently used first (Phase 1: created_at ordering).
