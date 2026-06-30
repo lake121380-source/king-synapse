@@ -6,6 +6,7 @@
 mod activation;
 mod buffer;
 mod consolidation;
+mod hebbian;
 mod item;
 mod reflection;
 mod session;
@@ -15,6 +16,7 @@ pub use buffer::WorkingMemoryBuffer;
 pub use consolidation::{
     ConsolidationEngine, ConsolidationPlan, MergeGroup, MergeStrategy, NoOpConsolidation,
 };
+pub use hebbian::{EdgeUpdatePlan, HebbianReinforcementEngine, NoOpHebbianReinforcementEngine};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
@@ -157,5 +159,18 @@ mod tests {
 
         assert!(empty.is_empty());
         assert!(!non_empty.is_empty());
+    }
+
+    #[test]
+    fn noop_hebbian_engine_emits_no_updates() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload::default(),
+        );
+        let engine = NoOpHebbianReinforcementEngine;
+
+        assert!(engine.reinforce(&event).is_empty());
     }
 }
