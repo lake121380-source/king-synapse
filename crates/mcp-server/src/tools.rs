@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
-use synapse_core::{MemoryKind, RecallQuery, Scope, Source, Store, WriteInput};
+use synapse_core::{MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput};
 
 pub type StoreHandle = Arc<Mutex<Store>>;
 
@@ -185,7 +185,7 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
         .map(MemoryKind::from_str)
         .transpose()?;
     let mut s = store.lock().unwrap();
-    let hits = s.recall(&RecallQuery {
+    let hits = RecallEngine::new(&mut s).recall(&RecallQuery {
         query,
         k,
         scope_filter: scope,

@@ -1,25 +1,22 @@
 //! SQLite-backed storage for memories + append-only event log.
 //!
-//! Phase 1 adds entity nodes and `MENTIONS` edges built automatically
-//! from extracted entities. Recall now does keyword + 1-hop entity
-//! expansion fused.
+//! Storage layer only: persistence + atomic search primitives
+//! (`search_fts`, `search_vector`, `search_entity`, `expand_neighbors`).
+//! Query understanding, fusion, and decay live in `crate::recall`.
 
 mod branches;
-mod recall;
 mod schema;
 
 use crate::entity::{Entity, EntityRef, EntityType};
 use crate::error::Result;
 use crate::extract;
-use crate::model::{Memory, MemoryKind, RecallQuery, WriteInput};
+use crate::model::{Memory, MemoryKind, WriteInput};
 use chrono::Utc;
 use rusqlite::{params, Connection, OptionalExtension};
 use std::path::Path;
 use std::str::FromStr;
 use std::sync::Once;
 use ulid::Ulid;
-
-pub use recall::RecallHit;
 
 static SQLITE_VEC_INIT: Once = Once::new();
 
@@ -175,13 +172,11 @@ impl Store {
     }
 
     /// Vector branch: nearest-neighbour search over memory_vecs (callers must pass an embedded query).
-    #[allow(dead_code)]
-    pub(crate) fn vector_neighbors(
-        &self,
-        query_vec: &[f32],
-        limit: usize,
-    ) -> Result<Vec<(String, f64)>> {
-        if query_vec.is_empty() {
+    /// Vector branch: nearest-neighbour search over `memory_vecs`.
+    /// Returns `(memory_id, distance)` ascending. Callers must have produced
+    /// the query vector themselves (typically via `crate::embed::Embedder`).
+    pub fn search_vector(&self, query_vec: &[f32], limit: usize) -> Result<Vec<(String, f64)>> {
+        if query_vec.is_empty() || limit == 0 {
             return Ok(Vec::new());
         }
         let bytes: Vec<u8> = query_vec.iter().flat_map(|v| v.to_le_bytes()).collect();
@@ -194,6 +189,41 @@ impl Store {
             })?
             .collect::<std::result::Result<Vec<_>, _>>()?;
         Ok(rows)
+    }
+
+    /// FTS branch: BM25-ranked full-text matches. Returns `(Memory, bm25)`
+    /// where lower bm25 = better (rusqlite's bm25 returns negative scores).
+    pub fn search_fts(
+        &self,
+        query: &str,
+        scope: Option<&str>,
+        kind: Option<&str>,
+        limit: usize,
+    ) -> Result<Vec<(Memory, f64)>> {
+        let fts_query = sanitize_fts(query);
+        if fts_query.is_empty() || limit == 0 {
+            return Ok(Vec::new());
+        }
+        let scope_s = scope.map(|s| s.to_string());
+        let kind_s = kind.map(|s| s.to_string());
+        branches::fts_branch(self, &fts_query, &scope_s, &kind_s, limit as i64)
+    }
+
+    /// Entity branch: memories that mention any entity recognized in `query`.
+    /// Returns `(Memory, hits)` ordered by shared-entity hit count.
+    pub fn search_entity(
+        &self,
+        query: &str,
+        scope: Option<&str>,
+        kind: Option<&str>,
+        limit: usize,
+    ) -> Result<Vec<(Memory, u32)>> {
+        if limit == 0 {
+            return Ok(Vec::new());
+        }
+        let scope_s = scope.map(|s| s.to_string());
+        let kind_s = kind.map(|s| s.to_string());
+        branches::entity_branch(self, query, &scope_s, &kind_s, limit as i64)
     }
 
     /// List all entities, most recently used first (Phase 1: created_at ordering).
@@ -293,8 +323,22 @@ impl Store {
         Ok(())
     }
 
-    pub fn recall(&mut self, q: &RecallQuery) -> Result<Vec<RecallHit>> {
-        recall::recall(self, q)
+    /// Bump `access_count` and stamp `last_accessed_at` for the memories the
+    /// recall layer surfaced. Called from `crate::recall::RecallEngine` and
+    /// from the 1-hop graph expansion below.
+    pub fn record_access(&mut self, ids: &[&str], now: i64) -> Result<()> {
+        if ids.is_empty() {
+            return Ok(());
+        }
+        let tx = self.conn.transaction()?;
+        for id in ids {
+            tx.execute(
+                "UPDATE memories SET access_count = access_count + 1, last_accessed_at = ?2 WHERE id = ?1",
+                params![id, now],
+            )?;
+        }
+        tx.commit()?;
+        Ok(())
     }
 
     pub fn count(&self) -> Result<i64> {
@@ -303,6 +347,27 @@ impl Store {
             .query_row("SELECT COUNT(*) FROM memories", [], |r| r.get(0))?;
         Ok(n)
     }
+}
+
+/// Sanitize a freeform user query into an FTS5 MATCH expression.
+/// Strips punctuation, keeps unicode letters/digits, OR-joins prefix terms.
+fn sanitize_fts(q: &str) -> String {
+    let cleaned: String = q
+        .chars()
+        .map(|c| {
+            if c.is_alphanumeric() || c.is_whitespace() || c == '_' || c == '-' {
+                c
+            } else {
+                ' '
+            }
+        })
+        .collect();
+    let tokens: Vec<String> = cleaned
+        .split_whitespace()
+        .filter(|t| !t.is_empty())
+        .map(|t| format!("\"{}\"*", t.replace('"', "")))
+        .collect();
+    tokens.join(" OR ")
 }
 
 pub(crate) fn row_to_memory(row: &rusqlite::Row) -> rusqlite::Result<Memory> {
@@ -332,22 +397,6 @@ pub(crate) fn row_to_memory(row: &rusqlite::Row) -> rusqlite::Result<Memory> {
         access_count: row.get(10)?,
         last_accessed_at: row.get(11)?,
     })
-}
-
-pub(crate) fn decay_lambda(kind: MemoryKind) -> f32 {
-    // Half-lives, in days:
-    //   STATE      ~1d   -> lambda = ln(2)/1
-    //   FAILURE   ~30d
-    //   FACT      ~180d
-    //   PLAYBOOK  ~180d
-    //   PREFERENCE ~365d
-    match kind {
-        MemoryKind::State => 0.693,
-        MemoryKind::Failure => 0.0231,
-        MemoryKind::Fact => 0.00385,
-        MemoryKind::Playbook => 0.00385,
-        MemoryKind::Preference => 0.0019,
-    }
 }
 
 #[cfg(test)]
@@ -424,7 +473,7 @@ mod tests {
             .all(|(id, _)| id != &m1.id && id != &m2.id));
 
         // Nearest neighbour to v1 should be m1 (distance ~0), then m2.
-        let nbrs = s.vector_neighbors(&v1, 2).unwrap();
+        let nbrs = s.search_vector(&v1, 2).unwrap();
         assert_eq!(nbrs.len(), 2);
         assert_eq!(nbrs[0].0, m1.id);
         assert!(nbrs[0].1 < nbrs[1].1);

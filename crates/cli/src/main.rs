@@ -2,7 +2,9 @@ use anyhow::{Context, Result};
 use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand};
 use std::str::FromStr;
-use synapse_core::{config::Config, MemoryKind, RecallQuery, Scope, Source, Store, WriteInput};
+use synapse_core::{
+    config::Config, MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+};
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
 #[derive(Parser)]
@@ -45,6 +47,9 @@ enum Cmd {
         kind: Option<String>,
         #[arg(long)]
         json: bool,
+        /// Also run the dense vector branch (loads the embedder; first run downloads the model).
+        #[arg(long)]
+        vectors: bool,
     },
     /// List recent memories.
     List {
@@ -128,6 +133,7 @@ fn main() -> Result<()> {
             scope,
             kind,
             json,
+            vectors,
         } => {
             let q = RecallQuery {
                 query,
@@ -135,7 +141,14 @@ fn main() -> Result<()> {
                 scope_filter: scope.map(|s| Scope::from_str(&s)).transpose()?,
                 kind_filter: kind.map(|s| MemoryKind::from_str(&s)).transpose()?,
             };
-            let hits = store.recall(&q)?;
+            let hits = if vectors {
+                let mut emb = synapse_core::Embedder::new().context("loading embedder")?;
+                RecallEngine::new(&mut store)
+                    .with_embedder(&mut emb)
+                    .recall(&q)?
+            } else {
+                RecallEngine::new(&mut store).recall(&q)?
+            };
             if json {
                 println!("{}", serde_json::to_string_pretty(&hits)?);
             } else if hits.is_empty() {
@@ -260,9 +273,20 @@ fn print_hit(h: &synapse_core::RecallHit) {
         .single()
         .map(|t| t.format("%Y-%m-%d %H:%M").to_string())
         .unwrap_or_default();
+    let mut sources = String::new();
+    if h.from_fts {
+        sources.push('F');
+    }
+    if h.from_entity {
+        sources.push('E');
+    }
+    if h.from_vector {
+        sources.push('V');
+    }
     println!(
-        "[{:.3}] {}  ({}/{}, {})  {}",
+        "[{:.3} {:<3}] {}  ({}/{}, {})  {}",
         h.score,
+        sources,
         &h.memory.id[..8],
         h.memory.kind,
         h.memory.scope,

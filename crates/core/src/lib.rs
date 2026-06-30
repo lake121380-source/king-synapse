@@ -1,8 +1,9 @@
 //! King Synapse core: storage, schema, recall, and entity primitives.
 //!
-//! Phase 1: SQLite + FTS5 keyword recall fused with 1-hop entity expansion.
-//! Append-only event log; entities and `MENTIONS` edges populated at write.
-//! Spreading activation, vector index, embedder arrive in Phase 2.
+//! Phase 2: SQLite + FTS5 + vec0 (sqlite-vec) storage with a separate
+//! RecallEngine that fuses FTS, entity-graph, and vector hits via RRF.
+//! Store is now query-agnostic; embedding lives behind a trait so it can
+//! be swapped or mocked.
 
 pub mod config;
 pub mod embed;
@@ -10,10 +11,12 @@ pub mod entity;
 pub mod error;
 pub mod extract;
 pub mod model;
+pub mod recall;
 pub mod store;
 
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
-pub use store::{RecallHit, Store};
+pub use recall::{QueryEmbedder, RecallEngine, RecallHit};
+pub use store::Store;
