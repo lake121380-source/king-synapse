@@ -349,3 +349,85 @@ pub(crate) fn decay_lambda(kind: MemoryKind) -> f32 {
         MemoryKind::Preference => 0.0019,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::model::{Scope, Source};
+
+    fn make_store() -> Store {
+        Store::open_in_memory().unwrap()
+    }
+
+    fn make_vec(seed: f32) -> Vec<f32> {
+        (0..super::schema::VEC_DIM)
+            .map(|i| seed + (i as f32) * 0.001)
+            .collect()
+    }
+
+    #[test]
+    fn write_marks_embedding_pending() {
+        let mut s = make_store();
+        let m = s
+            .write(WriteInput {
+                content: "needs embedding".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let pending = s.pending_embeddings(10).unwrap();
+        assert!(pending.iter().any(|(id, _)| id == &m.id));
+        let (done, pend) = s.embedding_stats().unwrap();
+        assert_eq!(done, 0);
+        assert_eq!(pend, 1);
+    }
+
+    #[test]
+    fn vector_round_trip_and_neighbors() {
+        let mut s = make_store();
+        let m1 = s
+            .write(WriteInput {
+                content: "first memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let m2 = s
+            .write(WriteInput {
+                content: "second memory, far away".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+
+        let v1 = make_vec(0.0);
+        let v2 = make_vec(10.0);
+        s.put_embedding(&m1.id, "fake-model", &v1).unwrap();
+        s.put_embedding(&m2.id, "fake-model", &v2).unwrap();
+
+        let (done, pend) = s.embedding_stats().unwrap();
+        assert_eq!(done, 2);
+        assert_eq!(pend, 0);
+        assert!(s
+            .pending_embeddings(10)
+            .unwrap()
+            .iter()
+            .all(|(id, _)| id != &m1.id && id != &m2.id));
+
+        // Nearest neighbour to v1 should be m1 (distance ~0), then m2.
+        let nbrs = s.vector_neighbors(&v1, 2).unwrap();
+        assert_eq!(nbrs.len(), 2);
+        assert_eq!(nbrs[0].0, m1.id);
+        assert!(nbrs[0].1 < nbrs[1].1);
+        assert_eq!(nbrs[1].0, m2.id);
+    }
+}

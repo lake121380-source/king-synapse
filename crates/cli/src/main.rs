@@ -74,6 +74,18 @@ enum Cmd {
     Stats,
     /// Show where the database is.
     Where,
+    /// Compute embeddings for memories that don't have one yet.
+    ///
+    /// First run downloads the ~470MB multilingual-e5-base model into the
+    /// fastembed cache (override with `FASTEMBED_CACHE_DIR`).
+    EmbedBackfill {
+        /// Memories per inference batch.
+        #[arg(long, default_value = "16")]
+        batch: usize,
+        /// Maximum memories to embed this run; 0 means "drain the queue".
+        #[arg(long, default_value = "0")]
+        max: usize,
+    },
 }
 
 fn main() -> Result<()> {
@@ -188,11 +200,55 @@ fn main() -> Result<()> {
         }
         Cmd::Stats => {
             let n = store.count()?;
-            println!("memories: {}", n);
-            println!("db_path:  {}", cfg.db_path.display());
+            let (done, pending) = store.embedding_stats()?;
+            println!("memories:    {}", n);
+            println!("embeddings:  {} done / {} pending", done, pending);
+            println!("db_path:     {}", cfg.db_path.display());
         }
         Cmd::Where => {
             println!("{}", cfg.db_path.display());
+        }
+        Cmd::EmbedBackfill { batch, max } => {
+            let batch = batch.max(1);
+            let (done0, pending0) = store.embedding_stats()?;
+            if pending0 == 0 {
+                println!("nothing pending ({} done)", done0);
+                return Ok(());
+            }
+            eprintln!(
+                "{} pending, loading embedder (first run downloads ~470MB)...",
+                pending0
+            );
+            let mut emb = synapse_core::Embedder::new().context("loading embedder")?;
+            eprintln!("model: {} (dim={})", emb.model_name(), emb.dim());
+
+            let mut total = 0usize;
+            loop {
+                let limit = if max == 0 {
+                    batch
+                } else {
+                    batch.min(max.saturating_sub(total))
+                };
+                if limit == 0 {
+                    break;
+                }
+                let pending = store.pending_embeddings(limit)?;
+                if pending.is_empty() {
+                    break;
+                }
+                let texts: Vec<&str> = pending.iter().map(|(_, c)| c.as_str()).collect();
+                let vecs = emb.embed_documents(&texts).context("embedding batch")?;
+                for ((id, _), v) in pending.iter().zip(vecs.iter()) {
+                    store.put_embedding(id, emb.model_name(), v)?;
+                    total += 1;
+                }
+                eprintln!("embedded {total}");
+                if max != 0 && total >= max {
+                    break;
+                }
+            }
+            let (done, pending) = store.embedding_stats()?;
+            println!("embedded {total} this run. now: {done} done / {pending} pending");
         }
     }
     Ok(())
