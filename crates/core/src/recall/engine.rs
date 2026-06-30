@@ -10,6 +10,7 @@ use crate::recall::rrf::{rrf_fuse, RrfInput, DEFAULT_RRF_K};
 use crate::recall::{QueryEmbedder, DEFAULT_RERANK_POOL};
 use crate::rerank::Reranker;
 use crate::store::Store;
+use crate::working_memory::SessionId;
 use chrono::Utc;
 use std::collections::HashMap;
 
@@ -19,6 +20,7 @@ pub struct RecallEngine<'a> {
     pub(crate) reranker: Option<&'a mut dyn Reranker>,
     pub(crate) boosters: Vec<&'a dyn RecallBooster>,
     pub(crate) rerank_pool: usize,
+    pub(crate) session_id: Option<SessionId>,
 }
 
 impl<'a> RecallEngine<'a> {
@@ -29,6 +31,7 @@ impl<'a> RecallEngine<'a> {
             reranker: None,
             boosters: Vec::new(),
             rerank_pool: DEFAULT_RERANK_POOL,
+            session_id: None,
         }
     }
 
@@ -45,6 +48,11 @@ impl<'a> RecallEngine<'a> {
 
     pub fn with_booster(mut self, booster: &'a dyn RecallBooster) -> Self {
         self.boosters.push(booster);
+        self
+    }
+
+    pub fn with_session_id(mut self, session_id: SessionId) -> Self {
+        self.session_id = Some(session_id);
         self
     }
 
@@ -182,7 +190,10 @@ impl<'a> RecallEngine<'a> {
         }
 
         if !self.boosters.is_empty() {
-            let ctx = BoosterContext::new(q, self.store);
+            let mut ctx = BoosterContext::new(q, self.store);
+            if let Some(session_id) = self.session_id {
+                ctx = ctx.with_session_id(session_id);
+            }
             for booster in &self.boosters {
                 booster.apply(&ctx, hits.as_mut_slice())?;
             }

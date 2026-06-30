@@ -1,4 +1,9 @@
-use synapse_core::{MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput};
+use std::sync::Arc;
+use std::time::Duration;
+use synapse_core::{
+    MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, SessionId, Source, Store,
+    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem, WriteInput,
+};
 
 fn add(store: &mut Store, content: &str, kind: MemoryKind) -> String {
     store
@@ -16,6 +21,30 @@ fn add(store: &mut Store, content: &str, kind: MemoryKind) -> String {
 
 fn recall(store: &mut Store, q: &RecallQuery) -> Vec<synapse_core::RecallHit> {
     RecallEngine::new(store).recall(q).unwrap()
+}
+
+fn assert_same_hits(a: &[RecallHit], b: &[RecallHit]) {
+    assert_eq!(a.len(), b.len(), "length must match");
+    for (a, b) in a.iter().zip(b.iter()) {
+        assert_eq!(a.memory.id, b.memory.id, "order must match");
+        assert!(
+            (a.score - b.score).abs() < 1e-6,
+            "final score must match: {} vs {}",
+            a.score,
+            b.score
+        );
+        assert!(
+            (a.rrf_score - b.rrf_score).abs() < 1e-6,
+            "rrf score must match"
+        );
+        assert_eq!(a.activation_bonus, b.activation_bonus);
+        assert_eq!(a.sources, b.sources);
+        assert_eq!(a.fts_rank, b.fts_rank);
+        assert_eq!(a.entity_rank, b.entity_rank);
+        assert_eq!(a.vector_rank, b.vector_rank);
+        assert_eq!(a.entity_hits, b.entity_hits);
+        assert_eq!(a.rerank_score, b.rerank_score);
+    }
 }
 
 #[test]
@@ -263,25 +292,124 @@ fn noop_booster_preserves_pipeline_output() {
         .recall(&q)
         .unwrap();
 
-    assert_eq!(baseline.len(), boosted.len(), "length must match");
-    for (a, b) in baseline.iter().zip(boosted.iter()) {
-        assert_eq!(a.memory.id, b.memory.id, "order must match");
-        assert!(
-            (a.score - b.score).abs() < 1e-6,
-            "final score must match: {} vs {}",
-            a.score,
-            b.score
+    assert_same_hits(&baseline, &boosted);
+}
+
+#[test]
+fn empty_working_memory_booster_preserves_pipeline_output() {
+    let mut s = Store::open_in_memory().unwrap();
+    add(
+        &mut s,
+        "use corepack for pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    add(&mut s, "axum middleware ordering tip", MemoryKind::Fact);
+
+    let q = RecallQuery {
+        query: "pnpm windows".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    let session = SessionId::new();
+    let booster = WorkingMemoryActivationBooster::new(Arc::new(WorkingMemoryBuffer::new()));
+    let boosted = RecallEngine::new(&mut s)
+        .with_session_id(session)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    assert_same_hits(&baseline, &boosted);
+}
+
+#[test]
+fn working_memory_booster_boosts_only_same_session_linked_hits() {
+    let mut s = Store::open_in_memory().unwrap();
+    let linked = add(
+        &mut s,
+        "use corepack for pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    let other = add(&mut s, "axum middleware ordering tip", MemoryKind::Fact);
+    let session = SessionId::new();
+    let wrong_session = SessionId::new();
+    let mut wm = WorkingMemoryBuffer::new();
+
+    wm.add(
+        session,
+        WorkingMemoryItem::new(
+            session,
+            "current pnpm context",
+            vec![linked.clone()],
+            Duration::from_secs(60),
+        ),
+    );
+    wm.add(
+        wrong_session,
+        WorkingMemoryItem::new(
+            wrong_session,
+            "unrelated axum context",
+            vec![other.clone()],
+            Duration::from_secs(60),
+        ),
+    );
+
+    let q = RecallQuery {
+        query: "pnpm windows axum".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let booster = WorkingMemoryActivationBooster::new(Arc::new(wm));
+    let hits = RecallEngine::new(&mut s)
+        .with_session_id(session)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    let linked_hit = hits.iter().find(|h| h.memory.id == linked).unwrap();
+    assert_eq!(linked_hit.activation_bonus, 0.05);
+    let other_hit = hits.iter().find(|h| h.memory.id == other).unwrap();
+    assert_eq!(other_hit.activation_bonus, 0.0);
+}
+
+#[test]
+fn working_memory_booster_caps_activation_bonus() {
+    let mut s = Store::open_in_memory().unwrap();
+    let linked = add(
+        &mut s,
+        "use corepack for pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    let session = SessionId::new();
+    let mut wm = WorkingMemoryBuffer::new();
+
+    for i in 0..3 {
+        wm.add(
+            session,
+            WorkingMemoryItem::new(
+                session,
+                format!("context {i}"),
+                vec![linked.clone()],
+                Duration::from_secs(60),
+            ),
         );
-        assert!(
-            (a.rrf_score - b.rrf_score).abs() < 1e-6,
-            "rrf score must match"
-        );
-        assert_eq!(a.activation_bonus, b.activation_bonus);
-        assert_eq!(a.sources, b.sources);
-        assert_eq!(a.fts_rank, b.fts_rank);
-        assert_eq!(a.entity_rank, b.entity_rank);
-        assert_eq!(a.vector_rank, b.vector_rank);
-        assert_eq!(a.entity_hits, b.entity_hits);
-        assert_eq!(a.rerank_score, b.rerank_score);
     }
+
+    let q = RecallQuery {
+        query: "pnpm windows".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let booster = WorkingMemoryActivationBooster::new(Arc::new(wm));
+    let hits = RecallEngine::new(&mut s)
+        .with_session_id(session)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    let linked_hit = hits.iter().find(|h| h.memory.id == linked).unwrap();
+    assert_eq!(linked_hit.activation_bonus, 0.1);
 }

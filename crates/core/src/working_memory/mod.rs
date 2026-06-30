@@ -3,11 +3,13 @@
 //! Working memory is a transient scratchpad for future activation. It is not
 //! persisted, embedded, reranked, or fused into recall.
 
+mod activation;
 mod buffer;
 mod consolidation;
 mod item;
 mod session;
 
+pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
 pub use consolidation::{ConsolidationPolicy, NoOpConsolidation};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};

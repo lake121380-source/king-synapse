@@ -17,6 +17,7 @@ use crate::error::Result;
 use crate::model::RecallQuery;
 use crate::recall::hit::RecallHit;
 use crate::store::Store;
+use crate::working_memory::SessionId;
 
 /// Read-only context handed to every `RecallBooster::apply` invocation.
 ///
@@ -30,11 +31,21 @@ pub struct BoosterContext<'a> {
     /// `Store::neighbors` etc. without each booster crate having to
     /// open its own connection.
     pub store: &'a Store,
+    pub session_id: Option<SessionId>,
 }
 
 impl<'a> BoosterContext<'a> {
     pub fn new(query: &'a RecallQuery, store: &'a Store) -> Self {
-        Self { query, store }
+        Self {
+            query,
+            store,
+            session_id: None,
+        }
+    }
+
+    pub fn with_session_id(mut self, session_id: SessionId) -> Self {
+        self.session_id = Some(session_id);
+        self
     }
 }
 
