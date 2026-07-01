@@ -25,7 +25,10 @@ pub use executor::{
     ExecutionStatistics, ExecutionWarning, MergeExecution, PlanOnlyConsolidationExecutor,
     SkippedAction,
 };
-pub use hebbian::{EdgeUpdatePlan, HebbianReinforcementEngine, NoOpHebbianReinforcementEngine};
+pub use hebbian::{
+    EdgeUpdatePlan, HebbianExecutionReport, HebbianExecutor, HebbianReinforcementEngine,
+    NoOpHebbianExecutor, NoOpHebbianReinforcementEngine, PlanOnlyHebbianExecutor,
+};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
@@ -188,6 +191,34 @@ mod tests {
         let engine = NoOpHebbianReinforcementEngine;
 
         assert!(engine.reinforce(&event).is_empty());
+    }
+
+    #[test]
+    fn noop_hebbian_executor_emits_empty_report() {
+        let plans = vec![EdgeUpdatePlan {
+            source: "mem-a".to_string(),
+            target: "mem-b".to_string(),
+            weight_delta: 0.1,
+        }];
+        let executor = NoOpHebbianExecutor;
+
+        let report = executor.execute(&plans);
+
+        assert!(report.is_empty());
+    }
+
+    #[test]
+    fn plan_only_hebbian_executor_reports_input_plans() {
+        let plans = vec![EdgeUpdatePlan {
+            source: "mem-a".to_string(),
+            target: "mem-b".to_string(),
+            weight_delta: 0.1,
+        }];
+        let executor = PlanOnlyHebbianExecutor;
+
+        let report = executor.execute(&plans);
+
+        assert_eq!(report.planned_updates, plans);
     }
 
     #[test]
