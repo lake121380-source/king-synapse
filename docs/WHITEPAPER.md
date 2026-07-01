@@ -124,14 +124,12 @@ The `reference` dataset protects baseline recall behavior. The `multihop` datase
 
 Phase 4 is Adaptive Memory. It should implement strategies behind the frozen contracts instead of changing them.
 
-Likely work includes:
+Planned work follows the RFC sequence:
 
-- Rule consolidation
-- Rule reflection
-- Hebbian update planning
-- ACT-R-style decay tuning
-- Predictive recall
-- Parameter tuning
-- Learning-to-rank evaluation
+- P4.1 Consolidation Executor
+- P4.2 Reflection Processor
+- P4.3 Hebbian Executor
+- P4.4 Forgetting Engine
+- P4.5 Sleep Cycle
 
 The development mode changes from defining interfaces to validating algorithms.

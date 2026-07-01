@@ -67,13 +67,11 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- Rule consolidation
-- Rule reflection
-- Hebbian update planning
-- ACT-R-style decay tuning
-- Predictive recall
-- Parameter tuning
-- Learning-to-rank evaluation
+- P4.1 Consolidation Executor
+- P4.2 Reflection Processor
+- P4.3 Hebbian Executor
+- P4.4 Forgetting Engine
+- P4.5 Sleep Cycle
 
 Contract rules
 
@@ -81,6 +79,17 @@ Contract rules
 2. Do not change Phase 3 Memory Evolution contracts without ADR approval.
 3. Prefer strategy implementations over interface changes.
 4. Preserve `reference` and `multihop` benchmark baselines before merging behavior changes.
+5. Start each Phase 4 implementation from an RFC.
+
+RFC sequence
+
+```text
+RFC-006 Consolidation Execution
+  -> RFC-007 Reflection Processing
+  -> RFC-008 Hebbian Reinforcement
+  -> RFC-009 Forgetting
+  -> RFC-010 Sleep Cycle
+```
 
 ## Completed Milestones
 
