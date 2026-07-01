@@ -37,10 +37,10 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 ## What's implemented now
 
 - `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
-- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, and additive recall boosters including graph activation.
+- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, additive recall boosters including graph activation, and a latent activation probe for inspecting hidden multi-step influence.
 - Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model.
 - `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference` and `multihop`.
-- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, and edge-inspection tools.
+- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, edge-inspection, and latent-activation tools.
 - `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, and stats.
 
 Still on the roadmap:
@@ -81,6 +81,7 @@ Binaries land in `target/release/`:
 ./target/release/kr recall "测试" --kind fact
 ./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
 ./target/release/kr edges <memory-id> --direction both
+./target/release/kr latent <memory-id> --steps 2
 
 # List recent
 ./target/release/kr list --limit 10
@@ -108,7 +109,7 @@ Add to your `opencode.json`:
 }
 ```
 
-The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, and `synapse_edges` available as tools.
+The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, `synapse_edges`, and `synapse_latent_activation` available as tools.
 
 ## License
 

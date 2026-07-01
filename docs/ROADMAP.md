@@ -38,6 +38,7 @@ Current milestone
 ✓ v0.9.6 — Graph Activation Booster
 ✓ v0.9.7 — Decayed Multi-Step Hidden Activation
 ✓ v0.9.8 — Edge Inspection Surface
+✓ v0.9.9 — Latent Activation Probe
 
 Status
 
@@ -106,6 +107,7 @@ Completed foundations
 - v0.9.6 — persisted edge weights add recall-time activation through `GraphActivationBooster`
 - v0.9.7 — graph activation supports capped, decayed multi-step hidden influence inside the candidate pool
 - v0.9.8 — persisted associative edges are inspectable through Store, CLI, and MCP surfaces
+- v0.9.9 — latent activation can be probed from seed memories without changing recall candidates or rankings
 
 Focus
 

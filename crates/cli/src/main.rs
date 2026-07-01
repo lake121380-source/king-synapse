@@ -3,8 +3,8 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, GraphActivationBooster, MemoryKind, RecallBooster, RecallEngine, RecallHit,
-    RecallQuery, Scope, Source, Store, WriteInput,
+    config::Config, GraphActivationBooster, LatentActivationProbe, MemoryKind, RecallBooster,
+    RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -108,6 +108,24 @@ enum Cmd {
         direction: EdgeDirection,
         #[arg(long, short = 'k', default_value = "20")]
         k: usize,
+        #[arg(long)]
+        json: bool,
+    },
+    /// Probe latent multi-step activation from one memory id.
+    Latent {
+        id: String,
+        #[arg(long, short = 'k', default_value = "10")]
+        k: usize,
+        #[arg(long, default_value = "0.05")]
+        scale: f32,
+        #[arg(long, default_value = "0.25")]
+        cap: f32,
+        #[arg(long, default_value = "2")]
+        steps: usize,
+        #[arg(long, default_value = "0.5")]
+        decay: f32,
+        #[arg(long, default_value = "16")]
+        fanout: usize,
         #[arg(long)]
         json: bool,
     },
@@ -312,6 +330,28 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Cmd::Latent {
+            id,
+            k,
+            scale,
+            cap,
+            steps,
+            decay,
+            fanout,
+            json,
+        } => {
+            let probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
+            let hits = probe.activate(&store, &[&id], k)?;
+            if json {
+                println!("{}", serde_json::to_string_pretty(&hits)?);
+            } else if hits.is_empty() {
+                println!("(no latent activations)");
+            } else {
+                for hit in hits {
+                    print_latent_hit(&hit);
+                }
+            }
+        }
         Cmd::Stats => {
             let n = store.count()?;
             let (done, pending) = store.embedding_stats()?;
@@ -381,6 +421,23 @@ fn print_edge(edge: &synapse_core::MemoryEdge) {
         edge.edge,
         edge.weight,
         when
+    );
+}
+
+fn print_latent_hit(hit: &synapse_core::LatentActivationHit) {
+    let path = hit
+        .path
+        .iter()
+        .map(|id| short_id(id).to_string())
+        .collect::<Vec<_>>()
+        .join(" -> ");
+    println!(
+        "[{:.4} depth={}] {}  path={}  {}",
+        hit.activation,
+        hit.depth,
+        short_id(&hit.memory.id),
+        path,
+        truncate(&hit.memory.content, 90)
     );
 }
 

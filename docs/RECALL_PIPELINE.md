@@ -120,6 +120,12 @@ low-strength hidden influence without surfacing new memories by itself. It does
 not create candidates, invoke retrievers, modify RRF, or change any `RecallHit`
 field except `activation_bonus`.
 
+`LatentActivationProbe` is a read-only inspection tool, not a booster. It starts
+from one or more memory ids, walks directed `memory_edges`, and returns hidden
+multi-step activations with path explanations. Because it does not produce
+`RecallHit`s or run inside `RecallEngine`, it can inspect candidate-set-external
+background influence without changing recall rankings.
+
 ---
 
 ## 6. Design Invariants

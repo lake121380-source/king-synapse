@@ -48,6 +48,8 @@ Detailed per-crate listings follow below.
 - `BoosterContext`
 - `NoOpBooster`
 - `GraphActivationBooster`
+- `LatentActivationProbe`
+- `LatentActivationHit`
 - `QueryEmbedder`
 - `Reranker`
 - `FastEmbedReranker`
@@ -58,6 +60,12 @@ Frozen by `v0.2.0-recall-api-freeze`. Recall scoring semantics, `RecallHit` sche
 `GraphActivationBooster` is additive only: it reads Store-owned `memory_edges`
 among existing candidate hits and contributes capped, decayed activation bonus
 without creating new candidates or changing retrieval provenance fields.
+
+`LatentActivationProbe` is read-only inspection, not a recall booster. It walks
+Store-owned `memory_edges` from one or more seed memories and returns hidden
+multi-step activation candidates with activation strength, depth, and path. It
+does not create `RecallHit`s, mutate Store, invoke retrievers, or alter recall
+rankings.
 
 ### model
 
@@ -312,6 +320,7 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_entities`
 - `synapse_neighbors`
 - `synapse_edges`
+- `synapse_latent_activation`
 
 Tool JSON schemas are considered part of the stable public API.
 `synapse_recall` accepts optional graph activation fields:
@@ -319,6 +328,8 @@ Tool JSON schemas are considered part of the stable public API.
 `graph_decay`. They are disabled by default.
 `synapse_edges` accepts `id`, optional `direction` (`outgoing`, `incoming`,
 or `both`), and optional `k`.
+`synapse_latent_activation` accepts `id`, optional `k`, `scale`, `cap`,
+`steps`, `decay`, and `fanout`.
 
 ## kr (CLI)
 
@@ -332,6 +343,7 @@ or `both`), and optional `k`.
 - `kr entities`
 - `kr neighbors`
 - `kr edges`
+- `kr latent`
 
 Flag names and output structure are considered part of the stable public API.
 `kr recall` supports optional graph activation flags:
@@ -339,6 +351,8 @@ Flag names and output structure are considered part of the stable public API.
 `--graph-decay`. They are disabled by default.
 `kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
 `--json` for inspecting persisted associative edge weights.
+`kr latent <id>` supports `--steps`, `--decay`, `--scale`, `--cap`,
+`--fanout`, `-k`, and `--json` for inspecting hidden multi-step activation.
 
 ## synapse-eval
 

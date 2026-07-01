@@ -3,7 +3,8 @@ use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
-    GraphActivationBooster, MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+    GraphActivationBooster, LatentActivationProbe, MemoryKind, RecallEngine, RecallQuery, Scope,
+    Source, Store, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
@@ -17,6 +18,7 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_entities(),
         descriptor_neighbors(),
         descriptor_edges(),
+        descriptor_latent_activation(),
     ]
 }
 
@@ -130,6 +132,26 @@ fn descriptor_edges() -> Value {
     })
 }
 
+fn descriptor_latent_activation() -> Value {
+    json!({
+        "name": "synapse_latent_activation",
+        "description": "Probe multi-step latent activation from one memory id without changing recall results.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": { "type": "string" },
+                "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 10 },
+                "scale": { "type": "number", "default": 0.05 },
+                "cap": { "type": "number", "default": 0.25 },
+                "steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 2 },
+                "decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+                "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 }
+            }
+        }
+    })
+}
+
 pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
     let name = params
         .get("name")
@@ -145,6 +167,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_entities" => do_entities(store, &args)?,
         "synapse_neighbors" => do_neighbors(store, &args)?,
         "synapse_edges" => do_edges(store, &args)?,
+        "synapse_latent_activation" => do_latent_activation(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -321,4 +344,35 @@ fn do_edges(store: &StoreHandle, args: &Value) -> Result<Value> {
         other => anyhow::bail!("unsupported edge direction: {other}"),
     };
     Ok(json!({ "edges": edges }))
+}
+
+fn do_latent_activation(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let id = args
+        .get("id")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| anyhow::anyhow!("id required"))?
+        .to_string();
+    let k = args
+        .get("k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(10);
+    let scale = arg_f32(args, "scale", 0.05);
+    let cap = arg_f32(args, "cap", 0.25);
+    let steps = args
+        .get("steps")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(2);
+    let decay = arg_f32(args, "decay", 0.5);
+    let fanout = args
+        .get("fanout")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(16);
+
+    let s = store.lock().unwrap();
+    let probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
+    let activations = probe.activate(&s, &[&id], k)?;
+    Ok(json!({ "activations": activations }))
 }
