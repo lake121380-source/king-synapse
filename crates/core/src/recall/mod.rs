@@ -12,6 +12,7 @@
 
 mod booster;
 mod engine;
+mod graph_activation;
 mod hit;
 mod rrf;
 
@@ -19,6 +20,7 @@ use crate::error::Result;
 
 pub use booster::{BoosterContext, NoOpBooster, RecallBooster};
 pub use engine::RecallEngine;
+pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};
 
 /// Default candidate pool size handed to the reranker before top-k truncation.

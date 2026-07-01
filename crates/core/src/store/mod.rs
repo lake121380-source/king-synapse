@@ -388,6 +388,35 @@ impl Store {
         Ok(weight)
     }
 
+    pub fn edge_weights_between(
+        &self,
+        source_ids: &[&str],
+        target_ids: &[&str],
+    ) -> Result<Vec<(String, String, f32)>> {
+        if source_ids.is_empty() || target_ids.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        let mut edges = Vec::new();
+        let mut stmt = self.conn.prepare(
+            "SELECT weight FROM memory_edges WHERE source = ?1 AND target = ?2 AND edge = 'associates'",
+        )?;
+        for source in source_ids {
+            for target in target_ids {
+                if source == target {
+                    continue;
+                }
+                let weight = stmt
+                    .query_row(params![source, target], |row| row.get::<_, f64>(0))
+                    .optional()?;
+                if let Some(weight) = weight {
+                    edges.push(((*source).to_string(), (*target).to_string(), weight as f32));
+                }
+            }
+        }
+        Ok(edges)
+    }
+
     pub fn list_recent(&self, limit: usize) -> Result<Vec<Memory>> {
         let mut stmt = self.conn.prepare(
             "SELECT id, kind, scope, content, source, confidence, importance, valid_from, valid_to, superseded_by, access_count, last_accessed_at FROM memories WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT ?1",
@@ -566,6 +595,56 @@ mod tests {
 
         assert_eq!(s.edge_weight(&source.id, &target.id).unwrap(), Some(0.5));
         assert_eq!(s.edge_weight(&target.id, &source.id).unwrap(), None);
+    }
+
+    #[test]
+    fn edge_weights_between_returns_directed_edges_inside_candidate_set() {
+        let mut s = make_store();
+        let source = s
+            .write(WriteInput {
+                content: "source memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let target = s
+            .write(WriteInput {
+                content: "target memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let unrelated = s
+            .write(WriteInput {
+                content: "unrelated memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+
+        s.update_edge(&source.id, &target.id, 0.6).unwrap();
+        s.update_edge(&target.id, &source.id, 0.2).unwrap();
+
+        let edges = s
+            .edge_weights_between(&[&source.id, &target.id], &[&source.id, &target.id])
+            .unwrap();
+
+        assert_eq!(edges.len(), 2);
+        assert!(edges.contains(&(source.id.clone(), target.id.clone(), 0.6)));
+        assert!(edges.contains(&(target.id.clone(), source.id.clone(), 0.2)));
+        assert!(s
+            .edge_weights_between(&[&unrelated.id], &[&source.id, &target.id])
+            .unwrap()
+            .is_empty());
     }
 
     #[test]

@@ -1,8 +1,9 @@
 use std::sync::Arc;
 use std::time::Duration;
 use synapse_core::{
-    MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, SessionId, Source, Store,
-    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem, WriteInput,
+    GraphActivationBooster, MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, SessionId,
+    Source, Store, WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem,
+    WriteInput,
 };
 
 fn add(store: &mut Store, content: &str, kind: MemoryKind) -> String {
@@ -372,6 +373,49 @@ fn working_memory_booster_boosts_only_same_session_linked_hits() {
     assert_eq!(linked_hit.activation_bonus, 0.05);
     let other_hit = hits.iter().find(|h| h.memory.id == other).unwrap();
     assert_eq!(other_hit.activation_bonus, 0.0);
+}
+
+#[test]
+fn graph_activation_booster_boosts_existing_edge_targets() {
+    let mut s = Store::open_in_memory().unwrap();
+    let source = add(&mut s, "pnpm install fails on Windows", MemoryKind::Failure);
+    let target = add(
+        &mut s,
+        "use corepack to fix pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    let unrelated = add(&mut s, "axum middleware ordering tip", MemoryKind::Fact);
+    s.update_edge(&source, &target, 2.0).unwrap();
+
+    let q = RecallQuery {
+        query: "pnpm windows axum".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    assert!(baseline.iter().any(|h| h.memory.id == source));
+    assert!(baseline.iter().any(|h| h.memory.id == target));
+    assert!(baseline.iter().any(|h| h.memory.id == unrelated));
+
+    let booster = GraphActivationBooster::new(0.05, 0.15);
+    let boosted = RecallEngine::new(&mut s)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    assert_eq!(baseline.len(), boosted.len());
+    for hit in &boosted {
+        assert!(
+            baseline.iter().any(|base| base.memory.id == hit.memory.id),
+            "booster must not create new candidates"
+        );
+    }
+    let target_hit = boosted.iter().find(|h| h.memory.id == target).unwrap();
+    assert_eq!(target_hit.activation_bonus, 0.1);
+    assert!(target_hit.from_activation());
+    let unrelated_hit = boosted.iter().find(|h| h.memory.id == unrelated).unwrap();
+    assert_eq!(unrelated_hit.activation_bonus, 0.0);
 }
 
 #[test]

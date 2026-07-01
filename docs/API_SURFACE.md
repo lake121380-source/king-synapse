@@ -47,6 +47,7 @@ Detailed per-crate listings follow below.
 - `RecallBooster`
 - `BoosterContext`
 - `NoOpBooster`
+- `GraphActivationBooster`
 - `QueryEmbedder`
 - `Reranker`
 - `FastEmbedReranker`

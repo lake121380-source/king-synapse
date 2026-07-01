@@ -112,6 +112,12 @@ RecallHit
 - Boosters never rerank candidates.
 - Boosters modify only `activation_bonus`.
 
+`GraphActivationBooster` is the Store-backed spreading-activation booster. It
+reads directed `memory_edges` between the current candidate hits and adds a
+capped bonus to existing edge targets only. It does not create candidates,
+invoke retrievers, modify RRF, or change any `RecallHit` field except
+`activation_bonus`.
+
 ---
 
 ## 6. Design Invariants

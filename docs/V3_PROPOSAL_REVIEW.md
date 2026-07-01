@@ -52,8 +52,8 @@ The proposal's v3 capability list maps to the current repository like this:
 
 | v3 concept | Current implementation / contract |
 | --- | --- |
-| Associative Memory | FTS + entity branch + vector branch + working-memory activation; SQLite edge persistence now exists for adaptive associations. |
-| Dynamic Edge | Hebbian contracts and StoreMutation-backed SQLite edge persistence exist; recall-time graph use still needs a measured integration milestone. |
+| Associative Memory | FTS + entity branch + vector branch + working-memory activation; SQLite edge persistence and recall-time graph activation now exist for adaptive associations. |
+| Dynamic Edge | Hebbian contracts, StoreMutation-backed SQLite edge persistence, and additive graph activation exist behind frozen Store/Recall boundaries. |
 | Working Memory | Implemented as `WorkingMemoryBuffer` and `WorkingMemoryActivationBooster`. |
 | Long-term Memory | Implemented through SQLite-backed `Store`. |
 | Explainable Recall | Implemented through `RecallHit` provenance fields and `--explain`. |
@@ -129,6 +129,6 @@ v0.6.6-rule-based-reflection
 
 This keeps the algorithm side-effect free while proving that concrete
 reflection results can enter the existing processing and store-mutation
-planning pipelines. Durable SQLite edge writes now exist behind the Store
-executor boundary; the next graph milestone is measured recall-time use of
-those edges without changing frozen recall contracts.
+planning pipelines. Durable SQLite edge writes and recall-time graph activation
+now exist behind the Store and RecallBooster boundaries; the next graph
+milestone is measured evaluation of those edges against larger datasets.
