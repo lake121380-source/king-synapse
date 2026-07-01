@@ -7,14 +7,29 @@ pub trait ConsolidationExecutor {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct ExecutionReport {
-    pub executed: Vec<ExecutedAction>,
-    pub skipped: Vec<SkippedAction>,
+    pub executed_actions: Vec<ExecutedAction>,
+    pub skipped_actions: Vec<SkippedAction>,
+    pub warnings: Vec<ExecutionWarning>,
+    pub statistics: ExecutionStatistics,
 }
 
 impl ExecutionReport {
     pub fn is_empty(&self) -> bool {
-        self.executed.is_empty() && self.skipped.is_empty()
+        self.executed_actions.is_empty() && self.skipped_actions.is_empty()
     }
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ExecutionStatistics {
+    pub merged: usize,
+    pub archived: usize,
+    pub discarded: usize,
+    pub skipped: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ExecutionWarning {
+    pub message: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -51,31 +66,68 @@ pub struct PlanOnlyConsolidationExecutor;
 
 impl ConsolidationExecutor for PlanOnlyConsolidationExecutor {
     fn execute(&self, plan: &ConsolidationPlan) -> ExecutionReport {
-        let mut executed =
-            Vec::with_capacity(plan.promote.len() + plan.merge.len() + plan.discard.len());
+        let mut report = ExecutionReport {
+            executed_actions: Vec::with_capacity(
+                plan.promote.len() + plan.merge.len() + plan.discard.len(),
+            ),
+            skipped_actions: Vec::new(),
+            warnings: Vec::new(),
+            statistics: ExecutionStatistics::default(),
+        };
 
         for item in &plan.promote {
-            executed.push(ExecutedAction::Archive(ArchiveExecution {
-                item: item.clone(),
-            }));
+            dispatch_archive(item, &mut report);
         }
 
-        for MergeGroup { items, strategy } in &plan.merge {
-            executed.push(ExecutedAction::Merge(MergeExecution {
-                items: items.clone(),
-                strategy: *strategy,
-            }));
+        for group in &plan.merge {
+            dispatch_merge(group, &mut report);
         }
 
         for item in &plan.discard {
-            executed.push(ExecutedAction::Discard(DiscardExecution {
-                item: item.clone(),
-            }));
+            dispatch_discard(item, &mut report);
         }
 
-        ExecutionReport {
-            executed,
-            skipped: Vec::new(),
-        }
+        report
     }
+}
+
+fn dispatch_archive(item: &WorkingMemoryItem, report: &mut ExecutionReport) {
+    report
+        .executed_actions
+        .push(ExecutedAction::Archive(ArchiveExecution {
+            item: item.clone(),
+        }));
+    report.statistics.archived += 1;
+}
+
+fn dispatch_merge(group: &MergeGroup, report: &mut ExecutionReport) {
+    if group.items.is_empty() {
+        let action = MergeExecution {
+            items: Vec::new(),
+            strategy: group.strategy,
+        };
+        report.skipped_actions.push(SkippedAction::Merge(action));
+        report.warnings.push(ExecutionWarning {
+            message: "skipped empty merge group".to_string(),
+        });
+        report.statistics.skipped += 1;
+        return;
+    }
+
+    report
+        .executed_actions
+        .push(ExecutedAction::Merge(MergeExecution {
+            items: group.items.clone(),
+            strategy: group.strategy,
+        }));
+    report.statistics.merged += 1;
+}
+
+fn dispatch_discard(item: &WorkingMemoryItem, report: &mut ExecutionReport) {
+    report
+        .executed_actions
+        .push(ExecutedAction::Discard(DiscardExecution {
+            item: item.clone(),
+        }));
+    report.statistics.discarded += 1;
 }

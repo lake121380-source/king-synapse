@@ -49,15 +49,24 @@ Out of scope:
 
 ## Contract
 
-The executor consumes a completed plan and returns an execution report.
+The executor consumes a completed plan and returns an immutable execution report.
 
 ```text
 ConsolidationPlan
   -> ConsolidationExecutor
-  -> ConsolidationExecutionReport
+  -> ExecutionReport
 ```
 
 The executor must be deterministic for the same plan and store state.
+
+`ExecutionReport` is immutable after execution and represents the complete deterministic outcome of a consolidation pass. Sinks may consume the report, but they must not modify it.
+
+The report contains:
+
+- Executed actions
+- Skipped actions
+- Warnings
+- Statistics
 
 ## Invariants
 
@@ -70,7 +79,6 @@ The executor must be deterministic for the same plan and store state.
 
 ## Open Design Points
 
-- Exact shape of `ConsolidationExecutionReport`.
 - Mapping from `WorkingMemoryItem` to `WriteInput`.
 - Merge semantics for `MergeStrategy::Deduplicate`, `Union`, and `Compress`.
 - Whether execution should be all-or-nothing or best-effort with partial reports.

@@ -19,7 +19,8 @@ pub use consolidation::{
 };
 pub use executor::{
     ArchiveExecution, ConsolidationExecutor, DiscardExecution, ExecutedAction, ExecutionReport,
-    MergeExecution, PlanOnlyConsolidationExecutor, SkippedAction,
+    ExecutionStatistics, ExecutionWarning, MergeExecution, PlanOnlyConsolidationExecutor,
+    SkippedAction,
 };
 pub use hebbian::{EdgeUpdatePlan, HebbianReinforcementEngine, NoOpHebbianReinforcementEngine};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
@@ -187,8 +188,10 @@ mod tests {
         let report = executor.execute(&plan);
 
         assert!(report.is_empty());
-        assert!(report.executed.is_empty());
-        assert!(report.skipped.is_empty());
+        assert!(report.executed_actions.is_empty());
+        assert!(report.skipped_actions.is_empty());
+        assert!(report.warnings.is_empty());
+        assert_eq!(report.statistics, ExecutionStatistics::default());
     }
 
     #[test]
@@ -214,22 +217,53 @@ mod tests {
 
         let report = executor.execute(&plan);
 
-        assert_eq!(report.executed.len(), 3);
+        assert_eq!(report.executed_actions.len(), 3);
         assert_eq!(
-            report.executed[0],
+            report.executed_actions[0],
             ExecutedAction::Archive(ArchiveExecution { item: promote })
         );
         assert_eq!(
-            report.executed[1],
+            report.executed_actions[1],
             ExecutedAction::Merge(MergeExecution {
                 items: vec![merge_a, merge_b],
                 strategy: MergeStrategy::Union,
             })
         );
         assert_eq!(
-            report.executed[2],
+            report.executed_actions[2],
             ExecutedAction::Discard(DiscardExecution { item: discard })
         );
-        assert!(report.skipped.is_empty());
+        assert!(report.skipped_actions.is_empty());
+        assert_eq!(report.statistics.archived, 1);
+        assert_eq!(report.statistics.merged, 1);
+        assert_eq!(report.statistics.discarded, 1);
+        assert_eq!(report.statistics.skipped, 0);
+    }
+
+    #[test]
+    fn empty_merge_group_is_skipped_with_warning() {
+        let plan = ConsolidationPlan {
+            promote: Vec::new(),
+            merge: vec![MergeGroup {
+                items: Vec::new(),
+                strategy: MergeStrategy::Deduplicate,
+            }],
+            discard: Vec::new(),
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert!(report.executed_actions.is_empty());
+        assert_eq!(report.skipped_actions.len(), 1);
+        assert_eq!(report.warnings.len(), 1);
+        assert_eq!(report.statistics.skipped, 1);
+        assert_eq!(
+            report.skipped_actions[0],
+            SkippedAction::Merge(MergeExecution {
+                items: Vec::new(),
+                strategy: MergeStrategy::Deduplicate,
+            })
+        );
     }
 }
