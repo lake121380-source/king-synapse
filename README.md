@@ -34,21 +34,21 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 5. **Local-first** — single SQLite file, no cloud calls on the hot path.
 6. **Transparent** — every memory and every edge can be inspected, edited, redacted, or rolled back.
 
-## What's in Phase 0
+## What's implemented now
 
-- `synapse-core`: SQLite + FTS5 storage, append-only event log, time-decay scoring.
-- `synapse-mcp`: A stdio MCP server exposing `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`.
-- `kr`: A CLI for the same operations.
+- `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
+- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, and additive recall boosters.
+- Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model.
+- `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference` and `multihop`.
+- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, and neighbor tools.
+- `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, and stats.
 
-What's **not yet** in Phase 0 (coming in later phases):
-- Vector embeddings (Phase 2)
-- Knowledge graph layer with Kuzu (Phase 1)
-- Recall API freeze and release note (Phase 2)
-- Spreading activation engine (Phase 3)
-- Failure / preference extractors (Phase 3)
-- Causal edges with 3-tier confidence (Phase 4)
-- Tauri UI (Phase 5)
-- Claude Code integration + multi-device sync (Phase 6)
+Still on the roadmap:
+
+- Concrete Phase 5 algorithms behind the frozen traits, starting with RFC-012 Reflection Algorithm.
+- Production-grade memory evolution behavior for merge, forget, and Hebbian reinforcement.
+- External benchmark comparisons and larger parameter sweeps.
+- UI and deeper agent integrations.
 
 See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, and `docs/COMPATIBILITY.md` for the current roadmap, adaptive memory architecture, public API list, and stability policy. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, `docs/releases/v0.4.49-adaptive-policies-freeze.md`, and `docs/releases/v0.5.0-architecture-freeze.md`.
 
@@ -99,7 +99,7 @@ Add to your `opencode.json`:
 }
 ```
 
-The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget` available as tools.
+The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, and `synapse_neighbors` available as tools.
 
 ## License
 

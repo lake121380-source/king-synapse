@@ -6,17 +6,18 @@ Recall benchmark harness for King Synapse.
 
 ```bash
 # baseline: RRF only (FTS + entity branches), no model downloads
-cargo bench-recall -- --tag baseline-rrf --json results/baseline-rrf.json
+cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
 
 # add the dense vector branch (downloads multilingual-e5-base ~470MB on first run)
-cargo bench-recall -- --vectors --tag rrf-with-vectors --json results/rrf-with-vectors.json
+cargo run --release -p synapse-eval --bin kr-eval -- --vectors --tag rrf-with-vectors --json crates/eval/reports/rrf-with-vectors.json
 
 # add the cross-encoder reranker (downloads bge-reranker-base ~300MB on first run)
-cargo bench-recall -- --vectors --rerank --tag rrf-vec-rerank --json results/rrf-vec-rerank.json
+cargo run --release -p synapse-eval --bin kr-eval -- --vectors --rerank --tag rrf-vec-rerank --json crates/eval/reports/rrf-vec-rerank.json
 ```
 
-`cargo bench-recall` is the workspace alias defined in `.cargo/config.toml`;
-it expands to `cargo run --release -p synapse-eval --bin kr-eval --`.
+These commands use the real workspace package and binary names directly. If
+you add a local Cargo alias later, keep it as a shortcut for this command
+shape.
 
 ## Metrics
 
@@ -45,7 +46,7 @@ run into `FASTEMBED_CACHE_DIR` (or `./.fastembed_cache`). If `huggingface.co`
 is unreachable from your network, set `HF_ENDPOINT=https://hf-mirror.com`
 before running. The baseline RRF bench needs no network access.
 
-## Baseline (rev 1ca25c6 + Phase 2 step 5 code)
+## Baseline
 
 ```
 tag:        baseline-rrf
@@ -67,7 +68,11 @@ to recover, so the harness gives us a real signal to optimize against.
 
 ## Layout (v0.5.3 harness contract)
 
-The `crates/eval` layout is frozen by `v0.5.3-benchmark-harness`. Each directory has a fixed role. Renaming or deleting a directory is a breaking change under `docs/COMPATIBILITY.md`. Adding a sibling directory is non-breaking.
+The `crates/eval` layout is frozen by `v0.5.3-benchmark-harness`. Existing
+dataset files and reserved benchmark/report paths have fixed roles. Renaming
+or deleting an existing path is a breaking change under
+`docs/COMPATIBILITY.md`. Adding a sibling dataset or benchmark path is
+non-breaking.
 
 | Path | Role |
 | --- | --- |
