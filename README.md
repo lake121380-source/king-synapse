@@ -2,7 +2,7 @@
 
 > A persistently activated, decaying, reinforcing **associative memory network** for coding agents — so they stop repeating the same mistakes, stop re-learning your preferences, and stop forgetting where you left off.
 
-**Status:** Phase 4 — Adaptive Memory. Recall Platform is frozen at `v0.2.0-recall-api-freeze`; Memory Evolution contracts are frozen at `v0.3.9-memory-evolution-freeze`; Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`; Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze`.
+**Status:** Phase 4 — Adaptive Memory. Recall Platform is frozen at `v0.2.0-recall-api-freeze`; Memory Evolution contracts are frozen at `v0.3.9-memory-evolution-freeze`; Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`; Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze`; Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze`.
 
 ## Why
 
@@ -44,7 +44,7 @@ What's **not yet** in Phase 0 (coming in later phases):
 - Tauri UI (Phase 5)
 - Claude Code integration + multi-device sync (Phase 6)
 
-See `docs/ROADMAP.md` for the current roadmap, `RELEASE-v0.2.0.md` for the Recall API freeze, `docs/releases/v0.3.9-memory-evolution-freeze.md` for the Memory Evolution freeze, `docs/releases/v0.4.9-adaptive-memory-foundation.md` for the Adaptive Memory Foundation freeze, and `docs/releases/v0.4.19-reflection-processing-freeze.md` for the Reflection Processing freeze.
+See `docs/ROADMAP.md` for the current roadmap, `RELEASE-v0.2.0.md` for the Recall API freeze, `docs/releases/v0.3.9-memory-evolution-freeze.md` for the Memory Evolution freeze, `docs/releases/v0.4.9-adaptive-memory-foundation.md` for the Adaptive Memory Foundation freeze, `docs/releases/v0.4.19-reflection-processing-freeze.md` for the Reflection Processing freeze, and `docs/releases/v0.4.29-hebbian-execution-freeze.md` for the Hebbian Execution freeze.
 
 ## Build
 

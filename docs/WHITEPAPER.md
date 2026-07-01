@@ -128,7 +128,7 @@ Phase 4 code review should check every new behavior module against these rules:
 
 ## Behavior Modules
 
-Consolidation and Reflection now share the same Adaptive Memory behavior shape:
+Consolidation, Reflection, and Hebbian Execution now share the same Adaptive Memory behavior shape:
 
 ```text
 Trait
@@ -141,7 +141,7 @@ Plan
   -> Sink
 ```
 
-Hebbian, Forgetting, and future Sleep Cycle work should preserve this architecture unless an ADR approves a different shape.
+Store Integration, LLM Integration, and future behavior work should preserve this architecture unless an ADR approves a different shape.
 
 ## Evaluation
 
@@ -162,9 +162,10 @@ The P4.1 Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundat
 
 P4.2 Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze` and remains deterministic and side-effect free.
 
+P4.3 Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze` and remains deterministic and side-effect free.
+
 Planned work follows the RFC sequence:
 
-- P4.3 Hebbian Executor
 - P4.4 Store Integration
 - P4.5 LLM Integration
 

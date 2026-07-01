@@ -1,8 +1,15 @@
 # RFC-008: Hebbian Execution
 
-Status: Draft
+Status: Accepted
 
 Phase: P4.3 Hebbian Execution
+
+Implemented by:
+
+- `v0.4.20-hebbian-executor-skeleton`
+- `v0.4.21-hebbian-dispatcher`
+- `v0.4.22-hebbian-sink`
+- `v0.4.29-hebbian-execution-freeze`
 
 ## Summary
 

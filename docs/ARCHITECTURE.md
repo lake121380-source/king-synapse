@@ -27,3 +27,14 @@ ReflectionEvent
 ```
 
 Reflection remains deterministic and side-effect free until later execution phases.
+
+## Hebbian
+
+```text
+EdgeUpdatePlan
+  -> HebbianExecutor
+  -> HebbianExecutionReport
+  -> HebbianSink
+```
+
+Hebbian Execution remains deterministic and side-effect free until Store integration introduces explicit persistence adapters.

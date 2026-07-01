@@ -7,6 +7,7 @@ Current milestone
 ✓ Phase 3 — Memory Evolution Contract (Architecture Freeze)
 ✓ P4.1 — Adaptive Memory Foundation (Execution Model Freeze)
 ✓ P4.2 — Reflection Processing (Contract Freeze)
+✓ P4.3 — Hebbian Execution (Contract Freeze)
 
 Status
 
@@ -25,6 +26,8 @@ Phase 3 concluded with `v0.3.9-memory-evolution-freeze`. The Memory Evolution co
 P4.1 concluded with `v0.4.9-adaptive-memory-foundation`. The Adaptive Memory execution model is now considered stable. Future behavior modules should reuse the Plan -> Execute -> Report -> Sink shape.
 
 P4.2 concluded with `v0.4.19-reflection-processing-freeze`. Reflection Processing is now contract-frozen and remains deterministic and side-effect free.
+
+P4.3 concluded with `v0.4.29-hebbian-execution-freeze`. Hebbian Execution is now contract-frozen and remains deterministic and side-effect free.
 
 ## Phase 3 Contract
 
@@ -73,7 +76,6 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- P4.3 Hebbian Executor
 - P4.4 Store Integration
 - P4.5 LLM Integration
 
@@ -96,6 +98,12 @@ P4.2 Reflection Processing
   -> ReflectionExecutor
   -> ReflectionReport
   -> ReflectionSink
+
+P4.3 Hebbian Execution
+  -> EdgeUpdatePlan
+  -> HebbianExecutor
+  -> HebbianExecutionReport
+  -> HebbianSink
 ```
 
 Contract rules
@@ -111,7 +119,7 @@ RFC sequence
 ```text
 RFC-006 Consolidation Execution
   -> RFC-007 Reflection Processing
-  -> RFC-008 Hebbian Reinforcement
+  -> RFC-008 Hebbian Execution
   -> RFC-009 Forgetting
   -> RFC-010 Sleep Cycle
 ```
@@ -161,3 +169,13 @@ Highlights
 • ReflectionReport
 • ReflectionSink
 • NoOpReflectionSink
+
+v0.4.29-hebbian-execution-freeze
+
+Highlights
+
+• EdgeUpdatePlan
+• HebbianExecutor
+• HebbianExecutionReport
+• HebbianSink
+• NoOpHebbianSink
