@@ -1,20 +1,23 @@
 use crate::{AlgorithmMetric, BenchmarkReport};
 use std::collections::BTreeMap;
 use synapse_core::{
-    AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe, DeterministicReflectionAlgorithm,
-    ForgetAlgorithm, ForgetOutput, ForgetTarget, HebbianAlgorithm, HebbianOutput, HebbianTarget,
+    AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe, CognitiveTraceReport,
+    DeterministicHebbianStoreMutationDispatcher, DeterministicReflectionAlgorithm, ForgetAlgorithm,
+    ForgetOutput, ForgetTarget, HebbianAlgorithm, HebbianExecutor, HebbianOutput, HebbianTarget,
     InMemoryMemoryEventStream, LatentActivationContext, LatentActivationProbe, Memory, MemoryEvent,
     MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    MergeAlgorithm, MergeOutput, MergeTarget, QueryLatentActivationProbe, RecallQuery,
-    ReflectionAlgorithm, ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm,
-    RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm, Scope, Source, Store,
-    UniformImportanceEstimator, WriteInput,
+    MergeAlgorithm, MergeOutput, MergeTarget, PersistentStoreExecutor, PlanOnlyHebbianExecutor,
+    QueryLatentActivationProbe, RecallQuery, ReflectionAlgorithm, ReflectionOutput,
+    RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm, RuleBasedMergeAlgorithm,
+    RuleBasedReflectionAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-deterministic";
 const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
 const COGNITIVE_TRACE_BENCHMARK_NAME: &str = "cognitive-trace-dominance";
+const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
@@ -83,6 +86,55 @@ pub fn cognitive_trace_dominance_report() -> BenchmarkReport {
     BenchmarkReport {
         benchmark: COGNITIVE_TRACE_BENCHMARK_NAME.to_string(),
         metrics: BTreeMap::from([(AlgorithmMetric::CognitiveTraceDominance, dominance)]),
+    }
+}
+
+/// Run the trace reinforcement benchmark.
+///
+/// This benchmark checks the learning half of the cognitive trace path. After
+/// a trace identifies the expected hidden/downstream influence, reinforcement
+/// should persist directed associative edges between the visible seed memories
+/// and that hidden influence through the Hebbian -> StoreMutation -> SQLite
+/// path. It reuses existing metrics rather than adding a new frozen API item:
+/// `CognitiveTraceDominance` checks that the trace chose the right hidden
+/// candidate, while `HebbianConsistency` checks that the expected directed
+/// edges gained weight after reinforcement.
+pub fn trace_reinforcement_report() -> BenchmarkReport {
+    let cases = cognitive_trace_fixture();
+    let outcomes = cases
+        .iter()
+        .map(trace_reinforcement_case_outcome)
+        .collect::<Vec<_>>();
+    let dominance_hits = outcomes
+        .iter()
+        .filter(|outcome| outcome.dominant_hit)
+        .count();
+    let expected_edges = outcomes
+        .iter()
+        .map(|outcome| outcome.expected_edges)
+        .sum::<usize>();
+    let reinforced_edges = outcomes
+        .iter()
+        .map(|outcome| outcome.reinforced_edges)
+        .sum::<usize>();
+
+    let dominance = if outcomes.is_empty() {
+        0.0
+    } else {
+        dominance_hits as f64 / outcomes.len() as f64
+    };
+    let consistency = if expected_edges == 0 {
+        0.0
+    } else {
+        reinforced_edges as f64 / expected_edges as f64
+    };
+
+    BenchmarkReport {
+        benchmark: TRACE_REINFORCEMENT_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([
+            (AlgorithmMetric::CognitiveTraceDominance, dominance),
+            (AlgorithmMetric::HebbianConsistency, consistency),
+        ]),
     }
 }
 
@@ -429,6 +481,45 @@ fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
         !case.label.trim().is_empty(),
         "cognitive trace case label must describe the chain"
     );
+    let (mut store, hidden) = seed_cognitive_trace_store(case);
+    let report = cognitive_trace_case_report(&mut store, case);
+
+    trace_report_dominates_hidden(&report, &hidden)
+}
+
+struct TraceReinforcementOutcome {
+    dominant_hit: bool,
+    expected_edges: usize,
+    reinforced_edges: usize,
+}
+
+fn trace_reinforcement_case_outcome(case: &CognitiveTraceCase) -> TraceReinforcementOutcome {
+    let (mut store, hidden) = seed_cognitive_trace_store(case);
+    let report = cognitive_trace_case_report(&mut store, case);
+    let dominant_hit = trace_report_dominates_hidden(&report, &hidden);
+    let visible_ids = trace_visible_seed_ids(&report, 3);
+    let expected_edges = visible_hidden_edges(&visible_ids, &hidden);
+    let before = edge_weights(&mut store, &expected_edges);
+
+    if let Some(dominant) = report.dominant.as_ref() {
+        let ids = trace_reinforcement_ids(&report, 3, &dominant.memory.id);
+        reinforce_trace_ids(&mut store, ids, case.query);
+    }
+
+    let after = edge_weights(&mut store, &expected_edges);
+    let reinforced_edges = expected_edges
+        .iter()
+        .filter(|edge| edge_gained_weight(*before.get(*edge).unwrap_or(&0.0), after[edge]))
+        .count();
+
+    TraceReinforcementOutcome {
+        dominant_hit,
+        expected_edges: expected_edges.len(),
+        reinforced_edges,
+    }
+}
+
+fn seed_cognitive_trace_store(case: &CognitiveTraceCase) -> (Store, String) {
     let mut store = Store::open_in_memory().expect("cognitive trace benchmark store opens");
     let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
     write_cognitive_memory(&mut store, case.visible_distractor, MemoryKind::Fact, 0.5);
@@ -442,6 +533,13 @@ fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
         .update_edge(&seed, &hidden_distractor, 2.0)
         .expect("cognitive trace distractor edge is persisted");
 
+    (store, hidden)
+}
+
+fn cognitive_trace_case_report(
+    store: &mut Store,
+    case: &CognitiveTraceCase,
+) -> CognitiveTraceReport {
     let query = RecallQuery {
         query: case.query.to_string(),
         k: Some(2),
@@ -469,13 +567,104 @@ fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
             .map(|term| (*term).to_string())
             .collect(),
     );
-    let report = probe
-        .trace(&mut store, &query, &context)
-        .expect("cognitive trace probe runs");
+    probe
+        .trace(store, &query, &context)
+        .expect("cognitive trace probe runs")
+}
 
+fn trace_report_dominates_hidden(report: &CognitiveTraceReport, hidden: &str) -> bool {
     report.dominant.as_ref().is_some_and(|candidate| {
         candidate.memory.id == hidden && !candidate.matched_terms.is_empty()
     })
+}
+
+fn trace_visible_seed_ids(report: &CognitiveTraceReport, reinforce_k: usize) -> Vec<String> {
+    report
+        .visible
+        .iter()
+        .take(reinforce_k)
+        .map(|hit| hit.memory.id.clone())
+        .collect()
+}
+
+fn trace_reinforcement_ids(
+    report: &CognitiveTraceReport,
+    reinforce_k: usize,
+    dominant_id: &str,
+) -> Vec<String> {
+    let mut ids = trace_visible_seed_ids(report, reinforce_k);
+    ids.push(dominant_id.to_string());
+    normalize_ids(ids)
+}
+
+fn visible_hidden_edges(
+    visible_ids: &[String],
+    hidden: &str,
+) -> std::collections::BTreeSet<(String, String)> {
+    visible_ids
+        .iter()
+        .filter(|id| id.as_str() != hidden)
+        .flat_map(|id| {
+            [
+                (id.clone(), hidden.to_string()),
+                (hidden.to_string(), id.clone()),
+            ]
+        })
+        .collect()
+}
+
+fn edge_weights(
+    store: &mut Store,
+    edges: &std::collections::BTreeSet<(String, String)>,
+) -> std::collections::BTreeMap<(String, String), f32> {
+    edges
+        .iter()
+        .map(|edge| {
+            let weight = store
+                .edge_weight(&edge.0, &edge.1)
+                .expect("benchmark edge lookup succeeds")
+                .unwrap_or(0.0);
+            (edge.clone(), weight)
+        })
+        .collect()
+}
+
+fn edge_gained_weight(before: f32, after: f32) -> bool {
+    after > before + f32::EPSILON
+}
+
+fn reinforce_trace_ids(store: &mut Store, ids: Vec<String>, query: &str) {
+    if ids.len() < 2 {
+        return;
+    }
+
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0)
+        .expect("fixed benchmark timestamp must be valid");
+    let memory_event = MemoryEvent {
+        id: MemoryEventId::nil(),
+        timestamp: now,
+        session_id: None,
+        kind: MemoryEventKind::Recalled,
+        memory_ids: ids.clone(),
+        payload: MemoryEventPayload::Recalled {
+            query: format!("trace:{query}"),
+            hit_count: ids.len(),
+        },
+    };
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(1);
+    events.record(memory_event.clone());
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let output = RuleBasedHebbianAlgorithm::default()
+        .reinforce(&HebbianTarget::new(vec![memory_event]), &ctx);
+    let hebbian_report = PlanOnlyHebbianExecutor.execute(output.plans());
+    let mutation_plan = DeterministicHebbianStoreMutationDispatcher::new(hebbian_report).dispatch();
+    let mut executor = SQLitePersistentStoreExecutor::new(store);
+    let store_report = executor.execute(&mutation_plan);
+    assert!(
+        store_report.skipped.is_empty(),
+        "trace reinforcement benchmark store mutations should all apply"
+    );
 }
 
 fn write_cognitive_memory(
@@ -720,6 +909,15 @@ fn memory_with_kind(id: &str, kind: MemoryKind, scope: Scope, content: &str) -> 
     }
 }
 
+fn normalize_ids(ids: Vec<String>) -> Vec<String> {
+    ids.into_iter()
+        .map(|id| id.trim().to_string())
+        .filter(|id| !id.is_empty())
+        .collect::<std::collections::BTreeSet<_>>()
+        .into_iter()
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -791,6 +989,32 @@ mod tests {
             report
                 .metrics
                 .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn trace_reinforcement_report_is_deterministic() {
+        let a = trace_reinforcement_report();
+        let b = trace_reinforcement_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn trace_reinforcement_report_uses_contract_shape() {
+        let report = trace_reinforcement_report();
+
+        assert_eq!(report.benchmark, "trace-reinforcement");
+        assert_eq!(report.metrics.len(), 2);
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
             Some(&1.0)
         );
     }

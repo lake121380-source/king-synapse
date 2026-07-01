@@ -97,6 +97,7 @@ Binaries land in `target/release/`:
 
 # Run the RFC-012 Reflection benchmark
 cargo bench -p synapse-eval --bench reflection_yield
+cargo bench -p synapse-eval --bench trace_reinforcement
 ```
 
 ## Plug into opencode
