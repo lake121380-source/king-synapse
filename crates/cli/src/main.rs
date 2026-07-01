@@ -3,9 +3,14 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, GraphActivationBooster, LatentActivationBooster, LatentActivationContext,
-    LatentActivationProbe, MemoryKind, QueryLatentActivationProbe, QueryLatentActivationReport,
-    RecallBooster, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
+    config::Config, AlgorithmContext, DeterministicHebbianStoreMutationDispatcher,
+    GraphActivationBooster, HebbianAlgorithm, HebbianExecutor, HebbianTarget,
+    InMemoryMemoryEventStream, LatentActivationBooster, LatentActivationContext,
+    LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
+    MemoryEventStream, MemoryKind, PersistentStoreExecutor, PlanOnlyHebbianExecutor,
+    QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster, RecallEngine,
+    RecallHit, RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope,
+    Source, Store, StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -142,6 +147,20 @@ enum Cmd {
         #[arg(long)]
         json: bool,
     },
+    /// Reinforce an association between memories that co-occurred.
+    Reinforce {
+        /// Memory ids that appeared together.
+        ids: Vec<String>,
+        /// Event kind used to weight the Hebbian update.
+        #[arg(long, value_enum, default_value = "recalled")]
+        event: ReinforceEvent,
+        /// Query or situation that caused the co-occurrence.
+        #[arg(long)]
+        query: Option<String>,
+        /// Emit the full Hebbian, mutation, and store reports.
+        #[arg(long)]
+        json: bool,
+    },
     /// Probe latent multi-step activation from one memory id.
     Latent {
         id: String,
@@ -220,6 +239,17 @@ enum EdgeDirection {
     Outgoing,
     Incoming,
     Both,
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+#[value(rename_all = "snake_case")]
+enum ReinforceEvent {
+    Recalled,
+    Written,
+    Updated,
+    Reflected,
+    Reinforced,
+    MergeCompleted,
 }
 
 fn main() -> Result<()> {
@@ -431,6 +461,27 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Cmd::Reinforce {
+            ids,
+            event,
+            query,
+            json,
+        } => {
+            let report = reinforce_memories(&mut store, ids, event, query)?;
+            if json {
+                println!("{}", serde_json::to_string_pretty(&report)?);
+            } else {
+                println!(
+                    "reinforced {} edge updates ({} skipped)",
+                    report["store_report"]["statistics"]["executed"]
+                        .as_u64()
+                        .unwrap_or(0),
+                    report["store_report"]["statistics"]["skipped"]
+                        .as_u64()
+                        .unwrap_or(0)
+                );
+            }
+        }
         Cmd::Latent {
             id,
             k,
@@ -546,6 +597,94 @@ fn main() -> Result<()> {
         }
     }
     Ok(())
+}
+
+fn reinforce_memories(
+    store: &mut Store,
+    ids: Vec<String>,
+    event: ReinforceEvent,
+    query: Option<String>,
+) -> Result<serde_json::Value> {
+    let ids = normalize_reinforce_ids(ids);
+    if ids.len() < 2 {
+        anyhow::bail!("reinforce requires at least two distinct memory ids");
+    }
+
+    for id in &ids {
+        match store.get(id)? {
+            Some(memory) if memory.valid_to.is_none() => {}
+            Some(_) => anyhow::bail!("memory is inactive: {id}"),
+            None => anyhow::bail!("memory not found: {id}"),
+        }
+    }
+
+    let now = Utc::now();
+    let memory_event = MemoryEvent {
+        id: MemoryEventId::new(),
+        timestamp: now,
+        session_id: None,
+        kind: event.memory_event_kind(),
+        memory_ids: ids.clone(),
+        payload: event.payload(query, ids.len()),
+    };
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(1);
+    events.record(memory_event.clone());
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let output = RuleBasedHebbianAlgorithm::default()
+        .reinforce(&HebbianTarget::new(vec![memory_event]), &ctx);
+    let hebbian_report = PlanOnlyHebbianExecutor.execute(output.plans());
+    let mutation_plan =
+        DeterministicHebbianStoreMutationDispatcher::new(hebbian_report.clone()).dispatch();
+    let store_report = SQLitePersistentStoreExecutor::new(store).execute(&mutation_plan);
+
+    Ok(serde_json::json!({
+        "hebbian_output": output,
+        "hebbian_report": hebbian_report,
+        "mutation_plan": mutation_plan,
+        "store_report": store_report,
+    }))
+}
+
+fn normalize_reinforce_ids(ids: Vec<String>) -> Vec<String> {
+    let mut out = ids
+        .into_iter()
+        .map(|id| id.trim().to_string())
+        .filter(|id| !id.is_empty())
+        .collect::<Vec<_>>();
+    out.sort();
+    out.dedup();
+    out
+}
+
+impl ReinforceEvent {
+    fn memory_event_kind(self) -> MemoryEventKind {
+        match self {
+            Self::Recalled => MemoryEventKind::Recalled,
+            Self::Written => MemoryEventKind::Written,
+            Self::Updated => MemoryEventKind::Updated,
+            Self::Reflected => MemoryEventKind::Reflected,
+            Self::Reinforced => MemoryEventKind::Reinforced,
+            Self::MergeCompleted => MemoryEventKind::MergeCompleted,
+        }
+    }
+
+    fn payload(self, query: Option<String>, memory_count: usize) -> MemoryEventPayload {
+        match self {
+            Self::Recalled => MemoryEventPayload::Recalled {
+                query: query.unwrap_or_default(),
+                hit_count: memory_count,
+            },
+            Self::Reinforced => MemoryEventPayload::Reinforced {
+                edge_key: query.unwrap_or_default(),
+                delta: 0.0,
+            },
+            Self::MergeCompleted => MemoryEventPayload::MergeCompleted {
+                into: query.unwrap_or_default(),
+            },
+            Self::Written | Self::Updated | Self::Reflected => MemoryEventPayload::Empty,
+        }
+    }
 }
 
 fn print_edge(edge: &synapse_core::MemoryEdge) {

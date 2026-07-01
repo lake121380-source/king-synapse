@@ -333,6 +333,7 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_entities`
 - `synapse_neighbors`
 - `synapse_edges`
+- `synapse_reinforce`
 - `synapse_latent_activation`
 - `synapse_latent_query`
 
@@ -342,6 +343,10 @@ Tool JSON schemas are considered part of the stable public API.
 `graph_decay`. They are disabled by default.
 `synapse_edges` accepts `id`, optional `direction` (`outgoing`, `incoming`,
 or `both`), and optional `k`.
+`synapse_reinforce` accepts `ids`, optional `event` (`recalled`, `written`,
+`updated`, `reflected`, `reinforced`, or `merge_completed`), and optional
+`query`. It routes co-occurrence through the rule-based Hebbian algorithm,
+Hebbian executor, StoreMutation dispatcher, and SQLite persistent executor.
 `synapse_latent_activation` accepts `id`, optional `k`, `scale`, `cap`,
 `steps`, `decay`, `fanout`, `state_terms`, and `goal_terms`.
 `synapse_latent_query` accepts `query`, optional `k`, `seed_k`, `scope`,
@@ -360,6 +365,7 @@ or `both`), and optional `k`.
 - `kr entities`
 - `kr neighbors`
 - `kr edges`
+- `kr reinforce`
 - `kr latent`
 - `kr latent-query`
 
@@ -374,6 +380,8 @@ Flag names and output structure are considered part of the stable public API.
 They are disabled by default and only add bonus to existing recall candidates.
 `kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
 `--json` for inspecting persisted associative edge weights.
+`kr reinforce <id> <id>...` supports `--event`, `--query`, and `--json` for
+learning associative edges from memories that co-occurred in one event.
 `kr latent <id>` supports `--steps`, `--decay`, `--scale`, `--cap`,
 `--fanout`, repeated `--state`, repeated `--goal`, `-k`, and `--json` for
 inspecting hidden multi-step activation.

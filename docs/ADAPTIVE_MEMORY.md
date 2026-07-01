@@ -96,6 +96,13 @@ Adaptive Memory is deterministic and side-effect free through P4.3. P4.4 introdu
 
 Frozen behavior modules may produce reports, but they must not directly mutate Store, graph edges, Recall scoring, or Working Memory. All persistence is routed through the frozen Store Integration boundary. All decision making about whether frozen capabilities should run is routed through the frozen Policy Layer.
 
+The user-facing reinforcement surfaces (`kr reinforce` and
+`synapse_reinforce`) are consumers of that boundary. They build a
+`MemoryEvent` from co-occurring memory ids, run the rule-based Hebbian
+algorithm, execute the resulting `EdgeUpdatePlan`s, dispatch them into
+`StoreMutation::UpdateEdge`, and persist through `SQLitePersistentStoreExecutor`.
+The Hebbian algorithm still has no direct Store access.
+
 ## P4.5 Adaptive Policies
 
 P4.5 should add policies after Store Integration exists.

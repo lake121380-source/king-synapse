@@ -117,6 +117,7 @@ Completed foundations
 - v0.9.13 — Chinese cognitive-chain benchmark covers visible seed recall into hidden latent influence
 - v0.9.14 — optional latent activation booster can add hidden-path bonus to existing recall candidates
 - v0.9.15 — deterministic CJK query expansion raises `multihop` Recall@10 to 1.000
+- v0.9.16 — CLI and MCP can reinforce co-occurring memories through the Hebbian -> StoreMutation -> SQLite path
 
 Focus
 

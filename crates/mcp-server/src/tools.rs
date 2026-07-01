@@ -1,11 +1,16 @@
 use anyhow::Result;
+use chrono::Utc;
 use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
-    GraphActivationBooster, LatentActivationBooster, LatentActivationContext,
-    LatentActivationProbe, MemoryKind, QueryLatentActivationProbe, RecallEngine, RecallQuery,
-    Scope, Source, Store, WriteInput,
+    AlgorithmContext, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
+    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
+    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
+    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe, RecallEngine,
+    RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
@@ -19,6 +24,7 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_entities(),
         descriptor_neighbors(),
         descriptor_edges(),
+        descriptor_reinforce(),
         descriptor_latent_activation(),
         descriptor_latent_query(),
     ]
@@ -144,6 +150,22 @@ fn descriptor_edges() -> Value {
     })
 }
 
+fn descriptor_reinforce() -> Value {
+    json!({
+        "name": "synapse_reinforce",
+        "description": "Learn directed associative edges from memories that co-occurred in one event.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["ids"],
+            "properties": {
+                "ids": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+                "event": { "type": "string", "enum": ["recalled", "written", "updated", "reflected", "reinforced", "merge_completed"], "default": "recalled" },
+                "query": { "type": "string", "description": "Query, situation, edge key, or merge target associated with the event." }
+            }
+        }
+    })
+}
+
 fn descriptor_latent_activation() -> Value {
     json!({
         "name": "synapse_latent_activation",
@@ -207,6 +229,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_entities" => do_entities(store, &args)?,
         "synapse_neighbors" => do_neighbors(store, &args)?,
         "synapse_edges" => do_edges(store, &args)?,
+        "synapse_reinforce" => do_reinforce(store, &args)?,
         "synapse_latent_activation" => do_latent_activation(store, &args)?,
         "synapse_latent_query" => do_latent_query(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
@@ -462,6 +485,66 @@ fn do_edges(store: &StoreHandle, args: &Value) -> Result<Value> {
     Ok(json!({ "edges": edges }))
 }
 
+fn do_reinforce(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let ids = args
+        .get("ids")
+        .and_then(|value| value.as_array())
+        .ok_or_else(|| anyhow::anyhow!("ids required"))?
+        .iter()
+        .filter_map(|value| value.as_str())
+        .map(str::to_string)
+        .collect::<Vec<_>>();
+    let ids = normalize_reinforce_ids(ids);
+    if ids.len() < 2 {
+        anyhow::bail!("synapse_reinforce requires at least two distinct memory ids");
+    }
+
+    let event = args
+        .get("event")
+        .and_then(|value| value.as_str())
+        .unwrap_or("recalled");
+    let query = args
+        .get("query")
+        .and_then(|value| value.as_str())
+        .map(str::to_string);
+
+    let mut s = store.lock().unwrap();
+    for id in &ids {
+        match s.get(id)? {
+            Some(memory) if memory.valid_to.is_none() => {}
+            Some(_) => anyhow::bail!("memory is inactive: {id}"),
+            None => anyhow::bail!("memory not found: {id}"),
+        }
+    }
+
+    let now = Utc::now();
+    let memory_event = MemoryEvent {
+        id: MemoryEventId::new(),
+        timestamp: now,
+        session_id: None,
+        kind: reinforce_event_kind(event)?,
+        memory_ids: ids.clone(),
+        payload: reinforce_payload(event, query, ids.len())?,
+    };
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(1);
+    events.record(memory_event.clone());
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let output = RuleBasedHebbianAlgorithm::default()
+        .reinforce(&HebbianTarget::new(vec![memory_event]), &ctx);
+    let hebbian_report = PlanOnlyHebbianExecutor.execute(output.plans());
+    let mutation_plan =
+        DeterministicHebbianStoreMutationDispatcher::new(hebbian_report.clone()).dispatch();
+    let store_report = SQLitePersistentStoreExecutor::new(&mut s).execute(&mutation_plan);
+
+    Ok(json!({
+        "hebbian_output": output,
+        "hebbian_report": hebbian_report,
+        "mutation_plan": mutation_plan,
+        "store_report": store_report
+    }))
+}
+
 fn do_latent_activation(store: &StoreHandle, args: &Value) -> Result<Value> {
     let id = args
         .get("id")
@@ -571,4 +654,49 @@ fn string_array(args: &Value, key: &str) -> Vec<String> {
                 .collect()
         })
         .unwrap_or_default()
+}
+
+fn normalize_reinforce_ids(ids: Vec<String>) -> Vec<String> {
+    let mut out = ids
+        .into_iter()
+        .map(|id| id.trim().to_string())
+        .filter(|id| !id.is_empty())
+        .collect::<Vec<_>>();
+    out.sort();
+    out.dedup();
+    out
+}
+
+fn reinforce_event_kind(event: &str) -> Result<MemoryEventKind> {
+    match event {
+        "recalled" => Ok(MemoryEventKind::Recalled),
+        "written" => Ok(MemoryEventKind::Written),
+        "updated" => Ok(MemoryEventKind::Updated),
+        "reflected" => Ok(MemoryEventKind::Reflected),
+        "reinforced" => Ok(MemoryEventKind::Reinforced),
+        "merge_completed" => Ok(MemoryEventKind::MergeCompleted),
+        other => anyhow::bail!("unsupported reinforce event: {other}"),
+    }
+}
+
+fn reinforce_payload(
+    event: &str,
+    value: Option<String>,
+    memory_count: usize,
+) -> Result<MemoryEventPayload> {
+    match event {
+        "recalled" => Ok(MemoryEventPayload::Recalled {
+            query: value.unwrap_or_default(),
+            hit_count: memory_count,
+        }),
+        "reinforced" => Ok(MemoryEventPayload::Reinforced {
+            edge_key: value.unwrap_or_default(),
+            delta: 0.0,
+        }),
+        "merge_completed" => Ok(MemoryEventPayload::MergeCompleted {
+            into: value.unwrap_or_default(),
+        }),
+        "written" | "updated" | "reflected" => Ok(MemoryEventPayload::Empty),
+        other => anyhow::bail!("unsupported reinforce event: {other}"),
+    }
 }

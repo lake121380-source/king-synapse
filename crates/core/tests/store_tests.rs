@@ -1,9 +1,14 @@
 use std::sync::Arc;
 use std::time::Duration;
 use synapse_core::{
-    GraphActivationBooster, LatentActivationBooster, LatentActivationContext, MemoryKind,
-    RecallEngine, RecallHit, RecallQuery, Scope, SessionId, Source, Store,
-    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem, WriteInput,
+    AlgorithmContext, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
+    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
+    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryKind, PersistentStoreExecutor,
+    PlanOnlyHebbianExecutor, RecallEngine, RecallHit, RecallQuery, RuleBasedHebbianAlgorithm,
+    SQLitePersistentStoreExecutor, Scope, SessionId, Source, Store, StoreMutationDispatcher,
+    UniformImportanceEstimator, WorkingMemoryActivationBooster, WorkingMemoryBuffer,
+    WorkingMemoryItem, WriteInput,
 };
 
 fn add(store: &mut Store, content: &str, kind: MemoryKind) -> String {
@@ -577,6 +582,67 @@ fn latent_activation_booster_does_not_create_new_candidates() {
 
     assert_eq!(hits.len(), 1);
     assert_eq!(hits[0].memory.id, seed);
+}
+
+#[test]
+fn hebbian_reinforcement_loop_persists_edges_for_latent_activation() {
+    let mut s = Store::open_in_memory().unwrap();
+    let seed = add(
+        &mut s,
+        "forgot water before commute affects mood",
+        MemoryKind::State,
+    );
+    let hidden = add(
+        &mut s,
+        "commute attention risk increases after bad mood",
+        MemoryKind::Playbook,
+    );
+    let unrelated = add(&mut s, "package manager lockfile note", MemoryKind::Fact);
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0).unwrap();
+    let event = MemoryEvent {
+        id: MemoryEventId::nil(),
+        timestamp: now,
+        session_id: None,
+        kind: MemoryEventKind::Recalled,
+        memory_ids: vec![seed.clone(), hidden.clone()],
+        payload: MemoryEventPayload::Recalled {
+            query: "forgot water commute attention".to_string(),
+            hit_count: 2,
+        },
+    };
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(4);
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let output =
+        RuleBasedHebbianAlgorithm::default().reinforce(&HebbianTarget::new(vec![event]), &ctx);
+    let hebbian_report = PlanOnlyHebbianExecutor.execute(output.plans());
+    let mutation_plan = DeterministicHebbianStoreMutationDispatcher::new(hebbian_report).dispatch();
+
+    let store_report = SQLitePersistentStoreExecutor::new(&mut s).execute(&mutation_plan);
+
+    assert_eq!(store_report.statistics.executed, 2);
+    assert_eq!(store_report.statistics.skipped, 0);
+    assert!(s.edge_weight(&seed, &hidden).unwrap().unwrap() > 0.0);
+    assert!(s.edge_weight(&hidden, &seed).unwrap().unwrap() > 0.0);
+    assert!(s.edge_weight(&seed, &unrelated).unwrap().is_none());
+
+    let context = LatentActivationContext::new(
+        vec!["mood".to_string()],
+        vec!["commute".to_string(), "attention".to_string()],
+    );
+    let activations = LatentActivationProbe::new(0.05, 0.25)
+        .activate_with_context(&s, &[&seed], 10, &context)
+        .unwrap();
+    let hidden_hit = activations
+        .iter()
+        .find(|hit| hit.memory.id == hidden)
+        .expect("persisted Hebbian edge should drive latent activation");
+
+    assert!(hidden_hit.activation > 0.0);
+    assert_eq!(hidden_hit.path, vec![seed, hidden]);
+    assert!(hidden_hit
+        .matched_terms
+        .contains(&"goal:attention".to_string()));
 }
 
 #[test]
