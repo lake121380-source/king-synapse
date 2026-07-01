@@ -109,6 +109,15 @@ The architecture uses contracts to avoid accidental coupling:
 
 Breaking these boundaries requires ADR approval.
 
+## Extension Pattern
+
+King Synapse uses two recurring extension patterns:
+
+- Trait -> NoOp -> concrete implementation
+- Plan -> Execute -> Report -> Sink
+
+Recall, Working Memory, Consolidation, Reflection, Hebbian reinforcement, Forgetting, and Sleep Cycle extensions should preserve these patterns unless an ADR approves a different shape.
+
 ## Evaluation
 
 Behavior changes must preserve the frozen baselines:

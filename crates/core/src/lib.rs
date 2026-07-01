@@ -28,11 +28,11 @@ pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;
 pub use working_memory::{
     ArchiveExecution, ConsolidationEngine, ConsolidationExecutor, ConsolidationPlan,
-    DiscardExecution, EdgeUpdatePlan, ExecutedAction, ExecutionReport, ExecutionStatistics,
-    ExecutionWarning, HebbianReinforcementEngine, MemoryId, MergeExecution, MergeGroup,
-    MergeStrategy, NoOpActivationBooster, NoOpConsolidation, NoOpHebbianReinforcementEngine,
-    NoOpReflectionEventRecorder, PlanOnlyConsolidationExecutor, ReflectionEvent,
-    ReflectionEventId, ReflectionEventRecorder, ReflectionPayload, ReflectionSource, SessionId,
-    WorkingMemoryActivationBooster, WorkingMemoryBuffer,
-    WorkingMemoryEdge, WorkingMemoryItem,
+    ConsolidationSink, DiscardExecution, EdgeUpdatePlan, ExecutedAction, ExecutionReport,
+    ExecutionStatistics, ExecutionWarning, HebbianReinforcementEngine, MemoryId, MergeExecution,
+    MergeGroup, MergeStrategy, NoOpActivationBooster, NoOpConsolidation,
+    NoOpHebbianReinforcementEngine, NoOpReflectionEventRecorder, NoOpSink,
+    PlanOnlyConsolidationExecutor, ReflectionEvent, ReflectionEventId, ReflectionEventRecorder,
+    ReflectionPayload, ReflectionSource, SessionId, WorkingMemoryActivationBooster,
+    WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };

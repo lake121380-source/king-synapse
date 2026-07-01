@@ -68,6 +68,17 @@ The report contains:
 - Warnings
 - Statistics
 
+`ExecutionReport` describes semantic execution outcomes only. Operational metrics such as latency, database write count, tracing ids, or token usage belong to observers or sinks.
+
+Sinks consume reports only:
+
+```text
+ExecutionReport
+  -> ConsolidationSink
+```
+
+Sinks must not consume `ConsolidationPlan`, `WorkingMemoryBuffer`, or `Store` directly through the executor path.
+
 ## Invariants
 
 1. The executor does not change the Recall contract.
@@ -76,6 +87,7 @@ The report contains:
 4. The executor does not call an LLM.
 5. Reflection events are outputs of execution, not inputs that modify the plan.
 6. Failed execution must not be hidden as success.
+7. Sinks may consume `ExecutionReport`, but they must not mutate it.
 
 ## Open Design Points
 

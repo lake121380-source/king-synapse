@@ -11,6 +11,7 @@ mod hebbian;
 mod item;
 mod reflection;
 mod session;
+mod sink;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
@@ -29,6 +30,7 @@ pub use reflection::{
     ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
 };
 pub use session::SessionId;
+pub use sink::{ConsolidationSink, NoOpSink};
 
 #[cfg(test)]
 mod tests {
@@ -265,5 +267,24 @@ mod tests {
                 strategy: MergeStrategy::Deduplicate,
             })
         );
+    }
+
+    #[test]
+    fn noop_sink_consumes_report_without_mutating_it() {
+        let session = SessionId::new();
+        let item = WorkingMemoryItem::new(session, "archive", Vec::new(), Duration::from_secs(60));
+        let plan = ConsolidationPlan {
+            promote: vec![item],
+            merge: Vec::new(),
+            discard: Vec::new(),
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+        let report = executor.execute(&plan);
+        let original = report.clone();
+        let mut sink = NoOpSink;
+
+        sink.apply(&report).expect("noop sink should accept report");
+
+        assert_eq!(report, original);
     }
 }
