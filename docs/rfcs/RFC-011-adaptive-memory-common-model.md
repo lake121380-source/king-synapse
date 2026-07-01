@@ -7,8 +7,8 @@ Phase: Phase 5 Algorithm Implementation
 Implementation Tags:
 
 ```text
-v0.5.1-memory-importance          (planned)
-v0.5.2-memory-event-and-context   (planned)
+v0.5.1-memory-importance          (implemented)
+v0.5.2-memory-event-and-context   (in progress)
 v0.5.3-benchmark-harness          (planned)
 v0.5.9-adaptive-common-freeze     (planned)
 ```
@@ -134,30 +134,39 @@ Both are placeholders. Concrete weighted estimators arrive with RFC-012 and late
 ### Value Type
 
 ```text
+MemoryEventId(Uuid)
+
 MemoryEvent
-  id: MemoryEventId          (uuid)
+  id: MemoryEventId
   timestamp: DateTime<Utc>
   session_id: Option<SessionId>
   kind: MemoryEventKind
+  memory_ids: Vec<MemoryId>
   payload: MemoryEventPayload
 ```
 
 Events are append-only. They carry no algorithm output. Algorithms produce their own reports (already frozen in Phase 4).
+
+`memory_ids` is a `Vec<MemoryId>`, never `Option<MemoryId>`. Single-target events use a one-element vector; multi-target events (e.g. `MergeCompleted`) use the full list. Events unrelated to a specific memory use an empty vector. This uniform shape lets every downstream algorithm iterate `memory_ids` without special-casing kinds.
+
+`MemoryEventId` is a newtype around `Uuid` so future implementations may swap the backing generator (ULID, Snowflake, database ID) without touching the event surface.
 
 ### Event Kinds
 
 ```text
 #[non_exhaustive]
 MemoryEventKind
-  Recall
-  Write
-  Reflection
-  Failure
-  UserCorrection
-  GoalCompleted
+  Recalled
+  Written
+  Updated
+  Invalidated
+  Reflected
+  Reinforced
   MergeCompleted
   Forgotten
 ```
+
+All kind names are **past tense** — every event describes something that has already happened. `Written`, `Updated`, and `Invalidated` mirror the frozen `Store::write` / `Store::invalidate` API surface; renaming to `Created` / `TombStoned` etc. is intentionally rejected.
 
 `MergeCompleted` and `Forgotten` are included at freeze time not because RFC-011 defines merging or forgetting, but because the event stream must be replayable across the future algorithms that produce them.
 
@@ -169,12 +178,19 @@ Adding a new kind is not a breaking change because the enum is `#[non_exhaustive
 #[non_exhaustive]
 MemoryEventPayload
   Empty
-  MemoryRef { memory_id: MemoryId }
-  MemoryRefs { memory_ids: Vec<MemoryId> }
-  Text { message: String }
+  Recalled { query: String, hit_count: usize }
+  Reflected { reflection_event_id: ReflectionEventId }
+  Reinforced { edge_key: String, delta: f32 }
+  MergeCompleted { into: MemoryId }
+  Forgotten { reason: String }
 ```
 
-Payloads stay minimal at freeze time. Algorithm RFCs may introduce new payload variants; `#[non_exhaustive]` guarantees additivity.
+Payloads stay minimal at freeze time.
+
+- The `Empty` variant name is chosen (not `None`) to avoid visual collision with `Option::None`.
+- Not every `MemoryEventKind` has a matching payload variant. `Written`, `Updated`, `Invalidated` carry no extra data beyond `memory_ids` and use `Empty`.
+- `MergeCompleted.into` is the surviving memory; the merged source ids live in `event.memory_ids` per the Value Type rule.
+- Algorithm RFCs may introduce new payload variants; `#[non_exhaustive]` guarantees additivity.
 
 ### Stream Trait
 
@@ -184,10 +200,16 @@ MemoryEventStream
   fn recent(&self, limit: usize) -> Vec<MemoryEvent>
 ```
 
+- `record` takes `&self`; concrete implementations use interior mutability. This lets `AlgorithmContext` hold `&dyn MemoryEventStream` and share it across algorithm calls.
+- `recent(0)` MUST return an empty `Vec`.
+- `recent(n)` where `n > len` MUST return every retained event.
+- Neither method returns `Result`; both are infallible.
+- `record` is NOT idempotent — recording the same event twice appends two entries. Deduplication is the caller's responsibility.
+
 Included implementations:
 
 - `NoOpMemoryEventStream` — records nothing, returns empty.
-- `InMemoryMemoryEventStream` — bounded ring buffer, deterministic for tests and benchmarks.
+- `InMemoryMemoryEventStream` — **reference implementation**: bounded ring buffer, deterministic, intended for tests and benchmarks. It is explicitly NOT a default implementation nor a production event store. Persistent event stores (SQLite / Kafka / etc.) are out of scope for RFC-011 and, when introduced, MUST implement the same `MemoryEventStream` contract without changing it.
 
 ### Rules
 
@@ -195,8 +217,10 @@ Included implementations:
 2. `MemoryEventStream` is **append-only**. Recorded events cannot be modified, deleted, or reordered by any consumer.
 3. **Past events are immutable.** Once an event has been observed by `recent(...)`, its fields are fixed for the lifetime of the stream.
 4. **Replay is deterministic.** Given the same sequence of `record(...)` calls, `recent(N)` MUST return events in the same order across every call. Concrete streams may drop the oldest events when the buffer overflows, but MUST NOT reorder events relative to insertion order.
-5. Streams must be side-effect free with respect to Store, Recall, and any executor.
-6. Filtering, transformation, and reordering are the responsibility of consumers over the returned `Vec<MemoryEvent>`; they MUST NOT be performed by the stream itself.
+5. **Event ordering is defined by `record` order, not by `event.timestamp`.** Two events with identical timestamps MUST NOT be reordered. Streams MUST NOT sort, reorder, or de-duplicate by timestamp. `timestamp` is metadata for observers; insertion order is the sole ordering invariant.
+6. Streams must be side-effect free with respect to Store, Recall, and any executor.
+7. Filtering, transformation, and reordering are the responsibility of consumers over the returned `Vec<MemoryEvent>`; they MUST NOT be performed by the stream itself.
+8. **`recent(n)` is not a query API.** It is a replay convenience over an append-only log. `MemoryEventStream` supports only append (`record`) and replay-oriented retrieval (`recent`). Query-shaped APIs (`query`, `filter`, `search`, `between`, tag lookups, aggregation) are explicitly out of scope and MUST NOT be added to the trait. Consumers that need such capabilities own their own indexes over `recent(n)` output.
 
 ## Part C — Algorithm Context
 
@@ -216,13 +240,14 @@ The context is a borrow. It carries no owned state. Algorithm implementations mu
 
 1. Algorithms MUST take `&AlgorithmContext` rather than adding new parameters to their trait methods.
 2. **`AlgorithmContext` represents execution environment only.** The primary evaluation target MUST be passed as an explicit method parameter (`memory`, `group`, `event`, etc.) rather than embedded into the context. Fields such as `target_memory`, `target_edge`, or `target_event` MUST NOT appear on `AlgorithmContext`.
-3. **`AlgorithmContext` MUST NOT acquire new service dependencies after v0.5.1.** No new trait objects, engines, stores, recall systems, LLM clients, policy engines, or graph handles may be added. The trait-object surface is closed at freeze time (`importance`, `events`).
+3. **`AlgorithmContext` trait-object surface is closed at v0.5.2.** The two allowed trait-object fields are `importance: &'a dyn ImportanceEstimator` (added in v0.5.2) and `events: &'a dyn MemoryEventStream` (added in v0.5.2). No new trait-object fields may ever be added: no `&dyn Store`, no `&dyn RecallEngine`, no `&dyn PolicyEngine`, no `&dyn Graph`, no `&dyn LlmClient`, no other service dependency.
 4. `AlgorithmContext` MAY gain additional **plain-data** fields in future minor versions when they are optional or backward-compatible (`Option<...>`, `Default`-able, or gated behind a new constructor while preserving the old one). This is subject to the `#[non_exhaustive]` marker on the struct.
 5. Removing or renaming any existing field is a breaking change under `docs/COMPATIBILITY.md` and requires an ADR.
 6. Fields introduced later that are optional must be represented as `Option<...>` or provided via a builder that preserves existing constructors.
 7. `now` is provided by the caller. Algorithms MUST NOT read the system clock directly.
 8. `session_id` is optional to allow global (non-session) algorithm invocations.
 9. The context is a borrow. Algorithm implementations MUST NOT store the context beyond the current call.
+10. **No `Send + Sync` bound is imposed on `ImportanceEstimator` or `MemoryEventStream`.** The reference algorithm layer is single-threaded and deterministic. Concurrent executors that need thread-safety MUST add the bound at their own layer, not on the shared traits.
 
 ### Uniform Call Shape
 
@@ -286,7 +311,7 @@ Each milestone follows the frozen pattern: `Trait -> NoOp -> (optional Determini
 Milestone constraints:
 
 - v0.5.1 ships `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator`, and a minimal `AlgorithmContext { now, session_id }`. The context intentionally excludes `importance` and `events` trait fields at this milestone — they are added additively in v0.5.2 under `#[non_exhaustive]`. `ImportanceEstimator::estimate(memory, ctx)` signature is frozen from v0.5.1 onward.
-- v0.5.2 ships `MemoryEvent`, `MemoryEventId`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`, and expands `AlgorithmContext` with `importance: &dyn ImportanceEstimator` and `events: &dyn MemoryEventStream`. After v0.5.2 the `AlgorithmContext` trait-object surface is closed per Part C rule 3.
+- v0.5.2 ships `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`. `AlgorithmContext` gains a lifetime `'a` and two trait-object fields `importance: &'a dyn ImportanceEstimator` and `events: &'a dyn MemoryEventStream`. The v0.5.1 constructor `AlgorithmContext::new(now, session_id)` is replaced by `AlgorithmContext::new(now, session_id, importance, events)`; this is the only allowed shape and there is no builder variant. After v0.5.2 the `AlgorithmContext` trait-object surface is permanently closed per Part C rule 3.
 - v0.5.3 scaffolds benchmark directories (`datasets/{regression,synthetic,dmr,longmemeval}`, `benches/{recall,memory,algorithms}`, `reports/`) plus `AlgorithmMetric`. No new datasets are populated at this milestone; scaffolding only.
 - v0.5.9 freezes the model: RFC-011 → Implemented, `docs/API_SURFACE.md` updated with the new Stable items, release note added.
 
