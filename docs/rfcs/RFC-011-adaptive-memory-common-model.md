@@ -1,8 +1,17 @@
 # RFC-011: Adaptive Memory Common Model
 
-Status: Draft
+Status: Accepted
 
 Phase: Phase 5 Algorithm Implementation
+
+Implementation Tags:
+
+```text
+v0.5.1-memory-importance          (planned)
+v0.5.2-memory-event-and-context   (planned)
+v0.5.3-benchmark-harness          (planned)
+v0.5.9-adaptive-common-freeze     (planned)
+```
 
 Subtitle: Shared Data Model for All Adaptive Memory Algorithms
 
@@ -93,8 +102,14 @@ Adding a new variant is not a breaking change.
 
 ```text
 ImportanceEstimator
-  fn estimate(&self, memory: &Memory, context: &AlgorithmContext) -> MemoryImportance
+  fn estimate(&self, memory: &Memory, ctx: &AlgorithmContext) -> MemoryImportance
 ```
+
+Signature rules:
+
+- `memory` is the evaluation **target**. It is passed as an explicit method parameter, not embedded into the context.
+- `ctx` is the evaluation **environment**. Shared inputs live here.
+- The trait signature is closed at v0.5.1. Future shared inputs are added to `AlgorithmContext` (subject to the Part C rules), never to this trait.
 
 Included implementations at freeze time:
 
@@ -173,9 +188,11 @@ Included implementations:
 ### Rules
 
 1. `MemoryEvent` is immutable after construction.
-2. Streams must be side-effect free with respect to Store, Recall, and any executor.
-3. Replay semantics: given the same input sequence, `recent(N)` returns the same result modulo the documented ring-buffer capacity of the concrete stream.
-4. Streams may drop old events but must never reorder events relative to insertion order.
+2. `MemoryEventStream` is **append-only**. Recorded events cannot be modified, deleted, or reordered by any consumer.
+3. **Past events are immutable.** Once an event has been observed by `recent(...)`, its fields are fixed for the lifetime of the stream.
+4. **Replay is deterministic.** Given the same sequence of `record(...)` calls, `recent(N)` MUST return events in the same order across every call. Concrete streams may drop the oldest events when the buffer overflows, but MUST NOT reorder events relative to insertion order.
+5. Streams must be side-effect free with respect to Store, Recall, and any executor.
+6. Filtering, transformation, and reordering are the responsibility of consumers over the returned `Vec<MemoryEvent>`; they MUST NOT be performed by the stream itself.
 
 ## Part C — Algorithm Context
 
@@ -194,10 +211,28 @@ The context is a borrow. It carries no owned state. Algorithm implementations mu
 ### Rules
 
 1. Algorithms MUST take `&AlgorithmContext` rather than adding new parameters to their trait methods.
-2. `AlgorithmContext` is a struct, not a trait. New fields are additive; adding a field requires the struct to be `#[non_exhaustive]` and a new constructor to be provided; otherwise it is a breaking change under `docs/COMPATIBILITY.md`.
-3. Fields introduced later that are optional must be represented as `Option<...>` or gated behind a builder pattern.
-4. `now` is provided by the caller. Algorithms MUST NOT read the system clock directly.
-5. `session_id` is optional to allow global (non-session) algorithm invocations.
+2. **`AlgorithmContext` represents execution environment only.** The primary evaluation target MUST be passed as an explicit method parameter (`memory`, `group`, `event`, etc.) rather than embedded into the context. Fields such as `target_memory`, `target_edge`, or `target_event` MUST NOT appear on `AlgorithmContext`.
+3. **`AlgorithmContext` MUST NOT acquire new service dependencies after v0.5.1.** No new trait objects, engines, stores, recall systems, LLM clients, policy engines, or graph handles may be added. The trait-object surface is closed at freeze time (`importance`, `events`).
+4. `AlgorithmContext` MAY gain additional **plain-data** fields in future minor versions when they are optional or backward-compatible (`Option<...>`, `Default`-able, or gated behind a new constructor while preserving the old one). This is subject to the `#[non_exhaustive]` marker on the struct.
+5. Removing or renaming any existing field is a breaking change under `docs/COMPATIBILITY.md` and requires an ADR.
+6. Fields introduced later that are optional must be represented as `Option<...>` or provided via a builder that preserves existing constructors.
+7. `now` is provided by the caller. Algorithms MUST NOT read the system clock directly.
+8. `session_id` is optional to allow global (non-session) algorithm invocations.
+9. The context is a borrow. Algorithm implementations MUST NOT store the context beyond the current call.
+
+### Uniform Call Shape
+
+Every Phase 5 algorithm MUST expose its primary method in the form `fn method(target, ctx)` where `ctx: &AlgorithmContext` and `target` is the algorithm-specific input. Illustrative expected shapes (defined by later RFCs):
+
+```text
+importance.estimate(memory, ctx)
+reflection.process(memory, ctx)
+merge.score(group, ctx)
+forget.should_forget(memory, ctx)
+hebbian.reinforce(edge, ctx)
+```
+
+This is a convention, not a trait: each algorithm's exact trait method is defined by its own RFC (RFC-012..015). RFC-011 fixes only the argument shape.
 
 ## Part D — Shared Metrics
 
