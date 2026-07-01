@@ -38,3 +38,16 @@ EdgeUpdatePlan
 ```
 
 Hebbian Execution remains deterministic and side-effect free until Store integration introduces explicit persistence adapters.
+
+## Store Integration
+
+```text
+ExecutionReport / ReflectionReport / HebbianExecutionReport
+  -> StoreMutationDispatcher
+  -> StoreMutationPlan
+  -> StoreAdapter / PersistentStoreExecutor
+  -> StoreExecutionReport
+  -> StoreSink
+```
+
+Store Integration is the first Phase 4 area allowed to perform durable writes. All persistence flows through `StoreAdapter` or `PersistentStoreExecutor`; behavior modules must not call Store directly. Frozen by `v0.4.39-store-integration-freeze`.

@@ -2,7 +2,7 @@
 
 > A persistently activated, decaying, reinforcing **associative memory network** for coding agents — so they stop repeating the same mistakes, stop re-learning your preferences, and stop forgetting where you left off.
 
-**Status:** Phase 4 — Adaptive Memory. Recall Platform is frozen at `v0.2.0-recall-api-freeze`; Memory Evolution contracts are frozen at `v0.3.9-memory-evolution-freeze`; Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`; Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze`; Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze`.
+**Status:** Phase 4 — Adaptive Memory. Recall Platform is frozen at `v0.2.0-recall-api-freeze`; Memory Evolution contracts are frozen at `v0.3.9-memory-evolution-freeze`; Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`; Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze`; Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze`; Store Integration is frozen at `v0.4.39-store-integration-freeze`.
 
 ## Why
 
@@ -44,7 +44,7 @@ What's **not yet** in Phase 0 (coming in later phases):
 - Tauri UI (Phase 5)
 - Claude Code integration + multi-device sync (Phase 6)
 
-See `docs/ROADMAP.md` and `docs/ADAPTIVE_MEMORY.md` for the current roadmap and adaptive memory architecture. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, and `docs/releases/v0.4.29-hebbian-execution-freeze.md`.
+See `docs/ROADMAP.md` and `docs/ADAPTIVE_MEMORY.md` for the current roadmap and adaptive memory architecture. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, and `docs/releases/v0.4.39-store-integration-freeze.md`.
 
 ## Build
 

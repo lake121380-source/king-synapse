@@ -166,9 +166,10 @@ P4.2 Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze` a
 
 P4.3 Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze` and remains deterministic and side-effect free.
 
+P4.4 Store Integration is frozen at `v0.4.39-store-integration-freeze`. It defines the canonical persistence boundary for Phase 4 behavior modules and is the first Phase 4 milestone allowed to perform durable writes.
+
 Planned work follows the RFC sequence:
 
-- P4.4 Store Integration
 - P4.5 Adaptive Policies
 
 The development mode changes from defining interfaces to validating algorithms.

@@ -1,8 +1,18 @@
 # RFC-009: Store Integration
 
-Status: Draft
+Status: Accepted
 
 Phase: P4.4 Store Integration
+
+Implementation Tags:
+
+```text
+v0.4.30-store-adapter-skeleton
+v0.4.31-store-mutation-dispatcher
+v0.4.32-store-sink
+v0.4.33-persistent-store-executor
+v0.4.39-store-integration-freeze
+```
 
 ## Summary
 

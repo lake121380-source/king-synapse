@@ -66,34 +66,24 @@ EdgeUpdatePlan
 
 Status: frozen by `v0.4.29-hebbian-execution-freeze`.
 
-## Current Boundary
-
-Adaptive Memory is deterministic and side-effect free through P4.3.
-
-Frozen behavior modules may produce reports, but they must not directly mutate Store, graph edges, Recall scoring, or Working Memory.
-
-## P4.4 Store Integration
-
-P4.4 introduces persistence through adapters after reports already exist.
-
-Planned shape:
+### Store Integration
 
 ```text
 ExecutionReport / ReflectionReport / HebbianExecutionReport
-  -> StoreAdapter
+  -> StoreMutationDispatcher
   -> StoreMutationPlan
-  -> StoreMutationReport
-  -> StoreMutationSink
-  -> StoreExecutor
+  -> StoreAdapter / PersistentStoreExecutor
+  -> StoreExecutionReport
+  -> StoreSink
 ```
 
-P4.4 must preserve these rules:
+Status: frozen by `v0.4.39-store-integration-freeze`.
 
-1. Frozen behavior reports remain immutable.
-2. Store integration must be adapter-based.
-3. Store writes must not change Recall contracts.
-4. Store writes must preserve benchmark baselines.
-5. Real persistence is introduced only after mutation plans and reports are deterministic.
+## Current Boundary
+
+Adaptive Memory is deterministic and side-effect free through P4.3. P4.4 introduced the first Phase 4 milestone allowed to perform durable writes, and only through `StoreAdapter` or `PersistentStoreExecutor`.
+
+Frozen behavior modules may produce reports, but they must not directly mutate Store, graph edges, Recall scoring, or Working Memory. All persistence is routed through the frozen Store Integration boundary.
 
 ## P4.5 Adaptive Policies
 

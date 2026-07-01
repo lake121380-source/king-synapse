@@ -8,6 +8,7 @@ Current milestone
 ✓ P4.1 — Adaptive Memory Foundation (Execution Model Freeze)
 ✓ P4.2 — Reflection Processing (Contract Freeze)
 ✓ P4.3 — Hebbian Execution (Contract Freeze)
+✓ P4.4 — Store Integration (Contract Freeze)
 
 Status
 
@@ -28,6 +29,8 @@ P4.1 concluded with `v0.4.9-adaptive-memory-foundation`. The Adaptive Memory exe
 P4.2 concluded with `v0.4.19-reflection-processing-freeze`. Reflection Processing is now contract-frozen and remains deterministic and side-effect free.
 
 P4.3 concluded with `v0.4.29-hebbian-execution-freeze`. Hebbian Execution is now contract-frozen and remains deterministic and side-effect free.
+
+P4.4 concluded with `v0.4.39-store-integration-freeze`. Store Integration is now contract-frozen and defines the canonical persistence boundary for Phase 4 behavior modules.
 
 ## Phase 3 Contract
 
@@ -76,7 +79,6 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- P4.4 Store Integration
 - P4.5 Adaptive Policies
 
 Completed foundation
@@ -104,6 +106,14 @@ P4.3 Hebbian Execution
   -> HebbianExecutor
   -> HebbianExecutionReport
   -> HebbianSink
+
+P4.4 Store Integration
+  -> StoreMutation
+  -> StoreMutationDispatcher
+  -> StoreMutationPlan
+  -> StoreAdapter / PersistentStoreExecutor
+  -> StoreExecutionReport
+  -> StoreSink
 ```
 
 Contract rules
@@ -179,3 +189,16 @@ Highlights
 • HebbianExecutionReport
 • HebbianSink
 • NoOpHebbianSink
+
+v0.4.39-store-integration-freeze
+
+Highlights
+
+• StoreMutation
+• StoreMutationPlan
+• StoreMutationDispatcher
+• StoreAdapter
+• StoreExecutionReport
+• StoreSink
+• PersistentStoreExecutor
+• SQLitePersistentStoreExecutor
