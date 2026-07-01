@@ -158,6 +158,19 @@ connected hidden influence, such as "forgot water -> bad mood -> commute
 attention risk". The benchmark is deliberately separate from `RecallEngine`
 ranking metrics because latent hits are explanations, not `RecallHit`s.
 
+`CognitiveTraceProbe` builds on the same separation. It combines visible recall,
+latent activation, and state/goal context into a report that names the dominant
+candidate and suppressed alternatives. The probe itself is inspection-only and
+does not change recall ranking or `RecallHit`; the CLI/MCP trace surfaces may
+explicitly run post-report Hebbian reinforcement to learn visible seed ->
+dominant hidden influence edges for future activation.
+
+`synapse_eval::cognitive_trace_dominance_report()` verifies that the expected
+hidden influence becomes the dominant trace candidate. `trace_reinforcement`
+then verifies that explicit post-trace reinforcement persists the expected
+visible-to-hidden associative edges through the Hebbian -> StoreMutation ->
+SQLite path.
+
 ---
 
 ## 6. Design Invariants

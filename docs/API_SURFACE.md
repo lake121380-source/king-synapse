@@ -93,10 +93,12 @@ rankings.
 state/goal context into a query-facing cognition report. The report identifies
 one dominant candidate, suppressed candidates, visible recall hits, latent
 activation paths, and the context terms that modulated hidden influence. It is
-an inspection surface: it does not update graph edges, does not add fields to
-`RecallHit`, and does not change recall ranking. Like normal recall, seed
-retrieval may stamp access metadata. This surface is Experimental while the
-cognitive competition scoring model is evaluated.
+an inspection surface by default: it does not update graph edges, does not add
+fields to `RecallHit`, and does not change recall ranking. Like normal recall,
+seed retrieval may stamp access metadata. The CLI/MCP trace surfaces can
+optionally run post-report Hebbian reinforcement; that learning is outside the
+probe itself and routes through the Store Integration boundary. This surface is
+Experimental while the cognitive competition scoring model is evaluated.
 
 ### model
 

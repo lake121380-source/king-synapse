@@ -36,11 +36,11 @@ the RFC + ADR + benchmark system already in the repository.
 | Vision | Strong | Needs version alignment with current `v0.5.x` / Phase 5 language. |
 | Scope | Good | Must explicitly preserve non-goals: no Chat UI, no agent framework, no LLM orchestration. |
 | Architecture | Good high-level shape | Needs exact module boundaries and frozen API constraints. |
-| Graph | Aspirational | Needs a concrete schema, persistence model, and migration policy before implementation. |
+| Graph | Mostly implemented for associative memory | SQLite edge persistence, activation, inspection, and reinforcement exist; larger graph schema/migration work remains for non-memory node types. |
 | Memory lifecycle | Good conceptually | Current lifecycle must flow through existing Plan -> Execute -> Report -> Sink contracts. |
 | Retrieval | Good direction | Must preserve frozen RecallHit, RecallEngine, RRF, rerank, and booster invariants. |
-| Reflection | Good milestone | Needs deterministic algorithm, benchmark, and store-integration mapping. |
-| Predictive recall | Future-facing | Should wait until Reflection/Merge/Forget/Hebbian have measurable baselines. |
+| Reflection | Implemented as Phase 5 algorithm work | Rule-based main path, deterministic comparison, benchmark, and store-integration mapping exist; freeze review remains. |
+| Predictive recall | Future-facing | Should wait until larger long-horizon datasets and parameter sweeps prove the cognitive trace path. |
 | Storage | Names SQLite, sqlite-vec, Kuzu | Needs explicit owner boundaries: Store remains durable persistence boundary. |
 | API | Mentions MCP | Needs exact tool schemas and compatibility policy. |
 | Testing | Missing | Needs tests, clippy, frozen recall baselines, and algorithm benchmarks. |
@@ -52,13 +52,13 @@ The proposal's v3 capability list maps to the current repository like this:
 
 | v3 concept | Current implementation / contract |
 | --- | --- |
-| Associative Memory | FTS + entity branch + vector branch + working-memory activation; SQLite edge persistence and recall-time graph activation now exist for adaptive associations. |
-| Dynamic Edge | Hebbian contracts, StoreMutation-backed SQLite edge persistence, and additive graph activation exist behind frozen Store/Recall boundaries. |
+| Associative Memory | FTS + entity branch + vector branch + working-memory activation; SQLite edge persistence, recall-time graph/latent activation, and cognitive trace exist for adaptive associations. |
+| Dynamic Edge | Hebbian contracts, StoreMutation-backed SQLite edge persistence, additive graph activation, recall/trace reinforcement, and trace reinforcement benchmarks exist behind frozen Store/Recall boundaries. |
 | Working Memory | Implemented as `WorkingMemoryBuffer` and `WorkingMemoryActivationBooster`. |
 | Long-term Memory | Implemented through SQLite-backed `Store`. |
 | Explainable Recall | Implemented through `RecallHit` provenance fields and `--explain`. |
-| Reflection | RFC-012 skeleton, NoOp, deterministic reference; benchmark milestone is next. |
-| Forgetting | Policy and store-integration contracts exist; concrete algorithm is planned. |
+| Reflection | RFC-012 has NoOp, deterministic reference, rule-based main path, benchmark, processing mapping, and StoreMutation mapping. |
+| Forgetting | RFC-014 has NoOp, rule-based heuristic, precision benchmark, and StoreMutation mapping. |
 | Predictive Recall | Not yet implemented; should be gated behind benchmarks and ADRs. |
 
 ## Required Additions Before Treating v3 As A Dev Spec
@@ -97,7 +97,14 @@ RFC-012 Reflection Algorithm
 This route advances the v3 goal of a cognitive memory engine while preserving
 the stable foundation already built.
 
-## Immediate Next Milestone
+## Historical Milestone Note
+
+The original near-term milestone below is now historical. The repository has
+advanced through v0.6.6 and later cognitive-memory milestones; see
+`docs/ROADMAP.md` and `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` for the
+current plan and final acceptance gates.
+
+## Original Immediate Next Milestone
 
 Implement `v0.6.3-reflection-benchmark`:
 

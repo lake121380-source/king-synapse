@@ -336,6 +336,7 @@ Highlights
 • Whole-project public API declared stable
 • `docs/API_SURFACE.md` (Stable / Experimental / Internal)
 • `docs/COMPATIBILITY.md` (SemVer, breaking-change rules, deprecation policy)
+• `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` (final cognitive-memory gates)
 • Final Architecture Rules (Trait → NoOp → Dispatcher → Report → Sink)
 • Layer direction (Policy → Execution → Storage)
 • Subsystem stack (Recall → Working Memory → Adaptive Memory → Store)
