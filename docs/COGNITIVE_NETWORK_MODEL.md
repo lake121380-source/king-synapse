@@ -33,6 +33,33 @@ forgot morning water
 The system does not need to pretend this chain is certain. It only needs to
 make the chain inspectable, scoreable, and learnable.
 
+## Computable Network State
+
+The graph should separate the thing being remembered from the forces acting on
+it. A production trace cycle can treat each moment as a short-lived activation
+state over the persisted memory graph:
+
+```text
+node:
+  id
+  content
+  kind: memory | event | object | emotion | body_state | goal | rule | risk
+  observability: visible | latent
+  confidence
+  importance
+
+edge:
+  source
+  target
+  weight
+  relation: co_occurs | causes | inhibits | enables | uses | predicts
+  confidence
+```
+
+The current implementation already persists memory nodes and weighted edges.
+The cognitive trace layer interprets those edges as momentary activation rather
+than changing the storage contract.
+
 ## Current Implementation Mapping
 
 | Human concept | King Synapse surface |
@@ -79,6 +106,30 @@ input:
      after the report is produced, reinforce visible seeds <-> dominant
 ```
 
+The scoring rule should stay deliberately modest:
+
+```text
+path_activation =
+  source_activation
+  * edge_weight
+  * scale
+  * decay(depth)
+  * context_modulation(target)
+
+activation[target] = min(cap, sum(path_activation))
+
+competition_score =
+  normalized(visible_score) * visible_weight
+  + normalized(latent_activation) * latent_weight
+
+inhibition = dominant_score - candidate_score
+```
+
+This makes a trace explainable. A candidate wins because it directly matched
+the query, because a hidden path reached it, or because both forces aligned.
+The suppressed candidates are not discarded; they are the weaker thoughts that
+were present but did not become dominant.
+
 The important boundary is step 9. Learning happens after the trace report is
 computed, so reinforcement cannot affect the current ranking. It only changes
 future activation.
@@ -93,9 +144,48 @@ In this project, "subconscious" means:
 - it can become dominant even when visible recall found something else;
 - it remains explainable through an activation path.
 
+Subconscious influence should not be modeled as an unknowable black box. It is
+better represented as low-observability activation:
+
+```text
+visible layer:
+  memories that directly match the current words or situation
+
+latent layer:
+  memories, emotions, body states, objects, learned rules, and risks reached
+  through association paths
+
+competition layer:
+  visible and latent candidates are ranked together; the strongest becomes the
+  reported dominant trace
+```
+
+The practical rule is: if the system says a hidden factor mattered, it must
+also show the path and score that made it matter.
+
 That is why `LatentActivationProbe` is deliberately separate from
 `RecallEngine`. Recall answers "what directly matches this query?" Trace asks
 "what hidden influence might be steering this moment?"
+
+## Cascade And Small Causes
+
+The "butterfly effect" should be implemented as bounded cascade, not unlimited
+chain reaction. Small causes may matter, but only when enough weighted evidence
+survives decay and aligns with the current state or goal:
+
+```text
+missed water
+  -> body state: tired or thirsty
+  -> emotion: worse mood
+  -> goal pressure: commute to work
+  -> attention risk
+  -> possible riding mistake
+```
+
+Each hop pays a decay cost. Strong edges, repeated reinforcement, or matching
+state and goal terms can keep the chain alive. Weak, irrelevant, or very long
+paths fade out. This prevents the model from turning every tiny event into an
+unbounded explanation.
 
 ## Prediction
 
