@@ -43,6 +43,12 @@ Current milestone
 ✓ v0.9.11 — Query-Seeded Latent Activation
 ✓ v0.9.12 — Auto-Derived Latent Context
 ✓ v0.9.18 — Cognitive Trace Probe
+✓ v0.9.19 — Trace Reinforcement Surface
+✓ v0.9.20 — Trace Reinforcement Benchmark
+✓ v0.9.21 — Activation Parameter Sweep
+✓ v0.9.22 — Long-Horizon Cognitive Memory Benchmark
+✓ v0.9.23 — Manual Validation Transcript
+✓ v0.9.24 — Cognitive Network Algorithm Model
 
 Status
 
@@ -125,6 +131,8 @@ Completed foundations
 - v0.9.20 — trace reinforcement benchmark verifies dominant hidden influence can be learned into persisted edges
 - v0.9.21 — activation parameter sweep verifies latent, trace, and trace-learning guarantees across multiple settings
 - v0.9.22 — long-horizon cognitive-memory benchmark verifies multi-day traces in one shared memory store
+- v0.9.23 — manual validation transcript covers normal and empty/error cognitive-memory surfaces
+- v0.9.24 — cognitive network algorithm model maps human-network design into visible seeds, latent activation, dominant/suppressed candidates, and post-trace learning
 
 Focus
 
@@ -132,6 +140,7 @@ Focus
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
 - **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, cognitive trace scoring, and benchmark before the next freeze tag.
+- Predictive trace — turn the dominant candidate plus outgoing hidden edges into an explainable ranked continuation report.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

@@ -20,6 +20,10 @@ The final system models memory as an inspectable associative network:
 - lifecycle algorithms can reflect, merge, forget, and reinforce without
   changing the frozen recall contract.
 
+The conceptual model is defined in `docs/COGNITIVE_NETWORK_MODEL.md`: a thought
+is treated as a dominant candidate selected from a wider, state-modulated graph
+of visible and hidden associations.
+
 ## Current Evidence
 
 | Requirement | Evidence |
@@ -32,6 +36,8 @@ The final system models memory as an inspectable associative network:
 | Hidden influence inspection | `LatentActivationProbe`, `QueryLatentActivationProbe`, `cognitive_chain_recall_report()` |
 | Dominant/suppressed cognitive trace | `CognitiveTraceProbe`, `cognitive_trace_dominance_report()` |
 | Post-trace learning | `kr trace --reinforce`, `synapse_trace` with `reinforce: true`, `trace_reinforcement_report()` |
+| Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
+| Manual surface validation | `docs/MANUAL_VALIDATION.md` |
 
 ## Required Verification Gates
 
@@ -81,8 +87,8 @@ Expected minimums:
 - Extend the internal long-horizon benchmark to external comparison runs.
   Candidate comparisons: Graphiti, Letta, Mem0, or a documented exported
   long-session dataset.
-- Add manual validation transcripts for normal input and empty/error input for
-  recall, latent-query, trace, trace reinforcement, and MCP trace.
+- Rerun and paste dated manual validation outputs for final release using
+  `docs/MANUAL_VALIDATION.md` as the baseline transcript.
 - Decide whether UI/deeper agent integrations are release blockers or a
   post-final product milestone.
 
