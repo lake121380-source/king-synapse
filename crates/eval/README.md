@@ -112,6 +112,10 @@ activation. `CognitiveTraceDominance` measures the fraction of trace settings
 that still choose the expected hidden influence as dominant.
 `HebbianConsistency` measures the fraction of trace-learning settings that
 still persist the expected visible <-> hidden edges after reinforcement.
+The final sweep covers seven cognitive-chain families and five parameter
+settings, including deeper multi-step activation, wider fanout, broader trace
+limits, and higher cap/decay settings used to approximate production-range
+behavior without changing public contracts.
 
 The long-horizon cognitive-memory benchmark emits one `BenchmarkReport` value:
 

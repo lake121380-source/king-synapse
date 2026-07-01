@@ -660,6 +660,31 @@ fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
             hidden: "记忆会影响未来决策和注意力分配",
             distractor: "午饭后备份照片到移动硬盘",
         },
+        CognitiveChainCase {
+            query: "object tool use affects work goal emotion decision",
+            seed: "object tool use affects work goal",
+            hidden: "object tool problem affects emotion decision and attention allocation",
+            distractor: "afternoon monitor cable label cleanup",
+        },
+        CognitiveChainCase {
+            query: "social evaluation worry failure complex task avoidance",
+            seed: "social evaluation worry failure",
+            hidden:
+                "social pressure failure memory triggers subconscious avoidance for complex task",
+            distractor: "meeting room air conditioner booking record",
+        },
+        CognitiveChainCase {
+            query: "past error review future prediction risk",
+            seed: "past error review insufficient",
+            hidden: "memory review affects future prediction and error risk",
+            distractor: "wednesday reimbursement form printing",
+        },
+        CognitiveChainCase {
+            query: "hungry tired work attention allocation",
+            seed: "hungry tired work attention dropped",
+            hidden: "body state affects work goal and attention allocation",
+            distractor: "evening music playlist sync",
+        },
     ]
 }
 
@@ -854,6 +879,13 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
 fn latent_sweep_configs() -> Vec<LatentSweepConfig> {
     vec![
         LatentSweepConfig {
+            scale: 0.025,
+            cap: 0.12,
+            steps: 1,
+            decay: 0.35,
+            fanout: 4,
+        },
+        LatentSweepConfig {
             scale: 0.04,
             cap: 0.20,
             steps: 1,
@@ -874,11 +906,36 @@ fn latent_sweep_configs() -> Vec<LatentSweepConfig> {
             decay: 0.7,
             fanout: 16,
         },
+        LatentSweepConfig {
+            scale: 0.06,
+            cap: 0.35,
+            steps: 4,
+            decay: 0.75,
+            fanout: 20,
+        },
+        LatentSweepConfig {
+            scale: 0.10,
+            cap: 0.45,
+            steps: 3,
+            decay: 0.85,
+            fanout: 24,
+        },
     ]
 }
 
 fn trace_sweep_configs() -> Vec<TraceSweepConfig> {
     vec![
+        TraceSweepConfig {
+            latent_scale: 0.025,
+            latent_cap: 0.12,
+            latent_steps: 1,
+            latent_decay: 0.35,
+            latent_fanout: 4,
+            visible_limit: 2,
+            latent_limit: 4,
+            seed_limit: 2,
+            suppressed_limit: 4,
+        },
         TraceSweepConfig {
             latent_scale: 0.04,
             latent_cap: 0.20,
@@ -911,6 +968,28 @@ fn trace_sweep_configs() -> Vec<TraceSweepConfig> {
             latent_limit: 6,
             seed_limit: 2,
             suppressed_limit: 5,
+        },
+        TraceSweepConfig {
+            latent_scale: 0.06,
+            latent_cap: 0.35,
+            latent_steps: 4,
+            latent_decay: 0.75,
+            latent_fanout: 20,
+            visible_limit: 4,
+            latent_limit: 8,
+            seed_limit: 3,
+            suppressed_limit: 8,
+        },
+        TraceSweepConfig {
+            latent_scale: 0.10,
+            latent_cap: 0.45,
+            latent_steps: 3,
+            latent_decay: 0.85,
+            latent_fanout: 24,
+            visible_limit: 4,
+            latent_limit: 8,
+            seed_limit: 3,
+            suppressed_limit: 8,
         },
     ]
 }
@@ -954,7 +1033,7 @@ fn cognitive_chain_case_hits_with_config(
         query: case.query.to_string(),
         k: None,
         scope_filter: None,
-        kind_filter: None,
+        kind_filter: Some(MemoryKind::State),
     };
     let probe = QueryLatentActivationProbe::new(
         LatentActivationProbe::with_config(
@@ -1904,6 +1983,42 @@ mod tests {
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::HebbianConsistency),
             Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn activation_parameter_sweep_uses_broader_final_coverage() {
+        let chain_cases = cognitive_chain_fixture();
+        let latent_configs = latent_sweep_configs();
+        let trace_configs = trace_sweep_configs();
+
+        assert!(
+            chain_cases.len() >= 7,
+            "final sweep should cover a broader cognitive-chain fixture"
+        );
+        assert!(
+            latent_configs.len() >= 5,
+            "final latent sweep should cover at least five parameter settings"
+        );
+        assert!(
+            trace_configs.len() >= 5,
+            "final trace sweep should cover at least five parameter settings"
+        );
+        assert!(
+            latent_configs.iter().any(|config| config.steps >= 4),
+            "latent sweep should include multi-step production-depth activation"
+        );
+        assert!(
+            latent_configs.iter().any(|config| config.fanout >= 24),
+            "latent sweep should include wider fanout coverage"
+        );
+        assert!(
+            trace_configs.iter().any(|config| config.latent_steps >= 4
+                && config.visible_limit >= 4
+                && config.latent_limit >= 8
+                && config.seed_limit >= 3
+                && config.suppressed_limit >= 8),
+            "trace sweep should include a wider production-range configuration"
         );
     }
 

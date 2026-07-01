@@ -41,6 +41,7 @@ of visible and hidden associations.
 | Post-trace learning | `kr trace --reinforce`, `synapse_trace` with `reinforce: true`, `trace_reinforcement_report()` |
 | Exported long-session validation | `crates/eval/datasets/exported_cognitive_session.toml`, `exported_cognitive_session_report()` |
 | Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
+| Broader activation parameter sweep | `activation_parameter_sweep_report()`, `crates/eval/README.md` |
 | Manual surface validation | `docs/MANUAL_VALIDATION.md` |
 | Release-candidate evidence | `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` |
 | Full gate validation | `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md` |
@@ -94,8 +95,10 @@ Expected minimums:
   note if the rule-based heuristic is accepted.
 - Freeze-review RFC-013 Merge, RFC-014 Forget, and RFC-015 Hebbian with release
   notes and tags.
-- Extend parameter sweeps beyond the deterministic activation/trace sweep to
-  larger datasets and broader production ranges.
+- Parameter sweeps have been extended beyond the initial deterministic
+  activation/trace sweep to seven cognitive-chain families and five broader
+  latent/trace parameter settings; evidence lives in
+  `activation_parameter_sweep_report()` and `crates/eval/README.md`.
 - External comparison runs are moved out of final scope by
   `docs/adr/ADR-007-cognitive-memory-final-release-scope.md`; keep the
   exported long-session benchmark as the reproducible internal baseline.
