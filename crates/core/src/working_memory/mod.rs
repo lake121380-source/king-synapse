@@ -6,6 +6,7 @@
 mod activation;
 mod buffer;
 mod consolidation;
+mod executor;
 mod hebbian;
 mod item;
 mod reflection;
@@ -15,6 +16,10 @@ pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
 pub use consolidation::{
     ConsolidationEngine, ConsolidationPlan, MergeGroup, MergeStrategy, NoOpConsolidation,
+};
+pub use executor::{
+    ArchiveExecution, ConsolidationExecutor, DiscardExecution, ExecutedAction, ExecutionReport,
+    MergeExecution, PlanOnlyConsolidationExecutor, SkippedAction,
 };
 pub use hebbian::{EdgeUpdatePlan, HebbianReinforcementEngine, NoOpHebbianReinforcementEngine};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
@@ -172,5 +177,59 @@ mod tests {
         let engine = NoOpHebbianReinforcementEngine;
 
         assert!(engine.reinforce(&event).is_empty());
+    }
+
+    #[test]
+    fn empty_plan_executes_to_empty_report() {
+        let plan = ConsolidationPlan::default();
+        let executor = PlanOnlyConsolidationExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert!(report.is_empty());
+        assert!(report.executed.is_empty());
+        assert!(report.skipped.is_empty());
+    }
+
+    #[test]
+    fn promote_merge_and_discard_translate_to_report_actions() {
+        let session = SessionId::new();
+        let promote =
+            WorkingMemoryItem::new(session, "promote", Vec::new(), Duration::from_secs(60));
+        let merge_a =
+            WorkingMemoryItem::new(session, "merge-a", Vec::new(), Duration::from_secs(60));
+        let merge_b =
+            WorkingMemoryItem::new(session, "merge-b", Vec::new(), Duration::from_secs(60));
+        let discard =
+            WorkingMemoryItem::new(session, "discard", Vec::new(), Duration::from_secs(60));
+        let plan = ConsolidationPlan {
+            promote: vec![promote.clone()],
+            merge: vec![MergeGroup {
+                items: vec![merge_a.clone(), merge_b.clone()],
+                strategy: MergeStrategy::Union,
+            }],
+            discard: vec![discard.clone()],
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.executed.len(), 3);
+        assert_eq!(
+            report.executed[0],
+            ExecutedAction::Archive(ArchiveExecution { item: promote })
+        );
+        assert_eq!(
+            report.executed[1],
+            ExecutedAction::Merge(MergeExecution {
+                items: vec![merge_a, merge_b],
+                strategy: MergeStrategy::Union,
+            })
+        );
+        assert_eq!(
+            report.executed[2],
+            ExecutedAction::Discard(DiscardExecution { item: discard })
+        );
+        assert!(report.skipped.is_empty());
     }
 }
