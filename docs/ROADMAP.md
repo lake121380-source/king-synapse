@@ -42,6 +42,7 @@ Current milestone
 ✓ v0.9.10 — Context-Modulated Latent Activation
 ✓ v0.9.11 — Query-Seeded Latent Activation
 ✓ v0.9.12 — Auto-Derived Latent Context
+✓ v0.9.18 — Cognitive Trace Probe
 
 Status
 
@@ -119,13 +120,14 @@ Completed foundations
 - v0.9.15 — deterministic CJK query expansion raises `multihop` Recall@10 to 1.000
 - v0.9.16 — CLI and MCP can reinforce co-occurring memories through the Hebbian -> StoreMutation -> SQLite path
 - v0.9.17 — recall surfaces can optionally reinforce top-hit co-occurrence after returning results
+- v0.9.18 — cognitive trace reports combine visible recall, latent activation, and context into dominant and suppressed candidates
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
-- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, and benchmark before the next freeze tag.
+- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, cognitive trace scoring, and benchmark before the next freeze tag.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

@@ -4,12 +4,13 @@ use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
-    AlgorithmContext, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
-    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
-    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
-    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe, RecallEngine,
-    RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe,
+    DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster, HebbianAlgorithm,
+    HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream, LatentActivationBooster,
+    LatentActivationContext, LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind,
+    MemoryEventPayload, MemoryEventStream, MemoryKind, PersistentStoreExecutor,
+    PlanOnlyHebbianExecutor, QueryLatentActivationProbe, RecallEngine, RecallQuery,
+    RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
     StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
@@ -27,6 +28,7 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_reinforce(),
         descriptor_latent_activation(),
         descriptor_latent_query(),
+        descriptor_trace(),
     ]
 }
 
@@ -216,6 +218,34 @@ fn descriptor_latent_query() -> Value {
     })
 }
 
+fn descriptor_trace() -> Value {
+    json!({
+        "name": "synapse_trace",
+        "description": "Trace the dominant memory candidate, suppressed candidates, and latent influences for a query.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["query"],
+            "properties": {
+                "query": { "type": "string" },
+                "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 8 },
+                "latent_k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 10 },
+                "seed_k": { "type": "integer", "minimum": 1, "maximum": 20, "default": 3 },
+                "suppressed_k": { "type": "integer", "minimum": 0, "maximum": 50, "default": 7 },
+                "scope": { "type": "string" },
+                "kind": { "type": "string", "enum": ["fact","preference","failure","playbook","state"] },
+                "scale": { "type": "number", "default": 0.05 },
+                "cap": { "type": "number", "default": 0.25 },
+                "steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 2 },
+                "decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+                "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 },
+                "state_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "auto_context": { "type": "boolean", "default": false }
+            }
+        }
+    })
+}
+
 pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
     let name = params
         .get("name")
@@ -234,6 +264,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_reinforce" => do_reinforce(store, &args)?,
         "synapse_latent_activation" => do_latent_activation(store, &args)?,
         "synapse_latent_query" => do_latent_query(store, &args)?,
+        "synapse_trace" => do_trace(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -687,6 +718,90 @@ fn do_latent_query(store: &StoreHandle, args: &Value) -> Result<Value> {
     } else {
         query_probe.probe(&mut s, &query, k, &context)?
     };
+    Ok(json!({ "report": report }))
+}
+
+fn do_trace(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let query = args
+        .get("query")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| anyhow::anyhow!("query required"))?
+        .to_string();
+    let k = args
+        .get("k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(8);
+    let latent_k = args
+        .get("latent_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(10);
+    let seed_k = args
+        .get("seed_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(3);
+    let suppressed_k = args
+        .get("suppressed_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(7);
+    let scope = args
+        .get("scope")
+        .and_then(|v| v.as_str())
+        .map(Scope::from_str)
+        .transpose()?;
+    let kind = args
+        .get("kind")
+        .and_then(|v| v.as_str())
+        .map(MemoryKind::from_str)
+        .transpose()?;
+    let scale = arg_f32(args, "scale", 0.05);
+    let cap = arg_f32(args, "cap", 0.25);
+    let steps = args
+        .get("steps")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(2);
+    let decay = arg_f32(args, "decay", 0.5);
+    let fanout = args
+        .get("fanout")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(16);
+    let state_terms = string_array(args, "state_terms");
+    let goal_terms = string_array(args, "goal_terms");
+    let auto_context = args
+        .get("auto_context")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+
+    let mut s = store.lock().unwrap();
+    let query = RecallQuery {
+        query,
+        k: Some(k),
+        scope_filter: scope,
+        kind_filter: kind,
+    };
+    let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: k,
+        latent_limit: latent_k,
+        seed_limit: seed_k,
+        suppressed_limit: suppressed_k,
+        latent_scale: scale,
+        latent_cap: cap,
+        latent_steps: steps,
+        latent_decay: decay,
+        latent_fanout: fanout,
+    });
+    let context = LatentActivationContext::new(state_terms, goal_terms);
+    let report = if auto_context {
+        probe.trace_auto_context(&mut s, &query, &context)?
+    } else {
+        probe.trace(&mut s, &query, &context)?
+    };
+
     Ok(json!({ "report": report }))
 }
 

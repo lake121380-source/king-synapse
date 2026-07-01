@@ -3,14 +3,15 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, AlgorithmContext, DeterministicHebbianStoreMutationDispatcher,
-    GraphActivationBooster, HebbianAlgorithm, HebbianExecutor, HebbianTarget,
-    InMemoryMemoryEventStream, LatentActivationBooster, LatentActivationContext,
-    LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
-    MemoryEventStream, MemoryKind, PersistentStoreExecutor, PlanOnlyHebbianExecutor,
-    QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster, RecallEngine,
-    RecallHit, RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope,
-    Source, Store, StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
+    config::Config, AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe,
+    CognitiveTraceReport, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
+    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
+    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
+    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe,
+    QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallQuery,
+    RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -198,6 +199,45 @@ enum Cmd {
         k: usize,
         #[arg(long, default_value = "3")]
         seed_k: usize,
+        #[arg(long)]
+        scope: Option<String>,
+        #[arg(long)]
+        kind: Option<String>,
+        #[arg(long, default_value = "0.05")]
+        scale: f32,
+        #[arg(long, default_value = "0.25")]
+        cap: f32,
+        #[arg(long, default_value = "2")]
+        steps: usize,
+        #[arg(long, default_value = "0.5")]
+        decay: f32,
+        #[arg(long, default_value = "16")]
+        fanout: usize,
+        #[arg(long = "state")]
+        state_terms: Vec<String>,
+        #[arg(long = "goal")]
+        goal_terms: Vec<String>,
+        /// Derive additional state/goal terms from the query text.
+        #[arg(long)]
+        auto_context: bool,
+        #[arg(long)]
+        json: bool,
+    },
+    /// Trace the dominant thought, suppressed candidates, and latent influences for a query.
+    Trace {
+        query: String,
+        /// Number of visible recall candidates to inspect.
+        #[arg(long, short = 'k', default_value = "8")]
+        k: usize,
+        /// Number of latent activation candidates to inspect.
+        #[arg(long = "latent-k", default_value = "10")]
+        latent_k: usize,
+        /// Number of top visible hits used as latent activation seeds.
+        #[arg(long, default_value = "3")]
+        seed_k: usize,
+        /// Number of non-dominant candidates to report as suppressed.
+        #[arg(long, default_value = "7")]
+        suppressed_k: usize,
         #[arg(long)]
         scope: Option<String>,
         #[arg(long)]
@@ -572,6 +612,53 @@ fn main() -> Result<()> {
                 print_query_latent_report(&report);
             }
         }
+        Cmd::Trace {
+            query,
+            k,
+            latent_k,
+            seed_k,
+            suppressed_k,
+            scope,
+            kind,
+            scale,
+            cap,
+            steps,
+            decay,
+            fanout,
+            state_terms,
+            goal_terms,
+            auto_context,
+            json,
+        } => {
+            let q = RecallQuery {
+                query,
+                k: Some(k),
+                scope_filter: scope.map(|s| Scope::from_str(&s)).transpose()?,
+                kind_filter: kind.map(|s| MemoryKind::from_str(&s)).transpose()?,
+            };
+            let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+                visible_limit: k,
+                latent_limit: latent_k,
+                seed_limit: seed_k,
+                suppressed_limit: suppressed_k,
+                latent_scale: scale,
+                latent_cap: cap,
+                latent_steps: steps,
+                latent_decay: decay,
+                latent_fanout: fanout,
+            });
+            let context = LatentActivationContext::new(state_terms, goal_terms);
+            let report = if auto_context {
+                probe.trace_auto_context(&mut store, &q, &context)?
+            } else {
+                probe.trace(&mut store, &q, &context)?
+            };
+            if json {
+                println!("{}", serde_json::to_string_pretty(&report)?);
+            } else {
+                print_cognitive_trace_report(&report);
+            }
+        }
         Cmd::Stats => {
             let n = store.count()?;
             let (done, pending) = store.embedding_stats()?;
@@ -840,6 +927,87 @@ fn print_query_latent_report(report: &QueryLatentActivationReport) {
             print_latent_hit(hit);
         }
     }
+}
+
+fn print_cognitive_trace_report(report: &CognitiveTraceReport) {
+    if !report.context.state_terms.is_empty() || !report.context.goal_terms.is_empty() {
+        println!(
+            "Context: state=[{}] goal=[{}]",
+            report.context.state_terms.join(","),
+            report.context.goal_terms.join(",")
+        );
+    }
+
+    if let Some(candidate) = report.dominant.as_ref() {
+        println!("Dominant:");
+        print_trace_candidate(candidate, "  ");
+    } else {
+        println!("Dominant: (none)");
+    }
+
+    if report.suppressed.is_empty() {
+        println!("Suppressed: (none)");
+    } else {
+        println!("Suppressed:");
+        for candidate in &report.suppressed {
+            print_trace_candidate(candidate, "  ");
+        }
+    }
+
+    println!(
+        "Stats: visible={} latent={} combined={} suppressed={}",
+        report.statistics.visible_candidates,
+        report.statistics.latent_candidates,
+        report.statistics.combined_candidates,
+        report.statistics.suppressed_candidates
+    );
+}
+
+fn print_trace_candidate(candidate: &synapse_core::CognitiveTraceCandidate, prefix: &str) {
+    let visible = candidate
+        .visible_score
+        .map(|score| format!("{score:.4}"))
+        .unwrap_or_else(|| "-".to_string());
+    let latent = candidate
+        .latent_activation
+        .map(|activation| format!("{activation:.4}"))
+        .unwrap_or_else(|| "-".to_string());
+    let rank = candidate
+        .visible_rank
+        .map(|rank| rank.to_string())
+        .unwrap_or_else(|| "-".to_string());
+    let path = if candidate.latent_path.is_empty() {
+        String::new()
+    } else {
+        format!(
+            " path={}",
+            candidate
+                .latent_path
+                .iter()
+                .map(|id| short_id(id).to_string())
+                .collect::<Vec<_>>()
+                .join(" -> ")
+        )
+    };
+    let matched = if candidate.matched_terms.is_empty() {
+        String::new()
+    } else {
+        format!(" match={}", candidate.matched_terms.join(","))
+    };
+
+    println!(
+        "{prefix}[{:.4} src={:?} rank={} visible={} latent={} inhibit={:.4}] {}{}{}  {}",
+        candidate.combined_score,
+        candidate.source,
+        rank,
+        visible,
+        latent,
+        candidate.inhibition,
+        short_id(&candidate.memory.id),
+        path,
+        matched,
+        truncate(&candidate.memory.content, 90)
+    );
 }
 
 fn print_hit(h: &synapse_core::RecallHit) {

@@ -11,6 +11,7 @@
 //! optional embedding, fusion, reranking, decay, boosters, and resorting.
 
 mod booster;
+mod cognitive_trace;
 mod engine;
 mod graph_activation;
 mod hit;
@@ -22,6 +23,10 @@ mod rrf;
 use crate::error::Result;
 
 pub use booster::{BoosterContext, NoOpBooster, RecallBooster};
+pub use cognitive_trace::{
+    CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTraceProbe, CognitiveTraceReport,
+    CognitiveTraceSource, CognitiveTraceStatistics,
+};
 pub use engine::RecallEngine;
 pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};

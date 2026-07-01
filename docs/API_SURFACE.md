@@ -80,6 +80,24 @@ auto-context derives additional state/goal terms from the query text so
 query-facing inspection remains outside `RecallHit` and does not alter recall
 rankings.
 
+**Experimental**
+
+- `CognitiveTraceConfig`
+- `CognitiveTraceProbe`
+- `CognitiveTraceReport`
+- `CognitiveTraceCandidate`
+- `CognitiveTraceSource`
+- `CognitiveTraceStatistics`
+
+`CognitiveTraceProbe` composes visible recall, latent activation, and
+state/goal context into a query-facing cognition report. The report identifies
+one dominant candidate, suppressed candidates, visible recall hits, latent
+activation paths, and the context terms that modulated hidden influence. It is
+an inspection surface: it does not update graph edges, does not add fields to
+`RecallHit`, and does not change recall ranking. Like normal recall, seed
+retrieval may stamp access metadata. This surface is Experimental while the
+cognitive competition scoring model is evaluated.
+
 ### model
 
 **Stable**
@@ -336,8 +354,10 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_reinforce`
 - `synapse_latent_activation`
 - `synapse_latent_query`
+- `synapse_trace` (Experimental)
 
-Tool JSON schemas are considered part of the stable public API.
+Tool JSON schemas are considered part of the stable public API except entries
+explicitly marked Experimental.
 `synapse_recall` accepts optional graph activation fields:
 `graph_activation`, `graph_scale`, `graph_cap`, `graph_steps`, and
 `graph_decay`. They are disabled by default.
@@ -355,6 +375,11 @@ Hebbian executor, StoreMutation dispatcher, and SQLite persistent executor.
 `synapse_latent_query` accepts `query`, optional `k`, `seed_k`, `scope`,
 `kind`, `scale`, `cap`, `steps`, `decay`, `fanout`, `state_terms`, and
 `goal_terms`, and `auto_context`.
+`synapse_trace` accepts `query`, optional `k`, `latent_k`, `seed_k`,
+`suppressed_k`, `scope`, `kind`, `scale`, `cap`, `steps`, `decay`, `fanout`,
+`state_terms`, `goal_terms`, and `auto_context`. It returns a cognitive trace
+report with dominant and suppressed candidates plus visible and latent
+evidence.
 
 ## kr (CLI)
 
@@ -371,8 +396,10 @@ Hebbian executor, StoreMutation dispatcher, and SQLite persistent executor.
 - `kr reinforce`
 - `kr latent`
 - `kr latent-query`
+- `kr trace` (Experimental)
 
-Flag names and output structure are considered part of the stable public API.
+Flag names and output structure are considered part of the stable public API
+except entries explicitly marked Experimental.
 `kr recall` supports optional graph activation flags:
 `--graph-activation`, `--graph-scale`, `--graph-cap`, `--graph-steps`, and
 `--graph-decay`. They are disabled by default.
@@ -396,6 +423,11 @@ inspecting hidden multi-step activation.
 `--steps`, `--decay`, `--scale`, `--cap`, `--fanout`, repeated `--state`,
 repeated `--goal`, `--auto-context`, `-k`, and `--json` for inspecting
 query-triggered visible seed memories plus their hidden activation paths.
+`kr trace <query>` supports `-k`, `--latent-k`, `--seed-k`,
+`--suppressed-k`, `--scope`, `--kind`, `--steps`, `--decay`, `--scale`,
+`--cap`, `--fanout`, repeated `--state`, repeated `--goal`,
+`--auto-context`, and `--json` for inspecting the dominant candidate,
+suppressed candidates, and hidden paths for a query.
 
 ## synapse-eval
 
