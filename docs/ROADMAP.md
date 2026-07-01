@@ -5,6 +5,7 @@ Current milestone
 ✓ Phase 1 — Capture Engine
 ✓ Phase 2 — Recall Platform (Recall API Freeze)
 ✓ Phase 3 — Memory Evolution Contract (Architecture Freeze)
+✓ P4.1 — Adaptive Memory Foundation (Execution Model Freeze)
 
 Status
 
@@ -19,6 +20,8 @@ Current focus
 Phase 2 concluded with `v0.2.0-recall-api-freeze`. The Recall contract is now considered stable. Future work extends the platform rather than redesigning it.
 
 Phase 3 concluded with `v0.3.9-memory-evolution-freeze`. The Memory Evolution contract layer is now considered stable. Future work should extend these interfaces instead of changing them.
+
+P4.1 concluded with `v0.4.9-adaptive-memory-foundation`. The Adaptive Memory execution model is now considered stable. Future behavior modules should reuse the Plan -> Execute -> Report -> Sink shape.
 
 ## Phase 3 Contract
 
@@ -67,11 +70,20 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- P4.1 Consolidation Executor
 - P4.2 Reflection Processor
 - P4.3 Hebbian Executor
 - P4.4 Forgetting Engine
 - P4.5 Sleep Cycle
+
+Completed foundation
+
+```text
+P4.1 Consolidation Executor
+  -> ConsolidationPlan
+  -> ConsolidationExecutor
+  -> ExecutionReport
+  -> ConsolidationSink
+```
 
 Contract rules
 
@@ -115,3 +127,13 @@ Highlights
 • ReflectionEvent
 • HebbianReinforcementEngine
 • Memory Evolution Contract
+
+v0.4.9-adaptive-memory-foundation
+
+Highlights
+
+• ConsolidationExecutor
+• ExecutionReport
+• ConsolidationSink
+• NoOpSink
+• Plan -> Execute -> Report -> Sink model

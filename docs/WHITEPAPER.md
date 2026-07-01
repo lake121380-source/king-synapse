@@ -133,9 +133,10 @@ The `reference` dataset protects baseline recall behavior. The `multihop` datase
 
 Phase 4 is Adaptive Memory. It should implement strategies behind the frozen contracts instead of changing them.
 
+The P4.1 Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`. Future adaptive behavior modules should reuse the `Plan -> Execute -> Report -> Sink` execution model.
+
 Planned work follows the RFC sequence:
 
-- P4.1 Consolidation Executor
 - P4.2 Reflection Processor
 - P4.3 Hebbian Executor
 - P4.4 Forgetting Engine
