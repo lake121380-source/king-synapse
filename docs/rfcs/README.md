@@ -21,7 +21,7 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 | RFC-006 | Consolidation Execution | Draft |
 | RFC-007 | Reflection Processing | Accepted: `v0.4.10`, `v0.4.11`, `v0.4.12`, `v0.4.19` |
 | RFC-008 | Hebbian Execution | Accepted: `v0.4.20`, `v0.4.21`, `v0.4.22`, `v0.4.29` |
-| RFC-009 | Store Integration | Planned |
+| RFC-009 | Store Integration | Draft |
 | RFC-010 | Adaptive Policies | Planned |
 
 ## Phase 4 Order

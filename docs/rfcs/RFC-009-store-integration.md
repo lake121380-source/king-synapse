@@ -1,0 +1,113 @@
+# RFC-009: Store Integration
+
+Status: Draft
+
+Phase: P4.4 Store Integration
+
+## Summary
+
+Store Integration connects frozen Adaptive Memory behavior reports to persistent state through a canonical mutation plan. It is the first Phase 4 area allowed to introduce durable writes, but only after Store mutations are represented as deterministic plans and routed through adapters.
+
+## Motivation
+
+P4.1 through P4.3 froze behavior modules as deterministic, side-effect-free chains:
+
+```text
+Behavior Layer
+  -> Execution Report
+  -> Sink
+```
+
+The system now needs a single persistence boundary:
+
+```text
+ExecutionReport / ReflectionReport / HebbianExecutionReport
+  -> StoreMutationPlan
+  -> StoreAdapter
+  -> StoreExecutionReport
+```
+
+This prevents behavior modules from directly calling Store and keeps persistence replaceable.
+
+## Scope
+
+In scope:
+
+- Define canonical `StoreMutation` variants.
+- Convert behavior reports into `StoreMutationPlan` values.
+- Introduce `StoreAdapter` as the only Store integration entry point.
+- Keep P4.4.1 through P4.4.3 deterministic and side-effect free.
+- Allow real Store writes only in P4.4.4.
+
+Out of scope:
+
+- Recall contract changes.
+- Memory Evolution contract changes.
+- Direct behavior-module calls to Store.
+- LLM behavior.
+- Adaptive policy selection.
+
+## Canonical Mutation Form
+
+All upstream behavior must be normalized into `StoreMutation`.
+
+```text
+StoreMutation
+  InsertMemory
+  UpdateMemory
+  DeleteMemory
+  ArchiveMemory
+  UpdateEdge
+```
+
+Store must not know whether a mutation came from Consolidation, Reflection, Hebbian, or future policies. Source may be stored as metadata, but it must not change the Store execution path.
+
+## Contract
+
+Store Integration must follow:
+
+```text
+ExecutionReport / ReflectionReport / HebbianExecutionReport
+  -> StoreAdapter
+  -> StoreMutationPlan
+  -> StoreMutationReport
+  -> StoreMutationSink
+  -> StoreExecutor
+```
+
+Adapter is the only Store entry point. Code must not bypass it with direct Store writes.
+
+## P4.4 Milestones
+
+```text
+P4.4.1 Store Adapter Skeleton
+  -> P4.4.2 Store Mutation Dispatcher
+  -> P4.4.3 Store Mutation Sink
+  -> P4.4.4 Persistent Executor
+  -> P4.4 Freeze
+```
+
+P4.4.1 through P4.4.3 must remain pure, deterministic, and side-effect free.
+
+P4.4.4 is the first milestone allowed to perform persistent mutations.
+
+## Invariants
+
+1. Store Integration does not change the Recall contract.
+2. Store Integration does not change frozen behavior reports.
+3. Store Integration must use canonical `StoreMutation` values.
+4. Store must not depend on Reflection, Hebbian, Consolidation, Working Memory, or Recall types through the execution path.
+5. Store writes must go through `StoreAdapter` or its approved executor path.
+6. Store backends must remain replaceable behind adapters.
+7. Persistent writes are forbidden before P4.4.4.
+8. Benchmark baselines must be preserved before merging Store Integration behavior.
+
+## Acceptance Criteria
+
+- RFC-009 defines the Store mutation boundary before code implementation.
+- P4.4.1 introduces adapter skeleton without database IO.
+- P4.4.2 introduces mutation dispatch without database IO.
+- P4.4.3 introduces mutation sink without database IO.
+- P4.4.4 introduces persistent writes through approved adapters.
+- `reference` remains `Recall@10 = 1.000`.
+- `multihop` remains `Recall@10 = 0.600`.
