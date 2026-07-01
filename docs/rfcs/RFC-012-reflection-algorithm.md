@@ -19,6 +19,7 @@ v0.6.2-reflection-deterministic-reference   (implemented)
 v0.6.3-reflection-benchmark                 (implemented)
 v0.6.4-reflection-processing-adapter        (implemented)
 v0.6.5-reflection-store-mutation-plan       (implemented)
+v0.6.6-reflection-rule-based-algorithm      (implemented)
 v0.6.9-reflection-algorithm-freeze          (planned)
 ```
 
@@ -53,6 +54,11 @@ Memory + AlgorithmContext
 ```
 
 The project now needs the first concrete algorithm that uses these frozen contracts without changing them. Reflection is the natural first algorithm because it can improve memory quality while remaining side-effect free until execution.
+
+The `v0.6.6` rule-based algorithm is a stronger heuristic than the deterministic
+reference. It still does not use Store, Recall, LLMs, or graph access, but it
+adds memory-kind weighting and lightweight content signal analysis so the
+behavior is closer to production than the synthetic reference baseline.
 
 ## Goals
 
@@ -265,6 +271,14 @@ Reference implementation expectations:
 - no IO,
 - no mutation.
 
+Rule-based algorithm expectations:
+
+- may produce `Produced` for high-signal memories,
+- may produce `Candidate` for medium-signal memories,
+- must still skip empty or structurally inert memories,
+- must stay deterministic for the same `(target, ctx)` inputs,
+- must remain side-effect free.
+
 ### Stage 4: Produce
 
 Produce converts a positive decision into algorithm-local reflection output suitable for later mapping to RFC-007 types.
@@ -356,6 +370,16 @@ BenchmarkReport {
 For this deterministic reference fixture, `ReflectionYield` is defined as the
 fraction of structurally eligible memories that produce reflection work.
 
+The `v0.6.6` rule-based benchmark uses
+`synapse_eval::rule_based_reflection_yield_report()` and emits:
+
+```text
+BenchmarkReport {
+  benchmark: "reflection-yield-rule-based",
+  metrics: { ReflectionYield: 1.0 }
+}
+```
+
 ## Acceptance Criteria
 
 The Reflection Algorithm RFC is complete when:
@@ -381,6 +405,7 @@ v0.6.0-reflection-algorithm-skeleton
   -> v0.6.3-reflection-benchmark
   -> v0.6.4-reflection-processing-adapter
   -> v0.6.5-reflection-store-mutation-plan
+  -> v0.6.6-reflection-rule-based-algorithm
   -> v0.6.9-reflection-algorithm-freeze
 ```
 
@@ -392,6 +417,7 @@ Milestone constraints:
 - Benchmark milestone emits `BenchmarkReport` and does not introduce a runner/exporter.
 - Processing adapter maps algorithm output into existing Reflection Processing events without Store writes.
 - Store mutation milestone maps Reflection plans into canonical Store mutations without Store writes.
+- Rule-based algorithm adds a more production-like heuristic while preserving deterministic behavior and frozen contracts.
 - Freeze updates API docs only for algorithm-local stable items, not RFC-011.
 
 ## Open Questions

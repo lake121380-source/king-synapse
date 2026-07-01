@@ -122,8 +122,13 @@ v0.6.4-reflection-processing-adapter
 
 v0.6.5-reflection-store-mutation-plan
   ReflectionPlan -> StoreMutationPlan
+
+v0.6.6-rule-based-reflection
+  Deterministic reference -> production-like heuristic
 ```
 
 This keeps the algorithm side-effect free while proving that concrete
 reflection results can enter the existing processing and store-mutation
-planning pipelines. Durable graph writes remain a later backend milestone.
+planning pipelines. Durable graph writes remain a later backend milestone, and
+the rule-based reflection step is the first one that starts resembling a
+production algorithm while preserving frozen contracts.

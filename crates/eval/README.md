@@ -22,12 +22,16 @@ shape.
 ## Algorithm Benchmarks
 
 ```bash
-# RFC-012 deterministic Reflection benchmark
+# RFC-012 reflection benchmark suite (deterministic + rule-based)
 cargo bench -p synapse-eval --bench reflection_yield
 ```
 
-The Reflection benchmark emits a `BenchmarkReport` with
-`benchmark = "reflection-yield"` and `AlgorithmMetric::ReflectionYield`.
+The benchmark emits two `BenchmarkReport` values:
+
+- `benchmark = "reflection-yield"` for the deterministic reference
+- `benchmark = "reflection-yield-rule-based"` for the v0.6.6 rule-based algorithm
+
+Both reports use `AlgorithmMetric::ReflectionYield`.
 
 ## Metrics
 

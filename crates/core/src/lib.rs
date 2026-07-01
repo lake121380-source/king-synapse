@@ -22,7 +22,7 @@ pub use adaptive::{
     ImportanceSignals, InMemoryMemoryEventStream, MemoryEvent, MemoryEventId, MemoryEventKind,
     MemoryEventPayload, MemoryEventStream, MemoryImportance, NoOpImportanceEstimator,
     NoOpMemoryEventStream, NoOpReflectionAlgorithm, ReflectionAlgorithm, ReflectionOutput,
-    ReflectionSkipReason, UniformImportanceEstimator,
+    ReflectionSkipReason, RuleBasedReflectionAlgorithm, UniformImportanceEstimator,
 };
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};

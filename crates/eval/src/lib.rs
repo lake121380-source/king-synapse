@@ -5,7 +5,7 @@ pub mod metrics;
 pub mod reporter;
 pub mod types;
 
-pub use algorithms::reflection_yield_report;
+pub use algorithms::{reflection_yield_report, rule_based_reflection_yield_report};
 pub use contract::{AlgorithmMetric, BenchmarkReport};
 pub use harness::{default_dataset_path, run};
 pub use reporter::print_table;

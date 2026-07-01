@@ -24,5 +24,5 @@ pub use importance::{
 };
 pub use reflection::{
     DeterministicReflectionAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,
-    ReflectionOutput, ReflectionSkipReason,
+    ReflectionOutput, ReflectionSkipReason, RuleBasedReflectionAlgorithm,
 };

@@ -18,6 +18,7 @@ Current milestone
 ✓ v0.6.3 — Reflection Yield Benchmark (RFC-012 benchmark milestone)
 ✓ v0.6.4 — Reflection Processing Adapter
 ✓ v0.6.5 — Reflection Store Mutation Plan
+✓ v0.6.6 — Rule-Based Reflection Algorithm
 
 Status
 
@@ -66,10 +67,11 @@ Completed foundations
 - v0.6.3 — Reflection yield benchmark (`BenchmarkReport` mapped to `ReflectionYield`)
 - v0.6.4 — Reflection output maps into existing Reflection Processing events
 - v0.6.5 — Reflection plans map into canonical StoreMutation plans
+- v0.6.6 — Reflection switches from deterministic reference to rule-based heuristic
 
 Focus
 
-- **RFC-012 Reflection Algorithm** — current milestone; replace deterministic reflection heuristics with production-quality signals before freeze.
+- **RFC-012 Reflection Algorithm** — current milestone; harden the rule-based heuristic and add production-grade benchmarks before freeze.
 - RFC-013 Merge Algorithm — concrete `MergePolicy` + `ConsolidationEngine` implementations.
 - RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.

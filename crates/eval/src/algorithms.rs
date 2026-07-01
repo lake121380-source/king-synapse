@@ -3,10 +3,12 @@ use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, DeterministicReflectionAlgorithm, InMemoryMemoryEventStream, Memory,
     MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    ReflectionAlgorithm, ReflectionOutput, Scope, Source, UniformImportanceEstimator,
+    ReflectionAlgorithm, ReflectionOutput, RuleBasedReflectionAlgorithm, Scope, Source,
+    UniformImportanceEstimator,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
+const RULE_BASED_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-rule-based";
 
 /// Run the RFC-012 deterministic reference benchmark for Reflection.
 ///
@@ -14,6 +16,24 @@ const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 /// produce a candidate output. The fixture is intentionally small and fixed so
 /// the `BenchmarkReport` remains a deterministic value object.
 pub fn reflection_yield_report() -> BenchmarkReport {
+    reflection_yield_report_for(
+        REFLECTION_BENCHMARK_NAME,
+        &DeterministicReflectionAlgorithm::default(),
+    )
+}
+
+/// Run the v0.6.6 rule-based Reflection benchmark.
+pub fn rule_based_reflection_yield_report() -> BenchmarkReport {
+    reflection_yield_report_for(
+        RULE_BASED_REFLECTION_BENCHMARK_NAME,
+        &RuleBasedReflectionAlgorithm::default(),
+    )
+}
+
+fn reflection_yield_report_for(
+    benchmark_name: &str,
+    algorithm: &dyn ReflectionAlgorithm,
+) -> BenchmarkReport {
     let memories = reflection_fixture();
     let eligible_count = memories
         .iter()
@@ -39,7 +59,6 @@ pub fn reflection_yield_report() -> BenchmarkReport {
     }
 
     let ctx = AlgorithmContext::new(now, None, &importance, &events);
-    let algorithm = DeterministicReflectionAlgorithm::default();
     let produced_count = memories
         .iter()
         .filter(|memory| {
@@ -57,7 +76,7 @@ pub fn reflection_yield_report() -> BenchmarkReport {
     };
 
     BenchmarkReport {
-        benchmark: REFLECTION_BENCHMARK_NAME.to_string(),
+        benchmark: benchmark_name.to_string(),
         metrics: BTreeMap::from([(AlgorithmMetric::ReflectionYield, yield_value)]),
     }
 }
@@ -126,6 +145,18 @@ mod tests {
         let report = reflection_yield_report();
 
         assert_eq!(report.benchmark, "reflection-yield");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::ReflectionYield),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn rule_based_reflection_yield_report_uses_contract_shape() {
+        let report = rule_based_reflection_yield_report();
+
+        assert_eq!(report.benchmark, "reflection-yield-rule-based");
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::ReflectionYield),

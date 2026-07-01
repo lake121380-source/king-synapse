@@ -243,6 +243,7 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 - `ReflectionSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
 - `NoOpReflectionAlgorithm`
 - `DeterministicReflectionAlgorithm` (reference implementation; reproducible baseline, not production)
+- `RuleBasedReflectionAlgorithm` (deterministic heuristic implementation; closer to production than the reference)
 
 Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, and `v0.6.4-reflection-processing-adapter`. These items are Reflection-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
