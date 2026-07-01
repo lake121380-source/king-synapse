@@ -1,8 +1,17 @@
 # RFC-010: Adaptive Policies
 
-Status: Draft
+Status: Accepted
 
 Phase: P4.5 Adaptive Policies
+
+Implementation Tags:
+
+```text
+v0.4.40-adaptive-policy-skeleton
+v0.4.41-adaptive-policy-dispatcher
+v0.4.42-adaptive-policy-sink
+v0.4.49-adaptive-policies-freeze
+```
 
 Subtitle: Policy Layer for Adaptive Memory Decision Making
 

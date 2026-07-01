@@ -168,8 +168,11 @@ P4.3 Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze` and remai
 
 P4.4 Store Integration is frozen at `v0.4.39-store-integration-freeze`. It defines the canonical persistence boundary for Phase 4 behavior modules and is the first Phase 4 milestone allowed to perform durable writes.
 
-Planned work follows the RFC sequence:
+P4.5 Adaptive Policies is frozen at `v0.4.49-adaptive-policies-freeze`. It introduces a dedicated decision layer above the frozen execution chains. Policies emit only `PolicyDecision::{Execute, Skip, Delay}` and never mutate memory. Phase 4 is now complete.
 
-- P4.5 Adaptive Policies
+Planned work:
+
+- v0.5.0 Architecture Freeze (whole-project public API freeze, SemVer policy)
+- Phase 5 Algorithm Implementation
 
 The development mode changes from defining interfaces to validating algorithms.

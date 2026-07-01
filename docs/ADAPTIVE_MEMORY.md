@@ -79,11 +79,22 @@ ExecutionReport / ReflectionReport / HebbianExecutionReport
 
 Status: frozen by `v0.4.39-store-integration-freeze`.
 
+### Adaptive Policies
+
+```text
+PolicyRequest
+  -> AdaptivePolicyEngine
+  -> PolicyReport
+  -> PolicySink
+```
+
+Status: frozen by `v0.4.49-adaptive-policies-freeze`. Policies emit `PolicyDecision::{Execute, Skip, Delay}` only. Policies never mutate memory, never call executors, and never touch Store or Recall.
+
 ## Current Boundary
 
-Adaptive Memory is deterministic and side-effect free through P4.3. P4.4 introduced the first Phase 4 milestone allowed to perform durable writes, and only through `StoreAdapter` or `PersistentStoreExecutor`.
+Adaptive Memory is deterministic and side-effect free through P4.3. P4.4 introduced the first Phase 4 milestone allowed to perform durable writes, and only through `StoreAdapter` or `PersistentStoreExecutor`. P4.5 introduced the Policy Layer above the frozen execution chains.
 
-Frozen behavior modules may produce reports, but they must not directly mutate Store, graph edges, Recall scoring, or Working Memory. All persistence is routed through the frozen Store Integration boundary.
+Frozen behavior modules may produce reports, but they must not directly mutate Store, graph edges, Recall scoring, or Working Memory. All persistence is routed through the frozen Store Integration boundary. All decision making about whether frozen capabilities should run is routed through the frozen Policy Layer.
 
 ## P4.5 Adaptive Policies
 

@@ -51,3 +51,14 @@ ExecutionReport / ReflectionReport / HebbianExecutionReport
 ```
 
 Store Integration is the first Phase 4 area allowed to perform durable writes. All persistence flows through `StoreAdapter` or `PersistentStoreExecutor`; behavior modules must not call Store directly. Frozen by `v0.4.39-store-integration-freeze`.
+
+## Adaptive Policies
+
+```text
+PolicyRequest
+  -> AdaptivePolicyEngine
+  -> PolicyReport
+  -> PolicySink
+```
+
+Adaptive Policies sit above the frozen Adaptive Memory execution chains and decide whether existing capabilities should run. Policies emit only `PolicyDecision::{Execute, Skip, Delay}`; they never mutate memory and never call executors or Store. Frozen by `v0.4.49-adaptive-policies-freeze`.

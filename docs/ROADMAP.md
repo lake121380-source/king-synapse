@@ -9,6 +9,7 @@ Current milestone
 ✓ P4.2 — Reflection Processing (Contract Freeze)
 ✓ P4.3 — Hebbian Execution (Contract Freeze)
 ✓ P4.4 — Store Integration (Contract Freeze)
+✓ P4.5 — Adaptive Policies (Contract Freeze)
 
 Status
 
@@ -31,6 +32,8 @@ P4.2 concluded with `v0.4.19-reflection-processing-freeze`. Reflection Processin
 P4.3 concluded with `v0.4.29-hebbian-execution-freeze`. Hebbian Execution is now contract-frozen and remains deterministic and side-effect free.
 
 P4.4 concluded with `v0.4.39-store-integration-freeze`. Store Integration is now contract-frozen and defines the canonical persistence boundary for Phase 4 behavior modules.
+
+P4.5 concluded with `v0.4.49-adaptive-policies-freeze`. Adaptive Policies is now contract-frozen. Phase 4 is complete.
 
 ## Phase 3 Contract
 
@@ -79,7 +82,8 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- P4.5 Adaptive Policies
+- v0.5.0 Architecture Freeze (whole-project public API freeze, SemVer policy)
+- Phase 5 Algorithm Implementation
 
 Completed foundation
 
@@ -114,6 +118,12 @@ P4.4 Store Integration
   -> StoreAdapter / PersistentStoreExecutor
   -> StoreExecutionReport
   -> StoreSink
+
+P4.5 Adaptive Policies
+  -> PolicyRequest
+  -> AdaptivePolicyEngine
+  -> PolicyReport
+  -> PolicySink
 ```
 
 Contract rules
@@ -202,3 +212,16 @@ Highlights
 • StoreSink
 • PersistentStoreExecutor
 • SQLitePersistentStoreExecutor
+
+v0.4.49-adaptive-policies-freeze
+
+Highlights
+
+• PolicyDecision
+• AdaptivePolicy
+• ReflectionPolicy / HebbianPolicy / ForgetPolicy / MergePolicy
+• PolicyRequest / PolicyReport
+• AdaptivePolicyEngine
+• DeterministicAdaptivePolicyEngine
+• PolicySink
+• NoOpPolicySink
