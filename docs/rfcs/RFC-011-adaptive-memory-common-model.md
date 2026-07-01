@@ -352,7 +352,7 @@ Milestone constraints:
 Benchmark baselines must be preserved across every milestone:
 
 - `reference` `Recall@10 = 1.000`
-- `multihop` `Recall@10 = 0.600`
+- `multihop` `Recall@10 = 1.000` after ADR-006
 
 ## Post-Freeze Rules
 
@@ -448,5 +448,5 @@ These are deferred to follow-up RFCs, each of which will reference RFC-011.
 - v0.5.3 scaffolds the benchmark harness and introduces `AlgorithmMetric` without changing baselines.
 - v0.5.9 freezes RFC-011 as Accepted.
 - `reference` remains `Recall@10 = 1.000`.
-- `multihop` remains `Recall@10 = 0.600`.
+- `multihop` remains `Recall@10 = 1.000` after ADR-006.
 - No stable Phase 1–4 API is modified by RFC-011 milestones.

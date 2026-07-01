@@ -60,7 +60,7 @@ Recall Platform is stable and query-agnostic. Working Memory is session-scoped a
 1. Phase 5 must not change any Stable API listed in `docs/API_SURFACE.md`.
 2. Algorithm implementations plug in behind existing traits and their `NoOp` slots.
 3. Breaking changes to Stable APIs require an ADR and a `0.6.0` release (see `docs/COMPATIBILITY.md`).
-4. Frozen benchmark baselines (`reference` = `Recall@10 = 1.000`, `multihop` = `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
+4. Frozen benchmark baselines (`reference` = `Recall@10 = 1.000`, `multihop` = `Recall@10 = 1.000` after ADR-006) must be preserved or explicitly renegotiated through ADR.
 5. Concrete algorithms must remain replaceable behind their traits; no algorithm becomes a hard dependency of the framework.
 
 ## Final Adaptive Memory Architecture (Frozen `v0.5.9`)

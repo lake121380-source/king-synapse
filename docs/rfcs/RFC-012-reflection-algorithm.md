@@ -392,7 +392,7 @@ The Reflection Algorithm RFC is complete when:
 - It adds at least one `BenchmarkReport`-producing benchmark mapped to `ReflectionYield`.
 - Production implementations are compared against the deterministic reference implementation before freeze.
 - It preserves `reference` `Recall@10 = 1.000`.
-- It preserves `multihop` `Recall@10 = 0.600`.
+- It preserves `multihop` `Recall@10 = 1.000` after ADR-006.
 - `cargo test --workspace` passes.
 - `cargo clippy --all-targets -- -D warnings` passes.
 - Empty input and normal input are manually validated.

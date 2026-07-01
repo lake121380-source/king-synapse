@@ -151,7 +151,7 @@ Behavior changes must preserve the frozen baselines:
 
 ```text
 reference Recall@10 = 1.000
-multihop  Recall@10 = 0.600
+multihop  Recall@10 = 1.000 after ADR-006
 ```
 
 The `reference` dataset protects baseline recall behavior. The `multihop` dataset captures the starting line for future adaptive memory algorithms.
@@ -178,7 +178,7 @@ Phase 1 through Phase 4 delivered a **Memory Runtime Architecture**: capture, re
 
 - The whole-project public API is enumerated in `docs/API_SURFACE.md` and classified as **Stable**, **Experimental**, or **Internal**.
 - Compatibility rules are codified in `docs/COMPATIBILITY.md`. Pre-1.0 `0.5.x` releases cannot break stable APIs; breaking changes require a `0.6.0` release and ADR approval.
-- Benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 0.600`) are covered by the same policy.
+- Benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 1.000` after ADR-006) are covered by the same policy.
 - Every capability follows the same shape: `Trait → NoOp → Dispatcher → Report → Sink`.
 - Every call flows the same direction: `Policy → Execution → Storage`.
 - Every subsystem sits in the same stack: `Recall Platform → Working Memory → Adaptive Memory → Store`.

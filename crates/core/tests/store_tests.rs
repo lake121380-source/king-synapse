@@ -125,6 +125,36 @@ fn entity_expansion_boosts_shared_entity_memories() {
 }
 
 #[test]
+fn cjk_query_expansion_recalls_technical_seed_memories() {
+    let mut s = Store::open_in_memory().unwrap();
+    let dim = add(
+        &mut s,
+        "memory_vecs is declared as vec0(embedding float[768]); validate VEC_DIM before put_embedding",
+        MemoryKind::Fact,
+    );
+    let prefix = add(
+        &mut s,
+        "Multilingual E5 needs explicit prefixes: passage for documents and query for user queries",
+        MemoryKind::Fact,
+    );
+
+    let q = RecallQuery {
+        query: "为了避免向量检索误判，需要一起检查哪条维度约束和哪条前缀记忆？".to_string(),
+        k: Some(10),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let hits = recall(&mut s, &q);
+    let ids = hits
+        .iter()
+        .map(|hit| hit.memory.id.as_str())
+        .collect::<Vec<_>>();
+
+    assert!(ids.contains(&dim.as_str()));
+    assert!(ids.contains(&prefix.as_str()));
+}
+
+#[test]
 fn neighbors_returns_shared_entity_memories() {
     let mut s = Store::open_in_memory().unwrap();
     let a = add(&mut s, "pnpm install fails on Windows", MemoryKind::Failure);

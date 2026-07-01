@@ -110,7 +110,7 @@ Before an algorithm freeze, the implementation MUST pass:
 1. `cargo test --workspace`
 2. `cargo clippy --all-targets -- -D warnings`
 3. Frozen baseline check: `reference` `Recall@10 = 1.000`
-4. Frozen baseline check: `multihop` `Recall@10 = 0.600`
+4. Frozen baseline check: `multihop` `Recall@10 = 1.000` after ADR-006
 5. At least one deterministic benchmark producing `BenchmarkReport`
 6. At least one normal input manual validation
 7. At least one error or empty input manual validation

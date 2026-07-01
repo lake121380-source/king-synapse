@@ -130,7 +130,7 @@ non-breaking.
 | Path | Role |
 | --- | --- |
 | `datasets/reference.toml` | Recall Platform baseline. `Recall@10 = 1.000` — must not regress. |
-| `datasets/multihop.toml` | Multi-hop baseline. `Recall@10 = 0.600` — must not regress. |
+| `datasets/multihop.toml` | Multi-hop and mixed Chinese/English technical recall baseline. `Recall@10 = 1.000` after ADR-006 CJK query expansion — must not regress. |
 | `datasets/coding_mem.toml` | Bundled 20-memory / 30-query golden set for `cargo bench-recall`. |
 | `datasets/regression/` | Frozen regression datasets. Add here to lock in a known corpus + queries and detect future retrieval / algorithm regressions. |
 | `datasets/synthetic/` | Synthetic datasets for scale and stress testing (controlled size and distribution). |

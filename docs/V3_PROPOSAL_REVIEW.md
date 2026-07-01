@@ -108,7 +108,7 @@ Implement `v0.6.3-reflection-benchmark`:
 - use only public APIs;
 - preserve frozen recall baselines:
   - `reference` Recall@10 = `1.000`;
-  - `multihop` Recall@10 = `0.600`.
+  - `multihop` Recall@10 = `1.000` after ADR-006.
 
 After this milestone, the project can compare future Reflection algorithms
 against a known deterministic reference instead of arguing from architecture

@@ -101,7 +101,7 @@ When a stable item must be replaced:
 The following baselines are contractually stable and must be preserved:
 
 - `reference` dataset: `Recall@10 = 1.000`
-- `multihop` dataset: `Recall@10 = 0.600`
+- `multihop` dataset: `Recall@10 = 1.000` after ADR-006 CJK query expansion
 
 Any change that regresses these values on the frozen datasets is a breaking change and must be gated behind the same versioning rules as API breaks.
 

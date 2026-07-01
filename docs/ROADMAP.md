@@ -116,6 +116,7 @@ Completed foundations
 - v0.9.12 — query text can derive state and goal terms for latent inspection while keeping recall ranking unchanged
 - v0.9.13 — Chinese cognitive-chain benchmark covers visible seed recall into hidden latent influence
 - v0.9.14 — optional latent activation booster can add hidden-path bonus to existing recall candidates
+- v0.9.15 — deterministic CJK query expansion raises `multihop` Recall@10 to 1.000
 
 Focus
 
@@ -129,7 +130,7 @@ Focus
 Rules
 
 1. Phase 5 must not change any Stable API. All work plugs in behind existing traits.
-2. Frozen benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
+2. Frozen benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 1.000` after ADR-006) must be preserved or explicitly renegotiated through ADR.
 3. Every concrete algorithm ships with a benchmark run demonstrating baseline preservation and target-metric improvement.
 4. Algorithm parameters are internal by default; promotion to Stable API requires an ADR.
 5. Post-freeze rules of RFC-011 apply: uniform call shape `fn method(&self, target, ctx)`, no new top-level shared types under `adaptive/`, algorithm RFCs are independent of one another, `AlgorithmContext` never owns data, benchmarks use only public API, renaming a frozen type is breaking.

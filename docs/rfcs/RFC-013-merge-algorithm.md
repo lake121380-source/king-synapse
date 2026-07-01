@@ -179,4 +179,4 @@ predictions.
 - `cargo test --workspace` passes.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.
-- `multihop` Recall@10 remains `0.600`.
+- `multihop` Recall@10 remains `1.000` after ADR-006.

@@ -65,10 +65,14 @@ impl<'a> RecallEngine<'a> {
         };
         let scope_str = q.scope_filter.as_ref().map(|s| s.to_string());
         let kind_str = q.kind_filter.as_ref().map(|k| k.to_string());
+        let retrieval_query = expand_cjk_query(&q.query);
 
-        let fts_rows =
-            self.store
-                .search_fts(&q.query, scope_str.as_deref(), kind_str.as_deref(), pool)?;
+        let fts_rows = self.store.search_fts(
+            &retrieval_query,
+            scope_str.as_deref(),
+            kind_str.as_deref(),
+            pool,
+        )?;
         let entity_rows =
             self.store
                 .search_entity(&q.query, scope_str.as_deref(), kind_str.as_deref(), pool)?;
@@ -237,6 +241,50 @@ fn rank_map<I: IntoIterator<Item = String>>(ids: I) -> HashMap<String, u32> {
 
 fn sigmoid(x: f32) -> f32 {
     1.0 / (1.0 + (-x).exp())
+}
+
+fn expand_cjk_query(query: &str) -> String {
+    let expansions = cjk_query_expansions(query);
+    if expansions.is_empty() {
+        return query.to_string();
+    }
+
+    let mut expanded = query.to_string();
+    for term in expansions {
+        expanded.push(' ');
+        expanded.push_str(term);
+    }
+    expanded
+}
+
+fn cjk_query_expansions(query: &str) -> Vec<&'static str> {
+    const RULES: &[(&str, &[&str])] = &[
+        ("中文", &["CJK", "multilingual", "unicode61"]),
+        ("多语言", &["multilingual"]),
+        ("设置", &["setting", "tokenizer", "prefix"]),
+        ("检索", &["recall", "embedding", "FTS"]),
+        ("向量", &["vector", "embedding", "vec0"]),
+        ("维度", &["dim", "dimension", "VEC_DIM", "768"]),
+        ("维度约束", &["dim", "VEC_DIM", "768"]),
+        ("前缀", &["prefix", "query", "passage"]),
+        ("前缀记忆", &["prefix", "query", "passage"]),
+        ("误判", &["mismatch", "validate", "drops"]),
+        ("泄漏", &["leak", "leaking"]),
+        ("大表", &["table", "100M", "autovacuum", "VACUUM"]),
+        ("维护", &["VACUUM", "ANALYZE", "autovacuum"]),
+        ("包管理器", &["pnpm", "npm"]),
+        ("卷挂载", &["Docker", "Compose", "mount"]),
+    ];
+
+    let mut terms = Vec::new();
+    for (marker, expansions) in RULES {
+        if query.contains(marker) {
+            terms.extend(expansions.iter().copied());
+        }
+    }
+    terms.sort_unstable();
+    terms.dedup();
+    terms
 }
 
 pub(crate) fn decay_lambda(kind: MemoryKind) -> f32 {

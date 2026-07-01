@@ -51,6 +51,13 @@ Store is responsible for storage only. It never performs retrieval orchestration
 
 Each stage has exactly one responsibility. Cross-stage behavior is prohibited.
 
+The FTS retriever still receives a deterministic Store-level `MATCH`
+expression, not an interpreted semantic query. As of ADR-006, `RecallEngine`
+may add a small CJK technical query-expansion dictionary before calling Store
+FTS so Chinese phrases such as "维度约束" and "前缀记忆" can bridge to
+existing English/code tokens like `VEC_DIM`, `embedding`, `prefix`, `query`,
+and `passage`.
+
 ---
 
 ## 3. Score Formula
