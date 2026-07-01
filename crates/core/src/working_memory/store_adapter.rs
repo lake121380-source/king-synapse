@@ -41,12 +41,32 @@ pub enum StoreMutation {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct StoreExecutionReport {
     pub executed: Vec<StoreMutation>,
+    pub skipped: Vec<SkippedStoreMutation>,
+    pub warnings: Vec<StoreExecutionWarning>,
+    pub statistics: StoreExecutionStatistics,
 }
 
 impl StoreExecutionReport {
     pub fn is_empty(&self) -> bool {
-        self.executed.is_empty()
+        self.executed.is_empty() && self.skipped.is_empty()
     }
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct StoreExecutionStatistics {
+    pub executed: usize,
+    pub skipped: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct StoreExecutionWarning {
+    pub message: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum SkippedStoreMutation {
+    Failed(StoreMutation),
+    Unsupported(StoreMutation),
 }
 
 pub struct NoOpStoreAdapter;
@@ -61,8 +81,13 @@ pub struct PlanOnlyStoreAdapter;
 
 impl StoreAdapter for PlanOnlyStoreAdapter {
     fn execute(&self, plan: &StoreMutationPlan) -> StoreExecutionReport {
-        StoreExecutionReport {
+        let mut report = StoreExecutionReport {
             executed: plan.mutations.clone(),
-        }
+            skipped: Vec::new(),
+            warnings: Vec::new(),
+            statistics: StoreExecutionStatistics::default(),
+        };
+        report.statistics.executed = report.executed.len();
+        report
     }
 }

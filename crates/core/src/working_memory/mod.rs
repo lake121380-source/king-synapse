@@ -10,6 +10,7 @@ mod executor;
 mod hebbian;
 mod hebbian_sink;
 mod item;
+mod persistent_store;
 mod reflection;
 mod reflection_processing;
 mod reflection_sink;
@@ -36,6 +37,10 @@ pub use hebbian::{
 };
 pub use hebbian_sink::{HebbianSink, NoOpHebbianSink};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
+pub use persistent_store::{
+    KuzuPersistentStoreExecutor, NoOpPersistentStoreExecutor, PersistentStoreExecutor,
+    SQLitePersistentStoreExecutor,
+};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
     ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
@@ -49,7 +54,8 @@ pub use reflection_sink::{NoOpReflectionSink, ReflectionSink};
 pub use session::SessionId;
 pub use sink::{ConsolidationSink, NoOpSink};
 pub use store_adapter::{
-    NoOpStoreAdapter, PlanOnlyStoreAdapter, StoreAdapter, StoreExecutionReport, StoreMutation,
+    NoOpStoreAdapter, PlanOnlyStoreAdapter, SkippedStoreMutation, StoreAdapter,
+    StoreExecutionReport, StoreExecutionStatistics, StoreExecutionWarning, StoreMutation,
     StoreMutationPlan,
 };
 pub use store_dispatcher::{
@@ -60,6 +66,7 @@ pub use store_sink::{NoOpStoreSink, StoreSink};
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Store;
     use chrono::{Duration as ChronoDuration, Utc};
     use std::time::Duration;
 
@@ -359,6 +366,7 @@ mod tests {
         let report = adapter.execute(&plan);
 
         assert!(report.is_empty());
+        assert_eq!(report.statistics, StoreExecutionStatistics::default());
     }
 
     #[test]
@@ -381,6 +389,10 @@ mod tests {
         let report = adapter.execute(&plan);
 
         assert_eq!(report.executed, plan.mutations);
+        assert!(report.skipped.is_empty());
+        assert!(report.warnings.is_empty());
+        assert_eq!(report.statistics.executed, 2);
+        assert_eq!(report.statistics.skipped, 0);
     }
 
     #[test]
@@ -504,6 +516,77 @@ mod tests {
         assert_eq!(report, report_after_sink);
         assert_eq!(sink_a.observed.get(), 1);
         assert_eq!(sink_b.observed.get(), 1);
+    }
+
+    #[test]
+    fn noop_persistent_store_executor_returns_empty_report() {
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::InsertMemory {
+                id: "mem-a".to_string(),
+                content: "hello".to_string(),
+            }],
+        };
+        let mut executor = NoOpPersistentStoreExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert!(report.is_empty());
+    }
+
+    #[test]
+    fn sqlite_persistent_store_executor_inserts_memory() {
+        let mut store = Store::open_in_memory().unwrap();
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::InsertMemory {
+                id: "mem-a".to_string(),
+                content: "persistent hello".to_string(),
+            }],
+        };
+        let original = plan.clone();
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(plan, original);
+        assert_eq!(report.executed, plan.mutations);
+        assert!(report.skipped.is_empty());
+        assert_eq!(report.statistics.executed, 1);
+        assert_eq!(store.count().unwrap(), 1);
+    }
+
+    #[test]
+    fn sqlite_persistent_store_executor_handles_empty_plan() {
+        let mut store = Store::open_in_memory().unwrap();
+        let plan = StoreMutationPlan::default();
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert!(report.is_empty());
+        assert_eq!(store.count().unwrap(), 0);
+    }
+
+    #[test]
+    fn sqlite_persistent_store_executor_reports_unsupported_mutations() {
+        let mut store = Store::open_in_memory().unwrap();
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::UpdateEdge {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.1,
+            }],
+        };
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert!(report.executed.is_empty());
+        assert_eq!(
+            report.skipped,
+            vec![SkippedStoreMutation::Unsupported(plan.mutations[0].clone())]
+        );
+        assert_eq!(report.statistics.skipped, 1);
+        assert_eq!(store.count().unwrap(), 0);
     }
 
     #[test]

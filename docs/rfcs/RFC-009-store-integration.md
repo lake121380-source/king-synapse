@@ -39,6 +39,7 @@ In scope:
 - Introduce `StoreAdapter` as the only Store integration entry point.
 - Keep P4.4.1 through P4.4.3 deterministic and side-effect free.
 - Allow real Store writes only in P4.4.4.
+- Execute persistent mutations through `PersistentStoreExecutor`.
 
 Out of scope:
 
@@ -111,6 +112,16 @@ P4.4.1 through P4.4.3 must remain pure, deterministic, and side-effect free.
 
 P4.4.4 is the first milestone allowed to perform persistent mutations.
 
+Persistent execution uses one report shape:
+
+```text
+StoreMutationPlan
+  -> PersistentStoreExecutor
+  -> StoreExecutionReport
+```
+
+Executors must match on `StoreMutation` only. They must not branch on behavior source such as Reflection, Hebbian, or Consolidation.
+
 ## Invariants
 
 1. Store Integration does not change the Recall contract.
@@ -129,6 +140,9 @@ P4.4.4 is the first milestone allowed to perform persistent mutations.
 14. Multiple Store sinks must observe the same immutable report deterministically.
 15. Store sink execution must not affect StoreAdapter output.
 16. Store sinks must not produce persistent writes.
+17. Persistent executors must not introduce backend-specific report types.
+18. Persistent executors must not inspect behavior-module sources.
+19. SQLite execution must use approved Store APIs instead of bypassing the Store layer with direct SQL.
 
 ## Acceptance Criteria
 
