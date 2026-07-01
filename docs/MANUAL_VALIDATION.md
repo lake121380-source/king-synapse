@@ -2,10 +2,16 @@
 
 Status: **Baseline Transcript**
 
+Latest dated run:
+`docs/releases/v0.9.26-manual-validation-2026-07-02.md`
+
 This file records manual validation scenarios for the user-facing cognitive
 memory surfaces. Commands that would persist memories should be run against a
 temporary configuration or in-memory harness during release validation, not
 against a user's default database.
+
+Use `KING_SYNAPSE_DB` and `KING_SYNAPSE_CONFIG` to point CLI/MCP validation at
+a temporary database and config file.
 
 ## Scope
 

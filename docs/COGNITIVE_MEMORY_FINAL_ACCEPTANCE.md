@@ -42,7 +42,7 @@ of visible and hidden associations.
 | Exported long-session validation | `crates/eval/datasets/exported_cognitive_session.toml`, `exported_cognitive_session_report()` |
 | Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
 | Broader activation parameter sweep | `activation_parameter_sweep_report()`, `crates/eval/README.md` |
-| Manual surface validation | `docs/MANUAL_VALIDATION.md` |
+| Manual surface validation | `docs/MANUAL_VALIDATION.md`, `docs/releases/v0.9.26-manual-validation-2026-07-02.md` |
 | Release-candidate evidence | `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` |
 | Full gate validation | `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md` |
 | Final release scope disposition | `docs/adr/ADR-007-cognitive-memory-final-release-scope.md` |
@@ -102,7 +102,8 @@ Expected minimums:
 - External comparison runs are moved out of final scope by
   `docs/adr/ADR-007-cognitive-memory-final-release-scope.md`; keep the
   exported long-session benchmark as the reproducible internal baseline.
-- Rerun and paste dated manual validation outputs for final release using
+- Dated manual validation outputs were recorded in
+  `docs/releases/v0.9.26-manual-validation-2026-07-02.md` using
   `docs/MANUAL_VALIDATION.md` as the baseline transcript.
 - UI/deeper agent integrations are post-final product milestones by
   `docs/adr/ADR-007-cognitive-memory-final-release-scope.md`.
