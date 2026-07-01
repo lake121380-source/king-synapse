@@ -57,6 +57,7 @@ Hebbian Execution must follow:
 EdgeUpdatePlan
   -> HebbianExecutor
   -> HebbianExecutionReport
+  -> HebbianSink
 ```
 
 `HebbianExecutionReport` describes semantic execution outcomes only. Operational metrics belong to observers or future sinks.
@@ -68,6 +69,15 @@ The report contains:
 - Warnings
 - Statistics
 
+Sinks consume reports only:
+
+```text
+HebbianExecutionReport
+  -> HebbianSink
+```
+
+Sinks are observers. They must not generate plans, mutate reports, mutate graph edges, call Store, or call Recall.
+
 ## Invariants
 
 1. Hebbian Execution does not change the Recall contract.
@@ -78,6 +88,10 @@ The report contains:
 6. Executor output is deterministic for the same input plans.
 7. Dispatcher must not modify `EdgeUpdatePlan` input values.
 8. Executor must only generate execution reports, not apply edge updates.
+9. `HebbianExecutionReport` is immutable after execution.
+10. `HebbianSink` may observe reports, but it must not mutate them.
+11. Multiple sinks must observe the same immutable report deterministically.
+12. Sink failures must not affect executor output.
 
 ## Acceptance Criteria
 

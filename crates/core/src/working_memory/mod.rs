@@ -8,6 +8,7 @@ mod buffer;
 mod consolidation;
 mod executor;
 mod hebbian;
+mod hebbian_sink;
 mod item;
 mod reflection;
 mod reflection_processing;
@@ -30,6 +31,7 @@ pub use hebbian::{
     HebbianExecutionWarning, HebbianExecutor, HebbianReinforcementEngine, NoOpHebbianExecutor,
     NoOpHebbianReinforcementEngine, PlanOnlyHebbianExecutor, SkippedEdgeUpdate,
 };
+pub use hebbian_sink::{HebbianSink, NoOpHebbianSink};
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
@@ -282,6 +284,55 @@ mod tests {
         assert_eq!(report_a.warnings.len(), 1);
         assert_eq!(report_a.statistics.executed, 1);
         assert_eq!(report_a.statistics.skipped, 1);
+    }
+
+    #[test]
+    fn noop_hebbian_sink_consumes_report_without_mutating_it() {
+        let plans = vec![EdgeUpdatePlan {
+            source: "mem-a".to_string(),
+            target: "mem-b".to_string(),
+            weight_delta: 0.1,
+        }];
+        let executor = PlanOnlyHebbianExecutor;
+        let report = executor.execute(&plans);
+        let original = report.clone();
+        let mut sink = NoOpHebbianSink;
+
+        sink.consume(&report);
+
+        assert_eq!(report, original);
+    }
+
+    #[test]
+    fn multiple_hebbian_sinks_observe_same_report() {
+        #[derive(Default)]
+        struct CountingSink {
+            observed_actions: usize,
+        }
+
+        impl HebbianSink for CountingSink {
+            fn consume(&mut self, report: &HebbianExecutionReport) {
+                self.observed_actions = report.executed_actions.len();
+            }
+        }
+
+        let plans = vec![EdgeUpdatePlan {
+            source: "mem-a".to_string(),
+            target: "mem-b".to_string(),
+            weight_delta: 0.1,
+        }];
+        let executor = PlanOnlyHebbianExecutor;
+        let report = executor.execute(&plans);
+        let report_after_dispatch = executor.execute(&plans);
+        let mut sink_a = CountingSink::default();
+        let mut sink_b = CountingSink::default();
+
+        sink_a.consume(&report);
+        sink_b.consume(&report);
+
+        assert_eq!(report, report_after_dispatch);
+        assert_eq!(sink_a.observed_actions, 1);
+        assert_eq!(sink_b.observed_actions, 1);
     }
 
     #[test]
