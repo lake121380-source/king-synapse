@@ -24,6 +24,9 @@ shape.
 ```bash
 # RFC-012 reflection benchmark suite (deterministic + rule-based)
 cargo bench -p synapse-eval --bench reflection_yield
+
+# RFC-013 merge benchmark suite (rule-based)
+cargo bench -p synapse-eval --bench merge_precision
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -32,6 +35,12 @@ The benchmark emits two `BenchmarkReport` values:
 - `benchmark = "reflection-yield-rule-based"` for the v0.6.6 rule-based algorithm
 
 Both reports use `AlgorithmMetric::ReflectionYield`.
+
+The merge benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "merge-precision"` for the v0.7.3 rule-based merge algorithm
+
+The report uses `AlgorithmMetric::MergePrecision`.
 
 ## Metrics
 

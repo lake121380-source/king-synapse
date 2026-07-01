@@ -3,12 +3,14 @@ use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, DeterministicReflectionAlgorithm, InMemoryMemoryEventStream, Memory,
     MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    ReflectionAlgorithm, ReflectionOutput, RuleBasedReflectionAlgorithm, Scope, Source,
+    MergeAlgorithm, MergeOutput, MergeTarget, ReflectionAlgorithm, ReflectionOutput,
+    RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm, Scope, Source,
     UniformImportanceEstimator,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const RULE_BASED_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-rule-based";
+const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 
 /// Run the RFC-012 deterministic reference benchmark for Reflection.
 ///
@@ -28,6 +30,45 @@ pub fn rule_based_reflection_yield_report() -> BenchmarkReport {
         RULE_BASED_REFLECTION_BENCHMARK_NAME,
         &RuleBasedReflectionAlgorithm::default(),
     )
+}
+
+/// Run the RFC-013 rule-based Merge benchmark.
+///
+/// `MergePrecision` is the fraction of emitted `Merge` decisions that are
+/// known true positives in the deterministic fixture. `Candidate` decisions
+/// are intentionally not counted as merge predictions.
+pub fn merge_precision_report() -> BenchmarkReport {
+    let groups = merge_fixture();
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(16);
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0)
+        .expect("fixed benchmark timestamp must be valid");
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let algorithm = RuleBasedMergeAlgorithm::default();
+
+    let mut true_positives = 0usize;
+    let mut false_positives = 0usize;
+
+    for (target, expected_merge) in groups {
+        let predicted_merge = matches!(algorithm.merge(&target, &ctx), MergeOutput::Merge { .. });
+        if predicted_merge && expected_merge {
+            true_positives += 1;
+        } else if predicted_merge {
+            false_positives += 1;
+        }
+    }
+
+    let predicted_count = true_positives + false_positives;
+    let precision = if predicted_count == 0 {
+        0.0
+    } else {
+        true_positives as f64 / predicted_count as f64
+    };
+
+    BenchmarkReport {
+        benchmark: MERGE_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::MergePrecision, precision)]),
+    }
 }
 
 fn reflection_yield_report_for(
@@ -111,11 +152,108 @@ fn reflection_fixture() -> Vec<Memory> {
     ]
 }
 
+fn merge_fixture() -> Vec<(MergeTarget, bool)> {
+    let mut superseded_duplicate = memory_with_kind(
+        "merge-superseded-b",
+        MemoryKind::Failure,
+        Scope::Global,
+        "Fix JWT refresh error by rotating token cache.",
+    );
+    superseded_duplicate.superseded_by = Some("merge-newer".to_string());
+
+    vec![
+        (
+            MergeTarget::new(vec![
+                memory_with_kind(
+                    "merge-duplicate-a",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Fix JWT refresh error by rotating token cache.",
+                ),
+                memory_with_kind(
+                    "merge-duplicate-b",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Fix JWT refresh error by rotating token cache.",
+                ),
+            ]),
+            true,
+        ),
+        (
+            MergeTarget::new(vec![
+                memory_with_kind(
+                    "merge-preference-a",
+                    MemoryKind::Preference,
+                    Scope::User,
+                    "Prefer concise Chinese summaries.",
+                ),
+                memory_with_kind(
+                    "merge-preference-b",
+                    MemoryKind::Preference,
+                    Scope::User,
+                    "Prefer concise Chinese summaries.",
+                ),
+            ]),
+            true,
+        ),
+        (
+            MergeTarget::new(vec![
+                memory_with_kind(
+                    "merge-candidate-a",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Fix JWT refresh error in auth middleware.",
+                ),
+                memory_with_kind(
+                    "merge-candidate-b",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Avoid JWT refresh failure in auth handler.",
+                ),
+            ]),
+            false,
+        ),
+        (
+            MergeTarget::new(vec![
+                memory_with_kind(
+                    "merge-unrelated-a",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Fix JWT refresh error.",
+                ),
+                memory_with_kind(
+                    "merge-unrelated-b",
+                    MemoryKind::Preference,
+                    Scope::User,
+                    "Prefer concise Chinese summaries.",
+                ),
+            ]),
+            false,
+        ),
+        (
+            MergeTarget::new(vec![
+                memory_with_kind(
+                    "merge-superseded-a",
+                    MemoryKind::Failure,
+                    Scope::Global,
+                    "Fix JWT refresh error by rotating token cache.",
+                ),
+                superseded_duplicate,
+            ]),
+            false,
+        ),
+    ]
+}
+
 fn memory(id: &str, content: &str) -> Memory {
+    memory_with_kind(id, MemoryKind::Fact, Scope::Global, content)
+}
+
+fn memory_with_kind(id: &str, kind: MemoryKind, scope: Scope, content: &str) -> Memory {
     Memory {
         id: id.to_string(),
-        kind: MemoryKind::Fact,
-        scope: Scope::Global,
+        kind,
+        scope,
         content: content.to_string(),
         source: Source::ExplicitUser,
         confidence: 1.0,
@@ -160,6 +298,26 @@ mod tests {
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::ReflectionYield),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn merge_precision_report_is_deterministic() {
+        let a = merge_precision_report();
+        let b = merge_precision_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn merge_precision_report_uses_contract_shape() {
+        let report = merge_precision_report();
+
+        assert_eq!(report.benchmark, "merge-precision");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::MergePrecision),
             Some(&1.0)
         );
     }

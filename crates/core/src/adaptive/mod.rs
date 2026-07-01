@@ -13,6 +13,7 @@ pub mod context;
 pub mod event;
 pub mod event_stream;
 pub mod importance;
+pub mod merge;
 pub mod reflection;
 
 pub use context::AlgorithmContext;
@@ -21,6 +22,10 @@ pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryE
 pub use importance::{
     ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
     NoOpImportanceEstimator, UniformImportanceEstimator,
+};
+pub use merge::{
+    MergeAlgorithm, MergeOutput, MergeSkipReason, MergeTarget, NoOpMergeAlgorithm,
+    RuleBasedMergeAlgorithm,
 };
 pub use reflection::{
     DeterministicReflectionAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,

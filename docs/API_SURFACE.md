@@ -244,8 +244,14 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 - `NoOpReflectionAlgorithm`
 - `DeterministicReflectionAlgorithm` (reference implementation; reproducible baseline, not production)
 - `RuleBasedReflectionAlgorithm` (deterministic heuristic implementation; closer to production than the reference)
+- `MergeAlgorithm` (trait: `fn merge(&self, target: &MergeTarget, ctx: &AlgorithmContext<'_>) -> MergeOutput`)
+- `MergeTarget` (`#[non_exhaustive]`; algorithm-local aggregate of candidate memories)
+- `MergeOutput` (`#[non_exhaustive]`; `Skipped`, `Candidate`, or `Merge`)
+- `MergeSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
+- `NoOpMergeAlgorithm`
+- `RuleBasedMergeAlgorithm` (deterministic heuristic implementation; emits merge, candidate, or skip decisions)
 
-Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, and `v0.6.4-reflection-processing-adapter`. These items are Reflection-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, and `v0.7.3-merge-benchmark`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
 ### entity
 
@@ -312,7 +318,7 @@ Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model
 **Experimental**
 
 - Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
-- `reflection_yield_report()` and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
+- `reflection_yield_report()`, `rule_based_reflection_yield_report()`, `merge_precision_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
 
 The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 

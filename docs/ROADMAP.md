@@ -19,6 +19,10 @@ Current milestone
 ✓ v0.6.4 — Reflection Processing Adapter
 ✓ v0.6.5 — Reflection Store Mutation Plan
 ✓ v0.6.6 — Rule-Based Reflection Algorithm
+✓ v0.7.0 — Merge Algorithm Skeleton
+✓ v0.7.1 — NoOp Merge Algorithm
+✓ v0.7.2 — Rule-Based Merge Algorithm
+✓ v0.7.3 — Merge Precision Benchmark
 
 Status
 
@@ -30,7 +34,7 @@ Algorithm: **In Progress**
 
 Current focus
 
-▶ RFC-012 — Reflection Algorithm
+▶ RFC-013 — Merge Algorithm
 
 Phase 5 shifts from shared-contract work to independent algorithm work. RFC-011 (Adaptive Common Model) is now frozen. RFC-012 through RFC-015 (Reflection, Merge, Forget, Hebbian) consume RFC-011 as read-only ground truth and MUST NOT extend it. Algorithm RFCs are also independent of one another — each depends only on RFC-011.
 
@@ -68,11 +72,15 @@ Completed foundations
 - v0.6.4 — Reflection output maps into existing Reflection Processing events
 - v0.6.5 — Reflection plans map into canonical StoreMutation plans
 - v0.6.6 — Reflection switches from deterministic reference to rule-based heuristic
+- v0.7.0 — Merge algorithm trait and target/output shape
+- v0.7.1 — NoOp merge implementation
+- v0.7.2 — Rule-based merge heuristic
+- v0.7.3 — Merge precision benchmark (`BenchmarkReport` mapped to `MergePrecision`)
 
 Focus
 
-- **RFC-012 Reflection Algorithm** — current milestone; harden the rule-based heuristic and add production-grade benchmarks before freeze.
-- RFC-013 Merge Algorithm — concrete `MergePolicy` + `ConsolidationEngine` implementations.
+- RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
+- **RFC-013 Merge Algorithm** — current milestone; connect merge decisions into the frozen consolidation/store mutation path without changing stable contracts.
 - RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
