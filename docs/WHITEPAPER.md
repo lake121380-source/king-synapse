@@ -156,9 +156,9 @@ multihop  Recall@10 = 0.600
 
 The `reference` dataset protects baseline recall behavior. The `multihop` dataset captures the starting line for future adaptive memory algorithms.
 
-## Phase 4 Direction
+## Phase 4 — Adaptive Memory (Complete)
 
-Phase 4 is Adaptive Memory. It should implement strategies behind the frozen contracts instead of changing them.
+Phase 4 delivered Adaptive Memory. It implemented strategies behind the frozen contracts instead of changing them.
 
 The P4.1 Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`. Future adaptive behavior modules should reuse the `Plan -> Execute -> Report -> Sink` execution model.
 
@@ -170,9 +170,31 @@ P4.4 Store Integration is frozen at `v0.4.39-store-integration-freeze`. It defin
 
 P4.5 Adaptive Policies is frozen at `v0.4.49-adaptive-policies-freeze`. It introduces a dedicated decision layer above the frozen execution chains. Policies emit only `PolicyDecision::{Execute, Skip, Delay}` and never mutate memory. Phase 4 is now complete.
 
-Planned work:
+## Architecture Stability
 
-- v0.5.0 Architecture Freeze (whole-project public API freeze, SemVer policy)
-- Phase 5 Algorithm Implementation
+Phase 1 through Phase 4 delivered a **Memory Runtime Architecture**: capture, recall, evolution contracts, adaptive execution chains, persistence adapters, and a policy decision layer — all frozen, deterministic, and side-effect free by default.
 
-The development mode changes from defining interfaces to validating algorithms.
+`v0.5.0-architecture-freeze` locks this architecture as the stable foundation of the project:
+
+- The whole-project public API is enumerated in `docs/API_SURFACE.md` and classified as **Stable**, **Experimental**, or **Internal**.
+- Compatibility rules are codified in `docs/COMPATIBILITY.md`. Pre-1.0 `0.5.x` releases cannot break stable APIs; breaking changes require a `0.6.0` release and ADR approval.
+- Benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 0.600`) are covered by the same policy.
+- Every capability follows the same shape: `Trait → NoOp → Dispatcher → Report → Sink`.
+- Every call flows the same direction: `Policy → Execution → Storage`.
+- Every subsystem sits in the same stack: `Recall Platform → Working Memory → Adaptive Memory → Store`.
+
+From `v0.5.0` onwards, the project stops adding architectural layers.
+
+## Phase 5 — Adaptive Intelligence
+
+Phase 5 begins the **Adaptive Intelligence** work: turning frozen contracts into concrete adaptive behavior. Scope:
+
+- Reflection algorithms
+- Hebbian reinforcement algorithms
+- Forgetting strategies
+- Merge strategies
+- Concrete Adaptive Policies
+- Evaluation on DMR and LongMemEval; comparisons with Graphiti, Letta, and Mem0
+- Parameter sweeps and ablation studies
+
+Phase 5 must not change any Stable API. All work plugs in behind existing traits. The development mode changes from defining interfaces to validating algorithms.

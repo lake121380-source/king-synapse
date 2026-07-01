@@ -2,7 +2,12 @@
 
 > A persistently activated, decaying, reinforcing **associative memory network** for coding agents — so they stop repeating the same mistakes, stop re-learning your preferences, and stop forgetting where you left off.
 
-**Status:** Phase 4 — Adaptive Memory (complete). Recall Platform is frozen at `v0.2.0-recall-api-freeze`; Memory Evolution contracts are frozen at `v0.3.9-memory-evolution-freeze`; Adaptive Memory Foundation is frozen at `v0.4.9-adaptive-memory-foundation`; Reflection Processing is frozen at `v0.4.19-reflection-processing-freeze`; Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze`; Store Integration is frozen at `v0.4.39-store-integration-freeze`; Adaptive Policies is frozen at `v0.4.49-adaptive-policies-freeze`.
+**Status:**
+
+- **Architecture:** ✅ Stable — frozen at `v0.5.0-architecture-freeze`. See `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
+- **Algorithm:** 🚧 In Progress — Phase 5 (Algorithm Implementation) is the current focus.
+
+Phase 1–4 freeze tags: `v0.2.0-recall-api-freeze`, `v0.3.9-memory-evolution-freeze`, `v0.4.9-adaptive-memory-foundation`, `v0.4.19-reflection-processing-freeze`, `v0.4.29-hebbian-execution-freeze`, `v0.4.39-store-integration-freeze`, `v0.4.49-adaptive-policies-freeze`.
 
 ## Why
 
@@ -44,7 +49,7 @@ What's **not yet** in Phase 0 (coming in later phases):
 - Tauri UI (Phase 5)
 - Claude Code integration + multi-device sync (Phase 6)
 
-See `docs/ROADMAP.md` and `docs/ADAPTIVE_MEMORY.md` for the current roadmap and adaptive memory architecture. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, and `docs/releases/v0.4.49-adaptive-policies-freeze.md`.
+See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, and `docs/COMPATIBILITY.md` for the current roadmap, adaptive memory architecture, public API list, and stability policy. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, `docs/releases/v0.4.49-adaptive-policies-freeze.md`, and `docs/releases/v0.5.0-architecture-freeze.md`.
 
 ## Build
 

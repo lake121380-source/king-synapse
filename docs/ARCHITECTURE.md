@@ -1,11 +1,51 @@
 # Architecture
 
+Status: **Stable** since `v0.5.0-architecture-freeze`.
+
 | Phase | Goal | Output |
 | --- | --- | --- |
 | Phase 1 | Build a reliable capture pipeline. | Capture Engine |
 | Phase 2 | Build a stable, explainable recall engine. | Recall API Freeze |
 | Phase 3 | Freeze memory evolution contracts without changing the recall contract. | Memory Evolution Contract Freeze |
-| Phase 4 | Implement adaptive behavior behind frozen contracts. | Adaptive Memory Foundation |
+| Phase 4 | Implement adaptive behavior behind frozen contracts. | Adaptive Memory (7 sub-freezes) |
+| Phase 5 | Turn frozen contracts into concrete adaptive behavior. | Algorithm Implementation |
+
+## Final Architecture Rules
+
+Every capability introduced after `v0.5.0-architecture-freeze` must follow all three shapes below.
+
+### Capability Shape
+
+```text
+Trait
+  -> NoOp
+  -> Dispatcher
+  -> Report
+  -> Sink
+```
+
+Every new public trait ships with a `NoOp` implementation. Dispatchers are pure and deterministic. Reports are immutable after emission. Sinks are observer-only.
+
+### Layer Direction
+
+```text
+Policy
+  -> Execution
+  -> Storage
+```
+
+Policies decide whether execution runs. Execution modules produce plans and reports. Storage is only reached through `StoreAdapter` or `PersistentStoreExecutor`.
+
+### Subsystem Stack
+
+```text
+Recall Platform
+  -> Working Memory
+  -> Adaptive Memory
+  -> Store
+```
+
+Recall Platform is stable and query-agnostic. Working Memory is session-scoped and transient. Adaptive Memory drives evolution through frozen behavior chains. Store is the only durable persistence layer.
 
 ## Phase 4 Development Rules
 
@@ -14,6 +54,14 @@
 3. New extension points should reuse the existing plugin pattern: `Trait -> NoOp -> Concrete Implementation`.
 4. Changes to frozen contracts require a dedicated ADR and a new architecture milestone.
 5. Every new public trait must ship with a NoOp implementation before entering the public API.
+
+## Phase 5 Development Rules
+
+1. Phase 5 must not change any Stable API listed in `docs/API_SURFACE.md`.
+2. Algorithm implementations plug in behind existing traits and their `NoOp` slots.
+3. Breaking changes to Stable APIs require an ADR and a `0.6.0` release (see `docs/COMPATIBILITY.md`).
+4. Frozen benchmark baselines (`reference` = `Recall@10 = 1.000`, `multihop` = `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
+5. Concrete algorithms must remain replaceable behind their traits; no algorithm becomes a hard dependency of the framework.
 
 ## Reflection
 

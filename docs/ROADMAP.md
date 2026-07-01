@@ -10,16 +10,17 @@ Current milestone
 ✓ P4.3 — Hebbian Execution (Contract Freeze)
 ✓ P4.4 — Store Integration (Contract Freeze)
 ✓ P4.5 — Adaptive Policies (Contract Freeze)
+✓ v0.5.0 — Architecture Freeze (Public API + SemVer Policy)
 
 Status
 
-Architecture Complete
+Architecture: **Stable**
 
-Contract Frozen
+Algorithm: **In Progress**
 
 Current focus
 
-▶ Phase 4 — Adaptive Memory
+▶ Phase 5 — Algorithm Implementation
 
 Phase 2 concluded with `v0.2.0-recall-api-freeze`. The Recall contract is now considered stable. Future work extends the platform rather than redesigning it.
 
@@ -34,6 +35,31 @@ P4.3 concluded with `v0.4.29-hebbian-execution-freeze`. Hebbian Execution is now
 P4.4 concluded with `v0.4.39-store-integration-freeze`. Store Integration is now contract-frozen and defines the canonical persistence boundary for Phase 4 behavior modules.
 
 P4.5 concluded with `v0.4.49-adaptive-policies-freeze`. Adaptive Policies is now contract-frozen. Phase 4 is complete.
+
+v0.5.0 concluded with `v0.5.0-architecture-freeze`. The whole-project public API is now stable under the compatibility policy in `docs/COMPATIBILITY.md`. Development mode shifts from **Contract-first** to **Algorithm-first**.
+
+## Phase 5 — Algorithm Implementation
+
+Goal
+
+Turn the frozen contracts into concrete adaptive behavior without changing any stable API.
+
+Focus
+
+- Reflection Algorithm (concrete `ReflectionEngine` / `ReflectionExecutor` implementations)
+- Hebbian Reinforcement (concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations)
+- Forgetting Strategy (concrete `ForgetPolicy` implementations)
+- Merge Strategy (concrete `MergePolicy` + `ConsolidationEngine` implementations)
+- Adaptive Policies (concrete `ReflectionPolicy` / `HebbianPolicy` implementations)
+- Evaluation & Benchmarks (DMR, LongMemEval, comparison against Graphiti / Letta / Mem0)
+- Parameter sweeps and ablation studies
+
+Rules
+
+1. Phase 5 must not change any Stable API. All work plugs in behind existing traits.
+2. Frozen benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
+3. Every concrete algorithm ships with a benchmark run demonstrating baseline preservation and target-metric improvement.
+4. Algorithm parameters are internal by default; promotion to Stable API requires an ADR.
 
 ## Phase 3 Contract
 
@@ -80,10 +106,7 @@ Goal
 
 Turn the frozen memory-evolution contracts into adaptive behavior while preserving the Recall and Memory Evolution contracts.
 
-Focus
-
-- v0.5.0 Architecture Freeze (whole-project public API freeze, SemVer policy)
-- Phase 5 Algorithm Implementation
+Status: **Complete**. All P4.1–P4.5 milestones are contract-frozen. See the Phase 5 section above for the current focus.
 
 Completed foundation
 
@@ -225,3 +248,15 @@ Highlights
 • DeterministicAdaptivePolicyEngine
 • PolicySink
 • NoOpPolicySink
+
+v0.5.0-architecture-freeze
+
+Highlights
+
+• Whole-project public API declared stable
+• `docs/API_SURFACE.md` (Stable / Experimental / Internal)
+• `docs/COMPATIBILITY.md` (SemVer, breaking-change rules, deprecation policy)
+• Final Architecture Rules (Trait → NoOp → Dispatcher → Report → Sink)
+• Layer direction (Policy → Execution → Storage)
+• Subsystem stack (Recall → Working Memory → Adaptive Memory → Store)
+• Development mode: Contract-first → Algorithm-first
