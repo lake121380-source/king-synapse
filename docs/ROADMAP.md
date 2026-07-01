@@ -114,6 +114,7 @@ Completed foundations
 - v0.9.10 — latent activation can be modulated by explicit state and goal terms while preserving path explanations
 - v0.9.11 — natural-language queries can recall visible seed memories and inspect their hidden activation paths as a separate report
 - v0.9.12 — query text can derive state and goal terms for latent inspection while keeping recall ranking unchanged
+- v0.9.13 — Chinese cognitive-chain benchmark covers visible seed recall into hidden latent influence
 
 Focus
 

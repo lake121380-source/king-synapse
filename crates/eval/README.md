@@ -33,6 +33,9 @@ cargo bench -p synapse-eval --bench forget_precision
 
 # RFC-015 hebbian benchmark suite (rule-based)
 cargo bench -p synapse-eval --bench hebbian_consistency
+
+# Latent cognitive-chain benchmark (visible seed -> hidden influence)
+cargo bench -p synapse-eval --bench cognitive_chain_recall
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -59,6 +62,15 @@ The hebbian benchmark emits one `BenchmarkReport` value:
 - `benchmark = "hebbian-consistency"` for the v0.9.3 rule-based hebbian algorithm
 
 The report uses `AlgorithmMetric::HebbianConsistency`.
+
+The cognitive-chain benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "cognitive-chain-recall"` for Chinese latent-chain inspection
+
+The report uses `AlgorithmMetric::RecallAt10`. It measures whether a visible
+seed memory recalled from Chinese query text can activate the expected hidden
+downstream memory through `QueryLatentActivationProbe` and auto-derived
+state/goal context.
 
 ## Metrics
 

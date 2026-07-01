@@ -3,14 +3,16 @@ use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
     ForgetTarget, HebbianAlgorithm, HebbianOutput, HebbianTarget, InMemoryMemoryEventStream,
-    Memory, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream,
-    MemoryKind, MergeAlgorithm, MergeOutput, MergeTarget, ReflectionAlgorithm, ReflectionOutput,
-    RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm, RuleBasedMergeAlgorithm,
-    RuleBasedReflectionAlgorithm, Scope, Source, UniformImportanceEstimator,
+    LatentActivationContext, LatentActivationProbe, Memory, MemoryEvent, MemoryEventId,
+    MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind, MergeAlgorithm,
+    MergeOutput, MergeTarget, QueryLatentActivationProbe, RecallQuery, ReflectionAlgorithm,
+    ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm, RuleBasedMergeAlgorithm,
+    RuleBasedReflectionAlgorithm, Scope, Source, Store, UniformImportanceEstimator, WriteInput,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-deterministic";
+const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
@@ -33,6 +35,29 @@ pub fn deterministic_reflection_yield_report() -> BenchmarkReport {
         DETERMINISTIC_REFLECTION_BENCHMARK_NAME,
         &DeterministicReflectionAlgorithm::default(),
     )
+}
+
+/// Run the cognitive-chain latent recall benchmark.
+///
+/// This benchmark models the user's core design idea: visible text can surface
+/// a seed memory, then auto-derived state/goal context should activate a hidden
+/// connected memory that represents subconscious or downstream influence.
+pub fn cognitive_chain_recall_report() -> BenchmarkReport {
+    let cases = cognitive_chain_fixture();
+    let hits = cases
+        .iter()
+        .filter(|case| cognitive_chain_case_hits(case))
+        .count();
+    let recall = if cases.is_empty() {
+        0.0
+    } else {
+        hits as f64 / cases.len() as f64
+    };
+
+    BenchmarkReport {
+        benchmark: COGNITIVE_CHAIN_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::RecallAt10, recall)]),
+    }
 }
 
 /// Run the RFC-013 rule-based Merge benchmark.
@@ -233,6 +258,87 @@ fn reflection_fixture() -> Vec<Memory> {
         superseded,
         expired,
     ]
+}
+
+struct CognitiveChainCase {
+    query: &'static str,
+    seed: &'static str,
+    hidden: &'static str,
+    distractor: &'static str,
+}
+
+fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
+    vec![
+        CognitiveChainCase {
+            query: "早上忘记喝水导致心情不好，上班骑车注意力下降",
+            seed: "早上忘记喝水导致心情不好",
+            hidden: "上班骑车时注意力下降可能摔倒",
+            distractor: "晚上整理书桌和文件夹",
+        },
+        CognitiveChainCase {
+            query: "长期压力让人下意识回避复杂任务，工作目标受到影响",
+            seed: "长期压力让人下意识回避复杂任务",
+            hidden: "潜意识回避会影响工作目标和错误复盘",
+            distractor: "周末可以清理临时下载目录",
+        },
+        CognitiveChainCase {
+            query: "过去失败经验让人担心再次出错，未来注意力会被影响",
+            seed: "过去失败经验让人担心再次出错",
+            hidden: "记忆会影响未来决策和注意力分配",
+            distractor: "午饭后备份照片到移动硬盘",
+        },
+    ]
+}
+
+fn cognitive_chain_case_hits(case: &CognitiveChainCase) -> bool {
+    let mut store = Store::open_in_memory().expect("cognitive benchmark store opens");
+    let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
+    let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.8);
+    let distractor = write_cognitive_memory(&mut store, case.distractor, MemoryKind::Fact, 0.5);
+    store
+        .update_edge(&seed, &hidden, 2.0)
+        .expect("cognitive target edge is persisted");
+    store
+        .update_edge(&seed, &distractor, 2.0)
+        .expect("cognitive distractor edge is persisted");
+
+    let query = RecallQuery {
+        query: case.query.to_string(),
+        k: None,
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let probe = QueryLatentActivationProbe::new(
+        LatentActivationProbe::with_config(0.05, 0.25, 2, 0.5, 10),
+        1,
+    );
+    let report = probe
+        .probe_auto_context(&mut store, &query, 10, &LatentActivationContext::default())
+        .expect("cognitive latent probe runs");
+
+    report
+        .activations
+        .iter()
+        .any(|hit| hit.memory.id == hidden && !hit.matched_terms.is_empty())
+}
+
+fn write_cognitive_memory(
+    store: &mut Store,
+    content: &str,
+    kind: MemoryKind,
+    importance: f32,
+) -> String {
+    store
+        .write(WriteInput {
+            content: content.to_string(),
+            kind,
+            scope: Scope::User,
+            source: Source::ExplicitUser,
+            confidence: Some(1.0),
+            importance: Some(importance),
+        })
+        .expect("cognitive benchmark memory is written")
+        .id
 }
 
 fn merge_fixture() -> Vec<(MergeTarget, bool)> {
@@ -492,6 +598,23 @@ mod tests {
             report.metrics.get(&AlgorithmMetric::ReflectionYield),
             Some(&1.0)
         );
+    }
+
+    #[test]
+    fn cognitive_chain_recall_report_is_deterministic() {
+        let a = cognitive_chain_recall_report();
+        let b = cognitive_chain_recall_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn cognitive_chain_recall_report_uses_contract_shape() {
+        let report = cognitive_chain_recall_report();
+
+        assert_eq!(report.benchmark, "cognitive-chain-recall");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
     }
 
     #[test]

@@ -136,6 +136,13 @@ derives extra state and goal terms from the query text. It does not add fields
 to `RecallHit`, change `RecallEngine` scoring, or feed latent activations back
 into recall.
 
+`synapse_eval::cognitive_chain_recall_report()` provides the first regression
+benchmark for this inspection path. It models Chinese cognitive chains where
+visible query text finds a seed memory and latent activation should surface a
+connected hidden influence, such as "forgot water -> bad mood -> commute
+attention risk". The benchmark is deliberately separate from `RecallEngine`
+ranking metrics because latent hits are explanations, not `RecallHit`s.
+
 ---
 
 ## 6. Design Invariants
