@@ -51,6 +51,7 @@ Current milestone
 ✓ v0.9.24 — Cognitive Network Algorithm Model
 ✓ v0.9.25 — Predictive Trace Continuation
 ✓ v0.9.26 — Exported Cognitive Session Benchmark
+✓ v0.9.26-rc — Cognitive Memory Release Candidate Evidence
 
 Status
 
@@ -137,6 +138,7 @@ Completed foundations
 - v0.9.24 — cognitive network algorithm model maps human-network design into visible seeds, latent activation, dominant/suppressed candidates, and post-trace learning
 - v0.9.25 — predictive trace continues from the dominant candidate into ranked next hidden influences
 - v0.9.26 — exported cognitive-session TOML benchmark verifies visible recall, dominant hidden influence, predictive future continuation, and trace learning in one shared graph
+- v0.9.26-rc — release-candidate note records cognitive-memory validation evidence and remaining final tag work
 
 Focus
 
@@ -145,6 +147,8 @@ Focus
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
 - **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, cognitive trace scoring, and benchmark before the next freeze tag.
 - Predictive trace — broaden continuation benchmarks beyond the exported fixture and into external Graphiti / Letta / Mem0 comparisons.
+- Release process — rerun every final acceptance gate in one pass, paste dated
+  outputs, and cut the cognitive-memory release/freeze tag.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 
