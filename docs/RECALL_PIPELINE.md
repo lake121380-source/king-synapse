@@ -122,9 +122,11 @@ field except `activation_bonus`.
 
 `LatentActivationProbe` is a read-only inspection tool, not a booster. It starts
 from one or more memory ids, walks directed `memory_edges`, and returns hidden
-multi-step activations with path explanations. Because it does not produce
-`RecallHit`s or run inside `RecallEngine`, it can inspect candidate-set-external
-background influence without changing recall rankings.
+multi-step activations with path explanations. Optional state and goal terms
+act as capped modulation, making matches to the current human/agent context
+slightly stronger while preserving the explanation trail. Because it does not
+produce `RecallHit`s or run inside `RecallEngine`, it can inspect
+candidate-set-external background influence without changing recall rankings.
 
 ---
 

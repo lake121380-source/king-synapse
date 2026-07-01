@@ -3,8 +3,9 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, GraphActivationBooster, LatentActivationProbe, MemoryKind, RecallBooster,
-    RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
+    config::Config, GraphActivationBooster, LatentActivationContext, LatentActivationProbe,
+    MemoryKind, RecallBooster, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store,
+    WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -126,6 +127,12 @@ enum Cmd {
         decay: f32,
         #[arg(long, default_value = "16")]
         fanout: usize,
+        /// Current state terms that should increase matching latent activations.
+        #[arg(long = "state")]
+        state_terms: Vec<String>,
+        /// Current goal terms that should increase matching latent activations.
+        #[arg(long = "goal")]
+        goal_terms: Vec<String>,
         #[arg(long)]
         json: bool,
     },
@@ -338,10 +345,13 @@ fn main() -> Result<()> {
             steps,
             decay,
             fanout,
+            state_terms,
+            goal_terms,
             json,
         } => {
             let probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
-            let hits = probe.activate(&store, &[&id], k)?;
+            let context = LatentActivationContext::new(state_terms, goal_terms);
+            let hits = probe.activate_with_context(&store, &[&id], k, &context)?;
             if json {
                 println!("{}", serde_json::to_string_pretty(&hits)?);
             } else if hits.is_empty() {
@@ -431,12 +441,19 @@ fn print_latent_hit(hit: &synapse_core::LatentActivationHit) {
         .map(|id| short_id(id).to_string())
         .collect::<Vec<_>>()
         .join(" -> ");
+    let matched = if hit.matched_terms.is_empty() {
+        String::new()
+    } else {
+        format!("  match={}", hit.matched_terms.join(","))
+    };
     println!(
-        "[{:.4} depth={}] {}  path={}  {}",
+        "[{:.4} depth={} mod={:.2}] {}  path={}{}  {}",
         hit.activation,
         hit.depth,
+        hit.modulation,
         short_id(&hit.memory.id),
         path,
+        matched,
         truncate(&hit.memory.content, 90)
     );
 }

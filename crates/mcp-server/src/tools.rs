@@ -3,8 +3,8 @@ use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
-    GraphActivationBooster, LatentActivationProbe, MemoryKind, RecallEngine, RecallQuery, Scope,
-    Source, Store, WriteInput,
+    GraphActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryKind,
+    RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
@@ -146,7 +146,9 @@ fn descriptor_latent_activation() -> Value {
                 "cap": { "type": "number", "default": 0.25 },
                 "steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 2 },
                 "decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
-                "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 }
+                "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 },
+                "state_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] }
             }
         }
     })
@@ -370,9 +372,25 @@ fn do_latent_activation(store: &StoreHandle, args: &Value) -> Result<Value> {
         .and_then(|v| v.as_u64())
         .map(|x| x as usize)
         .unwrap_or(16);
+    let state_terms = string_array(args, "state_terms");
+    let goal_terms = string_array(args, "goal_terms");
 
     let s = store.lock().unwrap();
     let probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
-    let activations = probe.activate(&s, &[&id], k)?;
+    let context = LatentActivationContext::new(state_terms, goal_terms);
+    let activations = probe.activate_with_context(&s, &[&id], k, &context)?;
     Ok(json!({ "activations": activations }))
+}
+
+fn string_array(args: &Value, key: &str) -> Vec<String> {
+    args.get(key)
+        .and_then(|v| v.as_array())
+        .map(|items| {
+            items
+                .iter()
+                .filter_map(|item| item.as_str())
+                .map(str::to_string)
+                .collect()
+        })
+        .unwrap_or_default()
 }

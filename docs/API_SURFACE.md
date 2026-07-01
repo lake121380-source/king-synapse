@@ -48,6 +48,7 @@ Detailed per-crate listings follow below.
 - `BoosterContext`
 - `NoOpBooster`
 - `GraphActivationBooster`
+- `LatentActivationContext`
 - `LatentActivationProbe`
 - `LatentActivationHit`
 - `QueryEmbedder`
@@ -63,9 +64,11 @@ without creating new candidates or changing retrieval provenance fields.
 
 `LatentActivationProbe` is read-only inspection, not a recall booster. It walks
 Store-owned `memory_edges` from one or more seed memories and returns hidden
-multi-step activation candidates with activation strength, depth, and path. It
-does not create `RecallHit`s, mutate Store, invoke retrievers, or alter recall
-rankings.
+multi-step activation candidates with activation strength, depth, path,
+modulation factor, and matched context terms. Optional
+`LatentActivationContext` state/goal terms can increase matching hidden
+activations while remaining capped and explainable. It does not create
+`RecallHit`s, mutate Store, invoke retrievers, or alter recall rankings.
 
 ### model
 
@@ -329,7 +332,7 @@ Tool JSON schemas are considered part of the stable public API.
 `synapse_edges` accepts `id`, optional `direction` (`outgoing`, `incoming`,
 or `both`), and optional `k`.
 `synapse_latent_activation` accepts `id`, optional `k`, `scale`, `cap`,
-`steps`, `decay`, and `fanout`.
+`steps`, `decay`, `fanout`, `state_terms`, and `goal_terms`.
 
 ## kr (CLI)
 
@@ -352,7 +355,8 @@ Flag names and output structure are considered part of the stable public API.
 `kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
 `--json` for inspecting persisted associative edge weights.
 `kr latent <id>` supports `--steps`, `--decay`, `--scale`, `--cap`,
-`--fanout`, `-k`, and `--json` for inspecting hidden multi-step activation.
+`--fanout`, repeated `--state`, repeated `--goal`, `-k`, and `--json` for
+inspecting hidden multi-step activation.
 
 ## synapse-eval
 

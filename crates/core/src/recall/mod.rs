@@ -23,7 +23,7 @@ pub use booster::{BoosterContext, NoOpBooster, RecallBooster};
 pub use engine::RecallEngine;
 pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};
-pub use latent_activation::{LatentActivationHit, LatentActivationProbe};
+pub use latent_activation::{LatentActivationContext, LatentActivationHit, LatentActivationProbe};
 
 /// Default candidate pool size handed to the reranker before top-k truncation.
 pub const DEFAULT_RERANK_POOL: usize = 50;

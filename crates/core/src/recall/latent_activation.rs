@@ -17,6 +17,8 @@ pub struct LatentActivationHit {
     pub activation: f32,
     pub depth: usize,
     pub path: Vec<String>,
+    pub modulation: f32,
+    pub matched_terms: Vec<String>,
 }
 
 pub struct LatentActivationProbe {
@@ -25,6 +27,25 @@ pub struct LatentActivationProbe {
     decay: f32,
     steps: usize,
     fanout: usize,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+pub struct LatentActivationContext {
+    pub state_terms: Vec<String>,
+    pub goal_terms: Vec<String>,
+}
+
+impl LatentActivationContext {
+    pub fn new(state_terms: Vec<String>, goal_terms: Vec<String>) -> Self {
+        Self {
+            state_terms: normalize_terms(state_terms),
+            goal_terms: normalize_terms(goal_terms),
+        }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.state_terms.is_empty() && self.goal_terms.is_empty()
+    }
 }
 
 impl LatentActivationProbe {
@@ -67,6 +88,16 @@ impl LatentActivationProbe {
         store: &Store,
         seed_ids: &[&str],
         limit: usize,
+    ) -> Result<Vec<LatentActivationHit>> {
+        self.activate_with_context(store, seed_ids, limit, &LatentActivationContext::default())
+    }
+
+    pub fn activate_with_context(
+        &self,
+        store: &Store,
+        seed_ids: &[&str],
+        limit: usize,
+        context: &LatentActivationContext,
     ) -> Result<Vec<LatentActivationHit>> {
         if seed_ids.is_empty()
             || limit == 0
@@ -111,7 +142,20 @@ impl LatentActivationProbe {
                         continue;
                     }
 
-                    let propagated = source.activation * edge.weight * self.scale * step_decay;
+                    let target_memory = store.get(&edge.target)?;
+                    let Some(target_memory) = target_memory else {
+                        continue;
+                    };
+                    if target_memory.valid_to.is_some() {
+                        continue;
+                    }
+
+                    let influence = modulation_for(&target_memory, context);
+                    let propagated = source.activation
+                        * edge.weight
+                        * self.scale
+                        * step_decay
+                        * influence.factor;
                     if propagated <= 0.0 || !propagated.is_finite() {
                         continue;
                     }
@@ -121,10 +165,14 @@ impl LatentActivationProbe {
                     update_accumulated(
                         &mut accumulated,
                         &edge.target,
-                        propagated,
-                        depth,
-                        &path,
-                        self.cap,
+                        ActivationUpdate {
+                            propagated,
+                            depth,
+                            path: &path,
+                            cap: self.cap,
+                            modulation: influence.factor,
+                            matched_terms: &influence.matched_terms,
+                        },
                     );
                     update_frontier(
                         &mut next_frontier,
@@ -151,6 +199,8 @@ impl LatentActivationProbe {
                         activation: activation.activation,
                         depth: activation.depth,
                         path: activation.path,
+                        modulation: activation.modulation,
+                        matched_terms: activation.matched_terms,
                     });
                 }
             }
@@ -182,36 +232,48 @@ struct AccumulatedActivation {
     depth: usize,
     path_activation: f32,
     path: Vec<String>,
+    modulation: f32,
+    matched_terms: Vec<String>,
+}
+
+struct ActivationUpdate<'a> {
+    propagated: f32,
+    depth: usize,
+    path: &'a [String],
+    cap: f32,
+    modulation: f32,
+    matched_terms: &'a [String],
 }
 
 fn update_accumulated(
     accumulated: &mut HashMap<String, AccumulatedActivation>,
     target: &str,
-    propagated: f32,
-    depth: usize,
-    path: &[String],
-    cap: f32,
+    update: ActivationUpdate<'_>,
 ) {
     let entry = accumulated
         .entry(target.to_string())
         .or_insert_with(|| AccumulatedActivation {
             activation: 0.0,
-            depth,
-            path_activation: propagated,
-            path: path.to_vec(),
+            depth: update.depth,
+            path_activation: update.propagated,
+            path: update.path.to_vec(),
+            modulation: update.modulation,
+            matched_terms: update.matched_terms.to_vec(),
         });
-    entry.activation = (entry.activation + propagated).min(cap);
+    entry.activation = (entry.activation + update.propagated).min(update.cap);
     if is_better_path(
-        propagated,
-        depth,
-        path,
+        update.propagated,
+        update.depth,
+        update.path,
         entry.path_activation,
         entry.depth,
         &entry.path,
     ) {
-        entry.depth = depth;
-        entry.path_activation = propagated;
-        entry.path = path.to_vec();
+        entry.depth = update.depth;
+        entry.path_activation = update.propagated;
+        entry.path = update.path.to_vec();
+        entry.modulation = update.modulation;
+        entry.matched_terms = update.matched_terms.to_vec();
     }
 }
 
@@ -251,6 +313,54 @@ fn normalized_seed_set(seed_ids: &[&str]) -> HashSet<String> {
         .filter(|id| !id.is_empty())
         .map(str::to_string)
         .collect()
+}
+
+struct ActivationInfluence {
+    factor: f32,
+    matched_terms: Vec<String>,
+}
+
+fn modulation_for(memory: &Memory, context: &LatentActivationContext) -> ActivationInfluence {
+    if context.is_empty() {
+        return ActivationInfluence {
+            factor: 1.0,
+            matched_terms: Vec::new(),
+        };
+    }
+
+    let content = memory.content.to_ascii_lowercase();
+    let mut factor: f32 = 1.0;
+    let mut matched_terms = Vec::new();
+    for term in &context.state_terms {
+        if content.contains(term) {
+            factor += 0.15;
+            matched_terms.push(format!("state:{term}"));
+        }
+    }
+    for term in &context.goal_terms {
+        if content.contains(term) {
+            factor += 0.25;
+            matched_terms.push(format!("goal:{term}"));
+        }
+    }
+
+    matched_terms.sort();
+    matched_terms.dedup();
+    ActivationInfluence {
+        factor: factor.min(2.0),
+        matched_terms,
+    }
+}
+
+fn normalize_terms(terms: Vec<String>) -> Vec<String> {
+    let mut normalized = terms
+        .into_iter()
+        .map(|term| term.trim().to_ascii_lowercase())
+        .filter(|term| !term.is_empty())
+        .collect::<Vec<_>>();
+    normalized.sort();
+    normalized.dedup();
+    normalized
 }
 
 fn compare_latent_hits(a: &LatentActivationHit, b: &LatentActivationHit) -> Ordering {
@@ -334,6 +444,8 @@ mod tests {
         assert_close(hits[0].activation, 0.1);
         assert_eq!(hits[0].depth, 1);
         assert_eq!(hits[0].path, vec![seed, target]);
+        assert_eq!(hits[0].modulation, 1.0);
+        assert!(hits[0].matched_terms.is_empty());
     }
 
     #[test]
@@ -378,5 +490,36 @@ mod tests {
         assert_eq!(hits[0].memory.id, target);
         assert!(!hits.iter().any(|hit| hit.memory.id == seed));
         assert!(!hits.iter().any(|hit| hit.memory.id == inactive));
+    }
+
+    #[test]
+    fn latent_probe_state_and_goal_terms_modulate_matching_targets() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = add(&mut store, "forgot morning water");
+        let commute = add(&mut store, "bad mood affects commute attention");
+        let unrelated = add(&mut store, "calendar planning note");
+        store.update_edge(&seed, &commute, 2.0).unwrap();
+        store.update_edge(&seed, &unrelated, 2.0).unwrap();
+
+        let context = LatentActivationContext::new(
+            vec!["mood".to_string(), "missing".to_string()],
+            vec!["commute".to_string()],
+        );
+        let probe = LatentActivationProbe::new(0.05, 0.25);
+        let hits = probe
+            .activate_with_context(&store, &[&seed], 10, &context)
+            .unwrap();
+
+        let commute_hit = hits.iter().find(|hit| hit.memory.id == commute).unwrap();
+        let unrelated_hit = hits.iter().find(|hit| hit.memory.id == unrelated).unwrap();
+        assert_close(commute_hit.modulation, 1.4);
+        assert_close(commute_hit.activation, 0.14);
+        assert_eq!(
+            commute_hit.matched_terms,
+            vec!["goal:commute".to_string(), "state:mood".to_string()]
+        );
+        assert_close(unrelated_hit.modulation, 1.0);
+        assert_close(unrelated_hit.activation, 0.1);
+        assert!(commute_hit.activation > unrelated_hit.activation);
     }
 }
