@@ -16,7 +16,9 @@ Implementation Tags:
 v0.6.0-reflection-algorithm-skeleton        (implemented)
 v0.6.1-reflection-algorithm-noop            (implemented)
 v0.6.2-reflection-deterministic-reference   (implemented)
-v0.6.3-reflection-benchmark                 (planned)
+v0.6.3-reflection-benchmark                 (implemented)
+v0.6.4-reflection-processing-adapter        (implemented)
+v0.6.5-reflection-store-mutation-plan       (implemented)
 v0.6.9-reflection-algorithm-freeze          (planned)
 ```
 
@@ -107,6 +109,11 @@ Reflection does not mutate memory directly. It produces algorithm-local output t
 
 Reflection Algorithm MUST be side-effect free. It must not modify Store, write recall indexes, update graph state, call external services, persist diagnostic state, or perform external IO. Its only algorithm-level output is `ReflectionOutput`; a higher layer decides whether and how that output enters the frozen Reflection Processing and Store Integration pipelines.
 
+The `v0.6.4` adapter maps positive `ReflectionOutput` values into existing
+`ReflectionEvent` values with a non-empty `ReflectionPayload`. This keeps the
+algorithm side-effect free while allowing `PlanOnlyReflectionExecutor` to
+process deterministic algorithm output through the frozen RFC-007 shape.
+
 ## Primary Call Shape
 
 Reflection MUST follow RFC-011 PF2 and `docs/ALGORITHM_GUIDELINES.md`:
@@ -160,6 +167,49 @@ ReflectionOutput
 ```
 
 This RFC does not freeze exact Rust names or field lists. Skeleton implementation defines algorithm-local concrete types under the Reflection module. Those types must not be added to RFC-011 or the shared `adaptive/` root.
+
+Adapter output:
+
+```text
+ReflectionOutput::Candidate | ReflectionOutput::Produced
+  -> ReflectionEvent {
+       source,
+       payload.promoted = [target_memory_id],
+       payload.merged = [],
+       payload.discarded = []
+     }
+
+ReflectionOutput::Skipped
+  -> no ReflectionEvent
+```
+
+The adapter takes `event_id`, `session_id`, `source`, and `now` from the caller
+so it does not read the system clock or generate hidden state.
+
+Store mutation plan output:
+
+```text
+ReflectionPlan
+  -> DeterministicReflectionStoreMutationDispatcher
+  -> StoreMutationPlan
+
+payload.promoted[]
+  -> StoreMutation::UpdateEdge {
+       source = "reflection:<event_id>",
+       target = promoted_memory_id,
+       weight_delta = 0.1
+     }
+
+payload.discarded[]
+  -> StoreMutation::ArchiveMemory
+
+payload.merged[]
+  -> StoreMutation::UpdateMemory for the primary merge item
+```
+
+This is still plan-only. SQLite may skip unsupported mutations such as
+`UpdateEdge`; that is acceptable until graph persistence is implemented behind
+the existing `PersistentStoreExecutor` boundary.
 
 ## Algorithm Flow
 
@@ -262,10 +312,10 @@ It MUST satisfy:
 
 ## Benchmark Plan
 
-RFC-012 must add at least one benchmark under:
+RFC-012 adds a deterministic reference benchmark under:
 
 ```text
-crates/eval/benches/algorithms/
+crates/eval/benches/algorithms/reflection_yield.rs
 ```
 
 Minimum report:
@@ -293,6 +343,19 @@ Benchmark rules:
 - Benchmark names use lowercase-kebab-case.
 - Benchmarks must not call reflection-internal debug helpers.
 
+The `v0.6.3` benchmark uses the public
+`synapse_eval::reflection_yield_report()` helper and emits:
+
+```text
+BenchmarkReport {
+  benchmark: "reflection-yield",
+  metrics: { ReflectionYield: 1.0 }
+}
+```
+
+For this deterministic reference fixture, `ReflectionYield` is defined as the
+fraction of structurally eligible memories that produce reflection work.
+
 ## Acceptance Criteria
 
 The Reflection Algorithm RFC is complete when:
@@ -316,6 +379,8 @@ v0.6.0-reflection-algorithm-skeleton
   -> v0.6.1-reflection-algorithm-noop
   -> v0.6.2-reflection-deterministic-reference
   -> v0.6.3-reflection-benchmark
+  -> v0.6.4-reflection-processing-adapter
+  -> v0.6.5-reflection-store-mutation-plan
   -> v0.6.9-reflection-algorithm-freeze
 ```
 
@@ -325,11 +390,11 @@ Milestone constraints:
 - NoOp emits deterministic skipped/empty output.
 - Deterministic reference adds simple positive/negative behavior without IO.
 - Benchmark milestone emits `BenchmarkReport` and does not introduce a runner/exporter.
+- Processing adapter maps algorithm output into existing Reflection Processing events without Store writes.
+- Store mutation milestone maps Reflection plans into canonical Store mutations without Store writes.
 - Freeze updates API docs only for algorithm-local stable items, not RFC-011.
 
 ## Open Questions
 
-1. Should the first deterministic reference use a fixed importance threshold, or only structural eligibility?
-2. Should event evidence in the deterministic reference include all recent events, or only events whose `memory_ids` mention the target memory?
-3. Should Reflection output map immediately to existing `ReflectionPayload`, or should that mapping wait until the skeleton milestone?
-4. Should the first benchmark dataset be synthetic only, or should it derive from existing `reference` / `multihop` memories?
+1. What production-quality signal should replace the deterministic fixture's simple yield metric before `v0.6.9` freeze?
+2. Should a future production adapter distinguish `Candidate` from `Produced` with separate payload semantics, or keep both as promoted reflection targets?

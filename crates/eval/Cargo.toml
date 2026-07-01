@@ -10,9 +10,15 @@ publish = false
 name = "kr-eval"
 path = "src/bin/bench.rs"
 
+[[bench]]
+name = "reflection_yield"
+path = "benches/algorithms/reflection_yield.rs"
+harness = false
+
 [dependencies]
 synapse-core = { workspace = true }
 anyhow = { workspace = true }
+chrono = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 toml = { workspace = true }

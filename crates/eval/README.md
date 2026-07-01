@@ -19,6 +19,16 @@ These commands use the real workspace package and binary names directly. If
 you add a local Cargo alias later, keep it as a shortcut for this command
 shape.
 
+## Algorithm Benchmarks
+
+```bash
+# RFC-012 deterministic Reflection benchmark
+cargo bench -p synapse-eval --bench reflection_yield
+```
+
+The Reflection benchmark emits a `BenchmarkReport` with
+`benchmark = "reflection-yield"` and `AlgorithmMetric::ReflectionYield`.
+
 ## Metrics
 
 Per run the harness reports:

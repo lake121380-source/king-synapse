@@ -170,6 +170,7 @@ Frozen by `v0.4.29-hebbian-execution-freeze`.
 - `StoreMutationDispatcher`
 - `NoOpStoreMutationDispatcher`
 - `DeterministicStoreMutationDispatcher`
+- `DeterministicReflectionStoreMutationDispatcher`
 - `StoreExecutionReport`
 - `StoreExecutionStatistics`
 - `StoreExecutionWarning`
@@ -238,11 +239,12 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 
 - `ReflectionAlgorithm` (trait: `fn reflect(&self, target: &Memory, ctx: &AlgorithmContext<'_>) -> ReflectionOutput`)
 - `ReflectionOutput` (`#[non_exhaustive]`; algorithm-local output)
+- `ReflectionOutput::to_reflection_event_with_id(event_id, session_id, source, now)` (adapter into frozen Reflection Processing events)
 - `ReflectionSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
 - `NoOpReflectionAlgorithm`
 - `DeterministicReflectionAlgorithm` (reference implementation; reproducible baseline, not production)
 
-Introduced by `v0.6.0-reflection-algorithm-skeleton` and `v0.6.2-reflection-deterministic-reference`. These items are Reflection-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, and `v0.6.4-reflection-processing-adapter`. These items are Reflection-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
 ### entity
 
@@ -309,6 +311,7 @@ Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model
 **Experimental**
 
 - Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
+- `reflection_yield_report()` and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
 
 The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 

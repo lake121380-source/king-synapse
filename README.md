@@ -52,6 +52,10 @@ Still on the roadmap:
 
 See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, and `docs/COMPATIBILITY.md` for the current roadmap, adaptive memory architecture, public API list, and stability policy. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, `docs/releases/v0.4.49-adaptive-policies-freeze.md`, and `docs/releases/v0.5.0-architecture-freeze.md`.
 
+For the broader "King Recall v3 / AI Cognitive Memory Engine" proposal and
+how it maps onto the current RFC-driven implementation plan, see
+`docs/V3_PROPOSAL_REVIEW.md`.
+
 ## Build
 
 Requires Rust 1.80+.
@@ -81,6 +85,9 @@ Binaries land in `target/release/`:
 
 # See where the DB lives
 ./target/release/kr where
+
+# Run the RFC-012 Reflection benchmark
+cargo bench -p synapse-eval --bench reflection_yield
 ```
 
 ## Plug into opencode

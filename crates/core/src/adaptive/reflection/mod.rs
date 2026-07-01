@@ -9,6 +9,10 @@
 
 use crate::adaptive::{AlgorithmContext, MemoryImportance};
 use crate::model::Memory;
+use crate::working_memory::{
+    ReflectionEvent, ReflectionEventId, ReflectionPayload, ReflectionSource, SessionId,
+};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 const DEFAULT_MIN_IMPORTANCE: f32 = 0.5;
@@ -61,6 +65,43 @@ impl ReflectionOutput {
                 ..
             }
         )
+    }
+
+    /// Convert algorithm output into the frozen Reflection Processing event
+    /// shape.
+    ///
+    /// This is a pure adapter: skipped outputs do not create events, and
+    /// positive outputs become a non-empty `ReflectionPayload` that the
+    /// existing `PlanOnlyReflectionExecutor` can process. The caller supplies
+    /// `now` so this method does not read the system clock.
+    pub fn to_reflection_event_with_id(
+        &self,
+        event_id: ReflectionEventId,
+        session_id: SessionId,
+        source: ReflectionSource,
+        now: DateTime<Utc>,
+    ) -> Option<ReflectionEvent> {
+        let target_memory_id = match self {
+            Self::Candidate {
+                target_memory_id, ..
+            }
+            | Self::Produced {
+                target_memory_id, ..
+            } => target_memory_id.clone(),
+            Self::Skipped { .. } => return None,
+        };
+
+        Some(ReflectionEvent {
+            id: event_id,
+            session_id,
+            timestamp: now,
+            source,
+            payload: ReflectionPayload {
+                promoted: vec![target_memory_id],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        })
     }
 }
 
@@ -173,7 +214,9 @@ mod tests {
         UniformImportanceEstimator,
     };
     use crate::model::{MemoryKind, Scope, Source};
+    use crate::working_memory::{PlanOnlyReflectionExecutor, ReflectionExecutor, ReflectionPlan};
     use chrono::Utc;
+    use uuid::Uuid;
 
     fn memory(id: &str, content: &str) -> Memory {
         Memory {
@@ -418,5 +461,57 @@ mod tests {
 
         assert_eq!(algorithm.min_importance(), 0.5);
         assert_eq!(algorithm.recent_event_limit(), 7);
+    }
+
+    #[test]
+    fn candidate_output_maps_to_reflection_processing_event() {
+        let now = Utc::now();
+        let session_id = crate::working_memory::SessionId::new();
+        let event_id = Uuid::nil();
+        let output = ReflectionOutput::Candidate {
+            target_memory_id: "target-memory".to_string(),
+            importance: MemoryImportance {
+                overall: 0.5,
+                signals: crate::adaptive::ImportanceSignals::uniform(0.5),
+            },
+            evidence_count: 2,
+        };
+
+        let event = output
+            .to_reflection_event_with_id(event_id, session_id, ReflectionSource::SystemSignal, now)
+            .expect("candidate output should produce a reflection event");
+
+        assert_eq!(event.id, event_id);
+        assert_eq!(event.session_id, session_id);
+        assert_eq!(event.timestamp, now);
+        assert_eq!(event.source, ReflectionSource::SystemSignal);
+        assert_eq!(event.payload.promoted, vec!["target-memory".to_string()]);
+        assert!(event.payload.merged.is_empty());
+        assert!(event.payload.discarded.is_empty());
+
+        let report = PlanOnlyReflectionExecutor.execute(&ReflectionPlan {
+            events: vec![event],
+        });
+        assert_eq!(report.statistics.processed, 1);
+        assert_eq!(report.statistics.skipped, 0);
+    }
+
+    #[test]
+    fn skipped_output_does_not_create_reflection_processing_event() {
+        let now = Utc::now();
+        let session_id = crate::working_memory::SessionId::new();
+        let output = ReflectionOutput::Skipped {
+            target_memory_id: "target-memory".to_string(),
+            reason: ReflectionSkipReason::LowImportance,
+        };
+
+        assert!(output
+            .to_reflection_event_with_id(
+                Uuid::nil(),
+                session_id,
+                ReflectionSource::SystemSignal,
+                now,
+            )
+            .is_none());
     }
 }

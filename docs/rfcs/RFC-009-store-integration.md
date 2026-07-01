@@ -12,6 +12,7 @@ v0.4.31-store-mutation-dispatcher
 v0.4.32-store-sink
 v0.4.33-persistent-store-executor
 v0.4.39-store-integration-freeze
+v0.6.5-reflection-store-mutation-plan
 ```
 
 ## Summary
@@ -98,6 +99,22 @@ ExecutionReport
 ```
 
 P4.4.2 starts with `ExecutionReport` and may extend to `ReflectionReport` and `HebbianExecutionReport` without changing Store backends.
+
+Phase 5 extends this boundary for RFC-012 with
+`DeterministicReflectionStoreMutationDispatcher`. It dispatches from
+`ReflectionPlan` rather than `ReflectionReport` because the frozen
+`ReflectionReport` records `event_id` and `source` only; it intentionally does
+not carry `ReflectionPayload`. Dispatching from the plan preserves payload
+information without changing the report schema.
+
+```text
+ReflectionPlan
+  -> DeterministicReflectionStoreMutationDispatcher
+  -> StoreMutationPlan
+```
+
+The dispatcher remains pure and side-effect free. It does not call Store,
+SQLite, Kuzu, RecallEngine, or any graph backend.
 
 Store sinks observe execution reports only:
 

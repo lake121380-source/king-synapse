@@ -15,6 +15,9 @@ Current milestone
 ✓ v0.5.2 — Memory Event Kernel + AlgorithmContext Closure
 ✓ v0.5.3 — Benchmark Harness Contract Freeze
 ✓ v0.5.9 — Adaptive Common Model Freeze (RFC-011 Implemented)
+✓ v0.6.3 — Reflection Yield Benchmark (RFC-012 benchmark milestone)
+✓ v0.6.4 — Reflection Processing Adapter
+✓ v0.6.5 — Reflection Store Mutation Plan
 
 Status
 
@@ -60,10 +63,13 @@ Completed foundations
 - v0.5.2 — Memory Event kernel + AlgorithmContext closure (20 new tests)
 - v0.5.3 — Benchmark harness contract (AlgorithmMetric, BenchmarkReport)
 - v0.5.9 — Adaptive Common Model freeze (RFC-011 Implemented)
+- v0.6.3 — Reflection yield benchmark (`BenchmarkReport` mapped to `ReflectionYield`)
+- v0.6.4 — Reflection output maps into existing Reflection Processing events
+- v0.6.5 — Reflection plans map into canonical StoreMutation plans
 
 Focus
 
-- **RFC-012 Reflection Algorithm** — next milestone; concrete `ReflectionEngine` / `ReflectionExecutor` implementations built on RFC-011.
+- **RFC-012 Reflection Algorithm** — current milestone; replace deterministic reflection heuristics with production-quality signals before freeze.
 - RFC-013 Merge Algorithm — concrete `MergePolicy` + `ConsolidationEngine` implementations.
 - RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.

@@ -71,16 +71,19 @@ pub use store_adapter::{
     StoreMutationPlan,
 };
 pub use store_dispatcher::{
-    DeterministicStoreMutationDispatcher, NoOpStoreMutationDispatcher, StoreMutationDispatcher,
+    DeterministicReflectionStoreMutationDispatcher, DeterministicStoreMutationDispatcher,
+    NoOpStoreMutationDispatcher, StoreMutationDispatcher,
 };
 pub use store_sink::{NoOpStoreSink, StoreSink};
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::adaptive::{ImportanceSignals, MemoryImportance, ReflectionOutput};
     use crate::Store;
     use chrono::{Duration as ChronoDuration, Utc};
     use std::time::Duration;
+    use uuid::Uuid;
 
     #[test]
     fn buffer_isolates_sessions() {
@@ -478,6 +481,79 @@ mod tests {
         let plan_b = dispatcher.dispatch();
 
         assert_eq!(plan_a, plan_b);
+    }
+
+    #[test]
+    fn reflection_store_dispatcher_maps_candidate_to_edge_update() {
+        let session = SessionId::new();
+        let now = Utc::now();
+        let event_id = Uuid::nil();
+        let output = ReflectionOutput::Candidate {
+            target_memory_id: "mem-reflected".to_string(),
+            importance: MemoryImportance {
+                overall: 0.5,
+                signals: ImportanceSignals::uniform(0.5),
+            },
+            evidence_count: 1,
+        };
+        let event = output
+            .to_reflection_event_with_id(event_id, session, ReflectionSource::SystemSignal, now)
+            .expect("candidate should map to a reflection event");
+        let dispatcher = DeterministicReflectionStoreMutationDispatcher::new(ReflectionPlan {
+            events: vec![event],
+        });
+
+        let plan = dispatcher.dispatch();
+
+        assert_eq!(
+            plan.mutations,
+            vec![StoreMutation::UpdateEdge {
+                source: format!("reflection:{}", event_id),
+                target: "mem-reflected".to_string(),
+                weight_delta: 0.1,
+            }]
+        );
+    }
+
+    #[test]
+    fn reflection_store_dispatcher_maps_payload_lifecycle_actions() {
+        let session = SessionId::new();
+        let merge_a =
+            WorkingMemoryItem::new(session, "merge-a", Vec::new(), Duration::from_secs(60));
+        let merge_b =
+            WorkingMemoryItem::new(session, "merge-b", Vec::new(), Duration::from_secs(60));
+        let event = ReflectionEvent {
+            id: Uuid::nil(),
+            session_id: session,
+            timestamp: Utc::now(),
+            source: ReflectionSource::SystemSignal,
+            payload: ReflectionPayload {
+                promoted: Vec::new(),
+                merged: vec![MergeGroup {
+                    items: vec![merge_a.clone(), merge_b.clone()],
+                    strategy: MergeStrategy::Union,
+                }],
+                discarded: vec!["mem-discarded".to_string()],
+            },
+        };
+        let dispatcher = DeterministicReflectionStoreMutationDispatcher::new(ReflectionPlan {
+            events: vec![event],
+        });
+
+        let plan = dispatcher.dispatch();
+
+        assert_eq!(
+            plan.mutations,
+            vec![
+                StoreMutation::UpdateMemory {
+                    id: merge_a.id.to_string(),
+                    content: "merge-a\nmerge-b".to_string(),
+                },
+                StoreMutation::ArchiveMemory {
+                    id: "mem-discarded".to_string(),
+                },
+            ]
+        );
     }
 
     #[test]
