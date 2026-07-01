@@ -3,15 +3,20 @@
 //! This module defines the shared data model consumed by every Phase 5
 //! adaptive-memory algorithm. It does not implement any algorithm.
 //!
-//! v0.5.1 scope: Memory Importance + a minimal `AlgorithmContext` that carries
-//! only `now` and `session_id`. Event stream, event types, and the
-//! trait-object fields of `AlgorithmContext` (`importance`, `events`) are
-//! introduced additively in v0.5.2 under `#[non_exhaustive]`.
+//! v0.5.1 shipped Memory Importance and a minimal `AlgorithmContext`.
+//! v0.5.2 closes the trait-object surface by adding `MemoryEvent`,
+//! `MemoryEventStream`, and the `importance` / `events` fields on
+//! `AlgorithmContext<'a>`. Per RFC-011 Part C rule 3, no further service
+//! dependencies may be added to `AlgorithmContext` after v0.5.2.
 
 pub mod context;
+pub mod event;
+pub mod event_stream;
 pub mod importance;
 
 pub use context::AlgorithmContext;
+pub use event::{MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload};
+pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryEventStream};
 pub use importance::{
     ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
     NoOpImportanceEstimator, UniformImportanceEstimator,

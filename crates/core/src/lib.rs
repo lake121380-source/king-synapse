@@ -18,8 +18,10 @@ pub(crate) mod store;
 pub mod working_memory;
 
 pub use adaptive::{
-    AlgorithmContext, ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
-    NoOpImportanceEstimator, UniformImportanceEstimator,
+    AlgorithmContext, ImportanceEstimator, ImportanceSignal, ImportanceSignals,
+    InMemoryMemoryEventStream, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
+    MemoryEventStream, MemoryImportance, NoOpImportanceEstimator, NoOpMemoryEventStream,
+    UniformImportanceEstimator,
 };
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};

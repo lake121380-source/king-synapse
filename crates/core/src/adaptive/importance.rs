@@ -98,7 +98,7 @@ pub enum ImportanceSignal {
 /// `AlgorithmContext` under the Part C additive-data rule, never to this
 /// trait.
 pub trait ImportanceEstimator {
-    fn estimate(&self, memory: &Memory, ctx: &AlgorithmContext) -> MemoryImportance;
+    fn estimate(&self, memory: &Memory, ctx: &AlgorithmContext<'_>) -> MemoryImportance;
 }
 
 /// Placeholder estimator that returns `MemoryImportance::zero()` for every
@@ -107,7 +107,7 @@ pub trait ImportanceEstimator {
 pub struct NoOpImportanceEstimator;
 
 impl ImportanceEstimator for NoOpImportanceEstimator {
-    fn estimate(&self, _memory: &Memory, _ctx: &AlgorithmContext) -> MemoryImportance {
+    fn estimate(&self, _memory: &Memory, _ctx: &AlgorithmContext<'_>) -> MemoryImportance {
         MemoryImportance::zero()
     }
 }
@@ -118,7 +118,7 @@ impl ImportanceEstimator for NoOpImportanceEstimator {
 pub struct UniformImportanceEstimator;
 
 impl ImportanceEstimator for UniformImportanceEstimator {
-    fn estimate(&self, _memory: &Memory, _ctx: &AlgorithmContext) -> MemoryImportance {
+    fn estimate(&self, _memory: &Memory, _ctx: &AlgorithmContext<'_>) -> MemoryImportance {
         MemoryImportance {
             overall: 0.5,
             signals: ImportanceSignals::uniform(0.5),
@@ -129,13 +129,10 @@ impl ImportanceEstimator for UniformImportanceEstimator {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::adaptive::event_stream::NoOpMemoryEventStream;
     use crate::model::{Memory, MemoryKind, Scope, Source};
     use chrono::Utc;
     use std::mem::size_of;
-
-    fn ctx() -> AlgorithmContext {
-        AlgorithmContext::new(Utc::now(), None)
-    }
 
     fn mem(text: &str) -> Memory {
         Memory {
@@ -156,8 +153,11 @@ mod tests {
 
     #[test]
     fn noop_returns_zero() {
+        let ctx_est = NoOpImportanceEstimator;
+        let ctx_evs = NoOpMemoryEventStream;
+        let ctx = AlgorithmContext::new(Utc::now(), None, &ctx_est, &ctx_evs);
         let est = NoOpImportanceEstimator;
-        let out = est.estimate(&mem("hello"), &ctx());
+        let out = est.estimate(&mem("hello"), &ctx);
         assert_eq!(out, MemoryImportance::zero());
         assert_eq!(out.overall, 0.0);
         assert_eq!(out.signals.access_frequency, 0.0);
@@ -169,28 +169,35 @@ mod tests {
 
     #[test]
     fn uniform_returns_half() {
+        let ctx_est = NoOpImportanceEstimator;
+        let ctx_evs = NoOpMemoryEventStream;
+        let ctx = AlgorithmContext::new(Utc::now(), None, &ctx_est, &ctx_evs);
         let est = UniformImportanceEstimator;
-        let out = est.estimate(&mem("hello"), &ctx());
+        let out = est.estimate(&mem("hello"), &ctx);
         assert_eq!(out.overall, 0.5);
         assert_eq!(out.signals, ImportanceSignals::uniform(0.5));
     }
 
     #[test]
     fn deterministic_for_same_inputs() {
+        let ctx_est = NoOpImportanceEstimator;
+        let ctx_evs = NoOpMemoryEventStream;
+        let ctx = AlgorithmContext::new(Utc::now(), None, &ctx_est, &ctx_evs);
         let est = UniformImportanceEstimator;
         let m = mem("same");
-        let c = ctx();
-        let a = est.estimate(&m, &c);
-        let b = est.estimate(&m, &c);
+        let a = est.estimate(&m, &ctx);
+        let b = est.estimate(&m, &ctx);
         assert_eq!(a, b);
     }
 
     #[test]
     fn uniform_independent_of_memory_content() {
+        let ctx_est = NoOpImportanceEstimator;
+        let ctx_evs = NoOpMemoryEventStream;
+        let ctx = AlgorithmContext::new(Utc::now(), None, &ctx_est, &ctx_evs);
         let est = UniformImportanceEstimator;
-        let c = ctx();
-        let a = est.estimate(&mem("foo"), &c);
-        let b = est.estimate(&mem("something completely different"), &c);
+        let a = est.estimate(&mem("foo"), &ctx);
+        let b = est.estimate(&mem("something completely different"), &ctx);
         assert_eq!(a, b);
     }
 

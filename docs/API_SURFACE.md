@@ -185,6 +185,28 @@ Frozen by `v0.4.39-store-integration-freeze`.
 
 Frozen by `v0.4.49-adaptive-policies-freeze`.
 
+### adaptive memory common model (Phase 5)
+
+**Stable**
+
+- `MemoryImportance`
+- `ImportanceSignals` (`#[non_exhaustive]`)
+- `ImportanceSignal` (`#[non_exhaustive]`; explainability-only)
+- `ImportanceEstimator` (trait: `fn estimate(&self, memory: &Memory, ctx: &AlgorithmContext<'_>) -> MemoryImportance`)
+- `NoOpImportanceEstimator`
+- `UniformImportanceEstimator`
+- `MemoryEventId`
+- `MemoryEvent`
+- `MemoryEventKind` (`#[non_exhaustive]`; 8 kinds: `Recalled`, `Written`, `Updated`, `Invalidated`, `Reflected`, `Reinforced`, `MergeCompleted`, `Forgotten`)
+- `MemoryEventPayload` (`#[non_exhaustive]`; `Empty` + typed variants)
+- `MemoryEventStream` (trait: `fn record(&self, event: MemoryEvent)` + `fn recent(&self, limit: usize) -> Vec<MemoryEvent>`; append + replay only)
+- `NoOpMemoryEventStream`
+- `InMemoryMemoryEventStream` (reference implementation only; not production)
+- `AlgorithmContext<'a>` (`#[non_exhaustive]`; fields: `now`, `session_id`, `importance: &'a dyn ImportanceEstimator`, `events: &'a dyn MemoryEventStream`; trait-object surface **closed** at v0.5.2)
+- `AlgorithmContext::new(now, session_id, importance, events)` — the only supported constructor
+
+Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-memory-event-and-context` (event kernel + context closure). Full RFC-011 freeze at `v0.5.9-adaptive-common-freeze`.
+
 ### entity
 
 **Stable**
