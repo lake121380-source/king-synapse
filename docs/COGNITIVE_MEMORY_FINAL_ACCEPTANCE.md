@@ -44,6 +44,7 @@ of visible and hidden associations.
 | Manual surface validation | `docs/MANUAL_VALIDATION.md` |
 | Release-candidate evidence | `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` |
 | Full gate validation | `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md` |
+| Final release scope disposition | `docs/adr/ADR-007-cognitive-memory-final-release-scope.md` |
 
 ## Required Verification Gates
 
@@ -95,13 +96,13 @@ Expected minimums:
   notes and tags.
 - Extend parameter sweeps beyond the deterministic activation/trace sweep to
   larger datasets and broader production ranges.
-- Extend the exported long-session dataset to external comparison runs.
-  Candidate comparisons: Graphiti, Letta, Mem0, or a larger documented
-  long-session export.
+- External comparison runs are moved out of final scope by
+  `docs/adr/ADR-007-cognitive-memory-final-release-scope.md`; keep the
+  exported long-session benchmark as the reproducible internal baseline.
 - Rerun and paste dated manual validation outputs for final release using
   `docs/MANUAL_VALIDATION.md` as the baseline transcript.
-- Decide whether UI/deeper agent integrations are release blockers or a
-  post-final product milestone.
+- UI/deeper agent integrations are post-final product milestones by
+  `docs/adr/ADR-007-cognitive-memory-final-release-scope.md`.
 
 ## Completion Rule
 
