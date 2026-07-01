@@ -11,6 +11,7 @@ mod hebbian;
 mod item;
 mod reflection;
 mod reflection_processing;
+mod reflection_sink;
 mod session;
 mod sink;
 
@@ -35,6 +36,7 @@ pub use reflection_processing::{
     ReflectionExecutor, ReflectionPlan, ReflectionRecord, ReflectionReport, ReflectionStatistics,
     ReflectionWarning, SkippedReflectionAction,
 };
+pub use reflection_sink::{NoOpReflectionSink, ReflectionSink};
 pub use session::SessionId;
 pub use sink::{ConsolidationSink, NoOpSink};
 
@@ -369,5 +371,68 @@ mod tests {
                 source: ReflectionSource::ConsolidationPlan,
             })
         );
+    }
+
+    #[test]
+    fn noop_reflection_sink_consumes_report_without_mutating_it() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload {
+                promoted: vec!["mem-a".to_string()],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        );
+        let plan = ReflectionPlan {
+            events: vec![event],
+        };
+        let executor = PlanOnlyReflectionExecutor;
+        let report = executor.execute(&plan);
+        let original = report.clone();
+        let mut sink = NoOpReflectionSink;
+
+        sink.consume(&report);
+
+        assert_eq!(report, original);
+    }
+
+    #[test]
+    fn multiple_reflection_sinks_observe_same_report() {
+        #[derive(Default)]
+        struct CountingSink {
+            observed_actions: usize,
+        }
+
+        impl ReflectionSink for CountingSink {
+            fn consume(&mut self, report: &ReflectionReport) {
+                self.observed_actions = report.executed_actions.len();
+            }
+        }
+
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload {
+                promoted: vec!["mem-a".to_string()],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        );
+        let plan = ReflectionPlan {
+            events: vec![event],
+        };
+        let executor = PlanOnlyReflectionExecutor;
+        let report = executor.execute(&plan);
+        let mut sink_a = CountingSink::default();
+        let mut sink_b = CountingSink::default();
+
+        sink_a.consume(&report);
+        sink_b.consume(&report);
+
+        assert_eq!(sink_a.observed_actions, 1);
+        assert_eq!(sink_b.observed_actions, 1);
     }
 }

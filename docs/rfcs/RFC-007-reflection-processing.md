@@ -75,6 +75,15 @@ The report contains:
 - Warnings
 - Statistics
 
+Sinks consume reports only:
+
+```text
+ReflectionReport
+  -> ReflectionSink
+```
+
+Sinks are observers. They must not generate plans, mutate reports, mutate memory, call Store, or call Recall.
+
 ## Invariants
 
 1. Reflection Processing does not change the Recall contract.
@@ -84,6 +93,8 @@ The report contains:
 5. Reflection Processing does not call an LLM.
 6. Reflection Processing does not mutate memory or graph edges.
 7. Reflection sinks may consume reports, but they must not mutate them.
+8. Multiple sinks must observe the same immutable report deterministically.
+9. Sink failures must not affect executor output.
 
 ## Acceptance Criteria
 
