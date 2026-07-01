@@ -36,6 +36,7 @@ In scope:
 
 - Consume existing `EdgeUpdatePlan` values.
 - Execute plans into a deterministic `HebbianExecutionReport`.
+- Dispatch edge update actions deterministically.
 - Provide NoOp executor behavior for default wiring.
 - Preserve benchmark baselines.
 
@@ -60,6 +61,13 @@ EdgeUpdatePlan
 
 `HebbianExecutionReport` describes semantic execution outcomes only. Operational metrics belong to observers or future sinks.
 
+The report contains:
+
+- Executed actions
+- Skipped actions
+- Warnings
+- Statistics
+
 ## Invariants
 
 1. Hebbian Execution does not change the Recall contract.
@@ -68,11 +76,14 @@ EdgeUpdatePlan
 4. Hebbian Execution does not mutate graph edges.
 5. Hebbian Execution does not call an LLM.
 6. Executor output is deterministic for the same input plans.
+7. Dispatcher must not modify `EdgeUpdatePlan` input values.
+8. Executor must only generate execution reports, not apply edge updates.
 
 ## Acceptance Criteria
 
 - A `NoOpHebbianExecutor` exists for default wiring.
 - Empty input produces an empty report.
 - Non-empty input produces deterministic report entries.
+- Invalid input produces skipped actions and warnings.
 - `reference` remains `Recall@10 = 1.000`.
 - `multihop` remains `Recall@10 = 0.600`.

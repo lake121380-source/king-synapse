@@ -26,8 +26,9 @@ pub use executor::{
     SkippedAction,
 };
 pub use hebbian::{
-    EdgeUpdatePlan, HebbianExecutionReport, HebbianExecutor, HebbianReinforcementEngine,
-    NoOpHebbianExecutor, NoOpHebbianReinforcementEngine, PlanOnlyHebbianExecutor,
+    EdgeUpdatePlan, ExecutedEdgeUpdate, HebbianExecutionReport, HebbianExecutionStatistics,
+    HebbianExecutionWarning, HebbianExecutor, HebbianReinforcementEngine, NoOpHebbianExecutor,
+    NoOpHebbianReinforcementEngine, PlanOnlyHebbianExecutor, SkippedEdgeUpdate,
 };
 pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use reflection::{
@@ -205,6 +206,7 @@ mod tests {
         let report = executor.execute(&plans);
 
         assert!(report.is_empty());
+        assert_eq!(report.statistics, HebbianExecutionStatistics::default());
     }
 
     #[test]
@@ -218,7 +220,68 @@ mod tests {
 
         let report = executor.execute(&plans);
 
-        assert_eq!(report.planned_updates, plans);
+        assert_eq!(
+            report.executed_actions,
+            vec![ExecutedEdgeUpdate::Apply(plans[0].clone())]
+        );
+        assert!(report.skipped_actions.is_empty());
+        assert!(report.warnings.is_empty());
+        assert_eq!(report.statistics.executed, 1);
+        assert_eq!(report.statistics.skipped, 0);
+    }
+
+    #[test]
+    fn invalid_hebbian_update_is_skipped_with_warning() {
+        let plans = vec![EdgeUpdatePlan {
+            source: String::new(),
+            target: "mem-b".to_string(),
+            weight_delta: f32::INFINITY,
+        }];
+        let executor = PlanOnlyHebbianExecutor;
+
+        let report = executor.execute(&plans);
+
+        assert!(report.executed_actions.is_empty());
+        assert_eq!(
+            report.skipped_actions,
+            vec![SkippedEdgeUpdate::Invalid(plans[0].clone())]
+        );
+        assert_eq!(report.warnings.len(), 1);
+        assert_eq!(report.statistics.executed, 0);
+        assert_eq!(report.statistics.skipped, 1);
+    }
+
+    #[test]
+    fn duplicate_hebbian_update_is_skipped_deterministically() {
+        let plans = vec![
+            EdgeUpdatePlan {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.1,
+            },
+            EdgeUpdatePlan {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.2,
+            },
+        ];
+        let executor = PlanOnlyHebbianExecutor;
+
+        let report_a = executor.execute(&plans);
+        let report_b = executor.execute(&plans);
+
+        assert_eq!(report_a, report_b);
+        assert_eq!(
+            report_a.executed_actions,
+            vec![ExecutedEdgeUpdate::Apply(plans[0].clone())]
+        );
+        assert_eq!(
+            report_a.skipped_actions,
+            vec![SkippedEdgeUpdate::Duplicate(plans[1].clone())]
+        );
+        assert_eq!(report_a.warnings.len(), 1);
+        assert_eq!(report_a.statistics.executed, 1);
+        assert_eq!(report_a.statistics.skipped, 1);
     }
 
     #[test]

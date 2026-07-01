@@ -28,8 +28,9 @@ pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::Store;
 pub use working_memory::{
     ArchiveExecution, ConsolidationEngine, ConsolidationExecutor, ConsolidationPlan,
-    ConsolidationSink, DiscardExecution, EdgeUpdatePlan, ExecutedAction, ExecutionReport,
-    ExecutionStatistics, ExecutionWarning, HebbianExecutionReport, HebbianExecutor,
+    ConsolidationSink, DiscardExecution, EdgeUpdatePlan, ExecutedAction, ExecutedEdgeUpdate,
+    ExecutionReport, ExecutionStatistics, ExecutionWarning, HebbianExecutionReport,
+    HebbianExecutionStatistics, HebbianExecutionWarning, HebbianExecutor,
     HebbianReinforcementEngine, MemoryId, MergeExecution, MergeGroup, MergeStrategy,
     NoOpActivationBooster, NoOpConsolidation, NoOpHebbianExecutor, NoOpHebbianReinforcementEngine,
     NoOpReflectionEngine, NoOpReflectionEventRecorder, NoOpReflectionSink, NoOpSink,
@@ -37,6 +38,6 @@ pub use working_memory::{
     ReflectionAction, ReflectionEngine, ReflectionEvent, ReflectionEventId,
     ReflectionEventRecorder, ReflectionExecutor, ReflectionPayload, ReflectionPlan,
     ReflectionRecord, ReflectionReport, ReflectionSink, ReflectionSource, ReflectionStatistics,
-    ReflectionWarning, SessionId, SkippedReflectionAction, WorkingMemoryActivationBooster,
-    WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
+    ReflectionWarning, SessionId, SkippedEdgeUpdate, SkippedReflectionAction,
+    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };
