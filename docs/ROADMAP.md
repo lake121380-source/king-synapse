@@ -77,7 +77,7 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 Focus
 
 - P4.4 Store Integration
-- P4.5 LLM Integration
+- P4.5 Adaptive Policies
 
 Completed foundation
 
@@ -120,8 +120,8 @@ RFC sequence
 RFC-006 Consolidation Execution
   -> RFC-007 Reflection Processing
   -> RFC-008 Hebbian Execution
-  -> RFC-009 Forgetting
-  -> RFC-010 Sleep Cycle
+  -> RFC-009 Store Integration
+  -> RFC-010 Adaptive Policies
 ```
 
 ## Completed Milestones

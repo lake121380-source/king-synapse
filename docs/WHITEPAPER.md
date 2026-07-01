@@ -143,6 +143,8 @@ Plan
 
 Store Integration, LLM Integration, and future behavior work should preserve this architecture unless an ADR approves a different shape.
 
+See `docs/ADAPTIVE_MEMORY.md` for the Phase 4 data flow and Store Integration boundary.
+
 ## Evaluation
 
 Behavior changes must preserve the frozen baselines:
@@ -167,6 +169,6 @@ P4.3 Hebbian Execution is frozen at `v0.4.29-hebbian-execution-freeze` and remai
 Planned work follows the RFC sequence:
 
 - P4.4 Store Integration
-- P4.5 LLM Integration
+- P4.5 Adaptive Policies
 
 The development mode changes from defining interfaces to validating algorithms.

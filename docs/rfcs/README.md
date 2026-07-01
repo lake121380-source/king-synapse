@@ -21,8 +21,8 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 | RFC-006 | Consolidation Execution | Draft |
 | RFC-007 | Reflection Processing | Accepted: `v0.4.10`, `v0.4.11`, `v0.4.12`, `v0.4.19` |
 | RFC-008 | Hebbian Execution | Accepted: `v0.4.20`, `v0.4.21`, `v0.4.22`, `v0.4.29` |
-| RFC-009 | Forgetting | Planned |
-| RFC-010 | Sleep Cycle | Planned |
+| RFC-009 | Store Integration | Planned |
+| RFC-010 | Adaptive Policies | Planned |
 
 ## Phase 4 Order
 
@@ -30,6 +30,6 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 P4.1 Consolidation Executor
   -> P4.2 Reflection Processor
   -> P4.3 Hebbian Executor
-  -> P4.4 Forgetting Engine
-  -> P4.5 Sleep Cycle
+  -> P4.4 Store Integration
+  -> P4.5 Adaptive Policies
 ```

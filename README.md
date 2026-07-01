@@ -44,7 +44,7 @@ What's **not yet** in Phase 0 (coming in later phases):
 - Tauri UI (Phase 5)
 - Claude Code integration + multi-device sync (Phase 6)
 
-See `docs/ROADMAP.md` for the current roadmap, `RELEASE-v0.2.0.md` for the Recall API freeze, `docs/releases/v0.3.9-memory-evolution-freeze.md` for the Memory Evolution freeze, `docs/releases/v0.4.9-adaptive-memory-foundation.md` for the Adaptive Memory Foundation freeze, `docs/releases/v0.4.19-reflection-processing-freeze.md` for the Reflection Processing freeze, and `docs/releases/v0.4.29-hebbian-execution-freeze.md` for the Hebbian Execution freeze.
+See `docs/ROADMAP.md` and `docs/ADAPTIVE_MEMORY.md` for the current roadmap and adaptive memory architecture. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, and `docs/releases/v0.4.29-hebbian-execution-freeze.md`.
 
 ## Build
 
