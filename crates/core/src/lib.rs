@@ -18,13 +18,14 @@ pub(crate) mod store;
 pub mod working_memory;
 
 pub use adaptive::{
-    AlgorithmContext, DeterministicReflectionAlgorithm, ImportanceEstimator, ImportanceSignal,
+    AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
+    ForgetReason, ForgetSkipReason, ForgetTarget, ImportanceEstimator, ImportanceSignal,
     ImportanceSignals, InMemoryMemoryEventStream, MemoryEvent, MemoryEventId, MemoryEventKind,
     MemoryEventPayload, MemoryEventStream, MemoryImportance, MergeAlgorithm, MergeOutput,
-    MergeSkipReason, MergeTarget, NoOpImportanceEstimator, NoOpMemoryEventStream,
-    NoOpMergeAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm, ReflectionOutput,
-    ReflectionSkipReason, RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm,
-    UniformImportanceEstimator,
+    MergeSkipReason, MergeTarget, NoOpForgetAlgorithm, NoOpImportanceEstimator,
+    NoOpMemoryEventStream, NoOpMergeAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,
+    ReflectionOutput, ReflectionSkipReason, RuleBasedForgetAlgorithm, RuleBasedMergeAlgorithm,
+    RuleBasedReflectionAlgorithm, UniformImportanceEstimator,
 };
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};

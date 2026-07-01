@@ -12,6 +12,7 @@
 pub mod context;
 pub mod event;
 pub mod event_stream;
+pub mod forget;
 pub mod importance;
 pub mod merge;
 pub mod reflection;
@@ -19,6 +20,10 @@ pub mod reflection;
 pub use context::AlgorithmContext;
 pub use event::{MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload};
 pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryEventStream};
+pub use forget::{
+    ForgetAlgorithm, ForgetOutput, ForgetReason, ForgetSkipReason, ForgetTarget,
+    NoOpForgetAlgorithm, RuleBasedForgetAlgorithm,
+};
 pub use importance::{
     ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
     NoOpImportanceEstimator, UniformImportanceEstimator,

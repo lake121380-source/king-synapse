@@ -27,6 +27,9 @@ cargo bench -p synapse-eval --bench reflection_yield
 
 # RFC-013 merge benchmark suite (rule-based)
 cargo bench -p synapse-eval --bench merge_precision
+
+# RFC-014 forget benchmark suite (rule-based)
+cargo bench -p synapse-eval --bench forget_precision
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -41,6 +44,12 @@ The merge benchmark emits one `BenchmarkReport` value:
 - `benchmark = "merge-precision"` for the v0.7.3 rule-based merge algorithm
 
 The report uses `AlgorithmMetric::MergePrecision`.
+
+The forget benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "forget-precision"` for the v0.8.3 rule-based forget algorithm
+
+The report uses `AlgorithmMetric::ForgetPrecision`.
 
 ## Metrics
 

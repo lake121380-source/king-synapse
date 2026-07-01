@@ -24,6 +24,10 @@ Current milestone
 ✓ v0.7.2 — Rule-Based Merge Algorithm
 ✓ v0.7.3 — Merge Precision Benchmark
 ✓ v0.7.4 — Merge Store Adapter
+✓ v0.8.0 — Forget Algorithm Skeleton
+✓ v0.8.1 — NoOp Forget Algorithm
+✓ v0.8.2 — Rule-Based Forget Algorithm
+✓ v0.8.3 — Forget Precision Benchmark
 
 Status
 
@@ -35,7 +39,7 @@ Algorithm: **In Progress**
 
 Current focus
 
-▶ RFC-013 — Merge Algorithm
+▶ RFC-014 — Forget Algorithm
 
 Phase 5 shifts from shared-contract work to independent algorithm work. RFC-011 (Adaptive Common Model) is now frozen. RFC-012 through RFC-015 (Reflection, Merge, Forget, Hebbian) consume RFC-011 as read-only ground truth and MUST NOT extend it. Algorithm RFCs are also independent of one another — each depends only on RFC-011.
 
@@ -78,12 +82,16 @@ Completed foundations
 - v0.7.2 — Rule-based merge heuristic
 - v0.7.3 — Merge precision benchmark (`BenchmarkReport` mapped to `MergePrecision`)
 - v0.7.4 — Merge output maps into existing Consolidation and StoreMutation plans
+- v0.8.0 — Forget algorithm trait and target/output shape
+- v0.8.1 — NoOp forget implementation
+- v0.8.2 — Rule-based forget heuristic
+- v0.8.3 — Forget precision benchmark (`BenchmarkReport` mapped to `ForgetPrecision`)
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
-- **RFC-013 Merge Algorithm** — current milestone; freeze-review merge lifecycle behavior and harden production benchmarks.
-- RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
+- RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
+- **RFC-014 Forget Algorithm** — current milestone; connect forget decisions into the frozen store mutation path without changing stable contracts.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.

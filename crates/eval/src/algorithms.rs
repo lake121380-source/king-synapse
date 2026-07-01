@@ -1,16 +1,17 @@
 use crate::{AlgorithmMetric, BenchmarkReport};
 use std::collections::BTreeMap;
 use synapse_core::{
-    AlgorithmContext, DeterministicReflectionAlgorithm, InMemoryMemoryEventStream, Memory,
-    MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    MergeAlgorithm, MergeOutput, MergeTarget, ReflectionAlgorithm, ReflectionOutput,
-    RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm, Scope, Source,
-    UniformImportanceEstimator,
+    AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
+    ForgetTarget, InMemoryMemoryEventStream, Memory, MemoryEvent, MemoryEventId, MemoryEventKind,
+    MemoryEventPayload, MemoryEventStream, MemoryKind, MergeAlgorithm, MergeOutput, MergeTarget,
+    ReflectionAlgorithm, ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedMergeAlgorithm,
+    RuleBasedReflectionAlgorithm, Scope, Source, UniformImportanceEstimator,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const RULE_BASED_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-rule-based";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
+const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 
 /// Run the RFC-012 deterministic reference benchmark for Reflection.
 ///
@@ -68,6 +69,46 @@ pub fn merge_precision_report() -> BenchmarkReport {
     BenchmarkReport {
         benchmark: MERGE_BENCHMARK_NAME.to_string(),
         metrics: BTreeMap::from([(AlgorithmMetric::MergePrecision, precision)]),
+    }
+}
+
+/// Run the RFC-014 rule-based Forget benchmark.
+///
+/// `ForgetPrecision` is the fraction of emitted `Forget` decisions that are
+/// known true positives in the deterministic fixture. `Candidate` decisions
+/// are intentionally not counted as forget predictions.
+pub fn forget_precision_report() -> BenchmarkReport {
+    let groups = forget_fixture();
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(16);
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0)
+        .expect("fixed benchmark timestamp must be valid");
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let algorithm = RuleBasedForgetAlgorithm::default();
+
+    let mut true_positives = 0usize;
+    let mut false_positives = 0usize;
+
+    for (target, expected_forget) in groups {
+        let predicted_forget =
+            matches!(algorithm.forget(&target, &ctx), ForgetOutput::Forget { .. });
+        if predicted_forget && expected_forget {
+            true_positives += 1;
+        } else if predicted_forget {
+            false_positives += 1;
+        }
+    }
+
+    let predicted_count = true_positives + false_positives;
+    let precision = if predicted_count == 0 {
+        0.0
+    } else {
+        true_positives as f64 / predicted_count as f64
+    };
+
+    BenchmarkReport {
+        benchmark: FORGET_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::ForgetPrecision, precision)]),
     }
 }
 
@@ -245,6 +286,72 @@ fn merge_fixture() -> Vec<(MergeTarget, bool)> {
     ]
 }
 
+fn forget_fixture() -> Vec<(ForgetTarget, bool)> {
+    let mut expired = memory_with_kind(
+        "forget-expired",
+        MemoryKind::State,
+        Scope::Global,
+        "Expired temporary deploy state.",
+    );
+    expired.valid_to = Some(1);
+
+    let mut superseded = memory_with_kind(
+        "forget-superseded",
+        MemoryKind::Fact,
+        Scope::Global,
+        "Old vector dimension was 384.",
+    );
+    superseded.superseded_by = Some("new-vector-dim".to_string());
+
+    let mut stale_scratch = memory_with_kind(
+        "forget-stale-scratch",
+        MemoryKind::State,
+        Scope::Global,
+        "todo",
+    );
+    stale_scratch.confidence = 0.2;
+    stale_scratch.importance = 0.1;
+    stale_scratch.valid_from = 1_600_000_000;
+
+    let mut protected = memory_with_kind(
+        "forget-protected",
+        MemoryKind::Playbook,
+        Scope::Global,
+        "Critical recovery playbook must be retained.",
+    );
+    protected.importance = 0.95;
+    protected.valid_from = 1_600_000_000;
+
+    let mut recent = memory_with_kind(
+        "forget-recent",
+        MemoryKind::Fact,
+        Scope::Global,
+        "Recently used deployment note.",
+    );
+    recent.importance = 0.1;
+    recent.confidence = 0.1;
+    recent.last_accessed_at = Some(1_700_000_000 - 60);
+
+    let mut candidate = memory_with_kind(
+        "forget-candidate",
+        MemoryKind::Fact,
+        Scope::Global,
+        "Old rarely used fact.",
+    );
+    candidate.confidence = 0.7;
+    candidate.importance = 0.4;
+    candidate.valid_from = 1_600_000_000;
+
+    vec![
+        (ForgetTarget::new(expired), true),
+        (ForgetTarget::new(superseded), true),
+        (ForgetTarget::new(stale_scratch), true),
+        (ForgetTarget::new(protected), false),
+        (ForgetTarget::new(recent), false),
+        (ForgetTarget::new(candidate), false),
+    ]
+}
+
 fn memory(id: &str, content: &str) -> Memory {
     memory_with_kind(id, MemoryKind::Fact, Scope::Global, content)
 }
@@ -318,6 +425,26 @@ mod tests {
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::MergePrecision),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn forget_precision_report_is_deterministic() {
+        let a = forget_precision_report();
+        let b = forget_precision_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn forget_precision_report_uses_contract_shape() {
+        let report = forget_precision_report();
+
+        assert_eq!(report.benchmark, "forget-precision");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::ForgetPrecision),
             Some(&1.0)
         );
     }
