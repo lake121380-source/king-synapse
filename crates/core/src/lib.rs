@@ -5,6 +5,7 @@
 //! Store is now query-agnostic; embedding lives behind a trait so it can
 //! be swapped or mocked.
 
+pub mod adaptive;
 pub mod config;
 pub(crate) mod embed;
 pub(crate) mod entity;
@@ -16,6 +17,10 @@ pub(crate) mod rerank;
 pub(crate) mod store;
 pub mod working_memory;
 
+pub use adaptive::{
+    AlgorithmContext, ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
+    NoOpImportanceEstimator, UniformImportanceEstimator,
+};
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
