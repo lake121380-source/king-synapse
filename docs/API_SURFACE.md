@@ -377,9 +377,12 @@ Hebbian executor, StoreMutation dispatcher, and SQLite persistent executor.
 `goal_terms`, and `auto_context`.
 `synapse_trace` accepts `query`, optional `k`, `latent_k`, `seed_k`,
 `suppressed_k`, `scope`, `kind`, `scale`, `cap`, `steps`, `decay`, `fanout`,
-`state_terms`, `goal_terms`, and `auto_context`. It returns a cognitive trace
-report with dominant and suppressed candidates plus visible and latent
-evidence.
+`state_terms`, `goal_terms`, `auto_context`, `reinforce`, and `reinforce_k`.
+It returns a cognitive trace report with dominant and suppressed candidates
+plus visible and latent evidence. Trace reinforcement is disabled by default
+and, when enabled, runs only after the trace report is computed. It learns
+associations between the top visible seed memories and the dominant trace
+candidate for future activation.
 
 ## kr (CLI)
 
@@ -426,8 +429,10 @@ query-triggered visible seed memories plus their hidden activation paths.
 `kr trace <query>` supports `-k`, `--latent-k`, `--seed-k`,
 `--suppressed-k`, `--scope`, `--kind`, `--steps`, `--decay`, `--scale`,
 `--cap`, `--fanout`, repeated `--state`, repeated `--goal`,
-`--auto-context`, and `--json` for inspecting the dominant candidate,
-suppressed candidates, and hidden paths for a query.
+`--auto-context`, `--reinforce`, `--reinforce-k`, and `--json` for inspecting
+the dominant candidate, suppressed candidates, and hidden paths for a query.
+Trace reinforcement is disabled by default and runs only after the report is
+produced, so it does not affect the current dominant/suppressed ranking.
 
 ## synapse-eval
 

@@ -87,6 +87,7 @@ Binaries land in `target/release/`:
 ./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
 ./target/release/kr latent-query "forgot water before commute while tired" --auto-context
 ./target/release/kr trace "forgot water before commute while tired" --auto-context
+./target/release/kr trace "forgot water before commute while tired" --auto-context --reinforce --reinforce-k 3
 
 # List recent
 ./target/release/kr list --limit 10

@@ -240,7 +240,9 @@ fn descriptor_trace() -> Value {
                 "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 },
                 "state_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
                 "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
-                "auto_context": { "type": "boolean", "default": false }
+                "auto_context": { "type": "boolean", "default": false },
+                "reinforce": { "type": "boolean", "default": false },
+                "reinforce_k": { "type": "integer", "minimum": 1, "maximum": 16, "default": 3 }
             }
         }
     })
@@ -776,6 +778,15 @@ fn do_trace(store: &StoreHandle, args: &Value) -> Result<Value> {
         .get("auto_context")
         .and_then(|v| v.as_bool())
         .unwrap_or(false);
+    let reinforce = args
+        .get("reinforce")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+    let reinforce_k = args
+        .get("reinforce_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(3);
 
     let mut s = store.lock().unwrap();
     let query = RecallQuery {
@@ -801,8 +812,42 @@ fn do_trace(store: &StoreHandle, args: &Value) -> Result<Value> {
     } else {
         probe.trace(&mut s, &query, &context)?
     };
+    let reinforcement = if reinforce {
+        reinforce_trace_report(&mut s, &report, reinforce_k, &query.query)?
+    } else {
+        None
+    };
 
-    Ok(json!({ "report": report }))
+    Ok(json!({ "report": report, "reinforcement": reinforcement }))
+}
+
+fn reinforce_trace_report(
+    store: &mut Store,
+    report: &synapse_core::CognitiveTraceReport,
+    reinforce_k: usize,
+    query: &str,
+) -> Result<Option<Value>> {
+    if reinforce_k == 0 {
+        return Ok(None);
+    }
+
+    let Some(dominant) = report.dominant.as_ref() else {
+        return Ok(None);
+    };
+
+    let mut ids = report
+        .visible
+        .iter()
+        .take(reinforce_k)
+        .map(|hit| hit.memory.id.clone())
+        .collect::<Vec<_>>();
+    ids.push(dominant.memory.id.clone());
+    let ids = normalize_reinforce_ids(ids);
+    if ids.len() < 2 {
+        return Ok(None);
+    }
+
+    reinforce_memory_ids(store, ids, "recalled", Some(format!("trace:{query}"))).map(Some)
 }
 
 fn string_array(args: &Value, key: &str) -> Vec<String> {

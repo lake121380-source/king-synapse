@@ -259,6 +259,12 @@ enum Cmd {
         /// Derive additional state/goal terms from the query text.
         #[arg(long)]
         auto_context: bool,
+        /// Learn Hebbian associations between visible seed memories and the dominant trace candidate after tracing.
+        #[arg(long)]
+        reinforce: bool,
+        /// Number of top visible trace seeds used for optional Hebbian reinforcement.
+        #[arg(long, default_value = "3")]
+        reinforce_k: usize,
         #[arg(long)]
         json: bool,
     },
@@ -628,6 +634,8 @@ fn main() -> Result<()> {
             state_terms,
             goal_terms,
             auto_context,
+            reinforce,
+            reinforce_k,
             json,
         } => {
             let q = RecallQuery {
@@ -653,10 +661,28 @@ fn main() -> Result<()> {
             } else {
                 probe.trace(&mut store, &q, &context)?
             };
+            let reinforcement = if reinforce {
+                reinforce_trace_report(&mut store, &report, reinforce_k, &q.query)?
+            } else {
+                None
+            };
             if json {
-                println!("{}", serde_json::to_string_pretty(&report)?);
+                if let Some(reinforcement) = reinforcement {
+                    println!(
+                        "{}",
+                        serde_json::to_string_pretty(&serde_json::json!({
+                            "report": report,
+                            "reinforcement": reinforcement,
+                        }))?
+                    );
+                } else {
+                    println!("{}", serde_json::to_string_pretty(&report)?);
+                }
             } else {
                 print_cognitive_trace_report(&report);
+                if let Some(reinforcement) = reinforcement.as_ref() {
+                    print_reinforcement_summary(reinforcement);
+                }
             }
         }
         Cmd::Stats => {
@@ -786,6 +812,41 @@ fn reinforce_recall_hits(
         ids,
         ReinforceEvent::Recalled,
         Some(query.to_string()),
+    )
+    .map(Some)
+}
+
+fn reinforce_trace_report(
+    store: &mut Store,
+    report: &CognitiveTraceReport,
+    reinforce_k: usize,
+    query: &str,
+) -> Result<Option<serde_json::Value>> {
+    if reinforce_k == 0 {
+        return Ok(None);
+    }
+
+    let Some(dominant) = report.dominant.as_ref() else {
+        return Ok(None);
+    };
+
+    let mut ids = report
+        .visible
+        .iter()
+        .take(reinforce_k)
+        .map(|hit| hit.memory.id.clone())
+        .collect::<Vec<_>>();
+    ids.push(dominant.memory.id.clone());
+    let ids = normalize_reinforce_ids(ids);
+    if ids.len() < 2 {
+        return Ok(None);
+    }
+
+    reinforce_memories(
+        store,
+        ids,
+        ReinforceEvent::Recalled,
+        Some(format!("trace:{query}")),
     )
     .map(Some)
 }
@@ -1169,5 +1230,77 @@ mod tests {
         let report = reinforce_recall_hits(&mut store, &hits, 2, "single").unwrap();
 
         assert!(report.is_none());
+    }
+
+    #[test]
+    fn trace_reinforcement_learns_visible_seed_to_dominant_edges() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = write_memory(&mut store, "forgot water before commute").id;
+        let visible = write_memory(&mut store, "forgot water calendar note").id;
+        let hidden = write_memory(&mut store, "tired attention failure").id;
+        store.update_edge(&seed, &hidden, 2.0).unwrap();
+
+        let q = RecallQuery {
+            query: "forgot water".to_string(),
+            k: Some(2),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+            visible_limit: 2,
+            latent_limit: 4,
+            seed_limit: 2,
+            suppressed_limit: 4,
+            latent_scale: 0.05,
+            latent_cap: 0.25,
+            latent_steps: 2,
+            latent_decay: 0.5,
+            latent_fanout: 10,
+        });
+        let context =
+            LatentActivationContext::new(vec!["tired".to_string()], vec!["attention".to_string()]);
+        let report = probe.trace(&mut store, &q, &context).unwrap();
+        assert_eq!(report.dominant.as_ref().unwrap().memory.id, hidden);
+
+        let reinforcement = reinforce_trace_report(&mut store, &report, 2, "forgot water")
+            .unwrap()
+            .expect("trace should reinforce visible seeds and dominant candidate");
+
+        assert_eq!(
+            reinforcement["store_report"]["statistics"]["executed"]
+                .as_u64()
+                .unwrap(),
+            6
+        );
+        assert!(store.edge_weight(&seed, &hidden).unwrap().is_some());
+        assert!(store.edge_weight(&hidden, &seed).unwrap().is_some());
+        assert!(store.edge_weight(&visible, &hidden).unwrap().is_some());
+        assert!(store.edge_weight(&hidden, &visible).unwrap().is_some());
+    }
+
+    #[test]
+    fn trace_reinforcement_skips_when_disabled_by_k() {
+        let mut store = Store::open_in_memory().unwrap();
+        write_memory(&mut store, "forgot water before commute");
+        let hidden = write_memory(&mut store, "tired attention failure").id;
+        let q = RecallQuery {
+            query: "forgot water".to_string(),
+            k: Some(1),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let probe = CognitiveTraceProbe::new(CognitiveTraceConfig::default());
+        let report = probe
+            .trace(
+                &mut store,
+                &q,
+                &LatentActivationContext::new(vec!["tired".to_string()], Vec::new()),
+            )
+            .unwrap();
+
+        let reinforcement = reinforce_trace_report(&mut store, &report, 0, "forgot water").unwrap();
+
+        assert!(reinforcement.is_none());
+        assert!(store.incoming_edges(&hidden, 10).unwrap().is_empty());
     }
 }

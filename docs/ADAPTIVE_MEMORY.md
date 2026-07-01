@@ -108,11 +108,19 @@ computed (`kr recall --reinforce`, `synapse_recall` with `reinforce: true`).
 This records "these memories were recalled together" for future activation,
 but it does not change the current recall ranking.
 
-The cognitive trace surfaces (`kr trace` and `synapse_trace`) are read-only
-inspection consumers. They compose visible recall, latent activation, and
+The cognitive trace surfaces (`kr trace` and `synapse_trace`) are inspection
+consumers by default. They compose visible recall, latent activation, and
 state/goal context into a report that names the current dominant candidate,
-suppressed candidates, and hidden activation paths. They do not run Hebbian
-learning, mutate Store, or alter the frozen `RecallHit` schema.
+suppressed candidates, and hidden activation paths.
+
+When explicitly enabled (`kr trace --reinforce`, `synapse_trace` with
+`reinforce: true`), trace reinforcement runs only after the report is computed.
+It routes the top visible seed memories plus the dominant trace candidate
+through the Hebbian algorithm, Hebbian executor, StoreMutation dispatcher, and
+SQLite persistent executor. This records "these visible causes and this hidden
+influence moved together" for future activation, but it does not affect the
+current trace ranking, mutate through the Hebbian algorithm directly, or alter
+the frozen `RecallHit` schema.
 
 ## P4.5 Adaptive Policies
 
