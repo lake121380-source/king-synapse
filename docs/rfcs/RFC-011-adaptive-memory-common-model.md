@@ -1,6 +1,6 @@
 # RFC-011: Adaptive Memory Common Model
 
-Status: Accepted
+Status: Implemented
 
 Phase: Phase 5 Algorithm Implementation
 
@@ -9,8 +9,8 @@ Implementation Tags:
 ```text
 v0.5.1-memory-importance          (implemented)
 v0.5.2-memory-event-and-context   (implemented)
-v0.5.3-benchmark-harness          (in progress)
-v0.5.9-adaptive-common-freeze     (planned)
+v0.5.3-benchmark-harness          (implemented)
+v0.5.9-adaptive-common-freeze     (implemented)
 ```
 
 Subtitle: Shared Data Model for All Adaptive Memory Algorithms
@@ -353,6 +353,78 @@ Benchmark baselines must be preserved across every milestone:
 
 - `reference` `Recall@10 = 1.000`
 - `multihop` `Recall@10 = 0.600`
+
+## Post-Freeze Rules
+
+Effective at `v0.5.9-adaptive-common-freeze`. These rules govern every subsequent RFC that consumes the Adaptive Common Model.
+
+### PF1. No new top-level shared types after v0.5.9
+
+No new top-level type (struct / enum / trait) may be added under `crates/core/src/adaptive/` after v0.5.9. Algorithm-specific data types belong to their own subtrees:
+
+```
+adaptive/reflection/
+adaptive/merge/
+adaptive/forget/
+adaptive/hebbian/
+```
+
+Types like `ReflectionScore`, `MergeCandidate`, `ForgetReason`, or `HebbianEdge` MUST live inside their own algorithm module, not in the shared `adaptive/` root.
+
+Additive extension of the frozen `#[non_exhaustive]` enums (`ImportanceSignal`, `MemoryEventKind`, `MemoryEventPayload`, `AlgorithmMetric`) via new variants remains allowed. What is frozen is the set of top-level types, not the set of variants.
+
+### PF2. Uniform algorithm call shape (MUST)
+
+Every Phase 5 algorithm's primary method MUST have the shape:
+
+```rust
+fn method(&self, target: &T, ctx: &AlgorithmContext<'_>) -> Output
+```
+
+Deviations such as `(ctx)` alone, `(graph, ctx)`, `(policy, ctx)`, or `(memory, edge, ctx)` are forbidden. Multi-input algorithms MUST wrap their inputs into a single target aggregate (`MergeGroup`, `EdgeInput`, ...) so the first argument is always exactly one value. Any deviation requires an ADR, not an RFC.
+
+### PF3. Downstream RFCs consume, never extend
+
+RFC-012 through RFC-015 (and any future algorithm RFC) MUST reference RFC-011 for `Importance`, `Event`, `Context`, and `Metric`. They MUST NOT redefine these types, fork them locally, or shadow them under a different name.
+
+### PF4. Algorithm RFCs MUST NOT depend on one another
+
+Every algorithm RFC depends only on RFC-011. Direct dependencies between algorithm RFCs are forbidden:
+
+```
+    RFC-011  (Adaptive Common Model, frozen)
+       ▲
+       │
+ ┌─────┼──────┬──────┬──────┐
+ │     │      │      │      │
+RFC-012 RFC-013 RFC-014 RFC-015
+Reflection Merge Forget Hebbian
+```
+
+Reflection MUST NOT import Merge types. Merge MUST NOT import Forget types. Cross-algorithm interaction (if ever needed) happens through `MemoryEvent` on the shared `MemoryEventStream`, never through direct type dependencies.
+
+### PF5. AlgorithmContext never owns data
+
+`AlgorithmContext` carries only borrows and small `Copy` values (`DateTime<Utc>`, `Option<SessionId>`, `&dyn ImportanceEstimator`, `&dyn MemoryEventStream`). It MUST NOT gain fields of the following shapes:
+
+- Owned collections: `Vec<Memory>`, `HashMap<...>`, `BTreeMap<...>`, `Arc<...>`, `Box<...>`.
+- Service handles: any `&dyn Store`, `&dyn RecallEngine`, `&dyn PolicyEngine`, `&dyn Graph`, `&dyn LlmClient`, or their owned equivalents.
+- Configuration bags, caches, or working buffers.
+
+`AlgorithmContext` is a borrow of environment, not a service locator.
+
+### PF6. Benchmarks use only public API
+
+Benchmarks under `crates/eval/benches/algorithms/` MUST call the same public API surface that end users call. Benchmarks MUST NOT invoke internal helpers, private modules, `pub(crate)` shortcuts, or "debug" variants of algorithm methods. If a benchmark cannot express the measurement using the public API, either the measurement is invalid or the public API is incomplete — in either case the fix is not to widen the benchmark's access.
+
+### PF7. Renaming a frozen type is breaking
+
+Renaming any frozen type introduced by RFC-011 is a breaking change under `docs/COMPATIBILITY.md`, regardless of behavioral equivalence:
+
+- `MemoryImportance` → `Importance`: breaking.
+- `AlgorithmContext` → `ExecutionContext`: breaking.
+- `MemoryEventStream` → `EventStream`: breaking.
+- `BenchmarkReport` → `Report`: breaking.
 
 ## Non-Goals
 

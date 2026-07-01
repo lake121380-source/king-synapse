@@ -198,3 +198,16 @@ Phase 5 begins the **Adaptive Intelligence** work: turning frozen contracts into
 - Parameter sweeps and ablation studies
 
 Phase 5 must not change any Stable API. All work plugs in behind existing traits. The development mode changes from defining interfaces to validating algorithms.
+
+## Shared Foundations (Frozen `v0.5.9`)
+
+Every adaptive algorithm in King Synapse shares one Importance model, one Event model, one AlgorithmContext, and one Benchmark contract. RFC-011, frozen at `v0.5.9-adaptive-common-freeze`, locks these four foundations:
+
+- **Importance** — `MemoryImportance` + `ImportanceSignals` (5 signals, `#[non_exhaustive]`), estimated via the `ImportanceEstimator` trait.
+- **Event** — `MemoryEvent` (8 past-tense kinds, `#[non_exhaustive]`) appended to a strictly ordered `MemoryEventStream`.
+- **Context** — `AlgorithmContext<'a>` carrying `now`, `session_id`, `&dyn ImportanceEstimator`, `&dyn MemoryEventStream`. The trait-object surface is closed permanently.
+- **Benchmark** — `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`) + `BenchmarkReport` (`benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), a deterministic value object with no runtime metadata.
+
+Reflection, Merge, Forget, and Hebbian each carry their own algorithm-specific logic but consume exactly this common surface — they do not extend it, do not fork it, and do not bypass it. This is what lets four independent algorithms be tuned, replaced, or benchmarked without touching each other or the platform.
+
+Every algorithm's primary method has the same shape: `fn method(&self, target: &T, ctx: &AlgorithmContext<'_>) -> Output`. This uniformity is a hard rule under RFC-011 Post-Freeze rule PF2.

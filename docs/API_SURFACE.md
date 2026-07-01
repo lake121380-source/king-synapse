@@ -1,6 +1,6 @@
 # API Surface
 
-This document lists the stable public API of King Synapse as of `v0.5.0-architecture-freeze`.
+This document lists the stable public API of King Synapse as of `v0.5.9-adaptive-common-freeze`.
 
 APIs are classified into three levels:
 
@@ -9,6 +9,31 @@ APIs are classified into three levels:
 - **Internal** — Not part of the public API. May change at any time. Do not depend on internal items.
 
 Stable items in `synapse-core` live under the crate's re-export table in `crates/core/src/lib.rs`. Stable items in other crates live in their crate's `src/lib.rs` re-exports. If an item is not re-exported there, it is **Internal**.
+
+## Adaptive Common Model (Frozen Reference)
+
+**Frozen at `v0.5.9-adaptive-common-freeze`.** This is the shared foundation every Phase 5 adaptive-memory algorithm consumes. New algorithm RFCs (RFC-012..015) reference these types read-only and MUST NOT redefine, fork, or shadow them.
+
+| Concept | Type | Crate | Frozen since |
+| --- | --- | --- | --- |
+| Importance | `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator` | `synapse-core::adaptive::importance` | `v0.5.1` |
+| Event | `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload` | `synapse-core::adaptive::event` | `v0.5.2` |
+| Event Stream | `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream` | `synapse-core::adaptive::event_stream` | `v0.5.2` |
+| Context | `AlgorithmContext<'a>` (trait-object surface: `importance`, `events`; **closed** at `v0.5.2`) | `synapse-core::adaptive::context` | `v0.5.2` |
+| Metric | `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`) | `synapse-eval::contract` | `v0.5.3` |
+| Report | `BenchmarkReport` (`#[non_exhaustive]`, `benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`) | `synapse-eval::contract` | `v0.5.3` |
+
+Post-Freeze rules (`docs/rfcs/RFC-011-adaptive-memory-common-model.md#post-freeze-rules`):
+
+- **PF1** No new top-level shared types under `crates/core/src/adaptive/`. Additive `#[non_exhaustive]` variant extension remains allowed.
+- **PF2** Every algorithm's primary method is `fn method(&self, target: &T, ctx: &AlgorithmContext<'_>) -> Output`. Any deviation requires an ADR.
+- **PF3** Downstream RFCs consume, never extend.
+- **PF4** Algorithm RFCs MUST NOT depend on one another. All algorithms depend only on RFC-011.
+- **PF5** `AlgorithmContext` never owns data; no new service handles.
+- **PF6** Benchmarks call only public API.
+- **PF7** Renaming any frozen type is breaking.
+
+Detailed per-crate listings follow below.
 
 ## synapse-core
 
@@ -205,7 +230,7 @@ Frozen by `v0.4.49-adaptive-policies-freeze`.
 - `AlgorithmContext<'a>` (`#[non_exhaustive]`; fields: `now`, `session_id`, `importance: &'a dyn ImportanceEstimator`, `events: &'a dyn MemoryEventStream`; trait-object surface **closed** at v0.5.2)
 - `AlgorithmContext::new(now, session_id, importance, events)` — the only supported constructor
 
-Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-memory-event-and-context` (event kernel + context closure). Full RFC-011 freeze at `v0.5.9-adaptive-common-freeze`.
+Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-memory-event-and-context` (event kernel + context closure). Full RFC-011 model frozen at `v0.5.9-adaptive-common-freeze`.
 
 ### entity
 
@@ -265,7 +290,7 @@ Invariants (RFC-011 Part D):
 - Reports are sparse: only meaningful metrics are included. Missing metrics MUST NOT be interpreted as `0.0`.
 - Directory layout under `crates/eval/{datasets,benches,reports}/` is stable per `docs/COMPATIBILITY.md`. Adding a sibling directory is non-breaking; renaming or deleting one is breaking.
 
-Frozen by `v0.5.3-benchmark-harness`.
+Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model freeze at `v0.5.9-adaptive-common-freeze`.
 
 ### legacy benchmark runner
 

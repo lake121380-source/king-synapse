@@ -11,16 +11,24 @@ Current milestone
 ✓ P4.4 — Store Integration (Contract Freeze)
 ✓ P4.5 — Adaptive Policies (Contract Freeze)
 ✓ v0.5.0 — Architecture Freeze (Public API + SemVer Policy)
+✓ v0.5.1 — Memory Importance Skeleton
+✓ v0.5.2 — Memory Event Kernel + AlgorithmContext Closure
+✓ v0.5.3 — Benchmark Harness Contract Freeze
+✓ v0.5.9 — Adaptive Common Model Freeze (RFC-011 Implemented)
 
 Status
 
 Architecture: **Stable**
 
+Adaptive Common Model: **Frozen**
+
 Algorithm: **In Progress**
 
 Current focus
 
-▶ Phase 5 — Algorithm Implementation
+▶ RFC-012 — Reflection Algorithm
+
+Phase 5 shifts from shared-contract work to independent algorithm work. RFC-011 (Adaptive Common Model) is now frozen. RFC-012 through RFC-015 (Reflection, Merge, Forget, Hebbian) consume RFC-011 as read-only ground truth and MUST NOT extend it. Algorithm RFCs are also independent of one another — each depends only on RFC-011.
 
 Phase 2 concluded with `v0.2.0-recall-api-freeze`. The Recall contract is now considered stable. Future work extends the platform rather than redesigning it.
 
@@ -38,21 +46,29 @@ P4.5 concluded with `v0.4.49-adaptive-policies-freeze`. Adaptive Policies is now
 
 v0.5.0 concluded with `v0.5.0-architecture-freeze`. The whole-project public API is now stable under the compatibility policy in `docs/COMPATIBILITY.md`. Development mode shifts from **Contract-first** to **Algorithm-first**.
 
+v0.5.9 concluded with `v0.5.9-adaptive-common-freeze`. RFC-011 is Implemented. The Adaptive Common Model (Importance, Event, Event Stream, Context, Metric, Report) is now frozen. Every subsequent algorithm RFC (RFC-012..015) depends only on RFC-011.
+
 ## Phase 5 — Algorithm Implementation
 
 Goal
 
 Turn the frozen contracts into concrete adaptive behavior without changing any stable API.
 
+Completed foundations
+
+- v0.5.1 — Memory Importance skeleton (10 tests)
+- v0.5.2 — Memory Event kernel + AlgorithmContext closure (20 new tests)
+- v0.5.3 — Benchmark harness contract (AlgorithmMetric, BenchmarkReport)
+- v0.5.9 — Adaptive Common Model freeze (RFC-011 Implemented)
+
 Focus
 
-- Reflection Algorithm (concrete `ReflectionEngine` / `ReflectionExecutor` implementations)
-- Hebbian Reinforcement (concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations)
-- Forgetting Strategy (concrete `ForgetPolicy` implementations)
-- Merge Strategy (concrete `MergePolicy` + `ConsolidationEngine` implementations)
-- Adaptive Policies (concrete `ReflectionPolicy` / `HebbianPolicy` implementations)
-- Evaluation & Benchmarks (DMR, LongMemEval, comparison against Graphiti / Letta / Mem0)
-- Parameter sweeps and ablation studies
+- **RFC-012 Reflection Algorithm** — next milestone; concrete `ReflectionEngine` / `ReflectionExecutor` implementations built on RFC-011.
+- RFC-013 Merge Algorithm — concrete `MergePolicy` + `ConsolidationEngine` implementations.
+- RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
+- RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.
+- Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
+- Parameter sweeps and ablation studies.
 
 Rules
 
@@ -60,6 +76,7 @@ Rules
 2. Frozen benchmark baselines (`reference` `Recall@10 = 1.000`, `multihop` `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
 3. Every concrete algorithm ships with a benchmark run demonstrating baseline preservation and target-metric improvement.
 4. Algorithm parameters are internal by default; promotion to Stable API requires an ADR.
+5. Post-freeze rules of RFC-011 apply: uniform call shape `fn method(&self, target, ctx)`, no new top-level shared types under `adaptive/`, algorithm RFCs are independent of one another, `AlgorithmContext` never owns data, benchmarks use only public API, renaming a frozen type is breaking.
 
 ## Phase 3 Contract
 

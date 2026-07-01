@@ -63,6 +63,58 @@ Recall Platform is stable and query-agnostic. Working Memory is session-scoped a
 4. Frozen benchmark baselines (`reference` = `Recall@10 = 1.000`, `multihop` = `Recall@10 = 0.600`) must be preserved or explicitly renegotiated through ADR.
 5. Concrete algorithms must remain replaceable behind their traits; no algorithm becomes a hard dependency of the framework.
 
+## Final Adaptive Memory Architecture (Frozen `v0.5.9`)
+
+The shared foundation every Phase 5 algorithm consumes. This structure is frozen; concrete algorithms attach below `AlgorithmContext`, not above it.
+
+```text
+                    ┌────────────────────┐
+                    │       Memory       │
+                    └──────────┬─────────┘
+                               │
+                               ▼
+                    ┌────────────────────┐
+                    │ ImportanceEstimator│──► MemoryImportance
+                    └────────────────────┘
+                               │
+                               │
+                    ┌────────────────────┐
+                    │ MemoryEventStream  │──► MemoryEvent (append-only)
+                    └──────────┬─────────┘
+                               │
+                               ▼
+                    ┌────────────────────┐
+                    │  AlgorithmContext  │  (trait-object surface closed at v0.5.2)
+                    │  now, session_id,  │
+                    │  importance, events│
+                    └──────────┬─────────┘
+                               │
+              ┌────────────────┼────────────────┬──────────────┐
+              ▼                ▼                ▼              ▼
+       ┌───────────┐    ┌───────────┐    ┌───────────┐   ┌───────────┐
+       │Reflection │    │   Merge   │    │  Forget   │   │  Hebbian  │
+       └─────┬─────┘    └─────┬─────┘    └─────┬─────┘   └─────┬─────┘
+             └──────────┬─────┴──────────┬─────┴───────────────┘
+                        ▼                ▼
+              ┌──────────────────────────────┐
+              │      Store Integration       │  (canonical StoreMutation)
+              └──────────────┬───────────────┘
+                             ▼
+                    ┌────────────────────┐
+                    │       Store        │
+                    └────────────────────┘
+
+Benchmark plane (parallel, observer-only):
+  Each algorithm → BenchmarkReport { benchmark, metrics: BTreeMap<AlgorithmMetric, f64> }
+```
+
+**Rule.** Every algorithm consumes `AlgorithmContext`. No algorithm bypasses it. No new engine, graph, recall handle, or LLM client may be added to `AlgorithmContext`.
+
+**Freeze boundary.**
+
+- Everything **above** `AlgorithmContext` (Importance, Event, Event Stream, Context itself, Metric, Report) is **frozen** at `v0.5.9-adaptive-common-freeze`. Changes require an ADR and a `0.6.0` release.
+- Everything **below** `AlgorithmContext` (Reflection, Merge, Forget, Hebbian, and their internal data types under `adaptive/<algorithm>/`) is **open**. Concrete algorithm work begins with RFC-012.
+
 ## Reflection
 
 ```text

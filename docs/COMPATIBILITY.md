@@ -34,6 +34,10 @@ Breaking changes to **Stable** APIs include, but are not limited to:
 - Renaming, deleting, or repurposing a directory under `crates/eval/datasets/`, `crates/eval/benches/`, or `crates/eval/reports/`.
 - Removing an `AlgorithmMetric` variant.
 - Changing the `BenchmarkReport` serialized shape in a way that alters existing metric encoding.
+- Renaming any frozen Adaptive Common Model type (`MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `AlgorithmContext`, `AlgorithmMetric`, `BenchmarkReport`). Rename = breaking regardless of behavioral equivalence.
+- Adding a new top-level type (struct / enum / trait) under `crates/core/src/adaptive/` after `v0.5.9-adaptive-common-freeze`.
+- Introducing an algorithm trait whose primary method deviates from `fn method(&self, target: &T, ctx: &AlgorithmContext<'_>) -> _`. This uniform shape is a hard rule; deviation requires an ADR.
+- Adding new service-handle fields to `AlgorithmContext` (any `&dyn Store`, `&dyn RecallEngine`, `&dyn PolicyEngine`, `&dyn Graph`, `&dyn LlmClient`, or owned equivalents). The trait-object surface is closed at v0.5.2.
 
 ## What Does Not Count as a Breaking Change
 
@@ -45,7 +49,9 @@ The following are always allowed and never trigger a major version bump:
 - Adding new fields to structs marked `#[non_exhaustive]`.
 - Adding new enum variants to enums marked `#[non_exhaustive]`.
 - Adding a new `AlgorithmMetric` variant.
+- Adding a new `ImportanceSignal`, `MemoryEventKind`, or `MemoryEventPayload` variant.
 - Adding a new sibling directory under `crates/eval/datasets/`, `crates/eval/benches/`, or `crates/eval/reports/`.
+- Adding a new algorithm module under `crates/core/src/adaptive/<algorithm>/` (e.g. `adaptive/reflection/`, `adaptive/merge/`), provided it does not introduce a new top-level shared type in `adaptive/` itself.
 - Changing internal-only items.
 - Changing algorithm implementations behind stable traits.
 - Changing docs, error messages, log messages, or panic messages.
