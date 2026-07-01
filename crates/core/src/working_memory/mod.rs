@@ -31,8 +31,9 @@ pub use reflection::{
     ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
 };
 pub use reflection_processing::{
-    NoOpReflectionEngine, PlanOnlyReflectionExecutor, ReflectionEngine, ReflectionExecutor,
-    ReflectionPlan, ReflectionReport,
+    NoOpReflectionEngine, PlanOnlyReflectionExecutor, ReflectionAction, ReflectionEngine,
+    ReflectionExecutor, ReflectionPlan, ReflectionRecord, ReflectionReport, ReflectionStatistics,
+    ReflectionWarning, SkippedReflectionAction,
 };
 pub use session::SessionId;
 pub use sink::{ConsolidationSink, NoOpSink};
@@ -314,6 +315,39 @@ mod tests {
         let event = ReflectionEvent::new(
             session,
             ReflectionSource::ConsolidationPlan,
+            ReflectionPayload {
+                promoted: vec!["mem-a".to_string()],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        );
+        let plan = ReflectionPlan {
+            events: vec![event.clone()],
+        };
+        let executor = PlanOnlyReflectionExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.executed_actions.len(), 1);
+        assert_eq!(
+            report.executed_actions[0],
+            ReflectionAction::Record(ReflectionRecord {
+                event_id: event.id,
+                source: ReflectionSource::ConsolidationPlan,
+            })
+        );
+        assert!(report.skipped_actions.is_empty());
+        assert!(report.warnings.is_empty());
+        assert_eq!(report.statistics.processed, 1);
+        assert_eq!(report.statistics.skipped, 0);
+    }
+
+    #[test]
+    fn empty_reflection_payload_is_skipped_with_warning() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
             ReflectionPayload::default(),
         );
         let plan = ReflectionPlan {
@@ -323,6 +357,17 @@ mod tests {
 
         let report = executor.execute(&plan);
 
-        assert_eq!(report.processed_events, vec![event.id]);
+        assert!(report.executed_actions.is_empty());
+        assert_eq!(report.skipped_actions.len(), 1);
+        assert_eq!(report.warnings.len(), 1);
+        assert_eq!(report.statistics.processed, 0);
+        assert_eq!(report.statistics.skipped, 1);
+        assert_eq!(
+            report.skipped_actions[0],
+            SkippedReflectionAction::EmptyPayload(ReflectionRecord {
+                event_id: event.id,
+                source: ReflectionSource::ConsolidationPlan,
+            })
+        );
     }
 }

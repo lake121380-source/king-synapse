@@ -33,7 +33,9 @@ pub use working_memory::{
     MergeGroup, MergeStrategy, NoOpActivationBooster, NoOpConsolidation,
     NoOpHebbianReinforcementEngine, NoOpReflectionEngine, NoOpReflectionEventRecorder, NoOpSink,
     PlanOnlyConsolidationExecutor, PlanOnlyReflectionExecutor, ReflectionEngine, ReflectionEvent,
-    ReflectionEventId, ReflectionEventRecorder, ReflectionExecutor, ReflectionPayload,
-    ReflectionPlan, ReflectionReport, ReflectionSource, SessionId, WorkingMemoryActivationBooster,
+    ReflectionEventId, ReflectionEventRecorder, ReflectionExecutor, ReflectionAction,
+    ReflectionPayload, ReflectionPlan, ReflectionRecord, ReflectionReport, ReflectionSource,
+    ReflectionStatistics, ReflectionWarning, SessionId, SkippedReflectionAction,
+    WorkingMemoryActivationBooster,
     WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };

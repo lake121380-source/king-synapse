@@ -39,6 +39,7 @@ In scope:
 - Consume existing `ReflectionEvent` values.
 - Produce a deterministic `ReflectionPlan`.
 - Execute the plan into a semantic `ReflectionReport`.
+- Dispatch reflection actions deterministically.
 - Provide a `NoOpReflectionSink`.
 - Preserve benchmark baselines.
 
@@ -66,6 +67,13 @@ ReflectionEvent
 ```
 
 `ReflectionReport` describes semantic reflection outcomes only. Operational metrics belong to observers or sinks.
+
+The report contains:
+
+- Executed actions
+- Skipped actions
+- Warnings
+- Statistics
 
 ## Invariants
 
