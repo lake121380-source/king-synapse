@@ -232,6 +232,18 @@ Frozen by `v0.4.49-adaptive-policies-freeze`.
 
 Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-memory-event-and-context` (event kernel + context closure). Full RFC-011 model frozen at `v0.5.9-adaptive-common-freeze`.
 
+### adaptive algorithms (Phase 5)
+
+**Stable (algorithm-local skeleton)**
+
+- `ReflectionAlgorithm` (trait: `fn reflect(&self, target: &Memory, ctx: &AlgorithmContext<'_>) -> ReflectionOutput`)
+- `ReflectionOutput` (`#[non_exhaustive]`; algorithm-local output)
+- `ReflectionSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
+- `NoOpReflectionAlgorithm`
+- `DeterministicReflectionAlgorithm` (reference implementation; reproducible baseline, not production)
+
+Introduced by `v0.6.0-reflection-algorithm-skeleton` and `v0.6.2-reflection-deterministic-reference`. These items are Reflection-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+
 ### entity
 
 **Stable**

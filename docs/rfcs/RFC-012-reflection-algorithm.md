@@ -13,9 +13,9 @@ Depends on:
 Implementation Tags:
 
 ```text
-v0.6.0-reflection-algorithm-skeleton        (planned)
-v0.6.1-reflection-algorithm-noop            (planned)
-v0.6.2-reflection-deterministic-reference   (planned)
+v0.6.0-reflection-algorithm-skeleton        (implemented)
+v0.6.1-reflection-algorithm-noop            (implemented)
+v0.6.2-reflection-deterministic-reference   (implemented)
 v0.6.3-reflection-benchmark                 (planned)
 v0.6.9-reflection-algorithm-freeze          (planned)
 ```

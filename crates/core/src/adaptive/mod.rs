@@ -13,6 +13,7 @@ pub mod context;
 pub mod event;
 pub mod event_stream;
 pub mod importance;
+pub mod reflection;
 
 pub use context::AlgorithmContext;
 pub use event::{MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload};
@@ -20,4 +21,8 @@ pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryE
 pub use importance::{
     ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,
     NoOpImportanceEstimator, UniformImportanceEstimator,
+};
+pub use reflection::{
+    DeterministicReflectionAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,
+    ReflectionOutput, ReflectionSkipReason,
 };
