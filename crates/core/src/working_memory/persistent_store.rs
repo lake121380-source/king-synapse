@@ -81,7 +81,14 @@ fn execute_mutation(
         StoreMutation::ArchiveMemory { id } | StoreMutation::DeleteMemory { id } => {
             record_result(store.invalidate(id, "store_adapter"), mutation, report);
         }
-        StoreMutation::UpdateMemory { .. } | StoreMutation::UpdateEdge { .. } => {
+        StoreMutation::UpdateMemory { id, content } => {
+            record_result(
+                store.update_content(id, content, "store_adapter"),
+                mutation,
+                report,
+            );
+        }
+        StoreMutation::UpdateEdge { .. } => {
             report
                 .skipped
                 .push(SkippedStoreMutation::Unsupported(mutation.clone()));

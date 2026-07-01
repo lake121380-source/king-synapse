@@ -17,6 +17,7 @@ v0.7.0-merge-algorithm-skeleton          (implemented)
 v0.7.1-merge-algorithm-noop              (implemented)
 v0.7.2-merge-rule-based-reference        (implemented)
 v0.7.3-merge-benchmark                   (implemented)
+v0.7.4-merge-store-adapter               (implemented)
 v0.7.9-merge-algorithm-freeze            (planned)
 ```
 
@@ -84,6 +85,18 @@ MergeOutput
 
 The output is not a Store mutation. Later layers translate merge output into
 existing consolidation/store plans.
+
+`v0.7.4` adds the first pure adapter:
+
+```text
+MergeOutput::Merge
+  -> ConsolidationPlan.merge
+  -> ExecutionReport::Merge
+  -> StoreMutationPlan(UpdateMemory + ArchiveMemory...)
+```
+
+The adapter preserves the algorithm boundary. `MergeAlgorithm` still has no
+Store access and does not mutate state directly.
 
 ## Algorithm Flow
 
@@ -162,6 +175,7 @@ predictions.
 - Rule-based reference produces a merge for controlled duplicate memories.
 - Rule-based reference skips incompatible groups.
 - Benchmark emits `BenchmarkReport` mapped to `MergePrecision`.
+- Merge output maps into the existing consolidation/store mutation path.
 - `cargo test --workspace` passes.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.

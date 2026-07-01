@@ -5,9 +5,14 @@
 
 use crate::adaptive::AlgorithmContext;
 use crate::model::Memory;
-use crate::working_memory::MergeStrategy;
+use crate::working_memory::{
+    ConsolidationPlan, MergeGroup, MergeStrategy, SessionId, WorkingMemoryItem,
+};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
+use std::time::Duration;
+use uuid::Uuid;
 
 const DEFAULT_MERGE_THRESHOLD: f32 = 0.72;
 const DEFAULT_CANDIDATE_THRESHOLD: f32 = 0.45;
@@ -55,6 +60,48 @@ impl MergeOutput {
                 reason: MergeSkipReason::NoOp
             }
         )
+    }
+
+    /// Convert a positive merge decision into the existing consolidation plan
+    /// shape.
+    ///
+    /// This is a pure adapter. It does not write to storage; later execution
+    /// and store-dispatch layers translate the returned `MergeGroup` into
+    /// canonical store mutations. `Candidate` and `Skipped` outputs do not
+    /// produce a plan because they still require review or intentionally carry
+    /// no work.
+    pub fn to_consolidation_plan_with_item_id(
+        &self,
+        item_id: Uuid,
+        session_id: SessionId,
+        created_at: DateTime<Utc>,
+        ttl: Duration,
+    ) -> Option<ConsolidationPlan> {
+        let (memory_ids, strategy, merged_content) = match self {
+            Self::Merge {
+                memory_ids,
+                strategy,
+                merged_content,
+                ..
+            } => (memory_ids, *strategy, merged_content),
+            Self::Candidate { .. } | Self::Skipped { .. } => return None,
+        };
+
+        Some(ConsolidationPlan {
+            promote: Vec::new(),
+            merge: vec![MergeGroup {
+                items: vec![WorkingMemoryItem {
+                    id: item_id,
+                    session_id,
+                    content: merged_content.clone(),
+                    linked_memory_ids: memory_ids.clone(),
+                    created_at,
+                    ttl,
+                }],
+                strategy,
+            }],
+            discard: Vec::new(),
+        })
     }
 }
 
@@ -292,6 +339,8 @@ mod tests {
     use crate::adaptive::{NoOpImportanceEstimator, NoOpMemoryEventStream};
     use crate::model::{MemoryKind, Scope, Source};
     use chrono::Utc;
+    use std::time::Duration;
+    use uuid::Uuid;
 
     fn memory(id: &str, content: &str) -> Memory {
         Memory {
@@ -356,6 +405,63 @@ mod tests {
             } if memory_ids == vec!["a".to_string(), "b".to_string()]
                 && merged_content == "Fix JWT refresh error by rotating token cache."
         ));
+    }
+
+    #[test]
+    fn merge_output_maps_to_consolidation_plan() {
+        let item_id = Uuid::nil();
+        let session_id = SessionId::new();
+        let created_at = Utc::now();
+        let ttl = Duration::from_secs(60);
+        let output = MergeOutput::Merge {
+            memory_ids: vec!["a".to_string(), "b".to_string()],
+            strategy: MergeStrategy::Deduplicate,
+            merged_content: "merged content".to_string(),
+            score: 1.0,
+        };
+
+        let plan = output
+            .to_consolidation_plan_with_item_id(item_id, session_id, created_at, ttl)
+            .expect("merge output should produce a consolidation plan");
+
+        assert!(plan.promote.is_empty());
+        assert!(plan.discard.is_empty());
+        assert_eq!(plan.merge.len(), 1);
+        assert_eq!(plan.merge[0].strategy, MergeStrategy::Deduplicate);
+        assert_eq!(plan.merge[0].items.len(), 1);
+        assert_eq!(plan.merge[0].items[0].id, item_id);
+        assert_eq!(plan.merge[0].items[0].session_id, session_id);
+        assert_eq!(plan.merge[0].items[0].content, "merged content");
+        assert_eq!(
+            plan.merge[0].items[0].linked_memory_ids,
+            vec!["a".to_string(), "b".to_string()]
+        );
+        assert_eq!(plan.merge[0].items[0].created_at, created_at);
+        assert_eq!(plan.merge[0].items[0].ttl, ttl);
+    }
+
+    #[test]
+    fn non_merge_outputs_do_not_create_consolidation_plans() {
+        let item_id = Uuid::nil();
+        let session_id = SessionId::new();
+        let created_at = Utc::now();
+        let ttl = Duration::from_secs(60);
+
+        let candidate = MergeOutput::Candidate {
+            memory_ids: vec!["a".to_string(), "b".to_string()],
+            strategy: MergeStrategy::Union,
+            score: 0.5,
+        };
+        let skipped = MergeOutput::Skipped {
+            reason: MergeSkipReason::LowSimilarity,
+        };
+
+        assert!(candidate
+            .to_consolidation_plan_with_item_id(item_id, session_id, created_at, ttl)
+            .is_none());
+        assert!(skipped
+            .to_consolidation_plan_with_item_id(item_id, session_id, created_at, ttl)
+            .is_none());
     }
 
     #[test]

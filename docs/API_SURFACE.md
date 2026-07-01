@@ -247,11 +247,12 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 - `MergeAlgorithm` (trait: `fn merge(&self, target: &MergeTarget, ctx: &AlgorithmContext<'_>) -> MergeOutput`)
 - `MergeTarget` (`#[non_exhaustive]`; algorithm-local aggregate of candidate memories)
 - `MergeOutput` (`#[non_exhaustive]`; `Skipped`, `Candidate`, or `Merge`)
+- `MergeOutput::to_consolidation_plan_with_item_id(item_id, session_id, created_at, ttl)` (adapter into frozen Consolidation plans)
 - `MergeSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
 - `NoOpMergeAlgorithm`
 - `RuleBasedMergeAlgorithm` (deterministic heuristic implementation; emits merge, candidate, or skip decisions)
 
-Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, and `v0.7.3-merge-benchmark`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, `v0.7.3-merge-benchmark`, and `v0.7.4-merge-store-adapter`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
 ### entity
 

@@ -294,6 +294,61 @@ impl Store {
         Ok(mem)
     }
 
+    pub fn update_content(&mut self, id: &str, content: &str, actor: &str) -> Result<()> {
+        let now = Utc::now().timestamp();
+        let entities = extract::extract(content);
+        let tx = self.conn.transaction()?;
+        let updated = tx.execute(
+            "UPDATE memories SET content = ?2 WHERE id = ?1 AND valid_to IS NULL",
+            params![id, content],
+        )?;
+        if updated == 0 {
+            return Err(crate::error::Error::NotFound(id.to_string()));
+        }
+
+        tx.execute(
+            "DELETE FROM memory_entities WHERE memory_id = ?1",
+            params![id],
+        )?;
+        for er in &entities {
+            let normalized = er.normalized();
+            let etype = er.kind.to_string();
+            tx.execute(
+                "INSERT OR IGNORE INTO entities (id, type, name, normalized, created_at) VALUES (?1, ?2, ?3, ?4, ?5)",
+                params![Ulid::new().to_string(), etype, er.name, normalized, now],
+            )?;
+            let entity_id: String = tx.query_row(
+                "SELECT id FROM entities WHERE type = ?1 AND normalized = ?2",
+                params![etype, normalized],
+                |r| r.get(0),
+            )?;
+            tx.execute(
+                "INSERT OR IGNORE INTO memory_entities (memory_id, entity_id, edge, weight) VALUES (?1, ?2, 'mentions', 1.0)",
+                params![id, entity_id],
+            )?;
+        }
+
+        tx.execute("DELETE FROM memory_vecs WHERE memory_id = ?1", params![id])?;
+        tx.execute(
+            "INSERT INTO embedding_state (memory_id, model, dim, status, updated_at) VALUES (?1, '', 0, 'pending', ?2) ON CONFLICT(memory_id) DO UPDATE SET model = '', dim = 0, status = 'pending', updated_at = excluded.updated_at",
+            params![id, now],
+        )?;
+
+        let updated_memory = tx.query_row(
+            "SELECT id, kind, scope, content, source, confidence, importance, valid_from, valid_to, superseded_by, access_count, last_accessed_at FROM memories WHERE id = ?1",
+            params![id],
+            row_to_memory,
+        )?;
+        let event_id = Ulid::new().to_string();
+        let payload = serde_json::to_string(&updated_memory)?;
+        tx.execute(
+            "INSERT INTO events (id, kind, memory_id, payload, actor, created_at) VALUES (?1, 'UPDATE', ?2, ?3, ?4, ?5)",
+            params![event_id, id, payload, actor, now],
+        )?;
+        tx.commit()?;
+        Ok(())
+    }
+
     pub fn list_recent(&self, limit: usize) -> Result<Vec<Memory>> {
         let mut stmt = self.conn.prepare(
             "SELECT id, kind, scope, content, source, confidence, importance, valid_from, valid_to, superseded_by, access_count, last_accessed_at FROM memories WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT ?1",

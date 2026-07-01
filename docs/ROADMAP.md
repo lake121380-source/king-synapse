@@ -23,6 +23,7 @@ Current milestone
 ✓ v0.7.1 — NoOp Merge Algorithm
 ✓ v0.7.2 — Rule-Based Merge Algorithm
 ✓ v0.7.3 — Merge Precision Benchmark
+✓ v0.7.4 — Merge Store Adapter
 
 Status
 
@@ -76,11 +77,12 @@ Completed foundations
 - v0.7.1 — NoOp merge implementation
 - v0.7.2 — Rule-based merge heuristic
 - v0.7.3 — Merge precision benchmark (`BenchmarkReport` mapped to `MergePrecision`)
+- v0.7.4 — Merge output maps into existing Consolidation and StoreMutation plans
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
-- **RFC-013 Merge Algorithm** — current milestone; connect merge decisions into the frozen consolidation/store mutation path without changing stable contracts.
+- **RFC-013 Merge Algorithm** — current milestone; freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — concrete `ForgetPolicy` implementations.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).

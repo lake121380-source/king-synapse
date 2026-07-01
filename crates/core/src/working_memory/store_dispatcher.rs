@@ -1,6 +1,6 @@
 use crate::working_memory::{
     ExecutedAction, ExecutionReport, MergeGroup, ReflectionEvent, ReflectionPlan, StoreMutation,
-    StoreMutationPlan,
+    StoreMutationPlan, WorkingMemoryItem,
 };
 
 const REFLECTION_EDGE_DELTA: f32 = 0.1;
@@ -33,7 +33,7 @@ impl StoreMutationDispatcher for DeterministicStoreMutationDispatcher {
             .report
             .executed_actions
             .iter()
-            .filter_map(dispatch_action)
+            .flat_map(dispatch_action)
             .collect();
 
         StoreMutationPlan { mutations }
@@ -63,31 +63,16 @@ impl StoreMutationDispatcher for DeterministicReflectionStoreMutationDispatcher 
     }
 }
 
-fn dispatch_action(action: &ExecutedAction) -> Option<StoreMutation> {
+fn dispatch_action(action: &ExecutedAction) -> Vec<StoreMutation> {
     match action {
-        ExecutedAction::Archive(action) => Some(StoreMutation::InsertMemory {
+        ExecutedAction::Archive(action) => vec![StoreMutation::InsertMemory {
             id: action.item.id.to_string(),
             content: action.item.content.clone(),
-        }),
-        ExecutedAction::Merge(action) => {
-            if action.items.is_empty() {
-                return None;
-            }
-
-            let primary = &action.items[0];
-            Some(StoreMutation::UpdateMemory {
-                id: primary.id.to_string(),
-                content: action
-                    .items
-                    .iter()
-                    .map(|item| item.content.as_str())
-                    .collect::<Vec<_>>()
-                    .join("\n"),
-            })
-        }
-        ExecutedAction::Discard(action) => Some(StoreMutation::ArchiveMemory {
+        }],
+        ExecutedAction::Merge(action) => dispatch_merge_lifecycle(&action.items),
+        ExecutedAction::Discard(action) => vec![StoreMutation::ArchiveMemory {
             id: action.item.id.to_string(),
-        }),
+        }],
     }
 }
 
@@ -102,7 +87,11 @@ fn dispatch_reflection_event(event: &ReflectionEvent) -> Vec<StoreMutation> {
             target: target.clone(),
             weight_delta: REFLECTION_EDGE_DELTA,
         });
-    let merged = event.payload.merged.iter().filter_map(dispatch_merge_group);
+    let merged = event
+        .payload
+        .merged
+        .iter()
+        .flat_map(dispatch_merge_group_lifecycle);
     let discarded = event
         .payload
         .discarded
@@ -112,15 +101,50 @@ fn dispatch_reflection_event(event: &ReflectionEvent) -> Vec<StoreMutation> {
     promoted.chain(merged).chain(discarded).collect()
 }
 
-fn dispatch_merge_group(group: &MergeGroup) -> Option<StoreMutation> {
-    let primary = group.items.first()?;
+fn dispatch_merge_items(items: &[WorkingMemoryItem]) -> Option<StoreMutation> {
+    let primary = primary_merge_memory_id(items)?;
     Some(StoreMutation::UpdateMemory {
-        id: primary.id.to_string(),
-        content: group
-            .items
-            .iter()
-            .map(|item| item.content.as_str())
-            .collect::<Vec<_>>()
-            .join("\n"),
+        id: primary,
+        content: merged_item_content(items),
     })
+}
+
+fn primary_merge_memory_id(items: &[WorkingMemoryItem]) -> Option<String> {
+    items
+        .iter()
+        .find_map(|item| item.linked_memory_ids.first().cloned())
+        .or_else(|| items.first().map(|item| item.id.to_string()))
+}
+
+fn merged_item_content(items: &[WorkingMemoryItem]) -> String {
+    items
+        .iter()
+        .map(|item| item.content.as_str())
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+fn dispatch_superseded_merge_items(
+    items: &[WorkingMemoryItem],
+) -> impl Iterator<Item = StoreMutation> + '_ {
+    let primary = primary_merge_memory_id(items);
+    items
+        .iter()
+        .flat_map(|item| item.linked_memory_ids.iter())
+        .filter(move |id| Some((*id).as_str()) != primary.as_deref())
+        .cloned()
+        .map(|id| StoreMutation::ArchiveMemory { id })
+}
+
+fn dispatch_merge_lifecycle(items: &[WorkingMemoryItem]) -> Vec<StoreMutation> {
+    let Some(update) = dispatch_merge_items(items) else {
+        return Vec::new();
+    };
+    std::iter::once(update)
+        .chain(dispatch_superseded_merge_items(items))
+        .collect()
+}
+
+fn dispatch_merge_group_lifecycle(group: &MergeGroup) -> Vec<StoreMutation> {
+    dispatch_merge_lifecycle(&group.items)
 }

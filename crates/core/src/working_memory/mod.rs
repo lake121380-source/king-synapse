@@ -557,6 +557,43 @@ mod tests {
     }
 
     #[test]
+    fn store_mutation_dispatcher_maps_linked_merge_to_update_and_archives() {
+        let session = SessionId::new();
+        let item = WorkingMemoryItem::new(
+            session,
+            "merged memory",
+            vec!["mem-primary".to_string(), "mem-duplicate".to_string()],
+            Duration::from_secs(60),
+        );
+        let plan = ConsolidationPlan {
+            promote: Vec::new(),
+            merge: vec![MergeGroup {
+                items: vec![item],
+                strategy: MergeStrategy::Deduplicate,
+            }],
+            discard: Vec::new(),
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+        let report = executor.execute(&plan);
+        let dispatcher = DeterministicStoreMutationDispatcher::new(report);
+
+        let mutation_plan = dispatcher.dispatch();
+
+        assert_eq!(
+            mutation_plan.mutations,
+            vec![
+                StoreMutation::UpdateMemory {
+                    id: "mem-primary".to_string(),
+                    content: "merged memory".to_string(),
+                },
+                StoreMutation::ArchiveMemory {
+                    id: "mem-duplicate".to_string(),
+                },
+            ]
+        );
+    }
+
+    #[test]
     fn noop_store_sink_consumes_report_without_mutating_it() {
         let plan = StoreMutationPlan {
             mutations: vec![StoreMutation::InsertMemory {
@@ -675,6 +712,59 @@ mod tests {
         );
         assert_eq!(report.statistics.skipped, 1);
         assert_eq!(store.count().unwrap(), 0);
+    }
+
+    #[test]
+    fn sqlite_persistent_store_executor_updates_memory_content() {
+        let mut store = Store::open_in_memory().unwrap();
+        let first = store
+            .write(crate::WriteInput {
+                content: "old duplicate memory".to_string(),
+                kind: crate::MemoryKind::Fact,
+                scope: crate::Scope::Global,
+                source: crate::Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let second = store
+            .write(crate::WriteInput {
+                content: "duplicate to archive".to_string(),
+                kind: crate::MemoryKind::Fact,
+                scope: crate::Scope::Global,
+                source: crate::Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let plan = StoreMutationPlan {
+            mutations: vec![
+                StoreMutation::UpdateMemory {
+                    id: first.id.clone(),
+                    content: "merged duplicate memory".to_string(),
+                },
+                StoreMutation::ArchiveMemory {
+                    id: second.id.clone(),
+                },
+            ],
+        };
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.executed, plan.mutations);
+        assert!(report.skipped.is_empty());
+        assert_eq!(report.statistics.executed, 2);
+        assert_eq!(report.statistics.skipped, 0);
+        assert_eq!(
+            store.get(&first.id).unwrap().unwrap().content,
+            "merged duplicate memory"
+        );
+        assert!(store.get(&second.id).unwrap().unwrap().valid_to.is_some());
+        let pending = store.pending_embeddings(10).unwrap();
+        assert!(pending
+            .iter()
+            .any(|(id, content)| { id == &first.id && content == "merged duplicate memory" }));
     }
 
     #[test]
