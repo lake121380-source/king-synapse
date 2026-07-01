@@ -15,6 +15,7 @@ mod reflection_processing;
 mod reflection_sink;
 mod session;
 mod sink;
+mod store_adapter;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
@@ -45,6 +46,10 @@ pub use reflection_processing::{
 pub use reflection_sink::{NoOpReflectionSink, ReflectionSink};
 pub use session::SessionId;
 pub use sink::{ConsolidationSink, NoOpSink};
+pub use store_adapter::{
+    NoOpStoreAdapter, PlanOnlyStoreAdapter, StoreAdapter, StoreExecutionReport, StoreMutation,
+    StoreMutationPlan,
+};
 
 #[cfg(test)]
 mod tests {
@@ -333,6 +338,60 @@ mod tests {
         assert_eq!(report, report_after_dispatch);
         assert_eq!(sink_a.observed_actions, 1);
         assert_eq!(sink_b.observed_actions, 1);
+    }
+
+    #[test]
+    fn noop_store_adapter_emits_empty_report() {
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::InsertMemory {
+                id: "mem-a".to_string(),
+                content: "hello".to_string(),
+            }],
+        };
+        let adapter = NoOpStoreAdapter;
+
+        let report = adapter.execute(&plan);
+
+        assert!(report.is_empty());
+    }
+
+    #[test]
+    fn plan_only_store_adapter_reports_input_mutations() {
+        let plan = StoreMutationPlan {
+            mutations: vec![
+                StoreMutation::InsertMemory {
+                    id: "mem-a".to_string(),
+                    content: "hello".to_string(),
+                },
+                StoreMutation::UpdateEdge {
+                    source: "mem-a".to_string(),
+                    target: "mem-b".to_string(),
+                    weight_delta: 0.1,
+                },
+            ],
+        };
+        let adapter = PlanOnlyStoreAdapter;
+
+        let report = adapter.execute(&plan);
+
+        assert_eq!(report.executed, plan.mutations);
+    }
+
+    #[test]
+    fn store_adapter_execution_is_deterministic_and_preserves_plan() {
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::ArchiveMemory {
+                id: "mem-a".to_string(),
+            }],
+        };
+        let original = plan.clone();
+        let adapter = PlanOnlyStoreAdapter;
+
+        let report_a = adapter.execute(&plan);
+        let report_b = adapter.execute(&plan);
+
+        assert_eq!(report_a, report_b);
+        assert_eq!(plan, original);
     }
 
     #[test]
