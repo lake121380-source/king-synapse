@@ -13,6 +13,7 @@ mod item;
 mod persistent_store;
 mod policy;
 mod policy_dispatcher;
+mod policy_sink;
 mod reflection;
 mod reflection_processing;
 mod reflection_sink;
@@ -51,6 +52,7 @@ pub use policy_dispatcher::{
     AdaptivePolicyEngine, DeterministicAdaptivePolicyEngine, NoOpAdaptivePolicyEngine, PolicyKind,
     PolicyReport, PolicyRequest, PolicyStatistics, PolicyWarning,
 };
+pub use policy_sink::{NoOpPolicySink, PolicySink};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
     ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
@@ -1021,5 +1023,45 @@ mod tests {
         let encoded = serde_json::to_string(&report).unwrap();
         let decoded: PolicyReport = serde_json::from_str(&encoded).unwrap();
         assert_eq!(decoded, report);
+    }
+
+    #[test]
+    fn noop_policy_sink_consumes_report_without_mutating_it() {
+        let engine = DeterministicAdaptivePolicyEngine::default();
+        let request = PolicyRequest::Hebbian(sample_edge_plan());
+        let report = engine.evaluate(&request);
+        let sink = NoOpPolicySink;
+
+        sink.consume(&report);
+
+        assert_eq!(engine.evaluate(&request), report);
+    }
+
+    #[test]
+    fn multiple_policy_sinks_observe_same_report_without_affecting_dispatcher() {
+        #[derive(Default)]
+        struct CountingPolicySink {
+            observed: std::cell::Cell<usize>,
+        }
+
+        impl PolicySink for CountingPolicySink {
+            fn consume(&self, _report: &PolicyReport) {
+                self.observed.set(self.observed.get() + 1);
+            }
+        }
+
+        let engine = DeterministicAdaptivePolicyEngine::default();
+        let request = PolicyRequest::Reflection(sample_reflection_event());
+        let report_before = engine.evaluate(&request);
+        let sink_a = CountingPolicySink::default();
+        let sink_b = CountingPolicySink::default();
+
+        sink_a.consume(&report_before);
+        sink_b.consume(&report_before);
+
+        let report_after = engine.evaluate(&request);
+        assert_eq!(report_before, report_after);
+        assert_eq!(sink_a.observed.get(), 1);
+        assert_eq!(sink_b.observed.get(), 1);
     }
 }
