@@ -12,6 +12,7 @@ mod hebbian_sink;
 mod item;
 mod persistent_store;
 mod policy;
+mod policy_dispatcher;
 mod reflection;
 mod reflection_processing;
 mod reflection_sink;
@@ -45,6 +46,10 @@ pub use persistent_store::{
 pub use policy::{
     AdaptivePolicy, ForgetPolicy, HebbianPolicy, MergePolicy, NoOpForgetPolicy, NoOpHebbianPolicy,
     NoOpMergePolicy, NoOpReflectionPolicy, PolicyDecision, ReflectionPolicy,
+};
+pub use policy_dispatcher::{
+    AdaptivePolicyEngine, DeterministicAdaptivePolicyEngine, NoOpAdaptivePolicyEngine, PolicyKind,
+    PolicyReport, PolicyRequest, PolicyStatistics, PolicyWarning,
 };
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
@@ -904,5 +909,117 @@ mod tests {
         assert_eq!(std::mem::size_of::<NoOpHebbianPolicy>(), 0);
         assert_eq!(std::mem::size_of::<NoOpForgetPolicy>(), 0);
         assert_eq!(std::mem::size_of::<NoOpMergePolicy>(), 0);
+    }
+
+    fn sample_reflection_event() -> ReflectionEvent {
+        ReflectionEvent::new(
+            SessionId::new(),
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload {
+                promoted: vec!["mem-a".to_string()],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        )
+    }
+
+    fn sample_edge_plan() -> EdgeUpdatePlan {
+        EdgeUpdatePlan {
+            source: "a".to_string(),
+            target: "b".to_string(),
+            weight_delta: 0.1,
+        }
+    }
+
+    fn sample_merge_group() -> MergeGroup {
+        MergeGroup {
+            items: Vec::new(),
+            strategy: MergeStrategy::Deduplicate,
+        }
+    }
+
+    #[test]
+    fn noop_policy_engine_returns_skip_for_all_requests() {
+        let engine = NoOpAdaptivePolicyEngine;
+
+        let reflection = engine.evaluate(&PolicyRequest::Reflection(sample_reflection_event()));
+        assert_eq!(reflection.policy, PolicyKind::Reflection);
+        assert_eq!(reflection.decision, PolicyDecision::Skip);
+        assert_eq!(reflection.statistics.evaluated, 1);
+        assert_eq!(reflection.statistics.skipped, 1);
+
+        let hebbian = engine.evaluate(&PolicyRequest::Hebbian(sample_edge_plan()));
+        assert_eq!(hebbian.policy, PolicyKind::Hebbian);
+        assert_eq!(hebbian.decision, PolicyDecision::Skip);
+
+        let forget = engine.evaluate(&PolicyRequest::Forget("mem-x".to_string()));
+        assert_eq!(forget.policy, PolicyKind::Forget);
+        assert_eq!(forget.decision, PolicyDecision::Skip);
+
+        let merge = engine.evaluate(&PolicyRequest::Merge(sample_merge_group()));
+        assert_eq!(merge.policy, PolicyKind::Merge);
+        assert_eq!(merge.decision, PolicyDecision::Skip);
+    }
+
+    #[test]
+    fn deterministic_policy_engine_routes_to_matching_policy() {
+        let engine = DeterministicAdaptivePolicyEngine::default();
+
+        let reflection = engine.evaluate(&PolicyRequest::Reflection(sample_reflection_event()));
+        assert_eq!(reflection.policy, PolicyKind::Reflection);
+        assert_eq!(reflection.decision, PolicyDecision::Execute);
+        assert_eq!(reflection.statistics.executed, 1);
+
+        let hebbian = engine.evaluate(&PolicyRequest::Hebbian(sample_edge_plan()));
+        assert_eq!(hebbian.policy, PolicyKind::Hebbian);
+        assert_eq!(hebbian.decision, PolicyDecision::Execute);
+
+        let forget = engine.evaluate(&PolicyRequest::Forget("mem-x".to_string()));
+        assert_eq!(forget.policy, PolicyKind::Forget);
+        assert_eq!(forget.decision, PolicyDecision::Skip);
+        assert_eq!(forget.statistics.skipped, 1);
+
+        let merge = engine.evaluate(&PolicyRequest::Merge(sample_merge_group()));
+        assert_eq!(merge.policy, PolicyKind::Merge);
+        assert_eq!(merge.decision, PolicyDecision::Execute);
+    }
+
+    #[test]
+    fn deterministic_policy_engine_is_stable_for_identical_input() {
+        let engine = DeterministicAdaptivePolicyEngine::default();
+        let request = PolicyRequest::Hebbian(sample_edge_plan());
+
+        let first = engine.evaluate(&request);
+        let second = engine.evaluate(&request);
+        assert_eq!(first, second);
+    }
+
+    #[test]
+    fn policy_request_kind_matches_variant() {
+        assert_eq!(
+            PolicyRequest::Reflection(sample_reflection_event()).kind(),
+            PolicyKind::Reflection,
+        );
+        assert_eq!(
+            PolicyRequest::Hebbian(sample_edge_plan()).kind(),
+            PolicyKind::Hebbian,
+        );
+        assert_eq!(
+            PolicyRequest::Forget("mem-a".to_string()).kind(),
+            PolicyKind::Forget,
+        );
+        assert_eq!(
+            PolicyRequest::Merge(sample_merge_group()).kind(),
+            PolicyKind::Merge,
+        );
+    }
+
+    #[test]
+    fn policy_report_serializes_round_trip() {
+        let engine = NoOpAdaptivePolicyEngine;
+        let report = engine.evaluate(&PolicyRequest::Forget("mem-a".to_string()));
+        let encoded = serde_json::to_string(&report).unwrap();
+        let decoded: PolicyReport = serde_json::from_str(&encoded).unwrap();
+        assert_eq!(decoded, report);
     }
 }
