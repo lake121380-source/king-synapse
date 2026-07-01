@@ -31,6 +31,9 @@ Breaking changes to **Stable** APIs include, but are not limited to:
 - Changing benchmark contract (`Recall@10` baselines for `reference` and `multihop` datasets) in a way that regresses results.
 - Changing MCP tool names, input schemas, or output schemas.
 - Changing CLI command names, flag names, or output structure.
+- Renaming, deleting, or repurposing a directory under `crates/eval/datasets/`, `crates/eval/benches/`, or `crates/eval/reports/`.
+- Removing an `AlgorithmMetric` variant.
+- Changing the `BenchmarkReport` serialized shape in a way that alters existing metric encoding.
 
 ## What Does Not Count as a Breaking Change
 
@@ -41,6 +44,8 @@ The following are always allowed and never trigger a major version bump:
 - Adding new trait blanket impls.
 - Adding new fields to structs marked `#[non_exhaustive]`.
 - Adding new enum variants to enums marked `#[non_exhaustive]`.
+- Adding a new `AlgorithmMetric` variant.
+- Adding a new sibling directory under `crates/eval/datasets/`, `crates/eval/benches/`, or `crates/eval/reports/`.
 - Changing internal-only items.
 - Changing algorithm implementations behind stable traits.
 - Changing docs, error messages, log messages, or panic messages.

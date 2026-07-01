@@ -8,7 +8,7 @@ APIs are classified into three levels:
 - **Experimental** — Public but subject to change. Documented as such at introduction.
 - **Internal** — Not part of the public API. May change at any time. Do not depend on internal items.
 
-Every public API item lives under `synapse-core`'s re-export table in `crates/core/src/lib.rs`. If an item is not re-exported there, it is **Internal**.
+Stable items in `synapse-core` live under the crate's re-export table in `crates/core/src/lib.rs`. Stable items in other crates live in their crate's `src/lib.rs` re-exports. If an item is not re-exported there, it is **Internal**.
 
 ## synapse-core
 
@@ -253,11 +253,27 @@ Flag names and output structure are considered part of the stable public API.
 
 ## synapse-eval
 
+### benchmark harness contract (Phase 5)
+
+**Stable**
+
+- `AlgorithmMetric` (`#[non_exhaustive]`; 10 IDs: `RecallAt10`, `PrecisionAt10`, `MemoryGrowth`, `CompressionRatio`, `ReflectionYield`, `MergePrecision`, `ForgetPrecision`, `HebbianConsistency`, `EventReplayLatency`, `AlgorithmLatency`)
+- `BenchmarkReport` (`#[non_exhaustive]`; fields: `benchmark: String` in `lowercase-kebab-case` by convention, `metrics: BTreeMap<AlgorithmMetric, f64>`)
+
+Invariants (RFC-011 Part D):
+- `BenchmarkReport` is a deterministic value object: same `(dataset, algorithm, config)` → identical report. It MUST NOT carry runtime metadata (timestamp, hostname, cpu, random_seed, git_dirty).
+- Reports are sparse: only meaningful metrics are included. Missing metrics MUST NOT be interpreted as `0.0`.
+- Directory layout under `crates/eval/{datasets,benches,reports}/` is stable per `docs/COMPATIBILITY.md`. Adding a sibling directory is non-breaking; renaming or deleting one is breaking.
+
+Frozen by `v0.5.3-benchmark-harness`.
+
+### legacy benchmark runner
+
 **Experimental**
 
-- Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs.
+- Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
 
-Metrics and dataset formats may evolve during Phase 5 (Algorithm Implementation).
+The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 
 ## Public Guarantees
 

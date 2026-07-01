@@ -64,3 +64,51 @@ Two queries miss:
 
 Both are exactly the kind of miss the dense + rerank branches are designed
 to recover, so the harness gives us a real signal to optimize against.
+
+## Layout (v0.5.3 harness contract)
+
+The `crates/eval` layout is frozen by `v0.5.3-benchmark-harness`. Each directory has a fixed role. Renaming or deleting a directory is a breaking change under `docs/COMPATIBILITY.md`. Adding a sibling directory is non-breaking.
+
+| Path | Role |
+| --- | --- |
+| `datasets/reference.toml` | Recall Platform baseline. `Recall@10 = 1.000` — must not regress. |
+| `datasets/multihop.toml` | Multi-hop baseline. `Recall@10 = 0.600` — must not regress. |
+| `datasets/coding_mem.toml` | Bundled 20-memory / 30-query golden set for `cargo bench-recall`. |
+| `datasets/regression/` | Frozen regression datasets. Add here to lock in a known corpus + queries and detect future retrieval / algorithm regressions. |
+| `datasets/synthetic/` | Synthetic datasets for scale and stress testing (controlled size and distribution). |
+| `datasets/dmr/` | Deep Memory Retrieval external dataset mirrors. |
+| `datasets/longmemeval/` | LongMemEval external dataset mirrors. |
+| `benches/recall/` | Recall-pipeline benchmark source (RRF, vector, rerank). |
+| `benches/memory/` | Memory-growth / compression / churn benchmark source. |
+| `benches/algorithms/` | Per-algorithm benchmarks (Reflection / Merge / Forget / Hebbian). Each algorithm RFC ships at least one benchmark here. |
+| `reports/` | Serialized `BenchmarkReport` outputs. |
+
+## Benchmark Contract
+
+Every Phase 5 benchmark returns a `synapse_eval::BenchmarkReport`:
+
+```rust
+BenchmarkReport {
+    benchmark: String,                              // lowercase-kebab-case
+    metrics: BTreeMap<AlgorithmMetric, f64>,        // deterministic order
+}
+```
+
+Rules (RFC-011 Part D):
+
+1. **Deterministic value object.** Same `(dataset, algorithm, config)` → identical `BenchmarkReport`. No `timestamp`, `hostname`, `cpu`, `random_seed`, or `git_dirty` fields.
+2. **Sparse by design.** A report contains only the metrics that are meaningful for that benchmark. Missing metrics MUST NOT be treated as `0.0`.
+3. **Finite values (SHOULD).** Producers should emit finite `f64` values; `NaN` / `Inf` are neither validated nor forbidden.
+4. **Benchmark naming.** `benchmark` field uses `lowercase-kebab-case`: `reference-recall`, `multihop-recall`, `reflection-yield`, `merge-precision`, `hebbian-consistency`.
+
+`AlgorithmMetric` is `#[non_exhaustive]`. Adding a new variant is non-breaking; removing or renaming one is breaking.
+
+## Algorithm → Benchmark → Metric Discipline
+
+Every algorithm RFC (RFC-012 onward) MUST:
+
+1. Ship at least one benchmark under `benches/algorithms/`.
+2. Map that benchmark to at least one `AlgorithmMetric` variant. If no existing variant fits, the RFC proposes a new variant as an additive change to `AlgorithmMetric`.
+3. Emit results as `BenchmarkReport` values that satisfy the determinism invariant.
+
+An algorithm that ships without a benchmark cannot be compared against previous versions, so it does not ship.

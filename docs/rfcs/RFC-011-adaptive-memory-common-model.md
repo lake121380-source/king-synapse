@@ -8,8 +8,8 @@ Implementation Tags:
 
 ```text
 v0.5.1-memory-importance          (implemented)
-v0.5.2-memory-event-and-context   (in progress)
-v0.5.3-benchmark-harness          (planned)
+v0.5.2-memory-event-and-context   (implemented)
+v0.5.3-benchmark-harness          (in progress)
 v0.5.9-adaptive-common-freeze     (planned)
 ```
 
@@ -263,28 +263,62 @@ hebbian.reinforce(edge, ctx)
 
 This is a convention, not a trait: each algorithm's exact trait method is defined by its own RFC (RFC-012..015). RFC-011 fixes only the argument shape.
 
-## Part D — Shared Metrics
+## Part D — Shared Metrics and Benchmark Report
 
-Benchmark identifiers used by `crates/eval` and future algorithm benchmarks.
+Benchmark identifiers and the unified benchmark output shape used by `crates/eval` and every future algorithm benchmark.
+
+### AlgorithmMetric
 
 ```text
 #[non_exhaustive]
 AlgorithmMetric
-  Recall
-  Mrr
-  Ndcg
-  LatencyP50
-  LatencyP95
+  RecallAt10
+  PrecisionAt10
   MemoryGrowth
   CompressionRatio
-  ImportanceStability
-  ReflectionLatency
-  ForgettingQuality
+  ReflectionYield
+  MergePrecision
+  ForgetPrecision
+  HebbianConsistency
+  EventReplayLatency
+  AlgorithmLatency
 ```
 
-Metric IDs are stable strings. Metric values are produced by benchmarks, not by algorithm implementations. Algorithms MUST NOT read metric outputs; benchmarks MUST NOT feed back into algorithm decisions.
+- Metric variants are stable IDs. Their **exact numerical definition** is fixed by the benchmark implementation, not by RFC-011. Algorithms MUST NOT read metric outputs; benchmarks MUST NOT feed back into algorithm decisions.
+- The enum is `#[non_exhaustive]`. Adding a new variant is not a breaking change.
+- `RecallAt10` is a naming convention only. Its presence in the enum does not imply the v0.5.3 skeleton produces any value.
+- `EventReplayLatency` (cost of `MemoryEventStream::recent`) and `AlgorithmLatency` (cost of one `algorithm.run(target, ctx)` call) are intentionally distinct — they MUST NOT be collapsed into a single "latency" number.
 
-Adding a new variant is not a breaking change.
+### BenchmarkReport
+
+```text
+#[non_exhaustive]
+BenchmarkReport
+  benchmark: String                              // lowercase-kebab-case, e.g. "reference-recall"
+  metrics: BTreeMap<AlgorithmMetric, f64>        // deterministic order
+```
+
+- All metric values are `f64`. Typed metric values (`Ratio`, `Duration`, etc.) are out of scope for v0.5.3.
+- `BTreeMap` (not `HashMap`) is mandatory: the resulting serialization order is deterministic, which is required for CI diffs.
+- The `benchmark` field is a free-form `String`. By convention it MUST be `lowercase-kebab-case` (e.g. `reference-recall`, `multihop-recall`, `reflection-yield`). This convention is documented, not enforced by the type.
+- The struct is `#[non_exhaustive]`.
+
+### Rules
+
+1. **Deterministic value object (D8).** `BenchmarkReport` is a deterministic value object. Given the same dataset, the same algorithm implementation, and the same configuration, benchmarks MUST produce identical `BenchmarkReport` values. Runtime-specific metadata (`timestamp`, `hostname`, `cpu`, `random_seed`, `git_dirty`, wall-clock start time, etc.) is out of scope for `BenchmarkReport` and belongs to a future exporter layer.
+2. **Sparse by design (D9).** A `BenchmarkReport` includes only the metrics that are meaningful for that benchmark. Missing metrics MUST NOT be interpreted as `0.0`. A recall benchmark may report only `RecallAt10`; a reflection benchmark may report only `ReflectionYield` and `AlgorithmLatency`.
+3. **Finite values.** Benchmark producers SHOULD emit finite `f64` values. `NaN` and `Inf` are neither validated nor forbidden by the harness; consumers of `BenchmarkReport` decide how to handle them.
+4. **Metrics are IDs, not fixed fields.** `AlgorithmMetric` variants are never inlined as `BenchmarkReport` struct fields. They flow only through `metrics`.
+
+### Algorithm → Benchmark → Metric Discipline (D7)
+
+Every algorithm RFC (RFC-012..015, and any future algorithm RFC) MUST:
+
+1. Define at least one benchmark under `crates/eval/benches/algorithms/`.
+2. Map its benchmark to at least one `AlgorithmMetric` variant. If no existing variant fits, the RFC MUST propose a new variant as an additive change to `AlgorithmMetric` (non-breaking under `#[non_exhaustive]`).
+3. Emit its result as a `BenchmarkReport` value obeying the D8 determinism invariant.
+
+This binds every algorithm to a measurable output shape and prevents "algorithm shipped without any way to compare it against the previous version".
 
 ## Appendix — Extension Rules
 
@@ -312,7 +346,7 @@ Milestone constraints:
 
 - v0.5.1 ships `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator`, and a minimal `AlgorithmContext { now, session_id }`. The context intentionally excludes `importance` and `events` trait fields at this milestone — they are added additively in v0.5.2 under `#[non_exhaustive]`. `ImportanceEstimator::estimate(memory, ctx)` signature is frozen from v0.5.1 onward.
 - v0.5.2 ships `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`. `AlgorithmContext` gains a lifetime `'a` and two trait-object fields `importance: &'a dyn ImportanceEstimator` and `events: &'a dyn MemoryEventStream`. The v0.5.1 constructor `AlgorithmContext::new(now, session_id)` is replaced by `AlgorithmContext::new(now, session_id, importance, events)`; this is the only allowed shape and there is no builder variant. After v0.5.2 the `AlgorithmContext` trait-object surface is permanently closed per Part C rule 3.
-- v0.5.3 scaffolds benchmark directories (`datasets/{regression,synthetic,dmr,longmemeval}`, `benches/{recall,memory,algorithms}`, `reports/`) plus `AlgorithmMetric`. No new datasets are populated at this milestone; scaffolding only.
+- v0.5.3 freezes the benchmark harness contract: `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`), `BenchmarkReport` (`#[non_exhaustive]`, `benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), and the directory layout under `crates/eval/{datasets,benches,reports}/`. This milestone ships **contract only** — no dataset loader, no benchmark runner, no CLI, no exporter. The Algorithm → Benchmark → Metric discipline (Part D "Discipline" section) becomes binding on every subsequent algorithm RFC.
 - v0.5.9 freezes the model: RFC-011 → Implemented, `docs/API_SURFACE.md` updated with the new Stable items, release note added.
 
 Benchmark baselines must be preserved across every milestone:
