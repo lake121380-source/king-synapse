@@ -305,6 +305,9 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_forget`
 
 Tool JSON schemas are considered part of the stable public API.
+`synapse_recall` accepts optional graph activation fields:
+`graph_activation`, `graph_scale`, `graph_cap`, `graph_steps`, and
+`graph_decay`. They are disabled by default.
 
 ## kr (CLI)
 
@@ -317,6 +320,9 @@ Tool JSON schemas are considered part of the stable public API.
 - `kr forget`
 
 Flag names and output structure are considered part of the stable public API.
+`kr recall` supports optional graph activation flags:
+`--graph-activation`, `--graph-scale`, `--graph-cap`, `--graph-steps`, and
+`--graph-decay`. They are disabled by default.
 
 ## synapse-eval
 

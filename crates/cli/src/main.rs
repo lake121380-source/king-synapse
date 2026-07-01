@@ -3,8 +3,8 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store,
-    WriteInput,
+    config::Config, GraphActivationBooster, MemoryKind, RecallBooster, RecallEngine, RecallHit,
+    RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -61,6 +61,21 @@ enum Cmd {
         /// rerank logit, activation bonus, booster list, final score.
         #[arg(long)]
         explain: bool,
+        /// Enable Store-backed graph activation over existing recall candidates.
+        #[arg(long)]
+        graph_activation: bool,
+        /// Graph activation scale applied to edge weights.
+        #[arg(long, default_value = "0.05")]
+        graph_scale: f32,
+        /// Maximum graph activation bonus per hit.
+        #[arg(long, default_value = "0.15")]
+        graph_cap: f32,
+        /// Number of decayed graph activation propagation steps.
+        #[arg(long, default_value = "1")]
+        graph_steps: usize,
+        /// Decay factor for graph activation after each propagation step.
+        #[arg(long, default_value = "0.5")]
+        graph_decay: f32,
     },
     /// List recent memories.
     List {
@@ -148,6 +163,11 @@ fn main() -> Result<()> {
             rerank,
             rerank_pool,
             explain,
+            graph_activation,
+            graph_scale,
+            graph_cap,
+            graph_steps,
+            graph_decay,
         } => {
             let q = RecallQuery {
                 query,
@@ -165,7 +185,16 @@ fn main() -> Result<()> {
             } else {
                 None
             };
-            let booster_names: Vec<&'static str> = Vec::new();
+            let graph_booster = graph_activation.then(|| {
+                GraphActivationBooster::with_spreading(
+                    graph_scale,
+                    graph_cap,
+                    graph_steps,
+                    graph_decay,
+                )
+            });
+            let booster_names: Vec<&'static str> =
+                graph_booster.iter().map(|booster| booster.name()).collect();
             let hits = {
                 let mut engine = RecallEngine::new(&mut store);
                 if let Some(e) = embedder.as_mut() {
@@ -173,6 +202,9 @@ fn main() -> Result<()> {
                 }
                 if let Some(rr) = reranker.as_mut() {
                     engine = engine.with_reranker(rr, rerank_pool);
+                }
+                if let Some(booster) = graph_booster.as_ref() {
+                    engine = engine.with_booster(booster);
                 }
                 engine.recall(&q)?
             };

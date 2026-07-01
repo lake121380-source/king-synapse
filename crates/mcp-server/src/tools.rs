@@ -2,7 +2,9 @@ use anyhow::Result;
 use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
-use synapse_core::{MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput};
+use synapse_core::{
+    GraphActivationBooster, MemoryKind, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+};
 
 pub type StoreHandle = Arc<Mutex<Store>>;
 
@@ -47,7 +49,12 @@ fn descriptor_recall() -> Value {
                 "query": { "type": "string" },
                 "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 8 },
                 "scope": { "type": "string" },
-                "kind": { "type": "string", "enum": ["fact","preference","failure","playbook","state"] }
+                "kind": { "type": "string", "enum": ["fact","preference","failure","playbook","state"] },
+                "graph_activation": { "type": "boolean", "default": false },
+                "graph_scale": { "type": "number", "default": 0.05 },
+                "graph_cap": { "type": "number", "default": 0.15 },
+                "graph_steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 1 },
+                "graph_decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 }
             }
         }
     })
@@ -184,14 +191,43 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
         .and_then(|v| v.as_str())
         .map(MemoryKind::from_str)
         .transpose()?;
+    let graph_activation = args
+        .get("graph_activation")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+    let graph_scale = arg_f32(args, "graph_scale", 0.05);
+    let graph_cap = arg_f32(args, "graph_cap", 0.15);
+    let graph_steps = args
+        .get("graph_steps")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(1);
+    let graph_decay = arg_f32(args, "graph_decay", 0.5);
     let mut s = store.lock().unwrap();
-    let hits = RecallEngine::new(&mut s).recall(&RecallQuery {
+    let query = RecallQuery {
         query,
         k,
         scope_filter: scope,
         kind_filter: kind,
-    })?;
+    };
+    let graph_booster = graph_activation.then(|| {
+        GraphActivationBooster::with_spreading(graph_scale, graph_cap, graph_steps, graph_decay)
+    });
+    let hits = {
+        let mut engine = RecallEngine::new(&mut s);
+        if let Some(booster) = graph_booster.as_ref() {
+            engine = engine.with_booster(booster);
+        }
+        engine.recall(&query)?
+    };
     Ok(json!({ "hits": hits }))
+}
+
+fn arg_f32(args: &Value, key: &str, default: f32) -> f32 {
+    args.get(key)
+        .and_then(|v| v.as_f64())
+        .map(|x| x as f32)
+        .unwrap_or(default)
 }
 
 fn do_list(store: &StoreHandle, args: &Value) -> Result<Value> {

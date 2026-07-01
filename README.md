@@ -37,7 +37,7 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 ## What's implemented now
 
 - `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
-- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, and additive recall boosters.
+- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, and additive recall boosters including graph activation.
 - Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model.
 - `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference` and `multihop`.
 - `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, and neighbor tools.
@@ -79,6 +79,7 @@ Binaries land in `target/release/`:
 # Recall
 ./target/release/kr recall "pnpm windows"
 ./target/release/kr recall "测试" --kind fact
+./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
 
 # List recent
 ./target/release/kr list --limit 10
