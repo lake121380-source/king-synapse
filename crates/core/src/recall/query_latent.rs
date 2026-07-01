@@ -194,4 +194,43 @@ mod tests {
             .matched_terms
             .contains(&"goal:commute".to_string()));
     }
+
+    #[test]
+    fn query_latent_probe_can_derive_chinese_context_phrases() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = add(&mut store, "早上忘记喝水导致心情不好");
+        let latent = add(&mut store, "上班骑车时注意力下降可能摔倒");
+        store.update_edge(&seed, &latent, 2.0).unwrap();
+
+        let query = RecallQuery {
+            query: "早上忘记喝水导致心情不好，上班骑车注意力下降".to_string(),
+            k: None,
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let probe = QueryLatentActivationProbe::new(
+            LatentActivationProbe::with_config(0.05, 0.25, 2, 0.5, 10),
+            1,
+        );
+        let report = probe
+            .probe_auto_context(&mut store, &query, 10, &LatentActivationContext::default())
+            .unwrap();
+
+        assert!(report.seeds.iter().any(|hit| hit.memory.id == seed));
+        let latent_hit = report
+            .activations
+            .iter()
+            .find(|hit| hit.memory.id == latent)
+            .unwrap();
+        assert!(report.context.state_terms.contains(&"心情".to_string()));
+        assert!(report.context.goal_terms.contains(&"喝水".to_string()));
+        assert!(report.context.goal_terms.contains(&"上班".to_string()));
+        assert!(report.context.goal_terms.contains(&"骑车".to_string()));
+        assert!(report.context.goal_terms.contains(&"注意力".to_string()));
+        assert!(latent_hit.matched_terms.contains(&"goal:上班".to_string()));
+        assert!(latent_hit.matched_terms.contains(&"goal:骑车".to_string()));
+        assert!(latent_hit
+            .matched_terms
+            .contains(&"goal:注意力".to_string()));
+    }
 }

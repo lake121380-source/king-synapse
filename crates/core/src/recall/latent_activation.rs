@@ -10,6 +10,74 @@ const DEFAULT_CAP: f32 = 0.25;
 const DEFAULT_DECAY: f32 = 0.5;
 const DEFAULT_STEPS: usize = 2;
 const DEFAULT_FANOUT: usize = 16;
+const MAX_DERIVED_ASCII_GOAL_TERMS: usize = 8;
+
+const STATE_MARKERS: &[&str] = &[
+    "angry",
+    "anxious",
+    "blocked",
+    "confused",
+    "frustrated",
+    "hungry",
+    "late",
+    "sad",
+    "stressed",
+    "tired",
+    "worried",
+    "不安",
+    "不舒服",
+    "压力",
+    "困",
+    "害怕",
+    "心情",
+    "担心",
+    "焦虑",
+    "烦",
+    "生气",
+    "疲惫",
+    "累",
+    "紧张",
+    "难受",
+    "饿",
+];
+
+const GOAL_MARKERS: &[&str] = &[
+    "attention",
+    "bike",
+    "commute",
+    "drink",
+    "failure",
+    "memory",
+    "ride",
+    "subconscious",
+    "water",
+    "work",
+    "上班",
+    "人性",
+    "使用",
+    "关联",
+    "喝水",
+    "工作",
+    "心理",
+    "情感",
+    "摔倒",
+    "未来",
+    "潜意识",
+    "注意力",
+    "物品",
+    "目标",
+    "社会",
+    "记忆",
+    "过去",
+    "通勤",
+    "预测",
+    "骑车",
+];
+
+const GOAL_STOPWORDS: &[&str] = &[
+    "about", "after", "again", "before", "from", "have", "into", "that", "the", "this", "with",
+    "因为", "如果", "怎么", "时候", "这个", "那个", "需要",
+];
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LatentActivationHit {
@@ -343,7 +411,7 @@ fn modulation_for(memory: &Memory, context: &LatentActivationContext) -> Activat
         };
     }
 
-    let content = memory.content.to_ascii_lowercase();
+    let content = memory.content.to_lowercase();
     let mut factor: f32 = 1.0;
     let mut matched_terms = Vec::new();
     for term in &context.state_terms {
@@ -370,7 +438,7 @@ fn modulation_for(memory: &Memory, context: &LatentActivationContext) -> Activat
 fn normalize_terms(terms: Vec<String>) -> Vec<String> {
     let mut normalized = terms
         .into_iter()
-        .map(|term| term.trim().to_ascii_lowercase())
+        .map(|term| term.trim().to_lowercase())
         .filter(|term| !term.is_empty())
         .collect::<Vec<_>>();
     normalized.sort();
@@ -379,53 +447,37 @@ fn normalize_terms(terms: Vec<String>) -> Vec<String> {
 }
 
 fn state_terms_from_text(text: &str) -> Vec<String> {
-    const STATE_MARKERS: &[&str] = &[
-        "angry",
-        "anxious",
-        "blocked",
-        "confused",
-        "frustrated",
-        "hungry",
-        "late",
-        "sad",
-        "stressed",
-        "tired",
-        "worried",
-        "焦虑",
-        "困",
-        "累",
-        "生气",
-        "压力",
-        "烦",
-        "饿",
-    ];
-    let lowered = text.to_ascii_lowercase();
-    let mut terms = STATE_MARKERS
-        .iter()
-        .filter(|term| lowered.contains(&term.to_ascii_lowercase()) || text.contains(**term))
-        .map(|term| (*term).to_string())
-        .collect::<Vec<_>>();
-    terms.sort();
-    terms.dedup();
-    terms
+    marker_terms_from_text(text, STATE_MARKERS)
 }
 
 fn goal_terms_from_text(text: &str) -> Vec<String> {
-    const STOPWORDS: &[&str] = &[
-        "about", "after", "again", "before", "from", "have", "into", "that", "the", "this", "with",
-        "需要", "因为", "如果", "怎么", "时候", "这个", "那个",
-    ];
-    let stopwords = STOPWORDS.iter().copied().collect::<HashSet<_>>();
-    let mut terms = text
-        .split(|ch: char| !ch.is_alphanumeric())
-        .map(|term| term.trim().to_ascii_lowercase())
-        .filter(|term| term.chars().count() >= 4)
-        .filter(|term| !stopwords.contains(term.as_str()))
-        .take(8)
+    let stopwords = GOAL_STOPWORDS.iter().copied().collect::<HashSet<_>>();
+    let mut terms = marker_terms_from_text(text, GOAL_MARKERS);
+    terms.extend(
+        text.split(|ch: char| !ch.is_alphanumeric())
+            .map(|term| term.trim().to_lowercase())
+            .filter(|term| is_ascii_goal_candidate(term))
+            .filter(|term| !stopwords.contains(term.as_str()))
+            .take(MAX_DERIVED_ASCII_GOAL_TERMS),
+    );
+    normalize_terms(terms)
+}
+
+fn marker_terms_from_text(text: &str, markers: &[&str]) -> Vec<String> {
+    let lowered = text.to_lowercase();
+    let terms = markers
+        .iter()
+        .filter(|term| lowered.contains(&term.to_lowercase()))
+        .map(|term| (*term).to_string())
         .collect::<Vec<_>>();
-    terms.sort();
-    terms.dedup();
-    terms
+    normalize_terms(terms)
+}
+
+fn is_ascii_goal_candidate(term: &str) -> bool {
+    term.len() >= 4
+        && term
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '_' || ch == '-')
 }
 
 fn compare_latent_hits(a: &LatentActivationHit, b: &LatentActivationHit) -> Ordering {
