@@ -80,6 +80,8 @@ ImportanceSignals
   semantic_uniqueness: f32    (normalized 0.0 ..= 1.0)
 ```
 
+**`overall` is NOT the arithmetic mean of `signals`.** It is the estimator's final judgement. Concrete estimators MAY combine signals non-linearly, apply weights, clip, or normalize. `overall < max(signal)` is a legal outcome. Consumers MUST NOT assume any algebraic relationship between `overall` and individual `signals` fields.
+
 All fields are normalized to `[0.0, 1.0]` at the model boundary. Estimators are responsible for normalization; consumers must not renormalize.
 
 ### Signal Enumeration
@@ -95,6 +97,8 @@ ImportanceSignal
   UserPriority
   SemanticUniqueness
 ```
+
+`ImportanceSignal` is for explainability, diagnostics, and metric mapping only. It MUST NOT appear as an input parameter to estimators or as a strategy selector (`estimate(signal: ImportanceSignal)` is forbidden).
 
 Adding a new variant is not a breaking change.
 
@@ -281,10 +285,10 @@ Each milestone follows the frozen pattern: `Trait -> NoOp -> (optional Determini
 
 Milestone constraints:
 
-- v0.5.1 ships `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator`.
-- v0.5.2 ships `MemoryEvent`, `MemoryEventId`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`, plus `AlgorithmContext`.
+- v0.5.1 ships `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator`, and a minimal `AlgorithmContext { now, session_id }`. The context intentionally excludes `importance` and `events` trait fields at this milestone — they are added additively in v0.5.2 under `#[non_exhaustive]`. `ImportanceEstimator::estimate(memory, ctx)` signature is frozen from v0.5.1 onward.
+- v0.5.2 ships `MemoryEvent`, `MemoryEventId`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`, and expands `AlgorithmContext` with `importance: &dyn ImportanceEstimator` and `events: &dyn MemoryEventStream`. After v0.5.2 the `AlgorithmContext` trait-object surface is closed per Part C rule 3.
 - v0.5.3 scaffolds benchmark directories (`datasets/{regression,synthetic,dmr,longmemeval}`, `benches/{recall,memory,algorithms}`, `reports/`) plus `AlgorithmMetric`. No new datasets are populated at this milestone; scaffolding only.
-- v0.5.9 freezes the model: RFC-011 → Accepted, `docs/API_SURFACE.md` updated with the new Stable items, release note added.
+- v0.5.9 freezes the model: RFC-011 → Implemented, `docs/API_SURFACE.md` updated with the new Stable items, release note added.
 
 Benchmark baselines must be preserved across every milestone:
 
