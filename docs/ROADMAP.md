@@ -36,6 +36,7 @@ Current milestone
 ✓ v0.9.4 — Hebbian Store Adapter
 ✓ v0.9.5 — SQLite Edge Persistence
 ✓ v0.9.6 — Graph Activation Booster
+✓ v0.9.7 — Decayed Multi-Step Hidden Activation
 
 Status
 
@@ -102,13 +103,14 @@ Completed foundations
 - v0.9.4 — Hebbian edge plans map into existing StoreMutation plans
 - v0.9.5 — `StoreMutation::UpdateEdge` persists directed edge weights in SQLite
 - v0.9.6 — persisted edge weights add recall-time activation through `GraphActivationBooster`
+- v0.9.7 — graph activation supports capped, decayed multi-step hidden influence inside the candidate pool
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
-- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, graph activation path, edge persistence, execution adapter, and benchmark before `v0.9.9`.
+- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, and benchmark before `v0.9.9`.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

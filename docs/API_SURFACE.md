@@ -55,6 +55,10 @@ Detailed per-crate listings follow below.
 
 Frozen by `v0.2.0-recall-api-freeze`. Recall scoring semantics, `RecallHit` schema, and booster extension point are stable. See `docs/RECALL_PIPELINE.md`.
 
+`GraphActivationBooster` is additive only: it reads Store-owned `memory_edges`
+among existing candidate hits and contributes capped, decayed activation bonus
+without creating new candidates or changing retrieval provenance fields.
+
 ### model
 
 **Stable**

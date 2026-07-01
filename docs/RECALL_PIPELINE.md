@@ -114,9 +114,11 @@ RecallHit
 
 `GraphActivationBooster` is the Store-backed spreading-activation booster. It
 reads directed `memory_edges` between the current candidate hits and adds a
-capped bonus to existing edge targets only. It does not create candidates,
-invoke retrievers, modify RRF, or change any `RecallHit` field except
-`activation_bonus`.
+capped bonus to existing edge targets only. It can spread activation for
+multiple decayed steps inside the already retrieved candidate pool, modeling
+low-strength hidden influence without surfacing new memories by itself. It does
+not create candidates, invoke retrievers, modify RRF, or change any `RecallHit`
+field except `activation_bonus`.
 
 ---
 

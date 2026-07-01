@@ -48,6 +48,13 @@ fn assert_same_hits(a: &[RecallHit], b: &[RecallHit]) {
     }
 }
 
+fn assert_close(actual: f32, expected: f32) {
+    assert!(
+        (actual - expected).abs() < 1e-6,
+        "expected {expected}, got {actual}"
+    );
+}
+
 #[test]
 fn roundtrip_and_recall() {
     let mut s = Store::open_in_memory().unwrap();
@@ -416,6 +423,55 @@ fn graph_activation_booster_boosts_existing_edge_targets() {
     assert!(target_hit.from_activation());
     let unrelated_hit = boosted.iter().find(|h| h.memory.id == unrelated).unwrap();
     assert_eq!(unrelated_hit.activation_bonus, 0.0);
+}
+
+#[test]
+fn graph_activation_booster_spreads_with_decay_across_multiple_steps() {
+    let mut s = Store::open_in_memory().unwrap();
+    let first = add(&mut s, "pnpm install fails on Windows", MemoryKind::Failure);
+    let second = add(
+        &mut s,
+        "use corepack to fix pnpm on Windows",
+        MemoryKind::Playbook,
+    );
+    let third = add(
+        &mut s,
+        "corepack should be enabled before package manager commands",
+        MemoryKind::Fact,
+    );
+    s.update_edge(&first, &second, 2.0).unwrap();
+    s.update_edge(&second, &third, 2.0).unwrap();
+
+    let q = RecallQuery {
+        query: "pnpm windows corepack package manager".to_string(),
+        k: Some(5),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    assert!(baseline.iter().any(|h| h.memory.id == first));
+    assert!(baseline.iter().any(|h| h.memory.id == second));
+    assert!(baseline.iter().any(|h| h.memory.id == third));
+
+    let one_step_booster = GraphActivationBooster::new(0.05, 0.15);
+    let one_step = RecallEngine::new(&mut s)
+        .with_booster(&one_step_booster)
+        .recall(&q)
+        .unwrap();
+    let two_step_booster = GraphActivationBooster::with_spreading(0.05, 0.15, 2, 0.5);
+    let two_step = RecallEngine::new(&mut s)
+        .with_booster(&two_step_booster)
+        .recall(&q)
+        .unwrap();
+
+    let second_hit = two_step.iter().find(|h| h.memory.id == second).unwrap();
+    let third_one_step = one_step.iter().find(|h| h.memory.id == third).unwrap();
+    let third_two_step = two_step.iter().find(|h| h.memory.id == third).unwrap();
+    assert_close(second_hit.activation_bonus, 0.1);
+    assert_close(third_one_step.activation_bonus, 0.1);
+    assert_close(third_two_step.activation_bonus, 0.105);
+    assert!(third_two_step.activation_bonus > third_one_step.activation_bonus);
+    assert!(third_two_step.from_activation());
 }
 
 #[test]
