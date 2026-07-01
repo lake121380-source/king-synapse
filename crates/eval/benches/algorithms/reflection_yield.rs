@@ -1,9 +1,9 @@
-use synapse_eval::{reflection_yield_report, rule_based_reflection_yield_report};
+use synapse_eval::{deterministic_reflection_yield_report, reflection_yield_report};
 
 fn main() {
     let report = vec![
         reflection_yield_report(),
-        rule_based_reflection_yield_report(),
+        deterministic_reflection_yield_report(),
     ];
     println!(
         "{}",

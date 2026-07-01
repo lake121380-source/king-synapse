@@ -10,28 +10,28 @@ use synapse_core::{
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
-const RULE_BASED_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-rule-based";
+const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-deterministic";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
 
-/// Run the RFC-012 deterministic reference benchmark for Reflection.
+/// Run the current RFC-012 Reflection benchmark.
 ///
 /// `ReflectionYield` is the fraction of structurally eligible memories that
-/// produce a candidate output. The fixture is intentionally small and fixed so
-/// the `BenchmarkReport` remains a deterministic value object.
+/// produce reflection work. As of v0.6.6, the public report uses the
+/// rule-based Reflection algorithm rather than the deterministic reference.
 pub fn reflection_yield_report() -> BenchmarkReport {
     reflection_yield_report_for(
         REFLECTION_BENCHMARK_NAME,
-        &DeterministicReflectionAlgorithm::default(),
+        &RuleBasedReflectionAlgorithm::default(),
     )
 }
 
-/// Run the v0.6.6 rule-based Reflection benchmark.
-pub fn rule_based_reflection_yield_report() -> BenchmarkReport {
+/// Run the RFC-012 deterministic reference benchmark for comparison.
+pub fn deterministic_reflection_yield_report() -> BenchmarkReport {
     reflection_yield_report_for(
-        RULE_BASED_REFLECTION_BENCHMARK_NAME,
-        &RuleBasedReflectionAlgorithm::default(),
+        DETERMINISTIC_REFLECTION_BENCHMARK_NAME,
+        &DeterministicReflectionAlgorithm::default(),
     )
 }
 
@@ -483,10 +483,10 @@ mod tests {
     }
 
     #[test]
-    fn rule_based_reflection_yield_report_uses_contract_shape() {
-        let report = rule_based_reflection_yield_report();
+    fn deterministic_reflection_yield_report_uses_contract_shape() {
+        let report = deterministic_reflection_yield_report();
 
-        assert_eq!(report.benchmark, "reflection-yield-rule-based");
+        assert_eq!(report.benchmark, "reflection-yield-deterministic");
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::ReflectionYield),

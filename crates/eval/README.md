@@ -37,8 +37,8 @@ cargo bench -p synapse-eval --bench hebbian_consistency
 
 The benchmark emits two `BenchmarkReport` values:
 
-- `benchmark = "reflection-yield"` for the deterministic reference
-- `benchmark = "reflection-yield-rule-based"` for the v0.6.6 rule-based algorithm
+- `benchmark = "reflection-yield"` for the current v0.6.6 rule-based algorithm
+- `benchmark = "reflection-yield-deterministic"` for the deterministic reference baseline
 
 Both reports use `AlgorithmMetric::ReflectionYield`.
 

@@ -3,9 +3,9 @@
 //! This module is algorithm-local. It consumes the frozen Adaptive Common
 //! Model (`Memory` + `AlgorithmContext`) and does not extend RFC-011.
 //!
-//! v0.6.0-v0.6.2 scope: skeleton + NoOp + deterministic reference. No
-//! production logic, no Store access, no Recall access, no graph access, no
-//! LLM access, and no side effects.
+//! v0.6.0-v0.6.6 scope: skeleton, NoOp, deterministic reference, and a
+//! rule-based production heuristic. Implementations still have no Store
+//! access, Recall access, graph access, LLM access, or side effects.
 
 use crate::adaptive::{AlgorithmContext, MemoryImportance};
 use crate::model::{Memory, MemoryKind};
@@ -340,7 +340,7 @@ fn kind_weight(kind: MemoryKind) -> f32 {
 }
 
 fn content_signal_weight(content: &str) -> f32 {
-    let normalized = content.to_ascii_lowercase();
+    let normalized = content.to_lowercase();
     let signals = [
         "fail",
         "failure",
@@ -353,6 +353,23 @@ fn content_signal_weight(content: &str) -> f32 {
         "must",
         "remember",
         "next time",
+        "下次",
+        "不要",
+        "偏好",
+        "修复",
+        "关系",
+        "关联",
+        "出错",
+        "失败",
+        "必须",
+        "导致",
+        "应该",
+        "影响",
+        "忘记",
+        "潜意识",
+        "记住",
+        "错误",
+        "避免",
     ];
     let hits = signals
         .iter()
@@ -659,6 +676,37 @@ mod tests {
                 target_memory_id,
                 payload_summary,
             } if target_memory_id == "rule-failure" && payload_summary.contains("failure")
+        ));
+    }
+
+    #[test]
+    fn rule_based_reflection_uses_chinese_content_signals() {
+        let importance = UniformImportanceEstimator;
+        let events = InMemoryMemoryEventStream::with_capacity(8);
+        let ctx = AlgorithmContext::new(Utc::now(), None, &importance, &events);
+        let algorithm = RuleBasedReflectionAlgorithm::default();
+        let mut target = memory(
+            "rule-chinese",
+            "下次记住避免中文 FTS 错误导致多跳召回失败。",
+        );
+        target.kind = MemoryKind::Failure;
+        events.record(MemoryEvent {
+            id: MemoryEventId::nil(),
+            timestamp: Utc::now(),
+            session_id: None,
+            kind: MemoryEventKind::Updated,
+            memory_ids: vec![target.id.clone()],
+            payload: MemoryEventPayload::Empty,
+        });
+
+        let output = algorithm.reflect(&target, &ctx);
+
+        assert!(matches!(
+            output,
+            ReflectionOutput::Produced {
+                target_memory_id,
+                payload_summary,
+            } if target_memory_id == "rule-chinese" && payload_summary.contains("中文 FTS")
         ));
     }
 

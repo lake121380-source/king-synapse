@@ -6,7 +6,7 @@
 
 - **Architecture:** ✅ Stable — frozen at `v0.5.0-architecture-freeze`. See `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 - **Adaptive Common Model:** ✅ Frozen — `v0.5.9-adaptive-common-freeze`. Importance, Event, Context, and Benchmark contracts are read-only. See `docs/rfcs/RFC-011-adaptive-memory-common-model.md`.
-- **Algorithm:** 🚧 In Progress — RFC-012 Reflection Algorithm is next.
+- **Algorithm:** 🚧 In Progress — RFC-012 Reflection has a v0.6.6 rule-based main path; freeze review and broader cognitive-memory behavior are next.
 
 Phase 1–4 freeze tags: `v0.2.0-recall-api-freeze`, `v0.3.9-memory-evolution-freeze`, `v0.4.9-adaptive-memory-foundation`, `v0.4.19-reflection-processing-freeze`, `v0.4.29-hebbian-execution-freeze`, `v0.4.39-store-integration-freeze`, `v0.4.49-adaptive-policies-freeze`.
 
@@ -38,15 +38,15 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 
 - `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
 - `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, additive recall boosters including graph activation, and a latent activation probe for inspecting hidden multi-step influence.
-- Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model.
+- Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model, plus rule-based Phase 5 algorithms for reflection, merge, forget, and Hebbian reinforcement.
 - `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference` and `multihop`.
 - `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, edge-inspection, and latent-activation tools.
 - `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, and stats.
 
 Still on the roadmap:
 
-- Concrete Phase 5 algorithms behind the frozen traits, starting with RFC-012 Reflection Algorithm.
-- Production-grade memory evolution behavior for merge, forget, and Hebbian reinforcement.
+- Freeze-review RFC-012 Reflection's rule-based heuristic against its deterministic baseline.
+- Production-grade memory evolution behavior wiring for merge, forget, Hebbian reinforcement, and latent cognitive-chain inspection.
 - External benchmark comparisons and larger parameter sweeps.
 - UI and deeper agent integrations.
 

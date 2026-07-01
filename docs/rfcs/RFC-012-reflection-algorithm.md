@@ -358,7 +358,7 @@ Benchmark rules:
 - Benchmark names use lowercase-kebab-case.
 - Benchmarks must not call reflection-internal debug helpers.
 
-The `v0.6.3` benchmark uses the public
+The `v0.6.6` benchmark uses the public
 `synapse_eval::reflection_yield_report()` helper and emits:
 
 ```text
@@ -368,15 +368,15 @@ BenchmarkReport {
 }
 ```
 
-For this deterministic reference fixture, `ReflectionYield` is defined as the
+For the current rule-based fixture, `ReflectionYield` is defined as the
 fraction of structurally eligible memories that produce reflection work.
 
-The `v0.6.6` rule-based benchmark uses
-`synapse_eval::rule_based_reflection_yield_report()` and emits:
+The deterministic reference baseline uses
+`synapse_eval::deterministic_reflection_yield_report()` and emits:
 
 ```text
 BenchmarkReport {
-  benchmark: "reflection-yield-rule-based",
+  benchmark: "reflection-yield-deterministic",
   metrics: { ReflectionYield: 1.0 }
 }
 ```
