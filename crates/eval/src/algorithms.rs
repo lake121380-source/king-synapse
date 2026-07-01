@@ -294,6 +294,7 @@ struct CognitiveChainCase {
 }
 
 struct CognitiveTraceCase {
+    label: &'static str,
     query: &'static str,
     seed: &'static str,
     visible_distractor: &'static str,
@@ -329,6 +330,7 @@ fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
 fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
     vec![
         CognitiveTraceCase {
+            label: "body-state-to-commute-attention",
             query: "forgot water before commute",
             seed: "forgot morning water before commute",
             visible_distractor: "forgot water calendar note",
@@ -338,6 +340,7 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
             goal_terms: &["attention"],
         },
         CognitiveTraceCase {
+            label: "social-pressure-to-work-goal",
             query: "pressure before difficult task",
             seed: "pressure before difficult task can trigger avoidance",
             visible_distractor: "pressure report for office schedule",
@@ -347,6 +350,7 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
             goal_terms: &["goal"],
         },
         CognitiveTraceCase {
+            label: "past-failure-to-future-decision",
             query: "past failure repeating mistakes",
             seed: "past failure makes a person worried about repeating mistakes",
             visible_distractor: "past failure incident index",
@@ -354,6 +358,36 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
             hidden_distractor: "photo backup reminder",
             state_terms: &["memory"],
             goal_terms: &["future", "attention"],
+        },
+        CognitiveTraceCase {
+            label: "object-usage-to-task-risk",
+            query: "phone charger before meeting",
+            seed: "phone charger was left at home before meeting",
+            visible_distractor: "phone charger shopping note",
+            hidden: "tool missing creates task risk and anxious planning",
+            hidden_distractor: "meeting room projector inventory",
+            state_terms: &["anxious"],
+            goal_terms: &["task"],
+        },
+        CognitiveTraceCase {
+            label: "renxing-social-memory-to-emotion",
+            query: "renxing social trust memory",
+            seed: "renxing social trust memory from last collaboration",
+            visible_distractor: "social trust reading list",
+            hidden: "emotion affects communication decision and work attention",
+            hidden_distractor: "collaboration lunch receipt",
+            state_terms: &["emotion"],
+            goal_terms: &["decision", "work"],
+        },
+        CognitiveTraceCase {
+            label: "subconscious-avoidance-to-error-review",
+            query: "complex review after repeated bug",
+            seed: "complex review after repeated bug can trigger avoidance",
+            visible_distractor: "complex review checklist title",
+            hidden: "subconscious avoidance can create error in future judgement",
+            hidden_distractor: "bug label color preference",
+            state_terms: &["subconscious"],
+            goal_terms: &["future", "error"],
         },
     ]
 }
@@ -391,6 +425,10 @@ fn cognitive_chain_case_hits(case: &CognitiveChainCase) -> bool {
 }
 
 fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
+    assert!(
+        !case.label.trim().is_empty(),
+        "cognitive trace case label must describe the chain"
+    );
     let mut store = Store::open_in_memory().expect("cognitive trace benchmark store opens");
     let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
     write_cognitive_memory(&mut store, case.visible_distractor, MemoryKind::Fact, 0.5);

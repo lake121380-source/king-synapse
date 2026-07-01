@@ -82,7 +82,10 @@ The cognitive-trace benchmark emits one `BenchmarkReport` value:
 The report uses `AlgorithmMetric::CognitiveTraceDominance`. It measures
 whether `CognitiveTraceProbe` makes the expected hidden/downstream influence
 the dominant candidate after visible recall supplies seed memories and
-state/goal context modulates latent activation.
+state/goal context modulates latent activation. The fixture covers six chain
+families: body state to commute attention, social pressure to work goals, past
+failure to future decision, object/tool use to task risk, social memory to
+emotion, and subconscious avoidance to error review.
 
 ## Metrics
 
