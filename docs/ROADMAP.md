@@ -37,6 +37,7 @@ Current milestone
 ✓ v0.9.5 — SQLite Edge Persistence
 ✓ v0.9.6 — Graph Activation Booster
 ✓ v0.9.7 — Decayed Multi-Step Hidden Activation
+✓ v0.9.8 — Edge Inspection Surface
 
 Status
 
@@ -104,6 +105,7 @@ Completed foundations
 - v0.9.5 — `StoreMutation::UpdateEdge` persists directed edge weights in SQLite
 - v0.9.6 — persisted edge weights add recall-time activation through `GraphActivationBooster`
 - v0.9.7 — graph activation supports capped, decayed multi-step hidden influence inside the candidate pool
+- v0.9.8 — persisted associative edges are inspectable through Store, CLI, and MCP surfaces
 
 Focus
 

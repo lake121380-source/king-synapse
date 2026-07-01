@@ -75,6 +75,12 @@ without creating new candidates or changing retrieval provenance fields.
 **Stable**
 
 - `Store`
+- `MemoryEdge`
+
+`Store` exposes additive edge-inspection reads:
+`outgoing_edges(memory_id, limit)`, `incoming_edges(memory_id, limit)`, and
+`memory_edges(memory_id, limit)`. They return Store-owned directed
+`associates` edges for active memories only.
 
 **Stable (embedder abstraction)**
 
@@ -303,11 +309,16 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_recall`
 - `synapse_list_recent`
 - `synapse_forget`
+- `synapse_entities`
+- `synapse_neighbors`
+- `synapse_edges`
 
 Tool JSON schemas are considered part of the stable public API.
 `synapse_recall` accepts optional graph activation fields:
 `graph_activation`, `graph_scale`, `graph_cap`, `graph_steps`, and
 `graph_decay`. They are disabled by default.
+`synapse_edges` accepts `id`, optional `direction` (`outgoing`, `incoming`,
+or `both`), and optional `k`.
 
 ## kr (CLI)
 
@@ -318,11 +329,16 @@ Tool JSON schemas are considered part of the stable public API.
 - `kr list`
 - `kr where`
 - `kr forget`
+- `kr entities`
+- `kr neighbors`
+- `kr edges`
 
 Flag names and output structure are considered part of the stable public API.
 `kr recall` supports optional graph activation flags:
 `--graph-activation`, `--graph-scale`, `--graph-cap`, `--graph-steps`, and
 `--graph-decay`. They are disabled by default.
+`kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
+`--json` for inspecting persisted associative edge weights.
 
 ## synapse-eval
 

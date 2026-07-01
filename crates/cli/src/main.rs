@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use chrono::{TimeZone, Utc};
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
     config::Config, GraphActivationBooster, MemoryKind, RecallBooster, RecallEngine, RecallHit,
@@ -101,6 +101,16 @@ enum Cmd {
         #[arg(long)]
         json: bool,
     },
+    /// Show directed associative edge weights for a memory.
+    Edges {
+        id: String,
+        #[arg(long, value_enum, default_value = "both")]
+        direction: EdgeDirection,
+        #[arg(long, short = 'k', default_value = "20")]
+        k: usize,
+        #[arg(long)]
+        json: bool,
+    },
     /// Show daemon stats.
     Stats,
     /// Show where the database is.
@@ -117,6 +127,13 @@ enum Cmd {
         #[arg(long, default_value = "0")]
         max: usize,
     },
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+enum EdgeDirection {
+    Outgoing,
+    Incoming,
+    Both,
 }
 
 fn main() -> Result<()> {
@@ -274,6 +291,27 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Cmd::Edges {
+            id,
+            direction,
+            k,
+            json,
+        } => {
+            let edges = match direction {
+                EdgeDirection::Outgoing => store.outgoing_edges(&id, k)?,
+                EdgeDirection::Incoming => store.incoming_edges(&id, k)?,
+                EdgeDirection::Both => store.memory_edges(&id, k)?,
+            };
+            if json {
+                println!("{}", serde_json::to_string_pretty(&edges)?);
+            } else if edges.is_empty() {
+                println!("(no edges)");
+            } else {
+                for edge in edges {
+                    print_edge(&edge);
+                }
+            }
+        }
         Cmd::Stats => {
             let n = store.count()?;
             let (done, pending) = store.embedding_stats()?;
@@ -330,6 +368,22 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+fn print_edge(edge: &synapse_core::MemoryEdge) {
+    let when = Utc
+        .timestamp_opt(edge.updated_at, 0)
+        .single()
+        .map(|t| t.format("%Y-%m-%d %H:%M").to_string())
+        .unwrap_or_default();
+    println!(
+        "{} -> {}  [{}, w={:.3}, {}]",
+        short_id(&edge.source),
+        short_id(&edge.target),
+        edge.edge,
+        edge.weight,
+        when
+    );
+}
+
 fn print_hit(h: &synapse_core::RecallHit) {
     let when = Utc
         .timestamp_opt(h.memory.valid_from, 0)
@@ -358,6 +412,10 @@ fn print_hit(h: &synapse_core::RecallHit) {
         rerank,
         truncate(&h.memory.content, 100)
     );
+}
+
+fn short_id(id: &str) -> &str {
+    id.get(..8).unwrap_or(id)
 }
 
 fn print_hit_explain(idx: usize, h: &RecallHit, booster_names: &[&'static str]) {

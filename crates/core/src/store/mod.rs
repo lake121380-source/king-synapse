@@ -13,6 +13,7 @@ use crate::extract;
 use crate::model::{Memory, MemoryKind, WriteInput};
 use chrono::Utc;
 use rusqlite::{params, Connection, OptionalExtension};
+use serde::{Deserialize, Serialize};
 use std::path::Path;
 use std::str::FromStr;
 use std::sync::Once;
@@ -31,6 +32,15 @@ fn register_sqlite_vec() {
 
 pub struct Store {
     pub(crate) conn: Connection,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct MemoryEdge {
+    pub source: String,
+    pub target: String,
+    pub edge: String,
+    pub weight: f32,
+    pub updated_at: i64,
 }
 
 impl Store {
@@ -417,6 +427,63 @@ impl Store {
         Ok(edges)
     }
 
+    pub fn outgoing_edges(&self, memory_id: &str, limit: usize) -> Result<Vec<MemoryEdge>> {
+        if memory_id.is_empty() || limit == 0 {
+            return Ok(Vec::new());
+        }
+        let mut stmt = self.conn.prepare(
+            "SELECT e.source, e.target, e.edge, e.weight, e.updated_at \
+             FROM memory_edges e \
+             JOIN memories source ON source.id = e.source AND source.valid_to IS NULL \
+             JOIN memories target ON target.id = e.target AND target.valid_to IS NULL \
+             WHERE e.source = ?1 AND e.edge = 'associates' \
+             ORDER BY e.weight DESC, e.updated_at DESC, e.target ASC \
+             LIMIT ?2",
+        )?;
+        let rows = stmt
+            .query_map(params![memory_id, limit as i64], row_to_memory_edge)?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
+    pub fn incoming_edges(&self, memory_id: &str, limit: usize) -> Result<Vec<MemoryEdge>> {
+        if memory_id.is_empty() || limit == 0 {
+            return Ok(Vec::new());
+        }
+        let mut stmt = self.conn.prepare(
+            "SELECT e.source, e.target, e.edge, e.weight, e.updated_at \
+             FROM memory_edges e \
+             JOIN memories source ON source.id = e.source AND source.valid_to IS NULL \
+             JOIN memories target ON target.id = e.target AND target.valid_to IS NULL \
+             WHERE e.target = ?1 AND e.edge = 'associates' \
+             ORDER BY e.weight DESC, e.updated_at DESC, e.source ASC \
+             LIMIT ?2",
+        )?;
+        let rows = stmt
+            .query_map(params![memory_id, limit as i64], row_to_memory_edge)?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
+    pub fn memory_edges(&self, memory_id: &str, limit: usize) -> Result<Vec<MemoryEdge>> {
+        if memory_id.is_empty() || limit == 0 {
+            return Ok(Vec::new());
+        }
+        let mut stmt = self.conn.prepare(
+            "SELECT e.source, e.target, e.edge, e.weight, e.updated_at \
+             FROM memory_edges e \
+             JOIN memories source ON source.id = e.source AND source.valid_to IS NULL \
+             JOIN memories target ON target.id = e.target AND target.valid_to IS NULL \
+             WHERE (e.source = ?1 OR e.target = ?1) AND e.edge = 'associates' \
+             ORDER BY e.weight DESC, e.updated_at DESC, e.source ASC, e.target ASC \
+             LIMIT ?2",
+        )?;
+        let rows = stmt
+            .query_map(params![memory_id, limit as i64], row_to_memory_edge)?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        Ok(rows)
+    }
+
     pub fn list_recent(&self, limit: usize) -> Result<Vec<Memory>> {
         let mut stmt = self.conn.prepare(
             "SELECT id, kind, scope, content, source, confidence, importance, valid_from, valid_to, superseded_by, access_count, last_accessed_at FROM memories WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT ?1",
@@ -470,6 +537,16 @@ impl Store {
             .query_row("SELECT COUNT(*) FROM memories", [], |r| r.get(0))?;
         Ok(n)
     }
+}
+
+fn row_to_memory_edge(row: &rusqlite::Row) -> rusqlite::Result<MemoryEdge> {
+    Ok(MemoryEdge {
+        source: row.get(0)?,
+        target: row.get(1)?,
+        edge: row.get(2)?,
+        weight: row.get::<_, f64>(3)? as f32,
+        updated_at: row.get(4)?,
+    })
 }
 
 fn memory_exists(conn: &Connection, id: &str) -> Result<bool> {
@@ -645,6 +722,60 @@ mod tests {
             .edge_weights_between(&[&unrelated.id], &[&source.id, &target.id])
             .unwrap()
             .is_empty());
+    }
+
+    #[test]
+    fn edge_inspection_lists_incoming_outgoing_and_both_directions() {
+        let mut s = make_store();
+        let source = s
+            .write(WriteInput {
+                content: "source memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let target = s
+            .write(WriteInput {
+                content: "target memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let third = s
+            .write(WriteInput {
+                content: "third memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+
+        s.update_edge(&source.id, &target.id, 0.7).unwrap();
+        s.update_edge(&third.id, &source.id, 0.4).unwrap();
+
+        let outgoing = s.outgoing_edges(&source.id, 10).unwrap();
+        assert_eq!(outgoing.len(), 1);
+        assert_eq!(outgoing[0].source, source.id);
+        assert_eq!(outgoing[0].target, target.id);
+        assert_eq!(outgoing[0].weight, 0.7);
+
+        let incoming = s.incoming_edges(&source.id, 10).unwrap();
+        assert_eq!(incoming.len(), 1);
+        assert_eq!(incoming[0].source, third.id);
+        assert_eq!(incoming[0].target, source.id);
+        assert_eq!(incoming[0].weight, 0.4);
+
+        let both = s.memory_edges(&source.id, 10).unwrap();
+        assert_eq!(both.len(), 2);
+        assert_eq!(s.memory_edges(&source.id, 0).unwrap(), Vec::new());
     }
 
     #[test]

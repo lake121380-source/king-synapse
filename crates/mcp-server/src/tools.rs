@@ -16,6 +16,7 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_forget(),
         descriptor_entities(),
         descriptor_neighbors(),
+        descriptor_edges(),
     ]
 }
 
@@ -113,6 +114,22 @@ fn descriptor_neighbors() -> Value {
     })
 }
 
+fn descriptor_edges() -> Value {
+    json!({
+        "name": "synapse_edges",
+        "description": "Inspect directed associative edges connected to a memory.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": { "type": "string" },
+                "direction": { "type": "string", "enum": ["outgoing", "incoming", "both"], "default": "both" },
+                "k": { "type": "integer", "minimum": 1, "maximum": 200, "default": 20 }
+            }
+        }
+    })
+}
+
 pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
     let name = params
         .get("name")
@@ -127,6 +144,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_forget" => do_forget(store, &args)?,
         "synapse_entities" => do_entities(store, &args)?,
         "synapse_neighbors" => do_neighbors(store, &args)?,
+        "synapse_edges" => do_edges(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -277,4 +295,30 @@ fn do_neighbors(store: &StoreHandle, args: &Value) -> Result<Value> {
     let s = store.lock().unwrap();
     let neighbors = s.neighbors(&id, k)?;
     Ok(json!({ "neighbors": neighbors }))
+}
+
+fn do_edges(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let id = args
+        .get("id")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| anyhow::anyhow!("id required"))?
+        .to_string();
+    let direction = args
+        .get("direction")
+        .and_then(|v| v.as_str())
+        .unwrap_or("both");
+    let k = args
+        .get("k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(20);
+
+    let s = store.lock().unwrap();
+    let edges = match direction {
+        "outgoing" => s.outgoing_edges(&id, k)?,
+        "incoming" => s.incoming_edges(&id, k)?,
+        "both" => s.memory_edges(&id, k)?,
+        other => anyhow::bail!("unsupported edge direction: {other}"),
+    };
+    Ok(json!({ "edges": edges }))
 }

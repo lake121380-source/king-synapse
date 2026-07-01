@@ -40,7 +40,7 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 - `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, and additive recall boosters including graph activation.
 - Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model.
 - `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference` and `multihop`.
-- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, and neighbor tools.
+- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, and edge-inspection tools.
 - `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, and stats.
 
 Still on the roadmap:
@@ -80,6 +80,7 @@ Binaries land in `target/release/`:
 ./target/release/kr recall "pnpm windows"
 ./target/release/kr recall "测试" --kind fact
 ./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
+./target/release/kr edges <memory-id> --direction both
 
 # List recent
 ./target/release/kr list --limit 10
@@ -107,7 +108,7 @@ Add to your `opencode.json`:
 }
 ```
 
-The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, and `synapse_neighbors` available as tools.
+The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, and `synapse_edges` available as tools.
 
 ## License
 

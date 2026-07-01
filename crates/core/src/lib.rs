@@ -37,7 +37,7 @@ pub use recall::{
     RecallEngine, RecallHit, RecallSource, DEFAULT_RERANK_POOL,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
-pub use store::Store;
+pub use store::{MemoryEdge, Store};
 pub use working_memory::{
     AdaptivePolicy, AdaptivePolicyEngine, ArchiveExecution, ConsolidationEngine,
     ConsolidationExecutor, ConsolidationPlan, ConsolidationSink, DeterministicAdaptivePolicyEngine,
