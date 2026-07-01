@@ -3,9 +3,9 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, GraphActivationBooster, LatentActivationContext, LatentActivationProbe,
-    MemoryKind, QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster,
-    RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
+    config::Config, GraphActivationBooster, LatentActivationBooster, LatentActivationContext,
+    LatentActivationProbe, MemoryKind, QueryLatentActivationProbe, QueryLatentActivationReport,
+    RecallBooster, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -77,6 +77,36 @@ enum Cmd {
         /// Decay factor for graph activation after each propagation step.
         #[arg(long, default_value = "0.5")]
         graph_decay: f32,
+        /// Enable latent activation over existing recall candidates.
+        #[arg(long)]
+        latent_activation: bool,
+        /// Number of top visible hits used as latent activation seeds.
+        #[arg(long, default_value = "3")]
+        latent_seed_k: usize,
+        /// Latent activation scale applied to edge weights.
+        #[arg(long, default_value = "0.05")]
+        latent_scale: f32,
+        /// Maximum latent activation contribution per propagation path.
+        #[arg(long, default_value = "0.25")]
+        latent_cap: f32,
+        /// Number of decayed latent activation propagation steps.
+        #[arg(long, default_value = "2")]
+        latent_steps: usize,
+        /// Decay factor for latent activation after each propagation step.
+        #[arg(long, default_value = "0.5")]
+        latent_decay: f32,
+        /// Maximum outgoing edges inspected per latent activation step.
+        #[arg(long, default_value = "16")]
+        latent_fanout: usize,
+        /// Current state terms that should increase matching latent activations.
+        #[arg(long = "latent-state")]
+        latent_state_terms: Vec<String>,
+        /// Current goal terms that should increase matching latent activations.
+        #[arg(long = "latent-goal")]
+        latent_goal_terms: Vec<String>,
+        /// Derive additional latent state/goal terms from the recall query.
+        #[arg(long)]
+        latent_auto_context: bool,
     },
     /// List recent memories.
     List {
@@ -241,6 +271,16 @@ fn main() -> Result<()> {
             graph_cap,
             graph_steps,
             graph_decay,
+            latent_activation,
+            latent_seed_k,
+            latent_scale,
+            latent_cap,
+            latent_steps,
+            latent_decay,
+            latent_fanout,
+            latent_state_terms,
+            latent_goal_terms,
+            latent_auto_context,
         } => {
             let q = RecallQuery {
                 query,
@@ -266,8 +306,28 @@ fn main() -> Result<()> {
                     graph_decay,
                 )
             });
-            let booster_names: Vec<&'static str> =
-                graph_booster.iter().map(|booster| booster.name()).collect();
+            let latent_context = latent_recall_context(
+                &q.query,
+                latent_state_terms,
+                latent_goal_terms,
+                latent_auto_context,
+            );
+            let latent_booster = latent_activation.then(|| {
+                LatentActivationBooster::with_config(
+                    latent_scale,
+                    latent_cap,
+                    latent_steps,
+                    latent_decay,
+                    latent_fanout,
+                    latent_seed_k,
+                    latent_context,
+                )
+            });
+            let booster_names: Vec<&'static str> = graph_booster
+                .iter()
+                .map(|booster| booster.name())
+                .chain(latent_booster.iter().map(|booster| booster.name()))
+                .collect();
             let hits = {
                 let mut engine = RecallEngine::new(&mut store);
                 if let Some(e) = embedder.as_mut() {
@@ -277,6 +337,9 @@ fn main() -> Result<()> {
                     engine = engine.with_reranker(rr, rerank_pool);
                 }
                 if let Some(booster) = graph_booster.as_ref() {
+                    engine = engine.with_booster(booster);
+                }
+                if let Some(booster) = latent_booster.as_ref() {
                     engine = engine.with_booster(booster);
                 }
                 engine.recall(&q)?
@@ -499,6 +562,20 @@ fn print_edge(edge: &synapse_core::MemoryEdge) {
         edge.weight,
         when
     );
+}
+
+fn latent_recall_context(
+    query: &str,
+    state_terms: Vec<String>,
+    goal_terms: Vec<String>,
+    auto_context: bool,
+) -> LatentActivationContext {
+    let explicit = LatentActivationContext::new(state_terms, goal_terms);
+    if auto_context {
+        LatentActivationContext::from_text(query).merge(explicit)
+    } else {
+        explicit
+    }
 }
 
 fn print_latent_hit(hit: &synapse_core::LatentActivationHit) {

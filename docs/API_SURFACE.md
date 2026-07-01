@@ -367,6 +367,11 @@ Flag names and output structure are considered part of the stable public API.
 `kr recall` supports optional graph activation flags:
 `--graph-activation`, `--graph-scale`, `--graph-cap`, `--graph-steps`, and
 `--graph-decay`. They are disabled by default.
+`kr recall` also supports optional latent activation flags:
+`--latent-activation`, `--latent-seed-k`, `--latent-scale`, `--latent-cap`,
+`--latent-steps`, `--latent-decay`, `--latent-fanout`, repeated
+`--latent-state`, repeated `--latent-goal`, and `--latent-auto-context`.
+They are disabled by default and only add bonus to existing recall candidates.
 `kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
 `--json` for inspecting persisted associative edge weights.
 `kr latent <id>` supports `--steps`, `--decay`, `--scale`, `--cap`,

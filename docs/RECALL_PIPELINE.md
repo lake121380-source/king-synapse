@@ -136,6 +136,14 @@ derives extra state and goal terms from the query text. It does not add fields
 to `RecallHit`, change `RecallEngine` scoring, or feed latent activations back
 into recall.
 
+`LatentActivationBooster` is the optional recall-time version of the same
+latent activation model. When explicitly enabled, it takes the top visible
+recall hits as seed memories, walks directed edges that may pass through
+candidate-set-external memories, and adds the resulting activation only to
+memories already present in the candidate list. It still obeys the booster
+contract: no new `RecallHit`s, no retriever calls, no RRF changes, and no field
+mutation except `activation_bonus`.
+
 `synapse_eval::cognitive_chain_recall_report()` provides the first regression
 benchmark for this inspection path. It models Chinese cognitive chains where
 visible query text finds a seed memory and latent activation should surface a

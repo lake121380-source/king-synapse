@@ -1,9 +1,9 @@
 use std::sync::Arc;
 use std::time::Duration;
 use synapse_core::{
-    GraphActivationBooster, MemoryKind, RecallEngine, RecallHit, RecallQuery, Scope, SessionId,
-    Source, Store, WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem,
-    WriteInput,
+    GraphActivationBooster, LatentActivationBooster, LatentActivationContext, MemoryKind,
+    RecallEngine, RecallHit, RecallQuery, Scope, SessionId, Source, Store,
+    WorkingMemoryActivationBooster, WorkingMemoryBuffer, WorkingMemoryItem, WriteInput,
 };
 
 fn add(store: &mut Store, content: &str, kind: MemoryKind) -> String {
@@ -472,6 +472,81 @@ fn graph_activation_booster_spreads_with_decay_across_multiple_steps() {
     assert_close(third_two_step.activation_bonus, 0.105);
     assert!(third_two_step.activation_bonus > third_one_step.activation_bonus);
     assert!(third_two_step.from_activation());
+}
+
+#[test]
+fn latent_activation_booster_boosts_existing_hidden_candidates() {
+    let mut s = Store::open_in_memory().unwrap();
+    let seed = add(
+        &mut s,
+        "forgot water mood commute attention seed",
+        MemoryKind::State,
+    );
+    let hidden = add(
+        &mut s,
+        "commute attention risk after work",
+        MemoryKind::Playbook,
+    );
+    let unrelated = add(&mut s, "commute checklist unrelated note", MemoryKind::Fact);
+    s.update_edge(&seed, &hidden, 2.0).unwrap();
+
+    let q = RecallQuery {
+        query: "forgot water mood commute attention".to_string(),
+        k: Some(3),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let baseline = RecallEngine::new(&mut s).recall(&q).unwrap();
+    assert!(baseline.iter().any(|hit| hit.memory.id == seed));
+    assert!(baseline.iter().any(|hit| hit.memory.id == hidden));
+    assert!(baseline.iter().any(|hit| hit.memory.id == unrelated));
+
+    let context = LatentActivationContext::new(
+        vec!["mood".to_string()],
+        vec!["commute".to_string(), "attention".to_string()],
+    );
+    let booster = LatentActivationBooster::with_config(0.05, 0.25, 2, 0.5, 10, 1, context);
+    let boosted = RecallEngine::new(&mut s)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    let hidden_hit = boosted
+        .iter()
+        .find(|hit| hit.memory.id == hidden)
+        .expect("hidden candidate should remain in recall results");
+    let unrelated_hit = boosted
+        .iter()
+        .find(|hit| hit.memory.id == unrelated)
+        .expect("unrelated candidate should remain in recall results");
+
+    assert_close(hidden_hit.activation_bonus, 0.15);
+    assert_eq!(unrelated_hit.activation_bonus, 0.0);
+    assert!(hidden_hit.from_activation());
+}
+
+#[test]
+fn latent_activation_booster_does_not_create_new_candidates() {
+    let mut s = Store::open_in_memory().unwrap();
+    let seed = add(&mut s, "forgot water before work mood", MemoryKind::State);
+    let hidden = add(&mut s, "attention risk after commute", MemoryKind::Playbook);
+    s.update_edge(&seed, &hidden, 2.0).unwrap();
+
+    let q = RecallQuery {
+        query: "forgot water mood".to_string(),
+        k: Some(1),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let context = LatentActivationContext::new(Vec::new(), vec!["attention".to_string()]);
+    let booster = LatentActivationBooster::with_config(0.05, 0.25, 2, 0.5, 10, 1, context);
+    let hits = RecallEngine::new(&mut s)
+        .with_booster(&booster)
+        .recall(&q)
+        .unwrap();
+
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].memory.id, seed);
 }
 
 #[test]

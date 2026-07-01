@@ -115,6 +115,7 @@ Completed foundations
 - v0.9.11 — natural-language queries can recall visible seed memories and inspect their hidden activation paths as a separate report
 - v0.9.12 — query text can derive state and goal terms for latent inspection while keeping recall ranking unchanged
 - v0.9.13 — Chinese cognitive-chain benchmark covers visible seed recall into hidden latent influence
+- v0.9.14 — optional latent activation booster can add hidden-path bonus to existing recall candidates
 
 Focus
 

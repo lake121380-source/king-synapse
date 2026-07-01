@@ -3,8 +3,9 @@ use serde_json::{json, Value};
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
-    GraphActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryKind,
-    QueryLatentActivationProbe, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+    GraphActivationBooster, LatentActivationBooster, LatentActivationContext,
+    LatentActivationProbe, MemoryKind, QueryLatentActivationProbe, RecallEngine, RecallQuery,
+    Scope, Source, Store, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
@@ -58,7 +59,17 @@ fn descriptor_recall() -> Value {
                 "graph_scale": { "type": "number", "default": 0.05 },
                 "graph_cap": { "type": "number", "default": 0.15 },
                 "graph_steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 1 },
-                "graph_decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 }
+                "graph_decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+                "latent_activation": { "type": "boolean", "default": false },
+                "latent_seed_k": { "type": "integer", "minimum": 1, "maximum": 16, "default": 3 },
+                "latent_scale": { "type": "number", "default": 0.05 },
+                "latent_cap": { "type": "number", "default": 0.25 },
+                "latent_steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 2 },
+                "latent_decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+                "latent_fanout": { "type": "integer", "minimum": 1, "maximum": 64, "default": 16 },
+                "latent_state": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "latent_goal": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "latent_auto_context": { "type": "boolean", "default": false }
             }
         }
     })
@@ -274,6 +285,34 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
         .map(|x| x as usize)
         .unwrap_or(1);
     let graph_decay = arg_f32(args, "graph_decay", 0.5);
+    let latent_activation = args
+        .get("latent_activation")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+    let latent_seed_k = args
+        .get("latent_seed_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(3);
+    let latent_scale = arg_f32(args, "latent_scale", 0.05);
+    let latent_cap = arg_f32(args, "latent_cap", 0.25);
+    let latent_steps = args
+        .get("latent_steps")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(2);
+    let latent_decay = arg_f32(args, "latent_decay", 0.5);
+    let latent_fanout = args
+        .get("latent_fanout")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(16);
+    let latent_state_terms = arg_string_array(args, "latent_state");
+    let latent_goal_terms = arg_string_array(args, "latent_goal");
+    let latent_auto_context = args
+        .get("latent_auto_context")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
     let mut s = store.lock().unwrap();
     let query = RecallQuery {
         query,
@@ -284,9 +323,29 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
     let graph_booster = graph_activation.then(|| {
         GraphActivationBooster::with_spreading(graph_scale, graph_cap, graph_steps, graph_decay)
     });
+    let latent_context = latent_recall_context(
+        &query.query,
+        latent_state_terms,
+        latent_goal_terms,
+        latent_auto_context,
+    );
+    let latent_booster = latent_activation.then(|| {
+        LatentActivationBooster::with_config(
+            latent_scale,
+            latent_cap,
+            latent_steps,
+            latent_decay,
+            latent_fanout,
+            latent_seed_k,
+            latent_context,
+        )
+    });
     let hits = {
         let mut engine = RecallEngine::new(&mut s);
         if let Some(booster) = graph_booster.as_ref() {
+            engine = engine.with_booster(booster);
+        }
+        if let Some(booster) = latent_booster.as_ref() {
             engine = engine.with_booster(booster);
         }
         engine.recall(&query)?
@@ -299,6 +358,33 @@ fn arg_f32(args: &Value, key: &str, default: f32) -> f32 {
         .and_then(|v| v.as_f64())
         .map(|x| x as f32)
         .unwrap_or(default)
+}
+
+fn arg_string_array(args: &Value, key: &str) -> Vec<String> {
+    args.get(key)
+        .and_then(|value| value.as_array())
+        .map(|values| {
+            values
+                .iter()
+                .filter_map(|value| value.as_str())
+                .map(str::to_string)
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+fn latent_recall_context(
+    query: &str,
+    state_terms: Vec<String>,
+    goal_terms: Vec<String>,
+    auto_context: bool,
+) -> LatentActivationContext {
+    let explicit = LatentActivationContext::new(state_terms, goal_terms);
+    if auto_context {
+        LatentActivationContext::from_text(query).merge(explicit)
+    } else {
+        explicit
+    }
 }
 
 fn do_list(store: &StoreHandle, args: &Value) -> Result<Value> {

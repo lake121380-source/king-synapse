@@ -15,6 +15,7 @@ mod engine;
 mod graph_activation;
 mod hit;
 mod latent_activation;
+mod latent_booster;
 mod query_latent;
 mod rrf;
 
@@ -25,6 +26,7 @@ pub use engine::RecallEngine;
 pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};
 pub use latent_activation::{LatentActivationContext, LatentActivationHit, LatentActivationProbe};
+pub use latent_booster::LatentActivationBooster;
 pub use query_latent::{QueryLatentActivationProbe, QueryLatentActivationReport};
 
 /// Default candidate pool size handed to the reranker before top-k truncation.
