@@ -35,6 +35,7 @@ In scope:
 
 - Define canonical `StoreMutation` variants.
 - Convert behavior reports into `StoreMutationPlan` values.
+- Dispatch behavior reports into mutation plans deterministically.
 - Introduce `StoreAdapter` as the only Store integration entry point.
 - Keep P4.4.1 through P4.4.3 deterministic and side-effect free.
 - Allow real Store writes only in P4.4.4.
@@ -77,6 +78,16 @@ ExecutionReport / ReflectionReport / HebbianExecutionReport
 
 Adapter is the only Store entry point. Code must not bypass it with direct Store writes.
 
+The mutation dispatcher is pure:
+
+```text
+ExecutionReport
+  -> StoreMutationDispatcher
+  -> StoreMutationPlan
+```
+
+P4.4.2 starts with `ExecutionReport` and may extend to `ReflectionReport` and `HebbianExecutionReport` without changing Store backends.
+
 ## P4.4 Milestones
 
 ```text
@@ -101,6 +112,9 @@ P4.4.4 is the first milestone allowed to perform persistent mutations.
 6. Store backends must remain replaceable behind adapters.
 7. Persistent writes are forbidden before P4.4.4.
 8. Benchmark baselines must be preserved before merging Store Integration behavior.
+9. Store mutation dispatchers must be deterministic for identical inputs.
+10. Store mutation dispatchers must not mutate input reports.
+11. Store mutation dispatchers must not access Store, SQLite, Kuzu, or RecallEngine.
 
 ## Acceptance Criteria
 

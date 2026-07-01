@@ -16,6 +16,7 @@ mod reflection_sink;
 mod session;
 mod sink;
 mod store_adapter;
+mod store_dispatcher;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
@@ -49,6 +50,9 @@ pub use sink::{ConsolidationSink, NoOpSink};
 pub use store_adapter::{
     NoOpStoreAdapter, PlanOnlyStoreAdapter, StoreAdapter, StoreExecutionReport, StoreMutation,
     StoreMutationPlan,
+};
+pub use store_dispatcher::{
+    DeterministicStoreMutationDispatcher, NoOpStoreMutationDispatcher, StoreMutationDispatcher,
 };
 
 #[cfg(test)]
@@ -392,6 +396,62 @@ mod tests {
 
         assert_eq!(report_a, report_b);
         assert_eq!(plan, original);
+    }
+
+    #[test]
+    fn noop_store_mutation_dispatcher_emits_empty_plan() {
+        let dispatcher = NoOpStoreMutationDispatcher;
+
+        let plan = dispatcher.dispatch();
+
+        assert!(plan.is_empty());
+    }
+
+    #[test]
+    fn store_mutation_dispatcher_maps_archive_action_to_insert_memory() {
+        let session = SessionId::new();
+        let item =
+            WorkingMemoryItem::new(session, "archive me", Vec::new(), Duration::from_secs(60));
+        let plan = ConsolidationPlan {
+            promote: vec![item.clone()],
+            merge: Vec::new(),
+            discard: Vec::new(),
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+        let report = executor.execute(&plan);
+        let original = report.clone();
+        let dispatcher = DeterministicStoreMutationDispatcher::new(report.clone());
+
+        let mutation_plan = dispatcher.dispatch();
+
+        assert_eq!(report, original);
+        assert_eq!(
+            mutation_plan.mutations,
+            vec![StoreMutation::InsertMemory {
+                id: item.id.to_string(),
+                content: item.content,
+            }]
+        );
+    }
+
+    #[test]
+    fn store_mutation_dispatcher_is_deterministic() {
+        let session = SessionId::new();
+        let item =
+            WorkingMemoryItem::new(session, "discard me", Vec::new(), Duration::from_secs(60));
+        let plan = ConsolidationPlan {
+            promote: Vec::new(),
+            merge: Vec::new(),
+            discard: vec![item],
+        };
+        let executor = PlanOnlyConsolidationExecutor;
+        let report = executor.execute(&plan);
+        let dispatcher = DeterministicStoreMutationDispatcher::new(report);
+
+        let plan_a = dispatcher.dispatch();
+        let plan_b = dispatcher.dispatch();
+
+        assert_eq!(plan_a, plan_b);
     }
 
     #[test]
