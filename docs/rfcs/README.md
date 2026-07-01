@@ -26,7 +26,7 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 | RFC-011 | Adaptive Memory Common Model | Implemented (frozen `v0.5.9-adaptive-common-freeze`) |
 | RFC-012 | Reflection Algorithm | Draft (`v0.6.0` skeleton, `v0.6.1` NoOp, `v0.6.2` deterministic reference, `v0.6.3` benchmark, `v0.6.4` processing adapter, `v0.6.5` store mutation plan, `v0.6.6` rule-based algorithm implemented) |
 | RFC-013 | Merge Algorithm | Draft (`v0.7.0` skeleton, `v0.7.1` NoOp, `v0.7.2` rule-based reference, `v0.7.3` benchmark, `v0.7.4` store adapter implemented) |
-| RFC-014 | Forgetting Algorithm | Draft (`v0.8.0` skeleton, `v0.8.1` NoOp, `v0.8.2` rule-based reference, `v0.8.3` benchmark implemented) |
+| RFC-014 | Forgetting Algorithm | Draft (`v0.8.0` skeleton, `v0.8.1` NoOp, `v0.8.2` rule-based reference, `v0.8.3` benchmark, `v0.8.4` store adapter implemented) |
 | RFC-015 | Hebbian Algorithm | Planned |
 
 ## Phase 4 Order
@@ -55,5 +55,4 @@ RFC-011 Adaptive Memory Common Model
 `RFC-014` is currently the active Phase 5 focus. RFC-012 has reached its
 rule-based Reflection milestone (`v0.6.6`) and remains to be freeze-reviewed;
 RFC-013 now has merge lifecycle milestones through `v0.7.4`; RFC-014 now has
-skeleton, NoOp, rule-based reference, and benchmark milestones through
-`v0.8.3`.
+forget lifecycle milestones through `v0.8.4`.

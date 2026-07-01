@@ -79,7 +79,9 @@ pub use store_sink::{NoOpStoreSink, StoreSink};
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::adaptive::{ImportanceSignals, MemoryImportance, ReflectionOutput};
+    use crate::adaptive::{
+        ForgetOutput, ForgetReason, ImportanceSignals, MemoryImportance, ReflectionOutput,
+    };
     use crate::Store;
     use chrono::{Duration as ChronoDuration, Utc};
     use std::time::Duration;
@@ -765,6 +767,37 @@ mod tests {
         assert!(pending
             .iter()
             .any(|(id, content)| { id == &first.id && content == "merged duplicate memory" }));
+    }
+
+    #[test]
+    fn forget_output_store_plan_archives_memory_in_sqlite() {
+        let mut store = Store::open_in_memory().unwrap();
+        let memory = store
+            .write(crate::WriteInput {
+                content: "forgettable memory".to_string(),
+                kind: crate::MemoryKind::Fact,
+                scope: crate::Scope::Global,
+                source: crate::Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let output = ForgetOutput::Forget {
+            memory_id: memory.id.clone(),
+            reason: ForgetReason::LowUseLowImportance,
+            score: 1.3,
+        };
+        let plan = output
+            .to_store_mutation_plan()
+            .expect("forget output should map to a store mutation plan");
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.executed, plan.mutations);
+        assert!(report.skipped.is_empty());
+        assert_eq!(report.statistics.executed, 1);
+        assert!(store.get(&memory.id).unwrap().unwrap().valid_to.is_some());
     }
 
     #[test]

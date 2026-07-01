@@ -28,6 +28,7 @@ Current milestone
 ✓ v0.8.1 — NoOp Forget Algorithm
 ✓ v0.8.2 — Rule-Based Forget Algorithm
 ✓ v0.8.3 — Forget Precision Benchmark
+✓ v0.8.4 — Forget Store Adapter
 
 Status
 
@@ -86,12 +87,13 @@ Completed foundations
 - v0.8.1 — NoOp forget implementation
 - v0.8.2 — Rule-based forget heuristic
 - v0.8.3 — Forget precision benchmark (`BenchmarkReport` mapped to `ForgetPrecision`)
+- v0.8.4 — Forget output maps into existing StoreMutation plans
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
-- **RFC-014 Forget Algorithm** — current milestone; connect forget decisions into the frozen store mutation path without changing stable contracts.
+- **RFC-014 Forget Algorithm** — current milestone; freeze-review forget lifecycle behavior and harden production benchmarks.
 - RFC-015 Hebbian Algorithm — concrete `HebbianReinforcementEngine` / `HebbianExecutor` implementations.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.

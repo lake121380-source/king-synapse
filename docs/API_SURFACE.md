@@ -254,12 +254,13 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 - `ForgetAlgorithm` (trait: `fn forget(&self, target: &ForgetTarget, ctx: &AlgorithmContext<'_>) -> ForgetOutput`)
 - `ForgetTarget` (`#[non_exhaustive]`; algorithm-local wrapper for one memory)
 - `ForgetOutput` (`#[non_exhaustive]`; `Skipped`, `Candidate`, or `Forget`)
+- `ForgetOutput::to_store_mutation_plan()` (adapter into frozen StoreMutation plans)
 - `ForgetReason` (`#[non_exhaustive]`; algorithm-local forget reason)
 - `ForgetSkipReason` (`#[non_exhaustive]`; algorithm-local skip reason)
 - `NoOpForgetAlgorithm`
 - `RuleBasedForgetAlgorithm` (deterministic heuristic implementation; emits forget, candidate, or skip decisions)
 
-Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, `v0.7.3-merge-benchmark`, `v0.7.4-merge-store-adapter`, `v0.8.0-forget-algorithm-skeleton`, `v0.8.2-forget-rule-based-reference`, and `v0.8.3-forget-benchmark`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, `v0.7.3-merge-benchmark`, `v0.7.4-merge-store-adapter`, `v0.8.0-forget-algorithm-skeleton`, `v0.8.2-forget-rule-based-reference`, `v0.8.3-forget-benchmark`, and `v0.8.4-forget-store-adapter`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
 ### entity
 

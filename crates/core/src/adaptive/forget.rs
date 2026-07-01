@@ -5,6 +5,7 @@
 
 use crate::adaptive::AlgorithmContext;
 use crate::model::Memory;
+use crate::working_memory::{StoreMutation, StoreMutationPlan};
 use serde::{Deserialize, Serialize};
 
 const DEFAULT_FORGET_THRESHOLD: f32 = 1.2;
@@ -71,6 +72,25 @@ impl ForgetOutput {
             | Self::Candidate { memory_id, .. }
             | Self::Forget { memory_id, .. } => memory_id,
         }
+    }
+
+    /// Convert a positive forget decision into the existing store mutation
+    /// plan shape.
+    ///
+    /// This is a pure adapter. It does not write to storage. `Candidate` and
+    /// `Skipped` outputs do not produce a plan because they either require
+    /// review or intentionally carry no work.
+    pub fn to_store_mutation_plan(&self) -> Option<StoreMutationPlan> {
+        let memory_id = match self {
+            Self::Forget { memory_id, .. } => memory_id,
+            Self::Candidate { .. } | Self::Skipped { .. } => return None,
+        };
+
+        Some(StoreMutationPlan {
+            mutations: vec![StoreMutation::ArchiveMemory {
+                id: memory_id.clone(),
+            }],
+        })
     }
 }
 
@@ -334,6 +354,42 @@ mod tests {
                 score: 1.0,
             }
         );
+    }
+
+    #[test]
+    fn forget_output_maps_to_store_mutation_plan() {
+        let output = ForgetOutput::Forget {
+            memory_id: "forget-me".to_string(),
+            reason: ForgetReason::Expired,
+            score: 1.0,
+        };
+
+        let plan = output
+            .to_store_mutation_plan()
+            .expect("forget output should produce a store mutation plan");
+
+        assert_eq!(
+            plan.mutations,
+            vec![StoreMutation::ArchiveMemory {
+                id: "forget-me".to_string(),
+            }]
+        );
+    }
+
+    #[test]
+    fn non_forget_outputs_do_not_create_store_mutation_plans() {
+        let candidate = ForgetOutput::Candidate {
+            memory_id: "candidate".to_string(),
+            reason: ForgetReason::LowUseLowImportance,
+            score: 0.8,
+        };
+        let skipped = ForgetOutput::Skipped {
+            memory_id: "skipped".to_string(),
+            reason: ForgetSkipReason::HighImportance,
+        };
+
+        assert!(candidate.to_store_mutation_plan().is_none());
+        assert!(skipped.to_store_mutation_plan().is_none());
     }
 
     #[test]

@@ -16,6 +16,7 @@ v0.8.0-forget-algorithm-skeleton         (implemented)
 v0.8.1-forget-algorithm-noop             (implemented)
 v0.8.2-forget-rule-based-reference       (implemented)
 v0.8.3-forget-benchmark                  (implemented)
+v0.8.4-forget-store-adapter              (implemented)
 v0.8.9-forget-algorithm-freeze           (planned)
 ```
 
@@ -81,6 +82,17 @@ ForgetOutput
 
 The output is not a Store mutation. Later layers may translate
 `ForgetOutput::Forget` into existing archive/delete store mutation plans.
+
+`v0.8.4` adds the first pure adapter:
+
+```text
+ForgetOutput::Forget
+  -> StoreMutationPlan(ArchiveMemory)
+  -> StoreAdapter / PersistentStoreExecutor
+```
+
+The adapter preserves the algorithm boundary. `ForgetAlgorithm` still has no
+Store access and does not mutate state directly.
 
 ## Algorithm Flow
 
@@ -156,6 +168,7 @@ predictions.
 - Rule-based reference forgets expired or superseded memories.
 - Rule-based reference protects high-importance or recently accessed memories.
 - Benchmark emits `BenchmarkReport` mapped to `ForgetPrecision`.
+- Forget output maps into the existing store mutation path.
 - `cargo test --workspace` passes.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.
