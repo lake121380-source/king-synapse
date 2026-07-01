@@ -206,7 +206,7 @@ Every adaptive algorithm in King Synapse shares one Importance model, one Event 
 - **Importance** — `MemoryImportance` + `ImportanceSignals` (5 signals, `#[non_exhaustive]`), estimated via the `ImportanceEstimator` trait.
 - **Event** — `MemoryEvent` (8 past-tense kinds, `#[non_exhaustive]`) appended to a strictly ordered `MemoryEventStream`.
 - **Context** — `AlgorithmContext<'a>` carrying `now`, `session_id`, `&dyn ImportanceEstimator`, `&dyn MemoryEventStream`. The trait-object surface is closed permanently.
-- **Benchmark** — `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`) + `BenchmarkReport` (`benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), a deterministic value object with no runtime metadata.
+- **Benchmark** — `AlgorithmMetric` (11 IDs, `#[non_exhaustive]`) + `BenchmarkReport` (`benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), a deterministic value object with no runtime metadata.
 
 Reflection, Merge, Forget, and Hebbian each carry their own algorithm-specific logic but consume exactly this common surface — they do not extend it, do not fork it, and do not bypass it. This is what lets four independent algorithms be tuned, replaced, or benchmarked without touching each other or the platform.
 

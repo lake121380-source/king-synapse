@@ -280,6 +280,7 @@ AlgorithmMetric
   MergePrecision
   ForgetPrecision
   HebbianConsistency
+  CognitiveTraceDominance
   EventReplayLatency
   AlgorithmLatency
 ```
@@ -287,6 +288,7 @@ AlgorithmMetric
 - Metric variants are stable IDs. Their **exact numerical definition** is fixed by the benchmark implementation, not by RFC-011. Algorithms MUST NOT read metric outputs; benchmarks MUST NOT feed back into algorithm decisions.
 - The enum is `#[non_exhaustive]`. Adding a new variant is not a breaking change.
 - `RecallAt10` is a naming convention only. Its presence in the enum does not imply the v0.5.3 skeleton produces any value.
+- `CognitiveTraceDominance` measures whether a cognitive trace report's dominant candidate matches an expected hidden/downstream influence in a benchmark fixture.
 - `EventReplayLatency` (cost of `MemoryEventStream::recent`) and `AlgorithmLatency` (cost of one `algorithm.run(target, ctx)` call) are intentionally distinct — they MUST NOT be collapsed into a single "latency" number.
 
 ### BenchmarkReport
@@ -346,7 +348,7 @@ Milestone constraints:
 
 - v0.5.1 ships `MemoryImportance`, `ImportanceSignals`, `ImportanceSignal`, `ImportanceEstimator`, `NoOpImportanceEstimator`, `UniformImportanceEstimator`, and a minimal `AlgorithmContext { now, session_id }`. The context intentionally excludes `importance` and `events` trait fields at this milestone — they are added additively in v0.5.2 under `#[non_exhaustive]`. `ImportanceEstimator::estimate(memory, ctx)` signature is frozen from v0.5.1 onward.
 - v0.5.2 ships `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload`, `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream`. `AlgorithmContext` gains a lifetime `'a` and two trait-object fields `importance: &'a dyn ImportanceEstimator` and `events: &'a dyn MemoryEventStream`. The v0.5.1 constructor `AlgorithmContext::new(now, session_id)` is replaced by `AlgorithmContext::new(now, session_id, importance, events)`; this is the only allowed shape and there is no builder variant. After v0.5.2 the `AlgorithmContext` trait-object surface is permanently closed per Part C rule 3.
-- v0.5.3 freezes the benchmark harness contract: `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`), `BenchmarkReport` (`#[non_exhaustive]`, `benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), and the directory layout under `crates/eval/{datasets,benches,reports}/`. This milestone ships **contract only** — no dataset loader, no benchmark runner, no CLI, no exporter. The Algorithm → Benchmark → Metric discipline (Part D "Discipline" section) becomes binding on every subsequent algorithm RFC.
+- v0.5.3 freezes the benchmark harness contract: `AlgorithmMetric` (11 IDs, `#[non_exhaustive]`), `BenchmarkReport` (`#[non_exhaustive]`, `benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`), and the directory layout under `crates/eval/{datasets,benches,reports}/`. This milestone ships **contract only** — no dataset loader, no benchmark runner, no CLI, no exporter. The Algorithm → Benchmark → Metric discipline (Part D "Discipline" section) becomes binding on every subsequent algorithm RFC.
 - v0.5.9 freezes the model: RFC-011 → Implemented, `docs/API_SURFACE.md` updated with the new Stable items, release note added.
 
 Benchmark baselines must be preserved across every milestone:

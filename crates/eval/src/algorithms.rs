@@ -1,18 +1,20 @@
 use crate::{AlgorithmMetric, BenchmarkReport};
 use std::collections::BTreeMap;
 use synapse_core::{
-    AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
-    ForgetTarget, HebbianAlgorithm, HebbianOutput, HebbianTarget, InMemoryMemoryEventStream,
-    LatentActivationContext, LatentActivationProbe, Memory, MemoryEvent, MemoryEventId,
-    MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind, MergeAlgorithm,
-    MergeOutput, MergeTarget, QueryLatentActivationProbe, RecallQuery, ReflectionAlgorithm,
-    ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm, RuleBasedMergeAlgorithm,
-    RuleBasedReflectionAlgorithm, Scope, Source, Store, UniformImportanceEstimator, WriteInput,
+    AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe, DeterministicReflectionAlgorithm,
+    ForgetAlgorithm, ForgetOutput, ForgetTarget, HebbianAlgorithm, HebbianOutput, HebbianTarget,
+    InMemoryMemoryEventStream, LatentActivationContext, LatentActivationProbe, Memory, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
+    MergeAlgorithm, MergeOutput, MergeTarget, QueryLatentActivationProbe, RecallQuery,
+    ReflectionAlgorithm, ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm,
+    RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm, Scope, Source, Store,
+    UniformImportanceEstimator, WriteInput,
 };
 
 const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-deterministic";
 const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
+const COGNITIVE_TRACE_BENCHMARK_NAME: &str = "cognitive-trace-dominance";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
@@ -57,6 +59,30 @@ pub fn cognitive_chain_recall_report() -> BenchmarkReport {
     BenchmarkReport {
         benchmark: COGNITIVE_CHAIN_BENCHMARK_NAME.to_string(),
         metrics: BTreeMap::from([(AlgorithmMetric::RecallAt10, recall)]),
+    }
+}
+
+/// Run the cognitive trace dominance benchmark.
+///
+/// This benchmark checks the stronger trace contract: after visible recall
+/// finds seed memories, the cognitive trace report should identify the
+/// expected hidden/downstream influence as the dominant candidate rather than
+/// merely listing it somewhere in latent activations.
+pub fn cognitive_trace_dominance_report() -> BenchmarkReport {
+    let cases = cognitive_trace_fixture();
+    let hits = cases
+        .iter()
+        .filter(|case| cognitive_trace_case_hits(case))
+        .count();
+    let dominance = if cases.is_empty() {
+        0.0
+    } else {
+        hits as f64 / cases.len() as f64
+    };
+
+    BenchmarkReport {
+        benchmark: COGNITIVE_TRACE_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::CognitiveTraceDominance, dominance)]),
     }
 }
 
@@ -267,6 +293,16 @@ struct CognitiveChainCase {
     distractor: &'static str,
 }
 
+struct CognitiveTraceCase {
+    query: &'static str,
+    seed: &'static str,
+    visible_distractor: &'static str,
+    hidden: &'static str,
+    hidden_distractor: &'static str,
+    state_terms: &'static [&'static str],
+    goal_terms: &'static [&'static str],
+}
+
 fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
     vec![
         CognitiveChainCase {
@@ -286,6 +322,38 @@ fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
             seed: "过去失败经验让人担心再次出错",
             hidden: "记忆会影响未来决策和注意力分配",
             distractor: "午饭后备份照片到移动硬盘",
+        },
+    ]
+}
+
+fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
+    vec![
+        CognitiveTraceCase {
+            query: "forgot water before commute",
+            seed: "forgot morning water before commute",
+            visible_distractor: "forgot water calendar note",
+            hidden: "tired attention failure",
+            hidden_distractor: "calendar archive cleanup",
+            state_terms: &["tired"],
+            goal_terms: &["attention"],
+        },
+        CognitiveTraceCase {
+            query: "pressure before difficult task",
+            seed: "pressure before difficult task can trigger avoidance",
+            visible_distractor: "pressure report for office schedule",
+            hidden: "subconscious avoidance affects goal and review quality",
+            hidden_distractor: "office plant watering schedule",
+            state_terms: &["subconscious"],
+            goal_terms: &["goal"],
+        },
+        CognitiveTraceCase {
+            query: "past failure repeating mistakes",
+            seed: "past failure makes a person worried about repeating mistakes",
+            visible_distractor: "past failure incident index",
+            hidden: "memory affects future decision attention allocation",
+            hidden_distractor: "photo backup reminder",
+            state_terms: &["memory"],
+            goal_terms: &["future", "attention"],
         },
     ]
 }
@@ -320,6 +388,56 @@ fn cognitive_chain_case_hits(case: &CognitiveChainCase) -> bool {
         .activations
         .iter()
         .any(|hit| hit.memory.id == hidden && !hit.matched_terms.is_empty())
+}
+
+fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
+    let mut store = Store::open_in_memory().expect("cognitive trace benchmark store opens");
+    let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
+    write_cognitive_memory(&mut store, case.visible_distractor, MemoryKind::Fact, 0.5);
+    let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.9);
+    let hidden_distractor =
+        write_cognitive_memory(&mut store, case.hidden_distractor, MemoryKind::Fact, 0.5);
+    store
+        .update_edge(&seed, &hidden, 2.0)
+        .expect("cognitive trace target edge is persisted");
+    store
+        .update_edge(&seed, &hidden_distractor, 2.0)
+        .expect("cognitive trace distractor edge is persisted");
+
+    let query = RecallQuery {
+        query: case.query.to_string(),
+        k: Some(2),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: 2,
+        latent_limit: 4,
+        seed_limit: 2,
+        suppressed_limit: 4,
+        latent_scale: 0.05,
+        latent_cap: 0.25,
+        latent_steps: 2,
+        latent_decay: 0.5,
+        latent_fanout: 10,
+    });
+    let context = LatentActivationContext::new(
+        case.state_terms
+            .iter()
+            .map(|term| (*term).to_string())
+            .collect(),
+        case.goal_terms
+            .iter()
+            .map(|term| (*term).to_string())
+            .collect(),
+    );
+    let report = probe
+        .trace(&mut store, &query, &context)
+        .expect("cognitive trace probe runs");
+
+    report.dominant.as_ref().is_some_and(|candidate| {
+        candidate.memory.id == hidden && !candidate.matched_terms.is_empty()
+    })
 }
 
 fn write_cognitive_memory(
@@ -615,6 +733,28 @@ mod tests {
         assert_eq!(report.benchmark, "cognitive-chain-recall");
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
+    }
+
+    #[test]
+    fn cognitive_trace_dominance_report_is_deterministic() {
+        let a = cognitive_trace_dominance_report();
+        let b = cognitive_trace_dominance_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn cognitive_trace_dominance_report_uses_contract_shape() {
+        let report = cognitive_trace_dominance_report();
+
+        assert_eq!(report.benchmark, "cognitive-trace-dominance");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
     }
 
     #[test]

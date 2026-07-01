@@ -36,6 +36,9 @@ cargo bench -p synapse-eval --bench hebbian_consistency
 
 # Latent cognitive-chain benchmark (visible seed -> hidden influence)
 cargo bench -p synapse-eval --bench cognitive_chain_recall
+
+# Cognitive trace dominance benchmark (visible seed + hidden influence -> dominant candidate)
+cargo bench -p synapse-eval --bench cognitive_trace_dominance
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -71,6 +74,15 @@ The report uses `AlgorithmMetric::RecallAt10`. It measures whether a visible
 seed memory recalled from Chinese query text can activate the expected hidden
 downstream memory through `QueryLatentActivationProbe` and auto-derived
 state/goal context.
+
+The cognitive-trace benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "cognitive-trace-dominance"` for trace competition behavior
+
+The report uses `AlgorithmMetric::CognitiveTraceDominance`. It measures
+whether `CognitiveTraceProbe` makes the expected hidden/downstream influence
+the dominant candidate after visible recall supplies seed memories and
+state/goal context modulates latent activation.
 
 ## Metrics
 

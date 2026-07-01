@@ -56,6 +56,7 @@ pub enum AlgorithmMetric {
     MergePrecision,
     ForgetPrecision,
     HebbianConsistency,
+    CognitiveTraceDominance,
     EventReplayLatency,
     AlgorithmLatency,
 }
@@ -86,7 +87,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn all_ten_metrics_are_distinct() {
+    fn all_eleven_metrics_are_distinct() {
         let all = [
             AlgorithmMetric::RecallAt10,
             AlgorithmMetric::PrecisionAt10,
@@ -96,10 +97,11 @@ mod tests {
             AlgorithmMetric::MergePrecision,
             AlgorithmMetric::ForgetPrecision,
             AlgorithmMetric::HebbianConsistency,
+            AlgorithmMetric::CognitiveTraceDominance,
             AlgorithmMetric::EventReplayLatency,
             AlgorithmMetric::AlgorithmLatency,
         ];
-        assert_eq!(all.len(), 10);
+        assert_eq!(all.len(), 11);
         for i in 0..all.len() {
             for j in (i + 1)..all.len() {
                 assert_ne!(all[i], all[j]);

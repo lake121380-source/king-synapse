@@ -20,7 +20,7 @@ Stable items in `synapse-core` live under the crate's re-export table in `crates
 | Event | `MemoryEventId`, `MemoryEvent`, `MemoryEventKind`, `MemoryEventPayload` | `synapse-core::adaptive::event` | `v0.5.2` |
 | Event Stream | `MemoryEventStream`, `NoOpMemoryEventStream`, `InMemoryMemoryEventStream` | `synapse-core::adaptive::event_stream` | `v0.5.2` |
 | Context | `AlgorithmContext<'a>` (trait-object surface: `importance`, `events`; **closed** at `v0.5.2`) | `synapse-core::adaptive::context` | `v0.5.2` |
-| Metric | `AlgorithmMetric` (10 IDs, `#[non_exhaustive]`) | `synapse-eval::contract` | `v0.5.3` |
+| Metric | `AlgorithmMetric` (11 IDs, `#[non_exhaustive]`) | `synapse-eval::contract` | `v0.5.3` |
 | Report | `BenchmarkReport` (`#[non_exhaustive]`, `benchmark: String` + `metrics: BTreeMap<AlgorithmMetric, f64>`) | `synapse-eval::contract` | `v0.5.3` |
 
 Post-Freeze rules (`docs/rfcs/RFC-011-adaptive-memory-common-model.md#post-freeze-rules`):
@@ -435,7 +435,7 @@ suppressed candidates, and hidden paths for a query.
 
 **Stable**
 
-- `AlgorithmMetric` (`#[non_exhaustive]`; 10 IDs: `RecallAt10`, `PrecisionAt10`, `MemoryGrowth`, `CompressionRatio`, `ReflectionYield`, `MergePrecision`, `ForgetPrecision`, `HebbianConsistency`, `EventReplayLatency`, `AlgorithmLatency`)
+- `AlgorithmMetric` (`#[non_exhaustive]`; 11 IDs: `RecallAt10`, `PrecisionAt10`, `MemoryGrowth`, `CompressionRatio`, `ReflectionYield`, `MergePrecision`, `ForgetPrecision`, `HebbianConsistency`, `CognitiveTraceDominance`, `EventReplayLatency`, `AlgorithmLatency`)
 - `BenchmarkReport` (`#[non_exhaustive]`; fields: `benchmark: String` in `lowercase-kebab-case` by convention, `metrics: BTreeMap<AlgorithmMetric, f64>`)
 
 Invariants (RFC-011 Part D):
@@ -450,7 +450,7 @@ Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model
 **Experimental**
 
 - Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
-- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
+- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `cognitive_trace_dominance_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
 
 The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 
