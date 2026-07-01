@@ -43,6 +43,7 @@ of visible and hidden associations.
 | Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
 | Manual surface validation | `docs/MANUAL_VALIDATION.md` |
 | Release-candidate evidence | `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` |
+| Full gate validation | `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md` |
 
 ## Required Verification Gates
 
@@ -99,9 +100,6 @@ Expected minimums:
   long-session export.
 - Rerun and paste dated manual validation outputs for final release using
   `docs/MANUAL_VALIDATION.md` as the baseline transcript.
-- Promote the release-candidate evidence in
-  `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` into a final
-  release note after the full gate list is rerun in one pass.
 - Decide whether UI/deeper agent integrations are release blockers or a
   post-final product milestone.
 

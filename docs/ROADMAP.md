@@ -52,6 +52,7 @@ Current milestone
 ✓ v0.9.25 — Predictive Trace Continuation
 ✓ v0.9.26 — Exported Cognitive Session Benchmark
 ✓ v0.9.26-rc — Cognitive Memory Release Candidate Evidence
+✓ v0.9.26-gate — Full Cognitive Memory Gate Validation
 
 Status
 
@@ -139,6 +140,7 @@ Completed foundations
 - v0.9.25 — predictive trace continues from the dominant candidate into ranked next hidden influences
 - v0.9.26 — exported cognitive-session TOML benchmark verifies visible recall, dominant hidden influence, predictive future continuation, and trace learning in one shared graph
 - v0.9.26-rc — release-candidate note records cognitive-memory validation evidence and remaining final tag work
+- v0.9.26-gate — full final acceptance command list passed and is recorded in the release validation note
 
 Focus
 
