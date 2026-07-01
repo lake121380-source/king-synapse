@@ -88,6 +88,15 @@ ExecutionReport
 
 P4.4.2 starts with `ExecutionReport` and may extend to `ReflectionReport` and `HebbianExecutionReport` without changing Store backends.
 
+Store sinks observe execution reports only:
+
+```text
+StoreExecutionReport
+  -> StoreSink
+```
+
+Sinks must not mutate `StoreExecutionReport`, mutate `StoreMutationPlan`, or perform Store writes.
+
 ## P4.4 Milestones
 
 ```text
@@ -115,6 +124,11 @@ P4.4.4 is the first milestone allowed to perform persistent mutations.
 9. Store mutation dispatchers must be deterministic for identical inputs.
 10. Store mutation dispatchers must not mutate input reports.
 11. Store mutation dispatchers must not access Store, SQLite, Kuzu, or RecallEngine.
+12. `StoreExecutionReport` is immutable after adapter execution.
+13. `StoreSink` may observe reports, but it must not mutate them.
+14. Multiple Store sinks must observe the same immutable report deterministically.
+15. Store sink execution must not affect StoreAdapter output.
+16. Store sinks must not produce persistent writes.
 
 ## Acceptance Criteria
 

@@ -17,6 +17,7 @@ mod session;
 mod sink;
 mod store_adapter;
 mod store_dispatcher;
+mod store_sink;
 
 pub use activation::{NoOpActivationBooster, WorkingMemoryActivationBooster};
 pub use buffer::WorkingMemoryBuffer;
@@ -54,6 +55,7 @@ pub use store_adapter::{
 pub use store_dispatcher::{
     DeterministicStoreMutationDispatcher, NoOpStoreMutationDispatcher, StoreMutationDispatcher,
 };
+pub use store_sink::{NoOpStoreSink, StoreSink};
 
 #[cfg(test)]
 mod tests {
@@ -452,6 +454,56 @@ mod tests {
         let plan_b = dispatcher.dispatch();
 
         assert_eq!(plan_a, plan_b);
+    }
+
+    #[test]
+    fn noop_store_sink_consumes_report_without_mutating_it() {
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::InsertMemory {
+                id: "mem-a".to_string(),
+                content: "hello".to_string(),
+            }],
+        };
+        let adapter = PlanOnlyStoreAdapter;
+        let report = adapter.execute(&plan);
+        let original = report.clone();
+        let sink = NoOpStoreSink;
+
+        sink.consume(&report);
+
+        assert_eq!(report, original);
+    }
+
+    #[test]
+    fn multiple_store_sinks_observe_same_report_without_affecting_adapter_output() {
+        #[derive(Default)]
+        struct CountingSink {
+            observed: std::cell::Cell<usize>,
+        }
+
+        impl StoreSink for CountingSink {
+            fn consume(&self, report: &StoreExecutionReport) {
+                self.observed.set(report.executed.len());
+            }
+        }
+
+        let plan = StoreMutationPlan {
+            mutations: vec![StoreMutation::ArchiveMemory {
+                id: "mem-a".to_string(),
+            }],
+        };
+        let adapter = PlanOnlyStoreAdapter;
+        let report = adapter.execute(&plan);
+        let report_after_sink = adapter.execute(&plan);
+        let sink_a = CountingSink::default();
+        let sink_b = CountingSink::default();
+
+        sink_a.consume(&report);
+        sink_b.consume(&report);
+
+        assert_eq!(report, report_after_sink);
+        assert_eq!(sink_a.observed.get(), 1);
+        assert_eq!(sink_b.observed.get(), 1);
     }
 
     #[test]
