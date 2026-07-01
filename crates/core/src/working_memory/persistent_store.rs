@@ -88,15 +88,16 @@ fn execute_mutation(
                 report,
             );
         }
-        StoreMutation::UpdateEdge { .. } => {
-            report
-                .skipped
-                .push(SkippedStoreMutation::Unsupported(mutation.clone()));
-            report.warnings.push(StoreExecutionWarning {
-                message: "store mutation is not supported by SQLitePersistentStoreExecutor"
-                    .to_string(),
-            });
-            report.statistics.skipped += 1;
+        StoreMutation::UpdateEdge {
+            source,
+            target,
+            weight_delta,
+        } => {
+            record_result(
+                store.update_edge(source, target, *weight_delta),
+                mutation,
+                report,
+            );
         }
     }
 }

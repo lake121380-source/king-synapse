@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS memory_entities (
 CREATE INDEX IF NOT EXISTS idx_me_entity ON memory_entities(entity_id);
 CREATE INDEX IF NOT EXISTS idx_me_memory ON memory_entities(memory_id);
 
+CREATE TABLE IF NOT EXISTS memory_edges (
+    source     TEXT NOT NULL REFERENCES memories(id),
+    target     TEXT NOT NULL REFERENCES memories(id),
+    edge       TEXT NOT NULL DEFAULT 'associates',
+    weight     REAL NOT NULL DEFAULT 0.0,
+    updated_at INTEGER NOT NULL,
+    PRIMARY KEY (source, target, edge)
+);
+CREATE INDEX IF NOT EXISTS idx_memory_edges_source ON memory_edges(source);
+CREATE INDEX IF NOT EXISTS idx_memory_edges_target ON memory_edges(target);
+
 CREATE TABLE IF NOT EXISTS embedding_state (
     memory_id   TEXT PRIMARY KEY REFERENCES memories(id),
     model       TEXT NOT NULL,

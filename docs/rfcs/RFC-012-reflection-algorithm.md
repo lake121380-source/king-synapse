@@ -213,9 +213,10 @@ payload.merged[]
   -> StoreMutation::UpdateMemory for the primary merge item
 ```
 
-This is still plan-only. SQLite may skip unsupported mutations such as
-`UpdateEdge`; that is acceptable until graph persistence is implemented behind
-the existing `PersistentStoreExecutor` boundary.
+`StoreMutation::UpdateEdge` is executed by SQLite through the existing
+`PersistentStoreExecutor` boundary and persists into the Store-owned
+`memory_edges` table. The Reflection algorithm remains side-effect free; only
+the approved persistent executor performs durable writes.
 
 ## Algorithm Flow
 

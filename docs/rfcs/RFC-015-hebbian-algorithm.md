@@ -18,6 +18,7 @@ v0.9.1-hebbian-algorithm-noop            (implemented)
 v0.9.2-hebbian-rule-based-reference      (implemented)
 v0.9.3-hebbian-benchmark                 (implemented)
 v0.9.4-hebbian-store-adapter             (implemented)
+v0.9.5-sqlite-edge-persistence           (implemented)
 v0.9.9-hebbian-algorithm-freeze          (planned)
 ```
 
@@ -100,6 +101,12 @@ HebbianOutput::Plans
 Only executed `ExecutedEdgeUpdate::Apply` actions become
 `StoreMutation::UpdateEdge` values. Skipped invalid or duplicate edge updates
 remain in `HebbianExecutionReport` and are not dispatched to Store.
+
+SQLite persistent execution now applies `UpdateEdge` through
+`Store::update_edge`, storing directed associative edges in `memory_edges` and
+accumulating repeated weight deltas. This is deliberately below the algorithm
+and dispatcher layers, so Hebbian stays pure while its approved StoreMutation
+output can become durable graph state.
 
 ## Algorithm Flow
 

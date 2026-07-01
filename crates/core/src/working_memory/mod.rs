@@ -770,12 +770,63 @@ mod tests {
     }
 
     #[test]
-    fn sqlite_persistent_store_executor_reports_unsupported_mutations() {
+    fn sqlite_persistent_store_executor_updates_edge_weight() {
+        let mut store = Store::open_in_memory().unwrap();
+        let source = store
+            .write(crate::WriteInput {
+                content: "source memory".to_string(),
+                kind: crate::MemoryKind::Fact,
+                scope: crate::Scope::Global,
+                source: crate::Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let target = store
+            .write(crate::WriteInput {
+                content: "target memory".to_string(),
+                kind: crate::MemoryKind::Fact,
+                scope: crate::Scope::Global,
+                source: crate::Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let plan = StoreMutationPlan {
+            mutations: vec![
+                StoreMutation::UpdateEdge {
+                    source: source.id.clone(),
+                    target: target.id.clone(),
+                    weight_delta: 0.1,
+                },
+                StoreMutation::UpdateEdge {
+                    source: source.id.clone(),
+                    target: target.id.clone(),
+                    weight_delta: 0.4,
+                },
+            ],
+        };
+        let mut executor = SQLitePersistentStoreExecutor::new(&mut store);
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.executed, plan.mutations);
+        assert!(report.skipped.is_empty());
+        assert_eq!(report.statistics.executed, 2);
+        assert_eq!(report.statistics.skipped, 0);
+        assert_eq!(
+            store.edge_weight(&source.id, &target.id).unwrap(),
+            Some(0.5)
+        );
+    }
+
+    #[test]
+    fn sqlite_persistent_store_executor_reports_failed_edge_updates() {
         let mut store = Store::open_in_memory().unwrap();
         let plan = StoreMutationPlan {
             mutations: vec![StoreMutation::UpdateEdge {
-                source: "mem-a".to_string(),
-                target: "mem-b".to_string(),
+                source: "missing-source".to_string(),
+                target: "missing-target".to_string(),
                 weight_delta: 0.1,
             }],
         };
@@ -786,10 +837,10 @@ mod tests {
         assert!(report.executed.is_empty());
         assert_eq!(
             report.skipped,
-            vec![SkippedStoreMutation::Unsupported(plan.mutations[0].clone())]
+            vec![SkippedStoreMutation::Failed(plan.mutations[0].clone())]
         );
+        assert_eq!(report.statistics.executed, 0);
         assert_eq!(report.statistics.skipped, 1);
-        assert_eq!(store.count().unwrap(), 0);
     }
 
     #[test]

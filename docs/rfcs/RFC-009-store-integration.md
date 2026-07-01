@@ -13,6 +13,7 @@ v0.4.32-store-sink
 v0.4.33-persistent-store-executor
 v0.4.39-store-integration-freeze
 v0.6.5-reflection-store-mutation-plan
+v0.9.5-sqlite-edge-persistence
 ```
 
 ## Summary
@@ -148,6 +149,13 @@ StoreMutationPlan
 ```
 
 Executors must match on `StoreMutation` only. They must not branch on behavior source such as Reflection, Hebbian, or Consolidation.
+
+`v0.9.5` extends SQLite persistent execution for
+`StoreMutation::UpdateEdge`. The executor calls the Store-owned
+`Store::update_edge` API, which writes directed `associates` edges into
+`memory_edges` and accumulates weight deltas for existing edges. This keeps
+Store as the durable persistence boundary and avoids direct SQL writes from
+Reflection, Hebbian, or dispatcher code.
 
 ## Invariants
 

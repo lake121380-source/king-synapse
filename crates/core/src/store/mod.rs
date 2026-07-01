@@ -349,6 +349,45 @@ impl Store {
         Ok(())
     }
 
+    pub fn update_edge(&mut self, source: &str, target: &str, weight_delta: f32) -> Result<()> {
+        if source.is_empty() || target.is_empty() || !weight_delta.is_finite() {
+            return Err(crate::error::Error::Invalid(
+                "edge update requires non-empty source/target and finite weight".to_string(),
+            ));
+        }
+
+        let now = Utc::now().timestamp();
+        let tx = self.conn.transaction()?;
+        let source_exists = memory_exists(&tx, source)?;
+        if !source_exists {
+            return Err(crate::error::Error::NotFound(source.to_string()));
+        }
+        let target_exists = memory_exists(&tx, target)?;
+        if !target_exists {
+            return Err(crate::error::Error::NotFound(target.to_string()));
+        }
+
+        tx.execute(
+            "INSERT INTO memory_edges (source, target, edge, weight, updated_at) VALUES (?1, ?2, 'associates', ?3, ?4) ON CONFLICT(source, target, edge) DO UPDATE SET weight = memory_edges.weight + excluded.weight, updated_at = excluded.updated_at",
+            params![source, target, weight_delta, now],
+        )?;
+        tx.commit()?;
+        Ok(())
+    }
+
+    pub fn edge_weight(&self, source: &str, target: &str) -> Result<Option<f32>> {
+        let weight = self
+            .conn
+            .query_row(
+                "SELECT weight FROM memory_edges WHERE source = ?1 AND target = ?2 AND edge = 'associates'",
+                params![source, target],
+                |row| row.get::<_, f64>(0),
+            )
+            .optional()?
+            .map(|value| value as f32);
+        Ok(weight)
+    }
+
     pub fn list_recent(&self, limit: usize) -> Result<Vec<Memory>> {
         let mut stmt = self.conn.prepare(
             "SELECT id, kind, scope, content, source, confidence, importance, valid_from, valid_to, superseded_by, access_count, last_accessed_at FROM memories WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT ?1",
@@ -402,6 +441,15 @@ impl Store {
             .query_row("SELECT COUNT(*) FROM memories", [], |r| r.get(0))?;
         Ok(n)
     }
+}
+
+fn memory_exists(conn: &Connection, id: &str) -> Result<bool> {
+    let exists: i64 = conn.query_row(
+        "SELECT EXISTS(SELECT 1 FROM memories WHERE id = ?1 AND valid_to IS NULL)",
+        params![id],
+        |row| row.get(0),
+    )?;
+    Ok(exists != 0)
 }
 
 /// Sanitize a freeform user query into an FTS5 MATCH expression.
@@ -487,6 +535,55 @@ mod tests {
         let (done, pend) = s.embedding_stats().unwrap();
         assert_eq!(done, 0);
         assert_eq!(pend, 1);
+    }
+
+    #[test]
+    fn update_edge_persists_and_accumulates_weight() {
+        let mut s = make_store();
+        let source = s
+            .write(WriteInput {
+                content: "source memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+        let target = s
+            .write(WriteInput {
+                content: "target memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+
+        s.update_edge(&source.id, &target.id, 0.2).unwrap();
+        s.update_edge(&source.id, &target.id, 0.3).unwrap();
+
+        assert_eq!(s.edge_weight(&source.id, &target.id).unwrap(), Some(0.5));
+        assert_eq!(s.edge_weight(&target.id, &source.id).unwrap(), None);
+    }
+
+    #[test]
+    fn update_edge_requires_existing_active_memories() {
+        let mut s = make_store();
+        let source = s
+            .write(WriteInput {
+                content: "source memory".into(),
+                kind: MemoryKind::Fact,
+                scope: Scope::User,
+                source: Source::ExplicitUser,
+                confidence: None,
+                importance: None,
+            })
+            .unwrap();
+
+        assert!(s.update_edge(&source.id, "missing", 0.2).is_err());
+        assert_eq!(s.edge_weight(&source.id, "missing").unwrap(), None);
     }
 
     #[test]
