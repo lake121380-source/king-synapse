@@ -1,6 +1,6 @@
 # RFC-012: Reflection Algorithm
 
-Status: Draft
+Status: Implemented
 
 Phase: Phase 5 Algorithm Implementation
 
@@ -20,7 +20,7 @@ v0.6.3-reflection-benchmark                 (implemented)
 v0.6.4-reflection-processing-adapter        (implemented)
 v0.6.5-reflection-store-mutation-plan       (implemented)
 v0.6.6-reflection-rule-based-algorithm      (implemented)
-v0.6.9-reflection-algorithm-freeze          (planned)
+v0.6.9-reflection-algorithm-freeze          (superseded by v0.9.26-cognitive-memory-freeze)
 ```
 
 Subtitle: First concrete Adaptive Memory algorithm built on RFC-011
@@ -408,6 +408,7 @@ v0.6.0-reflection-algorithm-skeleton
   -> v0.6.5-reflection-store-mutation-plan
   -> v0.6.6-reflection-rule-based-algorithm
   -> v0.6.9-reflection-algorithm-freeze
+     (superseded by v0.9.26-cognitive-memory-freeze)
 ```
 
 Milestone constraints:
@@ -421,7 +422,17 @@ Milestone constraints:
 - Rule-based algorithm adds a more production-like heuristic while preserving deterministic behavior and frozen contracts.
 - Freeze updates API docs only for algorithm-local stable items, not RFC-011.
 
-## Open Questions
+## Freeze Disposition
 
-1. What production-quality signal should replace the deterministic fixture's simple yield metric before `v0.6.9` freeze?
-2. Should a future production adapter distinguish `Candidate` from `Produced` with separate payload semantics, or keep both as promoted reflection targets?
+RFC-012 is freeze-reviewed as part of
+`docs/releases/v0.9.26-cognitive-memory-freeze.md`.
+
+The v0.6.6 rule-based Reflection heuristic replaces the deterministic
+reference as the primary benchmark path. The deterministic reference remains as
+a comparison report through `deterministic_reflection_yield_report()`.
+
+Open questions moved to post-freeze follow-up:
+
+1. richer production-quality signals beyond the rule-based v0.6.6 heuristic;
+2. optional future distinction between `Candidate` and `Produced` payload
+   semantics.

@@ -1,6 +1,6 @@
 # RFC-013: Merge Algorithm
 
-Status: Draft
+Status: Implemented
 
 Phase: Phase 5 Algorithm Implementation
 
@@ -18,7 +18,7 @@ v0.7.1-merge-algorithm-noop              (implemented)
 v0.7.2-merge-rule-based-reference        (implemented)
 v0.7.3-merge-benchmark                   (implemented)
 v0.7.4-merge-store-adapter               (implemented)
-v0.7.9-merge-algorithm-freeze            (planned)
+v0.7.9-merge-algorithm-freeze            (superseded by v0.9.26-cognitive-memory-freeze)
 ```
 
 ## Summary
@@ -180,3 +180,12 @@ predictions.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.
 - `multihop` Recall@10 remains `1.000` after ADR-006.
+
+## Freeze Disposition
+
+RFC-013 is freeze-reviewed as part of
+`docs/releases/v0.9.26-cognitive-memory-freeze.md`.
+
+The rule-based Merge heuristic, merge precision benchmark, and StoreMutation
+adapter are accepted for the cognitive-memory freeze. Future merge quality work
+must be additive and preserve the frozen recall baselines.

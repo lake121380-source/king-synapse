@@ -53,6 +53,7 @@ Current milestone
 ✓ v0.9.26 — Exported Cognitive Session Benchmark
 ✓ v0.9.26-rc — Cognitive Memory Release Candidate Evidence
 ✓ v0.9.26-gate — Full Cognitive Memory Gate Validation
+✓ v0.9.26-freeze — Cognitive Memory Freeze
 
 Status
 
@@ -60,11 +61,11 @@ Architecture: **Stable**
 
 Adaptive Common Model: **Frozen**
 
-Algorithm: **In Progress**
+Algorithm: **Frozen**
 
 Current focus
 
-▶ RFC-015 — Hebbian Algorithm
+▶ Post-freeze evaluation and product integration
 
 Phase 5 shifts from shared-contract work to independent algorithm work. RFC-011 (Adaptive Common Model) is now frozen. RFC-012 through RFC-015 (Reflection, Merge, Forget, Hebbian) consume RFC-011 as read-only ground truth and MUST NOT extend it. Algorithm RFCs are also independent of one another — each depends only on RFC-011.
 
@@ -141,16 +142,12 @@ Completed foundations
 - v0.9.26 — exported cognitive-session TOML benchmark verifies visible recall, dominant hidden influence, predictive future continuation, and trace learning in one shared graph
 - v0.9.26-rc — release-candidate note records cognitive-memory validation evidence and remaining final tag work
 - v0.9.26-gate — full final acceptance command list passed and is recorded in the release validation note
+- v0.9.26-freeze — RFC-012 through RFC-015 are freeze-reviewed by the cognitive-memory release note
 
 Focus
 
-- RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
-- RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
-- RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
-- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, cognitive trace scoring, and benchmark before the next freeze tag.
-- Predictive trace — broaden continuation benchmarks beyond the exported fixture and into external Graphiti / Letta / Mem0 comparisons.
-- Release process — rerun every final acceptance gate in one pass, paste dated
-  outputs, and cut the cognitive-memory release/freeze tag.
+- Predictive trace — broaden continuation benchmarks beyond the exported fixture.
+- Release process — cut and push the cognitive-memory release/freeze tag.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

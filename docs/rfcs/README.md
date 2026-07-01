@@ -24,10 +24,10 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 | RFC-009 | Store Integration | Accepted: `v0.4.30`, `v0.4.31`, `v0.4.32`, `v0.4.33`, `v0.4.39` |
 | RFC-010 | Adaptive Policies | Accepted: `v0.4.40`, `v0.4.41`, `v0.4.42`, `v0.4.49` |
 | RFC-011 | Adaptive Memory Common Model | Implemented (frozen `v0.5.9-adaptive-common-freeze`) |
-| RFC-012 | Reflection Algorithm | Draft (`v0.6.0` skeleton, `v0.6.1` NoOp, `v0.6.2` deterministic reference, `v0.6.3` benchmark, `v0.6.4` processing adapter, `v0.6.5` store mutation plan, `v0.6.6` rule-based algorithm implemented) |
-| RFC-013 | Merge Algorithm | Draft (`v0.7.0` skeleton, `v0.7.1` NoOp, `v0.7.2` rule-based reference, `v0.7.3` benchmark, `v0.7.4` store adapter implemented) |
-| RFC-014 | Forgetting Algorithm | Draft (`v0.8.0` skeleton, `v0.8.1` NoOp, `v0.8.2` rule-based reference, `v0.8.3` benchmark, `v0.8.4` store adapter implemented) |
-| RFC-015 | Hebbian Algorithm | Draft (`v0.9.0` skeleton, `v0.9.1` NoOp, `v0.9.2` rule-based reference, `v0.9.3` benchmark, `v0.9.4` store adapter implemented) |
+| RFC-012 | Reflection Algorithm | Implemented (freeze-reviewed by `v0.9.26-cognitive-memory-freeze`) |
+| RFC-013 | Merge Algorithm | Implemented (freeze-reviewed by `v0.9.26-cognitive-memory-freeze`) |
+| RFC-014 | Forgetting Algorithm | Implemented (freeze-reviewed by `v0.9.26-cognitive-memory-freeze`) |
+| RFC-015 | Hebbian Algorithm | Implemented (freeze-reviewed by `v0.9.26-cognitive-memory-freeze`) |
 
 ## Phase 4 Order
 
@@ -52,8 +52,7 @@ RFC-011 Adaptive Memory Common Model
   -> RFC-015 Hebbian Algorithm
 ```
 
-`RFC-015` is currently the active Phase 5 focus. RFC-012 has reached its
-rule-based Reflection milestone (`v0.6.6`) and remains to be freeze-reviewed;
-RFC-013 now has merge lifecycle milestones through `v0.7.4`; RFC-014 now has
-forget lifecycle milestones through `v0.8.4`; RFC-015 now has skeleton, NoOp,
-rule-based reference, benchmark, and store-adapter milestones through `v0.9.4`.
+RFC-012 through RFC-015 are implemented and freeze-reviewed by the
+`v0.9.26-cognitive-memory-freeze` milestone. Future Phase 5 work should extend
+the frozen algorithm surfaces without changing RFC-011 or the stable recall
+contracts.

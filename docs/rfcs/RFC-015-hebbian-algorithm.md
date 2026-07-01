@@ -1,6 +1,6 @@
 # RFC-015: Hebbian Algorithm
 
-Status: Draft
+Status: Implemented
 
 Phase: Phase 5 Algorithm Implementation
 
@@ -19,7 +19,7 @@ v0.9.2-hebbian-rule-based-reference      (implemented)
 v0.9.3-hebbian-benchmark                 (implemented)
 v0.9.4-hebbian-store-adapter             (implemented)
 v0.9.5-sqlite-edge-persistence           (implemented)
-v0.9.9-hebbian-algorithm-freeze          (planned)
+v0.9.9-hebbian-algorithm-freeze          (superseded by v0.9.26-cognitive-memory-freeze)
 ```
 
 ## Summary
@@ -178,3 +178,14 @@ fixture, with false-positive and missed edges penalized.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.
 - `multihop` Recall@10 remains `1.000` after ADR-006.
+
+## Freeze Disposition
+
+RFC-015 is freeze-reviewed as part of
+`docs/releases/v0.9.26-cognitive-memory-freeze.md`.
+
+The rule-based Hebbian heuristic, benchmark, StoreMutation adapter, SQLite edge
+persistence path, graph/latent activation consumers, and cognitive trace
+reinforcement surfaces are accepted for the cognitive-memory freeze. Future
+Hebbian quality work must preserve the post-report reinforcement boundary and
+the frozen recall contract.

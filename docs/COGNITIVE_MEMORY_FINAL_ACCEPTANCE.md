@@ -46,6 +46,8 @@ of visible and hidden associations.
 | Release-candidate evidence | `docs/releases/v0.9.26-cognitive-memory-release-candidate.md` |
 | Full gate validation | `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md` |
 | Final release scope disposition | `docs/adr/ADR-007-cognitive-memory-final-release-scope.md` |
+| RFC freeze-review disposition | `docs/releases/v0.9.26-cognitive-memory-freeze.md` |
+| Release/tag evidence | `v0.9.26-cognitive-memory-freeze` |
 
 ## Required Verification Gates
 
@@ -91,10 +93,9 @@ Expected minimums:
 
 ## Remaining Finalization Work
 
-- Freeze-review RFC-012 Reflection and create the reflection freeze tag/release
-  note if the rule-based heuristic is accepted.
-- Freeze-review RFC-013 Merge, RFC-014 Forget, and RFC-015 Hebbian with release
-  notes and tags.
+- RFC-012 Reflection, RFC-013 Merge, RFC-014 Forget, and RFC-015 Hebbian were
+  freeze-reviewed and accepted in
+  `docs/releases/v0.9.26-cognitive-memory-freeze.md`.
 - Parameter sweeps have been extended beyond the initial deterministic
   activation/trace sweep to seven cognitive-chain families and five broader
   latent/trace parameter settings; evidence lives in

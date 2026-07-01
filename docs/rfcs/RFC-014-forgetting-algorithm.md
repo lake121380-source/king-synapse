@@ -1,6 +1,6 @@
 # RFC-014: Forgetting Algorithm
 
-Status: Draft
+Status: Implemented
 
 Phase: Phase 5 Algorithm Implementation
 
@@ -17,7 +17,7 @@ v0.8.1-forget-algorithm-noop             (implemented)
 v0.8.2-forget-rule-based-reference       (implemented)
 v0.8.3-forget-benchmark                  (implemented)
 v0.8.4-forget-store-adapter              (implemented)
-v0.8.9-forget-algorithm-freeze           (planned)
+v0.8.9-forget-algorithm-freeze           (superseded by v0.9.26-cognitive-memory-freeze)
 ```
 
 ## Summary
@@ -173,3 +173,13 @@ predictions.
 - `cargo clippy --all-targets --all-features -- -D warnings` passes.
 - `reference` Recall@10 remains `1.000`.
 - `multihop` Recall@10 remains `1.000` after ADR-006.
+
+## Freeze Disposition
+
+RFC-014 is freeze-reviewed as part of
+`docs/releases/v0.9.26-cognitive-memory-freeze.md`.
+
+The rule-based Forget heuristic, forget precision benchmark, and StoreMutation
+adapter are accepted for the cognitive-memory freeze. Future forgetting policy
+work must be additive and preserve protected-memory behavior and frozen recall
+baselines.
