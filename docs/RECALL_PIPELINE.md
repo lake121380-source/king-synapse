@@ -171,6 +171,14 @@ then verifies that explicit post-trace reinforcement persists the expected
 visible-to-hidden associative edges through the Hebbian -> StoreMutation ->
 SQLite path.
 
+Predictive trace is the read-only continuation of the same report. After a
+dominant candidate is selected, `CognitiveTraceProbe::predict_continuation()`
+uses that candidate as the seed for another latent activation pass and returns
+ranked possible next hidden influences with paths and modulation evidence. It
+does not change the current trace, recall ranking, or Store. The
+`predictive_trace` benchmark checks whether the expected next influence appears
+in the continuation candidates.
+
 ---
 
 ## 6. Design Invariants

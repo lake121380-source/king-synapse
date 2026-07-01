@@ -33,8 +33,9 @@ pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
 pub use recall::{
-    BoosterContext, CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTraceProbe,
-    CognitiveTraceReport, CognitiveTraceSource, CognitiveTraceStatistics, GraphActivationBooster,
+    BoosterContext, CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTracePredictionReport,
+    CognitiveTracePredictionStatistics, CognitiveTraceProbe, CognitiveTraceReport,
+    CognitiveTraceSource, CognitiveTraceStatistics, GraphActivationBooster,
     LatentActivationBooster, LatentActivationContext, LatentActivationHit, LatentActivationProbe,
     NoOpBooster, QueryEmbedder, QueryLatentActivationProbe, QueryLatentActivationReport,
     RecallBooster, RecallEngine, RecallHit, RecallSource, DEFAULT_RERANK_POOL,

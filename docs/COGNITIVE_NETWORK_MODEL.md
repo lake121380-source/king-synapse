@@ -150,3 +150,8 @@ CognitivePredictionPrecision
 
 It should measure whether the expected next hidden influence appears in the
 top-k continuation candidates across long-horizon sessions.
+
+Implemented baseline: `CognitiveTraceProbe::predict_continuation()` starts from
+the dominant trace candidate and returns ranked continuation candidates. The
+`predictive_trace` benchmark uses `RecallAt10` to verify that the expected next
+hidden influence appears in the continuation set.

@@ -3,15 +3,15 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe,
-    CognitiveTraceReport, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
-    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
-    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
-    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
-    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe,
-    QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallQuery,
-    RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
-    StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
+    config::Config, AlgorithmContext, CognitiveTraceConfig, CognitiveTracePredictionReport,
+    CognitiveTraceProbe, CognitiveTraceReport, DeterministicHebbianStoreMutationDispatcher,
+    GraphActivationBooster, HebbianAlgorithm, HebbianExecutor, HebbianTarget,
+    InMemoryMemoryEventStream, LatentActivationBooster, LatentActivationContext,
+    LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
+    MemoryEventStream, MemoryKind, PersistentStoreExecutor, PlanOnlyHebbianExecutor,
+    QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster, RecallEngine,
+    RecallHit, RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope,
+    Source, Store, StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -265,6 +265,12 @@ enum Cmd {
         /// Number of top visible trace seeds used for optional Hebbian reinforcement.
         #[arg(long, default_value = "3")]
         reinforce_k: usize,
+        /// Predict likely next hidden candidates from the dominant trace candidate.
+        #[arg(long)]
+        predict: bool,
+        /// Number of predicted continuation candidates to report.
+        #[arg(long, default_value = "5")]
+        prediction_k: usize,
         #[arg(long)]
         json: bool,
     },
@@ -636,6 +642,8 @@ fn main() -> Result<()> {
             auto_context,
             reinforce,
             reinforce_k,
+            predict,
+            prediction_k,
             json,
         } => {
             let q = RecallQuery {
@@ -666,12 +674,18 @@ fn main() -> Result<()> {
             } else {
                 None
             };
+            let prediction = if predict {
+                Some(probe.predict_continuation(&store, &report, prediction_k)?)
+            } else {
+                None
+            };
             if json {
-                if let Some(reinforcement) = reinforcement {
+                if prediction.is_some() || reinforcement.is_some() {
                     println!(
                         "{}",
                         serde_json::to_string_pretty(&serde_json::json!({
                             "report": report,
+                            "prediction": prediction,
                             "reinforcement": reinforcement,
                         }))?
                     );
@@ -680,6 +694,9 @@ fn main() -> Result<()> {
                 }
             } else {
                 print_cognitive_trace_report(&report);
+                if let Some(prediction) = prediction.as_ref() {
+                    print_cognitive_trace_prediction(prediction);
+                }
                 if let Some(reinforcement) = reinforcement.as_ref() {
                     print_reinforcement_summary(reinforcement);
                 }
@@ -1024,6 +1041,29 @@ fn print_cognitive_trace_report(report: &CognitiveTraceReport) {
     );
 }
 
+fn print_cognitive_trace_prediction(report: &CognitiveTracePredictionReport) {
+    if let Some(seed) = report.seed.as_ref() {
+        println!("Prediction seed:");
+        print_trace_candidate(seed, "  ");
+    } else {
+        println!("Prediction seed: (none)");
+    }
+
+    if report.candidates.is_empty() {
+        println!("Prediction: (none)");
+    } else {
+        println!("Prediction:");
+        for hit in &report.candidates {
+            print!("  ");
+            print_latent_hit(hit);
+        }
+    }
+    println!(
+        "Prediction stats: candidates={}",
+        report.statistics.candidates
+    );
+}
+
 fn print_trace_candidate(candidate: &synapse_core::CognitiveTraceCandidate, prefix: &str) {
     let visible = candidate
         .visible_score
@@ -1302,5 +1342,47 @@ mod tests {
 
         assert!(reinforcement.is_none());
         assert!(store.incoming_edges(&hidden, 10).unwrap().is_empty());
+    }
+
+    #[test]
+    fn trace_prediction_uses_dominant_candidate_as_seed() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = write_memory(&mut store, "forgot water before commute").id;
+        let hidden = write_memory(&mut store, "tired attention failure").id;
+        let future = write_memory(&mut store, "future commute attention risk").id;
+        store.update_edge(&seed, &hidden, 2.0).unwrap();
+        store.update_edge(&hidden, &future, 2.0).unwrap();
+
+        let q = RecallQuery {
+            query: "forgot water".to_string(),
+            k: Some(1),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+            visible_limit: 1,
+            latent_limit: 4,
+            seed_limit: 1,
+            suppressed_limit: 4,
+            latent_scale: 0.05,
+            latent_cap: 0.25,
+            latent_steps: 2,
+            latent_decay: 0.5,
+            latent_fanout: 10,
+        });
+        let context = LatentActivationContext::new(
+            vec!["future".to_string()],
+            vec!["commute".to_string(), "attention".to_string()],
+        );
+        let report = probe.trace(&mut store, &q, &context).unwrap();
+        assert_eq!(report.dominant.as_ref().unwrap().memory.id, hidden);
+
+        let prediction = probe.predict_continuation(&store, &report, 3).unwrap();
+
+        assert_eq!(
+            prediction.seed.as_ref().map(|seed| seed.memory.id.as_str()),
+            Some(hidden.as_str())
+        );
+        assert_eq!(prediction.candidates[0].memory.id, future);
     }
 }

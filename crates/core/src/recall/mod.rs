@@ -24,7 +24,8 @@ use crate::error::Result;
 
 pub use booster::{BoosterContext, NoOpBooster, RecallBooster};
 pub use cognitive_trace::{
-    CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTraceProbe, CognitiveTraceReport,
+    CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTracePredictionReport,
+    CognitiveTracePredictionStatistics, CognitiveTraceProbe, CognitiveTraceReport,
     CognitiveTraceSource, CognitiveTraceStatistics,
 };
 pub use engine::RecallEngine;

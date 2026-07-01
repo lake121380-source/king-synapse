@@ -39,6 +39,9 @@ cargo bench -p synapse-eval --bench cognitive_chain_recall
 
 # Cognitive trace dominance benchmark (visible seed + hidden influence -> dominant candidate)
 cargo bench -p synapse-eval --bench cognitive_trace_dominance
+
+# Predictive trace benchmark (dominant candidate -> next hidden influence)
+cargo bench -p synapse-eval --bench predictive_trace
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -86,6 +89,15 @@ state/goal context modulates latent activation. The fixture covers six chain
 families: body state to commute attention, social pressure to work goals, past
 failure to future decision, object/tool use to task risk, social memory to
 emotion, and subconscious avoidance to error review.
+
+The predictive-trace benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "predictive-trace"` for dominant-candidate continuation
+
+The report uses `AlgorithmMetric::RecallAt10`. It measures whether
+`CognitiveTraceProbe::predict_continuation()` can start from the current
+dominant candidate and surface the expected next hidden influence through
+outgoing associative edges.
 
 The activation-parameter-sweep benchmark emits one `BenchmarkReport` value:
 

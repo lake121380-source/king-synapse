@@ -39,14 +39,14 @@ King Synapse takes a different bet: **memory is a network, not a database.** Mem
 - `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
 - `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, additive recall boosters including graph/latent activation, and cognitive probes for inspecting hidden multi-step influence.
 - Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model, plus rule-based Phase 5 algorithms for reflection, merge, forget, and Hebbian reinforcement.
-- `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference`, `multihop`, reflection yield, merge/forget precision, Hebbian consistency, cognitive-chain recall, cognitive-trace dominance, and trace reinforcement.
+- `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference`, `multihop`, reflection yield, merge/forget precision, Hebbian consistency, cognitive-chain recall, cognitive-trace dominance, trace reinforcement, and predictive trace.
 - `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, edge-inspection, Hebbian reinforcement, latent-activation, and cognitive-trace tools, including optional post-recall and post-trace reinforcement.
 - `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, and stats.
 
 Still on the roadmap:
 
 - Freeze-review RFC-012 Reflection's rule-based heuristic against its deterministic baseline.
-- Freeze-review RFC-013/RFC-014/RFC-015 now that merge, forget, Hebbian reinforcement, latent inspection, cognitive trace, and trace learning all have deterministic baselines.
+- Freeze-review RFC-013/RFC-014/RFC-015 now that merge, forget, Hebbian reinforcement, latent inspection, cognitive trace, trace learning, and trace prediction all have deterministic baselines.
 - External benchmark comparisons, larger parameter sweeps, and long-horizon memory trials.
 - UI, deeper agent integrations, and final release/tag evidence.
 
@@ -87,6 +87,7 @@ Binaries land in `target/release/`:
 ./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
 ./target/release/kr latent-query "forgot water before commute while tired" --auto-context
 ./target/release/kr trace "forgot water before commute while tired" --auto-context
+./target/release/kr trace "forgot water before commute while tired" --auto-context --predict
 ./target/release/kr trace "forgot water before commute while tired" --auto-context --reinforce --reinforce-k 3
 
 # List recent
@@ -98,6 +99,7 @@ Binaries land in `target/release/`:
 # Run the RFC-012 Reflection benchmark
 cargo bench -p synapse-eval --bench reflection_yield
 cargo bench -p synapse-eval --bench trace_reinforcement
+cargo bench -p synapse-eval --bench predictive_trace
 cargo bench -p synapse-eval --bench activation_parameter_sweep
 cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 ```

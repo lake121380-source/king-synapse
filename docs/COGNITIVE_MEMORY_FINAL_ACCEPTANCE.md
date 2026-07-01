@@ -15,6 +15,8 @@ The final system models memory as an inspectable associative network:
 - latent activation follows weighted edges to hidden influences;
 - state and goal terms modulate hidden activation without hiding the evidence;
 - cognitive trace reports the dominant candidate plus suppressed alternatives;
+- predictive trace can continue from the dominant candidate to likely next
+  hidden influences;
 - explicit reinforcement can strengthen recalled or traced co-occurrence for
   future activation;
 - lifecycle algorithms can reflect, merge, forget, and reinforce without
@@ -35,6 +37,7 @@ of visible and hidden associations.
 | Recall-time spreading activation | `GraphActivationBooster`, `LatentActivationBooster` |
 | Hidden influence inspection | `LatentActivationProbe`, `QueryLatentActivationProbe`, `cognitive_chain_recall_report()` |
 | Dominant/suppressed cognitive trace | `CognitiveTraceProbe`, `cognitive_trace_dominance_report()` |
+| Predictive trace continuation | `CognitiveTraceProbe::predict_continuation()`, `predictive_trace_report()` |
 | Post-trace learning | `kr trace --reinforce`, `synapse_trace` with `reinforce: true`, `trace_reinforcement_report()` |
 | Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
 | Manual surface validation | `docs/MANUAL_VALIDATION.md` |
@@ -56,8 +59,9 @@ Before final release, run and record:
 11. `cargo bench -p synapse-eval --bench cognitive_chain_recall`
 12. `cargo bench -p synapse-eval --bench cognitive_trace_dominance`
 13. `cargo bench -p synapse-eval --bench trace_reinforcement`
-14. `cargo bench -p synapse-eval --bench activation_parameter_sweep`
-15. `cargo bench -p synapse-eval --bench long_horizon_cognitive_memory`
+14. `cargo bench -p synapse-eval --bench predictive_trace`
+15. `cargo bench -p synapse-eval --bench activation_parameter_sweep`
+16. `cargo bench -p synapse-eval --bench long_horizon_cognitive_memory`
 
 Expected minimums:
 
@@ -71,6 +75,7 @@ Expected minimums:
 - `CognitiveTraceDominance = 1.0`
 - `trace-reinforcement` reports `CognitiveTraceDominance = 1.0` and
   `HebbianConsistency = 1.0`
+- `predictive-trace` reports `RecallAt10 = 1.0`
 - `activation-parameter-sweep` reports `RecallAt10 = 1.0`,
   `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 - `long-horizon-cognitive-memory` reports `RecallAt10 = 1.0`,

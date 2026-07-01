@@ -242,7 +242,9 @@ fn descriptor_trace() -> Value {
                 "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
                 "auto_context": { "type": "boolean", "default": false },
                 "reinforce": { "type": "boolean", "default": false },
-                "reinforce_k": { "type": "integer", "minimum": 1, "maximum": 16, "default": 3 }
+                "reinforce_k": { "type": "integer", "minimum": 1, "maximum": 16, "default": 3 },
+                "predict": { "type": "boolean", "default": false },
+                "prediction_k": { "type": "integer", "minimum": 0, "maximum": 50, "default": 5 }
             }
         }
     })
@@ -787,6 +789,15 @@ fn do_trace(store: &StoreHandle, args: &Value) -> Result<Value> {
         .and_then(|v| v.as_u64())
         .map(|x| x as usize)
         .unwrap_or(3);
+    let predict = args
+        .get("predict")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+    let prediction_k = args
+        .get("prediction_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(5);
 
     let mut s = store.lock().unwrap();
     let query = RecallQuery {
@@ -817,8 +828,13 @@ fn do_trace(store: &StoreHandle, args: &Value) -> Result<Value> {
     } else {
         None
     };
+    let prediction = if predict {
+        Some(probe.predict_continuation(&s, &report, prediction_k)?)
+    } else {
+        None
+    };
 
-    Ok(json!({ "report": report, "reinforcement": reinforcement }))
+    Ok(json!({ "report": report, "prediction": prediction, "reinforcement": reinforcement }))
 }
 
 fn reinforce_trace_report(

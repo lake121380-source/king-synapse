@@ -18,6 +18,7 @@ const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-determin
 const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
 const COGNITIVE_TRACE_BENCHMARK_NAME: &str = "cognitive-trace-dominance";
 const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
+const PREDICTIVE_TRACE_BENCHMARK_NAME: &str = "predictive-trace";
 const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
 const LONG_HORIZON_COGNITIVE_BENCHMARK_NAME: &str = "long-horizon-cognitive-memory";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
@@ -137,6 +138,26 @@ pub fn trace_reinforcement_report() -> BenchmarkReport {
             (AlgorithmMetric::CognitiveTraceDominance, dominance),
             (AlgorithmMetric::HebbianConsistency, consistency),
         ]),
+    }
+}
+
+/// Run the predictive trace benchmark.
+///
+/// This benchmark checks the "future pull" side of the cognitive model. A
+/// trace first selects the expected hidden/downstream influence as dominant,
+/// then prediction continues from that dominant candidate along outgoing
+/// associative edges. `RecallAt10` measures whether the expected next hidden
+/// influence appears in the continuation candidates.
+pub fn predictive_trace_report() -> BenchmarkReport {
+    let cases = predictive_trace_fixture();
+    let hits = cases
+        .iter()
+        .filter(|case| predictive_trace_case_hits(case))
+        .count();
+
+    BenchmarkReport {
+        benchmark: PREDICTIVE_TRACE_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::RecallAt10, ratio(hits, cases.len()))]),
     }
 }
 
@@ -467,6 +488,18 @@ struct CognitiveTraceCase {
     goal_terms: &'static [&'static str],
 }
 
+struct PredictiveTraceCase {
+    label: &'static str,
+    query: &'static str,
+    seed: &'static str,
+    visible_distractor: &'static str,
+    hidden: &'static str,
+    future: &'static str,
+    future_distractor: &'static str,
+    state_terms: &'static [&'static str],
+    goal_terms: &'static [&'static str],
+}
+
 struct LongHorizonCase {
     label: &'static str,
     query: &'static str,
@@ -589,6 +622,44 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
             hidden_distractor: "bug label color preference",
             state_terms: &["subconscious"],
             goal_terms: &["future", "error"],
+        },
+    ]
+}
+
+fn predictive_trace_fixture() -> Vec<PredictiveTraceCase> {
+    vec![
+        PredictiveTraceCase {
+            label: "hydration-to-commute-risk",
+            query: "forgot water before commute",
+            seed: "forgot morning water before commute",
+            visible_distractor: "forgot water calendar note",
+            hidden: "tired attention failure",
+            future: "future commute attention risk",
+            future_distractor: "calendar archive cleanup",
+            state_terms: &["future"],
+            goal_terms: &["commute", "attention"],
+        },
+        PredictiveTraceCase {
+            label: "avoidance-to-review-error",
+            query: "pressure before difficult task",
+            seed: "pressure before difficult task can trigger avoidance",
+            visible_distractor: "pressure report for office schedule",
+            hidden: "subconscious avoidance affects future error review quality",
+            future: "future error detection gets weaker during review",
+            future_distractor: "office plant watering schedule",
+            state_terms: &["future"],
+            goal_terms: &["error", "review"],
+        },
+        PredictiveTraceCase {
+            label: "past-failure-to-decision-risk",
+            query: "past failure repeating mistakes",
+            seed: "past failure makes repeated mistake fear salient",
+            visible_distractor: "past failure incident index",
+            hidden: "memory affects future decision attention allocation",
+            future: "future decision risk increases when attention narrows",
+            future_distractor: "photo backup reminder",
+            state_terms: &["future"],
+            goal_terms: &["decision", "attention"],
         },
     ]
 }
@@ -823,6 +894,49 @@ fn cognitive_trace_sweep_hits(config: &TraceSweepConfig) -> bool {
     })
 }
 
+fn predictive_trace_case_hits(case: &PredictiveTraceCase) -> bool {
+    assert!(
+        !case.label.trim().is_empty(),
+        "predictive trace case label must describe the chain"
+    );
+    let (mut store, hidden, future) = seed_predictive_trace_store(case);
+    let trace_case = CognitiveTraceCase {
+        label: case.label,
+        query: case.query,
+        seed: case.seed,
+        visible_distractor: case.visible_distractor,
+        hidden: case.hidden,
+        hidden_distractor: case.future_distractor,
+        state_terms: case.state_terms,
+        goal_terms: case.goal_terms,
+    };
+    let config = default_trace_sweep_config();
+    let report = cognitive_trace_case_report(&mut store, &trace_case, config);
+    if !trace_report_dominates_hidden(&report, &hidden) {
+        return false;
+    }
+
+    let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: config.visible_limit,
+        latent_limit: config.latent_limit,
+        seed_limit: config.seed_limit,
+        suppressed_limit: config.suppressed_limit,
+        latent_scale: config.latent_scale,
+        latent_cap: config.latent_cap,
+        latent_steps: config.latent_steps,
+        latent_decay: config.latent_decay,
+        latent_fanout: config.latent_fanout,
+    });
+    let prediction = probe
+        .predict_continuation(&store, &report, 10)
+        .expect("predictive trace continuation runs");
+
+    prediction
+        .candidates
+        .iter()
+        .any(|hit| hit.memory.id == future && !hit.matched_terms.is_empty())
+}
+
 struct TraceReinforcementOutcome {
     dominant_hit: bool,
     expected_edges: usize,
@@ -899,6 +1013,30 @@ fn seed_cognitive_trace_store(case: &CognitiveTraceCase) -> (Store, String) {
         .expect("cognitive trace distractor edge is persisted");
 
     (store, hidden)
+}
+
+fn seed_predictive_trace_store(case: &PredictiveTraceCase) -> (Store, String, String) {
+    let mut store = Store::open_in_memory().expect("predictive trace benchmark store opens");
+    let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
+    write_cognitive_memory(&mut store, case.visible_distractor, MemoryKind::Fact, 0.5);
+    let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.9);
+    let future = write_cognitive_memory(&mut store, case.future, MemoryKind::Playbook, 0.9);
+    let future_distractor =
+        write_cognitive_memory(&mut store, case.future_distractor, MemoryKind::Fact, 0.5);
+    store
+        .update_edge(&seed, &hidden, 3.0)
+        .expect("predictive trace target edge is persisted");
+    store
+        .update_edge(&seed, &future_distractor, 0.5)
+        .expect("predictive trace distractor edge is persisted");
+    store
+        .update_edge(&hidden, &future, 3.0)
+        .expect("predictive continuation target edge is persisted");
+    store
+        .update_edge(&hidden, &future_distractor, 0.5)
+        .expect("predictive continuation distractor edge is persisted");
+
+    (store, hidden, future)
 }
 
 fn seed_long_horizon_store(
@@ -1465,6 +1603,23 @@ mod tests {
             report.metrics.get(&AlgorithmMetric::HebbianConsistency),
             Some(&1.0)
         );
+    }
+
+    #[test]
+    fn predictive_trace_report_is_deterministic() {
+        let a = predictive_trace_report();
+        let b = predictive_trace_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn predictive_trace_report_uses_contract_shape() {
+        let report = predictive_trace_report();
+
+        assert_eq!(report.benchmark, "predictive-trace");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
     }
 
     #[test]

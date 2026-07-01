@@ -88,6 +88,8 @@ rankings.
 - `CognitiveTraceCandidate`
 - `CognitiveTraceSource`
 - `CognitiveTraceStatistics`
+- `CognitiveTracePredictionReport`
+- `CognitiveTracePredictionStatistics`
 
 `CognitiveTraceProbe` composes visible recall, latent activation, and
 state/goal context into a query-facing cognition report. The report identifies
@@ -99,6 +101,13 @@ seed retrieval may stamp access metadata. The CLI/MCP trace surfaces can
 optionally run post-report Hebbian reinforcement; that learning is outside the
 probe itself and routes through the Store Integration boundary. This surface is
 Experimental while the cognitive competition scoring model is evaluated.
+
+`CognitiveTraceProbe::predict_continuation()` is read-only trace continuation:
+it starts from the current dominant trace candidate and follows outgoing
+Store-owned associative edges to rank likely next hidden influences. The
+prediction report carries the seed candidate, continuation candidates, paths,
+activation scores, and modulation evidence. It does not mutate Store and does
+not affect the current trace ranking.
 
 ### model
 
@@ -379,12 +388,14 @@ Hebbian executor, StoreMutation dispatcher, and SQLite persistent executor.
 `goal_terms`, and `auto_context`.
 `synapse_trace` accepts `query`, optional `k`, `latent_k`, `seed_k`,
 `suppressed_k`, `scope`, `kind`, `scale`, `cap`, `steps`, `decay`, `fanout`,
-`state_terms`, `goal_terms`, `auto_context`, `reinforce`, and `reinforce_k`.
+`state_terms`, `goal_terms`, `auto_context`, `reinforce`, `reinforce_k`,
+`predict`, and `prediction_k`.
 It returns a cognitive trace report with dominant and suppressed candidates
-plus visible and latent evidence. Trace reinforcement is disabled by default
-and, when enabled, runs only after the trace report is computed. It learns
-associations between the top visible seed memories and the dominant trace
-candidate for future activation.
+plus visible and latent evidence. Predictive trace is disabled by default and
+adds a read-only continuation report when enabled. Trace reinforcement is
+disabled by default and, when enabled, runs only after the trace report is
+computed. It learns associations between the top visible seed memories and the
+dominant trace candidate for future activation.
 
 ## kr (CLI)
 
@@ -431,8 +442,9 @@ query-triggered visible seed memories plus their hidden activation paths.
 `kr trace <query>` supports `-k`, `--latent-k`, `--seed-k`,
 `--suppressed-k`, `--scope`, `--kind`, `--steps`, `--decay`, `--scale`,
 `--cap`, `--fanout`, repeated `--state`, repeated `--goal`,
-`--auto-context`, `--reinforce`, `--reinforce-k`, and `--json` for inspecting
-the dominant candidate, suppressed candidates, and hidden paths for a query.
+`--auto-context`, `--predict`, `--prediction-k`, `--reinforce`,
+`--reinforce-k`, and `--json` for inspecting the dominant candidate,
+suppressed candidates, and hidden paths for a query.
 Trace reinforcement is disabled by default and runs only after the report is
 produced, so it does not affect the current dominant/suppressed ranking.
 
@@ -457,7 +469,7 @@ Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model
 **Experimental**
 
 - Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
-- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `cognitive_trace_dominance_report()`, `trace_reinforcement_report()`, `activation_parameter_sweep_report()`, `long_horizon_cognitive_memory_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
+- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `cognitive_trace_dominance_report()`, `trace_reinforcement_report()`, `predictive_trace_report()`, `activation_parameter_sweep_report()`, `long_horizon_cognitive_memory_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
 
 The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 

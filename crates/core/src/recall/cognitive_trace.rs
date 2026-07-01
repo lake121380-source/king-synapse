@@ -89,6 +89,20 @@ pub struct CognitiveTraceReport {
     pub statistics: CognitiveTraceStatistics,
 }
 
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct CognitiveTracePredictionStatistics {
+    pub candidates: usize,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CognitiveTracePredictionReport {
+    pub query: String,
+    pub context: LatentActivationContext,
+    pub seed: Option<CognitiveTraceCandidate>,
+    pub candidates: Vec<LatentActivationHit>,
+    pub statistics: CognitiveTracePredictionStatistics,
+}
+
 pub struct CognitiveTraceProbe {
     config: CognitiveTraceConfig,
 }
@@ -163,6 +177,57 @@ impl CognitiveTraceProbe {
         let context =
             LatentActivationContext::from_text(&query.query).merge(explicit_context.clone());
         self.trace(store, query, &context)
+    }
+
+    pub fn predict_continuation(
+        &self,
+        store: &Store,
+        report: &CognitiveTraceReport,
+        limit: usize,
+    ) -> Result<CognitiveTracePredictionReport> {
+        let Some(seed) = report.dominant.as_ref() else {
+            return Ok(CognitiveTracePredictionReport {
+                query: report.query.clone(),
+                context: report.context.clone(),
+                seed: None,
+                candidates: Vec::new(),
+                statistics: CognitiveTracePredictionStatistics::default(),
+            });
+        };
+        if limit == 0 {
+            return Ok(CognitiveTracePredictionReport {
+                query: report.query.clone(),
+                context: report.context.clone(),
+                seed: Some(seed.clone()),
+                candidates: Vec::new(),
+                statistics: CognitiveTracePredictionStatistics::default(),
+            });
+        }
+
+        let latent_probe = LatentActivationProbe::with_config(
+            self.config.latent_scale,
+            self.config.latent_cap,
+            self.config.latent_steps,
+            self.config.latent_decay,
+            self.config.latent_fanout,
+        );
+        let candidates = latent_probe.activate_with_context(
+            store,
+            &[seed.memory.id.as_str()],
+            limit,
+            &report.context,
+        )?;
+        let statistics = CognitiveTracePredictionStatistics {
+            candidates: candidates.len(),
+        };
+
+        Ok(CognitiveTracePredictionReport {
+            query: report.query.clone(),
+            context: report.context.clone(),
+            seed: Some(seed.clone()),
+            candidates,
+            statistics,
+        })
     }
 }
 
@@ -442,5 +507,71 @@ mod tests {
         assert_eq!(dominant.memory.id, hidden);
         assert!(report.context.state_terms.contains(&"tired".to_string()));
         assert!(report.context.goal_terms.contains(&"commute".to_string()));
+    }
+
+    #[test]
+    fn cognitive_trace_predicts_continuation_from_dominant_candidate() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = add(&mut store, "forgot water before commute");
+        let hidden = add(&mut store, "tired attention failure");
+        let future = add(&mut store, "future commute attention risk");
+        let distractor = add(&mut store, "calendar archive cleanup");
+        store.update_edge(&seed, &hidden, 2.0).unwrap();
+        store.update_edge(&hidden, &future, 2.0).unwrap();
+        store.update_edge(&hidden, &distractor, 2.0).unwrap();
+
+        let query = RecallQuery {
+            query: "forgot water".to_string(),
+            k: Some(1),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let context = LatentActivationContext::new(
+            vec!["future".to_string()],
+            vec!["commute".to_string(), "attention".to_string()],
+        );
+        let probe = CognitiveTraceProbe::new(config());
+        let report = probe.trace(&mut store, &query, &context).unwrap();
+        assert_eq!(report.dominant.as_ref().unwrap().memory.id, hidden);
+
+        let prediction = probe.predict_continuation(&store, &report, 3).unwrap();
+
+        assert_eq!(
+            prediction.seed.as_ref().map(|seed| seed.memory.id.as_str()),
+            Some(hidden.as_str())
+        );
+        assert_eq!(prediction.candidates[0].memory.id, future);
+        assert!(prediction.candidates[0]
+            .matched_terms
+            .contains(&"goal:commute".to_string()));
+        assert!(prediction.candidates[0]
+            .matched_terms
+            .contains(&"goal:attention".to_string()));
+        assert!(prediction.candidates[0]
+            .matched_terms
+            .contains(&"state:future".to_string()));
+        assert_eq!(prediction.statistics.candidates, 2);
+    }
+
+    #[test]
+    fn cognitive_trace_prediction_is_empty_without_dominant_candidate() {
+        let store = Store::open_in_memory().unwrap();
+        let report = CognitiveTraceReport {
+            query: "empty".to_string(),
+            context: LatentActivationContext::default(),
+            dominant: None,
+            suppressed: Vec::new(),
+            visible: Vec::new(),
+            latent: Vec::new(),
+            statistics: CognitiveTraceStatistics::default(),
+        };
+
+        let prediction = CognitiveTraceProbe::default()
+            .predict_continuation(&store, &report, 10)
+            .unwrap();
+
+        assert!(prediction.seed.is_none());
+        assert!(prediction.candidates.is_empty());
+        assert_eq!(prediction.statistics.candidates, 0);
     }
 }
