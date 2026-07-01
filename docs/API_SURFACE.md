@@ -341,6 +341,9 @@ Tool JSON schemas are considered part of the stable public API.
 `synapse_recall` accepts optional graph activation fields:
 `graph_activation`, `graph_scale`, `graph_cap`, `graph_steps`, and
 `graph_decay`. They are disabled by default.
+`synapse_recall` also accepts optional post-recall Hebbian learning fields:
+`reinforce` and `reinforce_k`. They are disabled by default and run only after
+hits are computed.
 `synapse_edges` accepts `id`, optional `direction` (`outgoing`, `incoming`,
 or `both`), and optional `k`.
 `synapse_reinforce` accepts `ids`, optional `event` (`recalled`, `written`,
@@ -378,6 +381,10 @@ Flag names and output structure are considered part of the stable public API.
 `--latent-steps`, `--latent-decay`, `--latent-fanout`, repeated
 `--latent-state`, repeated `--latent-goal`, and `--latent-auto-context`.
 They are disabled by default and only add bonus to existing recall candidates.
+`kr recall` also supports optional post-recall Hebbian learning flags:
+`--reinforce` and `--reinforce-k`. They are disabled by default and run only
+after recall results have been produced, so they do not affect the current
+ranking.
 `kr edges <id>` supports `--direction outgoing|incoming|both`, `-k`, and
 `--json` for inspecting persisted associative edge weights.
 `kr reinforce <id> <id>...` supports `--event`, `--query`, and `--json` for

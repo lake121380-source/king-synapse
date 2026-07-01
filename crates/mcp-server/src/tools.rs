@@ -75,7 +75,9 @@ fn descriptor_recall() -> Value {
                 "latent_fanout": { "type": "integer", "minimum": 1, "maximum": 64, "default": 16 },
                 "latent_state": { "type": "array", "items": { "type": "string" }, "default": [] },
                 "latent_goal": { "type": "array", "items": { "type": "string" }, "default": [] },
-                "latent_auto_context": { "type": "boolean", "default": false }
+                "latent_auto_context": { "type": "boolean", "default": false },
+                "reinforce": { "type": "boolean", "default": false },
+                "reinforce_k": { "type": "integer", "minimum": 2, "maximum": 16, "default": 3 }
             }
         }
     })
@@ -336,6 +338,15 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
         .get("latent_auto_context")
         .and_then(|v| v.as_bool())
         .unwrap_or(false);
+    let reinforce = args
+        .get("reinforce")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+    let reinforce_k = args
+        .get("reinforce_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(3);
     let mut s = store.lock().unwrap();
     let query = RecallQuery {
         query,
@@ -373,7 +384,12 @@ fn do_recall(store: &StoreHandle, args: &Value) -> Result<Value> {
         }
         engine.recall(&query)?
     };
-    Ok(json!({ "hits": hits }))
+    let reinforcement = if reinforce {
+        reinforce_recall_hits(&mut s, &hits, reinforce_k, &query.query)?
+    } else {
+        None
+    };
+    Ok(json!({ "hits": hits, "reinforcement": reinforcement }))
 }
 
 fn arg_f32(args: &Value, key: &str, default: f32) -> f32 {
@@ -509,8 +525,39 @@ fn do_reinforce(store: &StoreHandle, args: &Value) -> Result<Value> {
         .map(str::to_string);
 
     let mut s = store.lock().unwrap();
+    reinforce_memory_ids(&mut s, ids, event, query)
+}
+
+fn reinforce_recall_hits(
+    store: &mut Store,
+    hits: &[synapse_core::RecallHit],
+    reinforce_k: usize,
+    query: &str,
+) -> Result<Option<Value>> {
+    if reinforce_k < 2 {
+        return Ok(None);
+    }
+
+    let ids = hits
+        .iter()
+        .take(reinforce_k)
+        .map(|hit| hit.memory.id.clone())
+        .collect::<Vec<_>>();
+    if ids.len() < 2 {
+        return Ok(None);
+    }
+
+    reinforce_memory_ids(store, ids, "recalled", Some(query.to_string())).map(Some)
+}
+
+fn reinforce_memory_ids(
+    store: &mut Store,
+    ids: Vec<String>,
+    event: &str,
+    query: Option<String>,
+) -> Result<Value> {
     for id in &ids {
-        match s.get(id)? {
+        match store.get(id)? {
             Some(memory) if memory.valid_to.is_none() => {}
             Some(_) => anyhow::bail!("memory is inactive: {id}"),
             None => anyhow::bail!("memory not found: {id}"),
@@ -535,7 +582,7 @@ fn do_reinforce(store: &StoreHandle, args: &Value) -> Result<Value> {
     let hebbian_report = PlanOnlyHebbianExecutor.execute(output.plans());
     let mutation_plan =
         DeterministicHebbianStoreMutationDispatcher::new(hebbian_report.clone()).dispatch();
-    let store_report = SQLitePersistentStoreExecutor::new(&mut s).execute(&mutation_plan);
+    let store_report = SQLitePersistentStoreExecutor::new(store).execute(&mutation_plan);
 
     Ok(json!({
         "hebbian_output": output,

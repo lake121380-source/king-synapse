@@ -112,6 +112,12 @@ enum Cmd {
         /// Derive additional latent state/goal terms from the recall query.
         #[arg(long)]
         latent_auto_context: bool,
+        /// Learn Hebbian associations between the top recall hits after recall.
+        #[arg(long)]
+        reinforce: bool,
+        /// Number of top recall hits used for optional Hebbian reinforcement.
+        #[arg(long, default_value = "3")]
+        reinforce_k: usize,
     },
     /// List recent memories.
     List {
@@ -311,6 +317,8 @@ fn main() -> Result<()> {
             latent_state_terms,
             latent_goal_terms,
             latent_auto_context,
+            reinforce,
+            reinforce_k,
         } => {
             let q = RecallQuery {
                 query,
@@ -374,17 +382,38 @@ fn main() -> Result<()> {
                 }
                 engine.recall(&q)?
             };
+            let reinforcement = if reinforce {
+                reinforce_recall_hits(&mut store, &hits, reinforce_k, &q.query)?
+            } else {
+                None
+            };
             if json {
-                println!("{}", serde_json::to_string_pretty(&hits)?);
+                if let Some(reinforcement) = reinforcement {
+                    println!(
+                        "{}",
+                        serde_json::to_string_pretty(&serde_json::json!({
+                            "hits": hits,
+                            "reinforcement": reinforcement,
+                        }))?
+                    );
+                } else {
+                    println!("{}", serde_json::to_string_pretty(&hits)?);
+                }
             } else if hits.is_empty() {
                 println!("(no matches)");
             } else if explain {
                 for (i, h) in hits.iter().enumerate() {
                     print_hit_explain(i + 1, h, &booster_names);
                 }
+                if let Some(reinforcement) = reinforcement.as_ref() {
+                    print_reinforcement_summary(reinforcement);
+                }
             } else {
                 for h in hits {
                     print_hit(&h);
+                }
+                if let Some(reinforcement) = reinforcement.as_ref() {
+                    print_reinforcement_summary(reinforcement);
                 }
             }
         }
@@ -646,6 +675,44 @@ fn reinforce_memories(
     }))
 }
 
+fn reinforce_recall_hits(
+    store: &mut Store,
+    hits: &[RecallHit],
+    reinforce_k: usize,
+    query: &str,
+) -> Result<Option<serde_json::Value>> {
+    if reinforce_k < 2 {
+        return Ok(None);
+    }
+
+    let ids = hits
+        .iter()
+        .take(reinforce_k)
+        .map(|hit| hit.memory.id.clone())
+        .collect::<Vec<_>>();
+    if ids.len() < 2 {
+        return Ok(None);
+    }
+
+    reinforce_memories(
+        store,
+        ids,
+        ReinforceEvent::Recalled,
+        Some(query.to_string()),
+    )
+    .map(Some)
+}
+
+fn print_reinforcement_summary(report: &serde_json::Value) {
+    let executed = report["store_report"]["statistics"]["executed"]
+        .as_u64()
+        .unwrap_or(0);
+    let skipped = report["store_report"]["statistics"]["skipped"]
+        .as_u64()
+        .unwrap_or(0);
+    println!("reinforced {executed} edge updates ({skipped} skipped)");
+}
+
 fn normalize_reinforce_ids(ids: Vec<String>) -> Vec<String> {
     let mut out = ids
         .into_iter()
@@ -866,5 +933,73 @@ fn truncate(s: &str, max: usize) -> String {
         let mut out: String = s.chars().take(max).collect();
         out.push_str("...");
         out
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn write_memory(store: &mut Store, content: &str) -> synapse_core::Memory {
+        store
+            .write(WriteInput {
+                content: content.to_string(),
+                kind: MemoryKind::Fact,
+                scope: Scope::Global,
+                source: Source::ExplicitUser,
+                confidence: Some(1.0),
+                importance: Some(0.7),
+            })
+            .unwrap()
+    }
+
+    #[test]
+    fn recall_reinforcement_learns_only_top_k_cooccurrence_edges() {
+        let mut store = Store::open_in_memory().unwrap();
+        write_memory(&mut store, "forgot water before commute");
+        write_memory(&mut store, "commute attention risk");
+        write_memory(&mut store, "commute package manager note");
+        let q = RecallQuery {
+            query: "commute".to_string(),
+            k: Some(3),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let hits = RecallEngine::new(&mut store).recall(&q).unwrap();
+        assert_eq!(hits.len(), 3);
+        let first = hits[0].memory.id.clone();
+        let second = hits[1].memory.id.clone();
+        let third = hits[2].memory.id.clone();
+
+        let report = reinforce_recall_hits(&mut store, &hits, 2, "forgot water commute")
+            .unwrap()
+            .expect("two top hits should reinforce");
+
+        assert_eq!(
+            report["store_report"]["statistics"]["executed"]
+                .as_u64()
+                .unwrap(),
+            2
+        );
+        assert!(store.edge_weight(&first, &second).unwrap().is_some());
+        assert!(store.edge_weight(&second, &first).unwrap().is_some());
+        assert!(store.edge_weight(&first, &third).unwrap().is_none());
+    }
+
+    #[test]
+    fn recall_reinforcement_skips_when_top_k_is_too_small() {
+        let mut store = Store::open_in_memory().unwrap();
+        write_memory(&mut store, "single");
+        let q = RecallQuery {
+            query: "single".to_string(),
+            k: Some(1),
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let hits = RecallEngine::new(&mut store).recall(&q).unwrap();
+
+        let report = reinforce_recall_hits(&mut store, &hits, 2, "single").unwrap();
+
+        assert!(report.is_none());
     }
 }

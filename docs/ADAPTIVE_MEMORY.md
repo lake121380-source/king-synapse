@@ -103,6 +103,11 @@ algorithm, execute the resulting `EdgeUpdatePlan`s, dispatch them into
 `StoreMutation::UpdateEdge`, and persist through `SQLitePersistentStoreExecutor`.
 The Hebbian algorithm still has no direct Store access.
 
+Recall surfaces may opt into the same learning path after results are already
+computed (`kr recall --reinforce`, `synapse_recall` with `reinforce: true`).
+This records "these memories were recalled together" for future activation,
+but it does not change the current recall ranking.
+
 ## P4.5 Adaptive Policies
 
 P4.5 should add policies after Store Integration exists.

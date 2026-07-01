@@ -81,6 +81,7 @@ Binaries land in `target/release/`:
 ./target/release/kr recall "测试" --kind fact
 ./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
 ./target/release/kr recall "forgot water commute attention" --latent-activation --latent-auto-context --explain
+./target/release/kr recall "forgot water commute attention" --reinforce --reinforce-k 3
 ./target/release/kr edges <memory-id> --direction both
 ./target/release/kr reinforce <memory-id-a> <memory-id-b> --event recalled --query "forgot water commute"
 ./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
