@@ -10,6 +10,7 @@ mod executor;
 mod hebbian;
 mod item;
 mod reflection;
+mod reflection_processing;
 mod session;
 mod sink;
 
@@ -28,6 +29,10 @@ pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
     ReflectionEventRecorder, ReflectionPayload, ReflectionSource,
+};
+pub use reflection_processing::{
+    NoOpReflectionEngine, PlanOnlyReflectionExecutor, ReflectionEngine, ReflectionExecutor,
+    ReflectionPlan, ReflectionReport,
 };
 pub use session::SessionId;
 pub use sink::{ConsolidationSink, NoOpSink};
@@ -286,5 +291,38 @@ mod tests {
         sink.apply(&report).expect("noop sink should accept report");
 
         assert_eq!(report, original);
+    }
+
+    #[test]
+    fn noop_reflection_engine_produces_empty_plan() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload::default(),
+        );
+        let engine = NoOpReflectionEngine;
+
+        let plan = engine.plan(&[event]);
+
+        assert!(plan.is_empty());
+    }
+
+    #[test]
+    fn plan_only_reflection_executor_reports_processed_events() {
+        let session = SessionId::new();
+        let event = ReflectionEvent::new(
+            session,
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload::default(),
+        );
+        let plan = ReflectionPlan {
+            events: vec![event.clone()],
+        };
+        let executor = PlanOnlyReflectionExecutor;
+
+        let report = executor.execute(&plan);
+
+        assert_eq!(report.processed_events, vec![event.id]);
     }
 }

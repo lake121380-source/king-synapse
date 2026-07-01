@@ -13,3 +13,4 @@
 2. New behavior should follow the established execution model: `Plan -> Execute -> Report -> Sink`.
 3. New extension points should reuse the existing plugin pattern: `Trait -> NoOp -> Concrete Implementation`.
 4. Changes to frozen contracts require a dedicated ADR and a new architecture milestone.
+5. Every new public trait must ship with a NoOp implementation before entering the public API.

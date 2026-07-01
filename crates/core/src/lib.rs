@@ -31,8 +31,9 @@ pub use working_memory::{
     ConsolidationSink, DiscardExecution, EdgeUpdatePlan, ExecutedAction, ExecutionReport,
     ExecutionStatistics, ExecutionWarning, HebbianReinforcementEngine, MemoryId, MergeExecution,
     MergeGroup, MergeStrategy, NoOpActivationBooster, NoOpConsolidation,
-    NoOpHebbianReinforcementEngine, NoOpReflectionEventRecorder, NoOpSink,
-    PlanOnlyConsolidationExecutor, ReflectionEvent, ReflectionEventId, ReflectionEventRecorder,
-    ReflectionPayload, ReflectionSource, SessionId, WorkingMemoryActivationBooster,
+    NoOpHebbianReinforcementEngine, NoOpReflectionEngine, NoOpReflectionEventRecorder, NoOpSink,
+    PlanOnlyConsolidationExecutor, PlanOnlyReflectionExecutor, ReflectionEngine, ReflectionEvent,
+    ReflectionEventId, ReflectionEventRecorder, ReflectionExecutor, ReflectionPayload,
+    ReflectionPlan, ReflectionReport, ReflectionSource, SessionId, WorkingMemoryActivationBooster,
     WorkingMemoryBuffer, WorkingMemoryEdge, WorkingMemoryItem,
 };
