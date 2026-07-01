@@ -39,6 +39,7 @@ of visible and hidden associations.
 | Dominant/suppressed cognitive trace | `CognitiveTraceProbe`, `cognitive_trace_dominance_report()` |
 | Predictive trace continuation | `CognitiveTraceProbe::predict_continuation()`, `predictive_trace_report()` |
 | Post-trace learning | `kr trace --reinforce`, `synapse_trace` with `reinforce: true`, `trace_reinforcement_report()` |
+| Exported long-session validation | `crates/eval/datasets/exported_cognitive_session.toml`, `exported_cognitive_session_report()` |
 | Cognitive-network design model | `docs/COGNITIVE_NETWORK_MODEL.md` |
 | Manual surface validation | `docs/MANUAL_VALIDATION.md` |
 
@@ -62,6 +63,7 @@ Before final release, run and record:
 14. `cargo bench -p synapse-eval --bench predictive_trace`
 15. `cargo bench -p synapse-eval --bench activation_parameter_sweep`
 16. `cargo bench -p synapse-eval --bench long_horizon_cognitive_memory`
+17. `cargo bench -p synapse-eval --bench exported_cognitive_session`
 
 Expected minimums:
 
@@ -80,6 +82,8 @@ Expected minimums:
   `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 - `long-horizon-cognitive-memory` reports `RecallAt10 = 1.0`,
   `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
+- `exported-cognitive-session` reports `RecallAt10 = 1.0`,
+  `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 
 ## Remaining Finalization Work
 
@@ -89,9 +93,9 @@ Expected minimums:
   notes and tags.
 - Extend parameter sweeps beyond the deterministic activation/trace sweep to
   larger datasets and broader production ranges.
-- Extend the internal long-horizon benchmark to external comparison runs.
-  Candidate comparisons: Graphiti, Letta, Mem0, or a documented exported
-  long-session dataset.
+- Extend the exported long-session dataset to external comparison runs.
+  Candidate comparisons: Graphiti, Letta, Mem0, or a larger documented
+  long-session export.
 - Rerun and paste dated manual validation outputs for final release using
   `docs/MANUAL_VALIDATION.md` as the baseline transcript.
 - Decide whether UI/deeper agent integrations are release blockers or a

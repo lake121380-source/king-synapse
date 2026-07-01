@@ -50,6 +50,7 @@ Current milestone
 ✓ v0.9.23 — Manual Validation Transcript
 ✓ v0.9.24 — Cognitive Network Algorithm Model
 ✓ v0.9.25 — Predictive Trace Continuation
+✓ v0.9.26 — Exported Cognitive Session Benchmark
 
 Status
 
@@ -135,6 +136,7 @@ Completed foundations
 - v0.9.23 — manual validation transcript covers normal and empty/error cognitive-memory surfaces
 - v0.9.24 — cognitive network algorithm model maps human-network design into visible seeds, latent activation, dominant/suppressed candidates, and post-trace learning
 - v0.9.25 — predictive trace continues from the dominant candidate into ranked next hidden influences
+- v0.9.26 — exported cognitive-session TOML benchmark verifies visible recall, dominant hidden influence, predictive future continuation, and trace learning in one shared graph
 
 Focus
 
@@ -142,7 +144,7 @@ Focus
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
 - **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, multi-step graph activation path, edge persistence, execution adapter, latent inspection path, cognitive trace scoring, and benchmark before the next freeze tag.
-- Predictive trace — broaden continuation benchmarks beyond deterministic fixtures and into long-session exported datasets.
+- Predictive trace — broaden continuation benchmarks beyond the exported fixture and into external Graphiti / Letta / Mem0 comparisons.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

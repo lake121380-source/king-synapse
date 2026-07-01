@@ -1,4 +1,5 @@
 use crate::{AlgorithmMetric, BenchmarkReport};
+use serde::Deserialize;
 use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe, CognitiveTraceReport,
@@ -21,9 +22,12 @@ const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
 const PREDICTIVE_TRACE_BENCHMARK_NAME: &str = "predictive-trace";
 const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
 const LONG_HORIZON_COGNITIVE_BENCHMARK_NAME: &str = "long-horizon-cognitive-memory";
+const EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME: &str = "exported-cognitive-session";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
+const EXPORTED_COGNITIVE_SESSION_DATASET: &str =
+    include_str!("../datasets/exported_cognitive_session.toml");
 
 /// Run the current RFC-012 Reflection benchmark.
 ///
@@ -261,6 +265,73 @@ pub fn long_horizon_cognitive_memory_report() -> BenchmarkReport {
             (
                 AlgorithmMetric::CognitiveTraceDominance,
                 ratio(trace_hits, cases.len()),
+            ),
+            (
+                AlgorithmMetric::HebbianConsistency,
+                ratio(reinforced_edges, expected_edges),
+            ),
+        ]),
+    }
+}
+
+/// Run the exported cognitive-session benchmark.
+///
+/// Unlike the inline deterministic fixtures, this benchmark loads a TOML file
+/// that is shaped like a small exported long-session transcript. Each chain
+/// verifies visible seed recall, dominant hidden influence, predictive future
+/// continuation, and post-trace reinforcement in one shared Store.
+pub fn exported_cognitive_session_report() -> BenchmarkReport {
+    let session = exported_cognitive_session_fixture();
+    let (mut store, ids) = seed_exported_cognitive_session_store(&session.chains);
+
+    let mut recall_hits = 0usize;
+    let mut trace_hits = 0usize;
+    let mut prediction_hits = 0usize;
+    let mut expected_edges = 0usize;
+    let mut reinforced_edges = 0usize;
+
+    for chain in &session.chains {
+        let chain_ids = ids
+            .get(chain.label.as_str())
+            .expect("exported cognitive session ids should be seeded");
+        if exported_visible_recall_hits(&mut store, chain, &chain_ids.seed) {
+            recall_hits += 1;
+        }
+
+        let report = exported_trace_report(&mut store, chain);
+        if trace_report_dominates_hidden(&report, &chain_ids.hidden) {
+            trace_hits += 1;
+        }
+
+        if exported_prediction_hits(&store, chain, &report, &chain_ids.future) {
+            prediction_hits += 1;
+        }
+
+        let visible_ids = trace_visible_seed_ids(&report, 3);
+        let expected = visible_hidden_edges(&visible_ids, &chain_ids.hidden);
+        let before = edge_weights(&mut store, &expected);
+        if let Some(dominant) = report.dominant.as_ref() {
+            let ids = trace_reinforcement_ids(&report, 3, &dominant.memory.id);
+            reinforce_trace_ids(&mut store, ids, &chain.query);
+        }
+        let after = edge_weights(&mut store, &expected);
+        expected_edges += expected.len();
+        reinforced_edges += expected
+            .iter()
+            .filter(|edge| edge_gained_weight(*before.get(*edge).unwrap_or(&0.0), after[*edge]))
+            .count();
+    }
+
+    BenchmarkReport {
+        benchmark: EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([
+            (
+                AlgorithmMetric::RecallAt10,
+                ratio(recall_hits + prediction_hits, session.chains.len() * 2),
+            ),
+            (
+                AlgorithmMetric::CognitiveTraceDominance,
+                ratio(trace_hits, session.chains.len()),
             ),
             (
                 AlgorithmMetric::HebbianConsistency,
@@ -514,6 +585,37 @@ struct LongHorizonCase {
 struct LongHorizonIds {
     seed: String,
     hidden: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct ExportedCognitiveSession {
+    chains: Vec<ExportedCognitiveChain>,
+}
+
+#[derive(Debug, Deserialize)]
+struct ExportedCognitiveChain {
+    label: String,
+    query: String,
+    seed: String,
+    visible_distractor: String,
+    hidden: String,
+    hidden_distractor: String,
+    future: String,
+    future_distractor: String,
+    state_terms: Vec<String>,
+    goal_terms: Vec<String>,
+}
+
+impl ExportedCognitiveChain {
+    fn scope(&self) -> Scope {
+        Scope::Session(self.label.clone())
+    }
+}
+
+struct ExportedCognitiveIds {
+    seed: String,
+    hidden: String,
+    future: String,
 }
 
 #[derive(Clone, Copy)]
@@ -1067,6 +1169,152 @@ fn seed_long_horizon_store(
     (store, ids)
 }
 
+fn exported_cognitive_session_fixture() -> ExportedCognitiveSession {
+    toml::from_str(EXPORTED_COGNITIVE_SESSION_DATASET)
+        .expect("exported cognitive session dataset parses")
+}
+
+fn seed_exported_cognitive_session_store(
+    chains: &[ExportedCognitiveChain],
+) -> (
+    Store,
+    std::collections::BTreeMap<String, ExportedCognitiveIds>,
+) {
+    let mut store = Store::open_in_memory().expect("exported cognitive session store opens");
+    let mut ids = std::collections::BTreeMap::new();
+
+    for chain in chains {
+        let scope = chain.scope();
+        let seed =
+            write_scoped_cognitive_memory(&mut store, &chain.seed, MemoryKind::State, 0.8, &scope);
+        write_scoped_cognitive_memory(
+            &mut store,
+            &chain.visible_distractor,
+            MemoryKind::Fact,
+            0.5,
+            &scope,
+        );
+        let hidden = write_scoped_cognitive_memory(
+            &mut store,
+            &chain.hidden,
+            MemoryKind::Playbook,
+            0.9,
+            &scope,
+        );
+        let hidden_distractor = write_scoped_cognitive_memory(
+            &mut store,
+            &chain.hidden_distractor,
+            MemoryKind::Fact,
+            0.5,
+            &scope,
+        );
+        let future = write_scoped_cognitive_memory(
+            &mut store,
+            &chain.future,
+            MemoryKind::Playbook,
+            0.9,
+            &scope,
+        );
+        let future_distractor = write_scoped_cognitive_memory(
+            &mut store,
+            &chain.future_distractor,
+            MemoryKind::Fact,
+            0.5,
+            &scope,
+        );
+
+        store
+            .update_edge(&seed, &hidden, 3.0)
+            .expect("exported cognitive hidden edge is persisted");
+        store
+            .update_edge(&seed, &hidden_distractor, 0.5)
+            .expect("exported cognitive hidden distractor edge is persisted");
+        store
+            .update_edge(&hidden, &future, 3.0)
+            .expect("exported cognitive future edge is persisted");
+        store
+            .update_edge(&hidden, &future_distractor, 0.5)
+            .expect("exported cognitive future distractor edge is persisted");
+
+        ids.insert(
+            chain.label.clone(),
+            ExportedCognitiveIds {
+                seed,
+                hidden,
+                future,
+            },
+        );
+    }
+
+    (store, ids)
+}
+
+fn exported_visible_recall_hits(
+    store: &mut Store,
+    chain: &ExportedCognitiveChain,
+    seed: &str,
+) -> bool {
+    let query = RecallQuery {
+        query: chain.query.clone(),
+        k: Some(10),
+        scope_filter: Some(chain.scope()),
+        kind_filter: Some(MemoryKind::State),
+    };
+    let hits = synapse_core::RecallEngine::new(store)
+        .recall(&query)
+        .expect("exported cognitive visible recall runs");
+    hits.iter().any(|hit| hit.memory.id == seed)
+}
+
+fn exported_trace_report(
+    store: &mut Store,
+    chain: &ExportedCognitiveChain,
+) -> CognitiveTraceReport {
+    let query = RecallQuery {
+        query: chain.query.clone(),
+        k: Some(2),
+        scope_filter: Some(chain.scope()),
+        kind_filter: Some(MemoryKind::State),
+    };
+    let probe = exported_trace_probe();
+    let context = LatentActivationContext::new(chain.state_terms.clone(), chain.goal_terms.clone());
+    probe
+        .trace(store, &query, &context)
+        .expect("exported cognitive trace runs")
+}
+
+fn exported_prediction_hits(
+    store: &Store,
+    chain: &ExportedCognitiveChain,
+    report: &CognitiveTraceReport,
+    future: &str,
+) -> bool {
+    let prediction = exported_trace_probe()
+        .predict_continuation(store, report, 10)
+        .expect("exported cognitive prediction runs");
+    prediction.candidates.iter().any(|hit| {
+        hit.memory.id == future
+            && hit
+                .matched_terms
+                .iter()
+                .any(|term| chain.state_terms.iter().any(|state| term.ends_with(state)))
+    })
+}
+
+fn exported_trace_probe() -> CognitiveTraceProbe {
+    CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: 2,
+        latent_limit: 8,
+        seed_limit: 1,
+        suppressed_limit: 8,
+        latent_scale: 0.05,
+        latent_cap: 0.25,
+        latent_steps: 2,
+        latent_decay: 0.5,
+        latent_fanout: 16,
+    })
+}
+
 fn long_horizon_visible_recall_hits(store: &mut Store, case: &LongHorizonCase, seed: &str) -> bool {
     let query = RecallQuery {
         query: case.query.to_string(),
@@ -1251,11 +1499,21 @@ fn write_cognitive_memory(
     kind: MemoryKind,
     importance: f32,
 ) -> String {
+    write_scoped_cognitive_memory(store, content, kind, importance, &Scope::User)
+}
+
+fn write_scoped_cognitive_memory(
+    store: &mut Store,
+    content: &str,
+    kind: MemoryKind,
+    importance: f32,
+    scope: &Scope,
+) -> String {
     store
         .write(WriteInput {
             content: content.to_string(),
             kind,
-            scope: Scope::User,
+            scope: scope.clone(),
             source: Source::ExplicitUser,
             confidence: Some(1.0),
             importance: Some(importance),
@@ -1662,6 +1920,33 @@ mod tests {
         let report = long_horizon_cognitive_memory_report();
 
         assert_eq!(report.benchmark, "long-horizon-cognitive-memory");
+        assert_eq!(report.metrics.len(), 3);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn exported_cognitive_session_report_is_deterministic() {
+        let a = exported_cognitive_session_report();
+        let b = exported_cognitive_session_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn exported_cognitive_session_report_uses_contract_shape() {
+        let report = exported_cognitive_session_report();
+
+        assert_eq!(report.benchmark, "exported-cognitive-session");
         assert_eq!(report.metrics.len(), 3);
         assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
         assert_eq!(

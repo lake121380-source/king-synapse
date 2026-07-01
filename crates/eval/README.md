@@ -42,6 +42,9 @@ cargo bench -p synapse-eval --bench cognitive_trace_dominance
 
 # Predictive trace benchmark (dominant candidate -> next hidden influence)
 cargo bench -p synapse-eval --bench predictive_trace
+
+# Exported cognitive-session benchmark (shared long-session TOML fixture)
+cargo bench -p synapse-eval --bench exported_cognitive_session
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -118,6 +121,14 @@ It writes several day-stamped cognitive chains into one shared in-memory store,
 including visible distractors and hidden distractors. It then verifies ordinary
 recall, cognitive trace dominance, and post-trace reinforcement in that shared
 long-session memory graph.
+
+The exported cognitive-session benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "exported-cognitive-session"` for the TOML-backed long-session fixture
+
+It loads `crates/eval/datasets/exported_cognitive_session.toml`, seeds one
+shared memory graph, and verifies visible seed recall, dominant hidden
+influence, predictive future continuation, and post-trace reinforcement.
 
 ## Metrics
 

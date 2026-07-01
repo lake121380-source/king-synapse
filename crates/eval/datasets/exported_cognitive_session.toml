@@ -1,0 +1,101 @@
+# Exported cognitive-memory session fixture.
+#
+# This file is shaped like a small long-session export rather than an inline
+# unit-test fixture. Each entry records one day-sized cognitive chain:
+# visible situation -> hidden influence -> predicted next influence.
+
+[[chains]]
+label = "day01-hydration-commute"
+query = "day01 skipped hydration before scooter commute"
+seed = "day01 skipped hydration before scooter commute lowered mood"
+visible_distractor = "day01 scooter maintenance receipt and tire pressure note"
+hidden = "tired mood reduces commute attention and raises scooter fall risk"
+hidden_distractor = "weekend laundry receipt sorting plan"
+future = "future commute mistake risk increases when attention narrows"
+future_distractor = "bike helmet color comparison"
+state_terms = ["tired", "mood", "future"]
+goal_terms = ["commute", "attention", "risk"]
+
+[[chains]]
+label = "day02-review-avoidance"
+query = "day02 team pressure before architecture task"
+seed = "day02 team pressure before architecture task triggered avoidance"
+visible_distractor = "day02 office pressure gauge maintenance record"
+hidden = "subconscious avoidance reduces review quality and future error detection"
+hidden_distractor = "office plant watering rotation"
+future = "future review misses error signals when avoidance dominates"
+future_distractor = "architecture diagram font preference"
+state_terms = ["subconscious", "future"]
+goal_terms = ["review", "error"]
+
+[[chains]]
+label = "day03-client-demo-tool"
+query = "day03 laptop charger missing before client demo"
+seed = "day03 laptop charger missing before client demo caused anxious planning"
+visible_distractor = "day03 charger shopping list and shipping reminder"
+hidden = "missing tool creates task risk and anxious planning"
+hidden_distractor = "client demo slide color archive"
+future = "future demo failure risk rises when tool planning consumes attention"
+future_distractor = "conference room snack inventory"
+state_terms = ["anxious", "future"]
+goal_terms = ["task", "risk", "attention"]
+
+[[chains]]
+label = "day04-payment-bug"
+query = "day04 past payment bug repeating mistakes"
+seed = "day04 past payment bug made repeated mistake fear salient"
+visible_distractor = "day04 payment receipt export folder"
+hidden = "memory of failure changes future decision attention allocation"
+hidden_distractor = "receipt export naming preference"
+future = "future decision risk increases when attention narrows around failure memory"
+future_distractor = "billing dashboard color note"
+state_terms = ["memory", "future"]
+goal_terms = ["decision", "attention", "risk"]
+
+[[chains]]
+label = "day05-social-trust"
+query = "day05 trust message collaboration communication"
+seed = "day05 trust message from collaboration changed communication tone"
+visible_distractor = "day05 collaboration lunch receipt"
+hidden = "emotion affects communication decision and work attention"
+hidden_distractor = "language history reading list"
+future = "future communication risk drops when trust memory guides tone"
+future_distractor = "handoff template spacing preference"
+state_terms = ["emotion", "memory", "future"]
+goal_terms = ["communication", "decision", "work"]
+
+[[chains]]
+label = "day06-hunger-deployment"
+query = "day06 hunger incident deployment focus"
+seed = "day06 hunger during deployment caused impatient focus"
+visible_distractor = "day06 deployment snack inventory"
+hidden = "hungry state narrows attention and increases operational mistake risk"
+hidden_distractor = "snack shelf location map"
+future = "future operational mistake risk increases when attention narrows"
+future_distractor = "deployment checklist printer setting"
+state_terms = ["hungry", "future"]
+goal_terms = ["attention", "risk"]
+
+[[chains]]
+label = "day07-feedback-handoff"
+query = "day07 social feedback concise chinese handoff"
+seed = "day07 social feedback reinforced concise chinese handoff preference"
+visible_distractor = "day07 social reading note about language history"
+hidden = "preference memory guides communication decision and reduces review friction"
+hidden_distractor = "bibliography sorting note"
+future = "future handoff quality improves when communication memory guides review"
+future_distractor = "meeting room light switch note"
+state_terms = ["memory", "future"]
+goal_terms = ["communication", "review", "quality"]
+
+[[chains]]
+label = "day08-complex-bug-review"
+query = "day08 complex review repeated bug avoidance"
+seed = "day08 complex review after repeated bug triggered avoidance"
+visible_distractor = "day08 complex review checklist title draft"
+hidden = "subconscious avoidance can create future judgement error"
+hidden_distractor = "checklist typography option"
+future = "future judgement error grows when review avoidance stays hidden"
+future_distractor = "label color preference"
+state_terms = ["subconscious", "future"]
+goal_terms = ["error", "review", "judgement"]

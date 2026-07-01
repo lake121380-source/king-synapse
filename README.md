@@ -47,7 +47,7 @@ Still on the roadmap:
 
 - Freeze-review RFC-012 Reflection's rule-based heuristic against its deterministic baseline.
 - Freeze-review RFC-013/RFC-014/RFC-015 now that merge, forget, Hebbian reinforcement, latent inspection, cognitive trace, trace learning, and trace prediction all have deterministic baselines.
-- External benchmark comparisons, larger parameter sweeps, and long-horizon memory trials.
+- External benchmark comparisons, larger parameter sweeps, and exported long-session memory trials.
 - UI, deeper agent integrations, and final release/tag evidence.
 
 See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, `docs/COMPATIBILITY.md`, `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md`, `docs/COGNITIVE_NETWORK_MODEL.md`, and `docs/MANUAL_VALIDATION.md` for the current roadmap, adaptive memory architecture, public API list, stability policy, final cognitive-memory acceptance gates, cognitive-network algorithm model, and manual validation transcript. Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, `docs/releases/v0.4.49-adaptive-policies-freeze.md`, and `docs/releases/v0.5.0-architecture-freeze.md`.
@@ -102,6 +102,7 @@ cargo bench -p synapse-eval --bench trace_reinforcement
 cargo bench -p synapse-eval --bench predictive_trace
 cargo bench -p synapse-eval --bench activation_parameter_sweep
 cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
+cargo bench -p synapse-eval --bench exported_cognitive_session
 ```
 
 ## Plug into opencode

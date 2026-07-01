@@ -155,3 +155,10 @@ Implemented baseline: `CognitiveTraceProbe::predict_continuation()` starts from
 the dominant trace candidate and returns ranked continuation candidates. The
 `predictive_trace` benchmark uses `RecallAt10` to verify that the expected next
 hidden influence appears in the continuation set.
+
+Exported-session baseline:
+`crates/eval/datasets/exported_cognitive_session.toml` records a shared
+long-session fixture outside the Rust code. The `exported_cognitive_session`
+benchmark loads that file and verifies visible recall, dominant hidden
+influence, predictive future continuation, and post-trace learning in one
+shared memory graph.
