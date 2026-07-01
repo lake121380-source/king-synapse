@@ -51,6 +51,8 @@ Detailed per-crate listings follow below.
 - `LatentActivationContext`
 - `LatentActivationProbe`
 - `LatentActivationHit`
+- `QueryLatentActivationProbe`
+- `QueryLatentActivationReport`
 - `QueryEmbedder`
 - `Reranker`
 - `FastEmbedReranker`
@@ -69,6 +71,12 @@ modulation factor, and matched context terms. Optional
 `LatentActivationContext` state/goal terms can increase matching hidden
 activations while remaining capped and explainable. It does not create
 `RecallHit`s, mutate Store, invoke retrievers, or alter recall rankings.
+
+`QueryLatentActivationProbe` is a read-only inspection orchestrator. It first
+uses `RecallEngine` to find visible seed memories for a `RecallQuery`, then
+runs `LatentActivationProbe` from those seed ids. The report separates
+`seeds` from `activations` so query-facing inspection remains outside
+`RecallHit` and does not alter recall rankings.
 
 ### model
 
@@ -324,6 +332,7 @@ Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-determi
 - `synapse_neighbors`
 - `synapse_edges`
 - `synapse_latent_activation`
+- `synapse_latent_query`
 
 Tool JSON schemas are considered part of the stable public API.
 `synapse_recall` accepts optional graph activation fields:
@@ -333,6 +342,9 @@ Tool JSON schemas are considered part of the stable public API.
 or `both`), and optional `k`.
 `synapse_latent_activation` accepts `id`, optional `k`, `scale`, `cap`,
 `steps`, `decay`, `fanout`, `state_terms`, and `goal_terms`.
+`synapse_latent_query` accepts `query`, optional `k`, `seed_k`, `scope`,
+`kind`, `scale`, `cap`, `steps`, `decay`, `fanout`, `state_terms`, and
+`goal_terms`.
 
 ## kr (CLI)
 
@@ -347,6 +359,7 @@ or `both`), and optional `k`.
 - `kr neighbors`
 - `kr edges`
 - `kr latent`
+- `kr latent-query`
 
 Flag names and output structure are considered part of the stable public API.
 `kr recall` supports optional graph activation flags:
@@ -357,6 +370,10 @@ Flag names and output structure are considered part of the stable public API.
 `kr latent <id>` supports `--steps`, `--decay`, `--scale`, `--cap`,
 `--fanout`, repeated `--state`, repeated `--goal`, `-k`, and `--json` for
 inspecting hidden multi-step activation.
+`kr latent-query <query>` supports `--seed-k`, `--scope`, `--kind`,
+`--steps`, `--decay`, `--scale`, `--cap`, `--fanout`, repeated `--state`,
+repeated `--goal`, `-k`, and `--json` for inspecting query-triggered visible
+seed memories plus their hidden activation paths.
 
 ## synapse-eval
 

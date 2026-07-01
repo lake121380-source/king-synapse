@@ -82,6 +82,7 @@ Binaries land in `target/release/`:
 ./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
 ./target/release/kr edges <memory-id> --direction both
 ./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
+./target/release/kr latent-query "forgot water before commute" --state tired --goal commute
 
 # List recent
 ./target/release/kr list --limit 10
@@ -109,7 +110,7 @@ Add to your `opencode.json`:
 }
 ```
 
-The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, `synapse_edges`, and `synapse_latent_activation` available as tools.
+The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, `synapse_edges`, `synapse_latent_activation`, and `synapse_latent_query` available as tools.
 
 ## License
 

@@ -15,6 +15,7 @@ mod engine;
 mod graph_activation;
 mod hit;
 mod latent_activation;
+mod query_latent;
 mod rrf;
 
 use crate::error::Result;
@@ -24,6 +25,7 @@ pub use engine::RecallEngine;
 pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};
 pub use latent_activation::{LatentActivationContext, LatentActivationHit, LatentActivationProbe};
+pub use query_latent::{QueryLatentActivationProbe, QueryLatentActivationReport};
 
 /// Default candidate pool size handed to the reranker before top-k truncation.
 pub const DEFAULT_RERANK_POOL: usize = 50;

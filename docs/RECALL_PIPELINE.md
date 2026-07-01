@@ -128,6 +128,12 @@ slightly stronger while preserving the explanation trail. Because it does not
 produce `RecallHit`s or run inside `RecallEngine`, it can inspect
 candidate-set-external background influence without changing recall rankings.
 
+`QueryLatentActivationProbe` composes the frozen recall pipeline with latent
+inspection: it recalls visible seed memories for a query, then probes hidden
+activation from those seed ids. It returns a separate report containing
+`seeds` and `activations`; it does not add fields to `RecallHit`, change
+`RecallEngine` scoring, or feed latent activations back into recall.
+
 ---
 
 ## 6. Design Invariants

@@ -34,8 +34,9 @@ pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
 pub use recall::{
     BoosterContext, GraphActivationBooster, LatentActivationContext, LatentActivationHit,
-    LatentActivationProbe, NoOpBooster, QueryEmbedder, RecallBooster, RecallEngine, RecallHit,
-    RecallSource, DEFAULT_RERANK_POOL,
+    LatentActivationProbe, NoOpBooster, QueryEmbedder, QueryLatentActivationProbe,
+    QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallSource,
+    DEFAULT_RERANK_POOL,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::{MemoryEdge, Store};

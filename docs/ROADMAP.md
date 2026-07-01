@@ -40,6 +40,7 @@ Current milestone
 ✓ v0.9.8 — Edge Inspection Surface
 ✓ v0.9.9 — Latent Activation Probe
 ✓ v0.9.10 — Context-Modulated Latent Activation
+✓ v0.9.11 — Query-Seeded Latent Activation
 
 Status
 
@@ -110,6 +111,7 @@ Completed foundations
 - v0.9.8 — persisted associative edges are inspectable through Store, CLI, and MCP surfaces
 - v0.9.9 — latent activation can be probed from seed memories without changing recall candidates or rankings
 - v0.9.10 — latent activation can be modulated by explicit state and goal terms while preserving path explanations
+- v0.9.11 — natural-language queries can recall visible seed memories and inspect their hidden activation paths as a separate report
 
 Focus
 

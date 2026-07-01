@@ -4,8 +4,8 @@ use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
     config::Config, GraphActivationBooster, LatentActivationContext, LatentActivationProbe,
-    MemoryKind, RecallBooster, RecallEngine, RecallHit, RecallQuery, Scope, Source, Store,
-    WriteInput,
+    MemoryKind, QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster,
+    RecallEngine, RecallHit, RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -131,6 +131,34 @@ enum Cmd {
         #[arg(long = "state")]
         state_terms: Vec<String>,
         /// Current goal terms that should increase matching latent activations.
+        #[arg(long = "goal")]
+        goal_terms: Vec<String>,
+        #[arg(long)]
+        json: bool,
+    },
+    /// Recall visible seed memories for a query, then probe their latent activation.
+    LatentQuery {
+        query: String,
+        #[arg(long, short = 'k', default_value = "10")]
+        k: usize,
+        #[arg(long, default_value = "3")]
+        seed_k: usize,
+        #[arg(long)]
+        scope: Option<String>,
+        #[arg(long)]
+        kind: Option<String>,
+        #[arg(long, default_value = "0.05")]
+        scale: f32,
+        #[arg(long, default_value = "0.25")]
+        cap: f32,
+        #[arg(long, default_value = "2")]
+        steps: usize,
+        #[arg(long, default_value = "0.5")]
+        decay: f32,
+        #[arg(long, default_value = "16")]
+        fanout: usize,
+        #[arg(long = "state")]
+        state_terms: Vec<String>,
         #[arg(long = "goal")]
         goal_terms: Vec<String>,
         #[arg(long)]
@@ -362,6 +390,37 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Cmd::LatentQuery {
+            query,
+            k,
+            seed_k,
+            scope,
+            kind,
+            scale,
+            cap,
+            steps,
+            decay,
+            fanout,
+            state_terms,
+            goal_terms,
+            json,
+        } => {
+            let q = RecallQuery {
+                query,
+                k: None,
+                scope_filter: scope.map(|s| Scope::from_str(&s)).transpose()?,
+                kind_filter: kind.map(|s| MemoryKind::from_str(&s)).transpose()?,
+            };
+            let latent_probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
+            let query_probe = QueryLatentActivationProbe::new(latent_probe, seed_k);
+            let context = LatentActivationContext::new(state_terms, goal_terms);
+            let report = query_probe.probe(&mut store, &q, k, &context)?;
+            if json {
+                println!("{}", serde_json::to_string_pretty(&report)?);
+            } else {
+                print_query_latent_report(&report);
+            }
+        }
         Cmd::Stats => {
             let n = store.count()?;
             let (done, pending) = store.embedding_stats()?;
@@ -456,6 +515,32 @@ fn print_latent_hit(hit: &synapse_core::LatentActivationHit) {
         matched,
         truncate(&hit.memory.content, 90)
     );
+}
+
+fn print_query_latent_report(report: &QueryLatentActivationReport) {
+    if report.seeds.is_empty() {
+        println!("Seeds: (none)");
+    } else {
+        println!("Seeds:");
+        for hit in &report.seeds {
+            println!(
+                "  [{:.3}] {}  {}",
+                hit.score,
+                short_id(&hit.memory.id),
+                truncate(&hit.memory.content, 90)
+            );
+        }
+    }
+
+    if report.activations.is_empty() {
+        println!("Latent: (none)");
+    } else {
+        println!("Latent:");
+        for hit in &report.activations {
+            print!("  ");
+            print_latent_hit(hit);
+        }
+    }
 }
 
 fn print_hit(h: &synapse_core::RecallHit) {

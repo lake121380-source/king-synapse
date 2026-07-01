@@ -4,7 +4,7 @@ use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
     GraphActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryKind,
-    RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
+    QueryLatentActivationProbe, RecallEngine, RecallQuery, Scope, Source, Store, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
@@ -19,6 +19,7 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_neighbors(),
         descriptor_edges(),
         descriptor_latent_activation(),
+        descriptor_latent_query(),
     ]
 }
 
@@ -154,6 +155,31 @@ fn descriptor_latent_activation() -> Value {
     })
 }
 
+fn descriptor_latent_query() -> Value {
+    json!({
+        "name": "synapse_latent_query",
+        "description": "Recall visible seed memories for a query, then probe their latent multi-step activation.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["query"],
+            "properties": {
+                "query": { "type": "string" },
+                "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 10 },
+                "seed_k": { "type": "integer", "minimum": 1, "maximum": 20, "default": 3 },
+                "scope": { "type": "string" },
+                "kind": { "type": "string", "enum": ["fact","preference","failure","playbook","state"] },
+                "scale": { "type": "number", "default": 0.05 },
+                "cap": { "type": "number", "default": 0.25 },
+                "steps": { "type": "integer", "minimum": 1, "maximum": 8, "default": 2 },
+                "decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
+                "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 },
+                "state_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] }
+            }
+        }
+    })
+}
+
 pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
     let name = params
         .get("name")
@@ -170,6 +196,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_neighbors" => do_neighbors(store, &args)?,
         "synapse_edges" => do_edges(store, &args)?,
         "synapse_latent_activation" => do_latent_activation(store, &args)?,
+        "synapse_latent_query" => do_latent_query(store, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -380,6 +407,62 @@ fn do_latent_activation(store: &StoreHandle, args: &Value) -> Result<Value> {
     let context = LatentActivationContext::new(state_terms, goal_terms);
     let activations = probe.activate_with_context(&s, &[&id], k, &context)?;
     Ok(json!({ "activations": activations }))
+}
+
+fn do_latent_query(store: &StoreHandle, args: &Value) -> Result<Value> {
+    let query = args
+        .get("query")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| anyhow::anyhow!("query required"))?
+        .to_string();
+    let k = args
+        .get("k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(10);
+    let seed_k = args
+        .get("seed_k")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(3);
+    let scope = args
+        .get("scope")
+        .and_then(|v| v.as_str())
+        .map(Scope::from_str)
+        .transpose()?;
+    let kind = args
+        .get("kind")
+        .and_then(|v| v.as_str())
+        .map(MemoryKind::from_str)
+        .transpose()?;
+    let scale = arg_f32(args, "scale", 0.05);
+    let cap = arg_f32(args, "cap", 0.25);
+    let steps = args
+        .get("steps")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(2);
+    let decay = arg_f32(args, "decay", 0.5);
+    let fanout = args
+        .get("fanout")
+        .and_then(|v| v.as_u64())
+        .map(|x| x as usize)
+        .unwrap_or(16);
+    let state_terms = string_array(args, "state_terms");
+    let goal_terms = string_array(args, "goal_terms");
+
+    let mut s = store.lock().unwrap();
+    let query = RecallQuery {
+        query,
+        k: None,
+        scope_filter: scope,
+        kind_filter: kind,
+    };
+    let latent_probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
+    let query_probe = QueryLatentActivationProbe::new(latent_probe, seed_k);
+    let context = LatentActivationContext::new(state_terms, goal_terms);
+    let report = query_probe.probe(&mut s, &query, k, &context)?;
+    Ok(json!({ "report": report }))
 }
 
 fn string_array(args: &Value, key: &str) -> Vec<String> {
