@@ -30,6 +30,9 @@ cargo bench -p synapse-eval --bench merge_precision
 
 # RFC-014 forget benchmark suite (rule-based)
 cargo bench -p synapse-eval --bench forget_precision
+
+# RFC-015 hebbian benchmark suite (rule-based)
+cargo bench -p synapse-eval --bench hebbian_consistency
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -50,6 +53,12 @@ The forget benchmark emits one `BenchmarkReport` value:
 - `benchmark = "forget-precision"` for the v0.8.3 rule-based forget algorithm
 
 The report uses `AlgorithmMetric::ForgetPrecision`.
+
+The hebbian benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "hebbian-consistency"` for the v0.9.3 rule-based hebbian algorithm
+
+The report uses `AlgorithmMetric::HebbianConsistency`.
 
 ## Metrics
 

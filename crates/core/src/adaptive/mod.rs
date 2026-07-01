@@ -13,6 +13,7 @@ pub mod context;
 pub mod event;
 pub mod event_stream;
 pub mod forget;
+pub mod hebbian;
 pub mod importance;
 pub mod merge;
 pub mod reflection;
@@ -23,6 +24,10 @@ pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryE
 pub use forget::{
     ForgetAlgorithm, ForgetOutput, ForgetReason, ForgetSkipReason, ForgetTarget,
     NoOpForgetAlgorithm, RuleBasedForgetAlgorithm,
+};
+pub use hebbian::{
+    HebbianAlgorithm, HebbianOutput, HebbianSkipReason, HebbianTarget, NoOpHebbianAlgorithm,
+    RuleBasedHebbianAlgorithm,
 };
 pub use importance::{
     ImportanceEstimator, ImportanceSignal, ImportanceSignals, MemoryImportance,

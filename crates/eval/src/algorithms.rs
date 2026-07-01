@@ -2,9 +2,10 @@ use crate::{AlgorithmMetric, BenchmarkReport};
 use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
-    ForgetTarget, InMemoryMemoryEventStream, Memory, MemoryEvent, MemoryEventId, MemoryEventKind,
-    MemoryEventPayload, MemoryEventStream, MemoryKind, MergeAlgorithm, MergeOutput, MergeTarget,
-    ReflectionAlgorithm, ReflectionOutput, RuleBasedForgetAlgorithm, RuleBasedMergeAlgorithm,
+    ForgetTarget, HebbianAlgorithm, HebbianOutput, HebbianTarget, InMemoryMemoryEventStream,
+    Memory, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream,
+    MemoryKind, MergeAlgorithm, MergeOutput, MergeTarget, ReflectionAlgorithm, ReflectionOutput,
+    RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm, RuleBasedMergeAlgorithm,
     RuleBasedReflectionAlgorithm, Scope, Source, UniformImportanceEstimator,
 };
 
@@ -12,6 +13,7 @@ const REFLECTION_BENCHMARK_NAME: &str = "reflection-yield";
 const RULE_BASED_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-rule-based";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
+const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
 
 /// Run the RFC-012 deterministic reference benchmark for Reflection.
 ///
@@ -109,6 +111,46 @@ pub fn forget_precision_report() -> BenchmarkReport {
     BenchmarkReport {
         benchmark: FORGET_BENCHMARK_NAME.to_string(),
         metrics: BTreeMap::from([(AlgorithmMetric::ForgetPrecision, precision)]),
+    }
+}
+
+/// Run the RFC-015 rule-based Hebbian benchmark.
+///
+/// `HebbianConsistency` is the fraction of expected directed edges produced by
+/// the deterministic fixture, with false-positive edges penalized.
+pub fn hebbian_consistency_report() -> BenchmarkReport {
+    let (target, expected_edges) = hebbian_fixture();
+    let importance = UniformImportanceEstimator;
+    let events = InMemoryMemoryEventStream::with_capacity(16);
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0)
+        .expect("fixed benchmark timestamp must be valid");
+    let ctx = AlgorithmContext::new(now, None, &importance, &events);
+    let algorithm = RuleBasedHebbianAlgorithm::default();
+
+    let produced_edges = match algorithm.reinforce(&target, &ctx) {
+        HebbianOutput::Plans { plans, .. } => plans
+            .into_iter()
+            .map(|plan| (plan.source, plan.target))
+            .collect::<std::collections::BTreeSet<_>>(),
+        HebbianOutput::Skipped { .. } => std::collections::BTreeSet::new(),
+        _ => std::collections::BTreeSet::new(),
+    };
+    let expected_edges = expected_edges
+        .into_iter()
+        .collect::<std::collections::BTreeSet<_>>();
+    let true_positives = produced_edges.intersection(&expected_edges).count() as f64;
+    let false_positives = produced_edges.difference(&expected_edges).count() as f64;
+    let missed = expected_edges.difference(&produced_edges).count() as f64;
+    let denominator = true_positives + false_positives + missed;
+    let consistency = if denominator == 0.0 {
+        0.0
+    } else {
+        true_positives / denominator
+    };
+
+    BenchmarkReport {
+        benchmark: HEBBIAN_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([(AlgorithmMetric::HebbianConsistency, consistency)]),
     }
 }
 
@@ -352,6 +394,49 @@ fn forget_fixture() -> Vec<(ForgetTarget, bool)> {
     ]
 }
 
+fn hebbian_fixture() -> (HebbianTarget, Vec<(String, String)>) {
+    let now = chrono::DateTime::from_timestamp(1_700_000_000, 0)
+        .expect("fixed benchmark timestamp must be valid");
+    let recall_event = MemoryEvent {
+        id: MemoryEventId::nil(),
+        timestamp: now,
+        session_id: None,
+        kind: MemoryEventKind::Recalled,
+        memory_ids: vec!["a".to_string(), "b".to_string()],
+        payload: MemoryEventPayload::Recalled {
+            query: "auth refresh".to_string(),
+            hit_count: 2,
+        },
+    };
+    let merge_event = MemoryEvent {
+        id: MemoryEventId::nil(),
+        timestamp: now,
+        session_id: None,
+        kind: MemoryEventKind::MergeCompleted,
+        memory_ids: vec!["b".to_string(), "c".to_string()],
+        payload: MemoryEventPayload::MergeCompleted {
+            into: "b".to_string(),
+        },
+    };
+    let single_event = MemoryEvent {
+        id: MemoryEventId::nil(),
+        timestamp: now,
+        session_id: None,
+        kind: MemoryEventKind::Written,
+        memory_ids: vec!["d".to_string()],
+        payload: MemoryEventPayload::Empty,
+    };
+    (
+        HebbianTarget::new(vec![recall_event, merge_event, single_event]),
+        vec![
+            ("a".to_string(), "b".to_string()),
+            ("b".to_string(), "a".to_string()),
+            ("b".to_string(), "c".to_string()),
+            ("c".to_string(), "b".to_string()),
+        ],
+    )
+}
+
 fn memory(id: &str, content: &str) -> Memory {
     memory_with_kind(id, MemoryKind::Fact, Scope::Global, content)
 }
@@ -445,6 +530,26 @@ mod tests {
         assert_eq!(report.metrics.len(), 1);
         assert_eq!(
             report.metrics.get(&AlgorithmMetric::ForgetPrecision),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn hebbian_consistency_report_is_deterministic() {
+        let a = hebbian_consistency_report();
+        let b = hebbian_consistency_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn hebbian_consistency_report_uses_contract_shape() {
+        let report = hebbian_consistency_report();
+
+        assert_eq!(report.benchmark, "hebbian-consistency");
+        assert_eq!(report.metrics.len(), 1);
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
             Some(&1.0)
         );
     }
