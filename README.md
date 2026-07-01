@@ -82,7 +82,7 @@ Binaries land in `target/release/`:
 ./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
 ./target/release/kr edges <memory-id> --direction both
 ./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
-./target/release/kr latent-query "forgot water before commute" --state tired --goal commute
+./target/release/kr latent-query "forgot water before commute while tired" --auto-context
 
 # List recent
 ./target/release/kr list --limit 10

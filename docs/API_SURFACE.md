@@ -75,8 +75,10 @@ activations while remaining capped and explainable. It does not create
 `QueryLatentActivationProbe` is a read-only inspection orchestrator. It first
 uses `RecallEngine` to find visible seed memories for a `RecallQuery`, then
 runs `LatentActivationProbe` from those seed ids. The report separates
-`seeds` from `activations` so query-facing inspection remains outside
-`RecallHit` and does not alter recall rankings.
+`seeds` from `activations` and includes the final latent context. Optional
+auto-context derives additional state/goal terms from the query text so
+query-facing inspection remains outside `RecallHit` and does not alter recall
+rankings.
 
 ### model
 
@@ -344,7 +346,7 @@ or `both`), and optional `k`.
 `steps`, `decay`, `fanout`, `state_terms`, and `goal_terms`.
 `synapse_latent_query` accepts `query`, optional `k`, `seed_k`, `scope`,
 `kind`, `scale`, `cap`, `steps`, `decay`, `fanout`, `state_terms`, and
-`goal_terms`.
+`goal_terms`, and `auto_context`.
 
 ## kr (CLI)
 
@@ -372,8 +374,8 @@ Flag names and output structure are considered part of the stable public API.
 inspecting hidden multi-step activation.
 `kr latent-query <query>` supports `--seed-k`, `--scope`, `--kind`,
 `--steps`, `--decay`, `--scale`, `--cap`, `--fanout`, repeated `--state`,
-repeated `--goal`, `-k`, and `--json` for inspecting query-triggered visible
-seed memories plus their hidden activation paths.
+repeated `--goal`, `--auto-context`, `-k`, and `--json` for inspecting
+query-triggered visible seed memories plus their hidden activation paths.
 
 ## synapse-eval
 

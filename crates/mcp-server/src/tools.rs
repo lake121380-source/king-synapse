@@ -149,7 +149,8 @@ fn descriptor_latent_activation() -> Value {
                 "decay": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 },
                 "fanout": { "type": "integer", "minimum": 1, "maximum": 200, "default": 16 },
                 "state_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
-                "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] }
+                "goal_terms": { "type": "array", "items": { "type": "string" }, "default": [] },
+                "auto_context": { "type": "boolean", "default": false }
             }
         }
     })
@@ -450,6 +451,10 @@ fn do_latent_query(store: &StoreHandle, args: &Value) -> Result<Value> {
         .unwrap_or(16);
     let state_terms = string_array(args, "state_terms");
     let goal_terms = string_array(args, "goal_terms");
+    let auto_context = args
+        .get("auto_context")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
 
     let mut s = store.lock().unwrap();
     let query = RecallQuery {
@@ -461,7 +466,11 @@ fn do_latent_query(store: &StoreHandle, args: &Value) -> Result<Value> {
     let latent_probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
     let query_probe = QueryLatentActivationProbe::new(latent_probe, seed_k);
     let context = LatentActivationContext::new(state_terms, goal_terms);
-    let report = query_probe.probe(&mut s, &query, k, &context)?;
+    let report = if auto_context {
+        query_probe.probe_auto_context(&mut s, &query, k, &context)?
+    } else {
+        query_probe.probe(&mut s, &query, k, &context)?
+    };
     Ok(json!({ "report": report }))
 }
 

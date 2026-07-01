@@ -131,8 +131,10 @@ candidate-set-external background influence without changing recall rankings.
 `QueryLatentActivationProbe` composes the frozen recall pipeline with latent
 inspection: it recalls visible seed memories for a query, then probes hidden
 activation from those seed ids. It returns a separate report containing
-`seeds` and `activations`; it does not add fields to `RecallHit`, change
-`RecallEngine` scoring, or feed latent activations back into recall.
+`seeds`, `activations`, and the final latent context. Optional auto-context
+derives extra state and goal terms from the query text. It does not add fields
+to `RecallHit`, change `RecallEngine` scoring, or feed latent activations back
+into recall.
 
 ---
 

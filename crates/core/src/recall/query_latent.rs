@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 pub struct QueryLatentActivationReport {
     pub seeds: Vec<RecallHit>,
     pub activations: Vec<LatentActivationHit>,
+    pub context: LatentActivationContext,
 }
 
 pub struct QueryLatentActivationProbe {
@@ -42,6 +43,7 @@ impl QueryLatentActivationProbe {
             return Ok(QueryLatentActivationReport {
                 seeds: Vec::new(),
                 activations: Vec::new(),
+                context: context.clone(),
             });
         }
 
@@ -60,7 +62,23 @@ impl QueryLatentActivationProbe {
             self.latent_probe
                 .activate_with_context(store, &seed_ids, activation_limit, context)?;
 
-        Ok(QueryLatentActivationReport { seeds, activations })
+        Ok(QueryLatentActivationReport {
+            seeds,
+            activations,
+            context: context.clone(),
+        })
+    }
+
+    pub fn probe_auto_context(
+        &self,
+        store: &mut Store,
+        query: &RecallQuery,
+        activation_limit: usize,
+        explicit_context: &LatentActivationContext,
+    ) -> Result<QueryLatentActivationReport> {
+        let context =
+            LatentActivationContext::from_text(&query.query).merge(explicit_context.clone());
+        self.probe(store, query, activation_limit, &context)
     }
 }
 
@@ -111,13 +129,14 @@ mod tests {
         let report = probe.probe(&mut store, &query, 10, &context).unwrap();
 
         assert_eq!(report.seeds.len(), 1);
-        assert_eq!(report.seeds[0].memory.id, seed);
+        assert!(report.seeds.iter().any(|hit| hit.memory.id == seed));
         assert_eq!(report.activations.len(), 1);
         assert_eq!(report.activations[0].memory.id, latent);
         assert_eq!(
             report.activations[0].matched_terms,
             vec!["goal:commute".to_string(), "state:mood".to_string()]
         );
+        assert_eq!(report.context, context);
     }
 
     #[test]
@@ -136,5 +155,43 @@ mod tests {
 
         assert!(report.seeds.is_empty());
         assert!(report.activations.is_empty());
+        assert_eq!(report.context, LatentActivationContext::default());
+    }
+
+    #[test]
+    fn query_latent_probe_can_derive_context_terms_from_query_text() {
+        let mut store = Store::open_in_memory().unwrap();
+        let seed = add(&mut store, "forgot morning water tired commute before work");
+        let latent = add(&mut store, "tired commute attention failure");
+        store.update_edge(&seed, &latent, 2.0).unwrap();
+
+        let query = RecallQuery {
+            query: "forgot morning water tired commute".to_string(),
+            k: None,
+            scope_filter: None,
+            kind_filter: None,
+        };
+        let probe = QueryLatentActivationProbe::new(
+            LatentActivationProbe::with_config(0.05, 0.25, 2, 0.5, 10),
+            1,
+        );
+        let report = probe
+            .probe_auto_context(&mut store, &query, 10, &LatentActivationContext::default())
+            .unwrap();
+
+        assert!(report.seeds.iter().any(|hit| hit.memory.id == seed));
+        let latent_hit = report
+            .activations
+            .iter()
+            .find(|hit| hit.memory.id == latent)
+            .unwrap();
+        assert!(report.context.state_terms.contains(&"tired".to_string()));
+        assert!(report.context.goal_terms.contains(&"commute".to_string()));
+        assert!(latent_hit
+            .matched_terms
+            .contains(&"state:tired".to_string()));
+        assert!(latent_hit
+            .matched_terms
+            .contains(&"goal:commute".to_string()));
     }
 }

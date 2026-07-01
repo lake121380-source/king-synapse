@@ -161,6 +161,9 @@ enum Cmd {
         state_terms: Vec<String>,
         #[arg(long = "goal")]
         goal_terms: Vec<String>,
+        /// Derive additional state/goal terms from the query text.
+        #[arg(long)]
+        auto_context: bool,
         #[arg(long)]
         json: bool,
     },
@@ -403,6 +406,7 @@ fn main() -> Result<()> {
             fanout,
             state_terms,
             goal_terms,
+            auto_context,
             json,
         } => {
             let q = RecallQuery {
@@ -414,7 +418,11 @@ fn main() -> Result<()> {
             let latent_probe = LatentActivationProbe::with_config(scale, cap, steps, decay, fanout);
             let query_probe = QueryLatentActivationProbe::new(latent_probe, seed_k);
             let context = LatentActivationContext::new(state_terms, goal_terms);
-            let report = query_probe.probe(&mut store, &q, k, &context)?;
+            let report = if auto_context {
+                query_probe.probe_auto_context(&mut store, &q, k, &context)?
+            } else {
+                query_probe.probe(&mut store, &q, k, &context)?
+            };
             if json {
                 println!("{}", serde_json::to_string_pretty(&report)?);
             } else {
@@ -518,6 +526,14 @@ fn print_latent_hit(hit: &synapse_core::LatentActivationHit) {
 }
 
 fn print_query_latent_report(report: &QueryLatentActivationReport) {
+    if !report.context.state_terms.is_empty() || !report.context.goal_terms.is_empty() {
+        println!(
+            "Context: state=[{}] goal=[{}]",
+            report.context.state_terms.join(","),
+            report.context.goal_terms.join(",")
+        );
+    }
+
     if report.seeds.is_empty() {
         println!("Seeds: (none)");
     } else {

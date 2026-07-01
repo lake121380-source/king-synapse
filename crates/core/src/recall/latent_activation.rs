@@ -43,6 +43,21 @@ impl LatentActivationContext {
         }
     }
 
+    pub fn from_text(text: &str) -> Self {
+        Self {
+            state_terms: state_terms_from_text(text),
+            goal_terms: goal_terms_from_text(text),
+        }
+    }
+
+    pub fn merge(self, other: Self) -> Self {
+        let mut state_terms = self.state_terms;
+        state_terms.extend(other.state_terms);
+        let mut goal_terms = self.goal_terms;
+        goal_terms.extend(other.goal_terms);
+        Self::new(state_terms, goal_terms)
+    }
+
     pub fn is_empty(&self) -> bool {
         self.state_terms.is_empty() && self.goal_terms.is_empty()
     }
@@ -361,6 +376,56 @@ fn normalize_terms(terms: Vec<String>) -> Vec<String> {
     normalized.sort();
     normalized.dedup();
     normalized
+}
+
+fn state_terms_from_text(text: &str) -> Vec<String> {
+    const STATE_MARKERS: &[&str] = &[
+        "angry",
+        "anxious",
+        "blocked",
+        "confused",
+        "frustrated",
+        "hungry",
+        "late",
+        "sad",
+        "stressed",
+        "tired",
+        "worried",
+        "焦虑",
+        "困",
+        "累",
+        "生气",
+        "压力",
+        "烦",
+        "饿",
+    ];
+    let lowered = text.to_ascii_lowercase();
+    let mut terms = STATE_MARKERS
+        .iter()
+        .filter(|term| lowered.contains(&term.to_ascii_lowercase()) || text.contains(**term))
+        .map(|term| (*term).to_string())
+        .collect::<Vec<_>>();
+    terms.sort();
+    terms.dedup();
+    terms
+}
+
+fn goal_terms_from_text(text: &str) -> Vec<String> {
+    const STOPWORDS: &[&str] = &[
+        "about", "after", "again", "before", "from", "have", "into", "that", "the", "this", "with",
+        "需要", "因为", "如果", "怎么", "时候", "这个", "那个",
+    ];
+    let stopwords = STOPWORDS.iter().copied().collect::<HashSet<_>>();
+    let mut terms = text
+        .split(|ch: char| !ch.is_alphanumeric())
+        .map(|term| term.trim().to_ascii_lowercase())
+        .filter(|term| term.chars().count() >= 4)
+        .filter(|term| !stopwords.contains(term.as_str()))
+        .take(8)
+        .collect::<Vec<_>>();
+    terms.sort();
+    terms.dedup();
+    terms
 }
 
 fn compare_latent_hits(a: &LatentActivationHit, b: &LatentActivationHit) -> Ordering {
