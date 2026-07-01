@@ -1,6 +1,6 @@
 # Cognitive Memory Final Acceptance
 
-Status: **Living Acceptance Plan**
+Status: **Final Accepted**
 
 This document defines what must be true before King Synapse can be called a
 complete cognitive memory system rather than an active Phase 5 implementation.
@@ -91,7 +91,7 @@ Expected minimums:
 - `exported-cognitive-session` reports `RecallAt10 = 1.0`,
   `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 
-## Remaining Finalization Work
+## Finalization Disposition
 
 - RFC-012 Reflection, RFC-013 Merge, RFC-014 Forget, and RFC-015 Hebbian were
   freeze-reviewed and accepted in
@@ -114,3 +114,6 @@ Expected minimums:
 The project is final only when every item in Required Verification Gates passes,
 every Remaining Finalization Work item is either completed or explicitly moved
 out of scope by an ADR, and the release/tag evidence is present in the repo.
+
+This rule is satisfied by the evidence table above and the pushed
+`v0.9.26-cognitive-memory-freeze` tag.
