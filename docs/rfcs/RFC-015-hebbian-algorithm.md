@@ -17,6 +17,7 @@ v0.9.0-hebbian-algorithm-skeleton        (implemented)
 v0.9.1-hebbian-algorithm-noop            (implemented)
 v0.9.2-hebbian-rule-based-reference      (implemented)
 v0.9.3-hebbian-benchmark                 (implemented)
+v0.9.4-hebbian-store-adapter             (implemented)
 v0.9.9-hebbian-algorithm-freeze          (planned)
 ```
 
@@ -81,6 +82,24 @@ HebbianOutput
 
 The output is not a Store mutation. It is a set of existing `EdgeUpdatePlan`
 values that later flow through the frozen Hebbian execution layer.
+
+## Store Integration
+
+`v0.9.4` connects Hebbian algorithm output into the existing store-mutation
+planning boundary without changing any frozen contracts:
+
+```text
+HebbianOutput::Plans
+  -> EdgeUpdatePlan
+  -> HebbianExecutor
+  -> HebbianExecutionReport
+  -> DeterministicHebbianStoreMutationDispatcher
+  -> StoreMutationPlan(UpdateEdge)
+```
+
+Only executed `ExecutedEdgeUpdate::Apply` actions become
+`StoreMutation::UpdateEdge` values. Skipped invalid or duplicate edge updates
+remain in `HebbianExecutionReport` and are not dispatched to Store.
 
 ## Algorithm Flow
 

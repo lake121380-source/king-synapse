@@ -33,6 +33,7 @@ Current milestone
 ✓ v0.9.1 — NoOp Hebbian Algorithm
 ✓ v0.9.2 — Rule-Based Hebbian Algorithm
 ✓ v0.9.3 — Hebbian Consistency Benchmark
+✓ v0.9.4 — Hebbian Store Adapter
 
 Status
 
@@ -96,13 +97,14 @@ Completed foundations
 - v0.9.1 — NoOp hebbian implementation
 - v0.9.2 — Rule-based hebbian heuristic
 - v0.9.3 — Hebbian consistency benchmark (`BenchmarkReport` mapped to `HebbianConsistency`)
+- v0.9.4 — Hebbian edge plans map into existing StoreMutation plans
 
 Focus
 
 - RFC-012 Reflection Algorithm — freeze-review the rule-based heuristic and production-grade benchmarks.
 - RFC-013 Merge Algorithm — freeze-review merge lifecycle behavior and harden production benchmarks.
 - RFC-014 Forget Algorithm — freeze-review forget lifecycle behavior and harden production benchmarks.
-- **RFC-015 Hebbian Algorithm** — current milestone; connect Hebbian edge plans into the frozen Hebbian execution/store path without changing stable contracts.
+- **RFC-015 Hebbian Algorithm** — freeze-review the rule-based heuristic, execution adapter, and benchmark before `v0.9.9`.
 - Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0).
 - Parameter sweeps and ablation studies.
 

@@ -71,8 +71,8 @@ pub use store_adapter::{
     StoreMutationPlan,
 };
 pub use store_dispatcher::{
-    DeterministicReflectionStoreMutationDispatcher, DeterministicStoreMutationDispatcher,
-    NoOpStoreMutationDispatcher, StoreMutationDispatcher,
+    DeterministicHebbianStoreMutationDispatcher, DeterministicReflectionStoreMutationDispatcher,
+    DeterministicStoreMutationDispatcher, NoOpStoreMutationDispatcher, StoreMutationDispatcher,
 };
 pub use store_sink::{NoOpStoreSink, StoreSink};
 
@@ -555,6 +555,82 @@ mod tests {
                     id: "mem-discarded".to_string(),
                 },
             ]
+        );
+    }
+
+    #[test]
+    fn hebbian_store_dispatcher_maps_edge_updates_to_store_mutations() {
+        let plans = vec![
+            EdgeUpdatePlan {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.2,
+            },
+            EdgeUpdatePlan {
+                source: "mem-b".to_string(),
+                target: "mem-a".to_string(),
+                weight_delta: 0.2,
+            },
+        ];
+        let executor = PlanOnlyHebbianExecutor;
+        let report = executor.execute(&plans);
+        let original = report.clone();
+        let dispatcher = DeterministicHebbianStoreMutationDispatcher::new(report.clone());
+
+        let mutation_plan = dispatcher.dispatch();
+
+        assert_eq!(report, original);
+        assert_eq!(
+            mutation_plan.mutations,
+            vec![
+                StoreMutation::UpdateEdge {
+                    source: "mem-a".to_string(),
+                    target: "mem-b".to_string(),
+                    weight_delta: 0.2,
+                },
+                StoreMutation::UpdateEdge {
+                    source: "mem-b".to_string(),
+                    target: "mem-a".to_string(),
+                    weight_delta: 0.2,
+                },
+            ]
+        );
+    }
+
+    #[test]
+    fn hebbian_store_dispatcher_ignores_skipped_edge_updates() {
+        let plans = vec![
+            EdgeUpdatePlan {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.2,
+            },
+            EdgeUpdatePlan {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.4,
+            },
+            EdgeUpdatePlan {
+                source: String::new(),
+                target: "mem-c".to_string(),
+                weight_delta: 0.6,
+            },
+        ];
+        let executor = PlanOnlyHebbianExecutor;
+        let report = executor.execute(&plans);
+        let dispatcher = DeterministicHebbianStoreMutationDispatcher::new(report);
+
+        let mutation_plan_a = dispatcher.dispatch();
+        let mutation_plan_b = dispatcher.dispatch();
+
+        assert_eq!(mutation_plan_a, mutation_plan_b);
+        assert_eq!(
+            mutation_plan_a.mutations,
+            vec![StoreMutation::UpdateEdge {
+                source: "mem-a".to_string(),
+                target: "mem-b".to_string(),
+                weight_delta: 0.2,
+            }]
         );
     }
 

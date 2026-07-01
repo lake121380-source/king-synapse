@@ -171,6 +171,7 @@ Frozen by `v0.4.29-hebbian-execution-freeze`.
 - `NoOpStoreMutationDispatcher`
 - `DeterministicStoreMutationDispatcher`
 - `DeterministicReflectionStoreMutationDispatcher`
+- `DeterministicHebbianStoreMutationDispatcher`
 - `StoreExecutionReport`
 - `StoreExecutionStatistics`
 - `StoreExecutionWarning`
@@ -266,7 +267,7 @@ Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-
 - `NoOpHebbianAlgorithm`
 - `RuleBasedHebbianAlgorithm` (deterministic heuristic implementation; emits edge-update plans)
 
-Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, `v0.7.3-merge-benchmark`, `v0.7.4-merge-store-adapter`, `v0.8.0-forget-algorithm-skeleton`, `v0.8.2-forget-rule-based-reference`, `v0.8.3-forget-benchmark`, `v0.8.4-forget-store-adapter`, `v0.9.0-hebbian-algorithm-skeleton`, `v0.9.2-hebbian-rule-based-reference`, and `v0.9.3-hebbian-benchmark`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
+Introduced by `v0.6.0-reflection-algorithm-skeleton`, `v0.6.2-reflection-deterministic-reference`, `v0.6.4-reflection-processing-adapter`, `v0.7.0-merge-algorithm-skeleton`, `v0.7.2-merge-rule-based-reference`, `v0.7.3-merge-benchmark`, `v0.7.4-merge-store-adapter`, `v0.8.0-forget-algorithm-skeleton`, `v0.8.2-forget-rule-based-reference`, `v0.8.3-forget-benchmark`, `v0.8.4-forget-store-adapter`, `v0.9.0-hebbian-algorithm-skeleton`, `v0.9.2-hebbian-rule-based-reference`, `v0.9.3-hebbian-benchmark`, and `v0.9.4-hebbian-store-adapter`. These items are algorithm-local; they do not extend RFC-011 and do not add new shared top-level adaptive types.
 
 ### entity
 

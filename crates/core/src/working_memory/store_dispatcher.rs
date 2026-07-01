@@ -1,6 +1,6 @@
 use crate::working_memory::{
-    ExecutedAction, ExecutionReport, MergeGroup, ReflectionEvent, ReflectionPlan, StoreMutation,
-    StoreMutationPlan, WorkingMemoryItem,
+    ExecutedAction, ExecutedEdgeUpdate, ExecutionReport, HebbianExecutionReport, MergeGroup,
+    ReflectionEvent, ReflectionPlan, StoreMutation, StoreMutationPlan, WorkingMemoryItem,
 };
 
 const REFLECTION_EDGE_DELTA: f32 = 0.1;
@@ -63,6 +63,29 @@ impl StoreMutationDispatcher for DeterministicReflectionStoreMutationDispatcher 
     }
 }
 
+pub struct DeterministicHebbianStoreMutationDispatcher {
+    report: HebbianExecutionReport,
+}
+
+impl DeterministicHebbianStoreMutationDispatcher {
+    pub fn new(report: HebbianExecutionReport) -> Self {
+        Self { report }
+    }
+}
+
+impl StoreMutationDispatcher for DeterministicHebbianStoreMutationDispatcher {
+    fn dispatch(&self) -> StoreMutationPlan {
+        let mutations = self
+            .report
+            .executed_actions
+            .iter()
+            .map(dispatch_hebbian_edge_update)
+            .collect();
+
+        StoreMutationPlan { mutations }
+    }
+}
+
 fn dispatch_action(action: &ExecutedAction) -> Vec<StoreMutation> {
     match action {
         ExecutedAction::Archive(action) => vec![StoreMutation::InsertMemory {
@@ -99,6 +122,16 @@ fn dispatch_reflection_event(event: &ReflectionEvent) -> Vec<StoreMutation> {
         .map(|id| StoreMutation::ArchiveMemory { id: id.clone() });
 
     promoted.chain(merged).chain(discarded).collect()
+}
+
+fn dispatch_hebbian_edge_update(action: &ExecutedEdgeUpdate) -> StoreMutation {
+    match action {
+        ExecutedEdgeUpdate::Apply(plan) => StoreMutation::UpdateEdge {
+            source: plan.source.clone(),
+            target: plan.target.clone(),
+            weight_delta: plan.weight_delta,
+        },
+    }
 }
 
 fn dispatch_merge_items(items: &[WorkingMemoryItem]) -> Option<StoreMutation> {
