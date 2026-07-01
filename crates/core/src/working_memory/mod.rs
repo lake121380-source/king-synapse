@@ -11,6 +11,7 @@ mod hebbian;
 mod hebbian_sink;
 mod item;
 mod persistent_store;
+mod policy;
 mod reflection;
 mod reflection_processing;
 mod reflection_sink;
@@ -40,6 +41,10 @@ pub use item::{MemoryId, WorkingMemoryEdge, WorkingMemoryItem};
 pub use persistent_store::{
     KuzuPersistentStoreExecutor, NoOpPersistentStoreExecutor, PersistentStoreExecutor,
     SQLitePersistentStoreExecutor,
+};
+pub use policy::{
+    AdaptivePolicy, ForgetPolicy, HebbianPolicy, MergePolicy, NoOpForgetPolicy, NoOpHebbianPolicy,
+    NoOpMergePolicy, NoOpReflectionPolicy, PolicyDecision, ReflectionPolicy,
 };
 pub use reflection::{
     InMemoryReflectionEventStream, NoOpReflectionEventRecorder, ReflectionEvent, ReflectionEventId,
@@ -833,5 +838,71 @@ mod tests {
 
         assert_eq!(sink_a.observed_actions, 1);
         assert_eq!(sink_b.observed_actions, 1);
+    }
+
+    #[test]
+    fn noop_reflection_policy_is_deterministic() {
+        let policy = NoOpReflectionPolicy;
+        let event = ReflectionEvent::new(
+            SessionId::new(),
+            ReflectionSource::ConsolidationPlan,
+            ReflectionPayload {
+                promoted: vec!["mem-a".to_string()],
+                merged: Vec::new(),
+                discarded: Vec::new(),
+            },
+        );
+        assert_eq!(policy.evaluate(&event), PolicyDecision::Execute);
+        assert_eq!(policy.evaluate(&event), PolicyDecision::Execute);
+    }
+
+    #[test]
+    fn noop_hebbian_policy_is_deterministic() {
+        let policy = NoOpHebbianPolicy;
+        let plan = EdgeUpdatePlan {
+            source: "a".to_string(),
+            target: "b".to_string(),
+            weight_delta: 0.1,
+        };
+        assert_eq!(policy.evaluate(&plan), PolicyDecision::Execute);
+        assert_eq!(policy.evaluate(&plan), PolicyDecision::Execute);
+    }
+
+    #[test]
+    fn noop_forget_policy_is_deterministic() {
+        let policy = NoOpForgetPolicy;
+        let id: MemoryId = "mem-a".to_string();
+        assert_eq!(policy.evaluate(&id), PolicyDecision::Skip);
+        assert_eq!(policy.evaluate(&id), PolicyDecision::Skip);
+    }
+
+    #[test]
+    fn noop_merge_policy_is_deterministic() {
+        let policy = NoOpMergePolicy;
+        let group = MergeGroup {
+            items: Vec::new(),
+            strategy: MergeStrategy::Deduplicate,
+        };
+        assert_eq!(policy.evaluate(&group), PolicyDecision::Execute);
+        assert_eq!(policy.evaluate(&group), PolicyDecision::Execute);
+    }
+
+    #[test]
+    fn policy_decision_equality_and_serialization() {
+        assert_eq!(PolicyDecision::Execute, PolicyDecision::Execute);
+        assert_ne!(PolicyDecision::Execute, PolicyDecision::Skip);
+        assert_ne!(PolicyDecision::Skip, PolicyDecision::Delay);
+
+        let encoded = serde_json::to_string(&PolicyDecision::Delay).unwrap();
+        let decoded: PolicyDecision = serde_json::from_str(&encoded).unwrap();
+        assert_eq!(decoded, PolicyDecision::Delay);
+    }
+
+    #[test]
+    fn noop_policies_are_zero_sized() {
+        assert_eq!(std::mem::size_of::<NoOpReflectionPolicy>(), 0);
+        assert_eq!(std::mem::size_of::<NoOpHebbianPolicy>(), 0);
+        assert_eq!(std::mem::size_of::<NoOpForgetPolicy>(), 0);
+        assert_eq!(std::mem::size_of::<NoOpMergePolicy>(), 0);
     }
 }
