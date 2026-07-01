@@ -19,7 +19,7 @@ RFCs define behavioral implementation contracts after the Phase 2 and Phase 3 ar
 | RFC-004 | Retrieval & Activation | Frozen by `docs/RECALL_PIPELINE.md` |
 | RFC-005 | Working Memory | Frozen by `docs/WORKING_MEMORY.md` |
 | RFC-006 | Consolidation Execution | Draft |
-| RFC-007 | Reflection Processing | Planned |
+| RFC-007 | Reflection Processing | Draft |
 | RFC-008 | Hebbian Reinforcement | Planned |
 | RFC-009 | Forgetting | Planned |
 | RFC-010 | Sleep Cycle | Planned |

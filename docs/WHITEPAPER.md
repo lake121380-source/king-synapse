@@ -118,6 +118,13 @@ King Synapse uses two recurring extension patterns:
 
 Recall, Working Memory, Consolidation, Reflection, Hebbian reinforcement, Forgetting, and Sleep Cycle extensions should preserve these patterns unless an ADR approves a different shape.
 
+Phase 4 code review should check every new behavior module against these rules:
+
+1. Build on frozen Recall Platform, Memory Evolution Contract, and Adaptive Memory Foundation layers.
+2. Preserve the `Plan -> Execute -> Report -> Sink` lifecycle.
+3. Reuse `Trait -> NoOp -> Concrete Implementation` for new extension points.
+4. Require ADR approval and a new architecture milestone for frozen-contract changes.
+
 ## Evaluation
 
 Behavior changes must preserve the frozen baselines:
