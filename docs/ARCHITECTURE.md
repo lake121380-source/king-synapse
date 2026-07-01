@@ -14,3 +14,16 @@
 3. New extension points should reuse the existing plugin pattern: `Trait -> NoOp -> Concrete Implementation`.
 4. Changes to frozen contracts require a dedicated ADR and a new architecture milestone.
 5. Every new public trait must ship with a NoOp implementation before entering the public API.
+
+## Reflection
+
+```text
+ReflectionEvent
+  -> ReflectionEngine
+  -> ReflectionPlan
+  -> ReflectionExecutor
+  -> ReflectionReport
+  -> ReflectionSink
+```
+
+Reflection remains deterministic and side-effect free until later execution phases.

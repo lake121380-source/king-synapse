@@ -6,6 +6,7 @@ Current milestone
 ✓ Phase 2 — Recall Platform (Recall API Freeze)
 ✓ Phase 3 — Memory Evolution Contract (Architecture Freeze)
 ✓ P4.1 — Adaptive Memory Foundation (Execution Model Freeze)
+✓ P4.2 — Reflection Processing (Contract Freeze)
 
 Status
 
@@ -22,6 +23,8 @@ Phase 2 concluded with `v0.2.0-recall-api-freeze`. The Recall contract is now co
 Phase 3 concluded with `v0.3.9-memory-evolution-freeze`. The Memory Evolution contract layer is now considered stable. Future work should extend these interfaces instead of changing them.
 
 P4.1 concluded with `v0.4.9-adaptive-memory-foundation`. The Adaptive Memory execution model is now considered stable. Future behavior modules should reuse the Plan -> Execute -> Report -> Sink shape.
+
+P4.2 concluded with `v0.4.19-reflection-processing-freeze`. Reflection Processing is now contract-frozen and remains deterministic and side-effect free.
 
 ## Phase 3 Contract
 
@@ -70,10 +73,9 @@ Turn the frozen memory-evolution contracts into adaptive behavior while preservi
 
 Focus
 
-- P4.2 Reflection Processor
 - P4.3 Hebbian Executor
-- P4.4 Forgetting Engine
-- P4.5 Sleep Cycle
+- P4.4 Store Integration
+- P4.5 LLM Integration
 
 Completed foundation
 
@@ -83,6 +85,17 @@ P4.1 Consolidation Executor
   -> ConsolidationExecutor
   -> ExecutionReport
   -> ConsolidationSink
+```
+
+Completed behavior contracts
+
+```text
+P4.2 Reflection Processing
+  -> ReflectionEngine
+  -> ReflectionPlan
+  -> ReflectionExecutor
+  -> ReflectionReport
+  -> ReflectionSink
 ```
 
 Contract rules
@@ -137,3 +150,14 @@ Highlights
 • ConsolidationSink
 • NoOpSink
 • Plan -> Execute -> Report -> Sink model
+
+v0.4.19-reflection-processing-freeze
+
+Highlights
+
+• ReflectionEngine
+• ReflectionPlan
+• ReflectionExecutor
+• ReflectionReport
+• ReflectionSink
+• NoOpReflectionSink

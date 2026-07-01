@@ -1,8 +1,15 @@
 # RFC-007: Reflection Processing
 
-Status: Draft
+Status: Accepted
 
 Phase: P4.2 Reflection Processor
+
+Implemented by:
+
+- `v0.4.10-reflection-skeleton`
+- `v0.4.11-reflection-dispatcher`
+- `v0.4.12-reflection-sink`
+- `v0.4.19-reflection-processing-freeze`
 
 ## Summary
 
