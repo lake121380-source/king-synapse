@@ -18,6 +18,7 @@ const DETERMINISTIC_REFLECTION_BENCHMARK_NAME: &str = "reflection-yield-determin
 const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
 const COGNITIVE_TRACE_BENCHMARK_NAME: &str = "cognitive-trace-dominance";
 const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
+const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
@@ -134,6 +135,54 @@ pub fn trace_reinforcement_report() -> BenchmarkReport {
         metrics: BTreeMap::from([
             (AlgorithmMetric::CognitiveTraceDominance, dominance),
             (AlgorithmMetric::HebbianConsistency, consistency),
+        ]),
+    }
+}
+
+/// Run a deterministic parameter sweep over cognitive activation settings.
+///
+/// This is a final-acceptance benchmark rather than a new algorithm metric. It
+/// reuses existing metric IDs and reports the fraction of swept configurations
+/// that preserve each cognitive-memory guarantee:
+///
+/// - `RecallAt10`: query -> visible seed -> latent hidden influence.
+/// - `CognitiveTraceDominance`: visible + latent context -> dominant hidden
+///   influence.
+/// - `HebbianConsistency`: post-trace reinforcement persists the expected
+///   visible <-> hidden edges.
+pub fn activation_parameter_sweep_report() -> BenchmarkReport {
+    let chain_configs = latent_sweep_configs();
+    let trace_configs = trace_sweep_configs();
+    let reinforcement_configs = trace_sweep_configs();
+
+    let chain_hits = chain_configs
+        .iter()
+        .filter(|config| cognitive_chain_sweep_hits(config))
+        .count();
+    let trace_hits = trace_configs
+        .iter()
+        .filter(|config| cognitive_trace_sweep_hits(config))
+        .count();
+    let reinforcement_hits = reinforcement_configs
+        .iter()
+        .filter(|config| trace_reinforcement_sweep_hits(config))
+        .count();
+
+    BenchmarkReport {
+        benchmark: ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([
+            (
+                AlgorithmMetric::RecallAt10,
+                ratio(chain_hits, chain_configs.len()),
+            ),
+            (
+                AlgorithmMetric::CognitiveTraceDominance,
+                ratio(trace_hits, trace_configs.len()),
+            ),
+            (
+                AlgorithmMetric::HebbianConsistency,
+                ratio(reinforcement_hits, reinforcement_configs.len()),
+            ),
         ]),
     }
 }
@@ -356,6 +405,28 @@ struct CognitiveTraceCase {
     goal_terms: &'static [&'static str],
 }
 
+#[derive(Clone, Copy)]
+struct LatentSweepConfig {
+    scale: f32,
+    cap: f32,
+    steps: usize,
+    decay: f32,
+    fanout: usize,
+}
+
+#[derive(Clone, Copy)]
+struct TraceSweepConfig {
+    latent_scale: f32,
+    latent_cap: f32,
+    latent_steps: usize,
+    latent_decay: f32,
+    latent_fanout: usize,
+    visible_limit: usize,
+    latent_limit: usize,
+    seed_limit: usize,
+    suppressed_limit: usize,
+}
+
 fn cognitive_chain_fixture() -> Vec<CognitiveChainCase> {
     vec![
         CognitiveChainCase {
@@ -444,7 +515,94 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
     ]
 }
 
+fn latent_sweep_configs() -> Vec<LatentSweepConfig> {
+    vec![
+        LatentSweepConfig {
+            scale: 0.04,
+            cap: 0.20,
+            steps: 1,
+            decay: 0.5,
+            fanout: 8,
+        },
+        LatentSweepConfig {
+            scale: 0.05,
+            cap: 0.25,
+            steps: 2,
+            decay: 0.5,
+            fanout: 10,
+        },
+        LatentSweepConfig {
+            scale: 0.08,
+            cap: 0.30,
+            steps: 3,
+            decay: 0.7,
+            fanout: 16,
+        },
+    ]
+}
+
+fn trace_sweep_configs() -> Vec<TraceSweepConfig> {
+    vec![
+        TraceSweepConfig {
+            latent_scale: 0.04,
+            latent_cap: 0.20,
+            latent_steps: 1,
+            latent_decay: 0.5,
+            latent_fanout: 8,
+            visible_limit: 2,
+            latent_limit: 4,
+            seed_limit: 2,
+            suppressed_limit: 4,
+        },
+        TraceSweepConfig {
+            latent_scale: 0.05,
+            latent_cap: 0.25,
+            latent_steps: 2,
+            latent_decay: 0.5,
+            latent_fanout: 10,
+            visible_limit: 2,
+            latent_limit: 4,
+            seed_limit: 2,
+            suppressed_limit: 4,
+        },
+        TraceSweepConfig {
+            latent_scale: 0.08,
+            latent_cap: 0.30,
+            latent_steps: 3,
+            latent_decay: 0.7,
+            latent_fanout: 16,
+            visible_limit: 2,
+            latent_limit: 6,
+            seed_limit: 2,
+            suppressed_limit: 5,
+        },
+    ]
+}
+
 fn cognitive_chain_case_hits(case: &CognitiveChainCase) -> bool {
+    cognitive_chain_case_hits_with_config(
+        case,
+        &LatentSweepConfig {
+            scale: 0.05,
+            cap: 0.25,
+            steps: 2,
+            decay: 0.5,
+            fanout: 10,
+        },
+    )
+}
+
+fn cognitive_chain_sweep_hits(config: &LatentSweepConfig) -> bool {
+    let cases = cognitive_chain_fixture();
+    cases
+        .iter()
+        .all(|case| cognitive_chain_case_hits_with_config(case, config))
+}
+
+fn cognitive_chain_case_hits_with_config(
+    case: &CognitiveChainCase,
+    config: &LatentSweepConfig,
+) -> bool {
     let mut store = Store::open_in_memory().expect("cognitive benchmark store opens");
     let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
     let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.8);
@@ -463,7 +621,13 @@ fn cognitive_chain_case_hits(case: &CognitiveChainCase) -> bool {
         kind_filter: None,
     };
     let probe = QueryLatentActivationProbe::new(
-        LatentActivationProbe::with_config(0.05, 0.25, 2, 0.5, 10),
+        LatentActivationProbe::with_config(
+            config.scale,
+            config.cap,
+            config.steps,
+            config.decay,
+            config.fanout,
+        ),
         1,
     );
     let report = probe
@@ -482,9 +646,18 @@ fn cognitive_trace_case_hits(case: &CognitiveTraceCase) -> bool {
         "cognitive trace case label must describe the chain"
     );
     let (mut store, hidden) = seed_cognitive_trace_store(case);
-    let report = cognitive_trace_case_report(&mut store, case);
+    let report = cognitive_trace_case_report(&mut store, case, default_trace_sweep_config());
 
     trace_report_dominates_hidden(&report, &hidden)
+}
+
+fn cognitive_trace_sweep_hits(config: &TraceSweepConfig) -> bool {
+    let cases = cognitive_trace_fixture();
+    cases.iter().all(|case| {
+        let (mut store, hidden) = seed_cognitive_trace_store(case);
+        let report = cognitive_trace_case_report(&mut store, case, *config);
+        trace_report_dominates_hidden(&report, &hidden)
+    })
 }
 
 struct TraceReinforcementOutcome {
@@ -494,15 +667,30 @@ struct TraceReinforcementOutcome {
 }
 
 fn trace_reinforcement_case_outcome(case: &CognitiveTraceCase) -> TraceReinforcementOutcome {
+    trace_reinforcement_case_outcome_with_config(case, default_trace_sweep_config())
+}
+
+fn trace_reinforcement_sweep_hits(config: &TraceSweepConfig) -> bool {
+    let cases = cognitive_trace_fixture();
+    cases.iter().all(|case| {
+        let outcome = trace_reinforcement_case_outcome_with_config(case, *config);
+        outcome.dominant_hit && outcome.expected_edges == outcome.reinforced_edges
+    })
+}
+
+fn trace_reinforcement_case_outcome_with_config(
+    case: &CognitiveTraceCase,
+    config: TraceSweepConfig,
+) -> TraceReinforcementOutcome {
     let (mut store, hidden) = seed_cognitive_trace_store(case);
-    let report = cognitive_trace_case_report(&mut store, case);
+    let report = cognitive_trace_case_report(&mut store, case, config);
     let dominant_hit = trace_report_dominates_hidden(&report, &hidden);
-    let visible_ids = trace_visible_seed_ids(&report, 3);
+    let visible_ids = trace_visible_seed_ids(&report, config.seed_limit);
     let expected_edges = visible_hidden_edges(&visible_ids, &hidden);
     let before = edge_weights(&mut store, &expected_edges);
 
     if let Some(dominant) = report.dominant.as_ref() {
-        let ids = trace_reinforcement_ids(&report, 3, &dominant.memory.id);
+        let ids = trace_reinforcement_ids(&report, config.seed_limit, &dominant.memory.id);
         reinforce_trace_ids(&mut store, ids, case.query);
     }
 
@@ -516,6 +704,20 @@ fn trace_reinforcement_case_outcome(case: &CognitiveTraceCase) -> TraceReinforce
         dominant_hit,
         expected_edges: expected_edges.len(),
         reinforced_edges,
+    }
+}
+
+fn default_trace_sweep_config() -> TraceSweepConfig {
+    TraceSweepConfig {
+        latent_scale: 0.05,
+        latent_cap: 0.25,
+        latent_steps: 2,
+        latent_decay: 0.5,
+        latent_fanout: 10,
+        visible_limit: 2,
+        latent_limit: 4,
+        seed_limit: 2,
+        suppressed_limit: 4,
     }
 }
 
@@ -539,23 +741,24 @@ fn seed_cognitive_trace_store(case: &CognitiveTraceCase) -> (Store, String) {
 fn cognitive_trace_case_report(
     store: &mut Store,
     case: &CognitiveTraceCase,
+    config: TraceSweepConfig,
 ) -> CognitiveTraceReport {
     let query = RecallQuery {
         query: case.query.to_string(),
-        k: Some(2),
+        k: Some(config.visible_limit),
         scope_filter: None,
         kind_filter: None,
     };
     let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
-        visible_limit: 2,
-        latent_limit: 4,
-        seed_limit: 2,
-        suppressed_limit: 4,
-        latent_scale: 0.05,
-        latent_cap: 0.25,
-        latent_steps: 2,
-        latent_decay: 0.5,
-        latent_fanout: 10,
+        visible_limit: config.visible_limit,
+        latent_limit: config.latent_limit,
+        seed_limit: config.seed_limit,
+        suppressed_limit: config.suppressed_limit,
+        latent_scale: config.latent_scale,
+        latent_cap: config.latent_cap,
+        latent_steps: config.latent_steps,
+        latent_decay: config.latent_decay,
+        latent_fanout: config.latent_fanout,
     });
     let context = LatentActivationContext::new(
         case.state_terms
@@ -918,6 +1121,14 @@ fn normalize_ids(ids: Vec<String>) -> Vec<String> {
         .collect()
 }
 
+fn ratio(numerator: usize, denominator: usize) -> f64 {
+    if denominator == 0 {
+        0.0
+    } else {
+        numerator as f64 / denominator as f64
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1007,6 +1218,33 @@ mod tests {
 
         assert_eq!(report.benchmark, "trace-reinforcement");
         assert_eq!(report.metrics.len(), 2);
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn activation_parameter_sweep_report_is_deterministic() {
+        let a = activation_parameter_sweep_report();
+        let b = activation_parameter_sweep_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn activation_parameter_sweep_report_uses_contract_shape() {
+        let report = activation_parameter_sweep_report();
+
+        assert_eq!(report.benchmark, "activation-parameter-sweep");
+        assert_eq!(report.metrics.len(), 3);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
         assert_eq!(
             report
                 .metrics

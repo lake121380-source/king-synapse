@@ -123,6 +123,7 @@ Completed foundations
 - v0.9.18 — cognitive trace reports combine visible recall, latent activation, and context into dominant and suppressed candidates
 - v0.9.19 — trace surfaces can optionally reinforce visible seeds to the dominant hidden influence after reporting
 - v0.9.20 — trace reinforcement benchmark verifies dominant hidden influence can be learned into persisted edges
+- v0.9.21 — activation parameter sweep verifies latent, trace, and trace-learning guarantees across multiple settings
 
 Focus
 

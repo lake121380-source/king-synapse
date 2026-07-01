@@ -50,6 +50,7 @@ Before final release, run and record:
 11. `cargo bench -p synapse-eval --bench cognitive_chain_recall`
 12. `cargo bench -p synapse-eval --bench cognitive_trace_dominance`
 13. `cargo bench -p synapse-eval --bench trace_reinforcement`
+14. `cargo bench -p synapse-eval --bench activation_parameter_sweep`
 
 Expected minimums:
 
@@ -63,6 +64,8 @@ Expected minimums:
 - `CognitiveTraceDominance = 1.0`
 - `trace-reinforcement` reports `CognitiveTraceDominance = 1.0` and
   `HebbianConsistency = 1.0`
+- `activation-parameter-sweep` reports `RecallAt10 = 1.0`,
+  `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 
 ## Remaining Finalization Work
 
@@ -70,8 +73,8 @@ Expected minimums:
   note if the rule-based heuristic is accepted.
 - Freeze-review RFC-013 Merge, RFC-014 Forget, and RFC-015 Hebbian with release
   notes and tags.
-- Run parameter sweeps for graph activation, latent activation, and trace
-  competition weights.
+- Extend parameter sweeps beyond the deterministic activation/trace sweep to
+  larger datasets and broader production ranges.
 - Add at least one larger long-horizon memory dataset or external comparison
   run. Candidate comparisons: Graphiti, Letta, Mem0, or a documented internal
   long-session dataset.

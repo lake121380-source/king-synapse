@@ -87,6 +87,17 @@ families: body state to commute attention, social pressure to work goals, past
 failure to future decision, object/tool use to task risk, social memory to
 emotion, and subconscious avoidance to error review.
 
+The activation-parameter-sweep benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "activation-parameter-sweep"` for final cognitive-memory parameter coverage
+
+The report reuses existing metric IDs. `RecallAt10` measures the fraction of
+latent-chain parameter settings that preserve visible seed -> hidden influence
+activation. `CognitiveTraceDominance` measures the fraction of trace settings
+that still choose the expected hidden influence as dominant.
+`HebbianConsistency` measures the fraction of trace-learning settings that
+still persist the expected visible <-> hidden edges after reinforcement.
+
 ## Metrics
 
 Per run the harness reports:
