@@ -99,6 +99,7 @@ Binaries land in `target/release/`:
 cargo bench -p synapse-eval --bench reflection_yield
 cargo bench -p synapse-eval --bench trace_reinforcement
 cargo bench -p synapse-eval --bench activation_parameter_sweep
+cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 ```
 
 ## Plug into opencode

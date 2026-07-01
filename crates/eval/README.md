@@ -98,6 +98,15 @@ that still choose the expected hidden influence as dominant.
 `HebbianConsistency` measures the fraction of trace-learning settings that
 still persist the expected visible <-> hidden edges after reinforcement.
 
+The long-horizon cognitive-memory benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "long-horizon-cognitive-memory"` for multi-day cognitive-memory behavior
+
+It writes several day-stamped cognitive chains into one shared in-memory store,
+including visible distractors and hidden distractors. It then verifies ordinary
+recall, cognitive trace dominance, and post-trace reinforcement in that shared
+long-session memory graph.
+
 ## Metrics
 
 Per run the harness reports:

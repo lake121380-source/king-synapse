@@ -124,6 +124,7 @@ Completed foundations
 - v0.9.19 — trace surfaces can optionally reinforce visible seeds to the dominant hidden influence after reporting
 - v0.9.20 — trace reinforcement benchmark verifies dominant hidden influence can be learned into persisted edges
 - v0.9.21 — activation parameter sweep verifies latent, trace, and trace-learning guarantees across multiple settings
+- v0.9.22 — long-horizon cognitive-memory benchmark verifies multi-day traces in one shared memory store
 
 Focus
 

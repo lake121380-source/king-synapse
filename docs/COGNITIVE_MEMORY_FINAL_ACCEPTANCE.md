@@ -51,6 +51,7 @@ Before final release, run and record:
 12. `cargo bench -p synapse-eval --bench cognitive_trace_dominance`
 13. `cargo bench -p synapse-eval --bench trace_reinforcement`
 14. `cargo bench -p synapse-eval --bench activation_parameter_sweep`
+15. `cargo bench -p synapse-eval --bench long_horizon_cognitive_memory`
 
 Expected minimums:
 
@@ -66,6 +67,8 @@ Expected minimums:
   `HebbianConsistency = 1.0`
 - `activation-parameter-sweep` reports `RecallAt10 = 1.0`,
   `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
+- `long-horizon-cognitive-memory` reports `RecallAt10 = 1.0`,
+  `CognitiveTraceDominance = 1.0`, and `HebbianConsistency = 1.0`
 
 ## Remaining Finalization Work
 
@@ -75,8 +78,8 @@ Expected minimums:
   notes and tags.
 - Extend parameter sweeps beyond the deterministic activation/trace sweep to
   larger datasets and broader production ranges.
-- Add at least one larger long-horizon memory dataset or external comparison
-  run. Candidate comparisons: Graphiti, Letta, Mem0, or a documented internal
+- Extend the internal long-horizon benchmark to external comparison runs.
+  Candidate comparisons: Graphiti, Letta, Mem0, or a documented exported
   long-session dataset.
 - Add manual validation transcripts for normal input and empty/error input for
   recall, latent-query, trace, trace reinforcement, and MCP trace.

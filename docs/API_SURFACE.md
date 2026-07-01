@@ -457,7 +457,7 @@ Frozen by `v0.5.3-benchmark-harness`. Included in the full Adaptive Common Model
 **Experimental**
 
 - Benchmark harness (`kr-eval` binary), dataset TOML schema, `Recall@k` / `MRR@k` / `NDCG@k` metric outputs from `crates/eval/src/harness.rs` and `crates/eval/src/metrics.rs`.
-- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `cognitive_trace_dominance_report()`, `trace_reinforcement_report()`, `activation_parameter_sweep_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
+- `reflection_yield_report()`, `deterministic_reflection_yield_report()`, `cognitive_chain_recall_report()`, `cognitive_trace_dominance_report()`, `trace_reinforcement_report()`, `activation_parameter_sweep_report()`, `long_horizon_cognitive_memory_report()`, `merge_precision_report()`, `forget_precision_report()`, `hebbian_consistency_report()`, and algorithm benchmark helpers under `crates/eval/src/algorithms.rs`.
 
 The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and are not part of the v0.5.3 harness contract. They remain Experimental during Phase 5 and may be migrated onto `BenchmarkReport` in a later milestone.
 

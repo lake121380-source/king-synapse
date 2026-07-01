@@ -19,6 +19,7 @@ const COGNITIVE_CHAIN_BENCHMARK_NAME: &str = "cognitive-chain-recall";
 const COGNITIVE_TRACE_BENCHMARK_NAME: &str = "cognitive-trace-dominance";
 const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
 const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
+const LONG_HORIZON_COGNITIVE_BENCHMARK_NAME: &str = "long-horizon-cognitive-memory";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
@@ -182,6 +183,67 @@ pub fn activation_parameter_sweep_report() -> BenchmarkReport {
             (
                 AlgorithmMetric::HebbianConsistency,
                 ratio(reinforcement_hits, reinforcement_configs.len()),
+            ),
+        ]),
+    }
+}
+
+/// Run the long-horizon cognitive-memory benchmark.
+///
+/// This benchmark simulates one longer memory store rather than one isolated
+/// case at a time. It writes multiple day-stamped memory chains with visible
+/// distractors, hidden influences, and hidden distractors, then verifies that
+/// final queries still recall the correct visible seed, trace the expected
+/// hidden influence, and learn the expected post-trace edges.
+pub fn long_horizon_cognitive_memory_report() -> BenchmarkReport {
+    let cases = long_horizon_fixture();
+    let (mut store, ids) = seed_long_horizon_store(&cases);
+
+    let mut recall_hits = 0usize;
+    let mut trace_hits = 0usize;
+    let mut expected_edges = 0usize;
+    let mut reinforced_edges = 0usize;
+
+    for case in &cases {
+        let case_ids = ids
+            .get(case.label)
+            .expect("long horizon case ids should be seeded");
+        let visible_recall = long_horizon_visible_recall_hits(&mut store, case, &case_ids.seed);
+        if visible_recall {
+            recall_hits += 1;
+        }
+
+        let report = long_horizon_trace_report(&mut store, case);
+        if trace_report_dominates_hidden(&report, &case_ids.hidden) {
+            trace_hits += 1;
+        }
+
+        let visible_ids = trace_visible_seed_ids(&report, 3);
+        let expected = visible_hidden_edges(&visible_ids, &case_ids.hidden);
+        let before = edge_weights(&mut store, &expected);
+        if let Some(dominant) = report.dominant.as_ref() {
+            let ids = trace_reinforcement_ids(&report, 3, &dominant.memory.id);
+            reinforce_trace_ids(&mut store, ids, case.query);
+        }
+        let after = edge_weights(&mut store, &expected);
+        expected_edges += expected.len();
+        reinforced_edges += expected
+            .iter()
+            .filter(|edge| edge_gained_weight(*before.get(*edge).unwrap_or(&0.0), after[*edge]))
+            .count();
+    }
+
+    BenchmarkReport {
+        benchmark: LONG_HORIZON_COGNITIVE_BENCHMARK_NAME.to_string(),
+        metrics: BTreeMap::from([
+            (AlgorithmMetric::RecallAt10, ratio(recall_hits, cases.len())),
+            (
+                AlgorithmMetric::CognitiveTraceDominance,
+                ratio(trace_hits, cases.len()),
+            ),
+            (
+                AlgorithmMetric::HebbianConsistency,
+                ratio(reinforced_edges, expected_edges),
             ),
         ]),
     }
@@ -405,6 +467,22 @@ struct CognitiveTraceCase {
     goal_terms: &'static [&'static str],
 }
 
+struct LongHorizonCase {
+    label: &'static str,
+    query: &'static str,
+    seed: &'static str,
+    visible_distractor: &'static str,
+    hidden: &'static str,
+    hidden_distractor: &'static str,
+    state_terms: &'static [&'static str],
+    goal_terms: &'static [&'static str],
+}
+
+struct LongHorizonIds {
+    seed: String,
+    hidden: String,
+}
+
 #[derive(Clone, Copy)]
 struct LatentSweepConfig {
     scale: f32,
@@ -509,6 +587,91 @@ fn cognitive_trace_fixture() -> Vec<CognitiveTraceCase> {
             visible_distractor: "complex review checklist title",
             hidden: "subconscious avoidance can create error in future judgement",
             hidden_distractor: "bug label color preference",
+            state_terms: &["subconscious"],
+            goal_terms: &["future", "error"],
+        },
+    ]
+}
+
+fn long_horizon_fixture() -> Vec<LongHorizonCase> {
+    vec![
+        LongHorizonCase {
+            label: "day01-hydration-commute",
+            query: "day01 hydration skipped scooter commute",
+            seed: "day01 hydration skipped before scooter commute caused low mood",
+            visible_distractor: "day01 hydration reminder template for weekend chores",
+            hidden: "tired mood reduces commute attention and raises scooter fall risk",
+            hidden_distractor: "weekend chore list includes laundry and receipts",
+            state_terms: &["tired", "mood"],
+            goal_terms: &["commute", "attention"],
+        },
+        LongHorizonCase {
+            label: "day02-pressure-review",
+            query: "day02 pressure architecture review avoidance",
+            seed: "day02 team pressure before architecture review triggered avoidance",
+            visible_distractor: "day02 pressure gauge reading for office equipment",
+            hidden: "subconscious avoidance reduces review quality and future error detection",
+            hidden_distractor: "office equipment calibration note for facilities",
+            state_terms: &["subconscious"],
+            goal_terms: &["review", "future", "error"],
+        },
+        LongHorizonCase {
+            label: "day03-charger-demo",
+            query: "day03 laptop charger missing client demo",
+            seed: "day03 laptop charger was missing before client demo",
+            visible_distractor: "day03 laptop charger shopping comparison",
+            hidden: "anxious planning from missing tool creates task failure risk",
+            hidden_distractor: "client demo slide color palette archive",
+            state_terms: &["anxious"],
+            goal_terms: &["task", "risk"],
+        },
+        LongHorizonCase {
+            label: "day04-past-bug",
+            query: "day04 past payment bug repeating mistakes",
+            seed: "day04 past payment bug made repeated mistake fear salient",
+            visible_distractor: "day04 payment receipt export folder",
+            hidden: "memory of failure changes future decision attention allocation",
+            hidden_distractor: "receipt export naming preference",
+            state_terms: &["memory"],
+            goal_terms: &["future", "attention"],
+        },
+        LongHorizonCase {
+            label: "day05-trust-message",
+            query: "day05 trust message collaboration communication",
+            seed: "day05 trust message from collaboration changed communication tone",
+            visible_distractor: "day05 collaboration lunch receipt",
+            hidden: "emotion affects communication decision and work attention",
+            hidden_distractor: "lunch receipt reimbursement checklist",
+            state_terms: &["emotion"],
+            goal_terms: &["decision", "work"],
+        },
+        LongHorizonCase {
+            label: "day06-hunger-incident",
+            query: "day06 hunger incident deployment focus",
+            seed: "day06 hunger during deployment caused impatient focus",
+            visible_distractor: "day06 deployment snack inventory",
+            hidden: "hungry state narrows attention and increases operational mistake risk",
+            hidden_distractor: "snack inventory sorted by shelf location",
+            state_terms: &["hungry"],
+            goal_terms: &["attention", "risk"],
+        },
+        LongHorizonCase {
+            label: "day07-social-feedback",
+            query: "day07 social feedback concise chinese handoff",
+            seed: "day07 social feedback reinforced concise chinese handoff preference",
+            visible_distractor: "day07 social reading note about language history",
+            hidden: "preference memory guides communication decision and reduces review friction",
+            hidden_distractor: "language history bibliography for later reading",
+            state_terms: &["memory"],
+            goal_terms: &["communication", "review"],
+        },
+        LongHorizonCase {
+            label: "day08-complex-review",
+            query: "day08 complex review repeated bug avoidance",
+            seed: "day08 complex review after repeated bug triggered avoidance",
+            visible_distractor: "day08 complex review checklist title draft",
+            hidden: "subconscious avoidance can create future judgement error",
+            hidden_distractor: "checklist title draft typography options",
             state_terms: &["subconscious"],
             goal_terms: &["future", "error"],
         },
@@ -736,6 +899,80 @@ fn seed_cognitive_trace_store(case: &CognitiveTraceCase) -> (Store, String) {
         .expect("cognitive trace distractor edge is persisted");
 
     (store, hidden)
+}
+
+fn seed_long_horizon_store(
+    cases: &[LongHorizonCase],
+) -> (
+    Store,
+    std::collections::BTreeMap<&'static str, LongHorizonIds>,
+) {
+    let mut store = Store::open_in_memory().expect("long horizon benchmark store opens");
+    let mut ids = std::collections::BTreeMap::new();
+
+    for case in cases {
+        let seed = write_cognitive_memory(&mut store, case.seed, MemoryKind::State, 0.8);
+        write_cognitive_memory(&mut store, case.visible_distractor, MemoryKind::Fact, 0.5);
+        let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.9);
+        let hidden_distractor =
+            write_cognitive_memory(&mut store, case.hidden_distractor, MemoryKind::Fact, 0.5);
+        store
+            .update_edge(&seed, &hidden, 2.0)
+            .expect("long horizon target edge is persisted");
+        store
+            .update_edge(&seed, &hidden_distractor, 1.0)
+            .expect("long horizon distractor edge is persisted");
+
+        ids.insert(case.label, LongHorizonIds { seed, hidden });
+    }
+
+    (store, ids)
+}
+
+fn long_horizon_visible_recall_hits(store: &mut Store, case: &LongHorizonCase, seed: &str) -> bool {
+    let query = RecallQuery {
+        query: case.query.to_string(),
+        k: Some(10),
+        scope_filter: None,
+        kind_filter: None,
+    };
+    let hits = synapse_core::RecallEngine::new(store)
+        .recall(&query)
+        .expect("long horizon visible recall runs");
+    hits.iter().any(|hit| hit.memory.id == seed)
+}
+
+fn long_horizon_trace_report(store: &mut Store, case: &LongHorizonCase) -> CognitiveTraceReport {
+    let query = RecallQuery {
+        query: case.query.to_string(),
+        k: Some(2),
+        scope_filter: None,
+        kind_filter: Some(MemoryKind::State),
+    };
+    let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: 2,
+        latent_limit: 6,
+        seed_limit: 2,
+        suppressed_limit: 8,
+        latent_scale: 0.05,
+        latent_cap: 0.25,
+        latent_steps: 2,
+        latent_decay: 0.5,
+        latent_fanout: 16,
+    });
+    let context = LatentActivationContext::new(
+        case.state_terms
+            .iter()
+            .map(|term| (*term).to_string())
+            .collect(),
+        case.goal_terms
+            .iter()
+            .map(|term| (*term).to_string())
+            .collect(),
+    );
+    probe
+        .trace(store, &query, &context)
+        .expect("long horizon cognitive trace runs")
 }
 
 fn cognitive_trace_case_report(
@@ -1243,6 +1480,33 @@ mod tests {
         let report = activation_parameter_sweep_report();
 
         assert_eq!(report.benchmark, "activation-parameter-sweep");
+        assert_eq!(report.metrics.len(), 3);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn long_horizon_cognitive_memory_report_is_deterministic() {
+        let a = long_horizon_cognitive_memory_report();
+        let b = long_horizon_cognitive_memory_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn long_horizon_cognitive_memory_report_uses_contract_shape() {
+        let report = long_horizon_cognitive_memory_report();
+
+        assert_eq!(report.benchmark, "long-horizon-cognitive-memory");
         assert_eq!(report.metrics.len(), 3);
         assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
         assert_eq!(
