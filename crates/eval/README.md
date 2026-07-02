@@ -146,6 +146,9 @@ cargo bench -p synapse-eval --bench predictive_trace
 
 # Exported cognitive-session benchmark (shared long-session TOML fixture)
 cargo bench -p synapse-eval --bench exported_cognitive_session
+
+# Expanded Phase 6 cognitive/prediction replay benchmark
+cargo bench -p synapse-eval --bench expanded_cognitive_replay
 ```
 
 The benchmark emits two `BenchmarkReport` values:
@@ -234,6 +237,14 @@ The exported cognitive-session benchmark emits one `BenchmarkReport` value:
 It loads `crates/eval/datasets/exported_cognitive_session.toml`, seeds one
 shared memory graph, and verifies visible seed recall, dominant hidden
 influence, predictive future continuation, and post-trace reinforcement.
+
+The expanded cognitive replay benchmark emits one `BenchmarkReport` value:
+
+- `benchmark = "expanded-cognitive-replay"` for the Phase 6 20-chain replay fixture
+
+It loads `crates/eval/datasets/regression/expanded_cognitive_replay.toml`.
+The fixture keeps the external-comparison dataset stable while fixing 20
+cognitive trace replays and 20 prediction replays for regression checks.
 
 ## Metrics
 

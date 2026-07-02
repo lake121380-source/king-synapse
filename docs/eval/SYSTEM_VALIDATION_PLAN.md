@@ -59,6 +59,7 @@ continues.
 cargo fmt --all -- --check
 cargo test -p synapse-eval
 cargo bench -p synapse-eval --bench exported_cognitive_session
+cargo bench -p synapse-eval --bench expanded_cognitive_replay
 ```
 
 Required result:
@@ -67,6 +68,8 @@ Required result:
 - `synapse-eval` tests pass;
 - exported cognitive session keeps visible recall, hidden influence, dominant
   trace, suppressed alternatives, prediction, and reinforcement checks intact.
+- expanded cognitive replay keeps 20 cognitive trace checks and 20 prediction
+  checks intact.
 
 ### 2. Current External Comparison
 
@@ -205,7 +208,7 @@ task. The validation win condition is narrower and more important:
 - Benchmark baseline fixation: completed for the current Phase 6 scope; see
   `docs/eval/BENCHMARK_BASELINE.md`.
 - Golden Dataset / regression baseline: current registry added at
-  `crates/eval/datasets/regression/golden-manifest.json`; expansion to a
-  larger 20-chain cognitive/prediction replay set remains a follow-up before
-  broad Phase 7 productization claims.
+  `crates/eval/datasets/regression/golden-manifest.json`; the expanded
+  `expanded-cognitive-replay` benchmark now covers 20 cognitive trace replays
+  and 20 prediction replays.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

@@ -200,6 +200,9 @@ cargo test -p synapse-eval
 # Run the cognitive-memory benchmark fixture
 cargo bench -p synapse-eval --bench exported_cognitive_session
 
+# Run the expanded 20-chain cognitive/prediction replay fixture
+cargo bench -p synapse-eval --bench expanded_cognitive_replay
+
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
 

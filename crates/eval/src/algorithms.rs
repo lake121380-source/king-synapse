@@ -23,11 +23,14 @@ const PREDICTIVE_TRACE_BENCHMARK_NAME: &str = "predictive-trace";
 const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
 const LONG_HORIZON_COGNITIVE_BENCHMARK_NAME: &str = "long-horizon-cognitive-memory";
 const EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME: &str = "exported-cognitive-session";
+const EXPANDED_COGNITIVE_REPLAY_BENCHMARK_NAME: &str = "expanded-cognitive-replay";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
 const FORGET_BENCHMARK_NAME: &str = "forget-precision";
 const HEBBIAN_BENCHMARK_NAME: &str = "hebbian-consistency";
 const EXPORTED_COGNITIVE_SESSION_DATASET: &str =
     include_str!("../datasets/exported_cognitive_session.toml");
+const EXPANDED_COGNITIVE_REPLAY_DATASET: &str =
+    include_str!("../datasets/regression/expanded_cognitive_replay.toml");
 
 /// Run the current RFC-012 Reflection benchmark.
 ///
@@ -281,7 +284,25 @@ pub fn long_horizon_cognitive_memory_report() -> BenchmarkReport {
 /// verifies visible seed recall, dominant hidden influence, predictive future
 /// continuation, and post-trace reinforcement in one shared Store.
 pub fn exported_cognitive_session_report() -> BenchmarkReport {
-    let session = exported_cognitive_session_fixture();
+    exported_cognitive_session_report_for(
+        EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME,
+        EXPORTED_COGNITIVE_SESSION_DATASET,
+    )
+}
+
+/// Run the expanded Phase 6 cognitive/prediction replay benchmark.
+///
+/// This keeps the external-comparison fixture stable while adding a larger
+/// golden replay set: 20 cognitive trace checks and 20 prediction checks.
+pub fn expanded_cognitive_replay_report() -> BenchmarkReport {
+    exported_cognitive_session_report_for(
+        EXPANDED_COGNITIVE_REPLAY_BENCHMARK_NAME,
+        EXPANDED_COGNITIVE_REPLAY_DATASET,
+    )
+}
+
+fn exported_cognitive_session_report_for(benchmark_name: &str, dataset: &str) -> BenchmarkReport {
+    let session = exported_cognitive_session_fixture(dataset);
     let (mut store, ids) = seed_exported_cognitive_session_store(&session.chains);
 
     let mut recall_hits = 0usize;
@@ -323,7 +344,7 @@ pub fn exported_cognitive_session_report() -> BenchmarkReport {
     }
 
     BenchmarkReport {
-        benchmark: EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME.to_string(),
+        benchmark: benchmark_name.to_string(),
         metrics: BTreeMap::from([
             (
                 AlgorithmMetric::RecallAt10,
@@ -1248,9 +1269,8 @@ fn seed_long_horizon_store(
     (store, ids)
 }
 
-fn exported_cognitive_session_fixture() -> ExportedCognitiveSession {
-    toml::from_str(EXPORTED_COGNITIVE_SESSION_DATASET)
-        .expect("exported cognitive session dataset parses")
+fn exported_cognitive_session_fixture(dataset: &str) -> ExportedCognitiveSession {
+    toml::from_str(dataset).expect("exported cognitive session dataset parses")
 }
 
 fn seed_exported_cognitive_session_store(
@@ -2062,6 +2082,33 @@ mod tests {
         let report = exported_cognitive_session_report();
 
         assert_eq!(report.benchmark, "exported-cognitive-session");
+        assert_eq!(report.metrics.len(), 3);
+        assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
+        assert_eq!(
+            report
+                .metrics
+                .get(&AlgorithmMetric::CognitiveTraceDominance),
+            Some(&1.0)
+        );
+        assert_eq!(
+            report.metrics.get(&AlgorithmMetric::HebbianConsistency),
+            Some(&1.0)
+        );
+    }
+
+    #[test]
+    fn expanded_cognitive_replay_report_is_deterministic() {
+        let a = expanded_cognitive_replay_report();
+        let b = expanded_cognitive_replay_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn expanded_cognitive_replay_report_uses_contract_shape() {
+        let report = expanded_cognitive_replay_report();
+
+        assert_eq!(report.benchmark, "expanded-cognitive-replay");
         assert_eq!(report.metrics.len(), 3);
         assert_eq!(report.metrics.get(&AlgorithmMetric::RecallAt10), Some(&1.0));
         assert_eq!(

@@ -1,7 +1,7 @@
 {
   "schema_version": "king-synapse.phase6-benchmark-baseline.v1",
-  "generated_at": "2026-07-02T20:24:24.2785510+08:00",
-  "validated_commit": "f10f2b2f",
+  "generated_at": "2026-07-02T21:12:00.0000000+08:00",
+  "validated_commit": "9f0b214",
   "golden_manifest": "crates/eval/datasets/regression/golden-manifest.json",
   "recall_baselines": [
     {
@@ -135,6 +135,19 @@
         "CognitiveTraceDominance": 1.0
       },
       "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "expanded-cognitive-replay",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "dataset": "crates/eval/datasets/regression/expanded_cognitive_replay.toml",
+      "chains": 20,
+      "cognitive_trace_replays": 20,
+      "prediction_replays": 20,
+      "gate": "all metrics must remain 1.0"
     }
   ],
   "long_memory_baselines": [
@@ -162,6 +175,6 @@
       "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json",
       "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multihop.toml --tag phase6-multihop-baseline --json crates/eval/reports/phase6-multihop-baseline.json"
     ],
-    "algorithm_baselines": "cargo bench -p synapse-eval --bench reflection_yield --bench merge_precision --bench forget_precision --bench hebbian_consistency --bench cognitive_chain_recall --bench cognitive_trace_dominance --bench trace_reinforcement --bench predictive_trace --bench activation_parameter_sweep --bench long_horizon_cognitive_memory --bench exported_cognitive_session"
+    "algorithm_baselines": "cargo bench -p synapse-eval --bench reflection_yield --bench merge_precision --bench forget_precision --bench hebbian_consistency --bench cognitive_chain_recall --bench cognitive_trace_dominance --bench trace_reinforcement --bench predictive_trace --bench activation_parameter_sweep --bench long_horizon_cognitive_memory --bench exported_cognitive_session --bench expanded_cognitive_replay"
   }
 }

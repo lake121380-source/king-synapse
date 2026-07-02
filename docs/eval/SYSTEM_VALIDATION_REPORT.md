@@ -150,7 +150,8 @@ Benchmark baseline status:
 
 - `docs/eval/BENCHMARK_BASELINE.md` fixes the recall, algorithm, and
   long-memory baseline numbers.
-- `docs/eval/GOLDEN_DATASET.md` fixes the current replay registry.
+- `docs/eval/GOLDEN_DATASET.md` fixes the current replay registry, including
+  20 cognitive trace replays and 20 prediction replays.
 - `crates/eval/reports/phase6-benchmark-baseline.json` stores the
   machine-readable baseline gates.
 - `crates/eval/datasets/regression/golden-manifest.json` records dataset
@@ -161,8 +162,7 @@ The project has not yet crossed the bar for:
 1. official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. expanded 20-chain cognitive/prediction replay coverage;
-5. production-readiness claims.
+4. production-readiness claims.
 
 GPU validation status:
 
@@ -177,5 +177,5 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen and investigate the remaining
-validation boundaries: DMR mapping/chunk skips, final candidate ranking,
-larger cognitive/prediction replay coverage, and live/hosted external runs.
+validation boundaries: DMR mapping/chunk skips, final candidate ranking, and
+live/hosted external runs.

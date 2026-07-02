@@ -48,10 +48,16 @@ The full algorithm bench run completed with every fixed metric at `1.0`.
 | `activation-parameter-sweep` | `RecallAt10 = 1.0`, `CognitiveTraceDominance = 1.0`, `HebbianConsistency = 1.0` |
 | `long-horizon-cognitive-memory` | `RecallAt10 = 1.0`, `CognitiveTraceDominance = 1.0`, `HebbianConsistency = 1.0` |
 | `exported-cognitive-session` | `RecallAt10 = 1.0`, `CognitiveTraceDominance = 1.0`, `HebbianConsistency = 1.0` |
+| `expanded-cognitive-replay` | `RecallAt10 = 1.0`, `CognitiveTraceDominance = 1.0`, `HebbianConsistency = 1.0` |
 
 These metrics are deterministic `BenchmarkReport` values. A future change that
 lowers one of them is a regression unless the change is intentionally approved
 and documented.
+
+`expanded-cognitive-replay` loads
+`crates/eval/datasets/regression/expanded_cognitive_replay.toml`. It fixes 20
+cognitive trace replays and 20 prediction replays without changing the
+8-chain external-comparison fixture.
 
 ## Long-Memory Baselines
 
@@ -75,5 +81,5 @@ cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multih
 ```
 
 ```bash
-cargo bench -p synapse-eval --bench reflection_yield --bench merge_precision --bench forget_precision --bench hebbian_consistency --bench cognitive_chain_recall --bench cognitive_trace_dominance --bench trace_reinforcement --bench predictive_trace --bench activation_parameter_sweep --bench long_horizon_cognitive_memory --bench exported_cognitive_session
+cargo bench -p synapse-eval --bench reflection_yield --bench merge_precision --bench forget_precision --bench hebbian_consistency --bench cognitive_chain_recall --bench cognitive_trace_dominance --bench trace_reinforcement --bench predictive_trace --bench activation_parameter_sweep --bench long_horizon_cognitive_memory --bench exported_cognitive_session --bench expanded_cognitive_replay
 ```

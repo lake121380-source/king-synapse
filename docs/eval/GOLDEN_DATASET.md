@@ -15,7 +15,8 @@ Registry:
 | `coding-mem-20x30` | 20 memories, 30 queries | yes | Primary recall golden set. |
 | `reference-20x5` | 20 memories, 5 queries | yes | Must preserve `Recall@10 = 1.0`. |
 | `multihop-20x5` | 20 memories, 5 queries | yes | Must preserve `Recall@10 = 1.0` for multi-hop / CJK recall. |
-| `exported-cognitive-session-8` | 8 cognitive chains | yes | Visible seed, hidden influence, prediction, and reinforcement replay. |
+| `exported-cognitive-session-8` | 8 cognitive chains | yes | Stable external-comparison cognitive fixture. |
+| `expanded-cognitive-replay-20` | 20 cognitive chains | yes | 20 cognitive trace replays and 20 prediction replays. |
 | `longmem-cleaned-50` | 50 LongMemEval cleaned queries | no raw records | Long-memory trend validation. |
 | `dmr-msc-self-instruct-50` | 50 evaluated DMR candidate queries | no raw records | Retrieval/ranking and mapping validation. |
 
@@ -33,6 +34,7 @@ cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multihop.toml --tag phase6-multihop-baseline --json crates/eval/reports/phase6-multihop-baseline.json
 cargo bench -p synapse-eval --bench exported_cognitive_session
+cargo bench -p synapse-eval --bench expanded_cognitive_replay
 ```
 
 For retrieval strategy changes, replay the full algorithm bench suite in
@@ -44,6 +46,6 @@ from `README.md` and compare with `VALIDATION_LONGMEM_50.md`,
 
 ## Current Boundary
 
-This registry fixes the current replay baseline. It does not yet expand the
-exported cognitive/prediction fixture to 20 chains. That expansion remains a
-Phase 6 follow-up before making broad Phase 7 productization claims.
+This registry fixes the current replay baseline, including the 20-chain
+cognitive/prediction replay set. It does not prove hosted external systems or
+official DMR completion; those remain separate Phase 6 boundaries.

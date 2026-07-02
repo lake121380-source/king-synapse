@@ -1,7 +1,7 @@
 {
   "schema_version": "king-synapse.golden-dataset.v1",
-  "generated_at": "2026-07-02T20:24:24.2785510+08:00",
-  "validated_commit": "f10f2b2f",
+  "generated_at": "2026-07-02T21:12:00.0000000+08:00",
+  "validated_commit": "9f0b214",
   "purpose": "Phase 6 regression replay registry. Raw third-party records are not committed.",
   "committed_sets": [
     {
@@ -33,7 +33,16 @@
       "path": "crates/eval/datasets/exported_cognitive_session.toml",
       "sha256": "7592FAC22C782FE083D85474EFAB5B91E5C3F173140813962CC77517F2CC73C5",
       "chains": 8,
-      "role": "visible seed, hidden influence, prediction, and reinforcement replay fixture"
+      "role": "external-comparison cognitive fixture"
+    },
+    {
+      "id": "expanded-cognitive-replay-20",
+      "path": "crates/eval/datasets/regression/expanded_cognitive_replay.toml",
+      "sha256": "71451B57E53498DBC5A799EFCA4DA5AE2DCCA4AB15AC0C0AFED063712F2FBD55",
+      "chains": 20,
+      "cognitive_trace_replays": 20,
+      "prediction_replays": 20,
+      "role": "Phase 6 golden replay for cognitive trace and prediction"
     }
   ],
   "external_sets": [
@@ -68,7 +77,7 @@
     "external_sets": "Must reproduce the same source revision, source SHA-256, sample size, and sanitized report shape without committing raw records.",
     "latency": "Recorded for trend analysis only; correctness gates use recall and algorithm metrics."
   },
-  "known_open_expansion": [
-    "The current exported cognitive session has 8 chains. A larger 20-chain cognitive/prediction replay set remains a Phase 6 follow-up before broad Phase 7 claims."
+  "completed_expansion": [
+    "expanded-cognitive-replay-20 fixes 20 cognitive trace replays and 20 prediction replays for Phase 6 regression."
   ]
 }
