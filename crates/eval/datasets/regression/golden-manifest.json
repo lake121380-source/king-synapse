@@ -1,7 +1,7 @@
 {
   "schema_version": "king-synapse.golden-dataset.v1",
-  "generated_at": "2026-07-02T21:12:00.0000000+08:00",
-  "validated_commit": "9f0b214",
+  "generated_at": "2026-07-02T22:00:59.209501+08:00",
+  "validated_commit": "3441832+50-process-metrics-working-tree",
   "purpose": "Phase 6 regression replay registry. Raw third-party records are not committed.",
   "committed_sets": [
     {
@@ -49,19 +49,20 @@
     {
       "id": "longmem-cleaned-50",
       "report": "crates/eval/reports/longmem-50-validation.json",
-      "report_sha256": "3DDC76B5969D46AE21E22FC682B1DAFF04E8579BE3A049EEDB512FF5A520A8EE",
+      "report_sha256": "84D18E9EA7788F903E5B21CEB20D791FCE016E9A63A43CD2A2603E0FED451B2F",
       "source_repo": "xiaowu0162/longmemeval-cleaned",
       "source_revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
       "source_file": "longmemeval_s_cleaned.json",
       "source_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
       "license": "mit",
       "sample_size": 50,
-      "raw_records_committed": false
+      "raw_records_committed": false,
+      "process_metrics_recorded": true
     },
     {
       "id": "dmr-msc-self-instruct-50",
       "report": "crates/eval/reports/dmr-50-validation.json",
-      "report_sha256": "220F1210B875AC444D245047727B87C9052BB8561AC18F6BC94EF9DA0B1BFB4B",
+      "report_sha256": "0BE34AD044AB0D9D88FA493FB82249CF5D216F319C4A5D801305E267886862BB",
       "source_repo": "MemGPT/MSC-Self-Instruct",
       "source_revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
       "source_file": "msc_self_instruct.jsonl",
@@ -69,12 +70,13 @@
       "license": "apache-2.0",
       "sample_size": 50,
       "pre_eval_skipped_answer_not_found_in_chunks": 278,
-      "raw_records_committed": false
+      "raw_records_committed": false,
+      "process_metrics_recorded": true
     },
     {
       "id": "dmr-msc-self-instruct-50-punctuation",
       "report": "crates/eval/reports/dmr-50-punctuation-validation.json",
-      "report_sha256": "FF36B6E77A1A85308B229F15ECB99792215D0C37C9C97EEA0796BB3404EC1935",
+      "report_sha256": "9410039A50C527E0F754D0794BFF79D501EFD4421FE43067A64AB141272A9EEE",
       "source_repo": "MemGPT/MSC-Self-Instruct",
       "source_revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
       "source_file": "msc_self_instruct.jsonl",
@@ -83,7 +85,8 @@
       "sample_size": 50,
       "answer_match_policy": "punctuation",
       "pre_eval_skipped_answer_not_found_in_chunks": 31,
-      "raw_records_committed": false
+      "raw_records_committed": false,
+      "process_metrics_recorded": true
     }
   ],
   "replay_policy": {

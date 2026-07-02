@@ -73,6 +73,9 @@ reports and keep raw third-party data out of the repo.
 Heavy LongMemEval / DMR reruns should use the CUDA path documented in
 `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
+The 50-sample long-memory reports also record process-tree CPU and memory
+metrics for each retrieval mode.
+
 DMR candidate baselines are not official DMR benchmark scores. See
 `docs/eval/OFFICIAL_DMR_REVIEW.md` for the answer-generation and judge
 requirements that remain open.

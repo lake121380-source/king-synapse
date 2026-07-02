@@ -40,9 +40,19 @@ aggregate metrics and anonymized per-query buckets.
 
 | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency | P95 latency |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Baseline RRF | 0.317 | 0.503 | 0.310 | 0.339 | 538.1 ms | 1115.2 ms |
-| RRF + vectors | 0.507 | 0.663 | 0.424 | 0.459 | 576.4 ms | 1190.3 ms |
-| RRF + vectors + reranker | 0.483 | 0.590 | 0.490 | 0.461 | 1274.6 ms | 1861.5 ms |
+| Baseline RRF | 0.317 | 0.503 | 0.310 | 0.339 | 541.8 ms | 1124.6 ms |
+| RRF + vectors | 0.507 | 0.663 | 0.424 | 0.459 | 582.0 ms | 1186.2 ms |
+| RRF + vectors + reranker | 0.483 | 0.590 | 0.490 | 0.461 | 1265.1 ms | 1874.2 ms |
+
+## Process Metrics
+
+Sampled around the `cargo run` / `kr-eval` process tree at 100 ms intervals.
+
+| Mode | Peak working set | Peak private bytes | CPU time |
+| --- | ---: | ---: | ---: |
+| Baseline RRF | 255.6 MiB | 231.2 MiB | 94.9 s |
+| RRF + vectors | 3044.3 MiB | 6407.3 MiB | 508.0 s |
+| RRF + vectors + reranker | 4690.9 MiB | 8880.6 MiB | 768.2 s |
 
 ## Rank Buckets
 
@@ -64,4 +74,3 @@ coverage versus vector-only: Recall@10 moved from `0.663` to `0.590`.
 Conclusion: LongMemEval benefits from dense vector retrieval. The reranker is
 useful for top-1 ordering but is not a safe default for top-10 recall on this
 configuration.
-

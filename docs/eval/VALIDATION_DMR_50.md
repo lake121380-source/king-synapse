@@ -82,9 +82,19 @@ to `31`, while keeping the original strict-string report as the baseline.
 
 | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency | P95 latency |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Baseline RRF | 0.145 | 0.188 | 0.155 | 0.135 | 64.4 ms | 83.4 ms |
+| Baseline RRF | 0.145 | 0.188 | 0.155 | 0.135 | 64.3 ms | 84.1 ms |
 | RRF + vectors | 0.238 | 0.438 | 0.217 | 0.238 | 78.1 ms | 102.9 ms |
-| RRF + vectors + reranker | 0.524 | 0.584 | 0.445 | 0.451 | 619.0 ms | 648.6 ms |
+| RRF + vectors + reranker | 0.524 | 0.584 | 0.445 | 0.451 | 618.7 ms | 651.8 ms |
+
+## Process Metrics
+
+Sampled around the `cargo run` / `kr-eval` process tree at 100 ms intervals.
+
+| Mode | Peak working set | Peak private bytes | CPU time |
+| --- | ---: | ---: | ---: |
+| Baseline RRF | 92.3 MiB | 72.1 MiB | 6.1 s |
+| RRF + vectors | 1935.9 MiB | 4277.9 MiB | 35.2 s |
+| RRF + vectors + reranker | 2741.1 MiB | 7236.5 MiB | 112.2 s |
 
 ## Rank Buckets
 

@@ -22,8 +22,8 @@ Registry:
 | `dmr-msc-self-instruct-50-punctuation` | 50 evaluated DMR candidate queries | no raw records | Punctuation-normalized DMR candidate validation. |
 
 Raw LongMemEval and DMR records are intentionally not committed. Their fixed
-source revisions, source hashes, sample sizes, and sanitized reports are listed
-in the registry.
+source revisions, source hashes, sample sizes, sanitized reports, and
+process-metrics coverage are listed in the registry.
 
 ## Replay Rule
 

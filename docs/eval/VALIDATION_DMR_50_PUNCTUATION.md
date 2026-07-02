@@ -64,9 +64,19 @@ semantic or LLM scoring.
 
 | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency | P95 latency |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Baseline RRF | 0.125 | 0.198 | 0.179 | 0.137 | 67.4 ms | 88.1 ms |
-| RRF + vectors | 0.217 | 0.280 | 0.303 | 0.224 | 80.8 ms | 106.4 ms |
-| RRF + vectors + reranker | 0.408 | 0.468 | 0.623 | 0.441 | 622.3 ms | 659.4 ms |
+| Baseline RRF | 0.125 | 0.198 | 0.179 | 0.137 | 68.3 ms | 91.8 ms |
+| RRF + vectors | 0.217 | 0.280 | 0.303 | 0.224 | 81.5 ms | 108.4 ms |
+| RRF + vectors + reranker | 0.408 | 0.468 | 0.623 | 0.441 | 622.4 ms | 647.6 ms |
+
+## Process Metrics
+
+Sampled around the `cargo run` / `kr-eval` process tree at 100 ms intervals.
+
+| Mode | Peak working set | Peak private bytes | CPU time |
+| --- | ---: | ---: | ---: |
+| Baseline RRF | 92.1 MiB | 71.9 MiB | 6.4 s |
+| RRF + vectors | 2022.3 MiB | 4268.2 MiB | 35.1 s |
+| RRF + vectors + reranker | 2612.5 MiB | 6583.1 MiB | 110.8 s |
 
 ## Rank Buckets
 

@@ -22,11 +22,11 @@ small CUDA sub-stage / process metrics probe.
 | Item | Current status |
 | --- | --- |
 | Latency | Measured end-to-end per query and per run. |
-| Memory | Instrumented in `phase6-substage-timing-probe.json` process metrics; older 50-sample reports do not include it. |
-| CPU | Instrumented in `phase6-substage-timing-probe.json` process metrics; older 50-sample reports do not include it. |
-| Embedding time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
-| Vector search time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
-| Reranker time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
+| Memory | Instrumented in the 50-sample LongMemEval / DMR reports and in `phase6-substage-timing-probe.json`. |
+| CPU | Instrumented in the 50-sample LongMemEval / DMR reports and in `phase6-substage-timing-probe.json`. |
+| Embedding time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
+| Vector search time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
+| Reranker time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
 | GPU path | CUDA validated for LongMemEval / DMR vector and reranker runs. |
 
 ## Lightweight Replay Latency
@@ -45,24 +45,40 @@ Read: the committed local replay gates are not the performance concern.
 
 | Dataset | Mode | Chunks | Recall@10 | MRR@10 | P50 latency | P95 latency | Total |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| LongMemEval 50 | Baseline RRF | 2355 | 0.503 | 0.310 | 538.1 ms | 1115.2 ms | 29121.1 ms |
-| LongMemEval 50 | RRF + vectors | 2355 | 0.663 | 0.424 | 576.4 ms | 1190.3 ms | 30971.6 ms |
-| LongMemEval 50 | RRF + vectors + reranker | 2355 | 0.590 | 0.490 | 1274.6 ms | 1861.5 ms | 65862.0 ms |
-| DMR 50 | Baseline RRF | 250 | 0.188 | 0.155 | 64.4 ms | 83.4 ms | 3300.3 ms |
-| DMR 50 | RRF + vectors | 250 | 0.438 | 0.217 | 78.1 ms | 102.9 ms | 3986.5 ms |
-| DMR 50 | RRF + vectors + reranker | 250 | 0.584 | 0.445 | 619.0 ms | 648.6 ms | 31133.9 ms |
+| LongMemEval 50 | Baseline RRF | 2355 | 0.503 | 0.310 | 541.8 ms | 1124.6 ms | 29193.9 ms |
+| LongMemEval 50 | RRF + vectors | 2355 | 0.663 | 0.424 | 582.0 ms | 1186.2 ms | 31064.6 ms |
+| LongMemEval 50 | RRF + vectors + reranker | 2355 | 0.590 | 0.490 | 1265.1 ms | 1874.2 ms | 65754.1 ms |
+| DMR 50 | Baseline RRF | 250 | 0.188 | 0.155 | 64.3 ms | 84.1 ms | 3297.4 ms |
+| DMR 50 | RRF + vectors | 250 | 0.438 | 0.217 | 78.1 ms | 102.9 ms | 3978.0 ms |
+| DMR 50 | RRF + vectors + reranker | 250 | 0.584 | 0.445 | 618.7 ms | 651.8 ms | 31111.4 ms |
+
+## Long-Memory Process Metrics
+
+These metrics were sampled around the `cargo run` / `kr-eval` process tree at
+100 ms intervals during the CUDA 50-sample reruns.
+
+| Dataset | Mode | Peak working set | Peak private bytes | CPU time |
+| --- | --- | ---: | ---: | ---: |
+| LongMemEval 50 | Baseline RRF | 255.6 MiB | 231.2 MiB | 94.9 s |
+| LongMemEval 50 | RRF + vectors | 3044.3 MiB | 6407.3 MiB | 508.0 s |
+| LongMemEval 50 | RRF + vectors + reranker | 4690.9 MiB | 8880.6 MiB | 768.2 s |
+| DMR 50 | Baseline RRF | 92.3 MiB | 72.1 MiB | 6.1 s |
+| DMR 50 | RRF + vectors | 1935.9 MiB | 4277.9 MiB | 35.2 s |
+| DMR 50 | RRF + vectors + reranker | 2741.1 MiB | 7236.5 MiB | 112.2 s |
 
 ## Branch Delta
 
 | Dataset | Vector P50 delta | Reranker P50 delta | Vector total delta | Reranker total delta |
 | --- | ---: | ---: | ---: | ---: |
-| LongMemEval 50 | +38.3 ms | +698.1 ms | +1850.4 ms | +34890.4 ms |
-| DMR 50 | +13.7 ms | +540.9 ms | +686.2 ms | +27147.4 ms |
+| LongMemEval 50 | +40.2 ms | +683.1 ms | +1870.8 ms | +34689.4 ms |
+| DMR 50 | +13.7 ms | +540.7 ms | +680.6 ms | +27133.4 ms |
 
 Read:
 
-- Vector retrieval is not the dominant latency cost in the 50-sample runs.
-- Reranking is the dominant added cost.
+- Vector retrieval is not the dominant latency cost in the 50-sample runs, but
+  it does account for most of the jump in process memory.
+- Reranking is the dominant added query latency cost and the peak memory point
+  in both 50-sample runs.
 - DMR benefits from reranking enough to justify the cost during validation.
 - LongMemEval reranking improves MRR/top-1 but reduces Recall@10 versus
   vector-only, so it is not a clear default without more ranking work.
@@ -148,9 +164,9 @@ raw latency.
 The next useful instrumentation is:
 
 1. GPU memory accounting if the execution provider exposes it;
-2. promote the sub-stage and process metrics probe to LongMemEval / DMR 50 during the next
-   GPU validation pass.
+2. repeat 50-sample process metrics after retrieval or model-configuration
+   changes.
 
 Memory, CPU, embedding, vector search, FTS/entity/RRF, and reranker inference
-now have a small direct probe, but the older 50-sample reports remain
-end-to-end-only for process resources.
+now have direct validation evidence. GPU memory is still not independently
+measured.

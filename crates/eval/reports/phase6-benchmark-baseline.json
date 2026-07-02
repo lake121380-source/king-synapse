@@ -1,7 +1,7 @@
 {
   "schema_version": "king-synapse.phase6-benchmark-baseline.v1",
-  "generated_at": "2026-07-02T21:12:00.0000000+08:00",
-  "validated_commit": "9f0b214",
+  "generated_at": "2026-07-02T22:03:55.310667+08:00",
+  "validated_commit": "3441832+50-process-metrics-working-tree",
   "golden_manifest": "crates/eval/datasets/regression/golden-manifest.json",
   "recall_baselines": [
     {
@@ -157,7 +157,9 @@
       "baseline_recall_at_10": 0.5033333333333334,
       "vector_recall_at_10": 0.6633333333333333,
       "vector_rerank_recall_at_10": 0.59,
-      "gate": "Use as trend baseline; any retrieval strategy change must explain movement in all three modes."
+      "gate": "Use as trend baseline; any retrieval strategy change must explain movement in all three modes.",
+      "report_sha256": "84D18E9EA7788F903E5B21CEB20D791FCE016E9A63A43CD2A2603E0FED451B2F",
+      "process_metrics_recorded": true
     },
     {
       "id": "dmr-msc-self-instruct-50",
@@ -166,7 +168,9 @@
       "vector_recall_at_10": 0.438,
       "vector_rerank_recall_at_10": 0.584,
       "pre_eval_skipped_answer_not_found_in_chunks": 278,
-      "gate": "Use as trend baseline; mapping/chunk skips must be tracked separately from evaluated retrieval failures."
+      "gate": "Use as trend baseline; mapping/chunk skips must be tracked separately from evaluated retrieval failures.",
+      "report_sha256": "0BE34AD044AB0D9D88FA493FB82249CF5D216F319C4A5D801305E267886862BB",
+      "process_metrics_recorded": true
     },
     {
       "id": "dmr-msc-self-instruct-50-punctuation",
@@ -176,7 +180,9 @@
       "vector_recall_at_10": 0.28,
       "vector_rerank_recall_at_10": 0.468,
       "pre_eval_skipped_answer_not_found_in_chunks": 31,
-      "gate": "Pinned punctuation-normalized candidate rerun; do not compare as the same sample as strict-string DMR."
+      "gate": "Pinned punctuation-normalized candidate rerun; do not compare as the same sample as strict-string DMR.",
+      "report_sha256": "9410039A50C527E0F754D0794BFF79D501EFD4421FE43067A64AB141272A9EEE",
+      "process_metrics_recorded": true
     }
   ],
   "validation_commands": {

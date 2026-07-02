@@ -1,15 +1,15 @@
 {
-  "schema_version": "king-synapse.phase6-performance-profile.v3",
-  "generated_at": "2026-07-02T21:33:38.150738+08:00",
-  "validated_commit": "b77e1e0+process-metrics-working-tree",
-  "purpose": "Phase 6 performance analysis. Records current timing evidence, sub-stage instrumentation, and process-level CPU / memory probe evidence.",
+  "schema_version": "king-synapse.phase6-performance-profile.v4",
+  "generated_at": "2026-07-02T22:00:59.214563+08:00",
+  "validated_commit": "3441832+50-process-metrics-working-tree",
+  "purpose": "Phase 6 performance analysis. Records 50-sample timing, process-level CPU / memory evidence, and sub-stage instrumentation.",
   "measurement_coverage": {
     "latency": "measured end-to-end per query and per run",
-    "memory": "instrumented in phase6-substage-timing-probe process_metrics; older 50-sample reports do not include process metrics",
-    "cpu": "instrumented in phase6-substage-timing-probe process_metrics; older 50-sample reports do not include process metrics",
-    "embedding_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
-    "vector_search_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
-    "reranker_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
+    "memory": "instrumented in LongMemEval / DMR 50-sample reports and phase6-substage-timing-probe process_metrics",
+    "cpu": "instrumented in LongMemEval / DMR 50-sample reports and phase6-substage-timing-probe process_metrics",
+    "embedding_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
+    "vector_search_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
+    "reranker_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
     "gpu": "CUDA path validated for LongMemEval / DMR vector and reranker runs"
   },
   "lightweight_recall": [
@@ -48,90 +48,148 @@
     {
       "dataset": "LongMemEval cleaned 50",
       "report": "crates/eval/reports/longmem-50-validation.json",
+      "report_sha256": "84D18E9EA7788F903E5B21CEB20D791FCE016E9A63A43CD2A2603E0FED451B2F",
       "memory_chunks": 2355,
       "queries": 50,
       "mode": "baseline-rrf",
       "recall_at_10": 0.5033333333333334,
-      "mrr_at_10": 0.3098578565578565,
-      "p50_latency_ms": 538.1424,
-      "p95_latency_ms": 1115.1534,
-      "total_ms": 29121.1465
+      "mrr_at_10": 0.31950071370071365,
+      "p50_latency_ms": 541.7724000000001,
+      "p95_latency_ms": 1124.5896,
+      "total_ms": 29193.8669,
+      "process_metrics": {
+        "sample_count": 856,
+        "elapsed_wall_ms": 95112.34189999959,
+        "max_process_count": 3,
+        "peak_working_set_mib": 255.63671875,
+        "peak_private_mib": 231.2265625,
+        "cpu_seconds": 94.875
+      }
     },
     {
       "dataset": "LongMemEval cleaned 50",
       "report": "crates/eval/reports/longmem-50-validation.json",
+      "report_sha256": "84D18E9EA7788F903E5B21CEB20D791FCE016E9A63A43CD2A2603E0FED451B2F",
       "memory_chunks": 2355,
       "queries": 50,
       "mode": "vectors",
       "recall_at_10": 0.6633333333333333,
-      "mrr_at_10": 0.4241738816738816,
-      "p50_latency_ms": 576.4174,
-      "p95_latency_ms": 1190.3343,
-      "total_ms": 30971.5836
+      "mrr_at_10": 0.42525552486728957,
+      "p50_latency_ms": 581.9913,
+      "p95_latency_ms": 1186.1839,
+      "total_ms": 31064.6346,
+      "process_metrics": {
+        "sample_count": 2230,
+        "elapsed_wall_ms": 249816.1254000006,
+        "max_process_count": 3,
+        "peak_working_set_mib": 3044.2734375,
+        "peak_private_mib": 6407.25390625,
+        "cpu_seconds": 507.953125
+      }
     },
     {
       "dataset": "LongMemEval cleaned 50",
       "report": "crates/eval/reports/longmem-50-validation.json",
+      "report_sha256": "84D18E9EA7788F903E5B21CEB20D791FCE016E9A63A43CD2A2603E0FED451B2F",
       "memory_chunks": 2355,
       "queries": 50,
       "mode": "vectors-rerank",
       "recall_at_10": 0.59,
-      "mrr_at_10": 0.4897070707070707,
-      "p50_latency_ms": 1274.5631,
-      "p95_latency_ms": 1861.5409,
-      "total_ms": 65861.9864
+      "mrr_at_10": 0.5231369902987698,
+      "p50_latency_ms": 1265.0664,
+      "p95_latency_ms": 1874.1819,
+      "total_ms": 65754.0742,
+      "process_metrics": {
+        "sample_count": 2593,
+        "elapsed_wall_ms": 291590.22139999794,
+        "max_process_count": 3,
+        "peak_working_set_mib": 4690.9453125,
+        "peak_private_mib": 8880.6171875,
+        "cpu_seconds": 768.25
+      }
     },
     {
       "dataset": "DMR candidate 50",
       "report": "crates/eval/reports/dmr-50-validation.json",
+      "report_sha256": "0BE34AD044AB0D9D88FA493FB82249CF5D216F319C4A5D801305E267886862BB",
       "memory_chunks": 250,
       "queries": 50,
       "mode": "baseline-rrf",
       "recall_at_10": 0.188,
       "mrr_at_10": 0.1554597840235081,
-      "p50_latency_ms": 64.4292,
-      "p95_latency_ms": 83.3538,
-      "total_ms": 3300.3331
+      "p50_latency_ms": 64.3409,
+      "p95_latency_ms": 84.07969999999999,
+      "total_ms": 3297.4328,
+      "process_metrics": {
+        "sample_count": 57,
+        "elapsed_wall_ms": 6337.724299999536,
+        "max_process_count": 3,
+        "peak_working_set_mib": 92.27734375,
+        "peak_private_mib": 72.1171875,
+        "cpu_seconds": 6.125
+      }
     },
     {
       "dataset": "DMR candidate 50",
       "report": "crates/eval/reports/dmr-50-validation.json",
+      "report_sha256": "0BE34AD044AB0D9D88FA493FB82249CF5D216F319C4A5D801305E267886862BB",
       "memory_chunks": 250,
       "queries": 50,
       "mode": "vectors",
-      "recall_at_10": 0.438,
-      "mrr_at_10": 0.2171527021415231,
-      "p50_latency_ms": 78.0871,
-      "p95_latency_ms": 102.9293,
-      "total_ms": 3986.5427
+      "recall_at_10": 0.43799999999999994,
+      "mrr_at_10": 0.21668323612726714,
+      "p50_latency_ms": 78.05969999999999,
+      "p95_latency_ms": 102.8845,
+      "total_ms": 3978.0347,
+      "process_metrics": {
+        "sample_count": 250,
+        "elapsed_wall_ms": 28347.529899998335,
+        "max_process_count": 3,
+        "peak_working_set_mib": 1935.890625,
+        "peak_private_mib": 4277.8671875,
+        "cpu_seconds": 35.25
+      }
     },
     {
       "dataset": "DMR candidate 50",
       "report": "crates/eval/reports/dmr-50-validation.json",
+      "report_sha256": "0BE34AD044AB0D9D88FA493FB82249CF5D216F319C4A5D801305E267886862BB",
       "memory_chunks": 250,
       "queries": 50,
       "mode": "vectors-rerank",
       "recall_at_10": 0.584,
-      "mrr_at_10": 0.4450088401620675,
-      "p50_latency_ms": 619.0115,
-      "p95_latency_ms": 648.6421,
-      "total_ms": 31133.9283
+      "mrr_at_10": 0.4450247011206176,
+      "p50_latency_ms": 618.7488,
+      "p95_latency_ms": 651.7819000000001,
+      "total_ms": 31111.4366,
+      "process_metrics": {
+        "sample_count": 545,
+        "elapsed_wall_ms": 61785.76189999876,
+        "max_process_count": 3,
+        "peak_working_set_mib": 2741.09765625,
+        "peak_private_mib": 7236.54296875,
+        "cpu_seconds": 112.1875
+      }
     }
   ],
   "branch_delta": [
     {
       "dataset": "LongMemEval cleaned 50",
-      "vector_p50_delta_ms": 38.275,
-      "reranker_p50_delta_ms": 698.1457,
-      "vector_total_delta_ms": 1850.4371,
-      "reranker_total_delta_ms": 34890.4028
+      "vector_p50_delta_ms": 40.21889999999996,
+      "reranker_p50_delta_ms": 683.0750999999999,
+      "vector_total_delta_ms": 1870.7677000000003,
+      "reranker_total_delta_ms": 34689.4396,
+      "vector_peak_working_set_delta_mib": 2788.63671875,
+      "reranker_peak_working_set_delta_mib": 1646.671875
     },
     {
       "dataset": "DMR candidate 50",
-      "vector_p50_delta_ms": 13.6579,
-      "reranker_p50_delta_ms": 540.9244,
-      "vector_total_delta_ms": 686.2096,
-      "reranker_total_delta_ms": 27147.3856
+      "vector_p50_delta_ms": 13.718799999999987,
+      "reranker_p50_delta_ms": 540.6890999999999,
+      "vector_total_delta_ms": 680.6019000000001,
+      "reranker_total_delta_ms": 27133.4019,
+      "vector_peak_working_set_delta_mib": 1843.61328125,
+      "reranker_peak_working_set_delta_mib": 805.20703125
     }
   ],
   "external_comparison": [
@@ -246,7 +304,117 @@
     "rerank_pool": 50
   },
   "next_instrumentation": [
-    "Promote sub-stage and process metrics probes from small diagnostic samples to LongMemEval / DMR 50 reruns when the next GPU validation pass is needed.",
-    "Add GPU memory accounting if the execution provider exposes it."
+    "Add GPU memory accounting if the execution provider exposes it.",
+    "Repeat 50-sample process metrics after retrieval or model-configuration changes."
+  ],
+  "long_memory_process_metrics": [
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "mode": "baseline-rrf",
+      "process_metrics": {
+        "sample_count": 856,
+        "elapsed_wall_ms": 95112.34189999959,
+        "max_process_count": 3,
+        "peak_working_set_mib": 255.63671875,
+        "peak_private_mib": 231.2265625,
+        "cpu_seconds": 94.875
+      }
+    },
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "mode": "vectors",
+      "process_metrics": {
+        "sample_count": 2230,
+        "elapsed_wall_ms": 249816.1254000006,
+        "max_process_count": 3,
+        "peak_working_set_mib": 3044.2734375,
+        "peak_private_mib": 6407.25390625,
+        "cpu_seconds": 507.953125
+      }
+    },
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "mode": "vectors-rerank",
+      "process_metrics": {
+        "sample_count": 2593,
+        "elapsed_wall_ms": 291590.22139999794,
+        "max_process_count": 3,
+        "peak_working_set_mib": 4690.9453125,
+        "peak_private_mib": 8880.6171875,
+        "cpu_seconds": 768.25
+      }
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "mode": "baseline-rrf",
+      "process_metrics": {
+        "sample_count": 57,
+        "elapsed_wall_ms": 6337.724299999536,
+        "max_process_count": 3,
+        "peak_working_set_mib": 92.27734375,
+        "peak_private_mib": 72.1171875,
+        "cpu_seconds": 6.125
+      }
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "mode": "vectors",
+      "process_metrics": {
+        "sample_count": 250,
+        "elapsed_wall_ms": 28347.529899998335,
+        "max_process_count": 3,
+        "peak_working_set_mib": 1935.890625,
+        "peak_private_mib": 4277.8671875,
+        "cpu_seconds": 35.25
+      }
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "mode": "vectors-rerank",
+      "process_metrics": {
+        "sample_count": 545,
+        "elapsed_wall_ms": 61785.76189999876,
+        "max_process_count": 3,
+        "peak_working_set_mib": 2741.09765625,
+        "peak_private_mib": 7236.54296875,
+        "cpu_seconds": 112.1875
+      }
+    },
+    {
+      "dataset": "DMR candidate 50, punctuation mapping",
+      "mode": "baseline-rrf",
+      "process_metrics": {
+        "sample_count": 59,
+        "elapsed_wall_ms": 6615.262100000109,
+        "max_process_count": 3,
+        "peak_working_set_mib": 92.08203125,
+        "peak_private_mib": 71.890625,
+        "cpu_seconds": 6.4375
+      }
+    },
+    {
+      "dataset": "DMR candidate 50, punctuation mapping",
+      "mode": "vectors",
+      "process_metrics": {
+        "sample_count": 252,
+        "elapsed_wall_ms": 28548.8852999988,
+        "max_process_count": 3,
+        "peak_working_set_mib": 2022.27734375,
+        "peak_private_mib": 4268.203125,
+        "cpu_seconds": 35.09375
+      }
+    },
+    {
+      "dataset": "DMR candidate 50, punctuation mapping",
+      "mode": "vectors-rerank",
+      "process_metrics": {
+        "sample_count": 543,
+        "elapsed_wall_ms": 61781.69329999946,
+        "max_process_count": 3,
+        "peak_working_set_mib": 2612.5,
+        "peak_private_mib": 6583.13671875,
+        "cpu_seconds": 110.84375
+      }
+    }
   ]
 }
