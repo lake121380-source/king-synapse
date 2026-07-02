@@ -5,6 +5,7 @@
 //! Store is now query-agnostic; embedding lives behind a trait so it can
 //! be swapped or mocked.
 
+pub(crate) mod accelerator;
 pub mod adaptive;
 pub mod config;
 pub(crate) mod embed;

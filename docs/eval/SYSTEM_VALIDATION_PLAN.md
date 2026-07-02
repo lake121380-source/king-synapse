@@ -177,6 +177,11 @@ task. The validation win condition is narrower and more important:
 - LongMemEval / DMR smoke path: implemented in
   `scripts/eval/longmem_dmr_smoke.py`; latest sanitized report is
   `crates/eval/reports/longmem-dmr-smoke-latest.json`.
+- GPU validation path: CUDA provider selection is implemented, but the local
+  CUDA smoke run is blocked by missing CUDA 12 runtime DLLs; see
+  `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 - Stage 7 system validation report: added at
   `docs/eval/SYSTEM_VALIDATION_REPORT.md`.
+- 50-sample LongMemEval / DMR validation: not started; run it with
+  `--accelerator cuda` only after the CUDA smoke check passes.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

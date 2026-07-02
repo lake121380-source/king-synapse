@@ -8,6 +8,7 @@
 //! memories, then drop it. First load downloads ONNX + tokenizer files into
 //! `FASTEMBED_CACHE_DIR` (or `./.fastembed_cache` if unset).
 
+use crate::accelerator::execution_providers_from_env;
 use crate::error::{Error, Result};
 use fastembed::{EmbeddingModel, TextEmbedding, TextInitOptions};
 
@@ -34,7 +35,11 @@ impl Embedder {
     }
 
     fn with_model(model: EmbeddingModel, name: String, dim: usize) -> Result<Self> {
-        let opts = TextInitOptions::new(model).with_show_download_progress(true);
+        let mut opts = TextInitOptions::new(model).with_show_download_progress(true);
+        let execution_providers = execution_providers_from_env()?;
+        if !execution_providers.is_empty() {
+            opts = opts.with_execution_providers(execution_providers);
+        }
         let inner = TextEmbedding::try_new(opts)
             .map_err(|e| Error::Embedder(format!("init {name}: {e}")))?;
         Ok(Self {

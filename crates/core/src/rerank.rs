@@ -8,6 +8,7 @@
 //! The engine writes those scores into hits and resorts. This isolates
 //! the trait from `RecallHit`'s frozen field set (ADR-003).
 
+use crate::accelerator::execution_providers_from_env;
 use crate::error::{Error, Result};
 use fastembed::{RerankInitOptions, RerankerModel, TextRerank};
 
@@ -38,7 +39,11 @@ impl FastEmbedReranker {
     }
 
     fn with_model(model: RerankerModel, name: &str) -> Result<Self> {
-        let opts = RerankInitOptions::new(model).with_show_download_progress(true);
+        let mut opts = RerankInitOptions::new(model).with_show_download_progress(true);
+        let execution_providers = execution_providers_from_env()?;
+        if !execution_providers.is_empty() {
+            opts = opts.with_execution_providers(execution_providers);
+        }
         let inner = TextRerank::try_new(opts)
             .map_err(|e| Error::Embedder(format!("init reranker {name}: {e}")))?;
         Ok(Self {

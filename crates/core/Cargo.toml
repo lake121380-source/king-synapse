@@ -15,8 +15,14 @@ uuid = { workspace = true }
 chrono = { workspace = true }
 rusqlite = { workspace = true }
 sqlite-vec = { workspace = true }
-fastembed = { workspace = true }
 directories = { workspace = true }
 tracing = { workspace = true }
 toml = { workspace = true }
 zerocopy = { workspace = true }
+
+[target.'cfg(windows)'.dependencies]
+fastembed = { workspace = true, features = ["directml"] }
+ort = { workspace = true, features = ["copy-dylibs", "cuda", "directml"] }
+
+[target.'cfg(not(windows))'.dependencies]
+fastembed = { workspace = true }

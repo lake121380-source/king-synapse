@@ -90,9 +90,22 @@ def parse_args() -> argparse.Namespace:
         default="all",
         help="Comma-separated smoke modes: all, baseline-rrf, vectors, vectors-rerank.",
     )
+    parser.add_argument(
+        "--datasets",
+        default="all",
+        help="Comma-separated datasets: all, longmem, dmr.",
+    )
     parser.add_argument("--longmem-sample-size", type=int, default=10)
     parser.add_argument("--dmr-sample-size", type=int, default=20)
     parser.add_argument("--k", type=int, default=10)
+    parser.add_argument(
+        "--accelerator",
+        choices=("env", "cpu", "cuda", "directml"),
+        default="env",
+        help="Execution provider for vector/rerank model inference. 'env' keeps KING_SYNAPSE_ACCELERATOR unchanged.",
+    )
+    parser.add_argument("--cuda-device-id", default=None)
+    parser.add_argument("--directml-device-id", default=None)
     parser.add_argument("--cleanup-cache", action="store_true")
     return parser.parse_args()
 
@@ -159,6 +172,46 @@ def parse_smoke_modes(raw: str) -> list[dict[str, Any]]:
     if not selected:
         raise ValueError("no smoke modes selected")
     return selected
+
+
+def parse_dataset_selection(raw: str) -> set[str]:
+    aliases = {
+        "all": "all",
+        "longmem": "longmem",
+        "longmemeval": "longmem",
+        "lm": "longmem",
+        "dmr": "dmr",
+    }
+    requested = [part.strip().lower() for part in raw.split(",") if part.strip()]
+    if not requested:
+        requested = ["all"]
+    selected: set[str] = set()
+    for part in requested:
+        if part not in aliases:
+            raise ValueError(f"unknown dataset: {part}")
+        canonical = aliases[part]
+        if canonical == "all":
+            return {"longmem", "dmr"}
+        selected.add(canonical)
+    if not selected:
+        raise ValueError("no datasets selected")
+    return selected
+
+
+def configure_accelerator_environment(args: argparse.Namespace) -> dict[str, Any]:
+    if args.accelerator != "env":
+        os.environ["KING_SYNAPSE_ACCELERATOR"] = args.accelerator
+    if args.cuda_device_id is not None:
+        os.environ["KING_SYNAPSE_CUDA_DEVICE_ID"] = str(args.cuda_device_id)
+    if args.directml_device_id is not None:
+        os.environ["KING_SYNAPSE_DIRECTML_DEVICE_ID"] = str(args.directml_device_id)
+
+    return {
+        "requested": args.accelerator,
+        "king_synapse_accelerator": os.environ.get("KING_SYNAPSE_ACCELERATOR"),
+        "cuda_device_id": os.environ.get("KING_SYNAPSE_CUDA_DEVICE_ID"),
+        "directml_device_id": os.environ.get("KING_SYNAPSE_DIRECTML_DEVICE_ID"),
+    }
 
 
 def flatten_text(value: Any) -> str:
@@ -450,12 +503,42 @@ def run_smoke_configs(
     return runs
 
 
+def first_relevant_rank(returned: list[str], relevant: set[str]) -> int | None:
+    for index, key in enumerate(returned, start=1):
+        if key in relevant:
+            return index
+    return None
+
+
+def rank_bucket(rank: int | None) -> str:
+    if rank is None:
+        return "absent"
+    if rank == 1:
+        return "top_1"
+    if rank <= 10:
+        return "top_10"
+    if rank <= 50:
+        return "top_50"
+    return "after_top_50"
+
+
+def failure_type_for_rank(rank: int | None) -> str:
+    if rank is None:
+        return "retrieval_miss"
+    if rank == 1:
+        return "hit_top_1"
+    if rank <= 10:
+        return "top_10_not_top_1"
+    return "wrong_rank"
+
+
 def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) -> dict[str, Any]:
     per_query = []
     for index, query_result in enumerate(raw.get("per_query", [])):
         example = examples[index]
         relevant = set(query_result.get("relevant", []))
         returned = query_result.get("returned", [])
+        first_rank = first_relevant_rank(returned, relevant)
         per_query.append(
             {
                 "sample_id": example["sample_id"],
@@ -463,6 +546,10 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
                 "source_session_count": example["source_session_count"],
                 "relevant_count": example["relevant_count"],
                 "returned_relevant_count": sum(1 for key in returned if key in relevant),
+                "returned_count": len(returned),
+                "first_relevant_rank": first_rank,
+                "rank_bucket": rank_bucket(first_rank),
+                "failure_type": failure_type_for_rank(first_rank),
                 "recall_at_5": query_result.get("recall_at_5"),
                 "recall_at_10": query_result.get("recall_at_10"),
                 "rr": query_result.get("rr"),
@@ -486,6 +573,8 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "p95_latency_ms": raw.get("p95_latency_ms"),
         "total_ms": raw.get("total_ms"),
         "per_query": per_query,
+        "rank_bucket_counts": dict(sorted(Counter(item["rank_bucket"] for item in per_query).items())),
+        "failure_type_counts": dict(sorted(Counter(item["failure_type"] for item in per_query).items())),
     }
 
 
@@ -538,53 +627,78 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.cache_root.mkdir(parents=True, exist_ok=True)
     selected_configs = parse_smoke_modes(args.modes)
+    selected_datasets = parse_dataset_selection(args.datasets)
+    accelerator = configure_accelerator_environment(args)
 
     api = HfApi(endpoint=args.endpoint)
-    longmem_info = dataset_info(api, LONGMEM_REPO)
-    dmr_info = dataset_info(api, DMR_REPO)
+    datasets: list[dict[str, Any]] = []
+    cleanup_paths: list[Path] = []
 
-    longmem_cache = args.cache_root / "longmemeval-cleaned"
-    dmr_cache = args.cache_root / "dmr-msc-self-instruct"
-    longmem_path = download_dataset(LONGMEM_REPO, LONGMEM_FILE, args.endpoint, longmem_cache)
-    dmr_path = download_dataset(DMR_REPO, DMR_FILE, args.endpoint, dmr_cache)
+    if "longmem" in selected_datasets:
+        longmem_info = dataset_info(api, LONGMEM_REPO)
+        longmem_cache = args.cache_root / "longmemeval-cleaned"
+        cleanup_paths.append(longmem_cache)
+        longmem_path = download_dataset(LONGMEM_REPO, LONGMEM_FILE, args.endpoint, longmem_cache)
+        longmem_rows = json.loads(longmem_path.read_text(encoding="utf-8"))
+        longmem_memories, longmem_queries, longmem_examples, longmem_skipped = build_longmem_dataset(
+            longmem_rows, args.longmem_sample_size
+        )
+        if not longmem_queries:
+            raise RuntimeError("LongMemEval smoke sample is empty.")
+        datasets.append(
+            {
+                "id": "longmem",
+                "name": "LongMemEval cleaned smoke",
+                "source": source_file_report(LONGMEM_REPO, LONGMEM_FILE, longmem_path, longmem_info),
+                "sample_size_requested": args.longmem_sample_size,
+                "memories": longmem_memories,
+                "queries": longmem_queries,
+                "examples": longmem_examples,
+                "skipped": longmem_skipped,
+                "toml_name": "longmemeval-smoke.toml",
+                "tag_base": "longmemeval-smoke",
+            }
+        )
 
-    longmem_rows = json.loads(longmem_path.read_text(encoding="utf-8"))
-    dmr_rows = read_jsonl(dmr_path)
-    longmem_memories, longmem_queries, longmem_examples, longmem_skipped = build_longmem_dataset(
-        longmem_rows, args.longmem_sample_size
-    )
-    dmr_memories, dmr_queries, dmr_examples, dmr_skipped = build_dmr_dataset(
-        dmr_rows, args.dmr_sample_size
-    )
-
-    if not longmem_queries:
-        raise RuntimeError("LongMemEval smoke sample is empty.")
-    if not dmr_queries:
-        raise RuntimeError("DMR smoke sample is empty.")
+    if "dmr" in selected_datasets:
+        dmr_info = dataset_info(api, DMR_REPO)
+        dmr_cache = args.cache_root / "dmr-msc-self-instruct"
+        cleanup_paths.append(dmr_cache)
+        dmr_path = download_dataset(DMR_REPO, DMR_FILE, args.endpoint, dmr_cache)
+        dmr_rows = read_jsonl(dmr_path)
+        dmr_memories, dmr_queries, dmr_examples, dmr_skipped = build_dmr_dataset(
+            dmr_rows, args.dmr_sample_size
+        )
+        if not dmr_queries:
+            raise RuntimeError("DMR smoke sample is empty.")
+        datasets.append(
+            {
+                "id": "dmr",
+                "name": "DMR candidate MSC-Self-Instruct smoke",
+                "source": source_file_report(DMR_REPO, DMR_FILE, dmr_path, dmr_info),
+                "sample_size_requested": args.dmr_sample_size,
+                "memories": dmr_memories,
+                "queries": dmr_queries,
+                "examples": dmr_examples,
+                "skipped": dmr_skipped,
+                "toml_name": "dmr-smoke.toml",
+                "tag_base": "dmr-candidate-smoke",
+            }
+        )
 
     with tempfile.TemporaryDirectory(prefix="king-synapse-longmem-dmr-") as temp:
         temp_dir = Path(temp)
-        longmem_toml = temp_dir / "longmemeval-smoke.toml"
-        dmr_toml = temp_dir / "dmr-smoke.toml"
-
-        write_toml_dataset(longmem_toml, longmem_memories, longmem_queries)
-        write_toml_dataset(dmr_toml, dmr_memories, dmr_queries)
-        longmem_runs = run_smoke_configs(
-            dataset_path=longmem_toml,
-            output_dir=temp_dir,
-            tag_base="longmemeval-smoke",
-            examples=longmem_examples,
-            k=args.k,
-            configs=selected_configs,
-        )
-        dmr_runs = run_smoke_configs(
-            dataset_path=dmr_toml,
-            output_dir=temp_dir,
-            tag_base="dmr-candidate-smoke",
-            examples=dmr_examples,
-            k=args.k,
-            configs=selected_configs,
-        )
+        for dataset in datasets:
+            dataset_path = temp_dir / dataset["toml_name"]
+            write_toml_dataset(dataset_path, dataset["memories"], dataset["queries"])
+            dataset["kr_eval_runs"] = run_smoke_configs(
+                dataset_path=dataset_path,
+                output_dir=temp_dir,
+                tag_base=dataset["tag_base"],
+                examples=dataset["examples"],
+                k=args.k,
+                configs=selected_configs,
+            )
 
     report = {
         "schema_version": "king-synapse.longmem-dmr-smoke.v2",
@@ -597,28 +711,21 @@ def main() -> int:
             "raw_records_committed": False,
         },
         "selected_modes": [config["id"] for config in selected_configs],
+        "selected_datasets": sorted(selected_datasets),
+        "accelerator": accelerator,
         "scoring_mode": "existing kr-eval RecallEngine compared across selected retrieval branches",
         "datasets": [
             dataset_smoke_report(
-                name="LongMemEval cleaned smoke",
-                source=source_file_report(LONGMEM_REPO, LONGMEM_FILE, longmem_path, longmem_info),
-                sample_size_requested=args.longmem_sample_size,
-                memories=longmem_memories,
-                queries=longmem_queries,
-                examples=longmem_examples,
-                skipped=longmem_skipped,
-                kr_eval_runs=longmem_runs,
-            ),
-            dataset_smoke_report(
-                name="DMR candidate MSC-Self-Instruct smoke",
-                source=source_file_report(DMR_REPO, DMR_FILE, dmr_path, dmr_info),
-                sample_size_requested=args.dmr_sample_size,
-                memories=dmr_memories,
-                queries=dmr_queries,
-                examples=dmr_examples,
-                skipped=dmr_skipped,
-                kr_eval_runs=dmr_runs,
-            ),
+                name=dataset["name"],
+                source=dataset["source"],
+                sample_size_requested=dataset["sample_size_requested"],
+                memories=dataset["memories"],
+                queries=dataset["queries"],
+                examples=dataset["examples"],
+                skipped=dataset["skipped"],
+                kr_eval_runs=dataset["kr_eval_runs"],
+            )
+            for dataset in datasets
         ],
         "limits": [
             "Small smoke sample only; not a full benchmark run.",
@@ -631,15 +738,16 @@ def main() -> int:
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     if args.cleanup_cache:
-        for path in [longmem_cache, dmr_cache]:
+        for path in cleanup_paths:
             if path.exists():
                 shutil.rmtree(path)
 
     print(json.dumps({
         "output": str(args.output),
         "selected_modes": [config["id"] for config in selected_configs],
-        "longmem_queries": len(longmem_queries),
-        "dmr_queries": len(dmr_queries),
+        "selected_datasets": sorted(selected_datasets),
+        "accelerator": accelerator,
+        "dataset_queries": {dataset["id"]: len(dataset["queries"]) for dataset in datasets},
         "kr_eval_runs_per_dataset": len(selected_configs),
         "cleanup_cache": args.cleanup_cache,
     }, indent=2))

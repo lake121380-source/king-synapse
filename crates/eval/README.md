@@ -94,6 +94,16 @@ sanitized aggregate report to
 Use `--modes` to isolate branch checks without overwriting the baseline report:
 `baseline`, `vector`, `vector-rerank`, or `all`.
 
+Use `--datasets` to isolate a long run:
+`longmem`, `dmr`, or `all`.
+
+Use `--accelerator cuda --cuda-device-id 0` for vector/reranker runs once the
+local CUDA 12 runtime is installed. The runner records the accelerator setting
+in the sanitized report. On Windows, CUDA mode requires ONNX Runtime's CUDA
+provider dependencies such as `cublasLt64_12.dll` and cuDNN DLLs to be visible
+on PATH. The 2026-07-02 local GPU attempt is recorded in
+`docs/eval/GPU_VALIDATION_2026-07-02.md`.
+
 The checked-in smoke report excludes raw questions, answers, dialogs, and
 session text. It is a small validation run, not a full LongMemEval or official
 DMR benchmark.
@@ -239,6 +249,26 @@ add `[[queries]]` blocks referencing that key in `relevant`.
 run into `FASTEMBED_CACHE_DIR` (or `./.fastembed_cache`). If `huggingface.co`
 is unreachable from your network, set `HF_ENDPOINT=https://hf-mirror.com`
 before running. The baseline RRF bench needs no network access.
+
+## Model Accelerator
+
+The vector and reranker paths can request an ONNX Runtime execution provider
+through `KING_SYNAPSE_ACCELERATOR`:
+
+| Value | Behavior |
+| --- | --- |
+| unset / `cpu` / `none` / `off` | Previous CPU behavior. |
+| `cuda` | Use CUDA provider on Windows validation builds. |
+| `directml` / `dml` / `gpu` | Use DirectML provider on Windows. |
+
+The LongMemEval / DMR runner can set this for a validation run:
+
+```bash
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
+```
+
+GPU mode is infrastructure for validation speed. It does not change the memory
+schema or the scoring contract.
 
 ## Baseline
 

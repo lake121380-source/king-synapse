@@ -140,6 +140,16 @@ The project has not yet crossed the bar for:
 3. live Letta endpoint measurement;
 4. production-readiness claims.
 
-Next required action: keep feature growth frozen and expand this same
-baseline/vector/vector-plus-reranker comparison to 50 LongMemEval and 50 DMR
-examples, with anonymized rank-bucket analysis for remaining misses.
+GPU validation status:
+
+- CUDA execution-provider selection is wired through
+  `KING_SYNAPSE_ACCELERATOR=cuda` and the LongMemEval / DMR runner now exposes
+  `--accelerator cuda`.
+- The local CUDA smoke check is blocked by missing CUDA 12 runtime DLLs,
+  specifically `cublasLt64_12.dll`.
+- Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
+
+Next required action: keep feature growth frozen, install or expose the CUDA 12
+runtime, then expand this same baseline/vector/vector-plus-reranker comparison
+to 50 LongMemEval and 50 DMR examples on GPU, with anonymized rank-bucket
+analysis for remaining misses.

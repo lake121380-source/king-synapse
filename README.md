@@ -141,9 +141,11 @@ repo and commit only aggregate, redacted metrics:
 | DMR candidate MSC-Self-Instruct | 0.317 | 0.333 | 0.658 | The low DMR baseline is mostly a ranking/retrieval-branch problem, with some data-mapping noise still present. |
 
 So the project is not in "add more features" mode. The next validation step is
-to expand the same three-way comparison to 50 LongMemEval and 50 DMR examples,
-then inspect the remaining anonymous DMR failures before changing the memory
-schema or product surface.
+to expand the same three-way comparison to 50 LongMemEval and 50 DMR examples
+with GPU acceleration, then inspect the remaining anonymous DMR failures before
+changing the memory schema or product surface. The local CUDA attempt is
+currently blocked by missing CUDA 12 runtime DLLs, recorded in
+[GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
 
@@ -202,6 +204,9 @@ python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --clea
 python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector --output crates/eval/reports/longmem-dmr-smoke-vector.json --cleanup-cache
 python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector-rerank --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json --cleanup-cache
 
+# Run the next DMR 50 validation on CUDA after CUDA 12 runtime is installed
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
+
 # Build release binaries
 cargo build --release
 ```
@@ -214,6 +219,8 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
+| `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and the blocked 50-sample GPU command. |
 | `docs/eval/LONGMEM_DMR_DATA_PLAN.md` | LongMemEval / DMR license, cache, and smoke-test rules. |
 | `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
 | `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |
