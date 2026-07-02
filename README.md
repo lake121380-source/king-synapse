@@ -129,22 +129,20 @@ The checked-in external comparison report is
 | Mem0 | 8/8 visible seed, 8/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
 | Letta | Adapter is present, but the local run is not configured yet. |
 
-The checked-in long-memory smoke reports use external data cached outside the
-repo and commit only aggregate, redacted metrics:
-[baseline](crates/eval/reports/longmem-dmr-smoke-latest.json),
-[vector](crates/eval/reports/longmem-dmr-smoke-vector.json), and
-[vector + reranker](crates/eval/reports/longmem-dmr-smoke-vector-rerank.json).
+The checked-in 50-sample long-memory reports use external data cached outside
+the repo and commit only aggregate, redacted metrics:
+[LongMemEval 50](crates/eval/reports/longmem-50-validation.json) and
+[DMR 50](crates/eval/reports/dmr-50-validation.json).
 
-| Smoke test | Baseline FTS/entity | + vector | + vector + reranker | Current read |
+| Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
-| LongMemEval cleaned | 0.817 | 1.000 | 0.800 | Vector recall helps; reranker is not safe to enable blindly here. |
-| DMR candidate MSC-Self-Instruct | 0.317 | 0.333 | 0.658 | The low DMR baseline is mostly a ranking/retrieval-branch problem, with some data-mapping noise still present. |
+| LongMemEval cleaned 50 | 0.503 | 0.663 | 0.590 | Vector recall helps; reranker improves top-1 / MRR but can hurt top-10 coverage. |
+| DMR candidate 50 | 0.188 | 0.438 | 0.584 | DMR improves strongly with vectors and reranking, but mapping/chunk skips remain large. |
 
-So the project is not in "add more features" mode. The next validation step is
-to expand the same three-way comparison to 50 LongMemEval and 50 DMR examples
-with GPU acceleration, then inspect the remaining anonymous DMR failures before
-changing the memory schema or product surface. The local CUDA attempt is
-currently blocked by missing CUDA 12 runtime DLLs, recorded in
+So the project is not in "add more features" mode. The current validation read
+is: the architecture still holds, and the next work is narrower, focused on DMR
+mapping/chunk skips and final candidate ranking before changing the memory
+schema or product surface. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
@@ -184,7 +182,7 @@ comparison adapters or optional embedding/reranking paths.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
-- LongMemEval and DMR have small smoke reports; full benchmark validation is not finished.
+- LongMemEval and DMR now have 50-sample validation reports; official DMR harness validation is not finished.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
 ## Useful Commands
@@ -199,13 +197,9 @@ cargo bench -p synapse-eval --bench exported_cognitive_session
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
 
-# Run LongMemEval / DMR smoke validation
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --cleanup-cache
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector --output crates/eval/reports/longmem-dmr-smoke-vector.json --cleanup-cache
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector-rerank --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json --cleanup-cache
-
-# Run the next DMR 50 validation on CUDA after CUDA 12 runtime is installed
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
+# Run the 50-sample LongMemEval / DMR CUDA validation
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets longmem --modes all --longmem-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/longmem-50-validation.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
 
 # Build release binaries
 cargo build --release
@@ -220,7 +214,10 @@ cargo build --release
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
-| `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and the blocked 50-sample GPU command. |
+| `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
+| `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
+| `docs/eval/FAILURE_ANALYSIS.md` | Anonymous failure bucket analysis. |
+| `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and runtime notes. |
 | `docs/eval/LONGMEM_DMR_DATA_PLAN.md` | LongMemEval / DMR license, cache, and smoke-test rules. |
 | `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
 | `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |

@@ -1,19 +1,47 @@
 # GPU Validation 2026-07-02
 
-Status: blocked by local CUDA runtime.
+Status: passed for Phase 6 local validation.
 
-This note records the GPU setup attempt for Phase 6 validation. It is not a
-long-memory benchmark result.
+This note records the local GPU setup used for the 50-sample LongMemEval and
+DMR validation runs. It is infrastructure evidence, not a benchmark result by
+itself.
 
 ## What Changed
 
-- `KING_SYNAPSE_ACCELERATOR=cuda` now routes fastembed model inference through
-  the ONNX Runtime CUDA execution provider on Windows validation builds.
-- `KING_SYNAPSE_ACCELERATOR=directml` remains available for DirectML attempts.
+- `KING_SYNAPSE_ACCELERATOR=cuda` routes fastembed model inference through the
+  ONNX Runtime CUDA execution provider on Windows validation builds.
+- The LongMemEval / DMR runner accepts `--accelerator cuda` and automatically
+  prepends local NVIDIA CUDA runtime wheel DLL directories when they exist under
+  the user cache.
+- The runner now records model inference parameters:
+  `embed-batch-size`, `embed-max-length`, `rerank-batch-size`, and
+  `rerank-max-length`.
 - `KING_SYNAPSE_ACCELERATOR=cpu`, `none`, `off`, or an empty value keeps the
   previous CPU behavior.
-- `scripts/eval/longmem_dmr_smoke.py` now accepts `--accelerator`, so future
-  LongMemEval / DMR runs can request GPU mode directly.
+
+## Local Runtime
+
+CUDA Toolkit was not installed system-wide. Instead, the required CUDA 12
+runtime DLLs were installed into a user cache outside the repository through
+NVIDIA Python wheels:
+
+```text
+%LOCALAPPDATA%\king-synapse\cuda-runtime-py313
+```
+
+Installed wheel families:
+
+- `nvidia-cuda-runtime-cu12`
+- `nvidia-cuda-nvrtc-cu12`
+- `nvidia-cublas-cu12`
+- `nvidia-cudnn-cu12`
+- `nvidia-cufft-cu12`
+- `nvidia-curand-cu12`
+- `nvidia-cusolver-cu12`
+- `nvidia-cusparse-cu12`
+- `nvidia-nvjitlink-cu12`
+
+The committed reports do not record the absolute local runtime path.
 
 ## Verified
 
@@ -24,31 +52,35 @@ cargo check -p synapse-core
 
 Result: passed.
 
-CUDA smoke command:
-
-```powershell
-$env:HF_ENDPOINT='https://hf-mirror.com'
-$env:FASTEMBED_CACHE_DIR="$env:LOCALAPPDATA\king-synapse\fastembed-cache"
-$env:KING_SYNAPSE_ACCELERATOR='cuda'
-$env:KING_SYNAPSE_CUDA_DEVICE_ID='0'
-cargo run -p synapse-eval --bin kr-eval -- `
-  --dataset crates/eval/datasets/basic.toml `
-  --k 3 `
-  --tag cuda-check `
-  --json crates/eval/reports/_tmp-cuda-check.json `
-  --vectors `
-  --rerank `
-  --rerank-pool 5
-```
-
-Observed result after enabling `copy-dylibs` for ONNX Runtime:
+CUDA smoke result:
 
 ```text
-Error loading "D:\lake\jiaoben\king_recall\target\debug\onnxruntime_providers_cuda.dll"
-which depends on "cublasLt64_12.dll" which is missing.
+dataset:        crates/eval/datasets/basic.toml
+vectors:        true
+rerank:         true
+Recall@10:      1.000
+MRR@10:         1.000
 ```
 
-No `_tmp-cuda-check.json` report was written.
+Temporary smoke reports were deleted.
+
+## 50-Sample Runs
+
+The completed CUDA validation reports are:
+
+- `crates/eval/reports/longmem-50-validation.json`
+- `crates/eval/reports/dmr-50-validation.json`
+
+Fixed GPU inference configuration:
+
+| Parameter | Value |
+| --- | ---: |
+| CUDA device | 0 |
+| Embed batch size | 32 |
+| Embed max length | 256 |
+| Rerank batch size | 32 |
+| Rerank max length | 256 |
+| Rerank pool | 50 |
 
 ## Local Machine State
 
@@ -56,35 +88,13 @@ No `_tmp-cuda-check.json` report was written.
 - Driver version reported by WMI: `32.0.15.9597`
 - `nvidia-smi` was not found in PATH or the checked NVIDIA program directory.
 - `CUDA_PATH` was not set.
-- CUDA 12 runtime DLLs such as `cublasLt64_12.dll`, `cublas64_12.dll`,
-  `cudart64_12.dll`, and `cudnn64_9.dll` were not found in the checked common
-  installation paths.
-- DirectML had already failed on this machine with ONNX Runtime adapter errors,
-  so CUDA is the intended GPU path for the next validation attempt.
+- DirectML had failed on this machine with ONNX Runtime adapter errors, so CUDA
+  is the validated GPU path.
 
 ## Conclusion
 
-This is not a Synapse architecture failure and not a DMR/LongMemEval result.
-The project can request CUDA now, but the local machine cannot run the CUDA
-provider until CUDA 12 runtime dependencies are installed and visible on PATH.
-
-Do not start the 50-sample vector/reranker validation on CPU. Resume with GPU
-only after the CUDA runtime check passes.
-
-## Next GPU Command
-
-After CUDA 12 runtime DLLs are installed and visible on PATH:
-
-```powershell
-python scripts/eval/longmem_dmr_smoke.py `
-  --endpoint https://hf-mirror.com `
-  --datasets dmr `
-  --modes all `
-  --dmr-sample-size 50 `
-  --k 50 `
-  --accelerator cuda `
-  --cuda-device-id 0 `
-  --output crates/eval/reports/dmr-50-validation.json `
-  --cleanup-cache
-```
+The local GPU path is usable for Phase 6 validation after adding CUDA 12 runtime
+DLLs from NVIDIA wheels. The 4GB GPU requires explicit embedding/reranker batch
+and max-length limits; without them, LongMemEval embedding can create excessive
+host memory pressure and DMR reranking can hit CUDA OOM.
 

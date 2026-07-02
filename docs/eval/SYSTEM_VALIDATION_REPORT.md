@@ -114,28 +114,40 @@ The project has crossed the basic bar for:
 2. internally consistent recall, trace, prediction, and reinforcement reports;
 3. visible comparative value on cognitive-trace introspection.
 
-Long-memory smoke evidence now exists across three retrieval modes:
+Long-memory 50-sample evidence now exists across three retrieval modes:
 
 | Dataset | Sample | Baseline Recall@10 | Vector Recall@10 | Vector + reranker Recall@10 |
 | --- | ---: | ---: | ---: | ---: |
-| LongMemEval cleaned | 10/10 | 0.817 | 1.000 | 0.800 |
-| DMR candidate MSC-Self-Instruct | 20/20 | 0.317 | 0.333 | 0.658 |
+| LongMemEval cleaned | 50/50 | 0.503 | 0.663 | 0.590 |
+| DMR candidate MSC-Self-Instruct | 50/50 | 0.188 | 0.438 | 0.584 |
 
-The smoke reports are:
+The 50-sample reports are:
 
-- `crates/eval/reports/longmem-dmr-smoke-latest.json`
-- `crates/eval/reports/longmem-dmr-smoke-vector.json`
-- `crates/eval/reports/longmem-dmr-smoke-vector-rerank.json`
+- `crates/eval/reports/longmem-50-validation.json`
+- `crates/eval/reports/dmr-50-validation.json`
+- `docs/eval/VALIDATION_LONGMEM_50.md`
+- `docs/eval/VALIDATION_DMR_50.md`
+- `docs/eval/FAILURE_ANALYSIS.md`
 
 They exclude raw third-party records from the committed reports. The current
-read is: vector search is enough to fix the sampled LongMemEval misses, while
-DMR needs a reranking step to recover many candidate rows. Reranking is also
-expensive and can hurt LongMemEval top-10 recall, so it is validated but not a
-safe default yet.
+read is: vector search improves both LongMemEval and DMR. Reranking improves
+DMR substantially and improves LongMemEval top-1 / MRR, but it can reduce
+LongMemEval top-10 recall versus vector-only.
+
+Failure analysis now shows:
+
+| Dataset | Final-mode top 1 | Ranking failures | Retrieval misses | Pre-eval missing/chunk rows |
+| --- | ---: | ---: | ---: | ---: |
+| LongMemEval 50 | 18 | 26 | 6 | 0 |
+| DMR 50 | 16 | 29 | 5 | 278 |
+
+The dominant evaluated failure mode is ranking. The dominant DMR data issue is
+mapping/chunking: 278 candidate rows were skipped before evaluation because the
+expected answer text was not found in generated memory chunks.
 
 The project has not yet crossed the bar for:
 
-1. full LongMemEval / official DMR benchmark results;
+1. official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. production-readiness claims.
@@ -145,11 +157,13 @@ GPU validation status:
 - CUDA execution-provider selection is wired through
   `KING_SYNAPSE_ACCELERATOR=cuda` and the LongMemEval / DMR runner now exposes
   `--accelerator cuda`.
-- The local CUDA smoke check is blocked by missing CUDA 12 runtime DLLs,
-  specifically `cublasLt64_12.dll`.
+- The local CUDA smoke check passed after installing CUDA 12 runtime DLLs into
+  a user cache outside the repository.
+- The 50-sample LongMemEval and DMR validation runs completed on CUDA with
+  embedding batch `32`, embedding max length `256`, reranker batch `32`, and
+  reranker max length `256`.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen, install or expose the CUDA 12
-runtime, then expand this same baseline/vector/vector-plus-reranker comparison
-to 50 LongMemEval and 50 DMR examples on GPU, with anonymized rank-bucket
-analysis for remaining misses.
+Next required action: keep feature growth frozen and investigate the two
+remaining validation boundaries: DMR mapping/chunk skips and final candidate
+ranking.

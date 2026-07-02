@@ -80,10 +80,22 @@ def default_cache_root() -> Path:
     return Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "king-synapse" / "eval"
 
 
+def default_fastembed_cache_dir() -> Path:
+    raw = os.environ.get("FASTEMBED_CACHE_DIR")
+    if raw:
+        return Path(raw)
+    if os.name == "nt":
+        base = os.environ.get("LOCALAPPDATA")
+        if base:
+            return Path(base) / "king-synapse" / "fastembed-cache"
+    return Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "king-synapse" / "fastembed-cache"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run LongMemEval / DMR smoke validation.")
     parser.add_argument("--endpoint", default=os.environ.get("HF_ENDPOINT", "https://huggingface.co"))
     parser.add_argument("--cache-root", type=Path, default=default_cache_root())
+    parser.add_argument("--fastembed-cache-dir", type=Path, default=default_fastembed_cache_dir())
     parser.add_argument("--output", type=Path, default=repo_root() / "crates/eval/reports/longmem-dmr-smoke-latest.json")
     parser.add_argument(
         "--modes",
@@ -98,6 +110,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--longmem-sample-size", type=int, default=10)
     parser.add_argument("--dmr-sample-size", type=int, default=20)
     parser.add_argument("--k", type=int, default=10)
+    parser.add_argument("--embed-batch-size", type=int, default=None)
+    parser.add_argument("--embed-max-length", type=int, default=None)
+    parser.add_argument("--rerank-batch-size", type=int, default=None)
+    parser.add_argument("--rerank-max-length", type=int, default=None)
     parser.add_argument(
         "--accelerator",
         choices=("env", "cpu", "cuda", "directml"),
@@ -105,6 +121,12 @@ def parse_args() -> argparse.Namespace:
         help="Execution provider for vector/rerank model inference. 'env' keeps KING_SYNAPSE_ACCELERATOR unchanged.",
     )
     parser.add_argument("--cuda-device-id", default=None)
+    parser.add_argument(
+        "--cuda-runtime-root",
+        type=Path,
+        default=None,
+        help="Optional root containing NVIDIA CUDA runtime wheel DLL directories.",
+    )
     parser.add_argument("--directml-device-id", default=None)
     parser.add_argument("--cleanup-cache", action="store_true")
     return parser.parse_args()
@@ -206,11 +228,163 @@ def configure_accelerator_environment(args: argparse.Namespace) -> dict[str, Any
     if args.directml_device_id is not None:
         os.environ["KING_SYNAPSE_DIRECTML_DEVICE_ID"] = str(args.directml_device_id)
 
+    cuda_runtime = configure_cuda_runtime_path(args)
+    embedding = configure_embedding_environment(args)
+    rerank_batch = configure_rerank_batch_environment(args)
+    rerank_max_length = configure_rerank_max_length_environment(args)
+
     return {
         "requested": args.accelerator,
         "king_synapse_accelerator": os.environ.get("KING_SYNAPSE_ACCELERATOR"),
         "cuda_device_id": os.environ.get("KING_SYNAPSE_CUDA_DEVICE_ID"),
+        "cuda_runtime": cuda_runtime,
+        "embedding": embedding,
+        "rerank_batch": rerank_batch,
+        "rerank_max_length": rerank_max_length,
         "directml_device_id": os.environ.get("KING_SYNAPSE_DIRECTML_DEVICE_ID"),
+    }
+
+
+def default_cuda_runtime_root() -> Path | None:
+    raw = os.environ.get("KING_SYNAPSE_CUDA_RUNTIME_ROOT")
+    if raw:
+        return Path(raw)
+    if os.name == "nt":
+        base = os.environ.get("LOCALAPPDATA")
+        if base:
+            return Path(base) / "king-synapse" / "cuda-runtime-py313"
+    return None
+
+
+def configure_cuda_runtime_path(args: argparse.Namespace) -> dict[str, Any]:
+    accelerator = os.environ.get("KING_SYNAPSE_ACCELERATOR", "").strip().lower()
+    if accelerator != "cuda":
+        return {"path_added": False, "reason": "accelerator is not cuda"}
+
+    runtime_root = args.cuda_runtime_root or default_cuda_runtime_root()
+    if runtime_root is None:
+        return {"path_added": False, "reason": "no cuda runtime root configured"}
+
+    runtime_root = runtime_root.expanduser()
+    exists = runtime_root.exists()
+    dll_dirs: list[str] = []
+    if exists:
+        dll_dirs = sorted({str(path.parent) for path in runtime_root.rglob("*.dll")})
+    if dll_dirs:
+        os.environ["PATH"] = os.pathsep.join(dll_dirs + [os.environ.get("PATH", "")])
+
+    return {
+        "path_added": bool(dll_dirs),
+        "root_recorded": False,
+        "root_exists": exists,
+        "dll_dir_count": len(dll_dirs),
+    }
+
+
+def configure_rerank_batch_environment(args: argparse.Namespace) -> dict[str, Any]:
+    if args.rerank_batch_size is not None:
+        os.environ["KING_SYNAPSE_RERANK_BATCH_SIZE"] = str(args.rerank_batch_size)
+        return {
+            "value": str(args.rerank_batch_size),
+            "source": "argument",
+        }
+
+    existing = os.environ.get("KING_SYNAPSE_RERANK_BATCH_SIZE")
+    if existing:
+        return {
+            "value": existing,
+            "source": "environment",
+        }
+
+    accelerator = os.environ.get("KING_SYNAPSE_ACCELERATOR", "").strip().lower()
+    if accelerator == "cuda":
+        os.environ["KING_SYNAPSE_RERANK_BATCH_SIZE"] = "8"
+        return {
+            "value": "8",
+            "source": "cuda_default",
+        }
+
+    return {
+        "value": None,
+        "source": "unset",
+    }
+
+
+def configure_embedding_environment(args: argparse.Namespace) -> dict[str, Any]:
+    return {
+        "batch_size": configure_model_env_value(
+            arg_value=args.embed_batch_size,
+            env_name="KING_SYNAPSE_EMBED_BATCH_SIZE",
+            cuda_default="32",
+        ),
+        "max_length": configure_model_env_value(
+            arg_value=args.embed_max_length,
+            env_name="KING_SYNAPSE_EMBED_MAX_LENGTH",
+            cuda_default="256",
+        ),
+    }
+
+
+def configure_model_env_value(
+    *,
+    arg_value: int | None,
+    env_name: str,
+    cuda_default: str,
+) -> dict[str, Any]:
+    if arg_value is not None:
+        os.environ[env_name] = str(arg_value)
+        return {
+            "value": str(arg_value),
+            "source": "argument",
+        }
+
+    existing = os.environ.get(env_name)
+    if existing:
+        return {
+            "value": existing,
+            "source": "environment",
+        }
+
+    accelerator = os.environ.get("KING_SYNAPSE_ACCELERATOR", "").strip().lower()
+    if accelerator == "cuda":
+        os.environ[env_name] = cuda_default
+        return {
+            "value": cuda_default,
+            "source": "cuda_default",
+        }
+
+    return {
+        "value": None,
+        "source": "unset",
+    }
+
+
+def configure_rerank_max_length_environment(args: argparse.Namespace) -> dict[str, Any]:
+    if args.rerank_max_length is not None:
+        os.environ["KING_SYNAPSE_RERANK_MAX_LENGTH"] = str(args.rerank_max_length)
+        return {
+            "value": str(args.rerank_max_length),
+            "source": "argument",
+        }
+
+    existing = os.environ.get("KING_SYNAPSE_RERANK_MAX_LENGTH")
+    if existing:
+        return {
+            "value": existing,
+            "source": "environment",
+        }
+
+    accelerator = os.environ.get("KING_SYNAPSE_ACCELERATOR", "").strip().lower()
+    if accelerator == "cuda":
+        os.environ["KING_SYNAPSE_RERANK_MAX_LENGTH"] = "256"
+        return {
+            "value": "256",
+            "source": "cuda_default",
+        }
+
+    return {
+        "value": None,
+        "source": "unset",
     }
 
 
@@ -461,7 +635,14 @@ def run_kr_eval(
         cmd.append("--vectors")
     if rerank:
         cmd.extend(["--rerank", "--rerank-pool", str(rerank_pool)])
-    result = subprocess.run(cmd, cwd=repo_root(), text=True, capture_output=True)
+    result = subprocess.run(
+        cmd,
+        cwd=repo_root(),
+        text=True,
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+    )
     if result.returncode != 0:
         raise RuntimeError(
             f"kr-eval failed for {tag}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
@@ -482,6 +663,7 @@ def run_smoke_configs(
     for config in configs:
         tag = tag_base if not config["tag_suffix"] else f"{tag_base}{config['tag_suffix']}"
         raw_output = output_dir / f"{tag_base}-{config['id']}-raw-report.json"
+        print(f"running {tag}...", flush=True)
         raw = run_kr_eval(
             dataset_path,
             raw_output,
@@ -623,9 +805,11 @@ def main() -> int:
     args = parse_args()
     root = repo_root()
     os.environ["HF_ENDPOINT"] = args.endpoint
+    os.environ["FASTEMBED_CACHE_DIR"] = str(args.fastembed_cache_dir)
     args.output = args.output if args.output.is_absolute() else root / args.output
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.cache_root.mkdir(parents=True, exist_ok=True)
+    args.fastembed_cache_dir.mkdir(parents=True, exist_ok=True)
     selected_configs = parse_smoke_modes(args.modes)
     selected_datasets = parse_dataset_selection(args.datasets)
     accelerator = configure_accelerator_environment(args)
@@ -707,6 +891,8 @@ def main() -> int:
         "endpoint": args.endpoint,
         "cache_policy": {
             "cache_root_recorded": False,
+            "fastembed_cache_dir_recorded": False,
+            "fastembed_cache_configured": True,
             "raw_cache_retained": not args.cleanup_cache,
             "raw_records_committed": False,
         },

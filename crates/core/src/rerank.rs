@@ -12,6 +12,9 @@ use crate::accelerator::execution_providers_from_env;
 use crate::error::{Error, Result};
 use fastembed::{RerankInitOptions, RerankerModel, TextRerank};
 
+const RERANK_BATCH_SIZE_ENV: &str = "KING_SYNAPSE_RERANK_BATCH_SIZE";
+const RERANK_MAX_LENGTH_ENV: &str = "KING_SYNAPSE_RERANK_MAX_LENGTH";
+
 /// Anything that can score (query, document) pairs.
 pub trait Reranker {
     /// Score every document against `query`. Output **must** be the same
@@ -25,6 +28,7 @@ pub trait Reranker {
 pub struct FastEmbedReranker {
     inner: TextRerank,
     model_name: String,
+    batch_size: Option<usize>,
 }
 
 impl FastEmbedReranker {
@@ -40,6 +44,9 @@ impl FastEmbedReranker {
 
     fn with_model(model: RerankerModel, name: &str) -> Result<Self> {
         let mut opts = RerankInitOptions::new(model).with_show_download_progress(true);
+        if let Some(max_length) = rerank_max_length_from_env()? {
+            opts = opts.with_max_length(max_length);
+        }
         let execution_providers = execution_providers_from_env()?;
         if !execution_providers.is_empty() {
             opts = opts.with_execution_providers(execution_providers);
@@ -49,6 +56,7 @@ impl FastEmbedReranker {
         Ok(Self {
             inner,
             model_name: name.to_string(),
+            batch_size: rerank_batch_size_from_env()?,
         })
     }
 
@@ -64,7 +72,7 @@ impl Reranker for FastEmbedReranker {
         }
         let results = self
             .inner
-            .rerank(query, docs, false, None)
+            .rerank(query, docs, false, self.batch_size)
             .map_err(|e| Error::Embedder(format!("rerank: {e}")))?;
         let mut scores = vec![f32::NEG_INFINITY; docs.len()];
         for r in &results {
@@ -74,4 +82,42 @@ impl Reranker for FastEmbedReranker {
         }
         Ok(scores)
     }
+}
+
+fn rerank_batch_size_from_env() -> Result<Option<usize>> {
+    let raw = std::env::var(RERANK_BATCH_SIZE_ENV).unwrap_or_default();
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return Ok(None);
+    }
+    let batch_size = trimmed.parse::<usize>().map_err(|_| {
+        Error::Invalid(format!(
+            "{RERANK_BATCH_SIZE_ENV} must be a positive integer"
+        ))
+    })?;
+    if batch_size == 0 {
+        return Err(Error::Invalid(format!(
+            "{RERANK_BATCH_SIZE_ENV} must be greater than 0"
+        )));
+    }
+    Ok(Some(batch_size))
+}
+
+fn rerank_max_length_from_env() -> Result<Option<usize>> {
+    let raw = std::env::var(RERANK_MAX_LENGTH_ENV).unwrap_or_default();
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return Ok(None);
+    }
+    let max_length = trimmed.parse::<usize>().map_err(|_| {
+        Error::Invalid(format!(
+            "{RERANK_MAX_LENGTH_ENV} must be a positive integer token length"
+        ))
+    })?;
+    if max_length == 0 {
+        return Err(Error::Invalid(format!(
+            "{RERANK_MAX_LENGTH_ENV} must be greater than 0"
+        )));
+    }
+    Ok(Some(max_length))
 }

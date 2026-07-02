@@ -77,19 +77,19 @@ agent memory blocks when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` is configured. If dependencies or credentials are
 missing, adapters report `not_configured` with the missing names.
 
-## LongMemEval / DMR Smoke Harness
+## LongMemEval / DMR Harness
 
 ```bash
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --cleanup-cache
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector --output crates/eval/reports/longmem-dmr-smoke-vector.json --cleanup-cache
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector-rerank --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets longmem --modes all --longmem-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/longmem-50-validation.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
 ```
 
-The smoke runner downloads LongMemEval cleaned and the DMR candidate
-MSC-Self-Instruct data to a user cache outside the repository, generates
-temporary TOML datasets for the existing `kr-eval` binary, and writes only a
-sanitized aggregate report to
-`crates/eval/reports/longmem-dmr-smoke-latest.json`.
+The runner downloads LongMemEval cleaned and the DMR candidate MSC-Self-Instruct
+data to a user cache outside the repository, generates temporary TOML datasets
+for the existing `kr-eval` binary, and writes only sanitized aggregate reports.
+The checked-in 50-sample reports are
+`crates/eval/reports/longmem-50-validation.json` and
+`crates/eval/reports/dmr-50-validation.json`.
 
 Use `--modes` to isolate branch checks without overwriting the baseline report:
 `baseline`, `vector`, `vector-rerank`, or `all`.
@@ -97,16 +97,15 @@ Use `--modes` to isolate branch checks without overwriting the baseline report:
 Use `--datasets` to isolate a long run:
 `longmem`, `dmr`, or `all`.
 
-Use `--accelerator cuda --cuda-device-id 0` for vector/reranker runs once the
-local CUDA 12 runtime is installed. The runner records the accelerator setting
-in the sanitized report. On Windows, CUDA mode requires ONNX Runtime's CUDA
-provider dependencies such as `cublasLt64_12.dll` and cuDNN DLLs to be visible
-on PATH. The 2026-07-02 local GPU attempt is recorded in
+Use `--accelerator cuda --cuda-device-id 0` for vector/reranker runs. The
+runner records accelerator, embedding, and reranker settings in the sanitized
+report. On Windows, CUDA mode requires ONNX Runtime's CUDA provider
+dependencies such as `cublasLt64_12.dll` and cuDNN DLLs to be visible on PATH.
+The 2026-07-02 local GPU setup is recorded in
 `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-The checked-in smoke report excludes raw questions, answers, dialogs, and
-session text. It is a small validation run, not a full LongMemEval or official
-DMR benchmark.
+The checked-in reports exclude raw questions, answers, dialogs, and session
+text. The DMR path is still a candidate harness, not the official DMR harness.
 
 ## Algorithm Benchmarks
 
@@ -264,7 +263,7 @@ through `KING_SYNAPSE_ACCELERATOR`:
 The LongMemEval / DMR runner can set this for a validation run:
 
 ```bash
-python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets dmr --modes all --dmr-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/dmr-50-validation.json --cleanup-cache
 ```
 
 GPU mode is infrastructure for validation speed. It does not change the memory

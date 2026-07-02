@@ -21,11 +21,14 @@ pub const DEFAULT_DIM: usize = 768;
 /// E5 family expects "passage: " / "query: " prefixes for best recall.
 pub(crate) const PASSAGE_PREFIX: &str = "passage: ";
 pub(crate) const QUERY_PREFIX: &str = "query: ";
+const EMBED_BATCH_SIZE_ENV: &str = "KING_SYNAPSE_EMBED_BATCH_SIZE";
+const EMBED_MAX_LENGTH_ENV: &str = "KING_SYNAPSE_EMBED_MAX_LENGTH";
 
 pub struct Embedder {
     inner: TextEmbedding,
     model_name: String,
     dim: usize,
+    batch_size: Option<usize>,
 }
 
 impl Embedder {
@@ -36,6 +39,9 @@ impl Embedder {
 
     fn with_model(model: EmbeddingModel, name: String, dim: usize) -> Result<Self> {
         let mut opts = TextInitOptions::new(model).with_show_download_progress(true);
+        if let Some(max_length) = positive_usize_from_env(EMBED_MAX_LENGTH_ENV, "token length")? {
+            opts = opts.with_max_length(max_length);
+        }
         let execution_providers = execution_providers_from_env()?;
         if !execution_providers.is_empty() {
             opts = opts.with_execution_providers(execution_providers);
@@ -46,6 +52,7 @@ impl Embedder {
             inner,
             model_name: name,
             dim,
+            batch_size: positive_usize_from_env(EMBED_BATCH_SIZE_ENV, "batch size")?,
         })
     }
 
@@ -68,7 +75,7 @@ impl Embedder {
             .collect();
         let out = self
             .inner
-            .embed(&prefixed, None)
+            .embed(&prefixed, self.batch_size)
             .map_err(|e| Error::Embedder(format!("embed docs: {e}")))?;
         self.validate_dims(&out)?;
         Ok(out)
@@ -79,7 +86,7 @@ impl Embedder {
         let prefixed = format!("{QUERY_PREFIX}{query}");
         let mut out = self
             .inner
-            .embed(&[prefixed], None)
+            .embed(&[prefixed], self.batch_size)
             .map_err(|e| Error::Embedder(format!("embed query: {e}")))?;
         self.validate_dims(&out)?;
         out.pop()
@@ -98,4 +105,19 @@ impl Embedder {
         }
         Ok(())
     }
+}
+
+fn positive_usize_from_env(name: &str, label: &str) -> Result<Option<usize>> {
+    let raw = std::env::var(name).unwrap_or_default();
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return Ok(None);
+    }
+    let value = trimmed
+        .parse::<usize>()
+        .map_err(|_| Error::Invalid(format!("{name} must be a positive integer {label}")))?;
+    if value == 0 {
+        return Err(Error::Invalid(format!("{name} must be greater than 0")));
+    }
+    Ok(Some(value))
 }
