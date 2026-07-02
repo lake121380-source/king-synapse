@@ -38,8 +38,9 @@ pub use recall::{
     CognitiveTracePredictionStatistics, CognitiveTraceProbe, CognitiveTraceReport,
     CognitiveTraceSource, CognitiveTraceStatistics, GraphActivationBooster,
     LatentActivationBooster, LatentActivationContext, LatentActivationHit, LatentActivationProbe,
-    NoOpBooster, QueryEmbedder, QueryLatentActivationProbe, QueryLatentActivationReport,
-    RecallBooster, RecallEngine, RecallHit, RecallSource, DEFAULT_RERANK_POOL,
+    NoOpBooster, ProfiledRecall, QueryEmbedder, QueryLatentActivationProbe,
+    QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallProfile,
+    RecallSource, DEFAULT_RERANK_POOL,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::{MemoryEdge, Store};

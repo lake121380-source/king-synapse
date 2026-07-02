@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
+use synapse_core::RecallProfile;
 
 #[derive(Debug, Deserialize)]
 pub struct Dataset {
@@ -36,6 +37,7 @@ pub struct QueryResult {
     pub rr: f64,
     pub ndcg_at_10: f64,
     pub latency_ms: f64,
+    pub profile: RecallProfile,
 }
 
 #[derive(Debug, Serialize)]
@@ -55,7 +57,37 @@ pub struct Report {
     pub p50_latency_ms: f64,
     pub p95_latency_ms: f64,
     pub total_ms: f64,
+    pub timing: TimingReport,
     pub per_query: Vec<QueryResult>,
+}
+
+#[derive(Debug, Default, Serialize)]
+pub struct TimingReport {
+    pub dataset_load_ms: f64,
+    pub store_write_ms: f64,
+    pub embedder_load_ms: Option<f64>,
+    pub corpus_embedding_ms: Option<f64>,
+    pub embedding_write_ms: Option<f64>,
+    pub reranker_load_ms: Option<f64>,
+    pub query_wall_ms: f64,
+    pub recall_profile_totals: RecallProfile,
+    pub recall_profile_mean_ms: RecallProfileMeanMs,
+}
+
+#[derive(Debug, Default, Serialize)]
+pub struct RecallProfileMeanMs {
+    pub total_ms: f64,
+    pub fts_ms: f64,
+    pub entity_ms: f64,
+    pub query_embedding_ms: f64,
+    pub vector_search_ms: f64,
+    pub memory_hydration_ms: f64,
+    pub rrf_fusion_ms: f64,
+    pub hit_build_ms: f64,
+    pub reranker_ms: f64,
+    pub booster_ms: f64,
+    pub final_score_ms: f64,
+    pub record_access_ms: f64,
 }
 
 pub struct BenchOptions {

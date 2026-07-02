@@ -123,6 +123,7 @@ Readable summaries live in `docs/eval/BENCHMARK_BASELINE.md` and
 The current Phase 6 performance profile is fixed in:
 
 - `reports/phase6-performance-profile.json`
+- `reports/phase6-substage-timing-probe.json`
 
 Readable summary: `docs/eval/PERFORMANCE_ANALYSIS.md`.
 

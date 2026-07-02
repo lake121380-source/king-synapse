@@ -180,15 +180,18 @@ Performance analysis status:
 - In the 50-sample long-memory reports, vector mode adds much less P50 latency
   than reranking. Reranking adds about `698 ms` P50 on LongMemEval and about
   `541 ms` P50 on DMR over vector mode.
-- Memory, CPU, embedding sub-stage, vector-search sub-stage, and reranker
-  sub-stage timing are not independently instrumented yet.
+- `crates/eval/reports/phase6-substage-timing-probe.json` adds a small CUDA
+  sub-stage timing probe. Mean query time was `307.5 ms`; reranker inference
+  accounted for `280.5 ms`, query embedding for `13.0 ms`, and vector search
+  for `2.1 ms`.
+- Memory and CPU process-level metrics are not independently instrumented yet.
 
 The project has not yet crossed the bar for:
 
 1. official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. sub-stage performance instrumentation;
+4. process-level memory / CPU instrumentation;
 5. final DMR scoring-policy adoption beyond candidate punctuation matching;
 6. production-readiness claims.
 

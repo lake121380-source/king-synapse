@@ -1,15 +1,15 @@
 {
-  "schema_version": "king-synapse.phase6-performance-profile.v1",
-  "generated_at": "2026-07-02T21:40:00.0000000+08:00",
-  "validated_commit": "2ac14e0",
-  "purpose": "Phase 6 performance analysis. Records current timing evidence and explicitly marks missing instrumentation.",
+  "schema_version": "king-synapse.phase6-performance-profile.v2",
+  "generated_at": "2026-07-02T21:10:59.6513359+08:00",
+  "validated_commit": "68aee91",
+  "purpose": "Phase 6 performance analysis. Records current timing evidence and sub-stage instrumentation status.",
   "measurement_coverage": {
     "latency": "measured end-to-end per query and per run",
     "memory": "not instrumented",
     "cpu": "not instrumented",
-    "embedding_time": "not independently instrumented; only branch-level latency delta is available",
-    "vector_search_time": "not independently instrumented; only branch-level latency delta is available",
-    "reranker_time": "not independently instrumented; reranker branch delta is available",
+    "embedding_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
+    "vector_search_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
+    "reranker_time": "instrumented in phase6-substage-timing-probe; older 50-sample reports only have branch-level latency delta",
     "gpu": "CUDA path validated for LongMemEval / DMR vector and reranker runs"
   },
   "lightweight_recall": [
@@ -160,6 +160,67 @@
       "mean_latency_ms": 0.0
     }
   ],
+  "substage_timing_probe": {
+    "id": "phase6-substage-timing-probe",
+    "report": "crates/eval/reports/phase6-substage-timing-probe.json",
+    "report_sha256": "5587B2EAF2B2863BA3FB43645919520ABBB8CC46E68D37679FB7F3383AA4D798",
+    "dataset": "DMR candidate MSC-Self-Instruct",
+    "answer_match_policy": "punctuation",
+    "queries": 5,
+    "memory_chunks": 25,
+    "mode": "vectors-rerank",
+    "accelerator": "cuda",
+    "recall_at_10": 0.6666666666666666,
+    "mrr_at_10": 0.7,
+    "p50_latency_ms": 296.7892,
+    "p95_latency_ms": 362.2836,
+    "total_ms": 1538.0013999999999,
+    "setup_timing_ms": {
+      "dataset_load": 11.6146,
+      "store_write": 172.9683,
+      "embedder_load": 6317.764999999999,
+      "corpus_embedding": 1598.5368,
+      "embedding_write": 8.8672,
+      "reranker_load": 5964.0298
+    },
+    "mean_query_substage_ms": {
+      "total": 307.4952,
+      "fts": 4.5562,
+      "entity": 0.94276,
+      "query_embedding": 12.974920000000001,
+      "vector_search": 2.1369,
+      "memory_hydration": 0.11038,
+      "rrf_fusion": 0.38223999999999997,
+      "hit_build": 0.14107999999999998,
+      "reranker_inference": 280.49514,
+      "booster": 0.0,
+      "final_score": 0.021939999999999998,
+      "record_access": 5.6787399999999995
+    },
+    "total_query_substage_ms": {
+      "total": 1537.476,
+      "fts": 22.781,
+      "entity": 4.7138,
+      "query_embedding": 64.8746,
+      "vector_search": 10.6845,
+      "memory_hydration": 0.5519000000000001,
+      "rrf_fusion": 1.9111999999999998,
+      "hit_build": 0.7053999999999999,
+      "reranker_inference": 1402.4757,
+      "booster": 0.0,
+      "final_score": 0.10969999999999999,
+      "record_access": 28.393699999999995
+    },
+    "candidate_counts_total": {
+      "fts": 125,
+      "entity": 80,
+      "vector": 125,
+      "hydrated_memories": 125,
+      "fused_candidates": 125,
+      "rerank_candidates": 125,
+      "returned_hits": 50
+    }
+  },
   "gpu_configuration": {
     "accelerator": "cuda",
     "cuda_device_id": "0",
@@ -171,8 +232,7 @@
   },
   "next_instrumentation": [
     "Add process peak memory and CPU accounting around kr-eval subprocesses.",
-    "Split embedding corpus build time from query-time vector search.",
-    "Split vector search time from FTS/entity/RRF fusion.",
-    "Split reranker model inference time from candidate collection and final scoring."
+    "Promote sub-stage timing probes from small diagnostic samples to LongMemEval / DMR 50 reruns when the next GPU validation pass is needed.",
+    "Add GPU memory accounting if the execution provider exposes it."
   ]
 }

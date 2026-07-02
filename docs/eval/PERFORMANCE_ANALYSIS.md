@@ -2,7 +2,7 @@
 
 Date: 2026-07-02
 
-Status: first Phase 6 performance pass.
+Status: Phase 6 performance pass with sub-stage timing probe.
 
 Machine-readable profile:
 
@@ -14,7 +14,8 @@ This is not an optimization plan. It records where time is currently going
 based on checked-in validation reports.
 
 No LongMemEval / DMR heavy rerun was started for this pass. The analysis uses
-the existing CUDA 50-sample reports and lightweight replay baselines.
+the existing CUDA 50-sample reports, lightweight replay baselines, and one
+small CUDA sub-stage timing probe.
 
 ## Measurement Coverage
 
@@ -23,9 +24,9 @@ the existing CUDA 50-sample reports and lightweight replay baselines.
 | Latency | Measured end-to-end per query and per run. |
 | Memory | Not instrumented yet. |
 | CPU | Not instrumented yet. |
-| Embedding time | Not independently instrumented; only vector-branch delta is available. |
-| Vector search time | Not independently instrumented; included in vector-branch delta. |
-| Reranker time | Not independently instrumented; reranker-branch delta is available. |
+| Embedding time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
+| Vector search time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
+| Reranker time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
 | GPU path | CUDA validated for LongMemEval / DMR vector and reranker runs. |
 
 ## Lightweight Replay Latency
@@ -66,6 +67,49 @@ Read:
 - LongMemEval reranking improves MRR/top-1 but reduces Recall@10 versus
   vector-only, so it is not a clear default without more ranking work.
 
+## Sub-Stage Timing Probe
+
+Report:
+
+`crates/eval/reports/phase6-substage-timing-probe.json`
+
+Scope: DMR candidate, punctuation-normalized mapping, 5 queries, 25 chunks,
+`RRF + vectors + reranker`, CUDA device `0`.
+
+This probe is intentionally small. It proves the instrumentation path and
+locates sub-stage cost without replacing the 50-sample validation reports.
+
+Setup timing:
+
+| Stage | Time |
+| --- | ---: |
+| Dataset load | 11.6 ms |
+| Store write | 173.0 ms |
+| Embedder load | 6317.8 ms |
+| Corpus embedding | 1598.5 ms |
+| Embedding write | 8.9 ms |
+| Reranker load | 5964.0 ms |
+
+Mean query sub-stage timing:
+
+| Stage | Mean per query |
+| --- | ---: |
+| Total recall | 307.5 ms |
+| FTS | 4.6 ms |
+| Entity | 0.9 ms |
+| Query embedding | 13.0 ms |
+| Vector search | 2.1 ms |
+| Memory hydration | 0.1 ms |
+| RRF fusion | 0.4 ms |
+| Hit build | 0.1 ms |
+| Reranker inference | 280.5 ms |
+| Final scoring | 0.0 ms |
+| Record access | 5.7 ms |
+
+Read: on this CUDA probe, reranker inference dominates query-time cost.
+Query embedding and vector search are visible but much smaller. The original
+branch-delta conclusion is therefore supported by direct sub-stage timing.
+
 ## External Adapter Latency
 
 | System | Status | Chains | Mean latency |
@@ -87,10 +131,11 @@ raw latency.
 The next useful instrumentation is:
 
 1. process peak memory and CPU around `kr-eval` subprocesses;
-2. corpus embedding time separated from query-time vector search;
-3. FTS/entity/RRF/vector branch timing separated inside `RecallEngine`;
-4. reranker candidate collection time separated from reranker model inference.
+2. GPU memory accounting if the execution provider exposes it;
+3. promote the sub-stage timing probe to LongMemEval / DMR 50 during the next
+   GPU validation pass.
 
-Until those are available, memory, CPU, embedding time, vector search time, and
-reranker time should be treated as unresolved sub-stage metrics, not inferred
-from end-to-end latency alone.
+Memory and CPU should still be treated as unresolved process-level metrics.
+Embedding, vector search, FTS/entity/RRF, and reranker inference now have a
+small direct timing probe, but the older 50-sample reports remain
+end-to-end-only.

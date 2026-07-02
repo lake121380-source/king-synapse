@@ -12,7 +12,38 @@ use crate::rerank::Reranker;
 use crate::store::Store;
 use crate::working_memory::SessionId;
 use chrono::Utc;
+use serde::Serialize;
 use std::collections::HashMap;
+use std::time::Instant;
+
+#[derive(Debug, Clone, Default, Serialize)]
+pub struct RecallProfile {
+    pub total_ms: f64,
+    pub fts_ms: f64,
+    pub entity_ms: f64,
+    pub query_embedding_ms: f64,
+    pub vector_search_ms: f64,
+    pub memory_hydration_ms: f64,
+    pub rrf_fusion_ms: f64,
+    pub hit_build_ms: f64,
+    pub reranker_ms: f64,
+    pub booster_ms: f64,
+    pub final_score_ms: f64,
+    pub record_access_ms: f64,
+    pub fts_candidates: usize,
+    pub entity_candidates: usize,
+    pub vector_candidates: usize,
+    pub hydrated_memories: usize,
+    pub fused_candidates: usize,
+    pub rerank_candidates: usize,
+    pub returned_hits: usize,
+}
+
+#[derive(Debug, Clone)]
+pub struct ProfiledRecall {
+    pub hits: Vec<RecallHit>,
+    pub profile: RecallProfile,
+}
 
 pub struct RecallEngine<'a> {
     pub(crate) store: &'a mut Store,
@@ -57,6 +88,12 @@ impl<'a> RecallEngine<'a> {
     }
 
     pub fn recall(&mut self, q: &RecallQuery) -> Result<Vec<RecallHit>> {
+        Ok(self.recall_profiled(q)?.hits)
+    }
+
+    pub fn recall_profiled(&mut self, q: &RecallQuery) -> Result<ProfiledRecall> {
+        let total_start = Instant::now();
+        let mut profile = RecallProfile::default();
         let k = q.k.unwrap_or(8).max(1);
         let pool = if self.reranker.is_some() {
             self.rerank_pool.max(k)
@@ -67,23 +104,39 @@ impl<'a> RecallEngine<'a> {
         let kind_str = q.kind_filter.as_ref().map(|k| k.to_string());
         let retrieval_query = expand_cjk_query(&q.query);
 
+        let fts_start = Instant::now();
         let fts_rows = self.store.search_fts(
             &retrieval_query,
             scope_str.as_deref(),
             kind_str.as_deref(),
             pool,
         )?;
+        profile.fts_ms = elapsed_ms(fts_start);
+        profile.fts_candidates = fts_rows.len();
+
+        let entity_start = Instant::now();
         let entity_rows =
             self.store
                 .search_entity(&q.query, scope_str.as_deref(), kind_str.as_deref(), pool)?;
+        profile.entity_ms = elapsed_ms(entity_start);
+        profile.entity_candidates = entity_rows.len();
+
         let vector_rows: Vec<(String, f64)> = match self.embedder.as_mut() {
             Some(emb) => {
+                let embed_start = Instant::now();
                 let qv = emb.embed_query(&q.query)?;
-                self.store.search_vector(&qv, pool)?
+                profile.query_embedding_ms = elapsed_ms(embed_start);
+
+                let vector_start = Instant::now();
+                let rows = self.store.search_vector(&qv, pool)?;
+                profile.vector_search_ms = elapsed_ms(vector_start);
+                rows
             }
             None => Vec::new(),
         };
+        profile.vector_candidates = vector_rows.len();
 
+        let hydration_start = Instant::now();
         let mut mem_cache: HashMap<String, Memory> = HashMap::new();
         for (m, _) in &fts_rows {
             mem_cache.insert(m.id.clone(), m.clone());
@@ -100,7 +153,10 @@ impl<'a> RecallEngine<'a> {
                 }
             }
         }
+        profile.memory_hydration_ms = elapsed_ms(hydration_start);
+        profile.hydrated_memories = mem_cache.len();
 
+        let fusion_start = Instant::now();
         let fts_ranks = rank_map(fts_rows.iter().map(|(m, _)| m.id.clone()));
         let entity_ranks = rank_map(entity_rows.iter().map(|(m, _)| m.id.clone()));
         let vector_ranks = rank_map(
@@ -139,7 +195,9 @@ impl<'a> RecallEngine<'a> {
             ],
             DEFAULT_RRF_K,
         );
+        profile.rrf_fusion_ms = elapsed_ms(fusion_start);
 
+        let hit_build_start = Instant::now();
         let mut hits: Vec<RecallHit> = fused
             .into_iter()
             .filter_map(|(id, rrf_score, sources)| {
@@ -168,6 +226,8 @@ impl<'a> RecallEngine<'a> {
                 )
             })
             .collect();
+        profile.hit_build_ms = elapsed_ms(hit_build_start);
+        profile.fused_candidates = hits.len();
 
         if self.reranker.is_some() {
             hits.truncate(self.rerank_pool);
@@ -175,7 +235,10 @@ impl<'a> RecallEngine<'a> {
 
         if let Some(rr) = self.reranker.as_mut() {
             let docs: Vec<&str> = hits.iter().map(|h| h.memory.content.as_str()).collect();
+            profile.rerank_candidates = docs.len();
+            let rerank_start = Instant::now();
             let scores = rr.rerank(&q.query, &docs)?;
+            profile.reranker_ms = elapsed_ms(rerank_start);
             if scores.len() != hits.len() {
                 return Err(Error::Invalid(format!(
                     "reranker returned {} scores for {} docs",
@@ -194,6 +257,7 @@ impl<'a> RecallEngine<'a> {
         }
 
         if !self.boosters.is_empty() {
+            let booster_start = Instant::now();
             let mut ctx = BoosterContext::new(q, self.store);
             if let Some(session_id) = self.session_id {
                 ctx = ctx.with_session_id(session_id);
@@ -201,8 +265,10 @@ impl<'a> RecallEngine<'a> {
             for booster in &self.boosters {
                 booster.apply(&ctx, hits.as_mut_slice())?;
             }
+            profile.booster_ms = elapsed_ms(booster_start);
         }
 
+        let final_score_start = Instant::now();
         let now = Utc::now().timestamp();
         for h in hits.iter_mut() {
             let base = h.rerank_score.map(sigmoid).unwrap_or(h.rrf_score);
@@ -222,13 +288,22 @@ impl<'a> RecallEngine<'a> {
                 .unwrap_or(std::cmp::Ordering::Equal)
         });
         hits.truncate(k);
+        profile.final_score_ms = elapsed_ms(final_score_start);
+        profile.returned_hits = hits.len();
 
         if !hits.is_empty() {
             let ids: Vec<&str> = hits.iter().map(|h| h.memory.id.as_str()).collect();
+            let record_start = Instant::now();
             self.store.record_access(&ids, now)?;
+            profile.record_access_ms = elapsed_ms(record_start);
         }
-        Ok(hits)
+        profile.total_ms = elapsed_ms(total_start);
+        Ok(ProfiledRecall { hits, profile })
     }
+}
+
+fn elapsed_ms(start: Instant) -> f64 {
+    start.elapsed().as_secs_f64() * 1000.0
 }
 
 fn rank_map<I: IntoIterator<Item = String>>(ids: I) -> HashMap<String, u32> {

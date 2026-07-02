@@ -28,7 +28,7 @@ pub use cognitive_trace::{
     CognitiveTracePredictionStatistics, CognitiveTraceProbe, CognitiveTraceReport,
     CognitiveTraceSource, CognitiveTraceStatistics,
 };
-pub use engine::RecallEngine;
+pub use engine::{ProfiledRecall, RecallEngine, RecallProfile};
 pub use graph_activation::GraphActivationBooster;
 pub use hit::{RecallHit, RecallSource};
 pub use latent_activation::{LatentActivationContext, LatentActivationHit, LatentActivationProbe};

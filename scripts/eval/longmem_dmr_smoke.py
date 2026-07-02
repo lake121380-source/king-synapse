@@ -775,6 +775,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
                 "rr": query_result.get("rr"),
                 "ndcg_at_10": query_result.get("ndcg_at_10"),
                 "latency_ms": query_result.get("latency_ms"),
+                "profile": query_result.get("profile"),
             }
         )
     return {
@@ -792,6 +793,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "p50_latency_ms": raw.get("p50_latency_ms"),
         "p95_latency_ms": raw.get("p95_latency_ms"),
         "total_ms": raw.get("total_ms"),
+        "timing": raw.get("timing"),
         "per_query": per_query,
         "rank_bucket_counts": dict(sorted(Counter(item["rank_bucket"] for item in per_query).items())),
         "failure_type_counts": dict(sorted(Counter(item["failure_type"] for item in per_query).items())),

@@ -231,6 +231,7 @@ cargo build --release
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |
 | `docs/eval/GOLDEN_DATASET.md` | Golden dataset registry and replay policy. |
 | `docs/eval/PERFORMANCE_ANALYSIS.md` | Phase 6 latency and performance-boundary analysis. |
+| `crates/eval/reports/phase6-substage-timing-probe.json` | Small CUDA sub-stage timing probe for embedding/vector/reranker costs. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
