@@ -26,6 +26,13 @@ This report is still not an official DMR harness result and uses no LLM judge.
 Raw questions, answers, conversations, and generated temporary TOML datasets
 are not committed.
 
+Official scoring boundary:
+
+- `docs/eval/OFFICIAL_DMR_REVIEW.md`
+
+Published DMR numbers are answer-generation / judge results. This report is a
+retrieval and mapping diagnostic only.
+
 ## Fixed Configuration
 
 | Field | Value |

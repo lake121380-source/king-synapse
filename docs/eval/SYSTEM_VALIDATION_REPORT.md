@@ -122,6 +122,14 @@ Long-memory 50-sample evidence now exists across three retrieval modes:
 | LongMemEval cleaned | 50/50 | 0.503 | 0.663 | 0.590 |
 | DMR candidate MSC-Self-Instruct | 50/50 | 0.188 | 0.438 | 0.584 |
 
+DMR boundary:
+
+- `docs/eval/OFFICIAL_DMR_REVIEW.md` records the official scoring review.
+- The current DMR numbers are candidate retrieval metrics, not official DMR
+  accuracy or ROUGE-L.
+- Official DMR still requires generated answers scored against gold answers
+  with a fixed judge policy.
+
 The 50-sample reports are:
 
 - `crates/eval/reports/longmem-50-validation.json`
@@ -188,7 +196,7 @@ Performance analysis status:
 
 The project has not yet crossed the bar for:
 
-1. official DMR benchmark results;
+1. official DMR answer-generation benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. process-level memory / CPU instrumentation;

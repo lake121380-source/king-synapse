@@ -144,6 +144,11 @@ The Phase 6 replay baseline is fixed in
 | LongMemEval cleaned 50 | 0.503 | 0.663 | 0.590 | Vector recall helps; reranker improves top-1 / MRR but can hurt top-10 coverage. |
 | DMR candidate 50 | 0.188 | 0.438 | 0.584 | DMR improves strongly with vectors and reranking, but mapping/chunk skips remain large. |
 
+The DMR row above is a candidate retrieval validation, not an official DMR
+accuracy / ROUGE-L result. Official DMR requires generated answers judged
+against gold answers; that boundary is tracked in
+[OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
+
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower, focused on DMR
 mapping/chunk skips and final candidate ranking before changing the memory
@@ -187,7 +192,7 @@ comparison adapters or optional embedding/reranking paths.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
-- LongMemEval and DMR now have 50-sample validation reports; official DMR harness validation is not finished.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official DMR answer-generation validation is not finished.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
@@ -233,6 +238,7 @@ cargo build --release
 | `docs/eval/PERFORMANCE_ANALYSIS.md` | Phase 6 latency and performance-boundary analysis. |
 | `crates/eval/reports/phase6-substage-timing-probe.json` | Small CUDA sub-stage timing probe for embedding/vector/reranker costs. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
+| `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

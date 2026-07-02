@@ -50,4 +50,6 @@ from `README.md` and compare with `VALIDATION_LONGMEM_50.md`,
 
 This registry fixes the current replay baseline, including the 20-chain
 cognitive/prediction replay set. It does not prove hosted external systems or
-official DMR completion; those remain separate Phase 6 boundaries.
+official DMR completion; those remain separate Phase 6 boundaries. The current
+DMR sets are candidate retrieval baselines, not official answer-generation
+results. See `docs/eval/OFFICIAL_DMR_REVIEW.md`.

@@ -23,6 +23,14 @@ branches:
 Raw questions, answers, conversations, and generated temporary TOML datasets
 are not committed.
 
+Official scoring boundary:
+
+- `docs/eval/OFFICIAL_DMR_REVIEW.md`
+
+The current report should not be compared directly with published DMR accuracy
+or ROUGE-L numbers from MemGPT or Zep, because those results score generated
+answers against gold answers.
+
 ## Fixed Configuration
 
 | Field | Value |

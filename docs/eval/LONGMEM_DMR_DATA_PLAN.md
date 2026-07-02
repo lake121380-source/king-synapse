@@ -32,6 +32,16 @@ dataset the practical candidate for a DMR smoke test, but this plan should not
 claim an official DMR reproduction until the original harness and scoring rules
 are pinned.
 
+Official DMR review:
+
+- `docs/eval/OFFICIAL_DMR_REVIEW.md`
+
+The current Synapse DMR reports score candidate retrieval of answer-bearing
+chunks. The MemGPT and Zep papers describe DMR as answer generation scored
+against gold answers with accuracy / ROUGE-L and an LLM judge. Therefore the
+current reports must remain labeled `DMR candidate` until an answer-generation
+and judge pipeline is implemented.
+
 ## Cache Rules
 
 Dataset files must be fetched into a user cache outside the Git worktree.
