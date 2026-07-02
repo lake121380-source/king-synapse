@@ -28,6 +28,44 @@ LONGMEM_REPO = "xiaowu0162/longmemeval-cleaned"
 LONGMEM_FILE = "longmemeval_s_cleaned.json"
 DMR_REPO = "MemGPT/MSC-Self-Instruct"
 DMR_FILE = "msc_self_instruct.jsonl"
+SMOKE_CONFIGS = (
+    {
+        "id": "baseline-rrf",
+        "label": "baseline RRF",
+        "tag_suffix": "",
+        "vectors": False,
+        "rerank": False,
+        "rerank_pool": 50,
+    },
+    {
+        "id": "vectors",
+        "label": "RRF + vectors",
+        "tag_suffix": "-vectors",
+        "vectors": True,
+        "rerank": False,
+        "rerank_pool": 50,
+    },
+    {
+        "id": "vectors-rerank",
+        "label": "RRF + vectors + reranker",
+        "tag_suffix": "-vectors-rerank",
+        "vectors": True,
+        "rerank": True,
+        "rerank_pool": 50,
+    },
+)
+
+SMOKE_CONFIG_ALIASES = {
+    "baseline": "baseline-rrf",
+    "rrf": "baseline-rrf",
+    "baseline-rrf": "baseline-rrf",
+    "vector": "vectors",
+    "vectors": "vectors",
+    "vector-rerank": "vectors-rerank",
+    "vectors-rerank": "vectors-rerank",
+    "vector+rerank": "vectors-rerank",
+    "all": "all",
+}
 
 
 def repo_root() -> Path:
@@ -47,6 +85,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--endpoint", default=os.environ.get("HF_ENDPOINT", "https://huggingface.co"))
     parser.add_argument("--cache-root", type=Path, default=default_cache_root())
     parser.add_argument("--output", type=Path, default=repo_root() / "crates/eval/reports/longmem-dmr-smoke-latest.json")
+    parser.add_argument(
+        "--modes",
+        default="all",
+        help="Comma-separated smoke modes: all, baseline-rrf, vectors, vectors-rerank.",
+    )
     parser.add_argument("--longmem-sample-size", type=int, default=10)
     parser.add_argument("--dmr-sample-size", type=int, default=20)
     parser.add_argument("--k", type=int, default=10)
@@ -93,6 +136,29 @@ def download_dataset(repo_id: str, filename: str, endpoint: str, cache_dir: Path
             local_dir=cache_dir,
         )
     )
+
+
+def parse_smoke_modes(raw: str) -> list[dict[str, Any]]:
+    requested = [part.strip().lower() for part in raw.split(",") if part.strip()]
+    if not requested:
+        requested = ["all"]
+    canonical: list[str] = []
+    for part in requested:
+        if part not in SMOKE_CONFIG_ALIASES:
+            raise ValueError(f"unknown smoke mode: {part}")
+        canonical_name = SMOKE_CONFIG_ALIASES[part]
+        if canonical_name == "all":
+            return list(SMOKE_CONFIGS)
+        canonical.append(canonical_name)
+    seen: set[str] = set()
+    selected: list[dict[str, Any]] = []
+    for config in SMOKE_CONFIGS:
+        if config["id"] in canonical and config["id"] not in seen:
+            selected.append(config)
+            seen.add(config["id"])
+    if not selected:
+        raise ValueError("no smoke modes selected")
+    return selected
 
 
 def flatten_text(value: Any) -> str:
@@ -311,7 +377,16 @@ def build_dmr_dataset(rows: list[dict[str, Any]], sample_size: int) -> tuple[lis
     return memories, queries, examples, skipped
 
 
-def run_kr_eval(dataset_path: Path, output_path: Path, tag: str, k: int) -> dict[str, Any]:
+def run_kr_eval(
+    dataset_path: Path,
+    output_path: Path,
+    tag: str,
+    k: int,
+    *,
+    vectors: bool = False,
+    rerank: bool = False,
+    rerank_pool: int = 50,
+) -> dict[str, Any]:
     cmd = [
         "cargo",
         "run",
@@ -329,12 +404,50 @@ def run_kr_eval(dataset_path: Path, output_path: Path, tag: str, k: int) -> dict
         "--json",
         str(output_path),
     ]
+    if vectors:
+        cmd.append("--vectors")
+    if rerank:
+        cmd.extend(["--rerank", "--rerank-pool", str(rerank_pool)])
     result = subprocess.run(cmd, cwd=repo_root(), text=True, capture_output=True)
     if result.returncode != 0:
         raise RuntimeError(
             f"kr-eval failed for {tag}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
-        )
+    )
     return json.loads(output_path.read_text(encoding="utf-8"))
+
+
+def run_smoke_configs(
+    *,
+    dataset_path: Path,
+    output_dir: Path,
+    tag_base: str,
+    examples: list[dict[str, Any]],
+    k: int,
+    configs: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    runs: list[dict[str, Any]] = []
+    for config in configs:
+        tag = tag_base if not config["tag_suffix"] else f"{tag_base}{config['tag_suffix']}"
+        raw_output = output_dir / f"{tag_base}-{config['id']}-raw-report.json"
+        raw = run_kr_eval(
+            dataset_path,
+            raw_output,
+            tag,
+            k,
+            vectors=config["vectors"],
+            rerank=config["rerank"],
+            rerank_pool=config["rerank_pool"],
+        )
+        run = sanitize_eval_report(raw, examples)
+        run.update(
+            {
+                "mode": config["id"],
+                "label": config["label"],
+                "tag": raw.get("tag"),
+            }
+        )
+        runs.append(run)
+    return runs
 
 
 def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) -> dict[str, Any]:
@@ -362,6 +475,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "k": raw.get("k"),
         "vectors_enabled": raw.get("vectors_enabled"),
         "rerank_enabled": raw.get("rerank_enabled"),
+        "rerank_pool": raw.get("rerank_pool"),
         "n_memories": raw.get("n_memories"),
         "n_queries": raw.get("n_queries"),
         "recall_at_5": raw.get("recall_at_5"),
@@ -395,9 +509,11 @@ def dataset_smoke_report(
     queries: list[dict[str, Any]],
     examples: list[dict[str, Any]],
     skipped: Counter[str],
-    raw_report: dict[str, Any],
+    kr_eval_runs: list[dict[str, Any]],
 ) -> dict[str, Any]:
     categories = Counter(example["category"] for example in examples)
+    if not kr_eval_runs:
+        raise RuntimeError(f"{name} smoke report has no kr-eval runs.")
     return {
         "name": name,
         "source": source,
@@ -409,16 +525,19 @@ def dataset_smoke_report(
         "temporary_dataset_committed": False,
         "raw_records_committed": False,
         "memory_chunks": len(memories),
-        "kr_eval": sanitize_eval_report(raw_report, examples),
+        "kr_eval": kr_eval_runs[0],
+        "kr_eval_runs": kr_eval_runs,
     }
 
 
 def main() -> int:
     args = parse_args()
     root = repo_root()
+    os.environ["HF_ENDPOINT"] = args.endpoint
     args.output = args.output if args.output.is_absolute() else root / args.output
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.cache_root.mkdir(parents=True, exist_ok=True)
+    selected_configs = parse_smoke_modes(args.modes)
 
     api = HfApi(endpoint=args.endpoint)
     longmem_info = dataset_info(api, LONGMEM_REPO)
@@ -447,16 +566,28 @@ def main() -> int:
         temp_dir = Path(temp)
         longmem_toml = temp_dir / "longmemeval-smoke.toml"
         dmr_toml = temp_dir / "dmr-smoke.toml"
-        longmem_json = temp_dir / "longmemeval-smoke-raw-report.json"
-        dmr_json = temp_dir / "dmr-smoke-raw-report.json"
 
         write_toml_dataset(longmem_toml, longmem_memories, longmem_queries)
         write_toml_dataset(dmr_toml, dmr_memories, dmr_queries)
-        longmem_raw = run_kr_eval(longmem_toml, longmem_json, "longmemeval-smoke", args.k)
-        dmr_raw = run_kr_eval(dmr_toml, dmr_json, "dmr-candidate-smoke", args.k)
+        longmem_runs = run_smoke_configs(
+            dataset_path=longmem_toml,
+            output_dir=temp_dir,
+            tag_base="longmemeval-smoke",
+            examples=longmem_examples,
+            k=args.k,
+            configs=selected_configs,
+        )
+        dmr_runs = run_smoke_configs(
+            dataset_path=dmr_toml,
+            output_dir=temp_dir,
+            tag_base="dmr-candidate-smoke",
+            examples=dmr_examples,
+            k=args.k,
+            configs=selected_configs,
+        )
 
     report = {
-        "schema_version": "king-synapse.longmem-dmr-smoke.v1",
+        "schema_version": "king-synapse.longmem-dmr-smoke.v2",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "runner": "scripts/eval/longmem_dmr_smoke.py",
         "endpoint": args.endpoint,
@@ -465,7 +596,8 @@ def main() -> int:
             "raw_cache_retained": not args.cleanup_cache,
             "raw_records_committed": False,
         },
-        "scoring_mode": "existing kr-eval RecallEngine, FTS/entity branches only",
+        "selected_modes": [config["id"] for config in selected_configs],
+        "scoring_mode": "existing kr-eval RecallEngine compared across selected retrieval branches",
         "datasets": [
             dataset_smoke_report(
                 name="LongMemEval cleaned smoke",
@@ -475,7 +607,7 @@ def main() -> int:
                 queries=longmem_queries,
                 examples=longmem_examples,
                 skipped=longmem_skipped,
-                raw_report=longmem_raw,
+                kr_eval_runs=longmem_runs,
             ),
             dataset_smoke_report(
                 name="DMR candidate MSC-Self-Instruct smoke",
@@ -485,14 +617,15 @@ def main() -> int:
                 queries=dmr_queries,
                 examples=dmr_examples,
                 skipped=dmr_skipped,
-                raw_report=dmr_raw,
+                kr_eval_runs=dmr_runs,
             ),
         ],
         "limits": [
             "Small smoke sample only; not a full benchmark run.",
             "DMR source is treated as a candidate until the original DMR harness is pinned.",
             "Report excludes raw questions, answers, dialogs, and session text.",
-            "No vectors, reranker, LLM judge, or hosted external systems are used.",
+            "Comparison covers baseline RRF, vector branch, and vector-plus-reranker branch only.",
+            "No LLM judge or hosted external systems are used.",
         ],
     }
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -504,8 +637,10 @@ def main() -> int:
 
     print(json.dumps({
         "output": str(args.output),
+        "selected_modes": [config["id"] for config in selected_configs],
         "longmem_queries": len(longmem_queries),
         "dmr_queries": len(dmr_queries),
+        "kr_eval_runs_per_dataset": len(selected_configs),
         "cleanup_cache": args.cleanup_cache,
     }, indent=2))
     return 0

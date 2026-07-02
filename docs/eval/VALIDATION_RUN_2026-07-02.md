@@ -270,3 +270,86 @@ generation, sanitized reporting, and small-sample run are working. This is not
 a full LongMemEval or official DMR benchmark result. The low DMR candidate
 score shows that plain FTS/entity recall is not enough for many question-style
 deep-memory retrieval rows.
+
+## Stage 7 Long-Memory Retrieval Branch Check
+
+Purpose:
+
+Answer whether the low DMR candidate score is mainly caused by a weak retrieval
+branch or by the current DMR data mapping.
+
+Commands:
+
+```bash
+python scripts/eval/longmem_dmr_smoke.py \
+  --endpoint https://hf-mirror.com \
+  --modes vector \
+  --output crates/eval/reports/longmem-dmr-smoke-vector.json \
+  --cleanup-cache
+
+python scripts/eval/longmem_dmr_smoke.py \
+  --endpoint https://hf-mirror.com \
+  --modes vector-rerank \
+  --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json \
+  --cleanup-cache
+```
+
+Reports:
+
+- `crates/eval/reports/longmem-dmr-smoke-latest.json`
+- `crates/eval/reports/longmem-dmr-smoke-vector.json`
+- `crates/eval/reports/longmem-dmr-smoke-vector-rerank.json`
+
+Result:
+
+| Dataset | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| LongMemEval cleaned | baseline FTS/entity | 0.600 | 0.817 | 0.383 | 0.510 | 117.2 ms |
+| LongMemEval cleaned | vector | 0.800 | 1.000 | 0.611 | 0.717 | 146.6 ms |
+| LongMemEval cleaned | vector + reranker | 0.617 | 0.800 | 0.673 | 0.659 | 16287.5 ms |
+| DMR candidate MSC-Self-Instruct | baseline FTS/entity | 0.192 | 0.317 | 0.124 | 0.162 | 16.7 ms |
+| DMR candidate MSC-Self-Instruct | vector | 0.267 | 0.333 | 0.178 | 0.204 | 53.9 ms |
+| DMR candidate MSC-Self-Instruct | vector + reranker | 0.583 | 0.658 | 0.403 | 0.454 | 15943.6 ms |
+
+Anonymized failure summary:
+
+| Dataset | Mode | zero Recall@10 | full Recall@10 | Notes |
+| --- | --- | ---: | ---: | --- |
+| LongMemEval cleaned | baseline FTS/entity | 1/10 | 7/10 | One preference-style sample missed at top 10. |
+| LongMemEval cleaned | vector | 0/10 | 10/10 | Vector branch recovered every sampled LongMemEval query. |
+| LongMemEval cleaned | vector + reranker | 1/10 | 7/10 | Reranker hurt three samples versus vector-only. |
+| DMR candidate | baseline FTS/entity | 13/20 | 6/20 | Plain lexical/entity recall misses most candidate rows. |
+| DMR candidate | vector | 13/20 | 6/20 | Vector alone barely changes DMR top-10 recall. |
+| DMR candidate | vector + reranker | 6/20 | 12/20 | Reranker recovered seven vector misses and hurt one partial hit. |
+
+DMR anonymous IDs still at zero Recall@10 after vector + reranker:
+
+```text
+57b6b989521797c9
+c46541722e486083
+776cf885e5ecaeaa
+f854941b0186f8c0
+80a1b939a7e18a9f
+f411b444bd9e28b1
+```
+
+Interpretation:
+
+- DMR's low baseline is not solved by adding dense vectors alone: Recall@10
+  moved only from `0.317` to `0.333`.
+- DMR improves strongly when reranking is added: Recall@10 reached `0.658`,
+  which is above the `0.55` decision threshold for "retrieval branch matters."
+- LongMemEval behaves differently: vector-only reached `1.000`, but reranker
+  dropped it to `0.800`, so reranker should stay a validation branch rather than
+  a default behavior.
+- The DMR loader still shows data-mapping noise: 112 candidate rows were skipped
+  because the expected answer text was not found in the generated memory chunks.
+- The committed reports only expose top-10 returned relevance, so they cannot
+  fully separate "not recalled anywhere" from "recalled after rank 10." The next
+  failure-analysis run should add an anonymized rank bucket such as `top_10`,
+  `top_50`, or `absent`.
+
+Stage 7 conclusion: the DMR weakness is primarily a retrieval-ranking problem
+for the selected valid rows, but the candidate dataset mapping is also noisy.
+The correct next step is not feature growth; it is a larger 50/50 validation
+run with the same three modes and an anonymized rank-bucket failure report.

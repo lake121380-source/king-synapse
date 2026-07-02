@@ -188,3 +188,52 @@ Interpretation:
 - The low DMR candidate score is a baseline signal, not a product regression:
   the run used only existing FTS/entity recall and no vector branch, reranker,
   LLM judge, or cognitive-trace adaptation.
+
+## Retrieval Branch Check 2026-07-02
+
+Additional reports:
+
+- `crates/eval/reports/longmem-dmr-smoke-vector.json`
+- `crates/eval/reports/longmem-dmr-smoke-vector-rerank.json`
+
+The branch check used the same deterministic smoke samples and changed only the
+retrieval mode.
+
+| Dataset | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| LongMemEval cleaned | baseline FTS/entity | 0.600 | 0.817 | 0.383 | 0.510 |
+| LongMemEval cleaned | vector | 0.800 | 1.000 | 0.611 | 0.717 |
+| LongMemEval cleaned | vector + reranker | 0.617 | 0.800 | 0.673 | 0.659 |
+| DMR candidate MSC-Self-Instruct | baseline FTS/entity | 0.192 | 0.317 | 0.124 | 0.162 |
+| DMR candidate MSC-Self-Instruct | vector | 0.267 | 0.333 | 0.178 | 0.204 |
+| DMR candidate MSC-Self-Instruct | vector + reranker | 0.583 | 0.658 | 0.403 | 0.454 |
+
+Failure analysis from anonymized IDs:
+
+- LongMemEval vector-only recovered all sampled misses, but reranker moved
+  three previously relevant results out of the top 10.
+- DMR vector-only did not change the top-10 miss count: 13/20 rows still had
+  zero Recall@10.
+- DMR vector + reranker reduced zero Recall@10 rows from 13/20 to 6/20.
+- DMR vector + reranker recovered these vector misses:
+  `9a43753c58bb6bac`, `fbb4d10243d62605`, `08f41b439a71adf4`,
+  `4c4b25f96d26acff`, `531d84aa5ba3fb36`, `268837a04a32ba8e`,
+  `6481289551ed1a75`.
+- DMR vector + reranker still missed:
+  `57b6b989521797c9`, `c46541722e486083`, `776cf885e5ecaeaa`,
+  `f854941b0186f8c0`, `80a1b939a7e18a9f`, `f411b444bd9e28b1`.
+- One DMR sample, `9fd144e79228209f`, was hurt by reranking versus vector-only.
+
+Decision gate:
+
+| Observed result | Decision |
+| --- | --- |
+| Vector-only made LongMemEval perfect on the smoke sample. | Keep vector as a serious validation branch. |
+| Vector-only barely moved DMR from 0.317 to 0.333. | DMR is not solved by dense recall alone. |
+| Vector + reranker moved DMR to 0.658. | Ranking is a real DMR bottleneck for selected valid rows. |
+| Vector + reranker reduced LongMemEval from 1.000 to 0.800 and had high latency. | Do not make reranker the default from this smoke result. |
+| 112 DMR candidate rows were skipped before selecting 20 valid rows. | Data mapping and candidate quality still need inspection. |
+
+Next step: expand the same three-way comparison to LongMemEval 50 and DMR 50.
+Before changing memory schema or chunking, add an anonymized rank-bucket field
+so remaining failures can be separated into `top_10`, `top_50`, and `absent`.

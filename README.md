@@ -129,15 +129,21 @@ The checked-in external comparison report is
 | Mem0 | 8/8 visible seed, 8/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
 | Letta | Adapter is present, but the local run is not configured yet. |
 
-The checked-in long-memory smoke report is
-[longmem-dmr-smoke-latest.json](crates/eval/reports/longmem-dmr-smoke-latest.json).
-It uses external data cached outside the repo and commits only aggregate,
-redacted metrics.
+The checked-in long-memory smoke reports use external data cached outside the
+repo and commit only aggregate, redacted metrics:
+[baseline](crates/eval/reports/longmem-dmr-smoke-latest.json),
+[vector](crates/eval/reports/longmem-dmr-smoke-vector.json), and
+[vector + reranker](crates/eval/reports/longmem-dmr-smoke-vector-rerank.json).
 
-| Smoke test | Local result |
-| --- | --- |
-| LongMemEval cleaned | 10-query smoke, 484 memory chunks, Recall@10 0.817 with FTS/entity recall only. |
-| DMR candidate MSC-Self-Instruct | 20-query smoke, 100 memory chunks, Recall@10 0.317 with FTS/entity recall only. |
+| Smoke test | Baseline FTS/entity | + vector | + vector + reranker | Current read |
+| --- | ---: | ---: | ---: | --- |
+| LongMemEval cleaned | 0.817 | 1.000 | 0.800 | Vector recall helps; reranker is not safe to enable blindly here. |
+| DMR candidate MSC-Self-Instruct | 0.317 | 0.333 | 0.658 | The low DMR baseline is mostly a ranking/retrieval-branch problem, with some data-mapping noise still present. |
+
+So the project is not in "add more features" mode. The next validation step is
+to expand the same three-way comparison to 50 LongMemEval and 50 DMR examples,
+then inspect the remaining anonymous DMR failures before changing the memory
+schema or product surface.
 
 Run the same comparison:
 
@@ -193,6 +199,8 @@ cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json c
 
 # Run LongMemEval / DMR smoke validation
 python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector --output crates/eval/reports/longmem-dmr-smoke-vector.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector-rerank --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json --cleanup-cache
 
 # Build release binaries
 cargo build --release

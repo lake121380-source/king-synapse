@@ -114,16 +114,24 @@ The project has crossed the basic bar for:
 2. internally consistent recall, trace, prediction, and reinforcement reports;
 3. visible comparative value on cognitive-trace introspection.
 
-Long-memory smoke evidence now exists:
+Long-memory smoke evidence now exists across three retrieval modes:
 
-| Dataset | Sample | Memory chunks | Recall@10 |
-| --- | ---: | ---: | ---: |
-| LongMemEval cleaned | 10/10 | 484 | 0.817 |
-| DMR candidate MSC-Self-Instruct | 20/20 | 100 | 0.317 |
+| Dataset | Sample | Baseline Recall@10 | Vector Recall@10 | Vector + reranker Recall@10 |
+| --- | ---: | ---: | ---: | ---: |
+| LongMemEval cleaned | 10/10 | 0.817 | 1.000 | 0.800 |
+| DMR candidate MSC-Self-Instruct | 20/20 | 0.317 | 0.333 | 0.658 |
 
-The smoke report is `crates/eval/reports/longmem-dmr-smoke-latest.json`. It
-uses no vectors, reranker, LLM judge, or hosted service, and it excludes raw
-third-party records from the committed report.
+The smoke reports are:
+
+- `crates/eval/reports/longmem-dmr-smoke-latest.json`
+- `crates/eval/reports/longmem-dmr-smoke-vector.json`
+- `crates/eval/reports/longmem-dmr-smoke-vector-rerank.json`
+
+They exclude raw third-party records from the committed reports. The current
+read is: vector search is enough to fix the sampled LongMemEval misses, while
+DMR needs a reranking step to recover many candidate rows. Reranking is also
+expensive and can hurt LongMemEval top-10 recall, so it is validated but not a
+safe default yet.
 
 The project has not yet crossed the bar for:
 
@@ -132,5 +140,6 @@ The project has not yet crossed the bar for:
 3. live Letta endpoint measurement;
 4. production-readiness claims.
 
-Next required action: keep feature growth frozen and turn the smoke path into a
-larger validation run with pinned original scoring rules.
+Next required action: keep feature growth frozen and expand this same
+baseline/vector/vector-plus-reranker comparison to 50 LongMemEval and 50 DMR
+examples, with anonymized rank-bucket analysis for remaining misses.

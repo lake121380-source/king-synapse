@@ -81,6 +81,8 @@ missing, adapters report `not_configured` with the missing names.
 
 ```bash
 python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector --output crates/eval/reports/longmem-dmr-smoke-vector.json --cleanup-cache
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --modes vector-rerank --output crates/eval/reports/longmem-dmr-smoke-vector-rerank.json --cleanup-cache
 ```
 
 The smoke runner downloads LongMemEval cleaned and the DMR candidate
@@ -88,6 +90,9 @@ MSC-Self-Instruct data to a user cache outside the repository, generates
 temporary TOML datasets for the existing `kr-eval` binary, and writes only a
 sanitized aggregate report to
 `crates/eval/reports/longmem-dmr-smoke-latest.json`.
+
+Use `--modes` to isolate branch checks without overwriting the baseline report:
+`baseline`, `vector`, `vector-rerank`, or `all`.
 
 The checked-in smoke report excludes raw questions, answers, dialogs, and
 session text. It is a small validation run, not a full LongMemEval or official
