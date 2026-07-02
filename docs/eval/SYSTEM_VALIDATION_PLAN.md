@@ -112,7 +112,8 @@ Required before acceptance:
 
 ### 4. Long-Horizon And Public Dataset Tests
 
-LongMemEval and DMR are not yet started.
+LongMemEval and DMR now have a small smoke runner and sanitized aggregate
+report. Full benchmark validation is not yet started.
 
 Before importing or mirroring data:
 
@@ -173,8 +174,9 @@ task. The validation win condition is narrower and more important:
 - Letta measured run: attempted with `letta-client 1.12.1` and
   `LETTA_ENVIRONMENT=local`; still not measured because no local Letta endpoint
   was reachable.
-- LongMemEval / DMR fetch/cache path: data plan added at
-  `docs/eval/LONGMEM_DMR_DATA_PLAN.md`; smoke runners are not implemented yet.
+- LongMemEval / DMR smoke path: implemented in
+  `scripts/eval/longmem_dmr_smoke.py`; latest sanitized report is
+  `crates/eval/reports/longmem-dmr-smoke-latest.json`.
 - Stage 7 system validation report: added at
   `docs/eval/SYSTEM_VALIDATION_REPORT.md`.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

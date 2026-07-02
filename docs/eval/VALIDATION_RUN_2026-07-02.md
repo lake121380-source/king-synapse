@@ -224,3 +224,49 @@ therefore still not measured. The next Letta validation step requires either a
 running local Letta server or a disposable hosted Letta project.
 
 The temporary adapter input file was not committed.
+
+## Stage 6 LongMemEval / DMR Smoke Run
+
+Command:
+
+```bash
+python scripts/eval/longmem_dmr_smoke.py \
+  --endpoint https://hf-mirror.com \
+  --cleanup-cache
+```
+
+Runner:
+
+`scripts/eval/longmem_dmr_smoke.py`
+
+Report:
+
+`crates/eval/reports/longmem-dmr-smoke-latest.json`
+
+Environment and data notes:
+
+- LongMemEval cleaned source: `xiaowu0162/longmemeval-cleaned`,
+  revision `98d7416c24c778c2fee6e6f3006e7a073259d48f`, license `mit`.
+- DMR candidate source: `MemGPT/MSC-Self-Instruct`, revision
+  `5138f416f8fa76b75b2e080da87e8a8e346e1500`, license `apache-2.0`.
+- Raw source files were downloaded to a user cache outside the repository.
+- Temporary TOML datasets were generated under the system temp directory.
+- Raw questions, answers, dialogs, haystack sessions, and temporary TOML files
+  were not committed.
+- `--cleanup-cache` removed the downloaded raw cache after the report was
+  written.
+- Scoring used the existing `kr-eval` RecallEngine with FTS/entity branches
+  only. No vectors, reranker, LLM judge, or hosted service was used.
+
+Result:
+
+| Dataset | Sample | Memory chunks | Recall@5 | Recall@10 | MRR@10 | NDCG@10 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| LongMemEval cleaned | 10/10 | 484 | 0.600 | 0.817 | 0.383 | 0.510 |
+| DMR candidate MSC-Self-Instruct | 20/20 | 100 | 0.192 | 0.317 | 0.124 | 0.162 |
+
+Stage 6 conclusion: the fetch/cache path, schema loader, temporary dataset
+generation, sanitized reporting, and small-sample run are working. This is not
+a full LongMemEval or official DMR benchmark result. The low DMR candidate
+score shows that plain FTS/entity recall is not enough for many question-style
+deep-memory retrieval rows.

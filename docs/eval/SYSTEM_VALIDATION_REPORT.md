@@ -4,9 +4,10 @@ Date: 2026-07-02
 
 Status: scoped validation passed.
 
-This report answers only the three system-validation questions. It does not
-claim that LongMemEval, DMR, hosted Graphiti, hosted Mem0, or a live Letta
-endpoint have been fully measured.
+This report answers only the three system-validation questions. It includes a
+small LongMemEval / DMR smoke run, but does not claim that full LongMemEval,
+official DMR, hosted Graphiti, hosted Mem0, or a live Letta endpoint have been
+fully measured.
 
 ## 1. Is The System Stable?
 
@@ -47,7 +48,8 @@ Observed mean-latency range for the five repeatability runs:
 ```
 
 Stability conclusion: stable on the current deterministic cognitive fixture.
-Not yet proven on LongMemEval, DMR, or hosted external systems.
+The LongMemEval / DMR smoke path can run and report aggregate metrics, but
+full long-memory stability is not yet proven.
 
 ## 2. Is The System Internally Consistent?
 
@@ -112,13 +114,23 @@ The project has crossed the basic bar for:
 2. internally consistent recall, trace, prediction, and reinforcement reports;
 3. visible comparative value on cognitive-trace introspection.
 
+Long-memory smoke evidence now exists:
+
+| Dataset | Sample | Memory chunks | Recall@10 |
+| --- | ---: | ---: | ---: |
+| LongMemEval cleaned | 10/10 | 484 | 0.817 |
+| DMR candidate MSC-Self-Instruct | 20/20 | 100 | 0.317 |
+
+The smoke report is `crates/eval/reports/longmem-dmr-smoke-latest.json`. It
+uses no vectors, reranker, LLM judge, or hosted service, and it excludes raw
+third-party records from the committed report.
+
 The project has not yet crossed the bar for:
 
-1. LongMemEval / DMR smoke results;
+1. full LongMemEval / official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. production-readiness claims.
 
-Next required action: keep feature growth frozen and run the Stage 6
-LongMemEval / DMR smoke path described in
-`docs/eval/LONGMEM_DMR_DATA_PLAN.md`.
+Next required action: keep feature growth frozen and turn the smoke path into a
+larger validation run with pinned original scoring rules.

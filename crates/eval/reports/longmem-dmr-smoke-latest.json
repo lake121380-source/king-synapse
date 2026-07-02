@@ -1,0 +1,463 @@
+{
+  "schema_version": "king-synapse.longmem-dmr-smoke.v1",
+  "generated_at": "2026-07-02T06:09:49.404384+00:00",
+  "runner": "scripts/eval/longmem_dmr_smoke.py",
+  "endpoint": "https://hf-mirror.com",
+  "cache_policy": {
+    "cache_root_recorded": false,
+    "raw_cache_retained": false,
+    "raw_records_committed": false
+  },
+  "scoring_mode": "existing kr-eval RecallEngine, FTS/entity branches only",
+  "datasets": [
+    {
+      "name": "LongMemEval cleaned smoke",
+      "source": {
+        "repo_id": "xiaowu0162/longmemeval-cleaned",
+        "revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
+        "license": "mit",
+        "filename": "longmemeval_s_cleaned.json",
+        "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+        "bytes": 277383467
+      },
+      "sample_size_requested": 10,
+      "sample_size_used": 10,
+      "selection_policy": "deterministic category-first sample, then stable source order",
+      "skipped": {},
+      "category_counts": {
+        "knowledge-update": 4,
+        "multi-session": 2,
+        "single-session-assistant": 1,
+        "single-session-preference": 1,
+        "single-session-user": 1,
+        "temporal-reasoning": 1
+      },
+      "temporary_dataset_committed": false,
+      "raw_records_committed": false,
+      "memory_chunks": 484,
+      "kr_eval": {
+        "tag": "longmemeval-smoke",
+        "k": 10,
+        "vectors_enabled": false,
+        "rerank_enabled": false,
+        "n_memories": 484,
+        "n_queries": 10,
+        "recall_at_5": 0.6,
+        "recall_at_10": 0.8166666666666667,
+        "mrr_at_10": 0.3825,
+        "ndcg_at_10": 0.5097174764060703,
+        "p50_latency_ms": 117.1676,
+        "p95_latency_ms": 229.4652,
+        "total_ms": 1117.7352,
+        "per_query": [
+          {
+            "sample_id": "1254b144212a0213",
+            "category": "knowledge-update",
+            "source_session_count": 47,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.3333333333333333,
+            "ndcg_at_10": 0.5437713091520254,
+            "latency_ms": 81.7691
+          },
+          {
+            "sample_id": "ab113de1adc6b56f",
+            "category": "multi-session",
+            "source_session_count": 47,
+            "relevant_count": 3,
+            "returned_relevant_count": 2,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.6666666666666666,
+            "rr": 0.16666666666666666,
+            "ndcg_at_10": 0.3152014104491349,
+            "latency_ms": 143.4827
+          },
+          {
+            "sample_id": "52b5c37ac7afa8e3",
+            "category": "single-session-assistant",
+            "source_session_count": 46,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 1.0,
+            "ndcg_at_10": 1.0,
+            "latency_ms": 229.4652
+          },
+          {
+            "sample_id": "fe4511151e91186c",
+            "category": "single-session-preference",
+            "source_session_count": 48,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 65.141
+          },
+          {
+            "sample_id": "c30691367b602930",
+            "category": "single-session-user",
+            "source_session_count": 51,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 0.0,
+            "recall_at_10": 1.0,
+            "rr": 0.125,
+            "ndcg_at_10": 0.31546487678572877,
+            "latency_ms": 66.3609
+          },
+          {
+            "sample_id": "0a874502ef80048a",
+            "category": "temporal-reasoning",
+            "source_session_count": 47,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.5,
+            "ndcg_at_10": 0.6934264036172708,
+            "latency_ms": 152.1276
+          },
+          {
+            "sample_id": "c8332d455a4b67c2",
+            "category": "multi-session",
+            "source_session_count": 49,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 0.5,
+            "recall_at_10": 1.0,
+            "rr": 0.2,
+            "ndcg_at_10": 0.45560514958746035,
+            "latency_ms": 60.9278
+          },
+          {
+            "sample_id": "7e26a029ba0f0d20",
+            "category": "knowledge-update",
+            "source_session_count": 46,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.5,
+            "ndcg_at_10": 0.6934264036172708,
+            "latency_ms": 146.79039999999998
+          },
+          {
+            "sample_id": "37ca6c2bda1f0d8d",
+            "category": "knowledge-update",
+            "source_session_count": 52,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.5,
+            "ndcg_at_10": 0.6934264036172708,
+            "latency_ms": 117.1676
+          },
+          {
+            "sample_id": "a64b15755c8c0f73",
+            "category": "knowledge-update",
+            "source_session_count": 51,
+            "relevant_count": 2,
+            "returned_relevant_count": 1,
+            "recall_at_5": 0.5,
+            "recall_at_10": 0.5,
+            "rr": 0.5,
+            "ndcg_at_10": 0.38685280723454163,
+            "latency_ms": 52.7866
+          }
+        ]
+      }
+    },
+    {
+      "name": "DMR candidate MSC-Self-Instruct smoke",
+      "source": {
+        "repo_id": "MemGPT/MSC-Self-Instruct",
+        "revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
+        "license": "apache-2.0",
+        "filename": "msc_self_instruct.jsonl",
+        "sha256": "d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e",
+        "bytes": 8558741
+      },
+      "sample_size_requested": 20,
+      "sample_size_used": 20,
+      "selection_policy": "deterministic category-first sample, then stable source order",
+      "skipped": {
+        "answer_not_found_in_memory_chunks": 112
+      },
+      "category_counts": {
+        "dmr-candidate": 20
+      },
+      "temporary_dataset_committed": false,
+      "raw_records_committed": false,
+      "memory_chunks": 100,
+      "kr_eval": {
+        "tag": "dmr-candidate-smoke",
+        "k": 10,
+        "vectors_enabled": false,
+        "rerank_enabled": false,
+        "n_memories": 100,
+        "n_queries": 20,
+        "recall_at_5": 0.19166666666666665,
+        "recall_at_10": 0.31666666666666665,
+        "mrr_at_10": 0.12436507936507937,
+        "ndcg_at_10": 0.16158675233755326,
+        "p50_latency_ms": 16.6774,
+        "p95_latency_ms": 25.6653,
+        "total_ms": 352.3478,
+        "per_query": [
+          {
+            "sample_id": "57b6b989521797c9",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 25.6653
+          },
+          {
+            "sample_id": "9a43753c58bb6bac",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 16.508200000000002
+          },
+          {
+            "sample_id": "c46541722e486083",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 2,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 16.590799999999998
+          },
+          {
+            "sample_id": "776cf885e5ecaeaa",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 17.0875
+          },
+          {
+            "sample_id": "7a788ef53726d3e2",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 3,
+            "returned_relevant_count": 1,
+            "recall_at_5": 0.3333333333333333,
+            "recall_at_10": 0.3333333333333333,
+            "rr": 0.5,
+            "ndcg_at_10": 0.2960819109658652,
+            "latency_ms": 10.5537
+          },
+          {
+            "sample_id": "eb3700a328438dcb",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 18.3405
+          },
+          {
+            "sample_id": "f854941b0186f8c0",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 20.0228
+          },
+          {
+            "sample_id": "fbb4d10243d62605",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 2,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 16.338700000000003
+          },
+          {
+            "sample_id": "9fd144e79228209f",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 2,
+            "returned_relevant_count": 2,
+            "recall_at_5": 0.5,
+            "recall_at_10": 1.0,
+            "rr": 0.2,
+            "ndcg_at_10": 0.41443699955334395,
+            "latency_ms": 20.7267
+          },
+          {
+            "sample_id": "08f41b439a71adf4",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 2,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 14.0644
+          },
+          {
+            "sample_id": "80a1b939a7e18a9f",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 0.0,
+            "recall_at_10": 1.0,
+            "rr": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "latency_ms": 15.0367
+          },
+          {
+            "sample_id": "4c4b25f96d26acff",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 27.389699999999998
+          },
+          {
+            "sample_id": "c6a924cfc11c621e",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 0.0,
+            "recall_at_10": 1.0,
+            "rr": 0.1111111111111111,
+            "ndcg_at_10": 0.3010299956639812,
+            "latency_ms": 11.8567
+          },
+          {
+            "sample_id": "531d84aa5ba3fb36",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 17.959
+          },
+          {
+            "sample_id": "f5db11f894d6bcbc",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 1.0,
+            "ndcg_at_10": 1.0,
+            "latency_ms": 16.6774
+          },
+          {
+            "sample_id": "97cec4017edb55b1",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "latency_ms": 17.9274
+          },
+          {
+            "sample_id": "268837a04a32ba8e",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 15.3496
+          },
+          {
+            "sample_id": "f411b444bd9e28b1",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 22.396
+          },
+          {
+            "sample_id": "6481289551ed1a75",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 0,
+            "recall_at_5": 0.0,
+            "recall_at_10": 0.0,
+            "rr": 0.0,
+            "ndcg_at_10": 0.0,
+            "latency_ms": 14.481300000000001
+          },
+          {
+            "sample_id": "86d36285f59b7db4",
+            "category": "dmr-candidate",
+            "source_session_count": 5,
+            "relevant_count": 1,
+            "returned_relevant_count": 1,
+            "recall_at_5": 1.0,
+            "recall_at_10": 1.0,
+            "rr": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "latency_ms": 16.1739
+          }
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Small smoke sample only; not a full benchmark run.",
+    "DMR source is treated as a candidate until the original DMR harness is pinned.",
+    "Report excludes raw questions, answers, dialogs, and session text.",
+    "No vectors, reranker, LLM judge, or hosted external systems are used."
+  ]
+}

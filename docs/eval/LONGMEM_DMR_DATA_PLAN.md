@@ -2,8 +2,8 @@
 
 Date checked: 2026-07-02
 
-Status: planning only. No LongMemEval or DMR dataset records are committed in
-this repository.
+Status: smoke runner implemented and run. No LongMemEval or DMR raw dataset
+records are committed in this repository.
 
 ## Validation Purpose
 
@@ -152,3 +152,39 @@ Do not run a full benchmark until these are true:
 6. any LLM judge records model name, provider mode, and credential names only;
 7. the report clearly separates King Synapse cognitive-trace metrics from
    ordinary long-memory retrieval metrics.
+
+## Smoke Run 2026-07-02
+
+Runner:
+
+```powershell
+python scripts/eval/longmem_dmr_smoke.py `
+  --endpoint https://hf-mirror.com `
+  --cleanup-cache
+```
+
+Report:
+
+`crates/eval/reports/longmem-dmr-smoke-latest.json`
+
+The runner:
+
+- downloaded raw data to the user cache;
+- generated temporary TOML datasets for the existing `kr-eval` binary;
+- ran FTS/entity recall only;
+- wrote a sanitized aggregate report;
+- excluded raw questions, answers, dialogs, and session text;
+- removed the raw cache after the run.
+
+| Dataset | Sample | Memory chunks | Recall@5 | Recall@10 | MRR@10 | NDCG@10 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| LongMemEval cleaned | 10/10 | 484 | 0.600 | 0.817 | 0.383 | 0.510 |
+| DMR candidate MSC-Self-Instruct | 20/20 | 100 | 0.192 | 0.317 | 0.124 | 0.162 |
+
+Interpretation:
+
+- LongMemEval cleaned smoke is viable as the first long-memory loader path.
+- DMR remains a candidate benchmark until the original harness is pinned.
+- The low DMR candidate score is a baseline signal, not a product regression:
+  the run used only existing FTS/entity recall and no vector branch, reranker,
+  LLM judge, or cognitive-trace adaptation.

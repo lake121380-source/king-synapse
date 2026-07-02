@@ -129,6 +129,16 @@ The checked-in external comparison report is
 | Mem0 | 8/8 visible seed, 8/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
 | Letta | Adapter is present, but the local run is not configured yet. |
 
+The checked-in long-memory smoke report is
+[longmem-dmr-smoke-latest.json](crates/eval/reports/longmem-dmr-smoke-latest.json).
+It uses external data cached outside the repo and commits only aggregate,
+redacted metrics.
+
+| Smoke test | Local result |
+| --- | --- |
+| LongMemEval cleaned | 10-query smoke, 484 memory chunks, Recall@10 0.817 with FTS/entity recall only. |
+| DMR candidate MSC-Self-Instruct | 20-query smoke, 100 memory chunks, Recall@10 0.317 with FTS/entity recall only. |
+
 Run the same comparison:
 
 ```bash
@@ -165,7 +175,8 @@ comparison adapters or optional embedding/reranking paths.
 - Core architecture is stable.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
-- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta, LongMemEval, and DMR are not finished.
+- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
+- LongMemEval and DMR have small smoke reports; full benchmark validation is not finished.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
 ## Useful Commands
@@ -180,6 +191,9 @@ cargo bench -p synapse-eval --bench exported_cognitive_session
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
 
+# Run LongMemEval / DMR smoke validation
+python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --cleanup-cache
+
 # Build release binaries
 cargo build --release
 ```
@@ -191,6 +205,8 @@ cargo build --release
 | `docs/ROADMAP.md` | Current roadmap and next work. |
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
+| `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `docs/eval/LONGMEM_DMR_DATA_PLAN.md` | LongMemEval / DMR license, cache, and smoke-test rules. |
 | `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
 | `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |
 | `docs/eval/EXTERNAL_COMPARISON_PLAN.md` | External comparison plan and adapter rules. |
