@@ -132,6 +132,12 @@ The current DMR mapping audit is fixed in:
 
 Readable summary: `docs/eval/DMR_MAPPING_AUDIT.md`.
 
+The current punctuation-normalized DMR candidate rerun is fixed in:
+
+- `reports/dmr-50-punctuation-validation.json`
+
+Readable summary: `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
+
 ## Algorithm Benchmarks
 
 ```bash

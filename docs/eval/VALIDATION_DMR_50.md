@@ -62,6 +62,14 @@ normalization and 362 had all significant answer tokens in one chunk. This
 localizes the DMR skipped-row issue to the mapping/scoring rule rather than
 empty chunk generation.
 
+Punctuation-normalized rerun:
+
+- `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`
+- `crates/eval/reports/dmr-50-punctuation-validation.json`
+
+That rerun reduced skipped rows before the first 50 valid examples from `278`
+to `31`, while keeping the original strict-string report as the baseline.
+
 ## Metrics
 
 | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency | P95 latency |

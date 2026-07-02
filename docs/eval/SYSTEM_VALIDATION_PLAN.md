@@ -227,6 +227,7 @@ task. The validation win condition is narrower and more important:
   a follow-up.
 - DMR mapping audit: added at `docs/eval/DMR_MAPPING_AUDIT.md`; the 278
   pre-eval skipped rows are now localized to strict answer-string mapping, not
-  empty chunk generation. A replacement mapping/scoring policy is still not
-  pinned.
+  empty chunk generation. A punctuation-normalized candidate rerun is pinned at
+  `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`; official/final DMR scoring is
+  still unresolved.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

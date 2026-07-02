@@ -167,6 +167,16 @@
       "vector_rerank_recall_at_10": 0.584,
       "pre_eval_skipped_answer_not_found_in_chunks": 278,
       "gate": "Use as trend baseline; mapping/chunk skips must be tracked separately from evaluated retrieval failures."
+    },
+    {
+      "id": "dmr-msc-self-instruct-50-punctuation",
+      "report": "crates/eval/reports/dmr-50-punctuation-validation.json",
+      "answer_match_policy": "punctuation",
+      "baseline_recall_at_10": 0.198,
+      "vector_recall_at_10": 0.28,
+      "vector_rerank_recall_at_10": 0.468,
+      "pre_eval_skipped_answer_not_found_in_chunks": 31,
+      "gate": "Pinned punctuation-normalized candidate rerun; do not compare as the same sample as strict-string DMR."
     }
   ],
   "validation_commands": {

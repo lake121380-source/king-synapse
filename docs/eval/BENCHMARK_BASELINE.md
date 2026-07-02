@@ -68,6 +68,7 @@ reports and keep raw third-party data out of the repo.
 | --- | --- | ---: | ---: | ---: | --- |
 | LongMemEval cleaned 50 | `longmem-50-validation.json` | 0.503 | 0.663 | 0.590 | Explain movement across all three modes. |
 | DMR candidate 50 | `dmr-50-validation.json` | 0.188 | 0.438 | 0.584 | Track mapping/chunk skips separately from retrieval failures. |
+| DMR candidate 50, punctuation mapping | `dmr-50-punctuation-validation.json` | 0.198 | 0.280 | 0.468 | Treat as the pinned punctuation-normalized candidate rerun; do not compare as the same sample as strict-string DMR. |
 
 Heavy LongMemEval / DMR reruns should use the CUDA path documented in
 `docs/eval/GPU_VALIDATION_2026-07-02.md`.

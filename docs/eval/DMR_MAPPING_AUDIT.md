@@ -109,9 +109,18 @@ policy. It does not justify changing Synapse's memory architecture.
 
 ## Next Validation Work
 
-1. Decide whether DMR candidate mapping should use punctuation-normalized exact
-   match, significant-token containment, an official DMR label, or an LLM judge.
-2. Rebuild the DMR 50 candidate set after that policy is pinned.
-3. Re-run DMR 50 on GPU across baseline, vector, and vector + reranker.
-4. Keep the current DMR 50 numbers as the strict-string baseline until a new
-   mapping policy is documented.
+Follow-up completed:
+
+- `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`
+- `crates/eval/reports/dmr-50-punctuation-validation.json`
+
+The punctuation-normalized policy reduced skipped rows before the first 50
+valid examples from `278` to `31`.
+
+Remaining validation work:
+
+1. Decide whether the final DMR policy should stay punctuation-normalized or
+   move to an official DMR label or LLM judge.
+2. Keep the current DMR 50 numbers as the strict-string baseline.
+3. Treat the punctuation-normalized run as the pinned candidate rerun, not as an
+   official DMR result.

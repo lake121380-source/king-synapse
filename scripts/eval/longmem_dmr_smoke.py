@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -28,6 +29,10 @@ LONGMEM_REPO = "xiaowu0162/longmemeval-cleaned"
 LONGMEM_FILE = "longmemeval_s_cleaned.json"
 DMR_REPO = "MemGPT/MSC-Self-Instruct"
 DMR_FILE = "msc_self_instruct.jsonl"
+DMR_ANSWER_MATCH_POLICIES = {
+    "strict": "casefold + whitespace-normalized full answer substring",
+    "punctuation": "casefold + punctuation-normalized full answer substring",
+}
 SMOKE_CONFIGS = (
     {
         "id": "baseline-rrf",
@@ -109,6 +114,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--longmem-sample-size", type=int, default=10)
     parser.add_argument("--dmr-sample-size", type=int, default=20)
+    parser.add_argument(
+        "--dmr-answer-match",
+        choices=tuple(DMR_ANSWER_MATCH_POLICIES),
+        default="strict",
+        help="DMR answer-to-memory mapping policy. Default keeps the original strict baseline.",
+    )
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--embed-batch-size", type=int, default=None)
     parser.add_argument("--embed-max-length", type=int, default=None)
@@ -546,7 +557,35 @@ def build_dialog_chunk(row_token: str, label: str, payload: Any) -> dict[str, st
     }
 
 
-def build_dmr_dataset(rows: list[dict[str, Any]], sample_size: int) -> tuple[list[dict[str, str]], list[dict[str, Any]], list[dict[str, Any]], Counter[str]]:
+def normalize_whitespace(value: Any) -> str:
+    return " ".join(str(value).casefold().split())
+
+
+def normalize_punctuation(value: Any) -> str:
+    return " ".join(re.findall(r"[\w]+", str(value).casefold()))
+
+
+def dmr_answer_matches(answer: Any, content: str, policy: str) -> bool:
+    if policy == "strict":
+        answer_text = normalize_whitespace(answer)
+        return bool(answer_text and answer_text in normalize_whitespace(content))
+    if policy == "punctuation":
+        answer_text = normalize_punctuation(answer)
+        return bool(answer_text and answer_text in normalize_punctuation(content))
+    raise ValueError(f"unknown DMR answer match policy: {policy}")
+
+
+def dmr_tag_base(answer_match_policy: str) -> str:
+    if answer_match_policy == "strict":
+        return "dmr-candidate-smoke"
+    return f"dmr-candidate-{answer_match_policy}-smoke"
+
+
+def build_dmr_dataset(
+    rows: list[dict[str, Any]],
+    sample_size: int,
+    answer_match_policy: str,
+) -> tuple[list[dict[str, str]], list[dict[str, Any]], list[dict[str, Any]], Counter[str]]:
     memories: list[dict[str, str]] = []
     queries: list[dict[str, Any]] = []
     examples: list[dict[str, Any]] = []
@@ -578,11 +617,10 @@ def build_dmr_dataset(rows: list[dict[str, Any]], sample_size: int) -> tuple[lis
         if current_chunk["content"]:
             chunks.append(current_chunk)
 
-        answer_text = " ".join(str(answer).casefold().split())
         relevant_keys = [
             chunk["key"]
             for chunk in chunks
-            if answer_text and answer_text in " ".join(chunk["content"].casefold().split())
+            if dmr_answer_matches(answer, chunk["content"], answer_match_policy)
         ]
         if not relevant_keys:
             skipped["answer_not_found_in_memory_chunks"] += 1
@@ -781,11 +819,12 @@ def dataset_smoke_report(
     examples: list[dict[str, Any]],
     skipped: Counter[str],
     kr_eval_runs: list[dict[str, Any]],
+    dataset_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     categories = Counter(example["category"] for example in examples)
     if not kr_eval_runs:
         raise RuntimeError(f"{name} smoke report has no kr-eval runs.")
-    return {
+    report = {
         "name": name,
         "source": source,
         "sample_size_requested": sample_size_requested,
@@ -799,6 +838,9 @@ def dataset_smoke_report(
         "kr_eval": kr_eval_runs[0],
         "kr_eval_runs": kr_eval_runs,
     }
+    if dataset_metadata:
+        report.update(dataset_metadata)
+    return report
 
 
 def main() -> int:
@@ -851,7 +893,7 @@ def main() -> int:
         dmr_path = download_dataset(DMR_REPO, DMR_FILE, args.endpoint, dmr_cache)
         dmr_rows = read_jsonl(dmr_path)
         dmr_memories, dmr_queries, dmr_examples, dmr_skipped = build_dmr_dataset(
-            dmr_rows, args.dmr_sample_size
+            dmr_rows, args.dmr_sample_size, args.dmr_answer_match
         )
         if not dmr_queries:
             raise RuntimeError("DMR smoke sample is empty.")
@@ -866,7 +908,11 @@ def main() -> int:
                 "examples": dmr_examples,
                 "skipped": dmr_skipped,
                 "toml_name": "dmr-smoke.toml",
-                "tag_base": "dmr-candidate-smoke",
+                "tag_base": dmr_tag_base(args.dmr_answer_match),
+                "metadata": {
+                    "answer_match_policy": args.dmr_answer_match,
+                    "answer_match_policy_description": DMR_ANSWER_MATCH_POLICIES[args.dmr_answer_match],
+                },
             }
         )
 
@@ -898,6 +944,7 @@ def main() -> int:
         },
         "selected_modes": [config["id"] for config in selected_configs],
         "selected_datasets": sorted(selected_datasets),
+        "dmr_answer_match_policy": args.dmr_answer_match,
         "accelerator": accelerator,
         "scoring_mode": "existing kr-eval RecallEngine compared across selected retrieval branches",
         "datasets": [
@@ -910,6 +957,7 @@ def main() -> int:
                 examples=dataset["examples"],
                 skipped=dataset["skipped"],
                 kr_eval_runs=dataset["kr_eval_runs"],
+                dataset_metadata=dataset.get("metadata"),
             )
             for dataset in datasets
         ],
@@ -917,6 +965,7 @@ def main() -> int:
             "Small smoke sample only; not a full benchmark run.",
             "DMR source is treated as a candidate until the original DMR harness is pinned.",
             "Report excludes raw questions, answers, dialogs, and session text.",
+            "DMR answer matching is an answer-to-memory mapping policy, not an LLM judge.",
             "Comparison covers baseline RRF, vector branch, and vector-plus-reranker branch only.",
             "No LLM judge or hosted external systems are used.",
         ],

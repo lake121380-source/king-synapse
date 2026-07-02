@@ -68,6 +68,17 @@ the skipped rows, 241 matched after punctuation-insensitive exact matching and
 skip is mainly a strict mapping/scoring boundary, not a loader-empty or
 chunk-empty failure.
 
+Punctuation-normalized DMR 50 rerun:
+
+| Mode | Top 1 hit | Ranking: top 10 not top 1 | Ranking: top 50 not top 10 | Retrieval miss | Pre-eval missing/chunk rows |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Baseline RRF | 5 | 12 | 19 | 14 | 31 |
+| RRF + vectors | 9 | 16 | 16 | 9 | 31 |
+| RRF + vectors + reranker | 28 | 10 | 6 | 6 | 31 |
+
+This rerun is tracked separately from the strict-string DMR baseline because it
+admits a different candidate set.
+
 ## LongMemEval Anonymous Cases
 
 Final-mode examples, limited to the first 20 non-top-1 cases:

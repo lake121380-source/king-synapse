@@ -277,3 +277,39 @@ Decision gate:
 | All rows generated chunks. | Do not treat the skipped rows as loader-empty or chunk-empty failures. |
 | Current exact string matching accepts only 82/500 rows. | Keep current DMR 50 numbers as a strict-string baseline only. |
 | Many skipped rows match under punctuation or token diagnostics. | Pin a DMR mapping/scoring policy before making stronger DMR claims. |
+
+## DMR Punctuation-Normalized Rerun 2026-07-02
+
+Runner:
+
+```powershell
+python scripts/eval/longmem_dmr_smoke.py `
+  --endpoint https://hf-mirror.com `
+  --datasets dmr `
+  --modes all `
+  --dmr-sample-size 50 `
+  --dmr-answer-match punctuation `
+  --k 50 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/dmr-50-punctuation-validation.json `
+  --cleanup-cache
+```
+
+Readable summary:
+
+`docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`
+
+| Mode | Recall@10 | Top 1 | Retrieval miss |
+| --- | ---: | ---: | ---: |
+| Baseline RRF | 0.198 | 5 | 14 |
+| RRF + vectors | 0.280 | 9 | 9 |
+| RRF + vectors + reranker | 0.468 | 28 | 6 |
+
+The punctuation policy reduced skipped rows before the first 50 valid examples
+from `278` to `31`. This is now the pinned candidate rerun, while
+`dmr-50-validation.json` remains the strict-string baseline.

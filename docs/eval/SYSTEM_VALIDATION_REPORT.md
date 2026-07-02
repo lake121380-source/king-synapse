@@ -156,6 +156,10 @@ DMR mapping audit status:
   and 362 had all significant answer tokens in one chunk.
 - The DMR skip is now localized to mapping/scoring strictness, not empty chunk
   generation or a broad architecture failure.
+- A punctuation-normalized candidate rerun is recorded in
+  `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` and
+  `crates/eval/reports/dmr-50-punctuation-validation.json`; it reduced
+  pre-evaluation skips before 50 valid examples from `278` to `31`.
 
 Benchmark baseline status:
 
@@ -185,7 +189,7 @@ The project has not yet crossed the bar for:
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. sub-stage performance instrumentation;
-5. a pinned replacement DMR mapping/scoring policy;
+5. final DMR scoring-policy adoption beyond candidate punctuation matching;
 6. production-readiness claims.
 
 GPU validation status:

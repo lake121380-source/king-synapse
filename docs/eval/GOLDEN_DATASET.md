@@ -19,6 +19,7 @@ Registry:
 | `expanded-cognitive-replay-20` | 20 cognitive chains | yes | 20 cognitive trace replays and 20 prediction replays. |
 | `longmem-cleaned-50` | 50 LongMemEval cleaned queries | no raw records | Long-memory trend validation. |
 | `dmr-msc-self-instruct-50` | 50 evaluated DMR candidate queries | no raw records | Retrieval/ranking and mapping validation. |
+| `dmr-msc-self-instruct-50-punctuation` | 50 evaluated DMR candidate queries | no raw records | Punctuation-normalized DMR candidate validation. |
 
 Raw LongMemEval and DMR records are intentionally not committed. Their fixed
 source revisions, source hashes, sample sizes, and sanitized reports are listed
@@ -42,7 +43,8 @@ For retrieval strategy changes, replay the full algorithm bench suite in
 
 For long-memory strategy changes, rerun the CUDA LongMemEval / DMR commands
 from `README.md` and compare with `VALIDATION_LONGMEM_50.md`,
-`VALIDATION_DMR_50.md`, and `FAILURE_ANALYSIS.md`.
+`VALIDATION_DMR_50.md`, `VALIDATION_DMR_50_PUNCTUATION.md`, and
+`FAILURE_ANALYSIS.md`.
 
 ## Current Boundary
 
