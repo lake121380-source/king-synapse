@@ -107,6 +107,26 @@ OSS Python SDK when `mem0ai` and either OpenAI credentials or
 `LETTA_ENVIRONMENT=local` to measure agent memory blocks. Missing dependencies
 or credentials are reported as `not_configured`.
 
+### Memory framework comparison
+
+This comparison is intentionally about memory shape, not marketing claims. The
+latest checked-in evidence is
+`crates/eval/reports/external-comparison-latest.json`.
+
+| System | What its memory is | How it recalls / explains | Current fixture result | What it does not expose in this harness |
+|---|---|---|---|---|
+| **King Synapse** | An associative cognitive-memory network: explicit memories plus latent activation edges, cognitive trace competition, prediction, and post-trace reinforcement. | Runs visible recall, hidden influence activation, dominant/suppressed trace selection, evidence-path extraction, future continuation, and isolated reinforcement. | **Measured.** 8/8 visible seed, 8/8 hidden influence, 8/8 dominant hidden influence, 8/8 suppressed alternatives, 8/8 evidence paths, 8/8 future continuation, 8/8 reinforcement isolation. | This is the reference system for this fixture; broader public benchmarks are still next. |
+| **Graphiti/Zep** | A temporal context graph: episodes, entities, relationships, facts, and hybrid graph/semantic/full-text retrieval. | Can search graph facts and return graph-style evidence over imported fixture triplets. | **Measured locally through Graphiti + Kuzu.** 8/8 visible seed, 8/8 hidden influence, 8/8 evidence paths. | No exposed dominant/suppressed thought competition, predictive continuation, or reinforcement isolation in this adapter. |
+| **Mem0** | A long-term memory layer for LLM apps, oriented around persistent personalization and user/session/organization memory retrieval. | The adapter is wired for `Memory.add` + `Memory.search` through the Mem0 OSS Python SDK. | **Adapter wired, not configured on this machine.** Missing `mem0ai` and OpenAI/custom Mem0 config. | Not yet locally measured here; path evidence, thought competition, prediction, and reinforcement are unsupported unless exposed by the configured SDK. |
+| **Letta** | A stateful-agent platform: memory blocks, persisted messages, tools, reasoning, and agent-editable state. | The adapter is wired to create an agent memory block and read it back through the Letta Python SDK. | **Adapter wired, not configured on this machine.** Missing `letta-client` and Letta endpoint/API configuration. | Memory blocks are always-visible agent context, not a path-bearing cognitive trace graph; dominant/suppressed competition, prediction, and reinforcement are unsupported in this adapter. |
+
+In short: Graphiti is closest to King Synapse on graph evidence, Mem0 is closest
+on product-style long-term memory, and Letta is closest on stateful agent
+operation. King Synapse is different because it treats memory as an inspectable
+competition of influences: what was recalled, what hidden influence won, what
+was suppressed, why that path was chosen, what future continuation follows, and
+how reinforcement is isolated after the report.
+
 ## Build
 
 Requires Rust 1.80+.
