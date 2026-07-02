@@ -103,7 +103,8 @@ adapter automatically uses a local Kuzu graph backend with deterministic
 embeddings and explicit fixture triplet import. The Mem0 adapter uses the Mem0
 OSS Python SDK when `mem0ai` and either OpenAI credentials, `DEEPSEEK_API_KEY`,
 or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. With DeepSeek, it
-generates a DeepSeek + HuggingFace + local Qdrant config automatically. The
+generates a DeepSeek + deterministic local embedder + local Qdrant config
+automatically. The
 Letta adapter uses `letta-client` plus `LETTA_API_KEY`, `LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` to measure agent memory blocks. Missing dependencies
 or credentials are reported as `not_configured`.

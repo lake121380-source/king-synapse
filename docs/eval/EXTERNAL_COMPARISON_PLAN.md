@@ -21,7 +21,8 @@ Implementation status:
   `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, or a custom `MEM0_CONFIG_JSON` /
   `MEM0_CONFIG_PATH`, it is reported as `not_configured`. If
   `DEEPSEEK_API_KEY` is present, the adapter generates a DeepSeek +
-  HuggingFace + local Qdrant config automatically. Letta is wired through its
+  deterministic local embedder + local Qdrant config automatically. Letta is
+  wired through its
   official Python SDK adapter; without `letta-client` plus `LETTA_API_KEY`,
   `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local`, it is reported as
   `not_configured`.
@@ -229,7 +230,8 @@ support; those capabilities are reported as `unsupported`.
 The Mem0 adapter uses the OSS Python SDK's `Memory.add` and `Memory.search`
 paths when configured. It can run with OpenAI defaults, a custom
 `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH`, or `DEEPSEEK_API_KEY` plus an
-automatically generated HuggingFace embedder and local Qdrant vector store. It
+automatically generated deterministic local embedder and local Qdrant vector
+store. It
 uses a fresh `user_id` namespace per chain, measures visible and hidden
 retrieval if Mem0 returns them, and reports path evidence, dominant/suppressed
 trace competition, prediction, and reinforcement as `unsupported` unless Mem0

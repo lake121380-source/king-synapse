@@ -6,14 +6,15 @@ path. The script prints one ExternalSystemRun JSON object to stdout.
 
 This adapter uses the Mem0 OSS Python SDK when it is installed and configured.
 By default Mem0 OSS requires OpenAI credentials. It can also build a local
-DeepSeek + HuggingFace + Qdrant config from DEEPSEEK_API_KEY, or accept a
-custom SDK config through MEM0_CONFIG_JSON or MEM0_CONFIG_PATH. If a real Mem0
-path is not available, the adapter returns not_configured instead of
-fabricating benchmark numbers.
+DeepSeek + deterministic local embedder + Qdrant config from DEEPSEEK_API_KEY,
+or accept a custom SDK config through MEM0_CONFIG_JSON or MEM0_CONFIG_PATH. If
+a real Mem0 path is not available, the adapter returns not_configured instead
+of fabricating benchmark numbers.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import sys
@@ -205,8 +206,7 @@ def missing_configuration() -> list[str]:
 
 def deepseek_mem0_config() -> dict[str, Any]:
     model = os.getenv("MEM0_DEEPSEEK_MODEL", "deepseek-chat")
-    embedder_model = os.getenv("MEM0_HUGGINGFACE_EMBEDDER", "multi-qa-MiniLM-L6-cos-v1")
-    embedding_dims = int(os.getenv("MEM0_HUGGINGFACE_DIMS", "384"))
+    embedding_dims = int(os.getenv("MEM0_DETERMINISTIC_EMBEDDING_DIMS", "384"))
     qdrant_path = os.getenv(
         "MEM0_QDRANT_PATH",
         str(Path(tempfile.gettempdir()) / "king-synapse-mem0-qdrant"),
@@ -226,9 +226,9 @@ def deepseek_mem0_config() -> dict[str, Any]:
             "config": llm_config,
         },
         "embedder": {
-            "provider": "huggingface",
+            "provider": "fastembed",
             "config": {
-                "model": embedder_model,
+                "model": "king-synapse-deterministic",
                 "embedding_dims": embedding_dims,
             },
         },
@@ -270,6 +270,36 @@ def load_mem0_config() -> dict[str, Any] | None:
 def normalized_tokens(text: str) -> set[str]:
     cleaned = "".join(ch.lower() if ch.isalnum() else " " for ch in text)
     return {token for token in cleaned.split() if token}
+
+
+class DeterministicEmbedding:
+    def __init__(self, config: Any) -> None:
+        self.config = config
+        self.config.embedding_dims = self.config.embedding_dims or 384
+
+    def embed(self, text: str, memory_action: str | None = None) -> list[float]:
+        tokens = normalized_tokens(text)
+        dims = int(self.config.embedding_dims)
+        vector = [0.0] * dims
+        for token in tokens:
+            digest = hashlib.sha256(token.encode("utf-8")).digest()
+            index = int.from_bytes(digest[:4], "big") % dims
+            vector[index] += 1.0
+        norm = sum(value * value for value in vector) ** 0.5
+        if norm == 0.0:
+            return vector
+        return [value / norm for value in vector]
+
+    def embed_batch(
+        self, texts: list[str], memory_action: str = "add"
+    ) -> list[list[float]]:
+        return [self.embed(text, memory_action) for text in texts]
+
+
+def register_deterministic_embedder() -> None:
+    from mem0.utils.factory import EmbedderFactory
+
+    EmbedderFactory.provider_to_class["fastembed"] = "__main__.DeterministicEmbedding"
 
 
 def contains_expected(hits: list[dict[str, Any]], expected_text: str) -> bool:
@@ -380,6 +410,8 @@ def run_real_mem0(input_data: dict[str, Any]) -> dict[str, Any]:
     from mem0 import Memory
 
     config = load_mem0_config()
+    if config is not None and has_deepseek_config() and not has_custom_config():
+        register_deterministic_embedder()
     memory = Memory.from_config(config) if config is not None else Memory()
     run_id = os.getenv("MEM0_EVAL_USER_PREFIX") or f"king-synapse-eval-{uuid.uuid4().hex}"
     unsupported_note = (
@@ -449,7 +481,7 @@ def run_real_mem0(input_data: dict[str, Any]) -> dict[str, Any]:
         elif has_deepseek_config():
             notes.append(
                 "Mem0 configuration was generated from DEEPSEEK_API_KEY with "
-                "a HuggingFace embedder and local Qdrant vector store."
+                "a deterministic local embedder and local Qdrant vector store."
             )
     else:
         notes.append("Mem0 ran with its default OSS configuration.")
