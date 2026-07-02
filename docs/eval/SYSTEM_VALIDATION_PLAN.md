@@ -164,9 +164,11 @@ task. The validation win condition is narrower and more important:
 
 ## Current Open Items
 
+- Stage 1 internal baseline: passed in `docs/eval/VALIDATION_RUN_2026-07-02.md`.
+- Stage 2 repeatability check: stable for five King Synapse runs in
+  `docs/eval/VALIDATION_RUN_2026-07-02.md`.
 - Letta measured run: not started.
 - LongMemEval fetch/cache path: not started.
 - DMR fetch/cache path: not started.
 - External-run manifest for package versions and model names: not started.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
-
