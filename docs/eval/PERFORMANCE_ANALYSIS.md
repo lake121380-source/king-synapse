@@ -2,7 +2,8 @@
 
 Date: 2026-07-02
 
-Status: Phase 6 performance pass with sub-stage and process metrics probe.
+Status: Phase 6 performance pass with sub-stage, process metrics, and GPU
+memory probe.
 
 Machine-readable profile:
 
@@ -15,19 +16,19 @@ based on checked-in validation reports.
 
 No LongMemEval / DMR heavy rerun was started for this pass. The analysis uses
 the existing CUDA 50-sample reports, lightweight replay baselines, and one
-small CUDA sub-stage / process metrics probe.
+small CUDA sub-stage / process / GPU-memory probe.
 
 ## Measurement Coverage
 
 | Item | Current status |
 | --- | --- |
 | Latency | Measured end-to-end per query and per run. |
-| Memory | Instrumented in the 50-sample LongMemEval / DMR reports and in `phase6-substage-timing-probe.json`. |
+| Memory | Process memory is instrumented in the 50-sample LongMemEval / DMR reports; process and GPU memory are instrumented in `phase6-substage-timing-probe.json`. |
 | CPU | Instrumented in the 50-sample LongMemEval / DMR reports and in `phase6-substage-timing-probe.json`. |
 | Embedding time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
 | Vector search time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
 | Reranker time | Instrumented in the 50-sample reports and summarized in `phase6-substage-timing-probe.json`. |
-| GPU path | CUDA validated for LongMemEval / DMR vector and reranker runs. |
+| GPU path | CUDA validated for LongMemEval / DMR vector and reranker runs; GPU memory sampled in the small DMR CUDA probe. |
 
 ## Lightweight Replay Latency
 
@@ -99,26 +100,26 @@ Setup timing:
 
 | Stage | Time |
 | --- | ---: |
-| Dataset load | 11.3 ms |
-| Store write | 176.3 ms |
-| Embedder load | 6425.4 ms |
-| Corpus embedding | 1584.6 ms |
-| Embedding write | 8.8 ms |
-| Reranker load | 6013.0 ms |
+| Dataset load | 11.4 ms |
+| Store write | 173.3 ms |
+| Embedder load | 6305.9 ms |
+| Corpus embedding | 1574.1 ms |
+| Embedding write | 8.6 ms |
+| Reranker load | 5956.8 ms |
 
 Mean query sub-stage timing:
 
 | Stage | Mean per query |
 | --- | ---: |
-| Total recall | 308.0 ms |
-| FTS | 4.6 ms |
+| Total recall | 308.4 ms |
+| FTS | 4.5 ms |
 | Entity | 1.0 ms |
 | Query embedding | 13.0 ms |
 | Vector search | 2.2 ms |
 | Memory hydration | 0.1 ms |
 | RRF fusion | 0.4 ms |
 | Hit build | 0.1 ms |
-| Reranker inference | 280.8 ms |
+| Reranker inference | 281.4 ms |
 | Final scoring | 0.0 ms |
 | Record access | 5.7 ms |
 
@@ -131,17 +132,23 @@ Process metrics from the same probe:
 | Metric | Value |
 | --- | ---: |
 | Sample interval | 100 ms |
-| Samples | 156 |
+| Samples | 87 |
 | Max process count | 3 |
-| Peak working set | 2495.7 MiB |
-| Peak private bytes | 6173.5 MiB |
-| CPU time | 20.8 s |
-| Process wall time | 17.9 s |
+| Peak working set | 1965.7 MiB |
+| Peak private bytes | 6189.4 MiB |
+| CPU time | 18.6 s |
+| Process wall time | 17.6 s |
+| GPU sample interval | 5000 ms |
+| GPU samples | 4 |
+| Peak GPU dedicated | 4345.5 MiB |
+| Peak GPU shared | 66.0 MiB |
+| Peak GPU total | 4411.5 MiB |
 
 Read: process metrics now exist for the small CUDA probe. They include the
 `cargo run` wrapper plus the `kr-eval` process tree, so they should be treated
 as run-level validation evidence rather than isolated engine-only memory
-usage.
+usage. GPU memory is sampled through Windows `GPU Process Memory` counters and
+filtered to the monitored process tree.
 
 ## External Adapter Latency
 
@@ -163,10 +170,12 @@ raw latency.
 
 The next useful instrumentation is:
 
-1. GPU memory accounting if the execution provider exposes it;
-2. repeat 50-sample process metrics after retrieval or model-configuration
-   changes.
+1. repeat 50-sample process and GPU memory metrics after retrieval or
+   model-configuration changes;
+2. add provider-specific long-run telemetry if GPU memory becomes a product
+   constraint beyond Windows process counters.
 
 Memory, CPU, embedding, vector search, FTS/entity/RRF, and reranker inference
-now have direct validation evidence. GPU memory is still not independently
-measured.
+now have direct validation evidence. GPU memory accounting is verified on the
+small CUDA DMR probe; the 50-sample reports have not been rerun only to add
+GPU counters.

@@ -1,16 +1,16 @@
 {
-  "schema_version": "king-synapse.phase6-performance-profile.v4",
-  "generated_at": "2026-07-02T22:00:59.214563+08:00",
-  "validated_commit": "3441832+50-process-metrics-working-tree",
-  "purpose": "Phase 6 performance analysis. Records 50-sample timing, process-level CPU / memory evidence, and sub-stage instrumentation.",
+  "schema_version": "king-synapse.phase6-performance-profile.v5",
+  "generated_at": "2026-07-02T22:16:48.278400+08:00",
+  "validated_commit": "8a0eeda+gpu-memory-working-tree",
+  "purpose": "Phase 6 performance analysis. Records 50-sample timing, process-level CPU / memory evidence, sub-stage instrumentation, and GPU memory probe evidence.",
   "measurement_coverage": {
     "latency": "measured end-to-end per query and per run",
-    "memory": "instrumented in LongMemEval / DMR 50-sample reports and phase6-substage-timing-probe process_metrics",
+    "memory": "instrumented in LongMemEval / DMR 50-sample process_metrics and phase6-substage-timing-probe CPU/GPU process metrics",
     "cpu": "instrumented in LongMemEval / DMR 50-sample reports and phase6-substage-timing-probe process_metrics",
     "embedding_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
     "vector_search_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
     "reranker_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
-    "gpu": "CUDA path validated for LongMemEval / DMR vector and reranker runs"
+    "gpu": "CUDA path validated and GPU Process Memory counter sampled for the small DMR CUDA sub-stage probe"
   },
   "lightweight_recall": [
     {
@@ -221,7 +221,7 @@
   "substage_timing_probe": {
     "id": "phase6-substage-timing-probe",
     "report": "crates/eval/reports/phase6-substage-timing-probe.json",
-    "report_sha256": "D2C1EF76B53151DA115476E3634B8E545D613F1F0211C120C7A5457B03B39AF7",
+    "report_sha256": "B763C45F44438CF5F1991D9BE99A44D77D3D81ABF02D8ED301CACE5735627C3A",
     "dataset": "DMR candidate MSC-Self-Instruct",
     "answer_match_policy": "punctuation",
     "queries": 5,
@@ -230,44 +230,44 @@
     "accelerator": "cuda",
     "recall_at_10": 0.6666666666666666,
     "mrr_at_10": 0.7,
-    "p50_latency_ms": 293.23339999999996,
-    "p95_latency_ms": 368.7369,
-    "total_ms": 1540.7423000000001,
+    "p50_latency_ms": 297.7422,
+    "p95_latency_ms": 360.0088,
+    "total_ms": 1542.3864,
     "setup_timing_ms": {
-      "dataset_load": 11.2897,
-      "store_write": 176.281,
-      "embedder_load": 6425.3687,
-      "corpus_embedding": 1584.6122,
-      "embedding_write": 8.7843,
-      "reranker_load": 6013.0142
+      "dataset_load": 11.4117,
+      "store_write": 173.2967,
+      "embedder_load": 6305.938,
+      "corpus_embedding": 1574.1287000000002,
+      "embedding_write": 8.5712,
+      "reranker_load": 5956.7582999999995
     },
     "mean_query_substage_ms": {
-      "total": 308.04358,
-      "fts": 4.61478,
-      "entity": 0.967,
-      "query_embedding": 12.97894,
-      "vector_search": 2.23346,
-      "memory_hydration": 0.11448,
-      "rrf_fusion": 0.39008,
-      "hit_build": 0.14016,
-      "reranker_inference": 280.78797999999995,
+      "total": 308.37357999999995,
+      "fts": 4.51422,
+      "entity": 0.9394,
+      "query_embedding": 13.044900000000002,
+      "vector_search": 2.1210999999999998,
+      "memory_hydration": 0.10456000000000001,
+      "rrf_fusion": 0.36712,
+      "hit_build": 0.14116,
+      "reranker_inference": 281.38302000000004,
       "booster": 0.0,
-      "final_score": 0.021859999999999997,
-      "record_access": 5.73844
+      "final_score": 0.022019999999999998,
+      "record_access": 5.6825399999999995
     },
     "total_query_substage_ms": {
-      "total": 1540.2179,
-      "fts": 23.0739,
-      "entity": 4.835,
-      "query_embedding": 64.8947,
-      "vector_search": 11.167300000000001,
-      "memory_hydration": 0.5724,
-      "rrf_fusion": 1.9504,
-      "hit_build": 0.7008000000000001,
-      "reranker_inference": 1403.9398999999999,
+      "total": 1541.8678999999997,
+      "fts": 22.571099999999998,
+      "entity": 4.697,
+      "query_embedding": 65.2245,
+      "vector_search": 10.6055,
+      "memory_hydration": 0.5228,
+      "rrf_fusion": 1.8356,
+      "hit_build": 0.7058,
+      "reranker_inference": 1406.9151000000002,
       "booster": 0.0,
-      "final_score": 0.1093,
-      "record_access": 28.6922
+      "final_score": 0.11009999999999999,
+      "record_access": 28.412699999999997
     },
     "candidate_counts_total": {
       "fts": 125,
@@ -283,15 +283,28 @@
       "unavailable_reason": null,
       "platform": "nt",
       "sample_interval_ms": 100.0,
-      "sample_count": 156,
-      "elapsed_wall_ms": 17866.728900000453,
+      "sample_count": 87,
+      "elapsed_wall_ms": 17589.07199999885,
       "max_process_count": 3,
-      "peak_working_set_bytes": 2616979456,
-      "peak_private_bytes": 6473363456,
-      "cpu_seconds": 20.8125,
+      "peak_working_set_bytes": 2061189120,
+      "peak_private_bytes": 6490054656,
+      "cpu_seconds": 18.5625,
       "process_tree_includes_cargo_wrapper": true,
-      "peak_working_set_mib": 2495.74609375,
-      "peak_private_mib": 6173.48046875
+      "peak_working_set_mib": 1965.703125,
+      "peak_private_mib": 6189.3984375,
+      "gpu_memory": {
+        "available": true,
+        "unavailable_reason": null,
+        "provider": "windows_performance_counter_gpu_process_memory",
+        "sample_interval_ms": 5000.0,
+        "sample_count": 4,
+        "peak_dedicated_bytes": 4556570624,
+        "peak_shared_bytes": 69206016,
+        "peak_total_bytes": 4625776640,
+        "peak_dedicated_mib": 4345.484375,
+        "peak_shared_mib": 66.0,
+        "peak_total_mib": 4411.484375
+      }
     }
   },
   "gpu_configuration": {
@@ -304,8 +317,8 @@
     "rerank_pool": 50
   },
   "next_instrumentation": [
-    "Add GPU memory accounting if the execution provider exposes it.",
-    "Repeat 50-sample process metrics after retrieval or model-configuration changes."
+    "Repeat 50-sample process and GPU memory metrics after retrieval or model-configuration changes.",
+    "If GPU memory becomes a product constraint, add provider-specific long-run telemetry beyond Windows process counters."
   ],
   "long_memory_process_metrics": [
     {

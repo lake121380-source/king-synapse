@@ -842,6 +842,7 @@ def sample_process_tree(root_pid: int) -> dict[str, Any] | None:
         else None
     )
     return {
+        "pids": [pid for pid, _ in snapshots],
         "process_count": len(snapshots),
         "working_set_bytes": working_set,
         "private_bytes": private_bytes,
@@ -853,8 +854,124 @@ def sample_process_tree(root_pid: int) -> dict[str, Any] | None:
     }
 
 
+def gpu_process_memory_snapshot(pids: list[int]) -> dict[str, Any]:
+    if os.name != "nt":
+        return {
+            "available": False,
+            "unavailable_reason": "GPU process memory counters are currently implemented for Windows only",
+        }
+    powershell = shutil.which("powershell") or shutil.which("powershell.exe")
+    if powershell is None:
+        fallback = (
+            Path(os.environ.get("SystemRoot", r"C:\Windows"))
+            / "System32"
+            / "WindowsPowerShell"
+            / "v1.0"
+            / "powershell.exe"
+        )
+        if fallback.exists():
+            powershell = str(fallback)
+    if powershell is None:
+        return {
+            "available": False,
+            "unavailable_reason": "powershell.exe was not found for GPU process memory counter sampling",
+        }
+    unique_pids = sorted({int(pid) for pid in pids if int(pid) > 0})
+    if not unique_pids:
+        return {"available": False, "unavailable_reason": "no process ids to sample"}
+
+    unique_pid_set = set(unique_pids)
+    counters = [
+        r"\GPU Process Memory(*)\Dedicated Usage",
+        r"\GPU Process Memory(*)\Shared Usage",
+    ]
+    ps_paths = "@(" + ",".join(powershell_single_quote(counter) for counter in counters) + ")"
+    script = (
+        "$ErrorActionPreference = 'SilentlyContinue'; "
+        f"$paths = {ps_paths}; "
+        "$samples = (Get-Counter -Counter $paths -ErrorAction SilentlyContinue).CounterSamples | "
+        "Select-Object Path,CookedValue; "
+        "$samples | ConvertTo-Json -Compress"
+    )
+    result = subprocess.run(
+        [powershell, "-NoProfile", "-Command", script],
+        text=True,
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if result.returncode != 0:
+        return {
+            "available": False,
+            "unavailable_reason": "GPU Process Memory counter query failed",
+            "stderr": result.stderr.strip()[:500],
+        }
+
+    output = result.stdout.strip()
+    if not output:
+        return {
+            "available": False,
+            "unavailable_reason": "GPU Process Memory counters returned no samples",
+        }
+    try:
+        parsed = json.loads(output)
+    except json.JSONDecodeError:
+        return {
+            "available": False,
+            "unavailable_reason": "GPU Process Memory counters returned non-JSON output",
+            "stdout": output[:500],
+        }
+    samples = parsed if isinstance(parsed, list) else [parsed]
+    dedicated_bytes = 0
+    shared_bytes = 0
+    matched_pids: set[int] = set()
+    matched_sample_count = 0
+    for sample in samples:
+        if not isinstance(sample, dict):
+            continue
+        path = str(sample.get("Path") or "").lower()
+        value = int(float(sample.get("CookedValue") or 0))
+        pid_match = re.search(r"pid_(\d+)", path)
+        if not pid_match:
+            continue
+        pid = int(pid_match.group(1))
+        if pid not in unique_pid_set:
+            continue
+        matched_pids.add(pid)
+        matched_sample_count += 1
+        if "dedicated usage" in path:
+            dedicated_bytes += value
+        elif "shared usage" in path:
+            shared_bytes += value
+
+    if not matched_pids:
+        return {
+            "available": False,
+            "unavailable_reason": "GPU Process Memory counters had no samples for monitored process ids",
+            "sampled_pids": unique_pids,
+            "raw_sample_count": len(samples),
+        }
+
+    return {
+        "available": True,
+        "provider": "windows_performance_counter_gpu_process_memory",
+        "sampled_pids": unique_pids,
+        "matched_pids": sorted(matched_pids),
+        "raw_sample_count": len(samples),
+        "sample_count": matched_sample_count,
+        "dedicated_bytes": dedicated_bytes,
+        "shared_bytes": shared_bytes,
+        "total_bytes": dedicated_bytes + shared_bytes,
+    }
+
+
+def powershell_single_quote(value: str) -> str:
+    return "'" + value.replace("'", "''") + "'"
+
+
 def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.CompletedProcess, dict[str, Any]]:
     sample_interval_s = 0.1
+    gpu_sample_interval_s = 5.0
     started = time.perf_counter()
     proc = subprocess.Popen(
         cmd,
@@ -873,10 +990,19 @@ def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.Compl
     last_cpu_by_pid: dict[str, float] = {}
     available = True
     unavailable_reason = None
+    next_gpu_sample_at = started
+    gpu_sample_count = 0
+    gpu_available = os.name == "nt"
+    gpu_unavailable_reason = None if gpu_available else "GPU memory sampling is implemented for Windows only"
+    peak_gpu_dedicated_bytes: int | None = None
+    peak_gpu_shared_bytes: int | None = None
+    peak_gpu_total_bytes: int | None = None
+    gpu_provider = None
 
     stdout = ""
     stderr = ""
     while True:
+        now = time.perf_counter()
         sample = sample_process_tree(proc.pid)
         if sample is None:
             if sample_count == 0:
@@ -895,6 +1021,22 @@ def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.Compl
                 value = float(cpu_seconds)
                 first_cpu_by_pid.setdefault(pid, value)
                 last_cpu_by_pid[pid] = value
+            if now >= next_gpu_sample_at:
+                gpu_sample = gpu_process_memory_snapshot(sample["pids"])
+                gpu_sample_count += 1
+                if gpu_sample.get("available"):
+                    gpu_provider = gpu_sample.get("provider")
+                    gpu_available = True
+                    gpu_unavailable_reason = None
+                    dedicated_bytes = int(gpu_sample.get("dedicated_bytes") or 0)
+                    shared_bytes = int(gpu_sample.get("shared_bytes") or 0)
+                    total_bytes = int(gpu_sample.get("total_bytes") or 0)
+                    peak_gpu_dedicated_bytes = max(peak_gpu_dedicated_bytes or 0, dedicated_bytes)
+                    peak_gpu_shared_bytes = max(peak_gpu_shared_bytes or 0, shared_bytes)
+                    peak_gpu_total_bytes = max(peak_gpu_total_bytes or 0, total_bytes)
+                else:
+                    gpu_unavailable_reason = gpu_sample.get("unavailable_reason")
+                next_gpu_sample_at = now + gpu_sample_interval_s
         try:
             stdout, stderr = proc.communicate(timeout=sample_interval_s)
             break
@@ -906,6 +1048,8 @@ def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.Compl
         for pid in last_cpu_by_pid
     )
     elapsed_ms = (time.perf_counter() - started) * 1000.0
+    if gpu_available and peak_gpu_total_bytes is None and gpu_unavailable_reason is None:
+        gpu_unavailable_reason = "process ended before GPU memory sample"
     process_metrics = {
         "available": available,
         "unavailable_reason": unavailable_reason,
@@ -918,6 +1062,16 @@ def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.Compl
         "peak_private_bytes": peak_private_bytes if available else None,
         "cpu_seconds": cpu_seconds if available else None,
         "process_tree_includes_cargo_wrapper": True,
+        "gpu_memory": {
+            "available": gpu_available and peak_gpu_total_bytes is not None,
+            "unavailable_reason": gpu_unavailable_reason,
+            "provider": gpu_provider,
+            "sample_interval_ms": gpu_sample_interval_s * 1000.0,
+            "sample_count": gpu_sample_count,
+            "peak_dedicated_bytes": peak_gpu_dedicated_bytes,
+            "peak_shared_bytes": peak_gpu_shared_bytes,
+            "peak_total_bytes": peak_gpu_total_bytes,
+        },
     }
     result = subprocess.CompletedProcess(
         args=cmd,

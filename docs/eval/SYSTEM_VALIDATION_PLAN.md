@@ -165,9 +165,10 @@ The current performance pass is recorded in:
 
 It records end-to-end latency and branch deltas from existing reports. A later
 small CUDA probe added direct embedding, vector-search, FTS/entity/RRF,
-reranker, process memory, and process CPU metrics. The 50-sample LongMemEval /
-DMR reports now include process-level memory and CPU metrics; GPU memory
-accounting remains open.
+reranker, process memory, process CPU, and GPU memory metrics. The 50-sample
+LongMemEval / DMR reports now include process-level memory and CPU metrics;
+GPU memory accounting is verified on the small CUDA DMR probe and should be
+repeated on 50-sample runs only after retrieval or model-configuration changes.
 
 ## Failure Modes To Watch
 
@@ -228,7 +229,8 @@ task. The validation win condition is narrower and more important:
   `docs/eval/PERFORMANCE_ANALYSIS.md`; sub-stage timing and process metrics
   probe added at `crates/eval/reports/phase6-substage-timing-probe.json`;
   process memory and CPU instrumentation has been promoted to the 50-sample
-  LongMemEval / DMR reports.
+  LongMemEval / DMR reports, and GPU memory accounting is verified on the
+  small CUDA DMR probe.
 - DMR mapping audit: added at `docs/eval/DMR_MAPPING_AUDIT.md`; the 278
   pre-eval skipped rows are now localized to strict answer-string mapping, not
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at

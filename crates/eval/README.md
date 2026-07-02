@@ -125,8 +125,9 @@ The current Phase 6 performance profile is fixed in:
 - `reports/phase6-performance-profile.json`
 - `reports/phase6-substage-timing-probe.json`
 
-The sub-stage probe also records process-tree CPU and memory metrics around the
-`cargo run` / `kr-eval` validation command.
+The sub-stage probe also records process-tree CPU, process memory, and Windows
+GPU Process Memory counter samples around the `cargo run` / `kr-eval`
+validation command.
 
 Readable summary: `docs/eval/PERFORMANCE_ANALYSIS.md`.
 

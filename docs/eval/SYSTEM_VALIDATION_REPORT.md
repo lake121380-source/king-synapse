@@ -193,19 +193,21 @@ Performance analysis status:
   + reranker. Peak private bytes were `8880.6 MiB` and `7236.5 MiB`
   respectively.
 - `crates/eval/reports/phase6-substage-timing-probe.json` adds a small CUDA
-  sub-stage and process metrics probe. Mean query time was `308.0 ms`;
-  reranker inference accounted for `280.8 ms`, query embedding for `13.0 ms`,
+  sub-stage, process metrics, and GPU memory probe. Mean query time was
+  `308.4 ms`; reranker inference accounted for `281.4 ms`, query embedding for
+  `13.0 ms`,
   and vector search for `2.2 ms`.
-- GPU memory is not independently instrumented yet.
+- The same probe sampled Windows `GPU Process Memory` counters for the
+  monitored process tree. Peak GPU dedicated memory was `4345.5 MiB`; peak GPU
+  total memory was `4411.5 MiB`.
 
 The project has not yet crossed the bar for:
 
 1. official DMR answer-generation benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. GPU memory accounting;
-5. final DMR scoring-policy adoption beyond candidate punctuation matching;
-6. production-readiness claims.
+4. final DMR scoring-policy adoption beyond candidate punctuation matching;
+5. production-readiness claims.
 
 GPU validation status:
 
@@ -217,6 +219,10 @@ GPU validation status:
 - The 50-sample LongMemEval and DMR validation runs completed on CUDA with
   embedding batch `32`, embedding max length `256`, reranker batch `32`, and
   reranker max length `256`.
+- The LongMemEval / DMR runner now records `gpu_memory` in `process_metrics`
+  when Windows GPU process counters expose samples for the monitored process
+  tree. The small DMR CUDA probe confirmed the field with a `4411.5 MiB` peak
+  total GPU memory sample.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen and investigate the remaining
