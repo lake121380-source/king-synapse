@@ -180,3 +180,47 @@ The manifest records:
 - credential names required by each mode.
 
 It does not record API key values.
+
+## Stage 5 Letta Local Endpoint Attempt
+
+Command shape:
+
+```bash
+LETTA_ENVIRONMENT=local \
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --systems letta \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
+  --json <temp>/king-synapse-letta-local-validation.json
+```
+
+Environment notes:
+
+- `letta-client` was installed successfully at version `1.12.1`.
+- No `LETTA_API_KEY`, `LETTA_BASE_URL`, or `OPENAI_API_KEY` was available in
+  the shell.
+- `LETTA_ENVIRONMENT=local` was used to test a local Letta endpoint without
+  writing credentials to files.
+
+Result:
+
+| System | Status | Visible | Hidden | Dominant | Evidence | Future | Reinforcement |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Letta | failed | 0/8 failed | 0/8 failed | 0/8 failed | 0/8 failed | 0/8 failed | 0/8 failed |
+
+Failure reason:
+
+```text
+Letta adapter failed: Connection error.
+```
+
+The Letta-only external comparison report was saved at:
+
+`crates/eval/reports/letta-external-comparison.json`
+
+Stage 5 conclusion: the Letta SDK dependency is no longer missing, but no
+local or hosted Letta endpoint was reachable in this environment. Letta is
+therefore still not measured. The next Letta validation step requires either a
+running local Letta server or a disposable hosted Letta project.
+
+The temporary adapter input file was not committed.

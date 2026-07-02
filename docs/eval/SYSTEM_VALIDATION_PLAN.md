@@ -170,7 +170,9 @@ task. The validation win condition is narrower and more important:
 - Stage 3 external comparison rerun: passed in `docs/eval/VALIDATION_RUN_2026-07-02.md`.
 - Stage 4 external-run manifest: initial manifest added at
   `crates/eval/reports/external-comparison-manifest.json`.
-- Letta measured run: not started.
+- Letta measured run: attempted with `letta-client 1.12.1` and
+  `LETTA_ENVIRONMENT=local`; still not measured because no local Letta endpoint
+  was reachable.
 - LongMemEval fetch/cache path: not started.
 - DMR fetch/cache path: not started.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
