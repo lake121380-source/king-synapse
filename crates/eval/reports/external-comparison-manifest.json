@@ -1,0 +1,63 @@
+{
+  "schema_version": "king-synapse.external-comparison-manifest.v1",
+  "generated_at": "2026-07-02T05:15:04.436445100+00:00",
+  "validated_commit": "01490f1745b2191bf9a0945492c7753e8e49785b",
+  "branch": "main",
+  "report": "crates/eval/reports/external-comparison-latest.json",
+  "environment": {
+    "os": "Microsoft Windows NT 10.0.19045.0",
+    "powershell": "5.1.19041.6456",
+    "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+    "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+    "python": "Python 3.13.12"
+  },
+  "packages": {
+    "graphiti-core": "0.29.2",
+    "kuzu": "0.11.3",
+    "mem0ai": "2.0.11",
+    "qdrant-client": "1.18.0",
+    "letta-client": "missing"
+  },
+  "systems": [
+    {
+      "system": "King Synapse",
+      "status": "measured",
+      "mode": "local in-memory Store with exported cognitive session fixture",
+      "credentials": []
+    },
+    {
+      "system": "Graphiti/Zep",
+      "status": "measured",
+      "mode": "local Kuzu graph driver with deterministic local embeddings and explicit fixture triplets",
+      "credentials": [],
+      "hosted_mode_credentials_not_used": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ]
+    },
+    {
+      "system": "Mem0",
+      "status": "measured",
+      "mode": "Mem0 OSS SDK with DeepSeek, deterministic local embedder, and local Qdrant",
+      "llm_model": "deepseek-v4-flash",
+      "embedder": "king-synapse-deterministic",
+      "vector_store": "local qdrant",
+      "credentials": [
+        "DEEPSEEK_API_KEY"
+      ],
+      "secrets_recorded": false
+    },
+    {
+      "system": "Letta",
+      "status": "not_configured",
+      "mode": "official Python SDK adapter",
+      "missing": [
+        "letta-client",
+        "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+      ],
+      "credentials": []
+    }
+  ]
+}

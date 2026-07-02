@@ -124,3 +124,59 @@ No drift was observed in:
 The `reinforcement_isolated` metric stayed at 8/8 in every run, so this
 repeatability check did not observe reinforcement leaking backward into the
 current report.
+
+## Stage 3 External Comparison Rerun
+
+Command shape:
+
+```bash
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --graphiti-command python \
+  --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --mem0-command python \
+  --mem0-arg scripts/eval/mem0_adapter.py \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
+  --json crates/eval/reports/external-comparison-latest.json
+```
+
+Environment notes:
+
+- Graphiti/Zep used local Kuzu deterministic mode.
+- Mem0 used the OSS SDK with DeepSeek model `deepseek-v4-flash`, deterministic
+  local embedder, and a temporary local Qdrant directory.
+- Letta remained `not_configured` because `letta-client` and a Letta endpoint
+  were not available.
+- A stale invalid DeepSeek key was present in the shell on the first attempt;
+  the successful rerun used a temporary hidden input override. No key was
+  written to files.
+
+Final rerun result:
+
+| System | Status | Visible | Hidden | Dominant | Evidence | Future | Reinforcement |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| King Synapse | measured | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 |
+| Graphiti/Zep | measured | 8/8 | 8/8 | 0/8 unsupported | 8/8 | 0/8 unsupported | 0/8 unsupported |
+| Mem0 | measured | 8/8 | 8/8 | 0/8 unsupported | 0/8 unsupported | 0/8 unsupported | 0/8 unsupported |
+| Letta | not_configured | 0/8 | 0/8 | 0/8 | 0/8 | 0/8 | 0/8 |
+
+The latest checked-in external comparison report was updated:
+
+`crates/eval/reports/external-comparison-latest.json`
+
+## Stage 4 External-Run Manifest
+
+An initial manifest was added:
+
+`crates/eval/reports/external-comparison-manifest.json`
+
+The manifest records:
+
+- commit;
+- OS and tool versions;
+- Python package versions;
+- adapter modes;
+- model names;
+- credential names required by each mode.
+
+It does not record API key values.
