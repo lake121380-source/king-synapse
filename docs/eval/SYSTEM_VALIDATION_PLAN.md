@@ -163,11 +163,10 @@ The current performance pass is recorded in:
 - `docs/eval/PERFORMANCE_ANALYSIS.md`
 - `crates/eval/reports/phase6-performance-profile.json`
 
-It records end-to-end latency and branch deltas from existing reports. Memory,
-CPU, embedding sub-stage, vector-search sub-stage, and reranker sub-stage
-timings were initially marked as not instrumented. A later small CUDA probe
-added direct embedding, vector-search, FTS/entity/RRF, and reranker timings;
-process-level memory and CPU remain open.
+It records end-to-end latency and branch deltas from existing reports. A later
+small CUDA probe added direct embedding, vector-search, FTS/entity/RRF,
+reranker, process memory, and process CPU metrics. The 50-sample LongMemEval /
+DMR reports still do not include process-level memory or CPU metrics.
 
 ## Failure Modes To Watch
 
@@ -225,9 +224,10 @@ task. The validation win condition is narrower and more important:
   `expanded-cognitive-replay` benchmark now covers 20 cognitive trace replays
   and 20 prediction replays.
 - Performance analysis: first pass added at
-  `docs/eval/PERFORMANCE_ANALYSIS.md`; sub-stage timing probe added at
-  `crates/eval/reports/phase6-substage-timing-probe.json`; process memory and
-  CPU instrumentation remains a follow-up.
+  `docs/eval/PERFORMANCE_ANALYSIS.md`; sub-stage timing and process metrics
+  probe added at `crates/eval/reports/phase6-substage-timing-probe.json`;
+  process memory and CPU instrumentation still needs promotion to the
+  50-sample runs.
 - DMR mapping audit: added at `docs/eval/DMR_MAPPING_AUDIT.md`; the 278
   pre-eval skipped rows are now localized to strict answer-string mapping, not
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at

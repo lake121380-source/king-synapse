@@ -189,17 +189,21 @@ Performance analysis status:
   than reranking. Reranking adds about `698 ms` P50 on LongMemEval and about
   `541 ms` P50 on DMR over vector mode.
 - `crates/eval/reports/phase6-substage-timing-probe.json` adds a small CUDA
-  sub-stage timing probe. Mean query time was `307.5 ms`; reranker inference
-  accounted for `280.5 ms`, query embedding for `13.0 ms`, and vector search
-  for `2.1 ms`.
-- Memory and CPU process-level metrics are not independently instrumented yet.
+  sub-stage and process metrics probe. Mean query time was `308.0 ms`;
+  reranker inference accounted for `280.8 ms`, query embedding for `13.0 ms`,
+  and vector search for `2.2 ms`.
+- The same small probe recorded process-level metrics around the `cargo run`
+  / `kr-eval` process tree: peak working set `2495.7 MiB`, peak private bytes
+  `6173.5 MiB`, and CPU time `20.8 s`.
+- The 50-sample LongMemEval / DMR reports still do not include process-level
+  memory or CPU metrics.
 
 The project has not yet crossed the bar for:
 
 1. official DMR answer-generation benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. process-level memory / CPU instrumentation;
+4. process-level memory / CPU instrumentation on the 50-sample runs;
 5. final DMR scoring-policy adoption beyond candidate punctuation matching;
 6. production-readiness claims.
 

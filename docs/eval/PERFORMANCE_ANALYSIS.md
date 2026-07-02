@@ -2,7 +2,7 @@
 
 Date: 2026-07-02
 
-Status: Phase 6 performance pass with sub-stage timing probe.
+Status: Phase 6 performance pass with sub-stage and process metrics probe.
 
 Machine-readable profile:
 
@@ -15,15 +15,15 @@ based on checked-in validation reports.
 
 No LongMemEval / DMR heavy rerun was started for this pass. The analysis uses
 the existing CUDA 50-sample reports, lightweight replay baselines, and one
-small CUDA sub-stage timing probe.
+small CUDA sub-stage / process metrics probe.
 
 ## Measurement Coverage
 
 | Item | Current status |
 | --- | --- |
 | Latency | Measured end-to-end per query and per run. |
-| Memory | Not instrumented yet. |
-| CPU | Not instrumented yet. |
+| Memory | Instrumented in `phase6-substage-timing-probe.json` process metrics; older 50-sample reports do not include it. |
+| CPU | Instrumented in `phase6-substage-timing-probe.json` process metrics; older 50-sample reports do not include it. |
 | Embedding time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
 | Vector search time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
 | Reranker time | Instrumented in `phase6-substage-timing-probe.json`; older 50-sample reports only have branch deltas. |
@@ -83,32 +83,49 @@ Setup timing:
 
 | Stage | Time |
 | --- | ---: |
-| Dataset load | 11.6 ms |
-| Store write | 173.0 ms |
-| Embedder load | 6317.8 ms |
-| Corpus embedding | 1598.5 ms |
-| Embedding write | 8.9 ms |
-| Reranker load | 5964.0 ms |
+| Dataset load | 11.3 ms |
+| Store write | 176.3 ms |
+| Embedder load | 6425.4 ms |
+| Corpus embedding | 1584.6 ms |
+| Embedding write | 8.8 ms |
+| Reranker load | 6013.0 ms |
 
 Mean query sub-stage timing:
 
 | Stage | Mean per query |
 | --- | ---: |
-| Total recall | 307.5 ms |
+| Total recall | 308.0 ms |
 | FTS | 4.6 ms |
-| Entity | 0.9 ms |
+| Entity | 1.0 ms |
 | Query embedding | 13.0 ms |
-| Vector search | 2.1 ms |
+| Vector search | 2.2 ms |
 | Memory hydration | 0.1 ms |
 | RRF fusion | 0.4 ms |
 | Hit build | 0.1 ms |
-| Reranker inference | 280.5 ms |
+| Reranker inference | 280.8 ms |
 | Final scoring | 0.0 ms |
 | Record access | 5.7 ms |
 
 Read: on this CUDA probe, reranker inference dominates query-time cost.
 Query embedding and vector search are visible but much smaller. The original
 branch-delta conclusion is therefore supported by direct sub-stage timing.
+
+Process metrics from the same probe:
+
+| Metric | Value |
+| --- | ---: |
+| Sample interval | 100 ms |
+| Samples | 156 |
+| Max process count | 3 |
+| Peak working set | 2495.7 MiB |
+| Peak private bytes | 6173.5 MiB |
+| CPU time | 20.8 s |
+| Process wall time | 17.9 s |
+
+Read: process metrics now exist for the small CUDA probe. They include the
+`cargo run` wrapper plus the `kr-eval` process tree, so they should be treated
+as run-level validation evidence rather than isolated engine-only memory
+usage.
 
 ## External Adapter Latency
 
@@ -130,12 +147,10 @@ raw latency.
 
 The next useful instrumentation is:
 
-1. process peak memory and CPU around `kr-eval` subprocesses;
-2. GPU memory accounting if the execution provider exposes it;
-3. promote the sub-stage timing probe to LongMemEval / DMR 50 during the next
+1. GPU memory accounting if the execution provider exposes it;
+2. promote the sub-stage and process metrics probe to LongMemEval / DMR 50 during the next
    GPU validation pass.
 
-Memory and CPU should still be treated as unresolved process-level metrics.
-Embedding, vector search, FTS/entity/RRF, and reranker inference now have a
-small direct timing probe, but the older 50-sample reports remain
-end-to-end-only.
+Memory, CPU, embedding, vector search, FTS/entity/RRF, and reranker inference
+now have a small direct probe, but the older 50-sample reports remain
+end-to-end-only for process resources.

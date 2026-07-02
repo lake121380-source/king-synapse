@@ -9,6 +9,7 @@ aggregate report. It must not commit raw third-party records.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import hashlib
 import json
 import os
@@ -17,6 +18,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -642,6 +644,290 @@ def build_dmr_dataset(
     return memories, queries, examples, skipped
 
 
+def process_tree_pids(root_pid: int) -> list[int]:
+    parent_by_pid = windows_parent_map() if os.name == "nt" else procfs_parent_map()
+    children_by_parent: dict[int, list[int]] = {}
+    for pid, parent in parent_by_pid.items():
+        children_by_parent.setdefault(parent, []).append(pid)
+
+    tree: list[int] = []
+    stack = [root_pid]
+    seen: set[int] = set()
+    while stack:
+        pid = stack.pop()
+        if pid in seen:
+            continue
+        seen.add(pid)
+        tree.append(pid)
+        stack.extend(children_by_parent.get(pid, []))
+    return tree
+
+
+def windows_parent_map() -> dict[int, int]:
+    import ctypes.wintypes as wintypes
+
+    class ProcessEntry32(ctypes.Structure):
+        _fields_ = [
+            ("dwSize", wintypes.DWORD),
+            ("cntUsage", wintypes.DWORD),
+            ("th32ProcessID", wintypes.DWORD),
+            ("th32DefaultHeapID", ctypes.c_size_t),
+            ("th32ModuleID", wintypes.DWORD),
+            ("cntThreads", wintypes.DWORD),
+            ("th32ParentProcessID", wintypes.DWORD),
+            ("pcPriClassBase", wintypes.LONG),
+            ("dwFlags", wintypes.DWORD),
+            ("szExeFile", ctypes.c_char * 260),
+        ]
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel32.CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+    kernel32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+    kernel32.Process32First.argtypes = [wintypes.HANDLE, ctypes.POINTER(ProcessEntry32)]
+    kernel32.Process32First.restype = wintypes.BOOL
+    kernel32.Process32Next.argtypes = [wintypes.HANDLE, ctypes.POINTER(ProcessEntry32)]
+    kernel32.Process32Next.restype = wintypes.BOOL
+    kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+    kernel32.CloseHandle.restype = wintypes.BOOL
+    snapshot = kernel32.CreateToolhelp32Snapshot(0x00000002, 0)
+    if snapshot == ctypes.c_void_p(-1).value:
+        return {}
+    try:
+        entry = ProcessEntry32()
+        entry.dwSize = ctypes.sizeof(ProcessEntry32)
+        parents: dict[int, int] = {}
+        if not kernel32.Process32First(snapshot, ctypes.byref(entry)):
+            return parents
+        while True:
+            parents[int(entry.th32ProcessID)] = int(entry.th32ParentProcessID)
+            if not kernel32.Process32Next(snapshot, ctypes.byref(entry)):
+                break
+        return parents
+    finally:
+        kernel32.CloseHandle(snapshot)
+
+
+def procfs_parent_map() -> dict[int, int]:
+    proc = Path("/proc")
+    if not proc.exists():
+        return {}
+    parents: dict[int, int] = {}
+    for child in proc.iterdir():
+        if not child.name.isdigit():
+            continue
+        try:
+            stat = (child / "stat").read_text(encoding="utf-8", errors="replace")
+            after_comm = stat.rsplit(")", 1)[1].strip().split()
+            parents[int(child.name)] = int(after_comm[1])
+        except (OSError, IndexError, ValueError):
+            continue
+    return parents
+
+
+def process_snapshot(pid: int) -> dict[str, float | int | None] | None:
+    return windows_process_snapshot(pid) if os.name == "nt" else procfs_process_snapshot(pid)
+
+
+def windows_process_snapshot(pid: int) -> dict[str, float | int | None] | None:
+    import ctypes.wintypes as wintypes
+
+    class FileTime(ctypes.Structure):
+        _fields_ = [
+            ("dwLowDateTime", wintypes.DWORD),
+            ("dwHighDateTime", wintypes.DWORD),
+        ]
+
+    class ProcessMemoryCountersEx(ctypes.Structure):
+        _fields_ = [
+            ("cb", wintypes.DWORD),
+            ("PageFaultCount", wintypes.DWORD),
+            ("PeakWorkingSetSize", ctypes.c_size_t),
+            ("WorkingSetSize", ctypes.c_size_t),
+            ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+            ("PagefileUsage", ctypes.c_size_t),
+            ("PeakPagefileUsage", ctypes.c_size_t),
+            ("PrivateUsage", ctypes.c_size_t),
+        ]
+
+    def filetime_seconds(value: FileTime) -> float:
+        ticks = (int(value.dwHighDateTime) << 32) + int(value.dwLowDateTime)
+        return ticks / 10_000_000.0
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    psapi = ctypes.WinDLL("psapi", use_last_error=True)
+    kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel32.OpenProcess.restype = wintypes.HANDLE
+    kernel32.GetProcessTimes.argtypes = [
+        wintypes.HANDLE,
+        ctypes.POINTER(FileTime),
+        ctypes.POINTER(FileTime),
+        ctypes.POINTER(FileTime),
+        ctypes.POINTER(FileTime),
+    ]
+    kernel32.GetProcessTimes.restype = wintypes.BOOL
+    kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+    kernel32.CloseHandle.restype = wintypes.BOOL
+    psapi.GetProcessMemoryInfo.argtypes = [
+        wintypes.HANDLE,
+        ctypes.POINTER(ProcessMemoryCountersEx),
+        wintypes.DWORD,
+    ]
+    psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+    handle = kernel32.OpenProcess(0x1000 | 0x0010, False, pid)
+    if not handle:
+        return None
+    try:
+        mem = ProcessMemoryCountersEx()
+        mem.cb = ctypes.sizeof(ProcessMemoryCountersEx)
+        if not psapi.GetProcessMemoryInfo(handle, ctypes.byref(mem), mem.cb):
+            return None
+        creation = FileTime()
+        exit_time = FileTime()
+        kernel = FileTime()
+        user = FileTime()
+        cpu_seconds = None
+        if kernel32.GetProcessTimes(
+            handle,
+            ctypes.byref(creation),
+            ctypes.byref(exit_time),
+            ctypes.byref(kernel),
+            ctypes.byref(user),
+        ):
+            cpu_seconds = filetime_seconds(kernel) + filetime_seconds(user)
+        return {
+            "working_set_bytes": int(mem.WorkingSetSize),
+            "peak_working_set_bytes": int(mem.PeakWorkingSetSize),
+            "private_bytes": int(mem.PrivateUsage),
+            "cpu_seconds": cpu_seconds,
+        }
+    finally:
+        kernel32.CloseHandle(handle)
+
+
+def procfs_process_snapshot(pid: int) -> dict[str, float | int | None] | None:
+    stat_path = Path("/proc") / str(pid) / "stat"
+    try:
+        stat = stat_path.read_text(encoding="utf-8", errors="replace")
+        after_comm = stat.rsplit(")", 1)[1].strip().split()
+        ticks_per_second = os.sysconf(os.sysconf_names["SC_CLK_TCK"])
+        page_size = os.sysconf(os.sysconf_names["SC_PAGE_SIZE"])
+        user_ticks = int(after_comm[11])
+        kernel_ticks = int(after_comm[12])
+        rss_pages = int(after_comm[21])
+        rss_bytes = max(0, rss_pages) * page_size
+        return {
+            "working_set_bytes": rss_bytes,
+            "peak_working_set_bytes": None,
+            "private_bytes": None,
+            "cpu_seconds": (user_ticks + kernel_ticks) / ticks_per_second,
+        }
+    except (OSError, KeyError, IndexError, ValueError):
+        return None
+
+
+def sample_process_tree(root_pid: int) -> dict[str, Any] | None:
+    pids = process_tree_pids(root_pid)
+    snapshots = [(pid, process_snapshot(pid)) for pid in pids]
+    snapshots = [(pid, snap) for pid, snap in snapshots if snap is not None]
+    if not snapshots:
+        return None
+    working_set = sum(int(snap.get("working_set_bytes") or 0) for _, snap in snapshots)
+    private_values = [snap.get("private_bytes") for _, snap in snapshots]
+    private_bytes = (
+        sum(int(value or 0) for value in private_values)
+        if all(value is not None for value in private_values)
+        else None
+    )
+    return {
+        "process_count": len(snapshots),
+        "working_set_bytes": working_set,
+        "private_bytes": private_bytes,
+        "cpu_seconds_by_pid": {
+            str(pid): snap.get("cpu_seconds")
+            for pid, snap in snapshots
+            if snap.get("cpu_seconds") is not None
+        },
+    }
+
+
+def profiled_subprocess_run(cmd: list[str], cwd: Path) -> tuple[subprocess.CompletedProcess, dict[str, Any]]:
+    sample_interval_s = 0.1
+    started = time.perf_counter()
+    proc = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding="utf-8",
+        errors="replace",
+    )
+    sample_count = 0
+    peak_working_set_bytes = 0
+    peak_private_bytes: int | None = None
+    max_process_count = 0
+    first_cpu_by_pid: dict[str, float] = {}
+    last_cpu_by_pid: dict[str, float] = {}
+    available = True
+    unavailable_reason = None
+
+    stdout = ""
+    stderr = ""
+    while True:
+        sample = sample_process_tree(proc.pid)
+        if sample is None:
+            if sample_count == 0:
+                available = False
+                unavailable_reason = "process metrics unavailable on this platform or process ended before first sample"
+        else:
+            available = True
+            unavailable_reason = None
+            sample_count += 1
+            max_process_count = max(max_process_count, int(sample["process_count"]))
+            peak_working_set_bytes = max(peak_working_set_bytes, int(sample["working_set_bytes"]))
+            private_bytes = sample.get("private_bytes")
+            if private_bytes is not None:
+                peak_private_bytes = max(peak_private_bytes or 0, int(private_bytes))
+            for pid, cpu_seconds in sample["cpu_seconds_by_pid"].items():
+                value = float(cpu_seconds)
+                first_cpu_by_pid.setdefault(pid, value)
+                last_cpu_by_pid[pid] = value
+        try:
+            stdout, stderr = proc.communicate(timeout=sample_interval_s)
+            break
+        except subprocess.TimeoutExpired:
+            continue
+
+    cpu_seconds = sum(
+        max(0.0, last_cpu_by_pid[pid] - first_cpu_by_pid.get(pid, last_cpu_by_pid[pid]))
+        for pid in last_cpu_by_pid
+    )
+    elapsed_ms = (time.perf_counter() - started) * 1000.0
+    process_metrics = {
+        "available": available,
+        "unavailable_reason": unavailable_reason,
+        "platform": os.name,
+        "sample_interval_ms": sample_interval_s * 1000.0,
+        "sample_count": sample_count,
+        "elapsed_wall_ms": elapsed_ms,
+        "max_process_count": max_process_count,
+        "peak_working_set_bytes": peak_working_set_bytes if available else None,
+        "peak_private_bytes": peak_private_bytes if available else None,
+        "cpu_seconds": cpu_seconds if available else None,
+        "process_tree_includes_cargo_wrapper": True,
+    }
+    result = subprocess.CompletedProcess(
+        args=cmd,
+        returncode=proc.returncode,
+        stdout=stdout,
+        stderr=stderr,
+    )
+    return result, process_metrics
+
+
 def run_kr_eval(
     dataset_path: Path,
     output_path: Path,
@@ -673,19 +959,14 @@ def run_kr_eval(
         cmd.append("--vectors")
     if rerank:
         cmd.extend(["--rerank", "--rerank-pool", str(rerank_pool)])
-    result = subprocess.run(
-        cmd,
-        cwd=repo_root(),
-        text=True,
-        capture_output=True,
-        encoding="utf-8",
-        errors="replace",
-    )
+    result, process_metrics = profiled_subprocess_run(cmd, repo_root())
     if result.returncode != 0:
         raise RuntimeError(
             f"kr-eval failed for {tag}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
-    )
-    return json.loads(output_path.read_text(encoding="utf-8"))
+        )
+    raw = json.loads(output_path.read_text(encoding="utf-8"))
+    raw["process_metrics"] = process_metrics
+    return raw
 
 
 def run_smoke_configs(
@@ -794,6 +1075,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "p95_latency_ms": raw.get("p95_latency_ms"),
         "total_ms": raw.get("total_ms"),
         "timing": raw.get("timing"),
+        "process_metrics": raw.get("process_metrics"),
         "per_query": per_query,
         "rank_bucket_counts": dict(sorted(Counter(item["rank_bucket"] for item in per_query).items())),
         "failure_type_counts": dict(sorted(Counter(item["failure_type"] for item in per_query).items())),
