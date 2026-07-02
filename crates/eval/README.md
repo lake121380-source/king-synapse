@@ -107,6 +107,19 @@ The 2026-07-02 local GPU setup is recorded in
 The checked-in reports exclude raw questions, answers, dialogs, and session
 text. The DMR path is still a candidate harness, not the official DMR harness.
 
+## Phase 6 Baseline Registry
+
+The current Phase 6 replay baseline is fixed in:
+
+- `reports/phase6-benchmark-baseline.json`
+- `datasets/regression/golden-manifest.json`
+- `reports/phase6-coding-mem-baseline.json`
+- `reports/phase6-reference-baseline.json`
+- `reports/phase6-multihop-baseline.json`
+
+Readable summaries live in `docs/eval/BENCHMARK_BASELINE.md` and
+`docs/eval/GOLDEN_DATASET.md`.
+
 ## Algorithm Benchmarks
 
 ```bash

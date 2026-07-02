@@ -1,0 +1,74 @@
+{
+  "schema_version": "king-synapse.golden-dataset.v1",
+  "generated_at": "2026-07-02T20:24:24.2785510+08:00",
+  "validated_commit": "f10f2b2f",
+  "purpose": "Phase 6 regression replay registry. Raw third-party records are not committed.",
+  "committed_sets": [
+    {
+      "id": "coding-mem-20x30",
+      "path": "crates/eval/datasets/coding_mem.toml",
+      "sha256": "05CBD4FFB99C3C9BB931EEF91DFE89B36B63ECB69B30FB801FB8E117C0DD2D9F",
+      "memories": 20,
+      "queries": 30,
+      "role": "primary recall golden set"
+    },
+    {
+      "id": "reference-20x5",
+      "path": "crates/eval/datasets/reference.toml",
+      "sha256": "F94BE757972A50F33EBC3E23D4FCE57CEB0DBE930B224812BF20E1B03706B71A",
+      "memories": 20,
+      "queries": 5,
+      "role": "frozen reference recall baseline"
+    },
+    {
+      "id": "multihop-20x5",
+      "path": "crates/eval/datasets/multihop.toml",
+      "sha256": "CA7755BF2AB8985252A8B80480F0CCB654BE75AB25F542DAAF97651F38BFD8C6",
+      "memories": 20,
+      "queries": 5,
+      "role": "frozen multi-hop / CJK recall baseline"
+    },
+    {
+      "id": "exported-cognitive-session-8",
+      "path": "crates/eval/datasets/exported_cognitive_session.toml",
+      "sha256": "7592FAC22C782FE083D85474EFAB5B91E5C3F173140813962CC77517F2CC73C5",
+      "chains": 8,
+      "role": "visible seed, hidden influence, prediction, and reinforcement replay fixture"
+    }
+  ],
+  "external_sets": [
+    {
+      "id": "longmem-cleaned-50",
+      "report": "crates/eval/reports/longmem-50-validation.json",
+      "report_sha256": "3DDC76B5969D46AE21E22FC682B1DAFF04E8579BE3A049EEDB512FF5A520A8EE",
+      "source_repo": "xiaowu0162/longmemeval-cleaned",
+      "source_revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
+      "source_file": "longmemeval_s_cleaned.json",
+      "source_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+      "license": "mit",
+      "sample_size": 50,
+      "raw_records_committed": false
+    },
+    {
+      "id": "dmr-msc-self-instruct-50",
+      "report": "crates/eval/reports/dmr-50-validation.json",
+      "report_sha256": "220F1210B875AC444D245047727B87C9052BB8561AC18F6BC94EF9DA0B1BFB4B",
+      "source_repo": "MemGPT/MSC-Self-Instruct",
+      "source_revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
+      "source_file": "msc_self_instruct.jsonl",
+      "source_sha256": "d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e",
+      "license": "apache-2.0",
+      "sample_size": 50,
+      "pre_eval_skipped_answer_not_found_in_chunks": 278,
+      "raw_records_committed": false
+    }
+  ],
+  "replay_policy": {
+    "committed_sets": "Must run from checked-in TOML files.",
+    "external_sets": "Must reproduce the same source revision, source SHA-256, sample size, and sanitized report shape without committing raw records.",
+    "latency": "Recorded for trend analysis only; correctness gates use recall and algorithm metrics."
+  },
+  "known_open_expansion": [
+    "The current exported cognitive session has 8 chains. A larger 20-chain cognitive/prediction replay set remains a Phase 6 follow-up before broad Phase 7 claims."
+  ]
+}

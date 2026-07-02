@@ -1,0 +1,589 @@
+{
+  "tag": "phase6-coding-mem-baseline",
+  "dataset": "crates/eval/datasets/coding_mem.toml",
+  "vectors_enabled": false,
+  "rerank_enabled": false,
+  "rerank_pool": 50,
+  "k": 10,
+  "n_memories": 20,
+  "n_queries": 30,
+  "recall_at_5": 0.95,
+  "recall_at_10": 0.95,
+  "mrr_at_10": 0.95,
+  "ndcg_at_10": 0.941469231544564,
+  "p50_latency_ms": 2.2138,
+  "p95_latency_ms": 3.7708,
+  "total_ms": 71.0818,
+  "per_query": [
+    {
+      "query": "Should I use npm or pnpm on Windows?",
+      "relevant": [
+        "pnpm-win"
+      ],
+      "returned": [
+        "pnpm-win",
+        "docker-compose-volume",
+        "react-strict-double-effect",
+        "tauri-csp",
+        "sqlite-fts-tokenize",
+        "go-context-cancel",
+        "user-no-emoji",
+        "rust-clippy-bool-then",
+        "jwt-rs256",
+        "fastembed-prefix"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.3551
+    },
+    {
+      "query": "pnpm vs npm windows powershell symlinks",
+      "relevant": [
+        "pnpm-win"
+      ],
+      "returned": [
+        "pnpm-win",
+        "docker-compose-volume"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.2138
+    },
+    {
+      "query": "Which signing algorithm does our JWT auth use?",
+      "relevant": [
+        "jwt-rs256"
+      ],
+      "returned": [
+        "jwt-rs256",
+        "pnpm-win",
+        "user-no-emoji",
+        "rust-clippy-bool-then",
+        "fastembed-prefix",
+        "react-strict-double-effect",
+        "docker-compose-volume"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.0446
+    },
+    {
+      "query": "RS256 RSA key for JWT",
+      "relevant": [
+        "jwt-rs256"
+      ],
+      "returned": [
+        "jwt-rs256",
+        "fastembed-prefix",
+        "sqlite-fts-tokenize",
+        "tauri-csp"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.7352999999999998
+    },
+    {
+      "query": "How do I pass shared state to Axum handlers?",
+      "relevant": [
+        "axum-state"
+      ],
+      "returned": [
+        "axum-state",
+        "axum-bad-extractor",
+        "fastembed-prefix",
+        "user-no-emoji",
+        "redis-eviction",
+        "docker-compose-volume",
+        "sqlite-fts-tokenize",
+        "jwt-rs256",
+        "react-strict-double-effect",
+        "go-context-cancel"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.9082
+    },
+    {
+      "query": "Axum AppState Router::with_state Arc",
+      "relevant": [
+        "axum-state"
+      ],
+      "returned": [
+        "axum-state",
+        "axum-bad-extractor"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.6388
+    },
+    {
+      "query": "Why does my Axum handler return 400 for no reason?",
+      "relevant": [
+        "axum-bad-extractor"
+      ],
+      "returned": [
+        "axum-bad-extractor",
+        "axum-state",
+        "tauri-csp",
+        "fastembed-prefix",
+        "sqlite-fts-tokenize",
+        "redis-eviction",
+        "kuzu-dropped",
+        "reflection-as-event"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.3194
+    },
+    {
+      "query": "Axum Json Path extractor order failure",
+      "relevant": [
+        "axum-bad-extractor",
+        "axum-state"
+      ],
+      "returned": [
+        "axum-bad-extractor",
+        "axum-state",
+        "docker-compose-volume",
+        "tauri-csp"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.8025
+    },
+    {
+      "query": "clippy complains about bool::then in filter_map",
+      "relevant": [
+        "rust-clippy-bool-then"
+      ],
+      "returned": [
+        "rust-clippy-bool-then",
+        "pnpm-win",
+        "tauri-csp",
+        "jwt-rs256",
+        "axum-state",
+        "reflection-as-event",
+        "user-no-emoji",
+        "axum-bad-extractor",
+        "sqlite-fts-tokenize",
+        "react-strict-double-effect"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.59
+    },
+    {
+      "query": "rust filter map closure redundant",
+      "relevant": [
+        "rust-clippy-bool-then"
+      ],
+      "returned": [
+        "rust-clippy-bool-then"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.2666000000000002
+    },
+    {
+      "query": "FTS5 tokenizer for Chinese and Japanese text",
+      "relevant": [
+        "sqlite-fts-tokenize"
+      ],
+      "returned": [
+        "sqlite-fts-tokenize",
+        "fastembed-prefix",
+        "tauri-csp",
+        "user-no-emoji",
+        "axum-state",
+        "redis-eviction",
+        "postgres-vacuum",
+        "openai-rate-limit"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.942
+    },
+    {
+      "query": "sqlite full text search CJK porter",
+      "relevant": [
+        "sqlite-fts-tokenize"
+      ],
+      "returned": [
+        "sqlite-fts-tokenize",
+        "kuzu-dropped"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.4989000000000001
+    },
+    {
+      "query": "What dimension are our memory embeddings?",
+      "relevant": [
+        "sqlite-vec-dim",
+        "fastembed-prefix"
+      ],
+      "returned": [
+        "sqlite-vec-dim",
+        "kuzu-dropped",
+        "reflection-as-event"
+      ],
+      "recall_at_5": 0.5,
+      "recall_at_10": 0.5,
+      "rr": 1.0,
+      "ndcg_at_10": 0.6131471927654584,
+      "latency_ms": 1.4848999999999999
+    },
+    {
+      "query": "memory_vecs vec0 float 768",
+      "relevant": [
+        "sqlite-vec-dim"
+      ],
+      "returned": [
+        "sqlite-vec-dim"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.4019
+    },
+    {
+      "query": "Why must I prefix passages and queries before embedding?",
+      "relevant": [
+        "fastembed-prefix"
+      ],
+      "returned": [
+        "sqlite-vec-dim",
+        "fastembed-prefix",
+        "axum-bad-extractor",
+        "user-no-emoji",
+        "axum-state",
+        "redis-eviction",
+        "postgres-vacuum",
+        "openai-rate-limit",
+        "reflection-as-event",
+        "pnpm-win"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 0.5,
+      "ndcg_at_10": 0.6309297535714575,
+      "latency_ms": 3.6622999999999997
+    },
+    {
+      "query": "E5 multilingual model passage query prefix",
+      "relevant": [
+        "fastembed-prefix"
+      ],
+      "returned": [
+        "fastembed-prefix",
+        "reflection-as-event",
+        "sqlite-fts-tokenize"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.6504
+    },
+    {
+      "query": "What is the default k for RRF?",
+      "relevant": [
+        "rrf-k"
+      ],
+      "returned": [
+        "rrf-k",
+        "reflection-as-event",
+        "tauri-csp",
+        "fastembed-prefix",
+        "sqlite-fts-tokenize",
+        "jwt-rs256",
+        "go-context-cancel",
+        "sqlite-vec-dim",
+        "redis-eviction",
+        "kuzu-dropped"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.1341
+    },
+    {
+      "query": "Reciprocal Rank Fusion constant k=60",
+      "relevant": [
+        "rrf-k"
+      ],
+      "returned": [
+        "rrf-k",
+        "reflection-as-event",
+        "jwt-rs256",
+        "kuzu-dropped"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.7447000000000001
+    },
+    {
+      "query": "How is production Redis sized and what eviction policy?",
+      "relevant": [
+        "redis-eviction"
+      ],
+      "returned": [
+        "redis-eviction",
+        "sqlite-vec-dim",
+        "reflection-as-event",
+        "go-context-cancel",
+        "user-no-emoji",
+        "axum-state",
+        "fastembed-prefix",
+        "postgres-vacuum",
+        "openai-rate-limit"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.6032
+    },
+    {
+      "query": "redis maxmemory allkeys-lru 8GB",
+      "relevant": [
+        "redis-eviction"
+      ],
+      "returned": [
+        "redis-eviction"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 0.9927
+    },
+    {
+      "query": "Why does my useEffect run twice in dev?",
+      "relevant": [
+        "react-strict-double-effect"
+      ],
+      "returned": [
+        "react-strict-double-effect",
+        "postgres-vacuum",
+        "pnpm-win",
+        "rust-clippy-bool-then",
+        "tauri-csp",
+        "jwt-rs256",
+        "axum-state",
+        "reflection-as-event",
+        "user-no-emoji",
+        "axum-bad-extractor"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.5366
+    },
+    {
+      "query": "React 18 StrictMode double invocation",
+      "relevant": [
+        "react-strict-double-effect"
+      ],
+      "returned": [
+        "react-strict-double-effect"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.424
+    },
+    {
+      "query": "Postgres slow inserts on a giant table",
+      "relevant": [
+        "postgres-vacuum"
+      ],
+      "returned": [
+        "postgres-vacuum",
+        "kuzu-dropped",
+        "pnpm-win",
+        "sqlite-fts-tokenize",
+        "docker-compose-volume",
+        "go-context-cancel",
+        "axum-state",
+        "reflection-as-event",
+        "axum-bad-extractor",
+        "redis-eviction"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.5077
+    },
+    {
+      "query": "autovacuum_vacuum_scale_factor 100M rows",
+      "relevant": [
+        "postgres-vacuum"
+      ],
+      "returned": [
+        "postgres-vacuum"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.2668
+    },
+    {
+      "query": "Docker bind mount empty on Windows",
+      "relevant": [
+        "docker-compose-volume"
+      ],
+      "returned": [
+        "docker-compose-volume",
+        "pnpm-win",
+        "sqlite-fts-tokenize",
+        "go-context-cancel"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.8370000000000002
+    },
+    {
+      "query": "How do I avoid leaking a Go context?",
+      "relevant": [
+        "go-context-cancel"
+      ],
+      "returned": [
+        "go-context-cancel",
+        "user-no-emoji",
+        "redis-eviction",
+        "fastembed-prefix",
+        "docker-compose-volume",
+        "axum-state",
+        "reflection-as-event",
+        "jwt-rs256",
+        "axum-bad-extractor",
+        "sqlite-vec-dim"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.7708
+    },
+    {
+      "query": "user language preference for commits",
+      "relevant": [
+        "user-prefers-cn"
+      ],
+      "returned": [
+        "user-no-emoji",
+        "fastembed-prefix",
+        "sqlite-fts-tokenize",
+        "tauri-csp"
+      ],
+      "recall_at_5": 0.0,
+      "recall_at_10": 0.0,
+      "rr": 0.0,
+      "ndcg_at_10": 0.0,
+      "latency_ms": 1.3847
+    },
+    {
+      "query": "Should I use emojis in commit messages?",
+      "relevant": [
+        "user-no-emoji"
+      ],
+      "returned": [
+        "user-no-emoji",
+        "pnpm-win",
+        "rust-clippy-bool-then",
+        "jwt-rs256",
+        "react-strict-double-effect",
+        "fastembed-prefix",
+        "docker-compose-volume",
+        "axum-state",
+        "reflection-as-event",
+        "tauri-csp"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 3.2474000000000003
+    },
+    {
+      "query": "Did we drop the Kuzu graph layer?",
+      "relevant": [
+        "kuzu-dropped"
+      ],
+      "returned": [
+        "kuzu-dropped",
+        "fastembed-prefix",
+        "user-no-emoji",
+        "rust-clippy-bool-then",
+        "rrf-k",
+        "jwt-rs256",
+        "sqlite-fts-tokenize",
+        "reflection-as-event",
+        "go-context-cancel"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.812
+    },
+    {
+      "query": "Is reflection a memory or an event in our model?",
+      "relevant": [
+        "reflection-as-event"
+      ],
+      "returned": [
+        "reflection-as-event",
+        "sqlite-vec-dim",
+        "redis-eviction",
+        "react-strict-double-effect",
+        "kuzu-dropped",
+        "docker-compose-volume",
+        "tauri-csp",
+        "go-context-cancel",
+        "postgres-vacuum",
+        "user-no-emoji"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.754
+    }
+  ]
+}

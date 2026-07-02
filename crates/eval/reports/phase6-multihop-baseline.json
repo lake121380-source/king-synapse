@@ -1,0 +1,105 @@
+{
+  "tag": "phase6-multihop-baseline",
+  "dataset": "crates/eval/datasets/multihop.toml",
+  "vectors_enabled": false,
+  "rerank_enabled": false,
+  "rerank_pool": 50,
+  "k": 10,
+  "n_memories": 20,
+  "n_queries": 5,
+  "recall_at_5": 1.0,
+  "recall_at_10": 1.0,
+  "mrr_at_10": 1.0,
+  "ndcg_at_10": 1.0,
+  "p50_latency_ms": 2.1374,
+  "p95_latency_ms": 4.1617,
+  "total_ms": 12.7922,
+  "per_query": [
+    {
+      "query": "为了让中文 FTS 和多语言 embedding 一起正常工作，需要同时记住哪两个设置？",
+      "relevant": [
+        "sqlite-fts-tokenize",
+        "fastembed-prefix"
+      ],
+      "returned": [
+        "sqlite-fts-tokenize",
+        "fastembed-prefix",
+        "sqlite-vec-dim"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.1374
+    },
+    {
+      "query": "如果 Axum 既要共享状态又要避免 400，应该同时遵守哪两条规则？",
+      "relevant": [
+        "axum-state",
+        "axum-bad-extractor"
+      ],
+      "returned": [
+        "axum-bad-extractor",
+        "axum-state"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.5376
+    },
+    {
+      "query": "要解释 Windows 上的检索问题，应该同时查看哪条包管理器记忆和哪条卷挂载记忆？",
+      "relevant": [
+        "pnpm-win",
+        "docker-compose-volume"
+      ],
+      "returned": [
+        "docker-compose-volume",
+        "pnpm-win",
+        "sqlite-vec-dim",
+        "sqlite-fts-tokenize",
+        "fastembed-prefix"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 2.9065
+    },
+    {
+      "query": "为了避免向量检索误判，需要一起检查哪条维度约束和哪条前缀记忆？",
+      "relevant": [
+        "sqlite-vec-dim",
+        "fastembed-prefix"
+      ],
+      "returned": [
+        "sqlite-vec-dim",
+        "fastembed-prefix",
+        "sqlite-fts-tokenize"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 4.1617
+    },
+    {
+      "query": "如果既要避免 Go context 泄漏，又要处理大表维护，应该同时记住哪两条操作建议？",
+      "relevant": [
+        "go-context-cancel",
+        "postgres-vacuum"
+      ],
+      "returned": [
+        "go-context-cancel",
+        "postgres-vacuum",
+        "kuzu-dropped"
+      ],
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "rr": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_ms": 1.9553
+    }
+  ]
+}

@@ -113,6 +113,7 @@ The project has crossed the basic bar for:
 1. stable deterministic fixture behavior;
 2. internally consistent recall, trace, prediction, and reinforcement reports;
 3. visible comparative value on cognitive-trace introspection.
+4. fixed benchmark and golden replay baselines for the current Phase 6 scope.
 
 Long-memory 50-sample evidence now exists across three retrieval modes:
 
@@ -145,12 +146,23 @@ The dominant evaluated failure mode is ranking. The dominant DMR data issue is
 mapping/chunking: 278 candidate rows were skipped before evaluation because the
 expected answer text was not found in generated memory chunks.
 
+Benchmark baseline status:
+
+- `docs/eval/BENCHMARK_BASELINE.md` fixes the recall, algorithm, and
+  long-memory baseline numbers.
+- `docs/eval/GOLDEN_DATASET.md` fixes the current replay registry.
+- `crates/eval/reports/phase6-benchmark-baseline.json` stores the
+  machine-readable baseline gates.
+- `crates/eval/datasets/regression/golden-manifest.json` records dataset
+  paths, source revisions, hashes, sample sizes, and raw-data policy.
+
 The project has not yet crossed the bar for:
 
 1. official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. production-readiness claims.
+4. expanded 20-chain cognitive/prediction replay coverage;
+5. production-readiness claims.
 
 GPU validation status:
 
@@ -164,6 +176,6 @@ GPU validation status:
   reranker max length `256`.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen and investigate the two
-remaining validation boundaries: DMR mapping/chunk skips and final candidate
-ranking.
+Next required action: keep feature growth frozen and investigate the remaining
+validation boundaries: DMR mapping/chunk skips, final candidate ranking,
+larger cognitive/prediction replay coverage, and live/hosted external runs.

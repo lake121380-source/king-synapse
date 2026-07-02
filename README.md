@@ -135,6 +135,9 @@ The checked-in 50-sample long-memory reports use external data cached outside
 the repo and commit only aggregate, redacted metrics:
 [LongMemEval 50](crates/eval/reports/longmem-50-validation.json) and
 [DMR 50](crates/eval/reports/dmr-50-validation.json).
+The Phase 6 replay baseline is fixed in
+[BENCHMARK_BASELINE.md](docs/eval/BENCHMARK_BASELINE.md) and
+[GOLDEN_DATASET.md](docs/eval/GOLDEN_DATASET.md).
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
@@ -185,6 +188,7 @@ comparison adapters or optional embedding/reranking paths.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
 - LongMemEval and DMR now have 50-sample validation reports; official DMR harness validation is not finished.
+- Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
 ## Useful Commands
@@ -198,6 +202,11 @@ cargo bench -p synapse-eval --bench exported_cognitive_session
 
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
+
+# Run the Phase 6 lightweight replay baselines
+cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json
+cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json
+cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multihop.toml --tag phase6-multihop-baseline --json crates/eval/reports/phase6-multihop-baseline.json
 
 # Run the 50-sample LongMemEval / DMR CUDA validation
 python scripts/eval/longmem_dmr_smoke.py --endpoint https://hf-mirror.com --datasets longmem --modes all --longmem-sample-size 50 --k 50 --accelerator cuda --cuda-device-id 0 --embed-batch-size 32 --embed-max-length 256 --rerank-batch-size 32 --rerank-max-length 256 --output crates/eval/reports/longmem-50-validation.json --cleanup-cache
@@ -216,6 +225,8 @@ cargo build --release
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
+| `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |
+| `docs/eval/GOLDEN_DATASET.md` | Golden dataset registry and replay policy. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |

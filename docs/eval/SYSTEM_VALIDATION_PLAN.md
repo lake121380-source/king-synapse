@@ -113,7 +113,8 @@ Required before acceptance:
 ### 4. Long-Horizon And Public Dataset Tests
 
 LongMemEval and DMR now have a small smoke runner and sanitized aggregate
-report. Full benchmark validation is not yet started.
+report. The current 50-sample validation baseline is fixed, but official DMR
+and larger public benchmark claims are not complete.
 
 Before importing or mirroring data:
 
@@ -138,6 +139,19 @@ When credentials are available, rerun:
 
 Keep local deterministic modes as reproducible baselines. Hosted-mode results
 must be marked separately from local deterministic results.
+
+### 6. Benchmark And Golden Replay Baselines
+
+The current Phase 6 replay baseline is fixed in:
+
+- `docs/eval/BENCHMARK_BASELINE.md`
+- `docs/eval/GOLDEN_DATASET.md`
+- `crates/eval/reports/phase6-benchmark-baseline.json`
+- `crates/eval/datasets/regression/golden-manifest.json`
+
+Ordinary PRs should preserve the lightweight committed replay baselines.
+Retrieval-strategy changes must compare against the LongMemEval / DMR
+50-sample CUDA reports before changing defaults.
 
 ## Failure Modes To Watch
 
@@ -188,4 +202,10 @@ task. The validation win condition is narrower and more important:
   `docs/eval/FAILURE_ANALYSIS.md`.
 - Failure-analysis follow-up: focus on DMR mapping/chunk skips and final
   candidate ranking.
+- Benchmark baseline fixation: completed for the current Phase 6 scope; see
+  `docs/eval/BENCHMARK_BASELINE.md`.
+- Golden Dataset / regression baseline: current registry added at
+  `crates/eval/datasets/regression/golden-manifest.json`; expansion to a
+  larger 20-chain cognitive/prediction replay set remains a follow-up before
+  broad Phase 7 productization claims.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

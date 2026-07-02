@@ -1,0 +1,167 @@
+{
+  "schema_version": "king-synapse.phase6-benchmark-baseline.v1",
+  "generated_at": "2026-07-02T20:24:24.2785510+08:00",
+  "validated_commit": "f10f2b2f",
+  "golden_manifest": "crates/eval/datasets/regression/golden-manifest.json",
+  "recall_baselines": [
+    {
+      "id": "coding-mem-baseline",
+      "command": "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json",
+      "report": "crates/eval/reports/phase6-coding-mem-baseline.json",
+      "report_sha256": "A406BDACE0CF2F46149B719213C7435A33580D37E5EAEB19F68126E7D603DABA",
+      "memories": 20,
+      "queries": 30,
+      "recall_at_5": 0.95,
+      "recall_at_10": 0.95,
+      "mrr_at_10": 0.95,
+      "ndcg_at_10": 0.941469231544564,
+      "gate": "Recall@10 must stay at or above 0.95 unless an ADR records an intentional baseline change."
+    },
+    {
+      "id": "reference-baseline",
+      "command": "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json",
+      "report": "crates/eval/reports/phase6-reference-baseline.json",
+      "report_sha256": "EAC8801B75DB9E210243A71F59535D24FC33F34FBC69386EACEDAD051CF5BEBE",
+      "memories": 20,
+      "queries": 5,
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "mrr_at_10": 0.9,
+      "ndcg_at_10": 0.9261859507142916,
+      "gate": "Recall@10 must remain 1.0."
+    },
+    {
+      "id": "multihop-baseline",
+      "command": "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multihop.toml --tag phase6-multihop-baseline --json crates/eval/reports/phase6-multihop-baseline.json",
+      "report": "crates/eval/reports/phase6-multihop-baseline.json",
+      "report_sha256": "6DC4FF6FBEA2C2DB4691EBA03AB90B0F968E2FF69D09FEBA8ABDE6887B6B78B0",
+      "memories": 20,
+      "queries": 5,
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "mrr_at_10": 1.0,
+      "ndcg_at_10": 1.0,
+      "gate": "Recall@10 must remain 1.0."
+    }
+  ],
+  "algorithm_baselines": [
+    {
+      "benchmark": "reflection-yield",
+      "metrics": {
+        "ReflectionYield": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "reflection-yield-deterministic",
+      "metrics": {
+        "ReflectionYield": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "merge-precision",
+      "metrics": {
+        "MergePrecision": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "forget-precision",
+      "metrics": {
+        "ForgetPrecision": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "hebbian-consistency",
+      "metrics": {
+        "HebbianConsistency": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "cognitive-chain-recall",
+      "metrics": {
+        "RecallAt10": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "cognitive-trace-dominance",
+      "metrics": {
+        "CognitiveTraceDominance": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "trace-reinforcement",
+      "metrics": {
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "predictive-trace",
+      "metrics": {
+        "RecallAt10": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "activation-parameter-sweep",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "long-horizon-cognitive-memory",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    },
+    {
+      "benchmark": "exported-cognitive-session",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "gate": "all metrics must remain 1.0"
+    }
+  ],
+  "long_memory_baselines": [
+    {
+      "id": "longmem-cleaned-50",
+      "report": "crates/eval/reports/longmem-50-validation.json",
+      "baseline_recall_at_10": 0.5033333333333334,
+      "vector_recall_at_10": 0.6633333333333333,
+      "vector_rerank_recall_at_10": 0.59,
+      "gate": "Use as trend baseline; any retrieval strategy change must explain movement in all three modes."
+    },
+    {
+      "id": "dmr-msc-self-instruct-50",
+      "report": "crates/eval/reports/dmr-50-validation.json",
+      "baseline_recall_at_10": 0.188,
+      "vector_recall_at_10": 0.438,
+      "vector_rerank_recall_at_10": 0.584,
+      "pre_eval_skipped_answer_not_found_in_chunks": 278,
+      "gate": "Use as trend baseline; mapping/chunk skips must be tracked separately from evaluated retrieval failures."
+    }
+  ],
+  "validation_commands": {
+    "recall_baselines": [
+      "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json",
+      "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json",
+      "cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/multihop.toml --tag phase6-multihop-baseline --json crates/eval/reports/phase6-multihop-baseline.json"
+    ],
+    "algorithm_baselines": "cargo bench -p synapse-eval --bench reflection_yield --bench merge_precision --bench forget_precision --bench hebbian_consistency --bench cognitive_chain_recall --bench cognitive_trace_dominance --bench trace_reinforcement --bench predictive_trace --bench activation_parameter_sweep --bench long_horizon_cognitive_memory --bench exported_cognitive_session"
+  }
+}
