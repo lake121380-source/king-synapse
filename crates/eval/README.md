@@ -19,6 +19,38 @@ These commands use the real workspace package and binary names directly. If
 you add a local Cargo alias later, keep it as a shortcut for this command
 shape.
 
+## External Comparison Harness
+
+```bash
+# Run the post-freeze external comparison harness.
+# This measures King Synapse locally and records Graphiti/Zep as not_configured
+# until a local adapter command is provided.
+cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json
+
+# Run only the local King Synapse cognitive fixture.
+cargo run -p synapse-eval --bin kr-external-eval -- --systems king-synapse
+
+# Run with an external Graphiti adapter script.
+# The command receives one argument: an adapter-input JSON path.
+# It must print an ExternalSystemRun JSON object to stdout.
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --systems graphiti \
+  --graphiti-command python \
+  --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --json crates/eval/reports/graphiti-external-comparison.json
+```
+
+The harness uses `crates/eval/datasets/exported_cognitive_session.toml` and
+emits a runtime report, not a frozen `BenchmarkReport`. Runtime metadata,
+raw evidence, configured external systems, unsupported capabilities, and
+adapter failures belong in this external report format.
+
+The first checked-in report is
+`crates/eval/reports/external-comparison-latest.json`. It records King Synapse
+as a measured local run and Graphiti/Zep through
+`scripts/eval/graphiti_adapter.py`. On an unconfigured machine, Graphiti/Zep is
+reported as `not_configured` with the missing dependency and credential names.
+
 ## Algorithm Benchmarks
 
 ```bash

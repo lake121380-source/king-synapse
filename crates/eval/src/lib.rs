@@ -1,5 +1,6 @@
 pub mod algorithms;
 pub mod contract;
+pub mod external;
 pub mod harness;
 pub mod metrics;
 pub mod reporter;
@@ -13,6 +14,10 @@ pub use algorithms::{
     reflection_yield_report, trace_reinforcement_report,
 };
 pub use contract::{AlgorithmMetric, BenchmarkReport};
+pub use external::{
+    run_external_comparison, ExternalComparisonOptions, ExternalComparisonReport,
+    ExternalSystemKind,
+};
 pub use harness::{default_dataset_path, run};
 pub use reporter::print_table;
 pub use types::{BenchOptions, Dataset, MemorySpec, QueryResult, QuerySpec, Report};

@@ -80,6 +80,22 @@ For the broader "King Recall v3 / AI Cognitive Memory Engine" proposal and
 how it maps onto the current RFC-driven implementation plan, see
 `docs/V3_PROPOSAL_REVIEW.md`.
 
+## External comparison
+
+The first runnable external comparison harness is available through
+`kr-external-eval`:
+
+```bash
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --graphiti-command python \
+  --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --json crates/eval/reports/external-comparison-latest.json
+```
+
+This measures King Synapse locally against the exported cognitive fixture and
+runs the Graphiti/Zep adapter path. On an unconfigured machine, Graphiti/Zep is
+reported as `not_configured` with the missing dependency and credential names.
+
 ## Build
 
 Requires Rust 1.80+.

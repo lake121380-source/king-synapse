@@ -4,6 +4,15 @@ Status: Draft, post-freeze evaluation
 
 Date: 2026-07-02
 
+Implementation status:
+
+- First runnable harness: `cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json`
+- First Graphiti adapter command: `python scripts/eval/graphiti_adapter.py`
+- First report: `crates/eval/reports/external-comparison-latest.json`
+- Current local result: King Synapse is measured against the exported cognitive
+  fixture; Graphiti/Zep is represented as `not_configured` through the adapter
+  until `graphiti-core`, `OPENAI_API_KEY`, and Neo4j configuration are supplied.
+
 ## Purpose
 
 This document starts the external comparison phase for King Synapse after the
@@ -167,6 +176,31 @@ Do not add these metrics to the frozen `BenchmarkReport` contract until an RFC
 or ADR approves the additive metric surface. The first runs can live in an
 external report format under `crates/eval/reports/`.
 
+The first external report format now lives behind the `kr-external-eval`
+binary. It records runtime metadata, raw evidence, unsupported capabilities,
+adapter failures, and source/local-result separation outside the deterministic
+`BenchmarkReport` value object.
+
+To run the current local comparison:
+
+```bash
+cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json
+```
+
+To connect the included Graphiti adapter, pass Python as the command and the
+adapter script as an argument:
+
+```bash
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --graphiti-command python \
+  --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --json crates/eval/reports/external-comparison-latest.json
+```
+
+The adapter receives one final argument from the harness: an input JSON path
+containing the exported cognitive fixture. It must print one
+`ExternalSystemRun` JSON object to stdout.
+
 ## LongMemEval And DMR Plan
 
 LongMemEval should be the first external dataset because its categories align
@@ -217,9 +251,7 @@ The first real external comparison run is accepted only when all gates pass:
    memory.
 3. Build a Letta adapter third, with special care to separate memory-system
    behavior from autonomous agent-loop behavior.
-4. Add a small external report exporter that records raw artifacts without
-   changing the frozen `BenchmarkReport` value object.
-5. Import or script-fetch LongMemEval only after adapter reset and evidence
+4. Import or script-fetch LongMemEval only after adapter reset and evidence
    export are stable.
 
 The external comparison should begin with humility: King Synapse has strong
