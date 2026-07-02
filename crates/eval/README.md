@@ -68,9 +68,11 @@ as a measured local run, Graphiti/Zep through
 but Neo4j/OpenAI credentials are absent, the Graphiti adapter uses a local Kuzu
 graph backend with deterministic embeddings and explicit fixture triplets. The
 Mem0 adapter uses the Mem0 OSS Python SDK when `mem0ai` and either
-`OPENAI_API_KEY` or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. The
-Letta adapter uses the official `letta-client` SDK to create and inspect agent
-memory blocks when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+`OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, or `MEM0_CONFIG_JSON` /
+`MEM0_CONFIG_PATH` are available. With DeepSeek, the adapter generates a
+DeepSeek + HuggingFace + local Qdrant config automatically. The Letta adapter
+uses the official `letta-client` SDK to create and inspect agent memory blocks
+when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` is configured. If dependencies or credentials are
 missing, adapters report `not_configured` with the missing names.
 

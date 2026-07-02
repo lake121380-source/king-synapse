@@ -18,10 +18,13 @@ Implementation status:
   Neo4j/OpenAI extraction mode still requires `OPENAI_API_KEY`, `NEO4J_URI`,
   `NEO4J_USER`, and `NEO4J_PASSWORD`. Mem0 is wired into the same harness
   through the OSS Python SDK adapter; without `mem0ai` and either
-  `OPENAI_API_KEY` or a custom `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH`, it is
-  reported as `not_configured`. Letta is wired through its official Python SDK
-  adapter; without `letta-client` plus `LETTA_API_KEY`, `LETTA_BASE_URL`, or
-  `LETTA_ENVIRONMENT=local`, it is reported as `not_configured`.
+  `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, or a custom `MEM0_CONFIG_JSON` /
+  `MEM0_CONFIG_PATH`, it is reported as `not_configured`. If
+  `DEEPSEEK_API_KEY` is present, the adapter generates a DeepSeek +
+  HuggingFace + local Qdrant config automatically. Letta is wired through its
+  official Python SDK adapter; without `letta-client` plus `LETTA_API_KEY`,
+  `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local`, it is reported as
+  `not_configured`.
 
 ## Purpose
 
@@ -224,10 +227,13 @@ extraction, dominant/suppressed trace competition, prediction, or reinforcement
 support; those capabilities are reported as `unsupported`.
 
 The Mem0 adapter uses the OSS Python SDK's `Memory.add` and `Memory.search`
-paths when configured. It uses a fresh `user_id` namespace per chain, measures
-visible and hidden retrieval if Mem0 returns them, and reports path evidence,
-dominant/suppressed trace competition, prediction, and reinforcement as
-`unsupported` unless Mem0 exposes those semantics through the SDK.
+paths when configured. It can run with OpenAI defaults, a custom
+`MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH`, or `DEEPSEEK_API_KEY` plus an
+automatically generated HuggingFace embedder and local Qdrant vector store. It
+uses a fresh `user_id` namespace per chain, measures visible and hidden
+retrieval if Mem0 returns them, and reports path evidence, dominant/suppressed
+trace competition, prediction, and reinforcement as `unsupported` unless Mem0
+exposes those semantics through the SDK.
 
 The Letta adapter uses the official Python SDK to create an agent with a fresh
 memory block per chain, then reads the block back through the API. This measures

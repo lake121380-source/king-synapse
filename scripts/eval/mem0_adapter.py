@@ -5,10 +5,11 @@ The Rust harness calls this script with one argument: an adapter-input JSON
 path. The script prints one ExternalSystemRun JSON object to stdout.
 
 This adapter uses the Mem0 OSS Python SDK when it is installed and configured.
-By default Mem0 OSS requires OpenAI credentials; a custom SDK config can be
-provided through MEM0_CONFIG_JSON or MEM0_CONFIG_PATH. If a real Mem0 path is
-not available, the adapter returns not_configured instead of fabricating
-benchmark numbers.
+By default Mem0 OSS requires OpenAI credentials. It can also build a local
+DeepSeek + HuggingFace + Qdrant config from DEEPSEEK_API_KEY, or accept a
+custom SDK config through MEM0_CONFIG_JSON or MEM0_CONFIG_PATH. If a real Mem0
+path is not available, the adapter returns not_configured instead of
+fabricating benchmark numbers.
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import time
 import uuid
 from importlib import metadata
@@ -185,16 +187,60 @@ def has_custom_config() -> bool:
     return bool(os.getenv("MEM0_CONFIG_JSON") or os.getenv("MEM0_CONFIG_PATH"))
 
 
+def has_deepseek_config() -> bool:
+    return bool(os.getenv("DEEPSEEK_API_KEY"))
+
+
 def missing_configuration() -> list[str]:
     notes: list[str] = []
     if not mem0_installed():
         notes.append("mem0ai is not installed")
-    if not has_custom_config() and not os.getenv("OPENAI_API_KEY"):
+    if not has_custom_config() and not has_deepseek_config() and not os.getenv("OPENAI_API_KEY"):
         notes.append(
-            "OPENAI_API_KEY is not set; Mem0 OSS defaults require OpenAI unless "
-            "MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults "
+            "require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
         )
     return notes
+
+
+def deepseek_mem0_config() -> dict[str, Any]:
+    model = os.getenv("MEM0_DEEPSEEK_MODEL", "deepseek-chat")
+    embedder_model = os.getenv("MEM0_HUGGINGFACE_EMBEDDER", "multi-qa-MiniLM-L6-cos-v1")
+    embedding_dims = int(os.getenv("MEM0_HUGGINGFACE_DIMS", "384"))
+    qdrant_path = os.getenv(
+        "MEM0_QDRANT_PATH",
+        str(Path(tempfile.gettempdir()) / "king-synapse-mem0-qdrant"),
+    )
+    llm_config: dict[str, Any] = {
+        "model": model,
+        "temperature": float(os.getenv("MEM0_DEEPSEEK_TEMPERATURE", "0.2")),
+        "max_tokens": int(os.getenv("MEM0_DEEPSEEK_MAX_TOKENS", "2000")),
+        "top_p": float(os.getenv("MEM0_DEEPSEEK_TOP_P", "1.0")),
+    }
+    if os.getenv("DEEPSEEK_API_BASE"):
+        llm_config["deepseek_base_url"] = os.getenv("DEEPSEEK_API_BASE")
+
+    return {
+        "llm": {
+            "provider": "deepseek",
+            "config": llm_config,
+        },
+        "embedder": {
+            "provider": "huggingface",
+            "config": {
+                "model": embedder_model,
+                "embedding_dims": embedding_dims,
+            },
+        },
+        "vector_store": {
+            "provider": "qdrant",
+            "config": {
+                "collection_name": f"king_synapse_eval_{uuid.uuid4().hex}",
+                "path": qdrant_path,
+                "embedding_model_dims": embedding_dims,
+            },
+        },
+    }
 
 
 def load_mem0_config() -> dict[str, Any] | None:
@@ -203,19 +249,22 @@ def load_mem0_config() -> dict[str, Any] | None:
         return json.loads(raw_json)
 
     raw_path = os.getenv("MEM0_CONFIG_PATH")
-    if not raw_path:
-        return None
+    if raw_path:
+        path = Path(raw_path)
+        text = path.read_text(encoding="utf-8")
+        if path.suffix.lower() == ".json":
+            return json.loads(text)
 
-    path = Path(raw_path)
-    text = path.read_text(encoding="utf-8")
-    if path.suffix.lower() == ".json":
-        return json.loads(text)
+        try:
+            import yaml  # type: ignore
+        except ImportError as exc:
+            raise RuntimeError("PyYAML is required for non-JSON MEM0_CONFIG_PATH files") from exc
+        return yaml.safe_load(text)
 
-    try:
-        import yaml  # type: ignore
-    except ImportError as exc:
-        raise RuntimeError("PyYAML is required for non-JSON MEM0_CONFIG_PATH files") from exc
-    return yaml.safe_load(text)
+    if has_deepseek_config():
+        return deepseek_mem0_config()
+
+    return None
 
 
 def normalized_tokens(text: str) -> set[str]:
@@ -395,7 +444,13 @@ def run_real_mem0(input_data: dict[str, Any]) -> dict[str, Any]:
         "Each chain uses a fresh user_id namespace for isolation.",
     ]
     if config is not None:
-        notes.append("Mem0 configuration was loaded from MEM0_CONFIG_JSON or MEM0_CONFIG_PATH.")
+        if has_custom_config():
+            notes.append("Mem0 configuration was loaded from MEM0_CONFIG_JSON or MEM0_CONFIG_PATH.")
+        elif has_deepseek_config():
+            notes.append(
+                "Mem0 configuration was generated from DEEPSEEK_API_KEY with "
+                "a HuggingFace embedder and local Qdrant vector store."
+            )
     else:
         notes.append("Mem0 ran with its default OSS configuration.")
 
