@@ -7,7 +7,7 @@
 - **Architecture:** ✅ Stable — frozen at `v0.5.0-architecture-freeze`. See `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 - **Adaptive Common Model:** ✅ Frozen — `v0.5.9-adaptive-common-freeze`. Importance, Event, Context, and Benchmark contracts are read-only. See `docs/rfcs/RFC-011-adaptive-memory-common-model.md`.
 - **Cognitive Memory:** ✅ Final Accepted — frozen at `v0.9.26-cognitive-memory-freeze`. Visible recall, latent activation, cognitive trace dominance, predictive continuation, and explicit post-trace reinforcement are all validated by local benchmarks and manual transcripts.
-- **Post-freeze evaluation:** ▶ Started — external comparison against Graphiti/Zep, Letta, Mem0, LongMemEval, and DMR is tracked in `docs/eval/EXTERNAL_COMPARISON_PLAN.md`.
+- **Post-freeze evaluation:** Active - King Synapse, Graphiti/Zep, and Mem0 are measured in the checked-in external comparison report; Letta, LongMemEval, and DMR remain next.
 
 Major freeze tags: `v0.2.0-recall-api-freeze`, `v0.3.9-memory-evolution-freeze`, `v0.4.9-adaptive-memory-foundation`, `v0.4.19-reflection-processing-freeze`, `v0.4.29-hebbian-execution-freeze`, `v0.4.39-store-integration-freeze`, `v0.4.49-adaptive-policies-freeze`, `v0.5.0-architecture-freeze`, `v0.5.9-adaptive-common-freeze`, and `v0.9.26-cognitive-memory-freeze`.
 
@@ -66,11 +66,11 @@ continuation:
 
 Current post-freeze work:
 
-- Graphiti/Zep local adapter first, because temporal context graphs are the closest external shape to King Synapse edges and paths.
-- Mem0 adapter second, to compare layered user/session/organization memory against the cognitive fixture.
-- Letta adapter third, separating memory-system behavior from autonomous agent-loop behavior.
-- LongMemEval and DMR imports after adapter reset, raw evidence export, and source/local-result separation are stable.
-- UI and deeper agent integrations after the external comparison harness is reproducible.
+- Graphiti/Zep local adapter is measured through the Kuzu graph backend, because temporal context graphs are the closest external shape to King Synapse edges and paths.
+- Mem0 is measured through the OSS SDK with DeepSeek, a deterministic local embedder, and local Qdrant, giving a product-memory comparison against the cognitive fixture.
+- Letta remains the next adapter to configure, separating memory-system behavior from autonomous agent-loop behavior.
+- LongMemEval and DMR imports come after adapter reset, raw evidence export, and source/local-result separation stay stable.
+- UI and deeper agent integrations follow after the external comparison harness is reproducible.
 
 See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, `docs/COMPATIBILITY.md`, `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md`, `docs/COGNITIVE_NETWORK_MODEL.md`, `docs/MANUAL_VALIDATION.md`, and `docs/eval/EXTERNAL_COMPARISON_PLAN.md` for the current roadmap, adaptive memory architecture, public API list, stability policy, final cognitive-memory acceptance gates, cognitive-network algorithm model, manual validation transcript, and external comparison plan.
 
@@ -104,8 +104,8 @@ embeddings and explicit fixture triplet import. The Mem0 adapter uses the Mem0
 OSS Python SDK when `mem0ai` and either OpenAI credentials, `DEEPSEEK_API_KEY`,
 or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. With DeepSeek, it
 generates a DeepSeek + deterministic local embedder + local Qdrant config
-automatically. The
-Letta adapter uses `letta-client` plus `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+automatically. The Letta adapter uses `letta-client` plus `LETTA_API_KEY`,
+`LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` to measure agent memory blocks. Missing dependencies
 or credentials are reported as `not_configured`.
 

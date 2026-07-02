@@ -61,19 +61,19 @@ adapter failures belong in this external report format.
 
 The checked-in latest report is
 `crates/eval/reports/external-comparison-latest.json`. It records King Synapse
-as a measured local run, Graphiti/Zep through
-`scripts/eval/graphiti_adapter.py`, and Mem0 through
+as a measured local run, Graphiti/Zep measured through
+`scripts/eval/graphiti_adapter.py`, Mem0 measured through
 `scripts/eval/mem0_adapter.py`, and Letta through
-`scripts/eval/letta_adapter.py`. If `graphiti-core` and `kuzu` are installed
-but Neo4j/OpenAI credentials are absent, the Graphiti adapter uses a local Kuzu
+`scripts/eval/letta_adapter.py` as `not_configured` until a Letta client and
+endpoint are available. If `graphiti-core` and `kuzu` are installed but
+Neo4j/OpenAI credentials are absent, the Graphiti adapter uses a local Kuzu
 graph backend with deterministic embeddings and explicit fixture triplets. The
 Mem0 adapter uses the Mem0 OSS Python SDK when `mem0ai` and either
 `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, or `MEM0_CONFIG_JSON` /
 `MEM0_CONFIG_PATH` are available. With DeepSeek, the adapter generates a
 DeepSeek + deterministic local embedder + local Qdrant config automatically.
-The Letta adapter
-uses the official `letta-client` SDK to create and inspect agent memory blocks
-when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+The Letta adapter uses the official `letta-client` SDK to create and inspect
+agent memory blocks when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` is configured. If dependencies or credentials are
 missing, adapters report `not_configured` with the missing names.
 

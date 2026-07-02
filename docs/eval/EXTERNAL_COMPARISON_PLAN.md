@@ -14,18 +14,12 @@ Implementation status:
 - Current local result: King Synapse is measured against the exported cognitive
   fixture. Graphiti/Zep is measured locally through `graphiti-core` with the
   Kuzu graph driver, deterministic local embeddings, and explicit fixture
-  triplet import when `graphiti-core` and `kuzu` are installed. Full
-  Neo4j/OpenAI extraction mode still requires `OPENAI_API_KEY`, `NEO4J_URI`,
-  `NEO4J_USER`, and `NEO4J_PASSWORD`. Mem0 is wired into the same harness
-  through the OSS Python SDK adapter; without `mem0ai` and either
-  `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, or a custom `MEM0_CONFIG_JSON` /
-  `MEM0_CONFIG_PATH`, it is reported as `not_configured`. If
-  `DEEPSEEK_API_KEY` is present, the adapter generates a DeepSeek +
-  deterministic local embedder + local Qdrant config automatically. Letta is
-  wired through its
-  official Python SDK adapter; without `letta-client` plus `LETTA_API_KEY`,
-  `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local`, it is reported as
-  `not_configured`.
+  triplet import. Full Neo4j/OpenAI extraction mode still requires
+  `OPENAI_API_KEY`, `NEO4J_URI`, `NEO4J_USER`, and `NEO4J_PASSWORD`. Mem0 is
+  measured through the OSS Python SDK with DeepSeek, a deterministic local
+  embedder, and local Qdrant. Letta is wired through its official Python SDK
+  adapter, but remains `not_configured` until `letta-client` plus
+  `LETTA_API_KEY`, `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local` is available.
 
 ## Purpose
 
@@ -288,15 +282,15 @@ The first real external comparison run is accepted only when all gates pass:
 
 ## Immediate Next Work
 
-1. Build the Graphiti local adapter first, because its temporal graph model is
-   the closest external shape to King Synapse edges and paths.
-2. Build a Mem0 adapter second, because its API is simpler and its layered
-   memory model is useful for comparison against user/session/organization
-   memory.
-3. Build a Letta adapter third, with special care to separate memory-system
-   behavior from autonomous agent-loop behavior.
-4. Import or script-fetch LongMemEval only after adapter reset and evidence
-   export are stable.
+1. Configure and measure Letta with either a disposable API project or a local
+   endpoint, keeping agent-loop behavior separate from memory-block behavior.
+2. Add an external-run manifest that records adapter package versions, model
+   names, backend modes, and required credentials without storing secrets.
+3. Add fetch-or-cache instructions for LongMemEval and DMR, but do not check in
+   third-party datasets until license and redistribution terms are confirmed.
+4. Re-run Graphiti in full Neo4j/OpenAI extraction mode and Mem0 with an
+   official embedding path when those credentials are available, while keeping
+   the deterministic local modes as reproducible baselines.
 
 The external comparison should begin with humility: King Synapse has strong
 internal evidence for the cognitive-trace thesis, while the external systems

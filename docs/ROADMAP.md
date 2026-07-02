@@ -148,7 +148,7 @@ Focus
 
 - Predictive trace — broaden continuation benchmarks beyond the exported fixture.
 - Release process — cut and push the cognitive-memory release/freeze tag.
-- Evaluation & benchmarks (DMR, LongMemEval, comparisons against Graphiti / Letta / Mem0); first plan: `docs/eval/EXTERNAL_COMPARISON_PLAN.md`.
+- Evaluation & benchmarks: Graphiti/Zep and Mem0 are measured in the external comparison report; next work is Letta configuration, LongMemEval/DMR fetch instructions, and full hosted-mode reruns when credentials are available.
 - Parameter sweeps and ablation studies.
 
 Rules
