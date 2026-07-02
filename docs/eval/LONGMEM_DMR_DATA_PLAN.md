@@ -237,3 +237,43 @@ Decision gate:
 Next step: expand the same three-way comparison to LongMemEval 50 and DMR 50.
 Before changing memory schema or chunking, add an anonymized rank-bucket field
 so remaining failures can be separated into `top_10`, `top_50`, and `absent`.
+
+## DMR Mapping Audit 2026-07-02
+
+Runner:
+
+```powershell
+python scripts/eval/dmr_mapping_audit.py `
+  --endpoint https://hf-mirror.com `
+  --cleanup-cache
+```
+
+Report:
+
+`crates/eval/reports/dmr-mapping-audit.json`
+
+Readable summary:
+
+`docs/eval/DMR_MAPPING_AUDIT.md`
+
+The audit did not run retrieval. It checked all 500
+`MemGPT/MSC-Self-Instruct` candidate rows with the same answer-to-memory
+mapping rule used by the DMR smoke runner.
+
+| Item | Count |
+| --- | ---: |
+| Candidate rows audited | 500 |
+| Rows producing five chunks | 500 |
+| Rows accepted by current exact rule | 82 |
+| Rows skipped by current exact rule | 418 |
+| Rows skipped before first 50 valid rows | 278 |
+| Skipped rows recovered by punctuation-insensitive exact match | 241 |
+| Skipped rows with all significant answer tokens in one chunk | 362 |
+
+Decision gate:
+
+| Observed result | Decision |
+| --- | --- |
+| All rows generated chunks. | Do not treat the skipped rows as loader-empty or chunk-empty failures. |
+| Current exact string matching accepts only 82/500 rows. | Keep current DMR 50 numbers as a strict-string baseline only. |
+| Many skipped rows match under punctuation or token diagnostics. | Pin a DMR mapping/scoring policy before making stronger DMR claims. |

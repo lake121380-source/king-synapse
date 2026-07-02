@@ -225,4 +225,8 @@ task. The validation win condition is narrower and more important:
 - Performance analysis: first pass added at
   `docs/eval/PERFORMANCE_ANALYSIS.md`; sub-stage timing instrumentation remains
   a follow-up.
+- DMR mapping audit: added at `docs/eval/DMR_MAPPING_AUDIT.md`; the 278
+  pre-eval skipped rows are now localized to strict answer-string mapping, not
+  empty chunk generation. A replacement mapping/scoring policy is still not
+  pinned.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

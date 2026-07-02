@@ -126,6 +126,12 @@ The current Phase 6 performance profile is fixed in:
 
 Readable summary: `docs/eval/PERFORMANCE_ANALYSIS.md`.
 
+The current DMR mapping audit is fixed in:
+
+- `reports/dmr-mapping-audit.json`
+
+Readable summary: `docs/eval/DMR_MAPPING_AUDIT.md`.
+
 ## Algorithm Benchmarks
 
 ```bash

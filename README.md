@@ -234,6 +234,7 @@ cargo build --release
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
+| `docs/eval/DMR_MAPPING_AUDIT.md` | DMR skipped-row mapping audit. |
 | `docs/eval/FAILURE_ANALYSIS.md` | Anonymous failure bucket analysis. |
 | `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and runtime notes. |
 | `docs/eval/LONGMEM_DMR_DATA_PLAN.md` | LongMemEval / DMR license, cache, and smoke-test rules. |

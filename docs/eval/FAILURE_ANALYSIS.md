@@ -56,6 +56,18 @@ The dominant pre-evaluation issue is DMR mapping: 278 candidate rows were
 skipped because the current generated chunks did not contain the expected
 answer text.
 
+Follow-up DMR mapping audit:
+
+- `docs/eval/DMR_MAPPING_AUDIT.md`
+- `crates/eval/reports/dmr-mapping-audit.json`
+
+The audit covered all 500 candidate rows. All rows generated five chunks. The
+current exact answer-string rule accepted 82 rows and skipped 418 rows. Among
+the skipped rows, 241 matched after punctuation-insensitive exact matching and
+362 had all significant answer tokens in one chunk. Therefore the DMR pre-eval
+skip is mainly a strict mapping/scoring boundary, not a loader-empty or
+chunk-empty failure.
+
 ## LongMemEval Anonymous Cases
 
 Final-mode examples, limited to the first 20 non-top-1 cases:

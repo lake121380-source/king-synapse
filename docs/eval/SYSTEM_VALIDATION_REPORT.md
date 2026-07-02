@@ -146,6 +146,17 @@ The dominant evaluated failure mode is ranking. The dominant DMR data issue is
 mapping/chunking: 278 candidate rows were skipped before evaluation because the
 expected answer text was not found in generated memory chunks.
 
+DMR mapping audit status:
+
+- `docs/eval/DMR_MAPPING_AUDIT.md` and
+  `crates/eval/reports/dmr-mapping-audit.json` audit all 500 candidate rows.
+- Every audited row generated five memory chunks.
+- The current strict answer-string rule accepted 82 rows and skipped 418 rows.
+- Among skipped rows, 241 matched after punctuation-insensitive exact matching
+  and 362 had all significant answer tokens in one chunk.
+- The DMR skip is now localized to mapping/scoring strictness, not empty chunk
+  generation or a broad architecture failure.
+
 Benchmark baseline status:
 
 - `docs/eval/BENCHMARK_BASELINE.md` fixes the recall, algorithm, and
@@ -174,7 +185,8 @@ The project has not yet crossed the bar for:
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. sub-stage performance instrumentation;
-5. production-readiness claims.
+5. a pinned replacement DMR mapping/scoring policy;
+6. production-readiness claims.
 
 GPU validation status:
 

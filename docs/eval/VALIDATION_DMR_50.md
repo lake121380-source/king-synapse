@@ -50,6 +50,18 @@ The skipped count is important: it means a large part of the candidate source
 cannot yet participate in this harness without improving the DMR mapping and
 chunking logic.
 
+Follow-up audit:
+
+- `docs/eval/DMR_MAPPING_AUDIT.md`
+- `crates/eval/reports/dmr-mapping-audit.json`
+
+The audit checked all 500 candidate rows. Every row produced five memory
+chunks, but the current exact answer-string selection rule accepted only 82
+rows and skipped 418. Among skipped rows, 241 matched after punctuation
+normalization and 362 had all significant answer tokens in one chunk. This
+localizes the DMR skipped-row issue to the mapping/scoring rule rather than
+empty chunk generation.
+
 ## Metrics
 
 | Mode | Recall@5 | Recall@10 | MRR@10 | NDCG@10 | P50 latency | P95 latency |
@@ -78,4 +90,3 @@ retrieval misses.
 
 Conclusion: the DMR bottleneck is mainly retrieval-ranking plus data mapping,
 not a reason to change the whole Synapse architecture.
-

@@ -1,0 +1,240 @@
+{
+  "schema_version": "king-synapse.dmr-mapping-audit.v1",
+  "generated_at": "2026-07-02T12:49:08.092354+00:00",
+  "runner": "scripts/eval/dmr_mapping_audit.py",
+  "endpoint": "https://hf-mirror.com",
+  "source": {
+    "repo_id": "MemGPT/MSC-Self-Instruct",
+    "revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
+    "license": "apache-2.0",
+    "filename": "msc_self_instruct.jsonl",
+    "sha256": "d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e",
+    "bytes": 8558741
+  },
+  "cache_policy": {
+    "cache_root_recorded": false,
+    "raw_cache_retained": false,
+    "raw_records_committed": false
+  },
+  "criteria": {
+    "current_exact": "casefold + whitespace-normalized full answer substring in generated memory chunks; same selection criterion as longmem_dmr_smoke.py",
+    "punctuation_insensitive_exact": "diagnostic only; punctuation-stripped full answer substring",
+    "significant_token_containment": "diagnostic only; all non-stopword answer tokens with length >= 3 present in a single chunk"
+  },
+  "audit": {
+    "target_valid_rows": 50,
+    "first_valid_window": {
+      "accepted_current_exact": 50,
+      "answer_not_found_in_memory_chunks": 278
+    },
+    "full_dataset": {
+      "counts": {
+        "accepted_current_exact": 82,
+        "skipped_answer_not_found_current_exact": 418,
+        "with_question_and_answer": 500
+      },
+      "accepted_rows": 82,
+      "skipped_rows": 418,
+      "skipped_rows_punctuation_insensitive_exact_match": 241,
+      "skipped_rows_all_significant_answer_tokens_present": 362,
+      "skipped_rows_any_significant_answer_token_present": 414,
+      "skipped_rows_no_significant_answer_tokens": 2,
+      "chunk_count_distribution": {
+        "5": 500
+      }
+    },
+    "accepted_rows": {
+      "exact_match_source_rows": {
+        "both_previous_and_current": 23,
+        "current_only": 5,
+        "previous_only": 54
+      },
+      "relevant_chunk_count_distribution": {
+        "1": 59,
+        "2": 23
+      }
+    },
+    "skipped_rows": {
+      "answer_token_buckets": {
+        "1-3": 200,
+        "17-32": 5,
+        "4-8": 164,
+        "9-16": 49
+      },
+      "max_significant_token_overlap_buckets": {
+        "0": 4,
+        "0.25-0.49": 7,
+        "0.50-0.74": 18,
+        "0.75-0.99": 27,
+        "1.00": 362
+      },
+      "anonymized_examples": [
+        {
+          "sample_id": "6fbb9786ee7edd32",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "4e9ea2e95cb5ed60",
+          "answer_token_bucket": "9-16",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "cfa67e046b577700",
+          "answer_token_bucket": "9-16",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "f1555b8a2d041362",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "71714276bfbbc47d",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "1e69717693095efe",
+          "answer_token_bucket": "4-8",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "8ccceb153421d162",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "3440965f6a75c385",
+          "answer_token_bucket": "4-8",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "3cd3158a7c8ed905",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "24eadbc52e26269e",
+          "answer_token_bucket": "9-16",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": false,
+          "max_significant_token_overlap_bucket": "0.75-0.99"
+        },
+        {
+          "sample_id": "307d9176f8f2b10f",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "483bdc56f4c949f2",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "004e8a058643f809",
+          "answer_token_bucket": "4-8",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "8a42761748136730",
+          "answer_token_bucket": "4-8",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "545a10b592fa9b83",
+          "answer_token_bucket": "9-16",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": false,
+          "max_significant_token_overlap_bucket": "0.50-0.74"
+        },
+        {
+          "sample_id": "322d62ee174b105e",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "36ab285fb5815521",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "23a88ffe1abc58dc",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "ced0640480f25ef4",
+          "answer_token_bucket": "1-3",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": true,
+          "all_significant_answer_tokens_present": true,
+          "max_significant_token_overlap_bucket": "1.00"
+        },
+        {
+          "sample_id": "991e942adb567830",
+          "answer_token_bucket": "4-8",
+          "chunk_count": 5,
+          "punctuation_insensitive_exact_match": false,
+          "all_significant_answer_tokens_present": false,
+          "max_significant_token_overlap_bucket": "0.50-0.74"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "This is a mapping audit, not a retrieval benchmark.",
+    "Diagnostic recoverability counts are heuristics and are not scored as DMR hits.",
+    "Report excludes raw questions, answers, dialogs, personas, summaries, and retrieved text."
+  ]
+}
