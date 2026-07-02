@@ -40,6 +40,17 @@ Among the 100 evaluated final-mode queries:
 | Loader | 0 |
 | Chunk / missing before evaluation | 278 DMR candidate rows |
 
+```mermaid
+pie showData
+  title Evaluated Final-Mode Failures
+  "Ranking" : 55
+  "Retrieval" : 11
+  "Loader" : 0
+```
+
+The pre-evaluation DMR chunk/mapping issue is tracked separately because those
+278 rows did not enter the evaluated 100-query denominator.
+
 The dominant evaluated failure mode is ranking, not total retrieval absence.
 The dominant pre-evaluation issue is DMR mapping: 278 candidate rows were
 skipped because the current generated chunks did not contain the expected
@@ -92,4 +103,3 @@ The current system boundary is sharper now:
 - Remaining evaluated failures are mostly ranking failures, so the next
   technical investigation should focus on candidate ordering and chunk mapping
   before changing memory architecture.
-

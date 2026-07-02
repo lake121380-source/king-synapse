@@ -157,12 +157,24 @@ Benchmark baseline status:
 - `crates/eval/datasets/regression/golden-manifest.json` records dataset
   paths, source revisions, hashes, sample sizes, and raw-data policy.
 
+Performance analysis status:
+
+- `docs/eval/PERFORMANCE_ANALYSIS.md` records the current Phase 6 latency
+  evidence.
+- Lightweight replay baselines stay below `4.2 ms` P95.
+- In the 50-sample long-memory reports, vector mode adds much less P50 latency
+  than reranking. Reranking adds about `698 ms` P50 on LongMemEval and about
+  `541 ms` P50 on DMR over vector mode.
+- Memory, CPU, embedding sub-stage, vector-search sub-stage, and reranker
+  sub-stage timing are not independently instrumented yet.
+
 The project has not yet crossed the bar for:
 
 1. official DMR benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
-4. production-readiness claims.
+4. sub-stage performance instrumentation;
+5. production-readiness claims.
 
 GPU validation status:
 

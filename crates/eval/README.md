@@ -120,6 +120,12 @@ The current Phase 6 replay baseline is fixed in:
 Readable summaries live in `docs/eval/BENCHMARK_BASELINE.md` and
 `docs/eval/GOLDEN_DATASET.md`.
 
+The current Phase 6 performance profile is fixed in:
+
+- `reports/phase6-performance-profile.json`
+
+Readable summary: `docs/eval/PERFORMANCE_ANALYSIS.md`.
+
 ## Algorithm Benchmarks
 
 ```bash

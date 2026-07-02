@@ -1,0 +1,178 @@
+{
+  "schema_version": "king-synapse.phase6-performance-profile.v1",
+  "generated_at": "2026-07-02T21:40:00.0000000+08:00",
+  "validated_commit": "2ac14e0",
+  "purpose": "Phase 6 performance analysis. Records current timing evidence and explicitly marks missing instrumentation.",
+  "measurement_coverage": {
+    "latency": "measured end-to-end per query and per run",
+    "memory": "not instrumented",
+    "cpu": "not instrumented",
+    "embedding_time": "not independently instrumented; only branch-level latency delta is available",
+    "vector_search_time": "not independently instrumented; only branch-level latency delta is available",
+    "reranker_time": "not independently instrumented; reranker branch delta is available",
+    "gpu": "CUDA path validated for LongMemEval / DMR vector and reranker runs"
+  },
+  "lightweight_recall": [
+    {
+      "id": "coding-mem",
+      "report": "crates/eval/reports/phase6-coding-mem-baseline.json",
+      "memories": 20,
+      "queries": 30,
+      "recall_at_10": 0.95,
+      "p50_latency_ms": 2.2138,
+      "p95_latency_ms": 3.7708,
+      "total_ms": 71.0818
+    },
+    {
+      "id": "reference",
+      "report": "crates/eval/reports/phase6-reference-baseline.json",
+      "memories": 20,
+      "queries": 5,
+      "recall_at_10": 1.0,
+      "p50_latency_ms": 1.1615,
+      "p95_latency_ms": 1.6743,
+      "total_ms": 5.8435
+    },
+    {
+      "id": "multihop",
+      "report": "crates/eval/reports/phase6-multihop-baseline.json",
+      "memories": 20,
+      "queries": 5,
+      "recall_at_10": 1.0,
+      "p50_latency_ms": 2.1374,
+      "p95_latency_ms": 4.1617,
+      "total_ms": 12.7922
+    }
+  ],
+  "long_memory": [
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "report": "crates/eval/reports/longmem-50-validation.json",
+      "memory_chunks": 2355,
+      "queries": 50,
+      "mode": "baseline-rrf",
+      "recall_at_10": 0.5033333333333334,
+      "mrr_at_10": 0.3098578565578565,
+      "p50_latency_ms": 538.1424,
+      "p95_latency_ms": 1115.1534,
+      "total_ms": 29121.1465
+    },
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "report": "crates/eval/reports/longmem-50-validation.json",
+      "memory_chunks": 2355,
+      "queries": 50,
+      "mode": "vectors",
+      "recall_at_10": 0.6633333333333333,
+      "mrr_at_10": 0.4241738816738816,
+      "p50_latency_ms": 576.4174,
+      "p95_latency_ms": 1190.3343,
+      "total_ms": 30971.5836
+    },
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "report": "crates/eval/reports/longmem-50-validation.json",
+      "memory_chunks": 2355,
+      "queries": 50,
+      "mode": "vectors-rerank",
+      "recall_at_10": 0.59,
+      "mrr_at_10": 0.4897070707070707,
+      "p50_latency_ms": 1274.5631,
+      "p95_latency_ms": 1861.5409,
+      "total_ms": 65861.9864
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "report": "crates/eval/reports/dmr-50-validation.json",
+      "memory_chunks": 250,
+      "queries": 50,
+      "mode": "baseline-rrf",
+      "recall_at_10": 0.188,
+      "mrr_at_10": 0.1554597840235081,
+      "p50_latency_ms": 64.4292,
+      "p95_latency_ms": 83.3538,
+      "total_ms": 3300.3331
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "report": "crates/eval/reports/dmr-50-validation.json",
+      "memory_chunks": 250,
+      "queries": 50,
+      "mode": "vectors",
+      "recall_at_10": 0.438,
+      "mrr_at_10": 0.2171527021415231,
+      "p50_latency_ms": 78.0871,
+      "p95_latency_ms": 102.9293,
+      "total_ms": 3986.5427
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "report": "crates/eval/reports/dmr-50-validation.json",
+      "memory_chunks": 250,
+      "queries": 50,
+      "mode": "vectors-rerank",
+      "recall_at_10": 0.584,
+      "mrr_at_10": 0.4450088401620675,
+      "p50_latency_ms": 619.0115,
+      "p95_latency_ms": 648.6421,
+      "total_ms": 31133.9283
+    }
+  ],
+  "branch_delta": [
+    {
+      "dataset": "LongMemEval cleaned 50",
+      "vector_p50_delta_ms": 38.275,
+      "reranker_p50_delta_ms": 698.1457,
+      "vector_total_delta_ms": 1850.4371,
+      "reranker_total_delta_ms": 34890.4028
+    },
+    {
+      "dataset": "DMR candidate 50",
+      "vector_p50_delta_ms": 13.6579,
+      "reranker_p50_delta_ms": 540.9244,
+      "vector_total_delta_ms": 686.2096,
+      "reranker_total_delta_ms": 27147.3856
+    }
+  ],
+  "external_comparison": [
+    {
+      "system": "King Synapse",
+      "status": "measured",
+      "chains": 8,
+      "mean_latency_ms": 4.511125
+    },
+    {
+      "system": "Graphiti/Zep",
+      "status": "measured",
+      "chains": 8,
+      "mean_latency_ms": 136.5536499999962
+    },
+    {
+      "system": "Mem0",
+      "status": "measured",
+      "chains": 8,
+      "mean_latency_ms": 2995.50183749966
+    },
+    {
+      "system": "Letta",
+      "status": "not_configured",
+      "chains": 8,
+      "mean_latency_ms": 0.0
+    }
+  ],
+  "gpu_configuration": {
+    "accelerator": "cuda",
+    "cuda_device_id": "0",
+    "embed_batch_size": 32,
+    "embed_max_length": 256,
+    "rerank_batch_size": 32,
+    "rerank_max_length": 256,
+    "rerank_pool": 50
+  },
+  "next_instrumentation": [
+    "Add process peak memory and CPU accounting around kr-eval subprocesses.",
+    "Split embedding corpus build time from query-time vector search.",
+    "Split vector search time from FTS/entity/RRF fusion.",
+    "Split reranker model inference time from candidate collection and final scoring."
+  ]
+}

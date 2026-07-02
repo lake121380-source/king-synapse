@@ -156,6 +156,17 @@ Ordinary PRs should preserve the lightweight committed replay baselines.
 Retrieval-strategy changes must compare against the LongMemEval / DMR
 50-sample CUDA reports before changing defaults.
 
+### 7. Performance Analysis
+
+The current performance pass is recorded in:
+
+- `docs/eval/PERFORMANCE_ANALYSIS.md`
+- `crates/eval/reports/phase6-performance-profile.json`
+
+It records end-to-end latency and branch deltas from existing reports. Memory,
+CPU, embedding sub-stage, vector-search sub-stage, and reranker sub-stage
+timings are explicitly marked as not yet instrumented.
+
 ## Failure Modes To Watch
 
 | Failure mode | What it means |
@@ -211,4 +222,7 @@ task. The validation win condition is narrower and more important:
   `crates/eval/datasets/regression/golden-manifest.json`; the expanded
   `expanded-cognitive-replay` benchmark now covers 20 cognitive trace replays
   and 20 prediction replays.
+- Performance analysis: first pass added at
+  `docs/eval/PERFORMANCE_ANALYSIS.md`; sub-stage timing instrumentation remains
+  a follow-up.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
