@@ -10,8 +10,11 @@ Implementation status:
 - First Graphiti adapter command: `python scripts/eval/graphiti_adapter.py`
 - First report: `crates/eval/reports/external-comparison-latest.json`
 - Current local result: King Synapse is measured against the exported cognitive
-  fixture; Graphiti/Zep is represented as `not_configured` through the adapter
-  until `graphiti-core`, `OPENAI_API_KEY`, and Neo4j configuration are supplied.
+  fixture. Graphiti/Zep is measured locally through `graphiti-core` with the
+  Kuzu graph driver, deterministic local embeddings, and explicit fixture
+  triplet import when `graphiti-core` and `kuzu` are installed. Full
+  Neo4j/OpenAI extraction mode still requires `OPENAI_API_KEY`, `NEO4J_URI`,
+  `NEO4J_USER`, and `NEO4J_PASSWORD`.
 
 ## Purpose
 
@@ -200,6 +203,14 @@ cargo run -p synapse-eval --bin kr-external-eval -- \
 The adapter receives one final argument from the harness: an input JSON path
 containing the exported cognitive fixture. It must print one
 `ExternalSystemRun` JSON object to stdout.
+
+The adapter has two modes. With `GRAPHITI_BACKEND=neo4j`, it uses the normal
+Graphiti/Neo4j path and requires OpenAI plus Neo4j configuration. Without those
+credentials, if `graphiti-core` and `kuzu` are installed, it automatically uses
+`GRAPHITI_BACKEND=kuzu`: a local deterministic Graphiti Kuzu path that measures
+graph storage/search over fixture triplets. This Kuzu mode does not claim LLM
+extraction, dominant/suppressed trace competition, prediction, or reinforcement
+support; those capabilities are reported as `unsupported`.
 
 ## LongMemEval And DMR Plan
 

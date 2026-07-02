@@ -93,8 +93,11 @@ cargo run -p synapse-eval --bin kr-external-eval -- \
 ```
 
 This measures King Synapse locally against the exported cognitive fixture and
-runs the Graphiti/Zep adapter path. On an unconfigured machine, Graphiti/Zep is
-reported as `not_configured` with the missing dependency and credential names.
+runs the Graphiti/Zep adapter path. When `graphiti-core` and `kuzu` are
+available but Neo4j/OpenAI credentials are absent, the adapter automatically
+uses a local Kuzu graph backend with deterministic embeddings and explicit
+fixture triplet import. Without Graphiti dependencies, it reports
+`not_configured` with the missing dependency and credential names.
 
 ## Build
 

@@ -23,8 +23,8 @@ shape.
 
 ```bash
 # Run the post-freeze external comparison harness.
-# This measures King Synapse locally and records Graphiti/Zep as not_configured
-# until a local adapter command is provided.
+# This measures King Synapse locally. Pass the Graphiti adapter command below
+# to include the local Graphiti/Zep comparison path.
 cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json
 
 # Run only the local King Synapse cognitive fixture.
@@ -45,11 +45,14 @@ emits a runtime report, not a frozen `BenchmarkReport`. Runtime metadata,
 raw evidence, configured external systems, unsupported capabilities, and
 adapter failures belong in this external report format.
 
-The first checked-in report is
+The checked-in latest report is
 `crates/eval/reports/external-comparison-latest.json`. It records King Synapse
 as a measured local run and Graphiti/Zep through
-`scripts/eval/graphiti_adapter.py`. On an unconfigured machine, Graphiti/Zep is
-reported as `not_configured` with the missing dependency and credential names.
+`scripts/eval/graphiti_adapter.py`. If `graphiti-core` and `kuzu` are installed
+but Neo4j/OpenAI credentials are absent, the adapter uses a local Kuzu graph
+backend with deterministic embeddings and explicit fixture triplets. If the
+dependencies are missing, Graphiti/Zep is reported as `not_configured` with the
+missing dependency and credential names.
 
 ## Algorithm Benchmarks
 

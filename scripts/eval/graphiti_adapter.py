@@ -4,14 +4,18 @@
 The Rust harness calls this script with one argument: an adapter-input JSON
 path. The script prints one ExternalSystemRun JSON object to stdout.
 
-This adapter follows the official Graphiti quickstart shape: graphiti-core,
-OpenAI credentials, and a Neo4j backend. If any required piece is missing, it
-returns a not_configured report instead of fabricating benchmark numbers.
+The default production-shaped mode follows the official Graphiti quickstart:
+graphiti-core, OpenAI credentials, and a Neo4j backend. For local evaluation
+without hosted services, the adapter can also run graphiti-core with the Kuzu
+driver, deterministic embeddings, and explicit fixture triplet import. If no
+real Graphiti path is available, it returns not_configured instead of
+fabricating benchmark numbers.
 """
 
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import os
 import sys
@@ -185,6 +189,38 @@ def missing_configuration() -> list[str]:
     return notes
 
 
+def graphiti_installed() -> bool:
+    try:
+        __import__("graphiti_core")
+        return True
+    except ImportError:
+        return False
+
+
+def kuzu_installed() -> bool:
+    try:
+        __import__("kuzu")
+        return True
+    except ImportError:
+        return False
+
+
+def neo4j_openai_configured() -> bool:
+    return all(
+        os.getenv(name)
+        for name in ["OPENAI_API_KEY", "NEO4J_URI", "NEO4J_USER", "NEO4J_PASSWORD"]
+    )
+
+
+def graphiti_mode() -> str:
+    explicit = os.getenv("GRAPHITI_BACKEND", "").strip().lower()
+    if explicit:
+        return explicit
+    if graphiti_installed() and kuzu_installed() and not neo4j_openai_configured():
+        return "kuzu"
+    return "neo4j"
+
+
 def result_content(result: Any) -> str:
     for attr in ["fact", "content", "name", "summary"]:
         value = getattr(result, attr, None)
@@ -345,6 +381,241 @@ async def run_real_graphiti(input_data: dict[str, Any]) -> dict[str, Any]:
     )
 
 
+class NoOpLLMClient:
+    def __init__(self) -> None:
+        from graphiti_core.llm_client.client import LLMClient
+        from graphiti_core.llm_client.config import LLMConfig
+
+        class _Client(LLMClient):
+            async def _generate_response(
+                self,
+                messages: list[Any],
+                response_model: Any = None,
+                max_tokens: int = 16384,
+                model_size: Any = None,
+            ) -> dict[str, Any]:
+                raise RuntimeError(
+                    "NoOpLLMClient should not be called in deterministic Kuzu mode"
+                )
+
+        self.client = _Client(LLMConfig(model="noop", small_model="noop"))
+
+
+def deterministic_vector(text: str) -> list[float]:
+    tokens = normalized_tokens(text)
+    vector = [0.0] * 1024
+    if not tokens:
+        return vector
+    for token in tokens:
+        digest = hashlib.sha256(token.encode("utf-8")).digest()
+        index = int.from_bytes(digest[:4], "big") % len(vector)
+        vector[index] += 1.0
+    norm = sum(value * value for value in vector) ** 0.5
+    if norm == 0.0:
+        return vector
+    return [value / norm for value in vector]
+
+
+def normalized_tokens(text: str) -> set[str]:
+    cleaned = "".join(ch.lower() if ch.isalnum() else " " for ch in text)
+    return {token for token in cleaned.split() if token}
+
+
+def lexical_score(query: str, passage: str) -> float:
+    query_tokens = normalized_tokens(query)
+    passage_tokens = normalized_tokens(passage)
+    if not query_tokens or not passage_tokens:
+        return 0.0
+    overlap = len(query_tokens & passage_tokens)
+    return overlap / max(len(query_tokens), 1)
+
+
+def stable_id(*parts: str) -> str:
+    raw = "::".join(parts)
+    return hashlib.sha1(raw.encode("utf-8")).hexdigest()
+
+
+async def run_kuzu_graphiti(input_data: dict[str, Any]) -> dict[str, Any]:
+    from graphiti_core import Graphiti
+    from graphiti_core.cross_encoder.client import CrossEncoderClient
+    from graphiti_core.driver.kuzu_driver import KuzuDriver
+    from graphiti_core.embedder.client import EmbedderClient
+    from graphiti_core.edges import EntityEdge
+    from graphiti_core.graphiti import add_nodes_and_edges_bulk
+    from graphiti_core.graph_queries import get_fulltext_indices
+    from graphiti_core.nodes import EntityNode
+
+    class DeterministicEmbedder(EmbedderClient):
+        async def create(self, input_data: Any) -> list[float]:
+            text = (
+                " ".join(str(item) for item in input_data)
+                if isinstance(input_data, list)
+                else str(input_data)
+            )
+            return deterministic_vector(text)
+
+        async def create_batch(self, input_data_list: list[str]) -> list[list[float]]:
+            return [deterministic_vector(text) for text in input_data_list]
+
+    class DeterministicCrossEncoder(CrossEncoderClient):
+        async def rank(self, query: str, passages: list[str]) -> list[tuple[str, float]]:
+            return sorted(
+                [(passage, lexical_score(query, passage)) for passage in passages],
+                key=lambda item: item[1],
+                reverse=True,
+            )
+
+    os.environ.setdefault("GRAPHITI_TELEMETRY_ENABLED", "false")
+    driver = KuzuDriver(db=":memory:")
+    graphiti = Graphiti(
+        graph_driver=driver,
+        llm_client=NoOpLLMClient().client,
+        embedder=DeterministicEmbedder(),
+        cross_encoder=DeterministicCrossEncoder(),
+    )
+    chains: list[dict[str, Any]] = []
+    run_notes = [
+        "Measured through graphiti-core with the Kuzu graph driver and deterministic local embeddings.",
+        "Fixture memories are imported as explicit triplets, not extracted by a hosted LLM.",
+    ]
+    try:
+        for query in get_fulltext_indices(driver.provider):
+            await driver.execute_query(query)
+        for chain in input_data["chains"]:
+            started = time.perf_counter()
+            group_id = chain["label"]
+            now = datetime(2026, 7, 2, tzinfo=timezone.utc)
+            nodes = {
+                key: EntityNode(
+                    uuid=stable_id(chain["label"], key),
+                    name=value,
+                    group_id=group_id,
+                    summary=value,
+                    labels=["Memory"],
+                    created_at=now,
+                    name_embedding=deterministic_vector(value),
+                )
+                for key, value in [
+                    ("seed", chain["seed"]),
+                    ("visible_distractor", chain["visible_distractor"]),
+                    ("hidden", chain["hidden"]),
+                    ("hidden_distractor", chain["hidden_distractor"]),
+                    ("future", chain["future"]),
+                    ("future_distractor", chain["future_distractor"]),
+                ]
+            }
+            edge_specs = [
+                ("seed", "hidden", "ACTIVATES", f"{chain['seed']} -> {chain['hidden']}"),
+                (
+                    "seed",
+                    "hidden_distractor",
+                    "WEAKLY_ACTIVATES",
+                    f"{chain['seed']} -> {chain['hidden_distractor']}",
+                ),
+                ("hidden", "future", "CONTINUES", f"{chain['hidden']} -> {chain['future']}"),
+                (
+                    "hidden",
+                    "future_distractor",
+                    "WEAKLY_CONTINUES",
+                    f"{chain['hidden']} -> {chain['future_distractor']}",
+                ),
+            ]
+            edges = [
+                EntityEdge(
+                    uuid=stable_id(chain["label"], source, target, relation),
+                    group_id=group_id,
+                    source_node_uuid=nodes[source].uuid,
+                    target_node_uuid=nodes[target].uuid,
+                    created_at=now,
+                    name=relation,
+                    fact=fact,
+                    fact_embedding=deterministic_vector(fact),
+                    valid_at=now,
+                    reference_time=now,
+                )
+                for source, target, relation, fact in edge_specs
+            ]
+            await add_nodes_and_edges_bulk(
+                driver,
+                [],
+                [],
+                list(nodes.values()),
+                edges,
+                graphiti.embedder,
+            )
+
+            raw_results = await graphiti.search(chain["query"], group_ids=[group_id], num_results=10)
+            returned = [graphiti_hit(result, idx + 1) for idx, result in enumerate(raw_results)]
+            evidence_paths = [
+                {
+                    "source_id": hit["path"][0] if hit["path"] else "",
+                    "source_content": None,
+                    "target_id": hit["path"][-1] if hit["path"] else hit["id"],
+                    "target_content": hit["content"],
+                    "path": hit["path"],
+                    "score": hit["score"],
+                    "matched_terms": hit["matched_terms"],
+                }
+                for hit in returned
+                if hit["path"]
+            ]
+            visible_found = contains_expected(returned, chain["seed"])
+            hidden_found = contains_expected(returned, chain["hidden"])
+            path_available = bool(evidence_paths)
+            latency_ms = (time.perf_counter() - started) * 1000.0
+            unsupported_note = (
+                "Graphiti Kuzu deterministic mode measures graph storage/search over provided "
+                "triplets; it does not expose King Synapse dominant/suppressed/predict/reinforce semantics."
+            )
+            chains.append(
+                {
+                    "label": chain["label"],
+                    "query": chain["query"],
+                    "expected": expected(chain),
+                    "status": "measured",
+                    "latency_ms": latency_ms,
+                    "returned": returned,
+                    "evidence_paths": evidence_paths,
+                    "dominant": None,
+                    "suppressed": [],
+                    "prediction_candidates": [],
+                    "reinforcement": empty_reinforcement(unsupported_note),
+                    "metrics": {
+                        "visible_seed_found": metric("hit" if visible_found else "miss", 1.0 if visible_found else 0.0),
+                        "hidden_influence_found": metric("hit" if hidden_found else "miss", 1.0 if hidden_found else 0.0),
+                        "hidden_influence_dominant": metric("unsupported", None, unsupported_note),
+                        "suppressed_alternatives_visible": metric("unsupported", None, unsupported_note),
+                        "evidence_path_available": metric("hit" if path_available else "miss", 1.0 if path_available else 0.0),
+                        "future_continuation_found": metric("unsupported", None, unsupported_note),
+                        "reinforcement_isolated": metric("unsupported", None, unsupported_note),
+                    },
+                    "notes": [unsupported_note],
+                    "raw": {"result_count": len(returned), "mode": "kuzu_deterministic_triplets"},
+                }
+            )
+    finally:
+        close = getattr(graphiti, "close", None)
+        if close is not None:
+            maybe = close()
+            if hasattr(maybe, "__await__"):
+                await maybe
+
+    return system_run(
+        run_status(chains),
+        chains,
+        run_notes,
+        version=graphiti_version(),
+        capabilities={
+            "retrieval": "supported",
+            "trace": "unsupported",
+            "prediction": "unsupported",
+            "reinforcement": "unsupported",
+            "evidence_paths": "partial",
+        },
+        raw={"mode": "kuzu_deterministic_triplets"},
+    )
+
+
 async def main() -> int:
     if len(sys.argv) != 2:
         print("usage: graphiti_adapter.py <adapter-input.json>", file=sys.stderr)
@@ -352,13 +623,24 @@ async def main() -> int:
 
     input_path = Path(sys.argv[1])
     input_data = json.loads(input_path.read_text(encoding="utf-8"))
-    missing = missing_configuration()
-    if missing:
-        print(json.dumps(not_configured(input_data, missing), indent=2))
-        return 0
-
     try:
-        report = await run_real_graphiti(input_data)
+        mode = graphiti_mode()
+        if mode == "kuzu":
+            if not graphiti_installed() or not kuzu_installed():
+                missing = []
+                if not graphiti_installed():
+                    missing.append("graphiti-core is not installed")
+                if not kuzu_installed():
+                    missing.append("kuzu is not installed")
+                print(json.dumps(not_configured(input_data, missing), indent=2))
+                return 0
+            report = await run_kuzu_graphiti(input_data)
+        else:
+            missing = missing_configuration()
+            if missing:
+                print(json.dumps(not_configured(input_data, missing), indent=2))
+                return 0
+            report = await run_real_graphiti(input_data)
     except Exception as exc:  # pragma: no cover - depends on external service.
         report = failed(input_data, f"Graphiti adapter failed: {exc}")
     print(json.dumps(report, indent=2))
