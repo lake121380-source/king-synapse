@@ -1,188 +1,93 @@
 # King Synapse
 
-> A persistently activated, decaying, reinforcing **associative memory network** for coding agents — so they stop repeating the same mistakes, stop re-learning your preferences, and stop forgetting where you left off.
+<p align="center">
+  <strong>Readable memory for coding agents.</strong><br />
+  A local associative memory network that remembers facts, follows hidden influences,
+  explains why one trace won, and learns after the current answer is finished.
+</p>
 
-**Status:**
+<p align="center">
+  <a href="https://github.com/lake121380-source/king-synapse/stargazers"><img src="https://img.shields.io/github/stars/lake121380-source/king-synapse?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/lake121380-source/king-synapse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lake121380-source/king-synapse" alt="License" /></a>
+  <img src="https://img.shields.io/badge/language-Rust-orange" alt="Rust" />
+  <img src="https://img.shields.io/badge/status-cognitive%20memory%20validated-2ea44f" alt="Status" />
+</p>
 
-- **Architecture:** ✅ Stable — frozen at `v0.5.0-architecture-freeze`. See `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
-- **Adaptive Common Model:** ✅ Frozen — `v0.5.9-adaptive-common-freeze`. Importance, Event, Context, and Benchmark contracts are read-only. See `docs/rfcs/RFC-011-adaptive-memory-common-model.md`.
-- **Cognitive Memory:** ✅ Final Accepted — frozen at `v0.9.26-cognitive-memory-freeze`. Visible recall, latent activation, cognitive trace dominance, predictive continuation, and explicit post-trace reinforcement are all validated by local benchmarks and manual transcripts.
-- **Post-freeze evaluation:** Active - King Synapse, Graphiti/Zep, and Mem0 are measured in the checked-in external comparison report; Letta, LongMemEval, and DMR remain next.
+## Why This Exists
 
-Major freeze tags: `v0.2.0-recall-api-freeze`, `v0.3.9-memory-evolution-freeze`, `v0.4.9-adaptive-memory-foundation`, `v0.4.19-reflection-processing-freeze`, `v0.4.29-hebbian-execution-freeze`, `v0.4.39-store-integration-freeze`, `v0.4.49-adaptive-policies-freeze`, `v0.5.0-architecture-freeze`, `v0.5.9-adaptive-common-freeze`, and `v0.9.26-cognitive-memory-freeze`.
+Most coding agents still forget like a browser tab.
 
-## Why
+They may remember a note, a rule, or a chat summary, but they usually cannot
+show the chain behind a thought: what memory started it, what hidden influence
+pulled it forward, which alternatives were suppressed, and what likely happens
+next.
 
-The biggest unsolved problem in coding agents isn't reasoning — it's **memory**. Every other tool today either:
+King Synapse treats memory as a network, not a notebook.
 
-- forgets between sessions (Cursor, default Claude Code),
-- stores flat text only the human can author (CLAUDE.md, `.cursor/rules`), or
-- treats memory as a black box (Mem0, Letta) that the user can't inspect, edit, or trust.
-
-King Synapse takes a different bet: **memory is a network, not a database.** Memories are nodes; their relationships are weighted edges; recall is *spreading activation* across the network — not a vector search.
-
-## Cognitive memory model
-
-The final system models a thought as a dominant candidate selected from a wider,
-inspectable graph of visible memories, hidden influences, body/emotion state,
-goals, future risk, and suppressed alternatives.
-
-In practice, King Synapse can model chains like:
-
-> skipped water → tired mood → narrower commute attention → higher scooter fall risk → future mistake risk
-
-The important claim is not mind reading. It is probabilistic, inspectable trace
-continuation:
-
-- visible recall finds the seed memory from the current query;
-- latent activation follows weighted edges into hidden influences;
-- state and goal terms modulate hidden activation without hiding evidence;
-- cognitive trace reports a dominant candidate plus suppressed alternatives;
-- predictive trace continues from the dominant candidate into likely next influences;
-- explicit reinforcement can strengthen a selected association after the current report is already computed.
-
-## Design tenets
-
-1. **Append-only with bi-temporal stamps** — memories are never overwritten; old beliefs are superseded, not deleted. You can replay history.
-2. **Provenance is a first-class column** — every memory knows whether the user said it, the agent guessed it, or an extractor inferred it.
-3. **Scopes are explicit** — `global` / `user` / `project:<id>` / `file:<path>` / `session:<id>` — no more "is this preference mine, or this repo's?"
-4. **Five kinds of memory**, each with its own decay rate and extractor:
-   - `fact`     — stable repo/project facts
-   - `preference` — what you like / hate (slowest decay)
-   - `failure`  — what *didn't* work last time
-   - `playbook` — how-we-fix-X patterns
-   - `state`    — what you were working on (fastest decay)
-5. **Local-first** — single SQLite file, no cloud calls on the hot path.
-6. **Transparent** — every memory and every edge can be inspected, edited, redacted, or rolled back.
-
-## What's implemented now
-
-- `synapse-core`: SQLite + FTS5 storage, append-only event log, entity extraction, sqlite-vec embeddings, hybrid recall, time-decay scoring, and stable adaptive-memory contracts.
-- `RecallEngine`: fuses FTS, entity, and optional vector branches with RRF; supports optional fastembed query embeddings, cross-encoder reranking, explain output, additive recall boosters including graph/latent activation, and cognitive probes for inspecting hidden multi-step influence.
-- Working memory and adaptive memory: frozen public traits for activation, consolidation, reflection processing, Hebbian execution, store integration, adaptive policies, and the RFC-011 Adaptive Common Model, plus rule-based Phase 5 algorithms for reflection, merge, forget, and Hebbian reinforcement.
-- `synapse-eval`: benchmark harness and frozen datasets for recall baselines, including `reference`, `multihop`, reflection yield, merge/forget precision, Hebbian consistency, cognitive-chain recall, cognitive-trace dominance, trace reinforcement, predictive trace, activation parameter sweep, long-horizon cognitive memory, and exported cognitive session validation.
-- `synapse-mcp`: a stdio MCP server exposing write, recall, recent-list, forget, entity-list, neighbor, edge-inspection, Hebbian reinforcement, latent-activation, latent-query, and cognitive-trace tools, including optional prediction and post-trace reinforcement.
-- `kr`: a CLI for writing, recalling, inspecting, invalidating, embedding backfill, stats, latent activation, natural-language latent query, cognitive trace, trace prediction, and trace reinforcement.
-
-Current post-freeze work:
-
-- Graphiti/Zep local adapter is measured through the Kuzu graph backend, because temporal context graphs are the closest external shape to King Synapse edges and paths.
-- Mem0 is measured through the OSS SDK with DeepSeek, a deterministic local embedder, and local Qdrant, giving a product-memory comparison against the cognitive fixture.
-- Letta remains the next adapter to configure, separating memory-system behavior from autonomous agent-loop behavior.
-- LongMemEval and DMR imports come after adapter reset, raw evidence export, and source/local-result separation stay stable.
-- UI and deeper agent integrations follow after the external comparison harness is reproducible.
-
-See `docs/ROADMAP.md`, `docs/ADAPTIVE_MEMORY.md`, `docs/API_SURFACE.md`, `docs/COMPATIBILITY.md`, `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md`, `docs/COGNITIVE_NETWORK_MODEL.md`, `docs/MANUAL_VALIDATION.md`, and `docs/eval/EXTERNAL_COMPARISON_PLAN.md` for the current roadmap, adaptive memory architecture, public API list, stability policy, final cognitive-memory acceptance gates, cognitive-network algorithm model, manual validation transcript, and external comparison plan.
-
-Release notes: `RELEASE-v0.2.0.md`, `docs/releases/v0.3.9-memory-evolution-freeze.md`, `docs/releases/v0.4.9-adaptive-memory-foundation.md`, `docs/releases/v0.4.19-reflection-processing-freeze.md`, `docs/releases/v0.4.29-hebbian-execution-freeze.md`, `docs/releases/v0.4.39-store-integration-freeze.md`, `docs/releases/v0.4.49-adaptive-policies-freeze.md`, `docs/releases/v0.5.0-architecture-freeze.md`, `docs/releases/v0.9.26-cognitive-memory-release-candidate.md`, `docs/releases/v0.9.26-final-gate-validation-2026-07-02.md`, `docs/releases/v0.9.26-manual-validation-2026-07-02.md`, and `docs/releases/v0.9.26-cognitive-memory-freeze.md`.
-
-For the broader "King Recall v3 / AI Cognitive Memory Engine" proposal and
-how it maps onto the current RFC-driven implementation plan, see
-`docs/V3_PROPOSAL_REVIEW.md`.
-
-## External comparison
-
-The first runnable external comparison harness is available through
-`kr-external-eval`:
-
-```bash
-cargo run -p synapse-eval --bin kr-external-eval -- \
-  --graphiti-command python \
-  --graphiti-arg scripts/eval/graphiti_adapter.py \
-  --mem0-command python \
-  --mem0-arg scripts/eval/mem0_adapter.py \
-  --letta-command python \
-  --letta-arg scripts/eval/letta_adapter.py \
-  --json crates/eval/reports/external-comparison-latest.json
+```text
+visible memory -> hidden influence -> dominant trace -> possible future
+                 \-> suppressed alternatives stay visible
 ```
 
-This measures King Synapse locally against the exported cognitive fixture and
-runs the Graphiti/Zep, Mem0, and Letta adapter paths. When `graphiti-core` and
-`kuzu` are available but Neo4j/OpenAI credentials are absent, the Graphiti
-adapter automatically uses a local Kuzu graph backend with deterministic
-embeddings and explicit fixture triplet import. The Mem0 adapter uses the Mem0
-OSS Python SDK when `mem0ai` and either OpenAI credentials, `DEEPSEEK_API_KEY`,
-or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. With DeepSeek, it
-generates a DeepSeek + deterministic local embedder + local Qdrant config
-automatically. The Letta adapter uses `letta-client` plus `LETTA_API_KEY`,
-`LETTA_BASE_URL`, or
-`LETTA_ENVIRONMENT=local` to measure agent memory blocks. Missing dependencies
-or credentials are reported as `not_configured`.
+That makes it useful for long-running coding agents that need to stop repeating
+the same mistakes, stop re-learning your preferences, and explain their memory
+instead of hiding it inside a black box.
 
-### Memory framework comparison
+## What It Does
 
-This comparison is intentionally about memory shape, not marketing claims. The
-latest checked-in evidence is
-`crates/eval/reports/external-comparison-latest.json`.
+- Stores memories locally in SQLite with explicit scope, kind, provenance, and time.
+- Connects memories with weighted edges so recall can spread through a graph.
+- Finds visible memories from a query, then activates hidden influences nearby.
+- Reports the dominant trace and the suppressed alternatives.
+- Predicts likely next influences from the winning trace.
+- Reinforces an association only after the current report is already captured.
+- Exposes the same engine through a CLI and an MCP server for coding agents.
 
-| System | What its memory is | How it recalls / explains | Current fixture result | What it does not expose in this harness |
-|---|---|---|---|---|
-| **King Synapse** | An associative cognitive-memory network: explicit memories plus latent activation edges, cognitive trace competition, prediction, and post-trace reinforcement. | Runs visible recall, hidden influence activation, dominant/suppressed trace selection, evidence-path extraction, future continuation, and isolated reinforcement. | **Measured.** 8/8 visible seed, 8/8 hidden influence, 8/8 dominant hidden influence, 8/8 suppressed alternatives, 8/8 evidence paths, 8/8 future continuation, 8/8 reinforcement isolation. | This is the reference system for this fixture; broader public benchmarks are still next. |
-| **Graphiti/Zep** | A temporal context graph: episodes, entities, relationships, facts, and hybrid graph/semantic/full-text retrieval. | Can search graph facts and return graph-style evidence over imported fixture triplets. | **Measured locally through Graphiti + Kuzu.** 8/8 visible seed, 8/8 hidden influence, 8/8 evidence paths. | No exposed dominant/suppressed thought competition, predictive continuation, or reinforcement isolation in this adapter. |
-| **Mem0** | A long-term memory layer for LLM apps, oriented around persistent personalization and user/session/organization memory retrieval. | Measured through `Memory.add` + `Memory.search` in the Mem0 OSS Python SDK, using DeepSeek plus a deterministic local embedder and local Qdrant store. | **Measured through Mem0 OSS + DeepSeek.** 7/8 visible seed, 7/8 hidden influence. | Path evidence, dominant/suppressed thought competition, predictive continuation, and reinforcement isolation are unsupported in this adapter. |
-| **Letta** | A stateful-agent platform: memory blocks, persisted messages, tools, reasoning, and agent-editable state. | The adapter is wired to create an agent memory block and read it back through the Letta Python SDK. | **Adapter wired, not configured on this machine.** Missing `letta-client` and Letta endpoint/API configuration. | Memory blocks are always-visible agent context, not a path-bearing cognitive trace graph; dominant/suppressed competition, prediction, and reinforcement are unsupported in this adapter. |
+## A Small Example
 
-In short: Graphiti is closest to King Synapse on graph evidence, Mem0 is closest
-on product-style long-term memory, and Letta is closest on stateful agent
-operation. King Synapse is different because it treats memory as an inspectable
-competition of influences: what was recalled, what hidden influence won, what
-was suppressed, why that path was chosen, what future continuation follows, and
-how reinforcement is isolated after the report.
+Imagine this chain:
 
-## Build
+```text
+skipped water before commute
+  -> tired mood
+  -> narrower attention
+  -> higher scooter fall risk
+  -> future mistake risk
+```
 
-Requires Rust 1.80+.
+A flat memory system may retrieve one sentence. King Synapse tries to show the
+path: the visible seed, the hidden influence that became dominant, the other
+possible traces that lost, and the next risk that follows.
+
+## Quick Start
 
 ```bash
+git clone https://github.com/lake121380-source/king-synapse.git
+cd king-synapse
 cargo build --release
 ```
 
-Binaries land in `target/release/`:
-- `kr.exe` (or `kr` on Unix) — the CLI
-- `synapse-mcp.exe` — the MCP server
-
-## Try it
+Write a few memories:
 
 ```bash
-# Write some memories
-./target/release/kr write "本仓库测试用 pnpm test:ci" --kind fact --scope project:king-synapse
-./target/release/kr write "用户讨厌在 catch 里吞错" --kind preference --scope user
-./target/release/kr write "Windows 上 pnpm install 走代理会卡死，改用 corepack" --kind failure
-
-# Recall
-./target/release/kr recall "pnpm windows"
-./target/release/kr recall "测试" --kind fact
-./target/release/kr recall "pnpm windows" --graph-activation --graph-steps 2 --explain
-./target/release/kr recall "forgot water commute attention" --latent-activation --latent-auto-context --explain
-./target/release/kr recall "forgot water commute attention" --reinforce --reinforce-k 3
-./target/release/kr edges <memory-id> --direction both
-./target/release/kr reinforce <memory-id-a> <memory-id-b> --event recalled --query "forgot water commute"
-./target/release/kr latent <memory-id> --steps 2 --state tired --goal commute
-./target/release/kr latent-query "forgot water before commute while tired" --auto-context
-./target/release/kr trace "forgot water before commute while tired" --auto-context
-./target/release/kr trace "forgot water before commute while tired" --auto-context --predict
-./target/release/kr trace "forgot water before commute while tired" --auto-context --reinforce --reinforce-k 3
-
-# List recent
-./target/release/kr list --limit 10
-
-# See where the DB lives
-./target/release/kr where
-
-# Run cognitive-memory benchmarks
-cargo bench -p synapse-eval --bench reflection_yield
-cargo bench -p synapse-eval --bench cognitive_chain_recall
-cargo bench -p synapse-eval --bench cognitive_trace_dominance
-cargo bench -p synapse-eval --bench trace_reinforcement
-cargo bench -p synapse-eval --bench predictive_trace
-cargo bench -p synapse-eval --bench activation_parameter_sweep
-cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
-cargo bench -p synapse-eval --bench exported_cognitive_session
+./target/release/kr write "Skipped water before the scooter commute lowered mood." --kind state --scope user
+./target/release/kr write "Tired mood narrows commute attention and raises fall risk." --kind fact --scope user
+./target/release/kr write "Future commute mistakes increase when attention narrows." --kind fact --scope user
 ```
 
-## Plug into opencode
+Recall and inspect the chain:
 
-Add to your `opencode.json`:
+```bash
+./target/release/kr recall "water commute attention" --explain
+./target/release/kr trace "forgot water before commute while tired" --auto-context --predict
+./target/release/kr trace "forgot water before commute while tired" --auto-context --reinforce --reinforce-k 3
+```
+
+On Windows, use `.\target\release\kr.exe` instead of `./target/release/kr`.
+
+## Use It From An Agent
+
+King Synapse includes a stdio MCP server.
 
 ```json
 {
@@ -196,8 +101,110 @@ Add to your `opencode.json`:
 }
 ```
 
-The agent then has `synapse_write`, `synapse_recall`, `synapse_list_recent`, `synapse_forget`, `synapse_entities`, `synapse_neighbors`, `synapse_edges`, `synapse_reinforce`, `synapse_latent_activation`, `synapse_latent_query`, and `synapse_trace` available as tools.
+The MCP server exposes tools for write, recall, recent-list, forget,
+entity-list, neighbor lookup, edge inspection, reinforcement, latent activation,
+latent query, and cognitive trace.
+
+## How It Is Different
+
+| Project | Best at | What King Synapse adds |
+| --- | --- | --- |
+| Mem0 | Product-style long-term memory for AI apps. | Inspectable trace competition: dominant influence, suppressed alternatives, and post-report reinforcement. |
+| Graphiti/Zep | Temporal knowledge graphs and graph evidence. | A cognitive trace layer over recall: hidden influence activation, prediction, and reinforcement isolation. |
+| Letta | Stateful agents with editable memory blocks. | A local graph memory engine that can explain why a memory path won. |
+| Flat notes / rules files | Human-authored instructions. | Automatic recall, graph activation, edge learning, and explainable memory paths. |
+
+## Current Evaluation
+
+The checked-in external comparison report is
+[external-comparison-latest.json](crates/eval/reports/external-comparison-latest.json).
+
+| System | Local result on the cognitive fixture |
+| --- | --- |
+| King Synapse | 8/8 visible seed, 8/8 hidden influence, 8/8 dominant trace, 8/8 suppressed alternatives, 8/8 evidence paths, 8/8 future continuation, 8/8 reinforcement isolation. |
+| Graphiti/Zep | 8/8 visible seed, 8/8 hidden influence, 8/8 evidence paths. Dominant/suppressed trace, prediction, and reinforcement are not exposed by this adapter. |
+| Mem0 | 7/8 visible seed, 7/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
+| Letta | Adapter is present, but the local run is not configured yet. |
+
+Run the same comparison:
+
+```bash
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --graphiti-command python \
+  --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --mem0-command python \
+  --mem0-arg scripts/eval/mem0_adapter.py \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
+  --json crates/eval/reports/external-comparison-latest.json
+```
+
+## Architecture
+
+```mermaid
+flowchart LR
+  A["write memory"] --> B["SQLite + FTS5 store"]
+  B --> C["entities, scopes, kinds, timestamps"]
+  C --> D["weighted memory graph"]
+  Q["query"] --> R["visible recall"]
+  R --> L["latent activation"]
+  L --> T["dominant trace + suppressed alternatives"]
+  T --> P["prediction"]
+  T --> F["post-report reinforcement"]
+  F --> D
+```
+
+The hot path is local-first. External services are only used by optional
+comparison adapters or optional embedding/reranking paths.
+
+## Project Status
+
+- Core architecture is stable.
+- Cognitive memory behavior is validated by local benchmarks and manual traces.
+- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta, LongMemEval, and DMR are next.
+- Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
+
+## Useful Commands
+
+```bash
+# Run the main tests
+cargo test -p synapse-eval
+
+# Run the cognitive-memory benchmark fixture
+cargo bench -p synapse-eval --bench exported_cognitive_session
+
+# Run recall benchmarks
+cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
+
+# Build release binaries
+cargo build --release
+```
+
+## Documentation
+
+| Doc | What it is for |
+| --- | --- |
+| `docs/ROADMAP.md` | Current roadmap and next work. |
+| `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
+| `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |
+| `docs/eval/EXTERNAL_COMPARISON_PLAN.md` | External comparison plan and adapter rules. |
+| `docs/API_SURFACE.md` | Public API surface. |
+| `docs/COMPATIBILITY.md` | Stability and compatibility policy. |
+| `docs/MANUAL_VALIDATION.md` | Manual validation transcript. |
+| `docs/V3_PROPOSAL_REVIEW.md` | How the broader King Recall v3 idea maps to this implementation. |
+
+## Star History
+
+Stars are not the point of the engine, but they do help people find the work.
+
+<a href="https://star-history.com/#lake121380-source/king-synapse&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lake121380-source/king-synapse&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lake121380-source/king-synapse&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lake121380-source/king-synapse&type=Date" />
+  </picture>
+</a>
 
 ## License
 
-Apache-2.0.
+Apache-2.0. See `LICENSE`.
