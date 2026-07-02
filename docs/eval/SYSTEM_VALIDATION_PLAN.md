@@ -175,4 +175,6 @@ task. The validation win condition is narrower and more important:
   was reachable.
 - LongMemEval / DMR fetch/cache path: data plan added at
   `docs/eval/LONGMEM_DMR_DATA_PLAN.md`; smoke runners are not implemented yet.
+- Stage 7 system validation report: added at
+  `docs/eval/SYSTEM_VALIDATION_REPORT.md`.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
