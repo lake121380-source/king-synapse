@@ -79,24 +79,24 @@ long-horizon real-world consistency yet.
 Answer: yes in the checked external-comparison fixture.
 
 The latest external comparison measured King Synapse, Graphiti/Zep local Kuzu
-mode, and Mem0 OSS with DeepSeek plus local Qdrant. Letta remained unmeasured:
-the SDK was installed later, but `LETTA_ENVIRONMENT=local` failed with a
-connection error because no local Letta endpoint was reachable.
+mode, and Mem0 OSS with DeepSeek plus local Qdrant. Letta remained
+`not_configured`: `letta-client 1.12.1` is installed, but no
+`LETTA_API_KEY`, `LETTA_BASE_URL`, or local endpoint is configured.
 
 | System | Visible | Hidden | Dominant trace | Suppressed alternatives | Evidence paths | Future continuation | Reinforcement isolation |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | King Synapse | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 |
 | Graphiti/Zep local | 8/8 | 8/8 | unsupported | unsupported | 8/8 | unsupported | unsupported |
-| Mem0 OSS + DeepSeek | 8/8 | 8/8 | unsupported | unsupported | unsupported | unsupported | unsupported |
-| Letta | not measured | not measured | not measured | not measured | not measured | not measured | not measured |
+| Mem0 OSS + DeepSeek | 7/8 | 8/8 | unsupported | unsupported | unsupported | unsupported | unsupported |
+| Letta | not configured | not configured | not configured | not configured | not configured | not configured | not configured |
 
 Comparative conclusion: King Synapse currently exposes the richest
 cognitive-trace surface in this fixture. Graphiti/Zep can surface graph-style
 evidence paths in local deterministic mode, but the adapter does not expose
 dominant/suppressed trace competition, future continuation, or reinforcement
-isolation. Mem0 retrieves visible and hidden facts in this run, but does not
-expose path evidence, trace competition, prediction, or reinforcement
-isolation through the measured adapter.
+isolation. Mem0 retrieves every hidden influence and seven of eight visible
+seeds in this run, but does not expose path evidence, trace competition,
+prediction, or reinforcement isolation through the measured adapter.
 
 This is not a claim that King Synapse is better at every long-memory task. It
 is a narrower claim: for the cognitive-trace behavior this project is designed

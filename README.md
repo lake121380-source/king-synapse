@@ -121,13 +121,15 @@ latent query, and cognitive trace.
 
 The checked-in external comparison report is
 [external-comparison-latest.json](crates/eval/reports/external-comparison-latest.json).
+The readable summary is
+[EXTERNAL_VALIDATION.md](docs/eval/EXTERNAL_VALIDATION.md).
 
 | System | Local result on the cognitive fixture |
 | --- | --- |
 | King Synapse | 8/8 visible seed, 8/8 hidden influence, 8/8 dominant trace, 8/8 suppressed alternatives, 8/8 evidence paths, 8/8 future continuation, 8/8 reinforcement isolation. |
 | Graphiti/Zep | 8/8 visible seed, 8/8 hidden influence, 8/8 evidence paths. Dominant/suppressed trace, prediction, and reinforcement are not exposed by this adapter. |
-| Mem0 | 8/8 visible seed, 8/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
-| Letta | Adapter is present, but the local run is not configured yet. |
+| Mem0 | 7/8 visible seed, 8/8 hidden influence through Mem0 OSS + DeepSeek + local Qdrant. Path evidence and trace competition are not exposed by this adapter. |
+| Letta | Adapter and SDK are present, but no Letta endpoint is configured yet. |
 
 The checked-in 50-sample long-memory reports use external data cached outside
 the repo and commit only aggregate, redacted metrics:
@@ -213,6 +215,7 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |

@@ -17,6 +17,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import time
@@ -167,6 +168,13 @@ def not_configured(input_data: dict[str, Any], notes: list[str]) -> dict[str, An
 def failed(input_data: dict[str, Any], note: str) -> dict[str, Any]:
     chains = [placeholder_chain(chain, "failed", "failed", note) for chain in input_data["chains"]]
     return system_run("failed", chains, [note], version=mem0_version())
+
+
+def sanitize_error(exc: Exception) -> str:
+    text = str(exc)
+    text = re.sub(r"sk-[A-Za-z0-9_\-]+", "[redacted-api-key]", text)
+    text = re.sub(r"(?i)(api key:\s*)\S+", r"\1[redacted]", text)
+    return text
 
 
 def mem0_version() -> str:
@@ -517,7 +525,7 @@ def main() -> int:
     try:
         report = run_real_mem0(input_data)
     except Exception as exc:  # pragma: no cover - depends on external services.
-        report = failed(input_data, f"Mem0 adapter failed: {exc}")
+        report = failed(input_data, f"Mem0 adapter failed: {sanitize_error(exc)}")
     print(json.dumps(report, indent=2))
     return 0
 

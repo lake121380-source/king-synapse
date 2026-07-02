@@ -168,12 +168,12 @@ task. The validation win condition is narrower and more important:
 - Stage 1 internal baseline: passed in `docs/eval/VALIDATION_RUN_2026-07-02.md`.
 - Stage 2 repeatability check: stable for five King Synapse runs in
   `docs/eval/VALIDATION_RUN_2026-07-02.md`.
-- Stage 3 external comparison rerun: passed in `docs/eval/VALIDATION_RUN_2026-07-02.md`.
-- Stage 4 external-run manifest: initial manifest added at
+- Stage 3 external comparison rerun: completed in
+  `docs/eval/EXTERNAL_VALIDATION.md`.
+- Stage 4 external-run manifest: refreshed at
   `crates/eval/reports/external-comparison-manifest.json`.
-- Letta measured run: attempted with `letta-client 1.12.1` and
-  `LETTA_ENVIRONMENT=local`; still not measured because no local Letta endpoint
-  was reachable.
+- Letta measured run: `letta-client 1.12.1` is installed, but Letta is still
+  not measured because no hosted or local endpoint is configured.
 - LongMemEval / DMR smoke path: implemented in
   `scripts/eval/longmem_dmr_smoke.py`; latest sanitized report is
   `crates/eval/reports/longmem-dmr-smoke-latest.json`.
