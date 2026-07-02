@@ -1,0 +1,154 @@
+# LongMemEval / DMR Data Plan
+
+Date checked: 2026-07-02
+
+Status: planning only. No LongMemEval or DMR dataset records are committed in
+this repository.
+
+## Validation Purpose
+
+LongMemEval and DMR are Stage 6 system-validation inputs, not new product
+features.
+
+- LongMemEval checks long-horizon memory behavior across sessions, updates,
+  temporal questions, and abstention.
+- DMR is a smaller fact-retrieval sanity check used by memory-agent literature.
+- Neither benchmark replaces the exported cognitive-session fixture, because
+  neither directly validates hidden-trace dominance, suppressed alternatives,
+  or reinforcement isolation.
+
+## Source And License Check
+
+| Dataset | Source | License / status | Stage 6 decision |
+| --- | --- | --- | --- |
+| LongMemEval cleaned | <https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned> | Hugging Face dataset card lists `mit`. | Use for first smoke test. Prefer the smallest cleaned split before larger runs. |
+| LongMemEval original repo | <https://github.com/xiaowu0162/longmemeval> | Repository includes an MIT license and points to the released Hugging Face data. | Use as implementation reference only; fetch data from Hugging Face cache. |
+| LongMemEval-V2 | <https://huggingface.co/datasets/xiaowu0162/longmemeval-v2> | Hugging Face dataset card lists `apache-2.0`; the public package includes multimodal files and is much larger than the first smoke test needs. | Do not use in the first smoke test. Revisit after the cleaned dataset path is stable. |
+| DMR candidate data | <https://huggingface.co/datasets/MemGPT/MSC-Self-Instruct> | Hugging Face dataset card lists `apache-2.0`; 500 rows are available in the train split. | Use as the DMR candidate only after recording that the exact original DMR harness has not been reproduced yet. |
+| Upstream MSC context | <https://parl.ai/projects/msc/> | Upstream conversational source for MSC-style data. | Do not redistribute mirrored records. Keep only cache instructions and aggregate reports in this repo. |
+
+DMR note: the checked public sources make the MemGPT `MSC-Self-Instruct`
+dataset the practical candidate for a DMR smoke test, but this plan should not
+claim an official DMR reproduction until the original harness and scoring rules
+are pinned.
+
+## Cache Rules
+
+Dataset files must be fetched into a user cache outside the Git worktree.
+
+Default cache roots:
+
+```text
+Windows: %LOCALAPPDATA%\king-synapse\eval
+Unix:    ${XDG_CACHE_HOME:-$HOME/.cache}/king-synapse/eval
+```
+
+Repository paths such as `crates/eval/datasets/longmemeval/` and
+`crates/eval/datasets/dmr/` are reserved contract paths, but raw third-party
+records should not be checked in there.
+
+Allowed committed artifacts:
+
+- fetch/cache instructions;
+- checksums and source URLs;
+- small aggregate reports with counts and scores;
+- failure notes and schema summaries.
+
+Forbidden committed artifacts:
+
+- raw LongMemEval or DMR examples;
+- copied conversations;
+- generated answer text containing third-party records;
+- API keys, bearer tokens, hosted dataset credentials, or private endpoint
+  details.
+
+## Fetch Commands
+
+Install fetch tooling outside the repository:
+
+```powershell
+python -m pip install huggingface_hub datasets
+```
+
+LongMemEval cleaned smoke cache:
+
+```powershell
+$cache = Join-Path $env:LOCALAPPDATA 'king-synapse\eval\longmemeval-cleaned'
+New-Item -ItemType Directory -Force $cache | Out-Null
+huggingface-cli download xiaowu0162/longmemeval-cleaned `
+  --repo-type dataset `
+  --local-dir $cache
+```
+
+DMR candidate cache:
+
+```powershell
+$cache = Join-Path $env:LOCALAPPDATA 'king-synapse\eval\dmr-msc-self-instruct'
+New-Item -ItemType Directory -Force $cache | Out-Null
+huggingface-cli download MemGPT/MSC-Self-Instruct `
+  --repo-type dataset `
+  --local-dir $cache
+```
+
+After download, record checksums outside the raw-data files:
+
+```powershell
+Get-ChildItem $cache -File -Recurse | Get-FileHash -Algorithm SHA256
+```
+
+## Smoke Test Design
+
+### LongMemEval Smoke
+
+Initial scope:
+
+- load a deterministic 10-example sample from the smallest cleaned split;
+- cover extraction, multi-session reasoning, temporal reasoning, update, and
+  abstention if those fields are present;
+- fail closed if the dataset schema does not match the loader's expected
+  fields;
+- report only aggregate scores and anonymized example identifiers.
+
+Minimum report fields:
+
+- source dataset and revision if available;
+- local cache path omitted or redacted;
+- SHA256 checksums;
+- sample size and category counts;
+- judge mode: exact match, heuristic, or LLM-as-judge;
+- model name if an LLM judge is used;
+- pass/fail and per-category aggregate metrics.
+
+### DMR Smoke
+
+Initial scope:
+
+- load a deterministic 20-row sample from `MemGPT/MSC-Self-Instruct`;
+- score retrieval sanity first, before adding any LLM judge;
+- report whether the expected answer or target fact appears in top-k retrieved
+  memory;
+- mark the run as `dmr-candidate` until the exact original DMR harness is
+  pinned.
+
+Minimum report fields:
+
+- source dataset and revision if available;
+- SHA256 checksums;
+- sample size;
+- top-k setting;
+- exact/substring/semantic scoring mode;
+- aggregate hit rate;
+- unsupported or ambiguous rows count.
+
+## Before Any Full Run
+
+Do not run a full benchmark until these are true:
+
+1. dataset license fields are rechecked from the source pages;
+2. raw data is cached outside the repository;
+3. the loader records checksums and source revisions;
+4. the sample policy is deterministic;
+5. no third-party records are committed;
+6. any LLM judge records model name, provider mode, and credential names only;
+7. the report clearly separates King Synapse cognitive-trace metrics from
+   ordinary long-memory retrieval metrics.

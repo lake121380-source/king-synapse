@@ -173,6 +173,6 @@ task. The validation win condition is narrower and more important:
 - Letta measured run: attempted with `letta-client 1.12.1` and
   `LETTA_ENVIRONMENT=local`; still not measured because no local Letta endpoint
   was reachable.
-- LongMemEval fetch/cache path: not started.
-- DMR fetch/cache path: not started.
+- LongMemEval / DMR fetch/cache path: data plan added at
+  `docs/eval/LONGMEM_DMR_DATA_PLAN.md`; smoke runners are not implemented yet.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
