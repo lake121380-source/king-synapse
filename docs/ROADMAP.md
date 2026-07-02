@@ -65,7 +65,9 @@ Algorithm: **Frozen**
 
 Current focus
 
-▶ Post-freeze evaluation and product integration
+Phase 6 - Full System Evaluation. Feature growth is frozen by default while the
+system is validated for stability, consistency, and comparative value. See
+`docs/eval/SYSTEM_VALIDATION_PLAN.md`.
 
 Phase 5 shifts from shared-contract work to independent algorithm work. RFC-011 (Adaptive Common Model) is now frozen. RFC-012 through RFC-015 (Reflection, Merge, Forget, Hebbian) consume RFC-011 as read-only ground truth and MUST NOT extend it. Algorithm RFCs are also independent of one another — each depends only on RFC-011.
 
@@ -146,10 +148,11 @@ Completed foundations
 
 Focus
 
-- Predictive trace — broaden continuation benchmarks beyond the exported fixture.
-- Release process — cut and push the cognitive-memory release/freeze tag.
-- Evaluation & benchmarks: Graphiti/Zep and Mem0 are measured in the external comparison report; next work is Letta configuration, LongMemEval/DMR fetch instructions, and full hosted-mode reruns when credentials are available.
-- Parameter sweeps and ablation studies.
+- Freeze feature growth unless validation finds a bug or a reproducibility gap.
+- Keep internal deterministic gates passing before interpreting external results.
+- Finish Letta configuration and keep unsupported surfaces explicit.
+- Add LongMemEval/DMR fetch instructions only after license and cache rules are clear.
+- Re-run Graphiti and Mem0 in hosted/official modes when credentials are available.
 
 Rules
 

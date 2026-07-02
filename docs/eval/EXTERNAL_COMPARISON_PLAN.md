@@ -4,6 +4,8 @@ Status: Draft, post-freeze evaluation
 
 Date: 2026-07-02
 
+System validation phase: `docs/eval/SYSTEM_VALIDATION_PLAN.md`
+
 Implementation status:
 
 - First runnable harness: `cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json`

@@ -164,7 +164,8 @@ comparison adapters or optional embedding/reranking paths.
 
 - Core architecture is stable.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
-- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta, LongMemEval, and DMR are next.
+- Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
+- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta, LongMemEval, and DMR are not finished.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
 ## Useful Commands
@@ -189,6 +190,7 @@ cargo build --release
 | --- | --- |
 | `docs/ROADMAP.md` | Current roadmap and next work. |
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
+| `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
 | `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |
 | `docs/eval/EXTERNAL_COMPARISON_PLAN.md` | External comparison plan and adapter rules. |
