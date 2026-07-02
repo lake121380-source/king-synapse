@@ -12,7 +12,7 @@ use synapse_eval::{
     about = "Run external memory comparison harness"
 )]
 struct Cli {
-    /// Comma-separated systems: king-synapse, graphiti, or all.
+    /// Comma-separated systems: king-synapse, graphiti, mem0, letta, or all.
     #[arg(long, default_value = "all")]
     systems: String,
     /// Optional executable/script that runs a Graphiti adapter.
@@ -27,6 +27,30 @@ struct Cli {
     /// --graphiti-command python --graphiti-arg scripts/eval/graphiti_adapter.py
     #[arg(long)]
     graphiti_arg: Vec<String>,
+    /// Optional executable/script that runs a Mem0 adapter.
+    ///
+    /// The command receives one argument: a JSON adapter-input path. It must
+    /// print an ExternalSystemRun JSON object to stdout.
+    #[arg(long)]
+    mem0_command: Option<PathBuf>,
+    /// Extra argument passed before the adapter-input path.
+    ///
+    /// On Windows, use this to run a Python adapter:
+    /// --mem0-command python --mem0-arg scripts/eval/mem0_adapter.py
+    #[arg(long)]
+    mem0_arg: Vec<String>,
+    /// Optional executable/script that runs a Letta adapter.
+    ///
+    /// The command receives one argument: a JSON adapter-input path. It must
+    /// print an ExternalSystemRun JSON object to stdout.
+    #[arg(long)]
+    letta_command: Option<PathBuf>,
+    /// Extra argument passed before the adapter-input path.
+    ///
+    /// On Windows, use this to run a Python adapter:
+    /// --letta-command python --letta-arg scripts/eval/letta_adapter.py
+    #[arg(long)]
+    letta_arg: Vec<String>,
     /// Optional path where the adapter input JSON should be written.
     #[arg(long)]
     adapter_input: Option<PathBuf>,
@@ -41,6 +65,10 @@ fn main() -> Result<()> {
         systems: parse_systems(&cli.systems)?,
         graphiti_command: cli.graphiti_command,
         graphiti_args: cli.graphiti_arg,
+        mem0_command: cli.mem0_command,
+        mem0_args: cli.mem0_arg,
+        letta_command: cli.letta_command,
+        letta_args: cli.letta_arg,
         adapter_input_path: cli.adapter_input,
     })?;
     print_external_summary(&report);
@@ -68,10 +96,14 @@ fn parse_systems(raw: &str) -> Result<Vec<ExternalSystemKind>> {
                 return Ok(vec![
                     ExternalSystemKind::KingSynapse,
                     ExternalSystemKind::Graphiti,
+                    ExternalSystemKind::Mem0,
+                    ExternalSystemKind::Letta,
                 ]);
             }
             "king-synapse" | "king" | "synapse" => systems.push(ExternalSystemKind::KingSynapse),
             "graphiti" | "zep" | "graphiti-zep" => systems.push(ExternalSystemKind::Graphiti),
+            "mem0" | "mem-zero" => systems.push(ExternalSystemKind::Mem0),
+            "letta" | "memgpt" => systems.push(ExternalSystemKind::Letta),
             other => bail!("unknown external comparison system: {other}"),
         }
     }
@@ -80,6 +112,8 @@ fn parse_systems(raw: &str) -> Result<Vec<ExternalSystemKind>> {
         return Ok(vec![
             ExternalSystemKind::KingSynapse,
             ExternalSystemKind::Graphiti,
+            ExternalSystemKind::Mem0,
+            ExternalSystemKind::Letta,
         ]);
     }
     systems.dedup();

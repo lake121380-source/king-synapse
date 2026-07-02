@@ -8,13 +8,20 @@ Implementation status:
 
 - First runnable harness: `cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json`
 - First Graphiti adapter command: `python scripts/eval/graphiti_adapter.py`
+- First Mem0 adapter command: `python scripts/eval/mem0_adapter.py`
+- First Letta adapter command: `python scripts/eval/letta_adapter.py`
 - First report: `crates/eval/reports/external-comparison-latest.json`
 - Current local result: King Synapse is measured against the exported cognitive
   fixture. Graphiti/Zep is measured locally through `graphiti-core` with the
   Kuzu graph driver, deterministic local embeddings, and explicit fixture
   triplet import when `graphiti-core` and `kuzu` are installed. Full
   Neo4j/OpenAI extraction mode still requires `OPENAI_API_KEY`, `NEO4J_URI`,
-  `NEO4J_USER`, and `NEO4J_PASSWORD`.
+  `NEO4J_USER`, and `NEO4J_PASSWORD`. Mem0 is wired into the same harness
+  through the OSS Python SDK adapter; without `mem0ai` and either
+  `OPENAI_API_KEY` or a custom `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH`, it is
+  reported as `not_configured`. Letta is wired through its official Python SDK
+  adapter; without `letta-client` plus `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+  `LETTA_ENVIRONMENT=local`, it is reported as `not_configured`.
 
 ## Purpose
 
@@ -197,10 +204,14 @@ adapter script as an argument:
 cargo run -p synapse-eval --bin kr-external-eval -- \
   --graphiti-command python \
   --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --mem0-command python \
+  --mem0-arg scripts/eval/mem0_adapter.py \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
   --json crates/eval/reports/external-comparison-latest.json
 ```
 
-The adapter receives one final argument from the harness: an input JSON path
+Each adapter receives one final argument from the harness: an input JSON path
 containing the exported cognitive fixture. It must print one
 `ExternalSystemRun` JSON object to stdout.
 
@@ -211,6 +222,20 @@ credentials, if `graphiti-core` and `kuzu` are installed, it automatically uses
 graph storage/search over fixture triplets. This Kuzu mode does not claim LLM
 extraction, dominant/suppressed trace competition, prediction, or reinforcement
 support; those capabilities are reported as `unsupported`.
+
+The Mem0 adapter uses the OSS Python SDK's `Memory.add` and `Memory.search`
+paths when configured. It uses a fresh `user_id` namespace per chain, measures
+visible and hidden retrieval if Mem0 returns them, and reports path evidence,
+dominant/suppressed trace competition, prediction, and reinforcement as
+`unsupported` unless Mem0 exposes those semantics through the SDK.
+
+The Letta adapter uses the official Python SDK to create an agent with a fresh
+memory block per chain, then reads the block back through the API. This measures
+stateful memory-block persistence/inspection, not graph retrieval. Because
+Letta memory blocks are always-visible agent context rather than path-bearing
+trace graphs, evidence paths, dominant/suppressed trace competition,
+prediction, and reinforcement are reported as `unsupported` unless exposed by
+the configured SDK/API.
 
 ## LongMemEval And DMR Plan
 

@@ -26,6 +26,10 @@ pub struct ExternalComparisonOptions {
     pub systems: Vec<ExternalSystemKind>,
     pub graphiti_command: Option<PathBuf>,
     pub graphiti_args: Vec<String>,
+    pub mem0_command: Option<PathBuf>,
+    pub mem0_args: Vec<String>,
+    pub letta_command: Option<PathBuf>,
+    pub letta_args: Vec<String>,
     pub adapter_input_path: Option<PathBuf>,
 }
 
@@ -35,9 +39,15 @@ impl Default for ExternalComparisonOptions {
             systems: vec![
                 ExternalSystemKind::KingSynapse,
                 ExternalSystemKind::Graphiti,
+                ExternalSystemKind::Mem0,
+                ExternalSystemKind::Letta,
             ],
             graphiti_command: None,
             graphiti_args: Vec::new(),
+            mem0_command: None,
+            mem0_args: Vec::new(),
+            letta_command: None,
+            letta_args: Vec::new(),
             adapter_input_path: None,
         }
     }
@@ -48,6 +58,8 @@ impl Default for ExternalComparisonOptions {
 pub enum ExternalSystemKind {
     KingSynapse,
     Graphiti,
+    Mem0,
+    Letta,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -270,6 +282,8 @@ pub fn run_external_comparison(
         let run = match system {
             ExternalSystemKind::KingSynapse => run_king_synapse(&session)?,
             ExternalSystemKind::Graphiti => run_graphiti(&session, &options)?,
+            ExternalSystemKind::Mem0 => run_mem0(&session, &options)?,
+            ExternalSystemKind::Letta => run_letta(&session, &options)?,
         };
         runs.push(run);
     }
@@ -329,19 +343,86 @@ fn run_graphiti(
     session: &ExportedCognitiveSession,
     options: &ExternalComparisonOptions,
 ) -> Result<ExternalSystemRun> {
-    let Some(command) = options.graphiti_command.as_ref() else {
+    run_adapter(
+        session,
+        AdapterRunSpec {
+            system: "Graphiti/Zep",
+            kind: ExternalSystemKind::Graphiti,
+            command: options.graphiti_command.as_ref(),
+            args: &options.graphiti_args,
+            default_input_name: "graphiti",
+            missing_command_note: "Provide --graphiti-command to run a local Graphiti adapter.",
+            context_name: "Graphiti",
+        },
+        options.adapter_input_path.clone(),
+    )
+}
+
+fn run_mem0(
+    session: &ExportedCognitiveSession,
+    options: &ExternalComparisonOptions,
+) -> Result<ExternalSystemRun> {
+    run_adapter(
+        session,
+        AdapterRunSpec {
+            system: "Mem0",
+            kind: ExternalSystemKind::Mem0,
+            command: options.mem0_command.as_ref(),
+            args: &options.mem0_args,
+            default_input_name: "mem0",
+            missing_command_note: "Provide --mem0-command to run a local Mem0 adapter.",
+            context_name: "Mem0",
+        },
+        options.adapter_input_path.clone(),
+    )
+}
+
+fn run_letta(
+    session: &ExportedCognitiveSession,
+    options: &ExternalComparisonOptions,
+) -> Result<ExternalSystemRun> {
+    run_adapter(
+        session,
+        AdapterRunSpec {
+            system: "Letta",
+            kind: ExternalSystemKind::Letta,
+            command: options.letta_command.as_ref(),
+            args: &options.letta_args,
+            default_input_name: "letta",
+            missing_command_note: "Provide --letta-command to run a local Letta adapter.",
+            context_name: "Letta",
+        },
+        options.adapter_input_path.clone(),
+    )
+}
+
+struct AdapterRunSpec<'a> {
+    system: &'a str,
+    kind: ExternalSystemKind,
+    command: Option<&'a PathBuf>,
+    args: &'a [String],
+    default_input_name: &'a str,
+    missing_command_note: &'a str,
+    context_name: &'a str,
+}
+
+fn run_adapter(
+    session: &ExportedCognitiveSession,
+    spec: AdapterRunSpec<'_>,
+    adapter_input_path: Option<PathBuf>,
+) -> Result<ExternalSystemRun> {
+    let Some(command) = spec.command else {
         return Ok(not_configured_run(
-            "Graphiti/Zep",
-            ExternalSystemKind::Graphiti,
-            "Provide --graphiti-command to run a local Graphiti adapter.",
+            spec.system,
+            spec.kind,
+            spec.missing_command_note,
             session,
         ));
     };
 
-    let input_path = options
-        .adapter_input_path
+    let input_path = adapter_input_path
         .clone()
-        .unwrap_or_else(|| default_adapter_input_path("graphiti"));
+        .unwrap_or_else(|| default_adapter_input_path(spec.default_input_name));
     if let Some(parent) = input_path.parent() {
         std::fs::create_dir_all(parent)
             .with_context(|| format!("creating adapter input dir {}", parent.display()))?;
@@ -351,19 +432,26 @@ fn run_graphiti(
         .with_context(|| format!("writing adapter input {}", input_path.display()))?;
 
     let output = Command::new(command)
-        .args(&options.graphiti_args)
+        .args(spec.args)
         .arg(&input_path)
         .output()
-        .with_context(|| format!("running Graphiti adapter {}", command.display()))?;
+        .with_context(|| {
+            format!(
+                "running {} adapter {}",
+                spec.context_name,
+                command.display()
+            )
+        })?;
 
     if !output.status.success() {
         let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
         let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
         return Ok(failed_run(
-            "Graphiti/Zep",
-            ExternalSystemKind::Graphiti,
+            spec.system,
+            spec.kind,
             format!(
-                "Graphiti adapter exited with status {:?}. stdout={} stderr={}",
+                "{} adapter exited with status {:?}. stdout={} stderr={}",
+                spec.context_name,
                 output.status.code(),
                 stdout,
                 stderr
@@ -372,9 +460,14 @@ fn run_graphiti(
         ));
     }
 
-    let stdout = String::from_utf8(output.stdout).context("Graphiti adapter stdout is UTF-8")?;
-    let run: ExternalSystemRun =
-        serde_json::from_str(&stdout).context("parsing Graphiti adapter ExternalSystemRun JSON")?;
+    let stdout = String::from_utf8(output.stdout)
+        .with_context(|| format!("{} adapter stdout is UTF-8", spec.context_name))?;
+    let run: ExternalSystemRun = serde_json::from_str(&stdout).with_context(|| {
+        format!(
+            "parsing {} adapter ExternalSystemRun JSON",
+            spec.context_name
+        )
+    })?;
     Ok(run)
 }
 
@@ -1015,6 +1108,10 @@ mod tests {
             systems: vec![ExternalSystemKind::KingSynapse],
             graphiti_command: None,
             graphiti_args: Vec::new(),
+            mem0_command: None,
+            mem0_args: Vec::new(),
+            letta_command: None,
+            letta_args: Vec::new(),
             adapter_input_path: None,
         })
         .expect("external comparison runs");
@@ -1045,6 +1142,60 @@ mod tests {
             systems: vec![ExternalSystemKind::Graphiti],
             graphiti_command: None,
             graphiti_args: Vec::new(),
+            mem0_command: None,
+            mem0_args: Vec::new(),
+            letta_command: None,
+            letta_args: Vec::new(),
+            adapter_input_path: None,
+        })
+        .expect("external comparison runs");
+
+        let run = &report.systems[0];
+        assert_eq!(run.status, ExternalRunStatus::NotConfigured);
+        assert_eq!(run.chains.len(), 8);
+        let aggregate = run
+            .aggregate
+            .metrics
+            .get("visible_seed_found")
+            .expect("metric exists");
+        assert_eq!(aggregate.not_configured, 8);
+    }
+
+    #[test]
+    fn mem0_without_command_is_not_configured() {
+        let report = run_external_comparison(ExternalComparisonOptions {
+            systems: vec![ExternalSystemKind::Mem0],
+            graphiti_command: None,
+            graphiti_args: Vec::new(),
+            mem0_command: None,
+            mem0_args: Vec::new(),
+            letta_command: None,
+            letta_args: Vec::new(),
+            adapter_input_path: None,
+        })
+        .expect("external comparison runs");
+
+        let run = &report.systems[0];
+        assert_eq!(run.status, ExternalRunStatus::NotConfigured);
+        assert_eq!(run.chains.len(), 8);
+        let aggregate = run
+            .aggregate
+            .metrics
+            .get("visible_seed_found")
+            .expect("metric exists");
+        assert_eq!(aggregate.not_configured, 8);
+    }
+
+    #[test]
+    fn letta_without_command_is_not_configured() {
+        let report = run_external_comparison(ExternalComparisonOptions {
+            systems: vec![ExternalSystemKind::Letta],
+            graphiti_command: None,
+            graphiti_args: Vec::new(),
+            mem0_command: None,
+            mem0_args: Vec::new(),
+            letta_command: None,
+            letta_args: Vec::new(),
             adapter_input_path: None,
         })
         .expect("external comparison runs");

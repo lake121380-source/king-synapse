@@ -89,15 +89,23 @@ The first runnable external comparison harness is available through
 cargo run -p synapse-eval --bin kr-external-eval -- \
   --graphiti-command python \
   --graphiti-arg scripts/eval/graphiti_adapter.py \
+  --mem0-command python \
+  --mem0-arg scripts/eval/mem0_adapter.py \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
   --json crates/eval/reports/external-comparison-latest.json
 ```
 
 This measures King Synapse locally against the exported cognitive fixture and
-runs the Graphiti/Zep adapter path. When `graphiti-core` and `kuzu` are
-available but Neo4j/OpenAI credentials are absent, the adapter automatically
-uses a local Kuzu graph backend with deterministic embeddings and explicit
-fixture triplet import. Without Graphiti dependencies, it reports
-`not_configured` with the missing dependency and credential names.
+runs the Graphiti/Zep, Mem0, and Letta adapter paths. When `graphiti-core` and
+`kuzu` are available but Neo4j/OpenAI credentials are absent, the Graphiti
+adapter automatically uses a local Kuzu graph backend with deterministic
+embeddings and explicit fixture triplet import. The Mem0 adapter uses the Mem0
+OSS Python SDK when `mem0ai` and either OpenAI credentials or
+`MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. The Letta adapter uses
+`letta-client` plus `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+`LETTA_ENVIRONMENT=local` to measure agent memory blocks. Missing dependencies
+or credentials are reported as `not_configured`.
 
 ## Build
 

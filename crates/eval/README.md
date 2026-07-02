@@ -23,8 +23,8 @@ shape.
 
 ```bash
 # Run the post-freeze external comparison harness.
-# This measures King Synapse locally. Pass the Graphiti adapter command below
-# to include the local Graphiti/Zep comparison path.
+# This measures King Synapse locally. Pass adapter commands below to include
+# external systems in the same report.
 cargo run -p synapse-eval --bin kr-external-eval -- --json crates/eval/reports/external-comparison-latest.json
 
 # Run only the local King Synapse cognitive fixture.
@@ -38,6 +38,20 @@ cargo run -p synapse-eval --bin kr-external-eval -- \
   --graphiti-command python \
   --graphiti-arg scripts/eval/graphiti_adapter.py \
   --json crates/eval/reports/graphiti-external-comparison.json
+
+# Run with the included Mem0 adapter script.
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --systems mem0 \
+  --mem0-command python \
+  --mem0-arg scripts/eval/mem0_adapter.py \
+  --json crates/eval/reports/mem0-external-comparison.json
+
+# Run with the included Letta adapter script.
+cargo run -p synapse-eval --bin kr-external-eval -- \
+  --systems letta \
+  --letta-command python \
+  --letta-arg scripts/eval/letta_adapter.py \
+  --json crates/eval/reports/letta-external-comparison.json
 ```
 
 The harness uses `crates/eval/datasets/exported_cognitive_session.toml` and
@@ -47,12 +61,18 @@ adapter failures belong in this external report format.
 
 The checked-in latest report is
 `crates/eval/reports/external-comparison-latest.json`. It records King Synapse
-as a measured local run and Graphiti/Zep through
-`scripts/eval/graphiti_adapter.py`. If `graphiti-core` and `kuzu` are installed
-but Neo4j/OpenAI credentials are absent, the adapter uses a local Kuzu graph
-backend with deterministic embeddings and explicit fixture triplets. If the
-dependencies are missing, Graphiti/Zep is reported as `not_configured` with the
-missing dependency and credential names.
+as a measured local run, Graphiti/Zep through
+`scripts/eval/graphiti_adapter.py`, and Mem0 through
+`scripts/eval/mem0_adapter.py`, and Letta through
+`scripts/eval/letta_adapter.py`. If `graphiti-core` and `kuzu` are installed
+but Neo4j/OpenAI credentials are absent, the Graphiti adapter uses a local Kuzu
+graph backend with deterministic embeddings and explicit fixture triplets. The
+Mem0 adapter uses the Mem0 OSS Python SDK when `mem0ai` and either
+`OPENAI_API_KEY` or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` are available. The
+Letta adapter uses the official `letta-client` SDK to create and inspect agent
+memory blocks when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
+`LETTA_ENVIRONMENT=local` is configured. If dependencies or credentials are
+missing, adapters report `not_configured` with the missing names.
 
 ## Algorithm Benchmarks
 
