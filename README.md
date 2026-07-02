@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/lake121380-source/king-synapse/stargazers"><img src="https://img.shields.io/github/stars/lake121380-source/king-synapse?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/lake121380-source/king-synapse/actions/workflows/ci.yml"><img src="https://github.com/lake121380-source/king-synapse/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="https://github.com/lake121380-source/king-synapse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lake121380-source/king-synapse" alt="License" /></a>
   <img src="https://img.shields.io/badge/language-Rust-orange" alt="Rust" />
   <img src="https://img.shields.io/badge/status-cognitive%20memory%20validated-2ea44f" alt="Status" />
@@ -84,6 +85,8 @@ Recall and inspect the chain:
 ```
 
 On Windows, use `.\target\release\kr.exe` instead of `./target/release/kr`.
+
+For a complete disposable run with sample output, see [docs/DEMO.md](docs/DEMO.md).
 
 ## Use It From An Agent
 
@@ -185,6 +188,7 @@ cargo build --release
 | Doc | What it is for |
 | --- | --- |
 | `docs/ROADMAP.md` | Current roadmap and next work. |
+| `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/COGNITIVE_NETWORK_MODEL.md` | The cognitive-network algorithm model. |
 | `docs/COGNITIVE_MEMORY_FINAL_ACCEPTANCE.md` | Final cognitive-memory acceptance gates. |
 | `docs/eval/EXTERNAL_COMPARISON_PLAN.md` | External comparison plan and adapter rules. |
