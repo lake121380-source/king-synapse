@@ -198,6 +198,11 @@ DMR boundary:
   sample size: gold-answer substring accuracy rises from `0.040` to `0.120`,
   ROUGE-L F1 rises from `0.037` to `0.067`, and top-1 hits without the gold
   substring fall from `68/74` to `52/74`.
+- `crates/eval/reports/official-dmr-500-top-context-extractive.json` records
+  the generator cross-check on the 500-request / 323-scored local run.
+  Gold-answer substring accuracy rises from `0.046` to `0.121`, ROUGE-L F1
+  rises from `0.039` to `0.075`, and top-1 hits without the gold substring
+  fall from `118/128` to `90/127`.
 - DMR 200 and the DMR 500-request run intentionally skipped the LLM judge after
   the DMR 50 authorization failure, so they are lexical / ROUGE-L local scoring
   only.
@@ -217,9 +222,9 @@ architecture. They localize the current DMR weakness to three separable
 boundaries: retrieval/ranking quality, answer synthesis after a relevant chunk
 is already retrieved, and answer-to-memory mapping coverage. The DMR 50
 top-context generator ablation shows the answer-synthesis boundary can move,
-and the DMR 200 cross-check repeats the direction. It still needs DMR 500 and
-judge validation before becoming a default or product claim. LLM judge
-configuration is still unresolved.
+and the DMR 200 plus 500-request cross-checks repeat the direction. It still
+needs LLM judge validation before becoming a default or product claim. LLM
+judge configuration is still unresolved.
 
 Long-horizon cognitive validation:
 

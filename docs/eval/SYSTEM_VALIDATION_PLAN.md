@@ -333,6 +333,14 @@ finds a blocking bug.
   rises from `0.040` to `0.120` and ROUGE-L F1 rises from `0.037` to `0.067`.
   This repeats the DMR 50 direction, but still needs DMR 500 and judge
   validation before default or product claims.
+- Official-style DMR 500-request generator cross-check is recorded at
+  `crates/eval/reports/official-dmr-500-top-context-extractive.json` and
+  `crates/eval/reports/official-dmr-generator-ablation-dmr-500.json`. On the
+  323 scored samples available under the pinned punctuation policy, substring
+  accuracy rises from `0.046` to `0.121` and ROUGE-L F1 rises from `0.039` to
+  `0.075`. The answer-synthesis direction now repeats across DMR 50, 200, and
+  the largest local request, but it still needs LLM judge validation before
+  official or product claims.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`

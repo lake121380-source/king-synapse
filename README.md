@@ -168,6 +168,7 @@ questions, answers, or generated text:
 | 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | not requested |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.067 | not requested |
 | 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
+| 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
 This is still not a published-comparable official DMR result. A later 5-sample
 judge probe still returned DeepSeek authorization errors, so the remaining
@@ -182,7 +183,8 @@ separate bottleneck from retrieval/ranking. A DMR 50 generator ablation confirms
 that this is actionable: keeping answer extraction inside the top returned
 chunk raises substring accuracy from `0.060` to `0.220` without changing
 retrieval. The same direction repeats on DMR 200, where substring rises from
-`0.040` to `0.120`.
+`0.040` to `0.120`, and on the 323-scored DMR 500-request run, where substring
+rises from `0.046` to `0.121`.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
