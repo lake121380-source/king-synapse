@@ -376,10 +376,14 @@ pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport 
             prefix_prediction_rank_top10: prefix_prediction_ranks.matched_rank_top10,
             prefix_prediction_candidate_rank_top10: prefix_prediction_ranks.candidate_rank_top10,
             prefix_prediction_matched_rank_top10: prefix_prediction_ranks.matched_rank_top10,
+            prefix_prediction_candidate_matched_terms: prefix_prediction_ranks
+                .candidate_matched_terms,
             prefix_prediction_hit,
             full_prediction_rank_top10: initial_prediction_ranks.matched_rank_top10,
             full_prediction_candidate_rank_top10: initial_prediction_ranks.candidate_rank_top10,
             full_prediction_matched_rank_top10: initial_prediction_ranks.matched_rank_top10,
+            full_prediction_candidate_matched_terms: initial_prediction_ranks
+                .candidate_matched_terms,
             full_prediction_hit: initial_prediction_hit,
             later_writes_preserved_prediction: prefix_prediction_hit && initial_prediction_hit,
             suppressed_candidates,
@@ -389,6 +393,8 @@ pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport 
             final_prediction_rank_top10: final_prediction_ranks.matched_rank_top10,
             final_prediction_candidate_rank_top10: final_prediction_ranks.candidate_rank_top10,
             final_prediction_matched_rank_top10: final_prediction_ranks.matched_rank_top10,
+            final_prediction_candidate_matched_terms: final_prediction_ranks
+                .candidate_matched_terms,
             final_prediction_hit,
             reinforced_edge_count: reinforced_edges,
             expected_edge_count: expected_edges,
@@ -448,6 +454,14 @@ pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport 
         .filter(|case| case.full_prediction_candidate_rank_top10.is_none())
         .map(|case| case.case_label.clone())
         .collect::<Vec<_>>();
+    let future_candidate_without_matched_terms_labels = case_reports
+        .iter()
+        .filter(|case| {
+            case.full_prediction_candidate_rank_top10.is_some()
+                && case.full_prediction_candidate_matched_terms.is_empty()
+        })
+        .map(|case| case.case_label.clone())
+        .collect::<Vec<_>>();
     let future_matched_miss_labels = future_prediction_miss_labels.clone();
     let dominant_drift_free_cases = case_reports
         .iter()
@@ -484,7 +498,7 @@ pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport 
         .sum::<usize>();
 
     LongHorizonStabilityAuditReport {
-        schema_version: "king-synapse.long-horizon-stability-audit.v2".to_string(),
+        schema_version: "king-synapse.long-horizon-stability-audit.v3".to_string(),
         benchmark: LONG_HORIZON_STABILITY_AUDIT_NAME.to_string(),
         source_benchmark: LONG_HORIZON_COGNITIVE_BENCHMARK_NAME.to_string(),
         fixture_case_count: cases.len(),
@@ -509,6 +523,7 @@ pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport 
             drift_rounds_per_case: reinforcement_rounds,
             future_prediction_miss_labels,
             future_candidate_miss_labels,
+            future_candidate_without_matched_terms_labels,
             future_matched_miss_labels,
         },
         cases: case_reports,
@@ -881,6 +896,7 @@ pub struct LongHorizonStabilityAggregate {
     pub drift_rounds_per_case: usize,
     pub future_prediction_miss_labels: Vec<String>,
     pub future_candidate_miss_labels: Vec<String>,
+    pub future_candidate_without_matched_terms_labels: Vec<String>,
     pub future_matched_miss_labels: Vec<String>,
 }
 
@@ -898,10 +914,12 @@ pub struct LongHorizonStabilityCaseReport {
     pub prefix_prediction_rank_top10: Option<usize>,
     pub prefix_prediction_candidate_rank_top10: Option<usize>,
     pub prefix_prediction_matched_rank_top10: Option<usize>,
+    pub prefix_prediction_candidate_matched_terms: Vec<String>,
     pub prefix_prediction_hit: bool,
     pub full_prediction_rank_top10: Option<usize>,
     pub full_prediction_candidate_rank_top10: Option<usize>,
     pub full_prediction_matched_rank_top10: Option<usize>,
+    pub full_prediction_candidate_matched_terms: Vec<String>,
     pub full_prediction_hit: bool,
     pub later_writes_preserved_prediction: bool,
     pub suppressed_candidates: usize,
@@ -911,6 +929,7 @@ pub struct LongHorizonStabilityCaseReport {
     pub final_prediction_rank_top10: Option<usize>,
     pub final_prediction_candidate_rank_top10: Option<usize>,
     pub final_prediction_matched_rank_top10: Option<usize>,
+    pub final_prediction_candidate_matched_terms: Vec<String>,
     pub final_prediction_hit: bool,
     pub reinforced_edge_count: usize,
     pub expected_edge_count: usize,
@@ -1827,10 +1846,11 @@ fn long_horizon_trace_report(store: &mut Store, case: &LongHorizonCase) -> Cogni
         .expect("long horizon cognitive trace runs")
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct LongHorizonPredictionRanks {
     candidate_rank_top10: Option<usize>,
     matched_rank_top10: Option<usize>,
+    candidate_matched_terms: Vec<String>,
 }
 
 fn long_horizon_prediction_ranks(
@@ -1854,20 +1874,24 @@ fn long_horizon_prediction_ranks(
         .predict_continuation(store, report, limit)
         .expect("long horizon cognitive prediction runs");
 
-    let candidate_rank_top10 = prediction
+    let candidate_index = prediction
         .candidates
         .iter()
-        .position(|hit| hit.memory.id == future)
-        .map(|index| index + 1);
+        .position(|hit| hit.memory.id == future);
+    let candidate_rank_top10 = candidate_index.map(|index| index + 1);
     let matched_rank_top10 = prediction
         .candidates
         .iter()
         .position(|hit| hit.memory.id == future && !hit.matched_terms.is_empty())
         .map(|index| index + 1);
+    let candidate_matched_terms = candidate_index
+        .map(|index| prediction.candidates[index].matched_terms.clone())
+        .unwrap_or_default();
 
     LongHorizonPredictionRanks {
         candidate_rank_top10,
         matched_rank_top10,
+        candidate_matched_terms,
     }
 }
 
@@ -2495,7 +2519,7 @@ mod tests {
         assert_eq!(report.benchmark, "long-horizon-stability-audit");
         assert_eq!(
             report.schema_version,
-            "king-synapse.long-horizon-stability-audit.v2"
+            "king-synapse.long-horizon-stability-audit.v3"
         );
         assert_eq!(report.fixture_case_count, 8);
         assert_eq!(report.reinforcement_rounds, 3);
@@ -2518,6 +2542,12 @@ mod tests {
         );
         assert!(report.aggregate.future_candidate_miss_labels.is_empty());
         assert_eq!(
+            report
+                .aggregate
+                .future_candidate_without_matched_terms_labels,
+            report.aggregate.future_prediction_miss_labels
+        );
+        assert_eq!(
             report.aggregate.future_matched_miss_labels,
             report.aggregate.future_prediction_miss_labels
         );
@@ -2531,7 +2561,8 @@ mod tests {
             .filter(|case| !case.full_prediction_hit)
             .all(|case| case.full_prediction_rank_top10.is_none()
                 && case.full_prediction_matched_rank_top10.is_none()
-                && case.full_prediction_candidate_rank_top10 == Some(1)));
+                && case.full_prediction_candidate_rank_top10 == Some(1)
+                && case.full_prediction_candidate_matched_terms.is_empty()));
     }
 
     #[test]

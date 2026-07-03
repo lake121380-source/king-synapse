@@ -95,8 +95,10 @@ story is weaker than the trace part. The rank-localization fields in
 `long-horizon-stability-audit.json` now split candidate rank from matched rank.
 For those two cases, the expected future candidate is present at rank 1 in the
 prefix store, the full store, and after three reinforcement rounds, but its
-matched rank is `null`. This is therefore a context/evidence-matching miss,
-not a continuation-candidate miss.
+matched rank is `null`. Schema v3 also records
+`*_prediction_candidate_matched_terms`; those arrays are empty for both misses
+in prefix, full, and final checks. This is therefore a context/evidence-matching
+miss, not a continuation-candidate miss.
 
 ## Read
 
@@ -111,7 +113,8 @@ The detailed audit adds a sharper read: visible recall, older/newer memory
 separation, hidden trace dominance, and dominant-trace drift resistance are
 stable on this fixture. Future candidate recall is also stable at `8/8`, but
 future matched evidence is weaker at `6/8`. The two misses are candidate-present
-but evidence-missing cases.
+but evidence-missing cases: the candidate path exists, while the candidate text
+does not expose trace-context terms under the current matching rule.
 
 Research interpretation:
 

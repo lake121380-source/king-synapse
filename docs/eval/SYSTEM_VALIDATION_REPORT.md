@@ -68,7 +68,8 @@ separation, hidden trace dominance, dominant drift resistance, and
 reinforcement consistency at `1.000`; future candidate presence is also
 `1.000`. Future matched-evidence stability is weaker at `0.750`: the two
 future misses are present as continuation candidates at rank 1, but do not
-carry matched evidence terms.
+carry matched evidence terms. The v3 audit records this directly in empty
+`*_prediction_candidate_matched_terms` arrays for the two miss labels.
 The LongMemEval / DMR smoke path can run and report aggregate metrics, but full
 public long-memory stability is not yet proven.
 
@@ -97,8 +98,9 @@ boundary: future candidate presence remains `8/8`, while matched-evidence
 future prediction currently hits `6/8` cases. The two misses are
 `day03-charger-demo` and `day05-trust-message`; both keep the expected future
 candidate at rank 1 before and after reinforcement, but their matched rank is
-`null`. This is enough to say the core design is coherent in the validated
-scope, but not enough to claim long-horizon real-world consistency yet.
+`null` and their candidate matched-term arrays are empty. This is enough to say
+the core design is coherent in the validated scope, but not enough to claim
+long-horizon real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
 
@@ -257,7 +259,8 @@ Long-horizon cognitive validation:
   `1.000`; future prediction stability and prediction drift resistance are
   `0.750`. It also records continuation top-10 ranks: the two misses keep the
   expected future candidate at rank 1 in prefix, full, and final
-  post-reinforcement checks, but have no matched evidence rank.
+  post-reinforcement checks, but have no matched evidence rank and no candidate
+  matched terms.
 - This supports the network-memory thesis in a shared long-session store, but
   it also identifies future evidence matching as the weaker long-horizon
   surface.

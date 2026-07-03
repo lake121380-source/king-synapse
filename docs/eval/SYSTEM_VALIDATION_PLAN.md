@@ -253,7 +253,7 @@ finds a blocking bug.
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
 | 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
 | 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, but remains eval-only. |
-| 11 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, so evidence matching remains an open long-horizon weakness. |
+| 11 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
 | 12 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
@@ -413,9 +413,10 @@ finds a blocking bug.
   `1.000`; future candidate presence is also `1.000`. Future prediction
   stability and prediction drift resistance are `0.750`. The two missed
   expected future nodes are present at continuation rank 1 in prefix, full, and
-  final post-reinforcement checks, but have no matched evidence rank. This makes
-  future-continuation evidence matching the next long-horizon diagnostic target,
-  not visible recall, hidden trace dominance, or candidate generation.
+  final post-reinforcement checks, but have no matched evidence rank and no
+  candidate matched terms. This makes future-continuation evidence matching the
+  next long-horizon diagnostic target, not visible recall, hidden trace
+  dominance, or candidate generation.
 - Hosted/official external comparison probe is recorded at
   `crates/eval/reports/external-comparison-hosted.json`; Graphiti/Zep
   Neo4j/OpenAI, Mem0 official/custom configuration, and Letta endpoint paths

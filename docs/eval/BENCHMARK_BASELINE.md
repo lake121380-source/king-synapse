@@ -65,7 +65,8 @@ new memory separation, future continuation, and reinforcement drift checks.
 Current diagnostic read: visible / trace stability is `1.000`, while future
 candidate presence is also `1.000`. Future matched-evidence stability is
 `0.750`: the two misses are present as continuation candidates at rank 1 but do
-not carry matched evidence terms.
+not carry matched evidence terms. Audit schema v3 records those empty candidate
+matched-term arrays directly.
 
 `expanded-cognitive-replay` loads
 `crates/eval/datasets/regression/expanded_cognitive_replay.toml`. It fixes 20

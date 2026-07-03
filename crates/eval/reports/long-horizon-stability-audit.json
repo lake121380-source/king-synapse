@@ -1,5 +1,5 @@
 {
-  "schema_version": "king-synapse.long-horizon-stability-audit.v2",
+  "schema_version": "king-synapse.long-horizon-stability-audit.v3",
   "benchmark": "long-horizon-stability-audit",
   "source_benchmark": "long-horizon-cognitive-memory",
   "fixture_case_count": 8,
@@ -27,6 +27,10 @@
       "day05-trust-message"
     ],
     "future_candidate_miss_labels": [],
+    "future_candidate_without_matched_terms_labels": [
+      "day03-charger-demo",
+      "day05-trust-message"
+    ],
     "future_matched_miss_labels": [
       "day03-charger-demo",
       "day05-trust-message"
@@ -46,10 +50,16 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:commute"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:commute"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 4,
@@ -93,6 +103,9 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:commute"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 6,
       "expected_edge_count": 6,
@@ -113,10 +126,18 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:future",
+        "goal:review"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:future",
+        "goal:review"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 7,
@@ -160,6 +181,10 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:future",
+        "goal:review"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 12,
       "expected_edge_count": 12,
@@ -180,10 +205,12 @@
       "prefix_prediction_rank_top10": null,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": null,
+      "prefix_prediction_candidate_matched_terms": [],
       "prefix_prediction_hit": false,
       "full_prediction_rank_top10": null,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": null,
+      "full_prediction_candidate_matched_terms": [],
       "full_prediction_hit": false,
       "later_writes_preserved_prediction": false,
       "suppressed_candidates": 4,
@@ -227,6 +254,7 @@
       "final_prediction_rank_top10": null,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": null,
+      "final_prediction_candidate_matched_terms": [],
       "final_prediction_hit": false,
       "reinforced_edge_count": 6,
       "expected_edge_count": 6,
@@ -247,10 +275,18 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:attention",
+        "goal:future"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:attention",
+        "goal:future"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 7,
@@ -294,6 +330,10 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:attention",
+        "goal:future"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 12,
       "expected_edge_count": 12,
@@ -314,10 +354,12 @@
       "prefix_prediction_rank_top10": null,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": null,
+      "prefix_prediction_candidate_matched_terms": [],
       "prefix_prediction_hit": false,
       "full_prediction_rank_top10": null,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": null,
+      "full_prediction_candidate_matched_terms": [],
       "full_prediction_hit": false,
       "later_writes_preserved_prediction": false,
       "suppressed_candidates": 4,
@@ -361,6 +403,7 @@
       "final_prediction_rank_top10": null,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": null,
+      "final_prediction_candidate_matched_terms": [],
       "final_prediction_hit": false,
       "reinforced_edge_count": 6,
       "expected_edge_count": 6,
@@ -381,10 +424,16 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:risk"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:risk"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 4,
@@ -428,6 +477,9 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:risk"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 6,
       "expected_edge_count": 6,
@@ -448,10 +500,16 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:review"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:review"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 4,
@@ -495,6 +553,9 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:review"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 6,
       "expected_edge_count": 6,
@@ -515,10 +576,16 @@
       "prefix_prediction_rank_top10": 1,
       "prefix_prediction_candidate_rank_top10": 1,
       "prefix_prediction_matched_rank_top10": 1,
+      "prefix_prediction_candidate_matched_terms": [
+        "goal:future"
+      ],
       "prefix_prediction_hit": true,
       "full_prediction_rank_top10": 1,
       "full_prediction_candidate_rank_top10": 1,
       "full_prediction_matched_rank_top10": 1,
+      "full_prediction_candidate_matched_terms": [
+        "goal:future"
+      ],
       "full_prediction_hit": true,
       "later_writes_preserved_prediction": true,
       "suppressed_candidates": 7,
@@ -562,6 +629,9 @@
       "final_prediction_rank_top10": 1,
       "final_prediction_candidate_rank_top10": 1,
       "final_prediction_matched_rank_top10": 1,
+      "final_prediction_candidate_matched_terms": [
+        "goal:future"
+      ],
       "final_prediction_hit": true,
       "reinforced_edge_count": 12,
       "expected_edge_count": 12,
