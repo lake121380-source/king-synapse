@@ -383,6 +383,14 @@ Ranking ablation status:
   Vector weight `1.5` improves Recall@10 on both datasets in this pass, but it
   lowers DMR top-1 and lowers MRR versus same-run controls. Treat it as a
   coverage candidate for follow-up audits, not as a default.
+- `crates/eval/reports/ranking-vector-weight-transition-audit-dmr-longmem-50.json`
+  records the sanitized sample-level transition audit for vector weight `1.0`
+  versus `1.5`. On DMR 50, `1.5` recovers 2 samples into top-10, suppresses 1
+  from top-10, demotes 1 top-1 hit, and leaves 10 misses unchanged. On
+  LongMemEval 50, hit buckets are unchanged even though Recall@10 rises; the
+  audit records 2 recoveries, 1 top-10 suppression, 1 top-1 promotion, and 1
+  top-1 demotion. This confirms that the `1.5` gain is a coverage/ordering
+  tradeoff rather than a safe global ranking improvement.
 
 DMR mapping audit status:
 
@@ -464,5 +472,7 @@ GPU validation status:
 
 Next required action: keep feature growth frozen, keep the judge path on
 `deepseek-v4-flash`, and continue ranking / answer-synthesis validation before
-any product claim. Keep answer-synthesis work in evaluation mode until the
-official-style DMR protocol is finalized.
+any product claim. The next ranking work should design a safer signal for DMR
+top-50-only cases without adopting `vector_weight = 1.5` as a default. Keep
+answer-synthesis work in evaluation mode until the official-style DMR protocol
+is finalized.

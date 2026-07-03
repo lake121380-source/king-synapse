@@ -34,6 +34,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-longmem-50-vector-weight.json`
 
+`crates/eval/reports/ranking-vector-weight-transition-audit-dmr-longmem-50.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
@@ -45,6 +47,10 @@ Failure audit runner:
 Transition audit runner:
 
 `scripts/eval/ranking_transition_audit.py`
+
+Vector-weight transition audit runner:
+
+`scripts/eval/ranking_vector_weight_transition_audit.py`
 
 Chunk-policy runner:
 
@@ -763,6 +769,88 @@ Read:
   1.5` as a candidate for a follow-up focused on Recall@10 coverage, not as a
   production setting.
 
+## Vector-Weight Transition Audit
+
+This audit compares the sanitized per-query ranks for `vector_weight = 1.0`
+and `vector_weight = 1.5` from the existing DMR / LongMemEval 50 ablation
+report. It does not rerun retrieval and does not inspect raw questions,
+answers, dialogs, sessions, memory content, or generated text.
+
+Report:
+
+`crates/eval/reports/ranking-vector-weight-transition-audit-dmr-longmem-50.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_vector_weight_transition_audit.py
+```
+
+### Vector-Weight Transition Result
+
+DMR 50, candidate `1.5` minus control `1.0`:
+
+| Metric | Delta |
+| --- | ---: |
+| Recall@10 | +0.0067 |
+| MRR@10 | -0.0018 |
+| NDCG@10 | +0.0054 |
+| Top-1 | -1 |
+| Top-10 not top-1 | +2 |
+| Retrieval misses | -1 |
+
+DMR 50 transitions:
+
+| Transition | Count |
+| --- | ---: |
+| Stable top-1 | 27 |
+| Top-10 preserved | 9 |
+| Recovered to top-10 | 2 |
+| Suppressed from top-10 | 1 |
+| Demoted from top-1 | 1 |
+| Miss unchanged | 10 |
+
+LongMemEval 50, candidate `1.5` minus control `1.0`:
+
+| Metric | Delta |
+| --- | ---: |
+| Recall@10 | +0.0167 |
+| MRR@10 | -0.0103 |
+| NDCG@10 | -0.0009 |
+| Top-1 | 0 |
+| Top-10 not top-1 | 0 |
+| Retrieval misses | 0 |
+
+LongMemEval 50 transitions:
+
+| Transition | Count |
+| --- | ---: |
+| Stable top-1 | 18 |
+| Top-10 preserved | 15 |
+| Recovered to top-10 | 2 |
+| Suppressed from top-10 | 1 |
+| Promoted to top-1 | 1 |
+| Demoted from top-1 | 1 |
+| Miss unchanged | 12 |
+
+### Vector-Weight Transition Read
+
+The audit confirms that `vector_weight = 1.5` is a coverage candidate, not a
+safe default.
+
+On DMR 50, the small Recall@10 gain comes from two recoveries into top-10 and
+one fewer retrieval miss, but it also suppresses one previous top-10 hit and
+demotes one top-1 hit. That explains why the aggregate result improves
+coverage while losing top-1.
+
+On LongMemEval 50, the top-level hit buckets do not improve: top-1, top-10
+not top-1, and miss counts are unchanged. The Recall@10 gain is therefore
+coming from per-query relevant-evidence coverage inside already measured
+samples, while MRR falls because ordering quality gets slightly worse.
+
+This is useful evidence for a future adaptive or query-conditioned policy, but
+it is not enough to change the global branch weight.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -788,19 +876,19 @@ prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among
 reranker variants and still prefers vector-only for top-10 coverage. Any
 ranking change now needs either dataset-specific policy or a broader objective
 than Recall@10 alone. The vector-weight cross-check adds a possible Recall@10
-candidate (`1.5`) but also repeats the same rule: better coverage alone is not
-enough when MRR/top-1 tradeoffs appear.
+candidate (`1.5`) but the transition audit shows the tradeoff directly:
+DMR gains two top-10 recoveries while also taking one top-10 suppression and
+one top-1 demotion; LongMemEval keeps the same hit buckets while lowering MRR.
+Better coverage alone is not enough when ordering/top-1 tradeoffs appear.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. analyze which samples vector weight `1.5` recovers and which top-1 hits it
-   demotes;
-2. design a safer ranking signal for the top-50-only DMR cases;
-3. test smaller, overlap-aware chunking instead of full-session merging;
-4. avoid blunt keyword-boost query expansion unless a future answer-free
+1. design a safer ranking signal for the top-50-only DMR cases;
+2. test smaller, overlap-aware chunking instead of full-session merging;
+3. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-5. inspect top-50 retrieval misses separately from late-ranking cases;
-6. test candidate-retrieval coverage separately from reranker ordering;
-7. keep answer-generation scoring separate from retrieval-ranking scoring.
+4. inspect top-50 retrieval misses separately from late-ranking cases;
+5. test candidate-retrieval coverage separately from reranker ordering;
+6. keep answer-generation scoring separate from retrieval-ranking scoring.
