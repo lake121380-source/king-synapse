@@ -127,8 +127,13 @@ DMR boundary:
 - `docs/eval/OFFICIAL_DMR_REVIEW.md` records the official scoring review.
 - The current DMR numbers are candidate retrieval metrics, not official DMR
   accuracy or ROUGE-L.
-- Official DMR still requires generated answers scored against gold answers
-  with a fixed judge policy.
+- `scripts/eval/official_dmr_eval.py` now runs the official-style answer
+  generation shape on a small sanitized CUDA sample.
+- `docs/eval/OFFICIAL_DMR_RESULT.md` records the first 5-query extractive
+  result: exact accuracy `0.000`, punctuation accuracy `0.000`, gold-answer
+  substring accuracy `0.200`, and ROUGE-L F1 mean `0.082`.
+- Full official DMR still requires 50/200/500-query generated-answer runs with
+  a fixed judge policy.
 
 The 50-sample reports are:
 
@@ -203,7 +208,7 @@ Performance analysis status:
 
 The project has not yet crossed the bar for:
 
-1. official DMR answer-generation benchmark results;
+1. full official DMR answer-generation benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. final DMR scoring-policy adoption beyond candidate punctuation matching;
@@ -225,6 +230,5 @@ GPU validation status:
   total GPU memory sample.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen and investigate the remaining
-validation boundaries: DMR mapping/chunk skips, final candidate ranking, and
-live/hosted external runs.
+Next required action: keep feature growth frozen and expand the
+answer-generation DMR harness to 50 examples before making stronger DMR claims.

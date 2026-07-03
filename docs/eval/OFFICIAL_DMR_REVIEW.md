@@ -2,7 +2,8 @@
 
 Date checked: 2026-07-02
 
-Status: official DMR reproduction is not complete.
+Status: answer-generation harness smoke exists; full official DMR reproduction
+is not complete.
 
 ## Short Answer
 
@@ -43,13 +44,34 @@ This is useful because it isolates retrieval, ranking, and mapping quality
 without letting answer generation or judge variability hide the retrieval
 failure mode.
 
+## Answer-Generation Smoke
+
+`scripts/eval/official_dmr_eval.py` now runs the official-style task shape on a
+small sample:
+
+- retrieve candidate memory chunks with `kr-eval`;
+- generate an answer from returned chunks;
+- score against the gold answer with exact, punctuation-normalized, and
+  ROUGE-L metrics;
+- optionally call an LLM judge when explicitly configured;
+- commit only sanitized metrics and hashes.
+
+Current smoke report:
+
+- `crates/eval/reports/official-dmr-5-extractive.json`
+- `docs/eval/OFFICIAL_DMR_RESULT.md`
+
+The 5-query CUDA smoke passed, but it is not a published-comparable DMR result.
+It used a deterministic extractive generator and no LLM judge.
+
 ## What Official DMR Still Requires
 
 Before this repo can claim an official DMR result, it needs:
 
 1. fixed official dataset and split policy;
 2. conversation ingestion that matches the benchmark's intended setup;
-3. an answer-generation path, not only retrieval scoring;
+3. 50/200/500-query answer-generation runs, not only the current 5-query
+   smoke;
 4. fixed judge model, judge prompt, and provider configuration;
 5. accuracy and ROUGE-L style reporting that can be compared with MemGPT/Zep
    numbers;
@@ -70,4 +92,5 @@ Keep the existing DMR reports as candidate retrieval baselines:
 Do not compare their Recall@10 values directly with MemGPT or Zep DMR accuracy
 claims. The current conclusion remains narrower: Synapse has a retrieval and
 ranking signal on the public DMR candidate data, while official DMR
-answer-generation validation remains a Phase 6 gap.
+answer-generation validation has started, while full official DMR reproduction
+remains a Phase 6 gap.

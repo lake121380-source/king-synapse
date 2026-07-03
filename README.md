@@ -239,6 +239,7 @@ cargo build --release
 | `crates/eval/reports/phase6-substage-timing-probe.json` | Small CUDA sub-stage and process metrics probe for embedding/vector/reranker/CPU/memory/GPU-memory costs. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
+| `docs/eval/OFFICIAL_DMR_RESULT.md` | First sanitized official-style DMR answer-generation smoke result. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

@@ -234,6 +234,9 @@ task. The validation win condition is narrower and more important:
 - DMR mapping audit: added at `docs/eval/DMR_MAPPING_AUDIT.md`; the 278
   pre-eval skipped rows are now localized to strict answer-string mapping, not
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at
-  `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`; official/final DMR scoring is
-  still unresolved.
+  `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
+- Official-style DMR answer generation: 5-query CUDA extractive smoke added at
+  `docs/eval/OFFICIAL_DMR_RESULT.md` and
+  `crates/eval/reports/official-dmr-5-extractive.json`; full 50/200/500 runs
+  and fixed judge policy are still unresolved.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.
