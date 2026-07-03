@@ -2,16 +2,27 @@
 
 Date: 2026-07-03
 
-Status: deterministic long-horizon cognitive-memory benchmark passed.
+Status: deterministic long-horizon cognitive-memory benchmark passed; detailed
+stability audit is now recorded and exposes a future-prediction gap.
 
 Machine-readable report:
 
 `crates/eval/reports/long-horizon-cognitive-memory.json`
 
+Detailed stability audit:
+
+`crates/eval/reports/long-horizon-stability-audit.json`
+
 Command:
 
 ```powershell
 cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
+```
+
+Detailed audit command:
+
+```powershell
+cargo bench -p synapse-eval --bench long_horizon_stability_audit
 ```
 
 ## Scope
@@ -27,8 +38,10 @@ store. Each chain has:
 - a visible distractor;
 - an expected hidden influence;
 - a hidden distractor;
+- an expected future continuation;
+- a future distractor;
 - state and goal terms that should pull the correct hidden influence into the
-  trace.
+  trace and continuation.
 
 The eight chain families are:
 
@@ -51,6 +64,34 @@ The eight chain families are:
 | CognitiveTraceDominance | 1.000 | The expected hidden influence wins the trace. |
 | HebbianConsistency | 1.000 | Post-trace reinforcement strengthens the expected visible-hidden edges. |
 
+## Stability Audit
+
+The detailed audit keeps the same eight-case fixture but checks more than the
+frozen benchmark contract:
+
+- prefix store vs full store, to see whether later memories override earlier
+  ones;
+- older four cases vs newer four cases;
+- hidden trace dominance in the full store;
+- expected future continuation;
+- three reinforcement rounds per case, to check trace drift.
+
+| Audit check | Value | Read |
+| --- | ---: | --- |
+| Visible seed retention | 1.000 | Every case still recalls the expected visible seed in top 10. |
+| Old memory preservation | 1.000 | The first four cases keep visible recall and dominant hidden trace after later writes. |
+| Newer memory addressability | 1.000 | The last four cases remain addressable despite older memories already being present. |
+| Hidden trace dominance | 1.000 | The expected hidden influence wins in all eight cases. |
+| Future prediction stability | 0.750 | Six of eight cases predict the expected future continuation. |
+| Dominant drift resistance | 1.000 | Dominant hidden traces do not drift after three reinforcement rounds. |
+| Prediction drift resistance | 0.750 | The same two future-continuation misses remain after reinforcement. |
+| Reinforcement consistency | 1.000 | Expected visible-hidden edges strengthen during reinforcement. |
+
+The two future-continuation misses are `day03-charger-demo` and
+`day05-trust-message`. They do not break visible recall or hidden trace
+dominance, but they show that the future-prediction part of the long-horizon
+story is weaker than the trace part.
+
 ## Read
 
 Engineering result:
@@ -59,6 +100,11 @@ The long-horizon cognitive fixture passes with all fixed metrics at `1.000`.
 Old day-stamped memories still participate in current queries inside a shared
 store, hidden influences can still dominate over distractors, and post-trace
 reinforcement remains consistent.
+
+The detailed audit adds a sharper read: visible recall, older/newer memory
+separation, hidden trace dominance, and dominant-trace drift resistance are
+stable on this fixture. Future continuation is not yet equally strong: `6/8`
+cases hit the expected future node.
 
 Research interpretation:
 
@@ -77,24 +123,33 @@ This validation proves:
 
 - old visible memories can still be recalled in a shared long-session store;
 - hidden influences can still dominate the trace despite distractors;
-- reinforcement can update expected visible-hidden edges after the report.
+- reinforcement can update expected visible-hidden edges after the report;
+- repeated reinforcement does not move the dominant trace away from the
+  expected hidden influence in this fixture.
 
 This validation does not yet prove:
 
 - real multi-day user data stability;
-- resistance to uncontrolled drift after many reinforcement rounds;
-- that new memories never override old memories incorrectly;
+- full future-prediction stability;
+- resistance to uncontrolled drift after many reinforcement rounds beyond the
+  three-round audit;
+- that new memories never override old memories incorrectly outside this
+  deterministic fixture;
 - superiority over external systems on hosted long-memory workloads.
 
 ## Decision
 
-Keep feature growth frozen. Treat this as the current deterministic
-long-horizon cognitive regression gate. Productization still waits on external
-comparison gaps and broader long-horizon evidence.
+Keep feature growth frozen. Treat `long-horizon-cognitive-memory` as the
+current deterministic regression gate, and treat
+`long-horizon-stability-audit` as the sharper diagnostic baseline. The next
+long-horizon weakness to investigate is future continuation, not visible recall
+or hidden trace dominance.
 
 ## Next Work
 
 1. Preserve `long-horizon-cognitive-memory` at `1.000` for all fixed metrics.
-2. Add broader long-horizon evidence only as validation work, not product
+2. Improve or explain the two future-continuation misses in the stability
+   audit without changing product-facing behavior.
+3. Add broader long-horizon evidence only as validation work, not product
    surface expansion.
-3. Complete hosted/official external comparisons before productization claims.
+4. Complete hosted/official external comparisons before productization claims.

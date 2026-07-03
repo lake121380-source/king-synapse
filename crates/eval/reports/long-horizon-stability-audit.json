@@ -1,0 +1,395 @@
+{
+  "schema_version": "king-synapse.long-horizon-stability-audit.v1",
+  "benchmark": "long-horizon-stability-audit",
+  "source_benchmark": "long-horizon-cognitive-memory",
+  "fixture_case_count": 8,
+  "reinforcement_rounds": 3,
+  "raw_records_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "aggregate": {
+    "visible_seed_retention": 1.0,
+    "old_memory_preservation": 1.0,
+    "newer_memory_addressability": 1.0,
+    "hidden_trace_dominance": 1.0,
+    "future_prediction_stability": 0.75,
+    "dominant_drift_resistance": 1.0,
+    "prediction_drift_resistance": 0.75,
+    "reinforcement_drift_resistance": 0.75,
+    "reinforcement_consistency": 1.0,
+    "old_cases": 4,
+    "newer_cases": 4,
+    "drift_rounds_per_case": 3
+  },
+  "cases": [
+    {
+      "case_label": "day01-hydration-commute",
+      "case_index": 1,
+      "prefix_case_count": 1,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 3,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 4,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 6,
+      "expected_edge_count": 6,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    },
+    {
+      "case_label": "day02-pressure-review",
+      "case_index": 2,
+      "prefix_case_count": 2,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 5,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 7,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 12,
+      "expected_edge_count": 12,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    },
+    {
+      "case_label": "day03-charger-demo",
+      "case_index": 3,
+      "prefix_case_count": 3,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 3,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": false,
+      "full_prediction_hit": false,
+      "later_writes_preserved_prediction": false,
+      "suppressed_candidates": 4,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": false,
+      "reinforced_edge_count": 6,
+      "expected_edge_count": 6,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": false
+    },
+    {
+      "case_label": "day04-past-bug",
+      "case_index": 4,
+      "prefix_case_count": 4,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 2,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 7,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 12,
+      "expected_edge_count": 12,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    },
+    {
+      "case_label": "day05-trust-message",
+      "case_index": 5,
+      "prefix_case_count": 5,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 4,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": false,
+      "full_prediction_hit": false,
+      "later_writes_preserved_prediction": false,
+      "suppressed_candidates": 4,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": false,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": false,
+      "reinforced_edge_count": 6,
+      "expected_edge_count": 6,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": false
+    },
+    {
+      "case_label": "day06-hunger-incident",
+      "case_index": 6,
+      "prefix_case_count": 6,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 1,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 4,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 6,
+      "expected_edge_count": 6,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    },
+    {
+      "case_label": "day07-social-feedback",
+      "case_index": 7,
+      "prefix_case_count": 7,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 2,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 4,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 2,
+          "expected_edge_count": 2
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 6,
+      "expected_edge_count": 6,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    },
+    {
+      "case_label": "day08-complex-review",
+      "case_index": 8,
+      "prefix_case_count": 8,
+      "full_case_count": 8,
+      "visible_seed_rank_top10": 2,
+      "visible_seed_in_top10": true,
+      "prefix_dominant_hit": true,
+      "full_dominant_hit": true,
+      "later_writes_preserved_dominant": true,
+      "prefix_prediction_hit": true,
+      "full_prediction_hit": true,
+      "later_writes_preserved_prediction": true,
+      "suppressed_candidates": 7,
+      "reinforcement_rounds": 3,
+      "drift_checks": [
+        {
+          "round": 1,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 2,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        },
+        {
+          "round": 3,
+          "dominant_hit": true,
+          "prediction_hit": true,
+          "reinforced_edge_count": 4,
+          "expected_edge_count": 4
+        }
+      ],
+      "final_dominant_hit": true,
+      "final_prediction_hit": true,
+      "reinforced_edge_count": 12,
+      "expected_edge_count": 12,
+      "reinforcement_consistency": 1.0,
+      "no_dominant_drift_after_reinforcement": true,
+      "no_prediction_drift_after_reinforcement": true
+    }
+  ]
+}

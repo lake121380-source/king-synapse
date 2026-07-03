@@ -148,6 +148,11 @@ The deterministic long-horizon cognitive gate is also recorded:
 [long-horizon-cognitive-memory.json](crates/eval/reports/long-horizon-cognitive-memory.json).
 It passes the fixed long-session fixture with Recall@10 `1.000`,
 CognitiveTraceDominance `1.000`, and HebbianConsistency `1.000`.
+A detailed stability audit is also checked in at
+[long-horizon-stability-audit.json](crates/eval/reports/long-horizon-stability-audit.json):
+visible seed retention, old/new memory separation, hidden trace dominance, and
+dominant-trace drift resistance are `1.000`, while future continuation is
+`0.750`.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
@@ -266,6 +271,9 @@ cargo bench -p synapse-eval --bench expanded_cognitive_replay
 # Run the deterministic long-horizon cognitive-memory fixture
 cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 
+# Run the detailed long-horizon stability audit
+cargo bench -p synapse-eval --bench long_horizon_stability_audit
+
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
 
@@ -290,7 +298,7 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
-| `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result and boundary. |
+| `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result, stability audit, and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |

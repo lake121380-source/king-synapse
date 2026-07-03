@@ -4,7 +4,8 @@ Date: 2026-07-03
 
 Status: scoped validation passed; official-style DMR 200 local scoring is now
 recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
-samples, and the deterministic long-horizon cognitive gate is recorded.
+samples, and the deterministic long-horizon cognitive gate plus detailed
+stability audit are recorded.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -61,9 +62,12 @@ Observed mean-latency range for the five repeatability runs:
 ```
 
 Stability conclusion: stable on the current deterministic cognitive fixtures,
-including the fixed long-horizon cognitive-memory gate. The LongMemEval / DMR
-smoke path can run and report aggregate metrics, but full public long-memory
-stability is not yet proven.
+including the fixed long-horizon cognitive-memory gate. The detailed
+long-horizon audit also keeps visible seed retention, old/new memory
+separation, hidden trace dominance, dominant drift resistance, and
+reinforcement consistency at `1.000`; future continuation is weaker at `0.750`.
+The LongMemEval / DMR smoke path can run and report aggregate metrics, but full
+public long-memory stability is not yet proven.
 
 ## 2. Is The System Internally Consistent?
 
@@ -85,8 +89,10 @@ trace evidence, prediction, or reinforcement isolation:
 
 Consistency conclusion: the system's main cognitive-memory layers agree with
 each other under the exported cognitive-session fixture and the deterministic
-long-horizon cognitive fixture. This is enough to say the core design is
-coherent in the validated scope, but not enough to claim long-horizon
+long-horizon cognitive fixture. The sharper long-horizon audit adds one
+boundary: future continuation currently hits `6/8` cases, while visible recall
+and hidden trace dominance remain `8/8`. This is enough to say the core design
+is coherent in the validated scope, but not enough to claim long-horizon
 real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
@@ -239,9 +245,15 @@ Long-horizon cognitive validation:
 - `crates/eval/reports/long-horizon-cognitive-memory.json` records
   Recall@10 `1.000`, HebbianConsistency `1.000`, and
   CognitiveTraceDominance `1.000`.
+- `crates/eval/reports/long-horizon-stability-audit.json` records the detailed
+  diagnostic audit. It keeps visible seed retention, old memory preservation,
+  newer memory addressability, hidden trace dominance, dominant drift
+  resistance, and reinforcement consistency at `1.000`; future prediction
+  stability and prediction drift resistance are `0.750`.
 - This supports the network-memory thesis in a shared long-session store, but
-  it is a regression gate, not a substitute for public long-memory benchmarks
-  or hosted external comparisons.
+  it also identifies future continuation as the weaker long-horizon surface.
+  It is a regression gate and diagnostic baseline, not a substitute for public
+  long-memory benchmarks or hosted external comparisons.
 
 The 50-sample reports are:
 

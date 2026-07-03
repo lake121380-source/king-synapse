@@ -1,5 +1,5 @@
 use crate::{AlgorithmMetric, BenchmarkReport};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use synapse_core::{
     AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe, CognitiveTraceReport,
@@ -22,6 +22,7 @@ const TRACE_REINFORCEMENT_BENCHMARK_NAME: &str = "trace-reinforcement";
 const PREDICTIVE_TRACE_BENCHMARK_NAME: &str = "predictive-trace";
 const ACTIVATION_PARAMETER_SWEEP_BENCHMARK_NAME: &str = "activation-parameter-sweep";
 const LONG_HORIZON_COGNITIVE_BENCHMARK_NAME: &str = "long-horizon-cognitive-memory";
+const LONG_HORIZON_STABILITY_AUDIT_NAME: &str = "long-horizon-stability-audit";
 const EXPORTED_COGNITIVE_SESSION_BENCHMARK_NAME: &str = "exported-cognitive-session";
 const EXPANDED_COGNITIVE_REPLAY_BENCHMARK_NAME: &str = "expanded-cognitive-replay";
 const MERGE_BENCHMARK_NAME: &str = "merge-precision";
@@ -274,6 +275,205 @@ pub fn long_horizon_cognitive_memory_report() -> BenchmarkReport {
                 ratio(reinforced_edges, expected_edges),
             ),
         ]),
+    }
+}
+
+/// Run a detailed long-horizon stability audit.
+///
+/// The frozen `BenchmarkReport` above stays small by design. This audit is a
+/// separate validation artifact that checks whether the same long-session
+/// fixture preserves old memories after later writes, keeps newer cases
+/// addressable in the full store, predicts the expected future continuation,
+/// and avoids dominant-trace drift after repeated reinforcement.
+pub fn long_horizon_stability_audit_report() -> LongHorizonStabilityAuditReport {
+    let cases = long_horizon_fixture();
+    let reinforcement_rounds = 3usize;
+    let mut case_reports = Vec::with_capacity(cases.len());
+
+    for index in 0..cases.len() {
+        let case = &cases[index];
+        let prefix_cases = &cases[..=index];
+        let (mut prefix_store, prefix_ids) = seed_long_horizon_store(prefix_cases);
+        let prefix_case_ids = prefix_ids
+            .get(case.label)
+            .expect("prefix long horizon case ids should be seeded");
+        let prefix_trace = long_horizon_trace_report(&mut prefix_store, case);
+        let prefix_prediction =
+            long_horizon_prediction_hits(&prefix_store, &prefix_trace, &prefix_case_ids.future);
+
+        let (mut full_store, full_ids) = seed_long_horizon_store(&cases);
+        let full_case_ids = full_ids
+            .get(case.label)
+            .expect("full long horizon case ids should be seeded");
+        let visible_rank =
+            long_horizon_visible_recall_rank(&mut full_store, case, &full_case_ids.seed, 10);
+        let full_trace = long_horizon_trace_report(&mut full_store, case);
+        let initial_dominant_hit =
+            trace_report_dominates_hidden(&full_trace, &full_case_ids.hidden);
+        let initial_prediction_hit =
+            long_horizon_prediction_hits(&full_store, &full_trace, &full_case_ids.future);
+        let suppressed_candidates = full_trace.suppressed.len();
+
+        let mut drift_checks = Vec::with_capacity(reinforcement_rounds);
+        let mut expected_edges = 0usize;
+        let mut reinforced_edges = 0usize;
+        for round in 1..=reinforcement_rounds {
+            let report = long_horizon_trace_report(&mut full_store, case);
+            let dominant_hit = trace_report_dominates_hidden(&report, &full_case_ids.hidden);
+            let prediction_hit =
+                long_horizon_prediction_hits(&full_store, &report, &full_case_ids.future);
+            let visible_ids = trace_visible_seed_ids(&report, 3);
+            let expected = visible_hidden_edges(&visible_ids, &full_case_ids.hidden);
+            let before = edge_weights(&mut full_store, &expected);
+            if let Some(dominant) = report.dominant.as_ref() {
+                let ids = trace_reinforcement_ids(&report, 3, &dominant.memory.id);
+                reinforce_trace_ids(&mut full_store, ids, case.query);
+            }
+            let after = edge_weights(&mut full_store, &expected);
+            let gained = expected
+                .iter()
+                .filter(|edge| edge_gained_weight(*before.get(*edge).unwrap_or(&0.0), after[*edge]))
+                .count();
+            expected_edges += expected.len();
+            reinforced_edges += gained;
+            drift_checks.push(LongHorizonDriftRound {
+                round,
+                dominant_hit,
+                prediction_hit,
+                reinforced_edge_count: gained,
+                expected_edge_count: expected.len(),
+            });
+        }
+
+        let final_trace = long_horizon_trace_report(&mut full_store, case);
+        let final_dominant_hit = trace_report_dominates_hidden(&final_trace, &full_case_ids.hidden);
+        let final_prediction_hit =
+            long_horizon_prediction_hits(&full_store, &final_trace, &full_case_ids.future);
+        let prefix_dominant_hit =
+            trace_report_dominates_hidden(&prefix_trace, &prefix_case_ids.hidden);
+        let prefix_prediction_hit = prefix_prediction;
+
+        case_reports.push(LongHorizonStabilityCaseReport {
+            case_label: case.label.to_string(),
+            case_index: index + 1,
+            prefix_case_count: index + 1,
+            full_case_count: cases.len(),
+            visible_seed_rank_top10: visible_rank,
+            visible_seed_in_top10: visible_rank.is_some(),
+            prefix_dominant_hit,
+            full_dominant_hit: initial_dominant_hit,
+            later_writes_preserved_dominant: prefix_dominant_hit && initial_dominant_hit,
+            prefix_prediction_hit,
+            full_prediction_hit: initial_prediction_hit,
+            later_writes_preserved_prediction: prefix_prediction_hit && initial_prediction_hit,
+            suppressed_candidates,
+            reinforcement_rounds,
+            drift_checks,
+            final_dominant_hit,
+            final_prediction_hit,
+            reinforced_edge_count: reinforced_edges,
+            expected_edge_count: expected_edges,
+            reinforcement_consistency: ratio(reinforced_edges, expected_edges),
+            no_dominant_drift_after_reinforcement: final_dominant_hit,
+            no_prediction_drift_after_reinforcement: final_prediction_hit,
+        });
+    }
+
+    let old_cases = case_reports
+        .iter()
+        .filter(|case| case.case_index <= cases.len() / 2)
+        .count();
+    let visible_seed_hits = case_reports
+        .iter()
+        .filter(|case| case.visible_seed_in_top10)
+        .count();
+    let old_cases_preserved = case_reports
+        .iter()
+        .filter(|case| {
+            case.case_index <= cases.len() / 2
+                && case.visible_seed_in_top10
+                && case.later_writes_preserved_dominant
+        })
+        .count();
+    let newer_cases = case_reports
+        .iter()
+        .filter(|case| case.case_index > cases.len() / 2)
+        .count();
+    let newer_cases_addressable = case_reports
+        .iter()
+        .filter(|case| {
+            case.case_index > cases.len() / 2
+                && case.visible_seed_in_top10
+                && case.full_dominant_hit
+        })
+        .count();
+    let hidden_trace_hits = case_reports
+        .iter()
+        .filter(|case| case.full_dominant_hit)
+        .count();
+    let prediction_hits = case_reports
+        .iter()
+        .filter(|case| case.full_prediction_hit)
+        .count();
+    let dominant_drift_free_cases = case_reports
+        .iter()
+        .filter(|case| {
+            case.no_dominant_drift_after_reinforcement
+                && case.drift_checks.iter().all(|round| round.dominant_hit)
+        })
+        .count();
+    let prediction_drift_free_cases = case_reports
+        .iter()
+        .filter(|case| {
+            case.no_prediction_drift_after_reinforcement
+                && case.drift_checks.iter().all(|round| round.prediction_hit)
+        })
+        .count();
+    let drift_free_cases = case_reports
+        .iter()
+        .filter(|case| {
+            case.no_dominant_drift_after_reinforcement
+                && case.no_prediction_drift_after_reinforcement
+                && case
+                    .drift_checks
+                    .iter()
+                    .all(|round| round.dominant_hit && round.prediction_hit)
+        })
+        .count();
+    let expected_edges = case_reports
+        .iter()
+        .map(|case| case.expected_edge_count)
+        .sum::<usize>();
+    let reinforced_edges = case_reports
+        .iter()
+        .map(|case| case.reinforced_edge_count)
+        .sum::<usize>();
+
+    LongHorizonStabilityAuditReport {
+        schema_version: "king-synapse.long-horizon-stability-audit.v1".to_string(),
+        benchmark: LONG_HORIZON_STABILITY_AUDIT_NAME.to_string(),
+        source_benchmark: LONG_HORIZON_COGNITIVE_BENCHMARK_NAME.to_string(),
+        fixture_case_count: cases.len(),
+        reinforcement_rounds,
+        raw_records_committed: false,
+        raw_dialogs_committed: false,
+        raw_questions_committed: false,
+        raw_answers_committed: false,
+        aggregate: LongHorizonStabilityAggregate {
+            visible_seed_retention: ratio(visible_seed_hits, cases.len()),
+            old_memory_preservation: ratio(old_cases_preserved, old_cases),
+            newer_memory_addressability: ratio(newer_cases_addressable, newer_cases),
+            hidden_trace_dominance: ratio(hidden_trace_hits, cases.len()),
+            future_prediction_stability: ratio(prediction_hits, cases.len()),
+            dominant_drift_resistance: ratio(dominant_drift_free_cases, cases.len()),
+            prediction_drift_resistance: ratio(prediction_drift_free_cases, cases.len()),
+            reinforcement_drift_resistance: ratio(drift_free_cases, cases.len()),
+            reinforcement_consistency: ratio(reinforced_edges, expected_edges),
+            old_cases,
+            newer_cases,
+            drift_rounds_per_case: reinforcement_rounds,
+        },
+        cases: case_reports,
     }
 }
 
@@ -599,6 +799,8 @@ struct LongHorizonCase {
     visible_distractor: &'static str,
     hidden: &'static str,
     hidden_distractor: &'static str,
+    future: &'static str,
+    future_distractor: &'static str,
     state_terms: &'static [&'static str],
     goal_terms: &'static [&'static str],
 }
@@ -606,6 +808,73 @@ struct LongHorizonCase {
 struct LongHorizonIds {
     seed: String,
     hidden: String,
+    future: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LongHorizonStabilityAuditReport {
+    pub schema_version: String,
+    pub benchmark: String,
+    pub source_benchmark: String,
+    pub fixture_case_count: usize,
+    pub reinforcement_rounds: usize,
+    pub raw_records_committed: bool,
+    pub raw_dialogs_committed: bool,
+    pub raw_questions_committed: bool,
+    pub raw_answers_committed: bool,
+    pub aggregate: LongHorizonStabilityAggregate,
+    pub cases: Vec<LongHorizonStabilityCaseReport>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LongHorizonStabilityAggregate {
+    pub visible_seed_retention: f64,
+    pub old_memory_preservation: f64,
+    pub newer_memory_addressability: f64,
+    pub hidden_trace_dominance: f64,
+    pub future_prediction_stability: f64,
+    pub dominant_drift_resistance: f64,
+    pub prediction_drift_resistance: f64,
+    pub reinforcement_drift_resistance: f64,
+    pub reinforcement_consistency: f64,
+    pub old_cases: usize,
+    pub newer_cases: usize,
+    pub drift_rounds_per_case: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LongHorizonStabilityCaseReport {
+    pub case_label: String,
+    pub case_index: usize,
+    pub prefix_case_count: usize,
+    pub full_case_count: usize,
+    pub visible_seed_rank_top10: Option<usize>,
+    pub visible_seed_in_top10: bool,
+    pub prefix_dominant_hit: bool,
+    pub full_dominant_hit: bool,
+    pub later_writes_preserved_dominant: bool,
+    pub prefix_prediction_hit: bool,
+    pub full_prediction_hit: bool,
+    pub later_writes_preserved_prediction: bool,
+    pub suppressed_candidates: usize,
+    pub reinforcement_rounds: usize,
+    pub drift_checks: Vec<LongHorizonDriftRound>,
+    pub final_dominant_hit: bool,
+    pub final_prediction_hit: bool,
+    pub reinforced_edge_count: usize,
+    pub expected_edge_count: usize,
+    pub reinforcement_consistency: f64,
+    pub no_dominant_drift_after_reinforcement: bool,
+    pub no_prediction_drift_after_reinforcement: bool,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LongHorizonDriftRound {
+    pub round: usize,
+    pub dominant_hit: bool,
+    pub prediction_hit: bool,
+    pub reinforced_edge_count: usize,
+    pub expected_edge_count: usize,
 }
 
 #[derive(Debug, Deserialize)]
@@ -821,6 +1090,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day01 hydration reminder template for weekend chores",
             hidden: "tired mood reduces commute attention and raises scooter fall risk",
             hidden_distractor: "weekend chore list includes laundry and receipts",
+            future: "future commute decisions should check body state before riding",
+            future_distractor: "future weekend chore order can start with receipts",
             state_terms: &["tired", "mood"],
             goal_terms: &["commute", "attention"],
         },
@@ -831,6 +1102,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day02 pressure gauge reading for office equipment",
             hidden: "subconscious avoidance reduces review quality and future error detection",
             hidden_distractor: "office equipment calibration note for facilities",
+            future: "future architecture reviews should surface avoidance before judging risk",
+            future_distractor: "future facilities checks should log pressure gauge readings",
             state_terms: &["subconscious"],
             goal_terms: &["review", "future", "error"],
         },
@@ -841,6 +1114,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day03 laptop charger shopping comparison",
             hidden: "anxious planning from missing tool creates task failure risk",
             hidden_distractor: "client demo slide color palette archive",
+            future: "future demos should verify required tools before client calls",
+            future_distractor: "future slide palettes can reuse archived demo colors",
             state_terms: &["anxious"],
             goal_terms: &["task", "risk"],
         },
@@ -851,6 +1126,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day04 payment receipt export folder",
             hidden: "memory of failure changes future decision attention allocation",
             hidden_distractor: "receipt export naming preference",
+            future: "future payment decisions should allocate attention to repeated bug checks",
+            future_distractor: "future receipt exports should keep the naming preference",
             state_terms: &["memory"],
             goal_terms: &["future", "attention"],
         },
@@ -861,6 +1138,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day05 collaboration lunch receipt",
             hidden: "emotion affects communication decision and work attention",
             hidden_distractor: "lunch receipt reimbursement checklist",
+            future: "future collaboration messages should preserve trust and clear tone",
+            future_distractor: "future reimbursement notes should include lunch receipt totals",
             state_terms: &["emotion"],
             goal_terms: &["decision", "work"],
         },
@@ -871,6 +1150,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day06 deployment snack inventory",
             hidden: "hungry state narrows attention and increases operational mistake risk",
             hidden_distractor: "snack inventory sorted by shelf location",
+            future: "future deployments should check hunger before risky operations",
+            future_distractor: "future snack inventory should group shelves by location",
             state_terms: &["hungry"],
             goal_terms: &["attention", "risk"],
         },
@@ -881,6 +1162,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day07 social reading note about language history",
             hidden: "preference memory guides communication decision and reduces review friction",
             hidden_distractor: "language history bibliography for later reading",
+            future: "future handoffs should use concise chinese when reducing review friction",
+            future_distractor: "future reading notes can expand the language bibliography",
             state_terms: &["memory"],
             goal_terms: &["communication", "review"],
         },
@@ -891,6 +1174,8 @@ fn long_horizon_fixture() -> Vec<LongHorizonCase> {
             visible_distractor: "day08 complex review checklist title draft",
             hidden: "subconscious avoidance can create future judgement error",
             hidden_distractor: "checklist title draft typography options",
+            future: "future complex reviews should detect avoidance before final judgement",
+            future_distractor: "future checklist titles should compare typography options",
             state_terms: &["subconscious"],
             goal_terms: &["future", "error"],
         },
@@ -1256,14 +1541,30 @@ fn seed_long_horizon_store(
         let hidden = write_cognitive_memory(&mut store, case.hidden, MemoryKind::Playbook, 0.9);
         let hidden_distractor =
             write_cognitive_memory(&mut store, case.hidden_distractor, MemoryKind::Fact, 0.5);
+        let future = write_cognitive_memory(&mut store, case.future, MemoryKind::Playbook, 0.9);
+        let future_distractor =
+            write_cognitive_memory(&mut store, case.future_distractor, MemoryKind::Fact, 0.5);
         store
             .update_edge(&seed, &hidden, 2.0)
             .expect("long horizon target edge is persisted");
         store
             .update_edge(&seed, &hidden_distractor, 1.0)
             .expect("long horizon distractor edge is persisted");
+        store
+            .update_edge(&hidden, &future, 2.0)
+            .expect("long horizon future target edge is persisted");
+        store
+            .update_edge(&hidden, &future_distractor, 1.0)
+            .expect("long horizon future distractor edge is persisted");
 
-        ids.insert(case.label, LongHorizonIds { seed, hidden });
+        ids.insert(
+            case.label,
+            LongHorizonIds {
+                seed,
+                hidden,
+                future,
+            },
+        );
     }
 
     (store, ids)
@@ -1415,16 +1716,27 @@ fn exported_trace_probe() -> CognitiveTraceProbe {
 }
 
 fn long_horizon_visible_recall_hits(store: &mut Store, case: &LongHorizonCase, seed: &str) -> bool {
+    long_horizon_visible_recall_rank(store, case, seed, 10).is_some()
+}
+
+fn long_horizon_visible_recall_rank(
+    store: &mut Store,
+    case: &LongHorizonCase,
+    seed: &str,
+    k: usize,
+) -> Option<usize> {
     let query = RecallQuery {
         query: case.query.to_string(),
-        k: Some(10),
+        k: Some(k),
         scope_filter: None,
         kind_filter: None,
     };
     let hits = synapse_core::RecallEngine::new(store)
         .recall(&query)
         .expect("long horizon visible recall runs");
-    hits.iter().any(|hit| hit.memory.id == seed)
+    hits.iter()
+        .position(|hit| hit.memory.id == seed)
+        .map(|index| index + 1)
 }
 
 fn long_horizon_trace_report(store: &mut Store, case: &LongHorizonCase) -> CognitiveTraceReport {
@@ -1458,6 +1770,32 @@ fn long_horizon_trace_report(store: &mut Store, case: &LongHorizonCase) -> Cogni
     probe
         .trace(store, &query, &context)
         .expect("long horizon cognitive trace runs")
+}
+
+fn long_horizon_prediction_hits(
+    store: &Store,
+    report: &CognitiveTraceReport,
+    future: &str,
+) -> bool {
+    let probe = CognitiveTraceProbe::new(CognitiveTraceConfig {
+        visible_limit: 2,
+        latent_limit: 6,
+        seed_limit: 2,
+        suppressed_limit: 8,
+        latent_scale: 0.05,
+        latent_cap: 0.25,
+        latent_steps: 2,
+        latent_decay: 0.5,
+        latent_fanout: 16,
+    });
+    let prediction = probe
+        .predict_continuation(store, report, 10)
+        .expect("long horizon cognitive prediction runs");
+
+    prediction
+        .candidates
+        .iter()
+        .any(|hit| hit.memory.id == future && !hit.matched_terms.is_empty())
 }
 
 fn cognitive_trace_case_report(
@@ -2067,6 +2405,32 @@ mod tests {
             report.metrics.get(&AlgorithmMetric::HebbianConsistency),
             Some(&1.0)
         );
+    }
+
+    #[test]
+    fn long_horizon_stability_audit_report_is_deterministic() {
+        let a = long_horizon_stability_audit_report();
+        let b = long_horizon_stability_audit_report();
+
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn long_horizon_stability_audit_report_passes_fixed_gates() {
+        let report = long_horizon_stability_audit_report();
+
+        assert_eq!(report.benchmark, "long-horizon-stability-audit");
+        assert_eq!(report.fixture_case_count, 8);
+        assert_eq!(report.reinforcement_rounds, 3);
+        assert_eq!(report.aggregate.visible_seed_retention, 1.0);
+        assert_eq!(report.aggregate.old_memory_preservation, 1.0);
+        assert_eq!(report.aggregate.newer_memory_addressability, 1.0);
+        assert_eq!(report.aggregate.hidden_trace_dominance, 1.0);
+        assert_eq!(report.aggregate.future_prediction_stability, 0.75);
+        assert_eq!(report.aggregate.dominant_drift_resistance, 1.0);
+        assert_eq!(report.aggregate.prediction_drift_resistance, 0.75);
+        assert_eq!(report.aggregate.reinforcement_drift_resistance, 0.75);
+        assert_eq!(report.aggregate.reinforcement_consistency, 1.0);
     }
 
     #[test]

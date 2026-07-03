@@ -58,6 +58,13 @@ The checked long-horizon cognitive-memory report is
 `crates/eval/reports/long-horizon-cognitive-memory.json`. Its readable boundary
 is recorded in `docs/eval/LONG_HORIZON_VALIDATION.md`.
 
+The detailed long-horizon stability audit is
+`crates/eval/reports/long-horizon-stability-audit.json`. It is not a frozen
+`BenchmarkReport` contract value; it is a diagnostic report that records old /
+new memory separation, future continuation, and reinforcement drift checks.
+Current diagnostic read: visible / trace stability is `1.000`, while future
+continuation is `0.750`.
+
 `expanded-cognitive-replay` loads
 `crates/eval/datasets/regression/expanded_cognitive_replay.toml`. It fixes 20
 cognitive trace replays and 20 prediction replays without changing the

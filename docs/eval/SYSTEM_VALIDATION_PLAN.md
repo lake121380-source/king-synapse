@@ -97,6 +97,9 @@ Required result:
 - long-horizon cognitive memory keeps visible recall, hidden influence
   dominance, and Hebbian reinforcement intact in one shared long-session
   store.
+- long-horizon stability audit keeps old/new memory separation and dominant
+  trace drift resistance visible without changing the frozen benchmark
+  contract.
 
 ### 2. Current External Comparison
 
@@ -250,7 +253,8 @@ finds a blocking bug.
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
 | 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
 | 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, but remains eval-only. |
-| 11 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 11 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability remains `1.000`, future continuation is `0.750`, so prediction remains an open long-horizon weakness. |
+| 12 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -402,6 +406,13 @@ finds a blocking bug.
   `crates/eval/reports/long-horizon-cognitive-memory.json`; the fixed
   deterministic fixture passes Recall@10, HebbianConsistency, and
   CognitiveTraceDominance at `1.000`.
+- Detailed long-horizon stability audit is recorded at
+  `crates/eval/reports/long-horizon-stability-audit.json`. It confirms visible
+  seed retention, old memory preservation, newer memory addressability, hidden
+  trace dominance, dominant drift resistance, and reinforcement consistency at
+  `1.000`; future prediction stability and prediction drift resistance are
+  `0.750`. This makes future continuation the next long-horizon diagnostic
+  target, not visible recall or hidden trace dominance.
 - Hosted/official external comparison probe is recorded at
   `crates/eval/reports/external-comparison-hosted.json`; Graphiti/Zep
   Neo4j/OpenAI, Mem0 official/custom configuration, and Letta endpoint paths
