@@ -145,6 +145,7 @@ Readable summary: `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
 
 The official-style DMR answer-generation reports are fixed in:
 
+- `reports/official-dmr-500.json`
 - `reports/official-dmr-200.json`
 - `reports/official-dmr-50.json`
 - `reports/official-dmr-5-extractive.json`

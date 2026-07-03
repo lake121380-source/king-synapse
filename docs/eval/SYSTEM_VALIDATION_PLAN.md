@@ -227,11 +227,12 @@ finds a blocking bug.
 | 1 | Close the DMR 200 documentation pass and sync it to GitHub. | `official-dmr-200.json` is documented, checked for raw data / secrets, committed, and pushed. |
 | 2 | Fix LLM judge authorization/configuration outside the repository. | A 5-10 sample judge probe succeeds without writing an API key or raw answer text. |
 | 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
-| 4 | Run DMR 500 local scoring on CUDA. | A 500-sample report records sample count, mapping skips, Recall@10, answer metrics, latency, GPU memory, and raw-data policy. |
-| 5 | Expand ranking failure localization beyond DMR 50. | Late-ranking cases and true retrieval misses are split on a larger sample before changing reranker defaults. |
-| 6 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Any DMR-driven ranking change must not degrade LongMemEval without a recorded tradeoff. |
-| 7 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
-| 8 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
+| 5 | Review DMR mapping policy before claiming 500/500 coverage. | Decide whether to keep punctuation-only mapping as the official local boundary or add a separately labeled relaxed policy. |
+| 6 | Expand ranking failure localization beyond DMR 50. | Late-ranking cases and true retrieval misses are split on a larger sample before changing reranker defaults. |
+| 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Any DMR-driven ranking change must not degrade LongMemEval without a recorded tradeoff. |
+| 8 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
+| 9 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -275,12 +276,16 @@ finds a blocking bug.
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at
   `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
 - Official-style DMR answer generation: 5-query smoke, 50-query CUDA scoring,
-  and 200-query CUDA local scoring are recorded at
+  200-query CUDA local scoring, and a 500-request CUDA local scoring pass are
+  recorded at
   `docs/eval/OFFICIAL_DMR_RESULT.md`,
   `crates/eval/reports/official-dmr-5-extractive.json`,
   `crates/eval/reports/official-dmr-50.json`, and
-  `crates/eval/reports/official-dmr-200.json`; fixed LLM judge authorization
-  and DMR 500 are still unresolved.
+  `crates/eval/reports/official-dmr-200.json`, and
+  `crates/eval/reports/official-dmr-500.json`; fixed LLM judge authorization
+  is still unresolved. The DMR 500-request pass scored `323/500` requested
+  samples because the pinned punctuation mapping skipped 177 source rows before
+  selection.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`
