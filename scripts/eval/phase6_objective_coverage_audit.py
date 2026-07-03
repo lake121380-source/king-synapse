@@ -164,6 +164,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/phase6-requirements-audit.json",
         "phase6_next_gate_readiness": root
         / "crates/eval/reports/phase6-next-gate-readiness.json",
+        "official_dmr_task_gate": root
+        / "crates/eval/reports/official-dmr-task-gate.json",
+        "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
+        "external_comparison_task_gate": root
+        / "crates/eval/reports/external-comparison-task-gate.json",
+        "long_horizon_task_gate": root
+        / "crates/eval/reports/long-horizon-task-gate.json",
+        "productization_decision_gate": root
+        / "crates/eval/reports/productization-decision-gate.json",
+        "next_validation_action_gate": root
+        / "crates/eval/reports/next-validation-action-gate.json",
         "phase6_baseline_health": root
         / "crates/eval/reports/phase6-baseline-health-check-2026-07-04.json",
         "phase6_performance_profile": root
@@ -192,6 +203,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     missing_inputs = [name for name, path in paths.items() if not path.exists()]
     phase6 = load_json(paths["phase6_requirements_audit"])
     readiness = load_json(paths["phase6_next_gate_readiness"])
+    official_dmr_task_gate = load_json(paths["official_dmr_task_gate"])
+    ranking_task_gate = load_json(paths["ranking_task_gate"])
+    external_comparison_task_gate = load_json(paths["external_comparison_task_gate"])
+    long_horizon_task_gate = load_json(paths["long_horizon_task_gate"])
+    productization_decision_gate = load_json(paths["productization_decision_gate"])
+    next_validation_action_gate = load_json(paths["next_validation_action_gate"])
     baseline_health = load_json(paths["phase6_baseline_health"])
     performance = load_json(paths["phase6_performance_profile"])
     dmr_50 = load_json(paths["official_dmr_50"])
@@ -363,6 +380,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["official_dmr_bottleneck_taxonomy"]),
                         report_path(paths["official_dmr_generator_summary"]),
+                        report_path(paths["official_dmr_task_gate"]),
                     ],
                     conclusion=safe_get(bottleneck, ["read", "conclusion"], ""),
                 ),
@@ -422,9 +440,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["ranking_objective_conflict"]),
                         report_path(paths["ranking_pool_signal_guard"]),
+                        report_path(paths["ranking_task_gate"]),
                     ],
                     conclusion=safe_get(
-                        ranking_guard, ["read", "current_conclusion"], "No safe guard is ready."
+                        ranking_task_gate,
+                        ["read", "current_conclusion"],
+                        "No safe global runtime ranking default is ready.",
                     ),
                     remaining=[
                         "Need a new answer-free ordering signal or an explicit DMR/LongMemEval objective split."
@@ -472,6 +493,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["external_comparison_hosted"]),
                         report_path(paths["phase6_next_gate_readiness"]),
+                        report_path(paths["external_comparison_task_gate"]),
                     ],
                     conclusion=(
                         f"Hosted report has measured_systems={external_summary.get('measured_systems')} "
@@ -519,10 +541,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     item="Prove real-world/public long-memory stability.",
                     status="partial",
                     evidence=[report_path(paths["phase6_requirements_audit"])],
-                    conclusion=(
-                        "Deterministic fixture evidence is strong, but public real-world "
-                        "long-memory evidence is still open."
-                    ),
+                    conclusion=safe_get(long_horizon_task_gate, ["read", "current_conclusion"], ""),
                     remaining=["Add broader long-memory evidence only as validation work."],
                 ),
             ],
@@ -543,6 +562,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["external_comparison_latest"]),
                         report_path(paths["system_validation_report"]),
+                        report_path(paths["productization_decision_gate"]),
                     ],
                     conclusion=(
                         "Strongest supported claim is cognitive-trace introspection in local fixtures."
@@ -552,7 +572,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     item="Know where it is weaker than Mem0 / Graphiti / Zep.",
                     status="blocked_external",
                     evidence=[report_path(paths["external_comparison_hosted"])],
-                    conclusion="Hosted competitor measurements are not configured yet.",
+                    conclusion=safe_get(
+                        external_comparison_task_gate,
+                        ["read", "current_conclusion"],
+                        "Hosted competitor measurements are not configured yet.",
+                    ),
                 ),
                 requirement(
                     item="Know which capabilities others do not expose.",
@@ -569,6 +593,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["phase6_performance_profile"]),
                         report_path(paths["performance_analysis"]),
+                        report_path(paths["productization_decision_gate"]),
                     ],
                     conclusion=(
                         "GPU memory and reranker latency are measured, but no product "
@@ -581,6 +606,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["official_dmr_result"]),
                         report_path(paths["phase6_requirements_audit"]),
+                        report_path(paths["official_dmr_task_gate"]),
                     ],
                     conclusion=(
                         "Pinned official-style DMR exists, but answer quality is low, "
@@ -590,12 +616,31 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 requirement(
                     item="Have a stable demo before web/API/Docker/release work.",
                     status="not_ready",
-                    evidence=[report_path(paths["phase6_requirements_audit"])],
-                    conclusion="Productization is explicitly blocked by current validation gaps.",
+                    evidence=[
+                        report_path(paths["phase6_requirements_audit"]),
+                        report_path(paths["productization_decision_gate"]),
+                        report_path(paths["next_validation_action_gate"]),
+                    ],
+                    conclusion=safe_get(productization_decision_gate, ["read", "current_conclusion"], ""),
+                ),
+                requirement(
+                    item=(
+                        "Select the next heavy validation action only when external "
+                        "preconditions are ready."
+                    ),
+                    status="blocked_external",
+                    evidence=[
+                        report_path(paths["phase6_next_gate_readiness"]),
+                        report_path(paths["next_validation_action_gate"]),
+                    ],
+                    conclusion=safe_get(next_validation_action_gate, ["read", "current_conclusion"], ""),
+                    remaining=[
+                        "Wait for valid top-context judge authorization or hosted competitor configuration."
+                    ],
                 ),
             ],
             conclusion="Productization remains premature.",
-            next_action="Do not start web demo, API server, Docker, release packaging, or v0.1.",
+            next_action="Do not start web demo, API server, Docker, release packaging, or v0.1; follow the next-action gate and wait for external preconditions.",
         ),
     ]
 
@@ -640,6 +685,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "pinned_official_dmr_cuda_device_0": all_pinned_dmr_cuda,
             "top_context_judge_ready": safe_get(readiness, ["top_context_judge", "ready"]),
             "hosted_external_ready": safe_get(readiness, ["hosted_external", "ready"]),
+            "official_dmr_task_gate_status": official_dmr_task_gate["status"],
+            "ranking_task_gate_status": ranking_task_gate["status"],
+            "external_comparison_task_gate_status": external_comparison_task_gate["status"],
+            "long_horizon_task_gate_status": long_horizon_task_gate["status"],
+            "productization_decision_gate_status": productization_decision_gate["status"],
+            "next_validation_action_gate_status": next_validation_action_gate["status"],
             "ranking_global_default_candidate": safe_get(
                 ranking_conflict, ["read", "global_default_candidate"]
             ),
@@ -677,12 +728,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "hosted_external_comparison_not_configured",
                 "published_comparable_dmr_mapping_policy_not_final",
                 "no_safe_global_ranking_default",
+                "future_evidence_labeling_boundary",
+                "public_real_world_long_memory_not_validated",
+                "next_validation_action_waiting_on_external_preconditions",
                 "productization_not_ready",
             ],
             "next_action": (
-                "Keep feature freeze. The next true validation move is either "
-                "valid judge authorization for top-context DMR or hosted competitor "
-                "credentials/endpoints for external comparison."
+                "Keep feature freeze. The next validation action gate says to wait "
+                "for external preconditions: valid top-context judge authorization "
+                "or hosted competitor credentials/endpoints."
             ),
         },
         "limits": [

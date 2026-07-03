@@ -12,7 +12,9 @@ long-horizon task gate now records the deterministic fixture as passed while
 keeping public real-world long-memory claims blocked. A productization
 decision gate now records the current decision as no-go / validation-only. A
 next-validation action gate now records that no heavy rerun is allowed until
-external preconditions change.
+external preconditions change. The requirements and objective coverage audits
+now fold those task, decision, and next-action gates back into the top-level
+Phase 6 evidence chain.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -562,8 +564,9 @@ The project has not yet crossed the bar for:
 Phase 6 requirements audit status:
 
 - `crates/eval/reports/phase6-requirements-audit.json` consolidates the
-  six-stage validation objective against current evidence. It is an evidence
-  matrix, not a new benchmark run.
+  six-stage validation objective against current evidence, including the
+  official DMR, ranking, external comparison, long-horizon, productization, and
+  next-action gates. It is an evidence matrix, not a new benchmark run.
 
 | Phase | Status | Current read |
 | --- | --- | --- |
@@ -576,7 +579,9 @@ Phase 6 requirements audit status:
 
 The audit's blocking gaps are: published-comparable DMR is not finished,
 top-context candidate output is not judge-scored, no global ranking default is
-supported, hosted external comparison is not configured, and productization is
+supported, hosted external comparison is not configured, future evidence
+labeling and public real-world long-memory validation remain open, the next
+validation action is waiting on external preconditions, and productization is
 not ready.
 
 Phase 6 objective coverage audit:
@@ -594,8 +599,9 @@ Phase 6 objective coverage audit:
   productization.
 - Its most important open gates are: top-context candidate not judge-scored,
   hosted external comparison not configured, published-comparable DMR mapping
-  policy not final, no safe global ranking default, and productization not
-  ready.
+  policy not final, no safe global ranking default, future evidence labeling,
+  public real-world long-memory validation, next validation action waiting on
+  external preconditions, and productization not ready.
 
 Official DMR task gate:
 

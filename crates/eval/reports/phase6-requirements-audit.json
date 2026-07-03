@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-03T17:01:42.281139+00:00",
+  "generated_at": "2026-07-03T18:00:38.010564+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "ba88511ba2cb538e44426d897711bafe91dcfad1",
+    "commit": "9f76d6b8756ca80791b81922ecf981eabf963081",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "d7eabeab22b87b20404223ea104f98161934552c83f72c2ca14fcf619ddf1a3a"
+      "sha256": "dc3f1e33cb7bcc487c049ac5857d7a87eba21f5dd32e30922e6624b6be44e66c"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "93646c28cb931999c0e7a9b27fb1f9b4d1232f595b9bee3e74d31cb4039f4666"
+      "sha256": "69c1d0a5daee9bcbf0703c13ce51faca6bdd8d715147748fa615996b1b3fe6db"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -77,6 +77,36 @@
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
       "sha256": "b1f15f488cf323e3c715a3ffb4b43edd11537891c2ce7ba5544e109c89205f0c"
+    },
+    "official_dmr_task_gate": {
+      "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
+      "exists": true,
+      "sha256": "b7caf4e8851d45bc9d3e0de9b1fac7d127ce915fb841df10d7d8420a0daa0533"
+    },
+    "ranking_task_gate": {
+      "path": "crates\\eval\\reports\\ranking-task-gate.json",
+      "exists": true,
+      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+    },
+    "external_comparison_task_gate": {
+      "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
+      "exists": true,
+      "sha256": "89e160ee5cefc548814424bafc44739235140e72ed1e86d5209316e2a18078b7"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    },
+    "productization_decision_gate": {
+      "path": "crates\\eval\\reports\\productization-decision-gate.json",
+      "exists": true,
+      "sha256": "581774ffb5cf5a26b5f396a2a79c404fb3eeb2c778f6240df51d8767e1ebf983"
+    },
+    "next_validation_action_gate": {
+      "path": "crates\\eval\\reports\\next-validation-action-gate.json",
+      "exists": true,
+      "sha256": "1508fd4b5da1ec1f94a1601eaff945425b679799f72b6201f2769418a03ace4a"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -160,7 +190,8 @@
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
-        "crates\\eval\\reports\\phase6-next-gate-readiness.json"
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+        "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
       "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, but absolute answer quality remains low and the top-context candidate is not judge-scored.",
       "remaining": [
@@ -178,7 +209,8 @@
       "evidence": [
         "docs\\eval\\RANKING_ABLATION.md",
         "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
-        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "crates\\eval\\reports\\ranking-task-gate.json"
       ],
       "conclusion": "Existing one-variable ranking evidence does not support a new global default. RRF k is mostly flat, vector weight improves coverage with MRR/top-1 tradeoffs, reranker-pool preferences diverge between DMR and LongMemEval, and pool-signal guards have no screened safe default.",
       "remaining": [
@@ -194,7 +226,8 @@
       "evidence": [
         "docs\\eval\\EXTERNAL_VALIDATION.md",
         "crates\\eval\\reports\\external-comparison-hosted.json",
-        "crates\\eval\\reports\\phase6-next-gate-readiness.json"
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
       ],
       "conclusion": "The cognitive fixture shows Synapse's local trace surface, but hosted Graphiti/Zep, official Mem0, and live Letta are not configured in the current environment.",
       "remaining": [
@@ -211,7 +244,8 @@
         "docs\\eval\\LONG_HORIZON_VALIDATION.md",
         "crates\\eval\\reports\\long-horizon-cognitive-memory.json",
         "crates\\eval\\reports\\long-horizon-stability-audit.json",
-        "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json"
+        "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json",
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
       ],
       "conclusion": "The deterministic long-session fixture passes fixed metrics at 1.000. The remaining weak surface is target-side future evidence labeling, not candidate recall, hidden-trace drift, or reinforcement.",
       "remaining": [
@@ -226,16 +260,19 @@
       "evidence": [
         "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
         "crates\\eval\\reports\\external-comparison-hosted.json",
-        "docs\\eval\\OFFICIAL_DMR_RESULT.md"
+        "docs\\eval\\OFFICIAL_DMR_RESULT.md",
+        "crates\\eval\\reports\\productization-decision-gate.json",
+        "crates\\eval\\reports\\next-validation-action-gate.json"
       ],
-      "conclusion": "Productization is premature. The system has a validated cognitive trace advantage in local fixtures, but official DMR, hosted competitor measurements, and stable demo/product claims are not fully supported yet.",
+      "conclusion": "Productization is premature. The no-go decision is now gate-backed: the productization decision gate keeps productization false, and the next-validation action gate keeps heavy reruns blocked until external preconditions change.",
       "remaining": [
         "Need clear supported task boundaries.",
         "Need measured hosted competitor comparisons.",
         "Need stronger DMR answer-generation quality and finalized scoring policy.",
-        "Need explicit GPU cost acceptance and stable public demo criteria."
+        "Need explicit GPU cost acceptance and stable public demo criteria.",
+        "Need valid top-context judge authorization or hosted competitor configuration before the next heavy run."
       ],
-      "next_action": "Do not start web demo, API server, Docker, release packaging, or product README claims until validation gaps close."
+      "next_action": "Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: wait for external preconditions."
     }
   ],
   "key_metrics": {
@@ -419,6 +456,19 @@
         "hosted_external_ready": false,
         "blocking_reason": "Top-context judge still returns authorization_error, and hosted external comparison credentials/endpoints are not configured."
       },
+      "task_gate": {
+        "local_official_style_dmr_gate_passed": true,
+        "published_comparable_official_dmr_ready": false,
+        "top_context_judge_ready": false,
+        "runtime_generator_change_allowed": false,
+        "runtime_ranking_change_allowed": false,
+        "hard_failures": [],
+        "open_gates": [
+          "top_context_candidate_not_judge_scored",
+          "published_comparable_mapping_policy_not_final",
+          "answer_synthesis_quality_not_ready_for_official_claims"
+        ]
+      },
       "bottleneck_taxonomy": {
         "mapping_boundary": {
           "source_rows": 500,
@@ -446,6 +496,19 @@
       }
     },
     "ranking": {
+      "task_gate": {
+        "ranking_evidence_gate_passed": true,
+        "ranking_validated_bottleneck": true,
+        "safe_global_ranking_default_ready": false,
+        "runtime_ranking_change_allowed": false,
+        "hard_failures": [],
+        "open_gates": [
+          "no_safe_global_ranking_default",
+          "new_answer_free_ordering_signal_needed",
+          "dmr_longmem_objective_split_not_decided",
+          "latency_acceptance_threshold_not_adopted"
+        ]
+      },
       "global_default_candidate": null,
       "conflict_or_tradeoff_views": [
         "vector_weight_50",
@@ -456,11 +519,40 @@
       "safe_guard_ids": []
     },
     "external_hosted": {
+      "task_gate": {
+        "local_external_comparison_gate_passed": true,
+        "local_trace_advantage_supported": true,
+        "unsupported_counted_separately": true,
+        "hosted_official_external_ready": false,
+        "hosted_official_comparison_complete": false,
+        "hosted_competitor_superiority_claim_allowed": false,
+        "hard_failures": [],
+        "open_gates": [
+          "hosted_graphiti_zep_not_configured",
+          "official_mem0_not_configured",
+          "letta_endpoint_not_configured"
+        ]
+      },
       "measured_systems": 1,
       "not_configured_systems": 3,
       "failed_systems": 0
     },
     "long_horizon": {
+      "task_gate": {
+        "long_horizon_gate_passed": true,
+        "deterministic_fixture_stable": true,
+        "future_candidate_recall_stable": true,
+        "future_evidence_labeling_complete": false,
+        "public_real_world_long_memory_ready": false,
+        "runtime_behavior_change_allowed": false,
+        "productization_allowed": false,
+        "hard_failures": [],
+        "open_gates": [
+          "future_evidence_labeling_boundary",
+          "public_real_world_long_memory_not_validated",
+          "productization_not_ready"
+        ]
+      },
       "fixed_metrics": {
         "RecallAt10": 1.0,
         "HebbianConsistency": 1.0,
@@ -481,6 +573,52 @@
         "rerank_pool": 50
       },
       "recall_baseline_count": 3
+    },
+    "productization_decision": {
+      "productization_decision_gate_passed": true,
+      "current_decision": "no_go_validation_only",
+      "productization_ready": false,
+      "productization_allowed": false,
+      "release_v0_1_allowed": false,
+      "web_demo_allowed": false,
+      "api_server_allowed": false,
+      "docker_allowed": false,
+      "runtime_default_change_allowed": false,
+      "heavy_next_gate_ready": false,
+      "hard_failures": [],
+      "blocking_criteria": [
+        "clear_supported_task_boundaries",
+        "weaknesses_vs_competitors_known",
+        "gpu_cost_acceptance_ready",
+        "official_dmr_supports_readme_claims",
+        "stable_public_demo_ready",
+        "runtime_defaults_ready",
+        "public_long_memory_ready"
+      ],
+      "open_gates": [
+        "published_comparable_official_dmr_not_ready",
+        "top_context_candidate_not_judge_scored",
+        "hosted_external_comparison_not_configured",
+        "safe_runtime_ranking_default_not_ready",
+        "future_evidence_labeling_boundary",
+        "public_real_world_long_memory_not_validated",
+        "gpu_latency_acceptance_threshold_not_adopted",
+        "stable_public_demo_not_productized"
+      ]
+    },
+    "next_validation_action": {
+      "next_validation_action_gate_passed": true,
+      "recommended_action": "wait_for_external_preconditions",
+      "heavy_validation_allowed": false,
+      "top_context_dmr_50_judge_scoring_allowed": false,
+      "hosted_external_comparison_allowed": false,
+      "productization_allowed": false,
+      "runtime_default_change_allowed": false,
+      "hard_failures": [],
+      "open_preconditions": [
+        "valid_top_context_judge_authorization",
+        "hosted_graphiti_zep_official_mem0_letta_configuration"
+      ]
     },
     "baseline_health": {
       "validated_commit": "ea319f39ceb0a526a11874d73da2e738898312f6",
@@ -509,16 +647,20 @@
       "Published-comparable official DMR performance.",
       "Hosted Graphiti/Zep, official Mem0, or live Letta superiority.",
       "A safe global ranking-default change.",
-      "Production readiness or v0.1 release readiness."
+      "Production readiness or v0.1 release readiness.",
+      "Any heavy next validation rerun while external preconditions are blocked."
     ],
     "blocking_gaps": [
       "published_comparable_dmr_not_finished",
       "top_context_candidate_not_judge_scored",
       "no_global_ranking_default_supported",
       "hosted_external_comparison_not_configured",
+      "future_evidence_labeling_boundary",
+      "public_real_world_long_memory_not_validated",
+      "next_validation_action_waiting_on_external_preconditions",
       "productization_not_ready"
     ],
-    "recommended_next_action": "Keep feature freeze. The next-gate readiness audit says no heavy validation branch is currently ready: top-context DMR judge scoring still needs valid authorization, and hosted external comparison still needs competitor credentials/endpoints."
+    "recommended_next_action": "Keep feature freeze. The next-validation action gate says no heavy validation branch is currently ready: top-context DMR judge scoring still needs valid authorization, and hosted external comparison still needs competitor credentials/endpoints."
   },
   "limits": [
     "This is an evidence consolidation pass only.",

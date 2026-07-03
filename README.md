@@ -147,6 +147,10 @@ A current six-stage requirements audit is recorded in
 official-style DMR is local but not published-comparable, no global ranking
 default is supported yet, hosted external comparisons are still open, and
 productization is not ready.
+That audit is now backed by the task gates, the productization decision gate,
+and the next-action gate, so the current project state is validation-only:
+the system can keep being measured, but heavy reruns and productization wait on
+external preconditions.
 
 The deterministic long-horizon cognitive gate is also recorded:
 [LONG_HORIZON_VALIDATION.md](docs/eval/LONG_HORIZON_VALIDATION.md) and

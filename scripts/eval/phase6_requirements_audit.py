@@ -149,6 +149,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
         "phase6_next_gate_readiness": root
         / "crates/eval/reports/phase6-next-gate-readiness.json",
+        "official_dmr_task_gate": root
+        / "crates/eval/reports/official-dmr-task-gate.json",
+        "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
+        "external_comparison_task_gate": root
+        / "crates/eval/reports/external-comparison-task-gate.json",
+        "long_horizon_task_gate": root
+        / "crates/eval/reports/long-horizon-task-gate.json",
+        "productization_decision_gate": root
+        / "crates/eval/reports/productization-decision-gate.json",
+        "next_validation_action_gate": root
+        / "crates/eval/reports/next-validation-action-gate.json",
         "ranking_objective_conflict_audit": root
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard_audit": root
@@ -177,6 +188,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     bottleneck_taxonomy = load_json(paths["official_dmr_bottleneck_taxonomy"])
     top_context_preflight = load_json(paths["official_dmr_top_context_judge_preflight"])
     next_gate_readiness = load_json(paths["phase6_next_gate_readiness"])
+    official_dmr_task_gate = load_json(paths["official_dmr_task_gate"])
+    ranking_task_gate = load_json(paths["ranking_task_gate"])
+    external_comparison_task_gate = load_json(paths["external_comparison_task_gate"])
+    long_horizon_task_gate = load_json(paths["long_horizon_task_gate"])
+    productization_decision_gate = load_json(paths["productization_decision_gate"])
+    next_validation_action_gate = load_json(paths["next_validation_action_gate"])
     ranking_conflict = load_json(paths["ranking_objective_conflict_audit"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard_audit"])
     external_hosted = load_json(paths["external_comparison_hosted"])
@@ -239,6 +256,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_bottleneck_taxonomy"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
                 report_path(paths["phase6_next_gate_readiness"]),
+                report_path(paths["official_dmr_task_gate"]),
             ],
             conclusion=(
                 "Retrieval -> answer generation -> local scoring exists for 50, "
@@ -262,6 +280,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["ranking_ablation"]),
                 report_path(paths["ranking_objective_conflict_audit"]),
                 report_path(paths["ranking_pool_signal_guard_audit"]),
+                report_path(paths["ranking_task_gate"]),
             ],
             conclusion=ranking_read["conclusion"],
             remaining=[
@@ -278,6 +297,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["external_validation"]),
                 report_path(paths["external_comparison_hosted"]),
                 report_path(paths["phase6_next_gate_readiness"]),
+                report_path(paths["external_comparison_task_gate"]),
             ],
             conclusion=(
                 "The cognitive fixture shows Synapse's local trace surface, but "
@@ -299,6 +319,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["long_horizon_cognitive_memory"]),
                 report_path(paths["long_horizon_stability_audit"]),
                 report_path(paths["long_horizon_prediction_evidence_audit"]),
+                report_path(paths["long_horizon_task_gate"]),
             ],
             conclusion=(
                 "The deterministic long-session fixture passes fixed metrics at "
@@ -318,20 +339,23 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["system_validation_report"]),
                 report_path(paths["external_comparison_hosted"]),
                 report_path(paths["official_dmr_result"]),
+                report_path(paths["productization_decision_gate"]),
+                report_path(paths["next_validation_action_gate"]),
             ],
             conclusion=(
-                "Productization is premature. The system has a validated cognitive "
-                "trace advantage in local fixtures, but official DMR, hosted "
-                "competitor measurements, and stable demo/product claims are not "
-                "fully supported yet."
+                "Productization is premature. The no-go decision is now gate-backed: "
+                "the productization decision gate keeps productization false, and "
+                "the next-validation action gate keeps heavy reruns blocked until "
+                "external preconditions change."
             ),
             remaining=[
                 "Need clear supported task boundaries.",
                 "Need measured hosted competitor comparisons.",
                 "Need stronger DMR answer-generation quality and finalized scoring policy.",
                 "Need explicit GPU cost acceptance and stable public demo criteria.",
+                "Need valid top-context judge authorization or hosted competitor configuration before the next heavy run.",
             ],
-            next_action="Do not start web demo, API server, Docker, release packaging, or product README claims until validation gaps close.",
+            next_action="Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: wait for external preconditions.",
         ),
     ]
 
@@ -341,6 +365,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "top_context_candidate_not_judge_scored",
         "no_global_ranking_default_supported",
         "hosted_external_comparison_not_configured",
+        "future_evidence_labeling_boundary",
+        "public_real_world_long_memory_not_validated",
+        "next_validation_action_waiting_on_external_preconditions",
         "productization_not_ready",
     ]
 
@@ -390,6 +417,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     ),
                     "blocking_reason": next_gate_read.get("blocking_reason"),
                 },
+                "task_gate": official_dmr_task_gate["status"],
                 "bottleneck_taxonomy": {
                     "mapping_boundary": bottleneck_taxonomy["mapping_boundary"],
                     "largest_local_view": bottleneck_taxonomy["largest_local_view"],
@@ -397,6 +425,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 },
             },
             "ranking": {
+                "task_gate": ranking_task_gate["status"],
                 "global_default_candidate": ranking_read["global_default_candidate"],
                 "conflict_or_tradeoff_views": ranking_read[
                     "conflict_or_tradeoff_views"
@@ -405,11 +434,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "safe_guard_ids": safe_get(ranking_guard, ["read", "safe_guard_ids"], []),
             },
             "external_hosted": {
+                "task_gate": external_comparison_task_gate["status"],
                 "measured_systems": hosted_summary["measured_systems"],
                 "not_configured_systems": hosted_summary["not_configured_systems"],
                 "failed_systems": hosted_summary["failed_systems"],
             },
             "long_horizon": {
+                "task_gate": long_horizon_task_gate["status"],
                 "fixed_metrics": long_horizon_metrics,
                 "candidate_present_all_phases_count": long_horizon_evidence_aggregate[
                     "candidate_present_all_phases_count"
@@ -425,6 +456,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "gpu_configuration": gpu_configuration,
                 "recall_baseline_count": len(recall_baselines),
             },
+            "productization_decision": productization_decision_gate["status"],
+            "next_validation_action": next_validation_action_gate["status"],
             "baseline_health": {
                 "validated_commit": baseline_health.get("validated_commit"),
                 "current_baseline_health": safe_get(
@@ -459,10 +492,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Hosted Graphiti/Zep, official Mem0, or live Letta superiority.",
                 "A safe global ranking-default change.",
                 "Production readiness or v0.1 release readiness.",
+                "Any heavy next validation rerun while external preconditions are blocked.",
             ],
             "blocking_gaps": blocking_gaps,
             "recommended_next_action": (
-                "Keep feature freeze. The next-gate readiness audit says no "
+                "Keep feature freeze. The next-validation action gate says no "
                 "heavy validation branch is currently ready: top-context DMR "
                 "judge scoring still needs valid authorization, and hosted "
                 "external comparison still needs competitor credentials/endpoints."
