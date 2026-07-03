@@ -1,0 +1,86 @@
+{
+  "schema_version": "king-synapse.phase6-next-gate-readiness.v1",
+  "generated_at": "2026-07-03T16:43:38.650790+00:00",
+  "runner": "scripts\\eval\\phase6_next_gate_readiness.py",
+  "inputs": {
+    "top_context_preflight": {
+      "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
+      "sha256": "7a9f5c79747f02e69e8c410bc9e506b031fea6f2de15ac6e92246d45fdc8355f",
+      "decision": "judge_configuration_still_blocked"
+    },
+    "hosted_external_report": {
+      "path": "crates\\eval\\reports\\external-comparison-hosted.json",
+      "sha256": "606ecb6ff5834ab47af8a5ae8b38c0bc2834a8a153132188e1350ca2d9e36888",
+      "summary": {
+        "systems": 4,
+        "measured_systems": 1,
+        "not_configured_systems": 3,
+        "failed_systems": 0
+      }
+    }
+  },
+  "env_presence": {
+    "DEEPSEEK_API_KEY": true,
+    "DEEPSEEK_BASE_URL": false,
+    "DEEPSEEK_JUDGE_MODEL": false,
+    "OPENAI_API_KEY": false,
+    "NEO4J_URI": false,
+    "NEO4J_USER": false,
+    "NEO4J_PASSWORD": false,
+    "MEM0_CONFIG_JSON": false,
+    "MEM0_CONFIG_PATH": false,
+    "LETTA_API_KEY": false,
+    "LETTA_BASE_URL": false,
+    "LETTA_ENVIRONMENT": false
+  },
+  "env_checks": {
+    "LETTA_ENVIRONMENT_is_local": false
+  },
+  "api_keys_recorded": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "raw_records_committed": false,
+  "top_context_judge": {
+    "ready": false,
+    "status": "authorization_error",
+    "http_status": 401,
+    "decision": "judge_configuration_still_blocked",
+    "api_key_present": true,
+    "api_key_recorded": false
+  },
+  "hosted_external": {
+    "ready": false,
+    "requirements": {
+      "graphiti_zep_ready": false,
+      "mem0_official_ready": false,
+      "letta_ready": false,
+      "letta_environment_local": false,
+      "all_hosted_ready": false,
+      "missing_for_graphiti_zep": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ],
+      "missing_for_mem0_official": [
+        "OPENAI_API_KEY or MEM0_CONFIG_JSON or MEM0_CONFIG_PATH"
+      ],
+      "missing_for_letta": [
+        "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+      ]
+    },
+    "last_report_measured_systems": 1,
+    "last_report_not_configured_systems": 3,
+    "last_report_failed_systems": 0
+  },
+  "read": {
+    "next_gate_ready": false,
+    "blocking_reason": "Top-context judge still returns authorization_error, and hosted external comparison credentials/endpoints are not configured.",
+    "next_action": "No heavy next-gate run is currently ready. Keep feature freeze and wait for a valid judge key or hosted external credentials/endpoints."
+  },
+  "limits": [
+    "Records environment variable presence only, not values.",
+    "Does not run DMR retrieval, answer generation, LLM judging, or hosted adapters.",
+    "Does not inspect raw benchmark records or generated answers."
+  ]
+}

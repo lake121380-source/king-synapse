@@ -147,6 +147,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
         "official_dmr_top_context_judge_preflight": root
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
+        "phase6_next_gate_readiness": root
+        / "crates/eval/reports/phase6-next-gate-readiness.json",
         "ranking_objective_conflict_audit": root
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard_audit": root
@@ -172,6 +174,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     generator_summary = load_json(paths["official_dmr_generator_summary"])
     bottleneck_taxonomy = load_json(paths["official_dmr_bottleneck_taxonomy"])
     top_context_preflight = load_json(paths["official_dmr_top_context_judge_preflight"])
+    next_gate_readiness = load_json(paths["phase6_next_gate_readiness"])
     ranking_conflict = load_json(paths["ranking_objective_conflict_audit"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard_audit"])
     external_hosted = load_json(paths["external_comparison_hosted"])
@@ -188,6 +191,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     generator_findings = generator_summary["aggregate_findings"]
     ranking_read = ranking_conflict["read"]
     hosted_summary = external_hosted["summary"]
+    next_gate_read = next_gate_readiness["read"]
     long_horizon_metrics = long_horizon["metrics"]
     long_horizon_evidence_aggregate = long_horizon_evidence["aggregate"]
     gpu_configuration = performance.get("gpu_configuration", {})
@@ -229,6 +233,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_generator_summary"]),
                 report_path(paths["official_dmr_bottleneck_taxonomy"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
+                report_path(paths["phase6_next_gate_readiness"]),
             ],
             conclusion=(
                 "Retrieval -> answer generation -> local scoring exists for 50, "
@@ -267,6 +272,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[
                 report_path(paths["external_validation"]),
                 report_path(paths["external_comparison_hosted"]),
+                report_path(paths["phase6_next_gate_readiness"]),
             ],
             conclusion=(
                 "The cognitive fixture shows Synapse's local trace surface, but "
@@ -369,6 +375,16 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     "result": top_context_preflight.get("result"),
                     "decision": top_context_preflight.get("decision"),
                 },
+                "next_gate_readiness": {
+                    "next_gate_ready": next_gate_read.get("next_gate_ready"),
+                    "top_context_judge_ready": safe_get(
+                        next_gate_readiness, ["top_context_judge", "ready"]
+                    ),
+                    "hosted_external_ready": safe_get(
+                        next_gate_readiness, ["hosted_external", "ready"]
+                    ),
+                    "blocking_reason": next_gate_read.get("blocking_reason"),
+                },
                 "bottleneck_taxonomy": {
                     "mapping_boundary": bottleneck_taxonomy["mapping_boundary"],
                     "largest_local_view": bottleneck_taxonomy["largest_local_view"],
@@ -425,9 +441,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ],
             "blocking_gaps": blocking_gaps,
             "recommended_next_action": (
-                "Keep feature freeze. The next highest-value validation step is "
-                "judge-scored top-context DMR if DeepSeek authorization is fixed; "
-                "otherwise proceed with hosted external comparison configuration."
+                "Keep feature freeze. The next-gate readiness audit says no "
+                "heavy validation branch is currently ready: top-context DMR "
+                "judge scoring still needs valid authorization, and hosted "
+                "external comparison still needs competitor credentials/endpoints."
             ),
         },
         "limits": [

@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-03T16:32:21.153205+00:00",
+  "generated_at": "2026-07-03T16:43:46.157056+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "dcdfa330ce0b686dbb370f34fa0276bee111d1c3",
+    "commit": "1b256f93c9e91fac0d6df991d12b5195000c4010",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "874235eecf170eb3b98d0dffdff309fdbdf3c323b6ef33e698ec554333dcd99a"
+      "sha256": "60a59c97f2e94d622218bf02b8b076f37a43ba167bab251f762dfef585cde884"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "79d59a9763b46ad8d4aaddf3f6493fcece76bab88df5f9d2a6e27152b036d095"
+      "sha256": "86036eacec1d9ff55d44ce92b25261a1edc116024762bfe3df93034519f0cf22"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -71,7 +71,12 @@
     "official_dmr_top_context_judge_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
       "exists": true,
-      "sha256": "2b41d89cb6359d6840b1389fb711845cdf1c2a757c0563193c9c6e9da3c92915"
+      "sha256": "7a9f5c79747f02e69e8c410bc9e506b031fea6f2de15ac6e92246d45fdc8355f"
+    },
+    "phase6_next_gate_readiness": {
+      "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+      "exists": true,
+      "sha256": "b1f15f488cf323e3c715a3ffb4b43edd11537891c2ce7ba5544e109c89205f0c"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -148,7 +153,8 @@
         "crates\\eval\\reports\\official-dmr-500.json",
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
-        "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
+        "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json"
       ],
       "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, but absolute answer quality remains low and the top-context candidate is not judge-scored.",
       "remaining": [
@@ -181,7 +187,8 @@
       "status": "partial_local_complete_hosted_open",
       "evidence": [
         "docs\\eval\\EXTERNAL_VALIDATION.md",
-        "crates\\eval\\reports\\external-comparison-hosted.json"
+        "crates\\eval\\reports\\external-comparison-hosted.json",
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json"
       ],
       "conclusion": "The cognitive fixture shows Synapse's local trace surface, but hosted Graphiti/Zep, official Mem0, and live Letta are not configured in the current environment.",
       "remaining": [
@@ -388,7 +395,7 @@
           "models_probe": {
             "status": "http_error",
             "http_status": 401,
-            "wall_ms": 146.68830001028255,
+            "wall_ms": 177.15439999301452,
             "reason": "Authorization Required",
             "response_body_hash": "568320815b206ffd"
           },
@@ -396,9 +403,15 @@
           "http_status": 401,
           "reason": "Authorization Required",
           "response_body_hash": "568320815b206ffd",
-          "wall_ms": 109.76900000241585
+          "wall_ms": 92.98060000583064
         },
         "decision": "judge_configuration_still_blocked"
+      },
+      "next_gate_readiness": {
+        "next_gate_ready": false,
+        "top_context_judge_ready": false,
+        "hosted_external_ready": false,
+        "blocking_reason": "Top-context judge still returns authorization_error, and hosted external comparison credentials/endpoints are not configured."
       },
       "bottleneck_taxonomy": {
         "mapping_boundary": {
@@ -485,7 +498,7 @@
       "hosted_external_comparison_not_configured",
       "productization_not_ready"
     ],
-    "recommended_next_action": "Keep feature freeze. The next highest-value validation step is judge-scored top-context DMR if DeepSeek authorization is fixed; otherwise proceed with hosted external comparison configuration."
+    "recommended_next_action": "Keep feature freeze. The next-gate readiness audit says no heavy validation branch is currently ready: top-context DMR judge scoring still needs valid authorization, and hosted external comparison still needs competitor credentials/endpoints."
   },
   "limits": [
     "This is an evidence consolidation pass only.",

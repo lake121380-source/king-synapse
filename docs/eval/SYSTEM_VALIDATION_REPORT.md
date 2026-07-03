@@ -4,9 +4,10 @@ Date: 2026-07-04
 
 Status: scoped validation passed; official-style DMR 200 local scoring is now
 recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
-samples, DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`,
-and the deterministic long-horizon cognitive gate plus detailed stability /
-prediction-evidence audits are recorded.
+samples, pinned extractive DMR judge runs have returned `0` errors on
+`deepseek-v4-flash`, the top-context candidate judge preflight currently
+returns HTTP `401`, and the deterministic long-horizon cognitive gate plus
+detailed stability / prediction-evidence audits are recorded.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -562,6 +563,19 @@ top-context candidate output is not judge-scored, no global ranking default is
 supported, hosted external comparison is not configured, and productization is
 not ready.
 
+Phase 6 next-gate readiness:
+
+- `crates/eval/reports/phase6-next-gate-readiness.json` records the current
+  external preconditions without storing secret values, prompt text, raw
+  responses, raw benchmark records, or generated answers.
+- Top-context DMR judge readiness is `false`: the latest sanitized preflight
+  returns `authorization_error` with HTTP `401`.
+- Hosted external readiness is `false`: Graphiti/Zep, official Mem0, and Letta
+  still need configured credentials or endpoints before the fair hosted
+  comparison can run.
+- Current next-gate readiness is `false`, so no heavy next validation branch is
+  ready at this exact checkpoint.
+
 GPU validation status:
 
 - CUDA execution-provider selection is wired through
@@ -578,15 +592,10 @@ GPU validation status:
   total GPU memory sample.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen and continue ranking /
-answer-synthesis validation before any product claim. The next ranking work
-should separate candidate-retrieval coverage from reranker ordering on DMR 200
-and target the rank 11-25 late-rank band without adopting `vector_weight = 1.5`
-or reranker pool `100` as a default. The LongMemEval 500 expansion and the
-objective-conflict audit block the current global-default path, so the
-immediate next ranking gate is a new answer-free ordering signal, or an
-explicit split between DMR and LongMemEval objectives. Any future runtime
-ranking policy still needs zero LongMemEval Recall@10 regression, zero top-10
-suppressions, and an explicit triggered-query latency budget. Keep
-answer-synthesis work in evaluation mode until the official-style DMR protocol
-is finalized and a valid top-context judge configuration is available again.
+Next required action: keep feature growth frozen and do not start product work.
+No heavy next-gate run is currently ready: top-context DMR judge scoring needs
+valid authorization, and hosted external comparison needs competitor
+credentials/endpoints. Once one of those gates is ready, continue in validation
+mode only: judge-score the top-context DMR candidate, or run the hosted
+external comparison. Do not adopt `vector_weight = 1.5`, reranker pool `100`,
+or any pool-signal guard as a runtime default from the current evidence.
