@@ -92,6 +92,10 @@ The repeatable local health wrapper for the current Phase 6 baseline is:
 python scripts/eval/phase6_baseline_health_check.py
 ```
 
+The generated health report records the HEAD that was replayed. The later commit
+that stores the report is expected to be a descendant, not a self-validating
+commit, because adding the report changes the commit hash.
+
 Required result:
 
 - formatting passes;

@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 """Replay local non-external Phase 6 baseline health checks.
 
-This script anchors the current commit as the local Phase 6 validation baseline
+This script anchors the current HEAD as the local Phase 6 validation baseline
 without running LongMemEval/DMR heavy retrieval, hosted adapters, LLM judges, or
-product code. It records aggregate health only and must not store secrets, raw
-benchmark records, prompts, responses, or generated answers.
+product code. Because committing the generated report creates a new descendant
+commit, the report records the HEAD that was replayed rather than claiming to
+validate its own containing commit. It records aggregate health only and must
+not store secrets, raw benchmark records, prompts, responses, or generated
+answers.
 """
 
 from __future__ import annotations
@@ -65,6 +68,11 @@ def git_value(*args: str) -> str | None:
     except (OSError, subprocess.CalledProcessError):
         return None
     return result.stdout.strip()
+
+
+def git_status_porcelain() -> list[str]:
+    value = git_value("status", "--porcelain")
+    return value.splitlines() if value else []
 
 
 def run_command(command: list[str]) -> dict[str, Any]:
@@ -150,6 +158,8 @@ def fixed_metric_passed(metrics: dict[str, Any]) -> bool:
 
 def build_report(args: argparse.Namespace) -> tuple[dict[str, Any], bool]:
     checks: list[dict[str, Any]] = []
+    head_commit = git_value("rev-parse", "HEAD")
+    status_before = git_status_porcelain()
 
     if not args.skip_fmt:
         checks.append(
@@ -220,13 +230,26 @@ def build_report(args: argparse.Namespace) -> tuple[dict[str, Any], bool]:
         "schema_version": "king-synapse.phase6-baseline-health-check.v1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "runner": report_path(Path(__file__)),
-        "validated_commit": git_value("rev-parse", "HEAD"),
+        "validated_commit": head_commit,
+        "validated_commit_semantics": (
+            "HEAD at the start of this local replay. The commit that stores this "
+            "generated report is expected to be a descendant, because writing the "
+            "report changes repository state."
+        ),
+        "report_commit_model": {
+            "self_validating_commit": False,
+            "validated_commit_is_replay_head": True,
+            "containing_commit_expected_to_be_descendant": True,
+            "reason": "The generated report file cannot contain the hash of its own future commit without changing that hash.",
+        },
         "git": {
             "branch": git_value("rev-parse", "--abbrev-ref", "HEAD"),
-            "commit": git_value("rev-parse", "HEAD"),
+            "commit": head_commit,
             "origin_main_delta": git_value(
                 "rev-list", "--left-right", "--count", "origin/main...HEAD"
             ),
+            "worktree_dirty_at_start": bool(status_before),
+            "worktree_status_count_at_start": len(status_before),
         },
         "feature_freeze_preserved": True,
         "memory_schema_changed": False,
@@ -255,7 +278,9 @@ def build_report(args: argparse.Namespace) -> tuple[dict[str, Any], bool]:
             "conclusion": (
                 "The current Phase 6 baseline remains healthy under local non-external gates. "
                 "Core cognitive fixture metrics are stable, while the known long-horizon "
-                "future-evidence boundary remains unchanged at 6/8 matched evidence cases."
+                "future-evidence boundary remains unchanged at 6/8 matched evidence cases. "
+                "The report validates the replay HEAD recorded in validated_commit; the "
+                "commit that stores the report is expected to be a descendant."
                 if baseline_passed
                 else "The current Phase 6 baseline health replay failed; inspect checks before continuing."
             ),
