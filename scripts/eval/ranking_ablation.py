@@ -67,10 +67,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument(
+        "--ablation",
+        choices=("reranker-pool", "top-k"),
+        default="reranker-pool",
+        help="Ranking parameter to vary. Exactly one parameter is varied per run.",
+    )
+    parser.add_argument(
         "--reranker-pools",
         default="10,25,50,100",
-        help="Comma-separated reranker pool sizes. This is the ablated variable.",
+        help="Comma-separated reranker pool sizes for --ablation reranker-pool.",
     )
+    parser.add_argument(
+        "--top-k-values",
+        default="10,25,50",
+        help="Comma-separated top-k values for --ablation top-k.",
+    )
+    parser.add_argument("--fixed-reranker-pool", type=int, default=50)
     parser.add_argument("--embed-batch-size", type=int, default=None)
     parser.add_argument("--embed-max-length", type=int, default=None)
     parser.add_argument("--rerank-batch-size", type=int, default=None)
@@ -215,6 +227,7 @@ def run_reranker_pool_ablation(
             {
                 "variant_id": f"reranker-pool-{pool}",
                 "ablated_parameter": "reranker_pool",
+                "ablated_value": pool,
                 "reranker_pool": pool,
                 "k": k,
                 "mode": "vectors-rerank",
@@ -226,12 +239,52 @@ def run_reranker_pool_ablation(
     return runs
 
 
-def summarize_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
+def run_top_k_ablation(
+    *,
+    dataset_path: Path,
+    output_dir: Path,
+    tag_base: str,
+    examples: list[dict[str, Any]],
+    top_k_values: list[int],
+    reranker_pool: int,
+) -> list[dict[str, Any]]:
+    runs: list[dict[str, Any]] = []
+    for k in top_k_values:
+        tag = f"{tag_base}-top-k-{k}"
+        raw_output = output_dir / f"{tag}-raw-report.json"
+        print(f"running {tag}...", flush=True)
+        raw = run_kr_eval(
+            dataset_path,
+            raw_output,
+            tag,
+            k,
+            vectors=True,
+            rerank=True,
+            rerank_pool=reranker_pool,
+        )
+        run = sanitize_eval_report(raw, examples)
+        run.update(
+            {
+                "variant_id": f"top-k-{k}",
+                "ablated_parameter": "top_k",
+                "ablated_value": k,
+                "reranker_pool": reranker_pool,
+                "k": k,
+                "mode": "vectors-rerank",
+                "label": f"RRF + vectors + reranker top-k {k}",
+                "tag": raw.get("tag"),
+            }
+        )
+        runs.append(run)
+    return runs
+
+
+def summarize_runs(runs: list[dict[str, Any]], ablated_parameter: str) -> dict[str, Any]:
     if not runs:
         return {}
     best_recall = max(runs, key=lambda item: (item.get("recall_at_10") or 0.0, item.get("mrr_at_10") or 0.0))
     best_mrr = max(runs, key=lambda item: (item.get("mrr_at_10") or 0.0, item.get("recall_at_10") or 0.0))
-    control = next((run for run in runs if run.get("reranker_pool") == 50), runs[0])
+    control = control_run(runs, ablated_parameter)
     return {
         "best_by_recall_at_10": compact_run(best_recall),
         "best_by_mrr_at_10": compact_run(best_mrr),
@@ -239,7 +292,10 @@ def summarize_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "deltas_vs_control": [
             {
                 "variant_id": run["variant_id"],
+                "ablated_parameter": run["ablated_parameter"],
+                "ablated_value": run["ablated_value"],
                 "reranker_pool": run["reranker_pool"],
+                "k": run["k"],
                 "recall_at_10_delta": safe_delta(run.get("recall_at_10"), control.get("recall_at_10")),
                 "mrr_at_10_delta": safe_delta(run.get("mrr_at_10"), control.get("mrr_at_10")),
                 "p50_latency_ms_delta": safe_delta(run.get("p50_latency_ms"), control.get("p50_latency_ms")),
@@ -252,10 +308,21 @@ def summarize_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def control_run(runs: list[dict[str, Any]], ablated_parameter: str) -> dict[str, Any]:
+    if ablated_parameter == "reranker_pool":
+        return next((run for run in runs if run.get("reranker_pool") == 50), runs[0])
+    if ablated_parameter == "top_k":
+        return next((run for run in runs if run.get("k") == 10), runs[0])
+    return runs[0]
+
+
 def compact_run(run: dict[str, Any]) -> dict[str, Any]:
     return {
         "variant_id": run.get("variant_id"),
+        "ablated_parameter": run.get("ablated_parameter"),
+        "ablated_value": run.get("ablated_value"),
         "reranker_pool": run.get("reranker_pool"),
+        "k": run.get("k"),
         "recall_at_10": run.get("recall_at_10"),
         "mrr_at_10": run.get("mrr_at_10"),
         "ndcg_at_10": run.get("ndcg_at_10"),
@@ -280,7 +347,7 @@ def count_failure(run: dict[str, Any], failure: str) -> int:
     return int((run.get("failure_type_counts") or {}).get(failure, 0))
 
 
-def dataset_report(spec: dict[str, Any], runs: list[dict[str, Any]]) -> dict[str, Any]:
+def dataset_report(spec: dict[str, Any], runs: list[dict[str, Any]], ablated_parameter: str) -> dict[str, Any]:
     categories = Counter(example["category"] for example in spec["examples"])
     report = {
         "id": spec["id"],
@@ -295,7 +362,7 @@ def dataset_report(spec: dict[str, Any], runs: list[dict[str, Any]]) -> dict[str
         "raw_records_committed": False,
         "memory_chunks": len(spec["memories"]),
         "runs": runs,
-        "summary": summarize_runs(runs),
+        "summary": summarize_runs(runs, ablated_parameter),
     }
     report.update(spec.get("metadata") or {})
     return report
@@ -312,23 +379,37 @@ def main() -> int:
     args.fastembed_cache_dir.mkdir(parents=True, exist_ok=True)
 
     accelerator = configure_accelerator_environment(args)
+    if args.fixed_reranker_pool <= 0:
+        raise ValueError("--fixed-reranker-pool must be positive")
     reranker_pools = parse_int_list(args.reranker_pools, name="reranker-pools")
+    top_k_values = parse_int_list(args.top_k_values, name="top-k-values")
     api = HfApi(endpoint=args.endpoint)
     specs, cleanup_paths = build_dataset_specs(args, api)
+    ablated_parameter = "reranker_pool" if args.ablation == "reranker-pool" else "top_k"
 
     with tempfile.TemporaryDirectory(prefix="king-synapse-ranking-ablation-") as temp:
         temp_dir = Path(temp)
         for spec in specs:
             dataset_path = temp_dir / spec["toml_name"]
             write_toml_dataset(dataset_path, spec["memories"], spec["queries"])
-            spec["runs"] = run_reranker_pool_ablation(
-                dataset_path=dataset_path,
-                output_dir=temp_dir,
-                tag_base=spec["tag_base"],
-                examples=spec["examples"],
-                k=args.k,
-                reranker_pools=reranker_pools,
-            )
+            if args.ablation == "reranker-pool":
+                spec["runs"] = run_reranker_pool_ablation(
+                    dataset_path=dataset_path,
+                    output_dir=temp_dir,
+                    tag_base=spec["tag_base"],
+                    examples=spec["examples"],
+                    k=args.k,
+                    reranker_pools=reranker_pools,
+                )
+            else:
+                spec["runs"] = run_top_k_ablation(
+                    dataset_path=dataset_path,
+                    output_dir=temp_dir,
+                    tag_base=spec["tag_base"],
+                    examples=spec["examples"],
+                    top_k_values=top_k_values,
+                    reranker_pool=args.fixed_reranker_pool,
+                )
 
     report = {
         "schema_version": "king-synapse.ranking-ablation.v1",
@@ -343,19 +424,20 @@ def main() -> int:
             "raw_records_committed": False,
         },
         "ablation": {
-            "parameter": "reranker_pool",
-            "values": reranker_pools,
+            "parameter": ablated_parameter,
+            "values": reranker_pools if args.ablation == "reranker-pool" else top_k_values,
             "fixed": {
-                "k": args.k,
+                "k": args.k if args.ablation == "reranker-pool" else None,
+                "reranker_pool": args.fixed_reranker_pool if args.ablation == "top-k" else None,
                 "vectors": True,
                 "rerank": True,
             },
             "one_variable_policy": True,
         },
         "accelerator": accelerator,
-        "datasets": [dataset_report(spec, spec["runs"]) for spec in specs],
+        "datasets": [dataset_report(spec, spec["runs"], ablated_parameter) for spec in specs],
         "limits": [
-            "This pass varies reranker_pool only; RRF/vector weights, chunking, and query expansion are not exposed by the current CLI.",
+            f"This pass varies {ablated_parameter} only; RRF/vector weights, chunking, and query expansion are not exposed by the current CLI.",
             "Report excludes raw questions, answers, dialogs, and session text.",
             "Results are ranking evidence, not official answer-generation DMR scores.",
         ],
@@ -372,7 +454,8 @@ def main() -> int:
             {
                 "output": str(args.output),
                 "datasets": {spec["id"]: len(spec["queries"]) for spec in specs},
-                "reranker_pools": reranker_pools,
+                "ablation": ablated_parameter,
+                "values": reranker_pools if args.ablation == "reranker-pool" else top_k_values,
                 "accelerator": accelerator,
                 "cleanup_cache": args.cleanup_cache,
             },

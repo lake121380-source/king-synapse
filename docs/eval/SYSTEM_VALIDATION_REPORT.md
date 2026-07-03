@@ -172,6 +172,13 @@ Ranking ablation status:
 - Pool `100` slightly improves MRR (`0.623`) but lowers Recall@10 (`0.448`)
   and roughly doubles P50 latency versus pool `50`.
 - The result does not justify changing the default reranker pool.
+- `crates/eval/reports/ranking-ablation-dmr-50-top-k.json` records the DMR 50
+  top-k ablation with reranker pool fixed at `50`.
+- Top-k `50` does not improve Recall@10 (`0.468`) or top-1 hits (`28`), but it
+  reduces retrieval misses from `12` to `6` by revealing six answer-bearing
+  chunks between ranks 11 and 50.
+- This confirms a ranking boundary: several failures are late-ranking failures,
+  not missing-memory failures.
 
 DMR mapping audit status:
 
@@ -246,4 +253,4 @@ GPU validation status:
 
 Next required action: keep feature growth frozen, fix the LLM judge
 authorization/configuration, then continue ranking ablations for RRF/vector
-weighting and top-k before changing defaults.
+weighting before changing defaults.

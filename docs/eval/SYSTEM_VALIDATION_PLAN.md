@@ -245,4 +245,9 @@ task. The validation win condition is narrower and more important:
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`
   remains the best Recall@10 setting in that pass, so no default change is
   justified yet.
+- DMR 50 top-k ablation is recorded at
+  `crates/eval/reports/ranking-ablation-dmr-50-top-k.json`; top-k `50`
+  reveals six answer-bearing chunks between rank 11 and 50 but does not improve
+  Recall@10 or top-1 hits, so it is diagnostic evidence rather than a default
+  change.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

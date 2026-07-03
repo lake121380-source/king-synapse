@@ -153,6 +153,7 @@ Readable summary: `docs/eval/OFFICIAL_DMR_RESULT.md`.
 The first ranking ablation report is fixed in:
 
 - `reports/ranking-ablation-dmr-50-reranker-pool.json`
+- `reports/ranking-ablation-dmr-50-top-k.json`
 
 Readable summary: `docs/eval/RANKING_ABLATION.md`.
 
