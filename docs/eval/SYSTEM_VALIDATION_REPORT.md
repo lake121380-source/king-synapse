@@ -584,6 +584,22 @@ Phase 6 objective coverage audit:
   policy not final, no safe global ranking default, and productization not
   ready.
 
+README claims support audit:
+
+- `crates/eval/reports/readme-claims-support-audit.json` checks current README
+  public-facing claims against committed Phase 6 evidence.
+- The current result is `readme_claims_conservative_enough: true`: no audited
+  README claim is unsupported by current evidence.
+- Four README claims remain `supported_with_scope`: the project tagline, the
+  cognitive-memory validation badge, future/reinforcement language, and the
+  comparison table. These are acceptable only while the README keeps local
+  fixture, validation-stage, hosted-comparison, and productization caveats
+  visible.
+- The audit explicitly keeps these claims off limits: published-comparable
+  official DMR performance, hosted Graphiti/Zep or official Mem0 superiority,
+  a safe global ranking default, production readiness, and v0.1 release
+  readiness.
+
 Phase 6 next-gate readiness:
 
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
