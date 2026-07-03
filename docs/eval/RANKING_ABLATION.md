@@ -36,6 +36,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-vector-weight-transition-audit-dmr-longmem-50.json`
 
+`crates/eval/reports/ranking-late-rank-audit-dmr-50-200.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
@@ -51,6 +53,10 @@ Transition audit runner:
 Vector-weight transition audit runner:
 
 `scripts/eval/ranking_vector_weight_transition_audit.py`
+
+Late-rank audit runner:
+
+`scripts/eval/ranking_late_rank_audit.py`
 
 Chunk-policy runner:
 
@@ -851,6 +857,88 @@ samples, while MRR falls because ordering quality gets slightly worse.
 This is useful evidence for a future adaptive or query-conditioned policy, but
 it is not enough to change the global branch weight.
 
+## Late-Rank Audit
+
+This audit isolates DMR samples where the answer-bearing memory is absent from
+the top-10 run but appears within the top-50 run. It is a sanitized
+post-processing pass over existing top-k and transition reports; it does not
+rerun retrieval and does not inspect raw questions, answers, dialogs,
+sessions, memory content, or generated answer text.
+
+Report:
+
+`crates/eval/reports/ranking-late-rank-audit-dmr-50-200.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_late_rank_audit.py
+```
+
+### Late-Rank Result
+
+DMR 50 outcome split:
+
+| Outcome | Count |
+| --- | ---: |
+| Top-1 hit | 28 |
+| Top-10 not top-1 | 10 |
+| Top-50 only late rank | 6 |
+| Top-50 retrieval miss | 6 |
+
+DMR 50 late-rank distribution:
+
+| Rank band | Count |
+| --- | ---: |
+| 11-15 | 1 |
+| 16-25 | 0 |
+| 26-35 | 2 |
+| 36-50 | 3 |
+
+Only `1/6` DMR 50 late-rank cases are recoverable by expanding the output
+window to top-25. The other `5/6` remain between ranks 26 and 50. The late
+rank mean is `33.33` and the median is `36.5`.
+
+DMR 200 outcome split:
+
+| Outcome | Count |
+| --- | ---: |
+| Top-1 hit | 74 |
+| Top-10 not top-1 | 66 |
+| Top-50 only late rank | 17 |
+| Top-50 retrieval miss | 43 |
+
+DMR 200 late-rank distribution:
+
+| Rank band | Count |
+| --- | ---: |
+| 11-15 | 2 |
+| 16-25 | 8 |
+| 26-35 | 5 |
+| 36-50 | 2 |
+
+`10/17` DMR 200 late-rank cases are recoverable by top-25, while `7/17`
+remain between ranks 26 and 50. The late-rank mean is `25.06` and the median
+is `23`.
+
+### Late-Rank Read
+
+Late-rank failures are real, but they are not one uniform class.
+
+DMR 50 is harder at the tail: most late-rank cases sit below rank 25, and the
+same cases remain misses under the `vector_weight = 1.5` top-10 audit. That
+means simply increasing vector branch weight does not rescue the DMR 50
+late-rank set.
+
+DMR 200 has a more actionable middle band: most late-rank cases are between
+11 and 25. That suggests a future candidate-ordering experiment can target
+reranker ordering or a second-stage selector on the top-25 pool before trying
+larger schema or chunking changes.
+
+The key split remains: top-50-only late ranks are ranking/order failures,
+while top-50 misses are candidate-retrieval failures. The next experiment
+should keep those two buckets separate.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -881,14 +969,19 @@ DMR gains two top-10 recoveries while also taking one top-10 suppression and
 one top-1 demotion; LongMemEval keeps the same hit buckets while lowering MRR.
 Better coverage alone is not enough when ordering/top-1 tradeoffs appear.
 
+The late-rank audit narrows the next step. DMR 50 late-rank cases mostly sit
+below rank 25, while DMR 200 has a larger 11-25 band. A safe ranking fix should
+first target ordering inside the existing candidate pool and keep top-50
+retrieval misses as a separate coverage problem.
+
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. design a safer ranking signal for the top-50-only DMR cases;
-2. test smaller, overlap-aware chunking instead of full-session merging;
-3. avoid blunt keyword-boost query expansion unless a future answer-free
+1. separate candidate-retrieval coverage from reranker ordering on DMR 200;
+2. test a safer second-stage ordering signal for rank 11-25 cases;
+3. test smaller, overlap-aware chunking instead of full-session merging;
+4. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-4. inspect top-50 retrieval misses separately from late-ranking cases;
-5. test candidate-retrieval coverage separately from reranker ordering;
+5. inspect top-50 retrieval misses separately from late-ranking cases;
 6. keep answer-generation scoring separate from retrieval-ranking scoring.

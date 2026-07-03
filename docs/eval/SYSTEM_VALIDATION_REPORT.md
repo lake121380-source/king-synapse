@@ -391,6 +391,13 @@ Ranking ablation status:
   audit records 2 recoveries, 1 top-10 suppression, 1 top-1 promotion, and 1
   top-1 demotion. This confirms that the `1.5` gain is a coverage/ordering
   tradeoff rather than a safe global ranking improvement.
+- `crates/eval/reports/ranking-late-rank-audit-dmr-50-200.json` records the
+  sanitized late-rank audit for DMR 50 and 200. DMR 50 has 6 top-50-only
+  late-rank cases: only 1 is recoverable by top-25, while 5 sit at ranks
+  26-50. DMR 200 has 17 top-50-only late-rank cases: 10 are recoverable by
+  top-25, while 7 sit at ranks 26-50. This separates ordering failures from
+  true top-50 retrieval misses and argues for an ordering-focused DMR 200
+  experiment before schema, chunk, or global branch-weight changes.
 
 DMR mapping audit status:
 
@@ -472,7 +479,8 @@ GPU validation status:
 
 Next required action: keep feature growth frozen, keep the judge path on
 `deepseek-v4-flash`, and continue ranking / answer-synthesis validation before
-any product claim. The next ranking work should design a safer signal for DMR
-top-50-only cases without adopting `vector_weight = 1.5` as a default. Keep
+any product claim. The next ranking work should separate candidate-retrieval
+coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
+band without adopting `vector_weight = 1.5` as a default. Keep
 answer-synthesis work in evaluation mode until the official-style DMR protocol
 is finalized.
