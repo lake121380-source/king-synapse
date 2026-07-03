@@ -228,7 +228,7 @@ finds a blocking bug.
 | 2 | Fix LLM judge authorization/configuration outside the repository. | A 5-10 sample judge probe succeeds without writing an API key or raw answer text. |
 | 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
 | 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
-| 5 | Review DMR mapping policy before claiming 500/500 coverage. | Decide whether to keep punctuation-only mapping as the official local boundary or add a separately labeled relaxed policy. |
+| 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
 | 6 | Expand ranking failure localization beyond DMR 50. | Late-ranking cases and true retrieval misses are split on a larger sample before changing reranker defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Any DMR-driven ranking change must not degrade LongMemEval without a recorded tradeoff. |
 | 8 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
@@ -275,6 +275,13 @@ finds a blocking bug.
   pre-eval skipped rows are now localized to strict answer-string mapping, not
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at
   `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
+- DMR mapping policy review: added at
+  `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` and
+  `crates/eval/reports/dmr-mapping-policy-review.json`. It confirms
+  punctuation full-answer mapping covers `323/500` rows, significant-token
+  containment covers `442/500`, and the current decision is to keep punctuation
+  as the pinned local boundary while treating relaxed-token mapping as a
+  separately labeled diagnostic option.
 - Official-style DMR answer generation: 5-query smoke, 50-query CUDA scoring,
   200-query CUDA local scoring, and a 500-request CUDA local scoring pass are
   recorded at

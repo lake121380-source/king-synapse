@@ -1,0 +1,292 @@
+{
+  "schema_version": "king-synapse.dmr-mapping-policy-review.v1",
+  "generated_at": "2026-07-03T03:41:05.905790+00:00",
+  "runner": "scripts/eval/dmr_mapping_policy_review.py",
+  "endpoint": "https://hf-mirror.com",
+  "source": {
+    "repo_id": "MemGPT/MSC-Self-Instruct",
+    "revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
+    "license": "apache-2.0",
+    "filename": "msc_self_instruct.jsonl",
+    "sha256": "d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e",
+    "bytes": 8558741
+  },
+  "cache_policy": {
+    "cache_root_recorded": false,
+    "raw_cache_retained": false,
+    "raw_records_committed": false
+  },
+  "criteria": {
+    "strict_whitespace_full_answer": "casefold + whitespace-normalized full answer substring in a generated memory chunk",
+    "punctuation_full_answer": "casefold + punctuation-normalized full answer substring in a generated memory chunk",
+    "significant_token_containment": "all non-stopword answer tokens with length >= 3 present in one generated memory chunk",
+    "overlap_thresholds": "max significant-token overlap in one generated memory chunk"
+  },
+  "review": {
+    "rows": {
+      "source_rows": 500,
+      "rows_with_question_answer_and_chunks": 500,
+      "missing_question_or_answer": 0,
+      "empty_memory_chunks": 0
+    },
+    "policy_coverage": {
+      "strict_whitespace_full_answer": 82,
+      "punctuation_full_answer": 323,
+      "significant_token_containment": 442,
+      "significant_token_overlap_75": 469,
+      "significant_token_overlap_50": 487,
+      "any_significant_token": 494
+    },
+    "policy_coverage_ratio": {
+      "strict_whitespace_full_answer": 0.164,
+      "punctuation_full_answer": 0.646,
+      "significant_token_containment": 0.884,
+      "significant_token_overlap_75": 0.938,
+      "significant_token_overlap_50": 0.974,
+      "any_significant_token": 0.988
+    },
+    "incremental_first_match": {
+      "any_significant_token": 7,
+      "none": 3,
+      "overlap_50": 18,
+      "overlap_75": 27,
+      "punctuation_full_answer": 241,
+      "significant_token_containment": 122,
+      "strict_whitespace_full_answer": 82
+    },
+    "policy_combinations": {
+      "any_significant_token": 7,
+      "none": 3,
+      "overlap_50+any_significant_token": 18,
+      "overlap_75+overlap_50+any_significant_token": 27,
+      "punctuation_full_answer": 1,
+      "punctuation_full_answer+significant_token_containment+overlap_75+overlap_50+any_significant_token": 240,
+      "significant_token_containment+overlap_75+overlap_50+any_significant_token": 122,
+      "strict_whitespace_full_answer+punctuation_full_answer": 2,
+      "strict_whitespace_full_answer+punctuation_full_answer+significant_token_containment+overlap_75+overlap_50+any_significant_token": 80
+    },
+    "punctuation_boundary": {
+      "accepted_by_punctuation": 323,
+      "rejected_by_punctuation": 177,
+      "strict_subset_inside_punctuation": 82,
+      "punctuation_added_over_strict": 241,
+      "token_containment_total": 442,
+      "token_containment_rejected_by_punctuation": 122,
+      "overlap_75_rejected_by_punctuation_and_token_containment": 27,
+      "overlap_50_rejected_by_punctuation_token_and_overlap75": 18,
+      "any_token_rejected_by_stronger_policies": 7,
+      "no_diagnostic_match": 3,
+      "rejected_by_punctuation_overlap_buckets": {
+        "0": 3,
+        "0.25-0.49": 7,
+        "0.50-0.74": 18,
+        "0.75-0.99": 27,
+        "1.00": 122
+      },
+      "rejected_by_punctuation_answer_token_buckets": {
+        "1-3": 8,
+        "17-32": 5,
+        "4-8": 122,
+        "9-16": 42
+      },
+      "rejected_by_punctuation_significant_token_buckets": {
+        "1-3": 88,
+        "4-8": 85,
+        "9-16": 4
+      },
+      "anonymized_rejected_examples": [
+        {
+          "sample_id": "4e9ea2e95cb5ed60",
+          "answer_token_bucket": "9-16",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "3440965f6a75c385",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "24eadbc52e26269e",
+          "answer_token_bucket": "9-16",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.75-0.99",
+          "significant_token_containment": false,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "004e8a058643f809",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "8a42761748136730",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "545a10b592fa9b83",
+          "answer_token_bucket": "9-16",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.50-0.74",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "991e942adb567830",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "0.50-0.74",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "23636def574d8f28",
+          "answer_token_bucket": "17-32",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.25-0.49",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": false
+        },
+        {
+          "sample_id": "279e17f1c894930a",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "5f4f3b18c1b5417a",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "0.50-0.74",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "df66249ca13df6b6",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "1870cb56e081f8d4",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "b85de0795fad608f",
+          "answer_token_bucket": "17-32",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.25-0.49",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": false
+        },
+        {
+          "sample_id": "0defa4855b97a567",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.75-0.99",
+          "significant_token_containment": false,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "3103007c7044df48",
+          "answer_token_bucket": "9-16",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.75-0.99",
+          "significant_token_containment": false,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "8774a65c483f98db",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "4dc075cac5c91e14",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "4-8",
+          "max_significant_token_overlap_bucket": "0.75-0.99",
+          "significant_token_containment": false,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "8dba2ce4bc416e36",
+          "answer_token_bucket": "17-32",
+          "answer_significant_token_bucket": "9-16",
+          "max_significant_token_overlap_bucket": "0.50-0.74",
+          "significant_token_containment": false,
+          "overlap_75": false,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "16985e8098771c2d",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        },
+        {
+          "sample_id": "4d557fb0a95ace32",
+          "answer_token_bucket": "4-8",
+          "answer_significant_token_bucket": "1-3",
+          "max_significant_token_overlap_bucket": "1.00",
+          "significant_token_containment": true,
+          "overlap_75": true,
+          "overlap_50": true
+        }
+      ]
+    },
+    "policy_read": {
+      "strict_whitespace_full_answer": "Highest precision local mapping but too low coverage for larger official-style DMR runs.",
+      "punctuation_full_answer": "Current pinned deterministic boundary; enough for 323/500 scored rows but not 500/500.",
+      "significant_token_containment": "Higher coverage but can over-accept paraphrases or generic short answers; requires a separate label and judge/manual validation before scoring.",
+      "overlap_thresholds": "Diagnostic only; useful for failure localization, not safe as a scoring selection policy by itself."
+    }
+  },
+  "limits": [
+    "This is a mapping-policy review, not a retrieval benchmark.",
+    "Relaxed token policies are diagnostic unless separately labeled and validated.",
+    "Report excludes raw questions, answers, dialogs, personas, summaries, and memory chunk text."
+  ]
+}

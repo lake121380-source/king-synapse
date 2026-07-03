@@ -255,7 +255,9 @@ to a narrower DMR boundary: candidate retrieval/ranking is imperfect, and the
 simple deterministic extractive generator does not reliably turn returned
 chunks into clean answers. The DMR 500-request run adds a third boundary:
 under the current punctuation mapping policy, the public candidate file does
-not yield 500 scored official-style examples.
+not yield 500 scored official-style examples. The mapping policy review keeps
+punctuation full-answer mapping as the pinned local boundary and treats
+relaxed-token mapping as a separate diagnostic option.
 
 The LLM judge path was exercised but did not produce judged samples because the
 provider returned `HTTP Error 401: Authorization Required` for every request.
@@ -281,7 +283,7 @@ Reasons:
 ## Next Step
 
 Do not retry the LLM judge until the authorization/configuration is fixed.
-After that, run a small judge probe, rerun DMR 50 with a successful fixed
-judge, and decide whether the DMR mapping policy should remain punctuation
-only or gain a separately labeled relaxed policy for larger official-style
-coverage.
+After that, run a small judge probe and rerun DMR 50 with a successful fixed
+judge. Ranking work should continue on the pinned punctuation-mapped dataset;
+any relaxed-token coverage run must be separately labeled and validated before
+it is used for conclusions.

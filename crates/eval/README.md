@@ -134,8 +134,11 @@ Readable summary: `docs/eval/PERFORMANCE_ANALYSIS.md`.
 The current DMR mapping audit is fixed in:
 
 - `reports/dmr-mapping-audit.json`
+- `reports/dmr-mapping-policy-review.json`
 
 Readable summary: `docs/eval/DMR_MAPPING_AUDIT.md`.
+
+Policy review: `docs/eval/DMR_MAPPING_POLICY_REVIEW.md`.
 
 The current punctuation-normalized DMR candidate rerun is fixed in:
 

@@ -113,14 +113,21 @@ Follow-up completed:
 
 - `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`
 - `crates/eval/reports/dmr-50-punctuation-validation.json`
+- `docs/eval/DMR_MAPPING_POLICY_REVIEW.md`
+- `crates/eval/reports/dmr-mapping-policy-review.json`
 
 The punctuation-normalized policy reduced skipped rows before the first 50
 valid examples from `278` to `31`.
 
+The later policy review confirms punctuation-normalized full-answer mapping
+covers `323/500` rows. It keeps punctuation as the pinned local boundary and
+treats relaxed token containment as diagnostic unless separately labeled and
+validated.
+
 Remaining validation work:
 
-1. Decide whether the final DMR policy should stay punctuation-normalized or
-   move to an official DMR label or LLM judge.
+1. Fix LLM judge authorization before making stronger answer-correctness
+   claims.
 2. Keep the current DMR 50 numbers as the strict-string baseline.
 3. Treat the punctuation-normalized run as the pinned candidate rerun, not as an
    official DMR result.

@@ -157,9 +157,10 @@ questions, answers, or generated text:
 | 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
 
 This is still not a published-comparable official DMR result. The remaining
-boundary is a successful fixed LLM judge plus a mapping-policy decision before
-claiming 500/500 coverage. The scoring review lives in
-[OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
+boundary is a successful fixed LLM judge. The mapping-policy review keeps
+punctuation full-answer mapping as the pinned local boundary, so the honest
+large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
+review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower, focused on DMR
@@ -257,6 +258,7 @@ cargo build --release
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |
 | `docs/eval/RANKING_ABLATION.md` | DMR 50 ranking ablation and failure-audit results. |
 | `docs/eval/DMR_MAPPING_AUDIT.md` | DMR skipped-row mapping audit. |
+| `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` | DMR mapping-policy coverage and the punctuation-boundary decision. |
 | `docs/eval/FAILURE_ANALYSIS.md` | Anonymous failure bucket analysis. |
 | `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and runtime notes. |
 | `docs/eval/LONGMEM_DMR_DATA_PLAN.md` | LongMemEval / DMR license, cache, and smoke-test rules. |

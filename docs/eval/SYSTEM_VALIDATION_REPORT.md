@@ -151,9 +151,12 @@ DMR boundary:
 - DMR 200 and the DMR 500-request run intentionally skipped the LLM judge after
   the DMR 50 authorization failure, so they are lexical / ROUGE-L local scoring
   only.
-- Full official DMR still requires successful fixed-judge scoring and either a
-  mapping policy that can produce 500 scored examples or an explicit statement
-  that the current public candidate mapping only yields 323 scored examples.
+- `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` now records the policy decision:
+  keep punctuation full-answer mapping as the pinned local boundary, do not
+  claim 500/500 under that policy, and treat relaxed token mapping as a
+  separately labeled diagnostic option.
+- Full official DMR still requires successful fixed-judge scoring and an
+  explicit statement of mapping policy coverage.
 
 Engineering result: the 5, 50, 200, and 500-request official-style DMR runs now
 prove that retrieval -> answer generation -> local answer scoring is executable
@@ -162,7 +165,7 @@ on CUDA without committing raw third-party records.
 Research interpretation: these results do not overturn the Synapse
 architecture. They localize the current DMR weakness to retrieval/ranking
 quality plus a weak deterministic extractive answer generator. The larger
-request also shows that answer-to-memory mapping is now a separate validation
+request also shows that answer-to-memory mapping is a separate validation
 boundary, with LLM judge configuration still unresolved.
 
 The 50-sample reports are:
@@ -221,6 +224,13 @@ DMR mapping audit status:
   and 362 had all significant answer tokens in one chunk.
 - The DMR skip is now localized to mapping/scoring strictness, not empty chunk
   generation or a broad architecture failure.
+- `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` compares mapping policies across
+  all 500 rows: strict whitespace full-answer mapping covers 82 rows,
+  punctuation full-answer mapping covers 323 rows, significant-token
+  containment covers 442 rows, and any significant token appears in 494 rows.
+- Current decision: keep punctuation full-answer mapping as the pinned local
+  DMR boundary. Do not silently promote token containment to the default
+  official-style policy because it is higher coverage but weaker evidence.
 - A punctuation-normalized candidate rerun is recorded in
   `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` and
   `crates/eval/reports/dmr-50-punctuation-validation.json`; it reduced
@@ -284,5 +294,5 @@ GPU validation status:
 
 Next required action: keep feature growth frozen, fix the LLM judge
 authorization/configuration, run a small successful judge probe, then continue
-DMR mapping-policy review and ranking work on the six top-50-only late-ranking
-cases before changing defaults.
+ranking work on the six top-50-only late-ranking cases before changing
+defaults.
