@@ -2,8 +2,8 @@
 
 Date checked: 2026-07-02
 
-Status: answer-generation harness smoke exists; full official DMR reproduction
-is not complete.
+Status: answer-generation DMR 50 local scoring exists; full official
+reproduction is not complete because the LLM judge is not yet authorized.
 
 ## Short Answer
 
@@ -46,8 +46,7 @@ failure mode.
 
 ## Answer-Generation Smoke
 
-`scripts/eval/official_dmr_eval.py` now runs the official-style task shape on a
-small sample:
+`scripts/eval/official_dmr_eval.py` now runs the official-style task shape:
 
 - retrieve candidate memory chunks with `kr-eval`;
 - generate an answer from returned chunks;
@@ -56,13 +55,18 @@ small sample:
 - optionally call an LLM judge when explicitly configured;
 - commit only sanitized metrics and hashes.
 
-Current smoke report:
+Current reports:
 
+- `crates/eval/reports/official-dmr-50.json`
 - `crates/eval/reports/official-dmr-5-extractive.json`
 - `docs/eval/OFFICIAL_DMR_RESULT.md`
 
-The 5-query CUDA smoke passed, but it is not a published-comparable DMR result.
-It used a deterministic extractive generator and no LLM judge.
+The 50-query CUDA run completed local answer scoring. Exact accuracy was
+`0.000`, punctuation-normalized accuracy was `0.020`, answer-substring accuracy
+was `0.060`, and ROUGE-L F1 mean was `0.041`.
+
+The DeepSeek judge path was attempted, but all 50 requests returned
+authorization errors, so no LLM-judge accuracy is available yet.
 
 ## What Official DMR Still Requires
 
@@ -70,9 +74,8 @@ Before this repo can claim an official DMR result, it needs:
 
 1. fixed official dataset and split policy;
 2. conversation ingestion that matches the benchmark's intended setup;
-3. 50/200/500-query answer-generation runs, not only the current 5-query
-   smoke;
-4. fixed judge model, judge prompt, and provider configuration;
+3. successful fixed LLM judge authorization and scoring;
+4. 200/500-query answer-generation runs after the DMR 50 path is stable;
 5. accuracy and ROUGE-L style reporting that can be compared with MemGPT/Zep
    numbers;
 6. raw-data and credential handling that keeps third-party records and secrets

@@ -143,8 +143,9 @@ The current punctuation-normalized DMR candidate rerun is fixed in:
 
 Readable summary: `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
 
-The first official-style DMR answer-generation smoke is fixed in:
+The official-style DMR answer-generation reports are fixed in:
 
+- `reports/official-dmr-50.json`
 - `reports/official-dmr-5-extractive.json`
 
 Readable summary: `docs/eval/OFFICIAL_DMR_RESULT.md`.

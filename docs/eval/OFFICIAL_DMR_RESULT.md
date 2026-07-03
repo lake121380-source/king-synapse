@@ -2,10 +2,16 @@
 
 Date: 2026-07-03
 
-Status: answer-generation harness smoke passed; full official DMR result is not
-complete.
+Status: DMR 50 answer-generation scoring passed locally; LLM judge was
+attempted but not authorized.
 
 Machine-readable report:
+
+Primary report:
+
+`crates/eval/reports/official-dmr-50.json`
+
+Smoke report:
 
 `crates/eval/reports/official-dmr-5-extractive.json`
 
@@ -22,7 +28,48 @@ The runner is:
 
 `scripts/eval/official_dmr_eval.py`
 
-## Run
+## DMR 50 Run
+
+```powershell
+python scripts/eval/official_dmr_eval.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 50 `
+  --dmr-answer-match punctuation `
+  --mode vectors-rerank `
+  --k 10 `
+  --generator extractive `
+  --llm-judge deepseek `
+  --judge-model deepseek-chat `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/official-dmr-50.json `
+  --cleanup-cache
+```
+
+## DMR 50 Result
+
+| Metric | Value |
+| --- | ---: |
+| Sample size | 50 |
+| Retrieval mode | vectors + reranker |
+| Retrieval Recall@10 | 0.468 |
+| Retrieval MRR@10 | 0.619 |
+| Generator | extractive |
+| Exact accuracy | 0.000 |
+| Punctuation-normalized accuracy | 0.020 |
+| Gold-answer substring accuracy | 0.060 |
+| ROUGE-L precision mean | 0.033 |
+| ROUGE-L recall mean | 0.102 |
+| ROUGE-L F1 mean | 0.041 |
+| LLM judge status | 50/50 authorization errors |
+| LLM judge accuracy | not available |
+| Peak GPU total memory | 5304.2 MiB |
+
+## Smoke Run
 
 ```powershell
 python scripts/eval/official_dmr_eval.py `
@@ -43,7 +90,7 @@ python scripts/eval/official_dmr_eval.py `
   --cleanup-cache
 ```
 
-## Result
+## Smoke Result
 
 | Metric | Value |
 | --- | ---: |
@@ -61,30 +108,34 @@ python scripts/eval/official_dmr_eval.py `
 
 ## Read
 
-This run proves the official DMR task shape can execute locally on CUDA:
+These runs prove the official DMR task shape can execute locally on CUDA:
 retrieval -> answer generation -> gold-answer scoring.
 
-It also shows the next real gap. Candidate retrieval can surface answer-bearing
-chunks, but a simple deterministic extractive generator does not reliably turn
-those chunks into a clean answer. The current answer-generation score is
-therefore low even when retrieval finds relevant context.
+They also show the next real gap. Candidate retrieval can surface
+answer-bearing chunks, but a simple deterministic extractive generator does not
+reliably turn those chunks into a clean answer. On DMR 50, retrieval Recall@10
+is `0.468`, while answer substring accuracy is only `0.060` and ROUGE-L F1 is
+only `0.041`.
+
+The LLM judge path was exercised but did not produce judged samples because the
+provider returned `HTTP Error 401: Authorization Required` for every request.
+This is a judge authorization/configuration failure, not a retrieval or answer
+scoring failure.
 
 ## Boundary
 
-This is not a published-comparable official DMR benchmark result.
+This is still not a published-comparable official DMR benchmark result.
 
 Reasons:
 
-- only 5 examples were run;
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
-- no LLM judge was requested;
+- the LLM judge did not authenticate successfully;
 - the public DMR candidate mapping still uses the pinned punctuation policy;
 - raw questions, answers, dialogs, sessions, and generated answer text are not
   committed.
 
 ## Next Step
 
-Run the same harness on 50 examples with the same CUDA settings, then add a
-fixed judge configuration. Only after that should the project claim an
-official-style DMR 50 result.
+Fix the judge authorization/configuration, rerun DMR 50 with a successful fixed
+judge, then expand to DMR 200 / 500.

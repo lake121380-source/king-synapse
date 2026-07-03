@@ -128,12 +128,15 @@ DMR boundary:
 - The current DMR numbers are candidate retrieval metrics, not official DMR
   accuracy or ROUGE-L.
 - `scripts/eval/official_dmr_eval.py` now runs the official-style answer
-  generation shape on a small sanitized CUDA sample.
-- `docs/eval/OFFICIAL_DMR_RESULT.md` records the first 5-query extractive
-  result: exact accuracy `0.000`, punctuation accuracy `0.000`, gold-answer
-  substring accuracy `0.200`, and ROUGE-L F1 mean `0.082`.
-- Full official DMR still requires 50/200/500-query generated-answer runs with
-  a fixed judge policy.
+  generation shape on sanitized CUDA samples.
+- `docs/eval/OFFICIAL_DMR_RESULT.md` records the DMR 50 extractive result:
+  retrieval Recall@10 `0.468`, exact accuracy `0.000`, punctuation accuracy
+  `0.020`, gold-answer substring accuracy `0.060`, and ROUGE-L F1 mean
+  `0.041`.
+- The DeepSeek judge path was attempted, but all 50 requests returned
+  authorization errors, so LLM-judge accuracy is not available yet.
+- Full official DMR still requires successful fixed-judge scoring and 200/500
+  query expansion.
 
 The 50-sample reports are:
 
@@ -208,7 +211,7 @@ Performance analysis status:
 
 The project has not yet crossed the bar for:
 
-1. full official DMR answer-generation benchmark results;
+1. published-comparable official DMR answer-generation benchmark results;
 2. hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. final DMR scoring-policy adoption beyond candidate punctuation matching;
@@ -230,5 +233,6 @@ GPU validation status:
   total GPU memory sample.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen and expand the
-answer-generation DMR harness to 50 examples before making stronger DMR claims.
+Next required action: keep feature growth frozen, fix the LLM judge
+authorization/configuration, then rerun DMR 50 before expanding to DMR 200 /
+500.
