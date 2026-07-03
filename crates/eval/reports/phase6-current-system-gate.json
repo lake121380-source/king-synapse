@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T18:29:09.459456+00:00",
+  "generated_at": "2026-07-03T18:40:22.003479+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "3e66cf90be0c6f2a301fb7b772a3f6ecb6add5b4",
+    "commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "10be4936b1dd7393cb9941bb40f785e1b0075de8b2661619d2497c42d92272d9"
+      "sha256": "602c6de727eeb8c1cc8b0e54ee681ae6d8fc21bdb0c45db56f478b992065a840"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "9a0949a4f525d464dc4fbcc90985d11835b1201c4775f84a8c9b623939563f58"
+      "sha256": "73343bb119896d98de5e920bd921e62a91d6dbe21cfc17124aea768948d3f8d1"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "b26d23fe37a061a9f519801448c3c9d7832ccc1d6db72841007de6f1316573e0"
+      "sha256": "b93f52c3e60dacdc81724600cd40441060819a11cac020fa95651457f6889d56"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -51,17 +51,22 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "d0a3ed921d628e604d3e2ab0c7da18a5f2da95c775257c3931259bba10b56b34"
+      "sha256": "cb137d652f7f86bbf07952996924538666a54732673120ec06f695017e816d07"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "fa758ba975f7bbbcc29018ba6e2607b73dc133fe38983d068c19d1f0df0b2de8"
+      "sha256": "fce271c5f7ac5cbabac4aef4e4400b7f6fc7cb4568318434adb92abf59cca3e1"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
       "exists": true,
       "sha256": "377f6bbbad2ccdc514eb458c3ac309cec2645fa6d861e8b0c1cd531a6d2fe662"
+    },
+    "feature_freeze_audit": {
+      "path": "crates\\eval\\reports\\phase6-feature-freeze-audit.json",
+      "exists": true,
+      "sha256": "8d537f32a1b785bed3328584c27865743b9cc6420a3018c18a8f7f4741033fba"
     }
   },
   "checks": [
@@ -79,9 +84,10 @@
       "status": "passed",
       "severity": "required",
       "evidence": [
-        "crates\\eval\\reports\\phase6-requirements-audit.json"
+        "crates\\eval\\reports\\phase6-requirements-audit.json",
+        "crates\\eval\\reports\\phase6-feature-freeze-audit.json"
       ],
-      "conclusion": "Feature freeze remains the active Phase 6 policy."
+      "conclusion": "Feature freeze remains active and no protected path changes are present."
     },
     {
       "id": "readme_claims_supported",
@@ -251,7 +257,8 @@
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\productization-decision-gate.json",
         "crates\\eval\\reports\\next-validation-action-gate.json",
-        "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
+        "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
+        "crates\\eval\\reports\\phase6-feature-freeze-audit.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
     },
@@ -349,6 +356,14 @@
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
+      },
+      "feature_freeze_audit": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
       }
     }
   },
@@ -365,6 +380,8 @@
     "productization_ready": false,
     "release_v0_1_allowed": false,
     "next_validation_action_gate_passed": true,
+    "feature_freeze_audit_passed": true,
+    "protected_feature_freeze_change_count": 0,
     "recommended_next_validation_action": "wait_for_external_preconditions",
     "heavy_validation_allowed_by_action_gate": false,
     "productization_allowed": false,
@@ -382,7 +399,7 @@
   "read": {
     "current_system_conclusion": "Current Synapse is coherent enough to continue Phase 6 validation, but not to productize or change runtime ranking defaults.",
     "what_is_stable": [
-      "Feature freeze is active.",
+      "Feature freeze is active and protected path changes are absent.",
       "Local non-external baseline health is passed.",
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
       "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",

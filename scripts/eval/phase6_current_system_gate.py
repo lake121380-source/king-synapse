@@ -100,6 +100,11 @@ def parse_args() -> argparse.Namespace:
         default=latest_baseline_health_report(root),
     )
     parser.add_argument(
+        "--feature-freeze-audit",
+        type=Path,
+        default=root / "crates/eval/reports/phase6-feature-freeze-audit.json",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=root / "crates/eval/reports/phase6-current-system-gate.json",
@@ -212,6 +217,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             args.next_validation_action_gate
         ),
         "baseline_health": normalize_path_arg(args.baseline_health),
+        "feature_freeze_audit": normalize_path_arg(args.feature_freeze_audit),
     }
     reports = {name: load_json(path) for name, path in paths.items()}
     raw_clean, raw_details = raw_policy_clean(reports)
@@ -227,10 +233,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     productization = reports["productization_decision_gate"]
     next_action = reports["next_validation_action_gate"]
     baseline = reports["baseline_health"]
+    freeze_audit = reports["feature_freeze_audit"]
 
     baseline_passed = safe_get(baseline, ["read", "current_baseline_health"]) == "passed"
     feature_freeze_active = (
         phase_status(requirements, "1_lock_current_version") == "active_policy"
+    )
+    feature_freeze_audit_passed = bool(
+        safe_get(freeze_audit, ["status", "feature_freeze_audit_passed"])
+    )
+    protected_change_count = int(
+        safe_get(freeze_audit, ["status", "protected_change_count"], 0) or 0
     )
     readme_supported = bool(
         safe_get(readme, ["read", "readme_claims_conservative_enough"])
@@ -309,10 +322,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         ),
         check(
             "feature_freeze_active",
-            feature_freeze_active,
-            evidence=[paths["requirements_audit"]],
-            conclusion="Feature freeze remains the active Phase 6 policy.",
-            failure="Feature freeze is not recorded as the active Phase 6 policy.",
+            feature_freeze_active and feature_freeze_audit_passed and protected_change_count == 0,
+            evidence=[paths["requirements_audit"], paths["feature_freeze_audit"]],
+            conclusion="Feature freeze remains active and no protected path changes are present.",
+            failure="Feature freeze is not active or protected path changes are present.",
         ),
         check(
             "readme_claims_supported",
@@ -521,6 +534,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "productization_ready": not productization_ready_not_overstated,
             "release_v0_1_allowed": not release_v0_1_not_overstated,
             "next_validation_action_gate_passed": next_validation_action_gate_passed,
+            "feature_freeze_audit_passed": feature_freeze_audit_passed,
+            "protected_feature_freeze_change_count": protected_change_count,
             "recommended_next_validation_action": safe_get(
                 next_action, ["status", "recommended_action"]
             ),
@@ -537,7 +552,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 else "Current Synapse needs evidence-chain repair before continuing."
             ),
         "what_is_stable": [
-                "Feature freeze is active.",
+                "Feature freeze is active and protected path changes are absent.",
                 "Local non-external baseline health is passed.",
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
                 "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",

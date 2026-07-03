@@ -1,0 +1,149 @@
+{
+  "schema_version": "king-synapse.phase6-feature-freeze-audit.v1",
+  "generated_at": "2026-07-03T18:39:50.687707+00:00",
+  "runner": "scripts\\eval\\phase6_feature_freeze_audit.py",
+  "git": {
+    "branch": "main",
+    "commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
+    "origin_main_delta": "0\t0",
+    "base_ref": "origin/main",
+    "base_commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
+    "head_commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
+    "base_ref_resolved": true,
+    "worktree_dirty": true,
+    "worktree_status_count": 13
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "policy": {
+    "protected_prefixes": [
+      "crates/core/src/adaptive/",
+      "crates/core/src/store/",
+      "crates/core/src/working_memory/",
+      "crates/cli/src/",
+      "crates/mcp-server/src/"
+    ],
+    "protected_exact": [
+      "crates/cli/Cargo.toml",
+      "crates/core/Cargo.toml",
+      "crates/core/src/config.rs",
+      "crates/core/src/embed.rs",
+      "crates/core/src/entity.rs",
+      "crates/core/src/lib.rs",
+      "crates/core/src/model.rs",
+      "crates/core/src/recall/booster.rs",
+      "crates/core/src/recall/cognitive_trace.rs",
+      "crates/core/src/recall/engine.rs",
+      "crates/core/src/recall/graph_activation.rs",
+      "crates/core/src/recall/hit.rs",
+      "crates/core/src/recall/latent_activation.rs",
+      "crates/core/src/recall/latent_booster.rs",
+      "crates/core/src/recall/mod.rs",
+      "crates/core/src/recall/query_latent.rs",
+      "crates/core/src/recall/rrf.rs",
+      "crates/core/src/rerank.rs",
+      "crates/mcp-server/Cargo.toml"
+    ],
+    "allowed_by_default": [
+      "docs/eval/",
+      "scripts/eval/",
+      "crates/eval/reports/",
+      "README.md"
+    ]
+  },
+  "changes": [
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "README.md"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/next-validation-action-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-current-system-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-evidence-freshness-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-objective-coverage-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-requirements-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/productization-decision-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/readme-claims-support-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "docs/eval/EXPERIMENT_LOG.md"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "docs/eval/SYSTEM_VALIDATION_REPORT.md"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "scripts/eval/phase6_current_system_gate.py"
+    },
+    {
+      "source": "untracked",
+      "status": "??",
+      "path": "crates/eval/reports/phase6-feature-freeze-audit.json"
+    },
+    {
+      "source": "untracked",
+      "status": "??",
+      "path": "scripts/eval/phase6_feature_freeze_audit.py"
+    }
+  ],
+  "status": {
+    "feature_freeze_audit_passed": true,
+    "base_ref_resolved": true,
+    "change_count": 13,
+    "change_source_counts": {
+      "untracked": 2,
+      "working_tree": 11
+    },
+    "protected_change_count": 0,
+    "protected_changes": [],
+    "memory_schema_changed": false,
+    "cognitive_layer_changed": false,
+    "cli_or_mcp_surface_changed": false,
+    "runtime_default_or_ranking_code_changed": false
+  },
+  "read": {
+    "current_conclusion": "Current local changes respect the Phase 6 feature-freeze protected boundaries.",
+    "next_action": "Continue validation-only work."
+  },
+  "limits": [
+    "This audit is a path-boundary guard, not a semantic proof.",
+    "It does not inspect raw benchmark data, run models, call hosted adapters, or run product code.",
+    "It uses Git path changes to catch obvious memory schema, cognitive layer, CLI/MCP, and runtime-default edits."
+  ]
+}

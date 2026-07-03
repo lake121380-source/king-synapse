@@ -725,8 +725,8 @@ Current system gate:
   Phase 6 requirements audit, objective coverage audit, next-gate readiness,
   README claims audit, official DMR task gate, ranking task gate, external
   comparison task gate, long-horizon task gate, productization decision gate,
-  next validation action gate, and latest baseline health replay into one
-  current go/no-go read.
+  next validation action gate, latest baseline health replay, and the
+  feature-freeze path-boundary audit into one current go/no-go read.
 - The current result is `current_system_gate_passed: true`, with
   `current_work_mode: validation_only`.
 - This means the evidence chain is coherent enough to keep validating the
@@ -736,6 +736,16 @@ Current system gate:
   external comparison, future evidence labeling, public real-world long-memory
   validation, productization decision no-go, next validation action waiting on
   external preconditions, and productization.
+
+Phase 6 feature-freeze audit:
+
+- `crates/eval/reports/phase6-feature-freeze-audit.json` checks current Git
+  changes against protected Phase 6 boundaries: memory schema, cognitive layer
+  implementation, CLI/MCP surfaces, and runtime ranking/default code.
+- The current result is `feature_freeze_audit_passed: true`, with
+  `protected_change_count: 0`.
+- This is a path-boundary guard, not a semantic proof; it is meant to catch
+  obvious freeze violations before they enter the validation evidence chain.
 
 Phase 6 evidence freshness audit:
 
