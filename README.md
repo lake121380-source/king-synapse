@@ -123,6 +123,10 @@ The checked-in external comparison report is
 [external-comparison-latest.json](crates/eval/reports/external-comparison-latest.json).
 The readable summary is
 [EXTERNAL_VALIDATION.md](docs/eval/EXTERNAL_VALIDATION.md).
+The hosted/official configuration probe is recorded in
+[external-comparison-hosted.json](crates/eval/reports/external-comparison-hosted.json):
+Synapse is measured on the fixture, while hosted Graphiti/Zep, official Mem0
+configuration, and Letta are `not_configured` in this environment.
 
 | System | Local result on the cognitive fixture |
 | --- | --- |
@@ -215,7 +219,7 @@ comparison adapters or optional embedding/reranking paths.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
-- External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
+- External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, but fixed LLM-judge scoring is not finished.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
@@ -261,6 +265,7 @@ cargo build --release
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
 | `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
+| `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |
 | `docs/eval/GOLDEN_DATASET.md` | Golden dataset registry and replay policy. |
 | `docs/eval/PERFORMANCE_ANALYSIS.md` | Phase 6 latency and performance-boundary analysis. |

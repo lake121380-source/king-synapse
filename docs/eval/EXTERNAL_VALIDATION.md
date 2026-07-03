@@ -1,10 +1,14 @@
 # External Validation
 
-Date: 2026-07-02
+Date: 2026-07-03
 
-Status: local external comparison completed.
+Status: local external comparison completed; hosted/official configuration
+probe recorded.
 
-Report: `crates/eval/reports/external-comparison-latest.json`
+Reports:
+
+- `crates/eval/reports/external-comparison-latest.json`
+- `crates/eval/reports/external-comparison-hosted.json`
 
 ## What Was Tested
 
@@ -13,8 +17,10 @@ system can retrieve the visible memory, find the hidden influence, expose why a
 trace won, keep suppressed alternatives visible, predict a continuation, and
 keep reinforcement isolated after the report.
 
-This is not a hosted benchmark claim. It does not replace official LongMemEval,
-official DMR, hosted Graphiti/Zep, hosted Mem0, or a live Letta endpoint run.
+This is not a hosted benchmark claim. The hosted/official probe checks whether
+Graphiti/Zep Neo4j/OpenAI mode, Mem0 official configuration, and a live Letta
+endpoint are available in the current environment. Missing configuration is
+recorded as `not_configured`, not as a competitor failure.
 
 ## Measured Setup
 
@@ -28,6 +34,23 @@ official DMR, hosted Graphiti/Zep, hosted Mem0, or a live Letta endpoint run.
 Secrets are not stored in the report. The Mem0 run required
 `DEEPSEEK_API_KEY`; the report records only the required environment variable
 name, not the value.
+
+## Hosted / Official Configuration Probe
+
+The hosted probe forced Graphiti/Zep onto the Neo4j/OpenAI path, disabled the
+Mem0 DeepSeek fallback so Mem0 would require an OpenAI/custom official
+configuration, and checked Letta for a real endpoint. Result:
+
+| System | Hosted / official mode | Status | Missing configuration |
+| --- | --- | --- | --- |
+| King Synapse | Local baseline on the same fixture | measured | none |
+| Graphiti/Zep | Neo4j/OpenAI path | not configured | `OPENAI_API_KEY`, `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD` |
+| Mem0 | OSS SDK with OpenAI/custom config, no DeepSeek fallback | not configured | `OPENAI_API_KEY` or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` |
+| Letta | Hosted or local endpoint through `letta-client` | not configured | `LETTA_API_KEY`, `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local` |
+
+The probe wrote `crates/eval/reports/external-comparison-hosted.json`.
+Summary: one measured system, three `not_configured` systems, zero failed
+systems. No hosted competitor score is available yet.
 
 The heavy LongMemEval / DMR validation path remains GPU-first. This external
 fixture run is small and mostly adapter/API bound, so no CPU long-horizon
@@ -60,6 +83,11 @@ path evidence, trace competition, prediction, or reinforcement isolation.
 Letta is not judged yet. The SDK is installed, but a hosted or local endpoint
 must be configured before it can be measured.
 
+The hosted/official probe confirms that the remaining external comparison gap
+is environmental, not a current adapter crash: hosted Graphiti/Zep, official
+Mem0, and Letta all require credentials or endpoints that are not present in
+this environment.
+
 ## Current Conclusion
 
 This external validation supports the project thesis in a narrow, honest way:
@@ -67,9 +95,9 @@ King Synapse currently exposes more inspectable cognitive-trace structure than
 the measured competitor adapters on the same fixture.
 
 It does not prove that King Synapse is better at every long-memory task. The
-next validation boundary is still DMR mapping/chunk skips and candidate
-ranking, plus a real Letta endpoint and hosted-mode reruns for Graphiti/Zep and
-Mem0 when those environments are available.
+next validation boundary is still DMR judge scoring, DMR mapping/ranking, plus
+a real Letta endpoint and hosted-mode reruns for Graphiti/Zep and Mem0 when
+those environments are available.
 
 ## Reproduction Command
 
@@ -82,4 +110,18 @@ cargo run -p synapse-eval --bin kr-external-eval -- \
   --letta-command python \
   --letta-arg scripts/eval/letta_adapter.py \
   --json crates/eval/reports/external-comparison-latest.json
+```
+
+Hosted/official configuration probe:
+
+```powershell
+$env:GRAPHITI_BACKEND = 'neo4j'
+$env:DEEPSEEK_API_KEY = ''
+$env:MEM0_CONFIG_JSON = ''
+$env:MEM0_CONFIG_PATH = ''
+$env:OPENAI_API_KEY = ''
+$env:LETTA_API_KEY = ''
+$env:LETTA_BASE_URL = ''
+$env:LETTA_ENVIRONMENT = ''
+cargo run -p synapse-eval --bin kr-external-eval -- --systems all --graphiti-command python --graphiti-arg scripts/eval/graphiti_adapter.py --mem0-command python --mem0-arg scripts/eval/mem0_adapter.py --letta-command python --letta-arg scripts/eval/letta_adapter.py --json crates/eval/reports/external-comparison-hosted.json
 ```

@@ -170,6 +170,18 @@ When credentials are available, rerun:
 Keep local deterministic modes as reproducible baselines. Hosted-mode results
 must be marked separately from local deterministic results.
 
+Current hosted/official probe:
+
+- `crates/eval/reports/external-comparison-hosted.json`
+- King Synapse: measured as the same local baseline on the fixture.
+- Graphiti/Zep Neo4j/OpenAI path: `not_configured`.
+- Mem0 official/custom configuration path without the DeepSeek fallback:
+  `not_configured`.
+- Letta hosted/local endpoint path: `not_configured`.
+
+This records the current environment boundary. It is not a hosted measurement
+of the competitor systems.
+
 ### 6. Benchmark And Golden Replay Baselines
 
 The current Phase 6 replay baseline is fixed in:
@@ -236,7 +248,7 @@ finds a blocking bug.
 | 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split before changing reranker defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
-| 9 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
+| 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
 | 10 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
@@ -329,4 +341,9 @@ finds a blocking bug.
   `crates/eval/reports/long-horizon-cognitive-memory.json`; the fixed
   deterministic fixture passes Recall@10, HebbianConsistency, and
   CognitiveTraceDominance at `1.000`.
-- Hosted Graphiti and official-embedding Mem0 reruns: not started.
+- Hosted/official external comparison probe is recorded at
+  `crates/eval/reports/external-comparison-hosted.json`; Graphiti/Zep
+  Neo4j/OpenAI, Mem0 official/custom configuration, and Letta endpoint paths
+  are all `not_configured` in the current environment, with zero adapter
+  failures. Real hosted measurements remain open until credentials/endpoints
+  are available.

@@ -1,0 +1,3807 @@
+{
+  "schema_version": "king-synapse.external-comparison.v1",
+  "generated_at": "2026-07-03T04:49:36.800988300+00:00",
+  "dataset": "exported-cognitive-session",
+  "fixture_chains": 8,
+  "systems": [
+    {
+      "system": "King Synapse",
+      "kind": "king-synapse",
+      "version": "0.0.1",
+      "status": "measured",
+      "capabilities": {
+        "retrieval": "supported",
+        "trace": "supported",
+        "prediction": "supported",
+        "reinforcement": "supported",
+        "evidence_paths": "supported"
+      },
+      "aggregate": {
+        "chains": 8,
+        "mean_latency_ms": 4.5571125,
+        "metrics": {
+          "evidence_path_available": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "visible_seed_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          }
+        }
+      },
+      "chains": [
+        {
+          "label": "day01-hydration-commute",
+          "query": "day01 skipped hydration before scooter commute",
+          "expected": {
+            "visible_seed": "day01 skipped hydration before scooter commute lowered mood",
+            "hidden_influence": "tired mood reduces commute attention and raises scooter fall risk",
+            "future_influence": "future commute mistake risk increases when attention narrows"
+          },
+          "status": "measured",
+          "latency_ms": 4.764,
+          "returned": [
+            {
+              "id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "content": "day01 skipped hydration before scooter commute lowered mood",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.013114753179252148,
+              "matched_terms": [
+                "fts"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "source_content": null,
+              "target_id": "01KWK4YR2RRCJYWAM3WSWYSSAN",
+              "target_content": "tired mood reduces commute attention and raises scooter fall risk",
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRCJYWAM3WSWYSSAN"
+              ],
+              "score": 0.25,
+              "matched_terms": [
+                "goal:attention",
+                "goal:commute",
+                "goal:risk",
+                "state:mood",
+                "state:tired"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "source_content": null,
+              "target_id": "01KWK4YR2SB8C35CE8TM1KAKK0",
+              "target_content": "future commute mistake risk increases when attention narrows",
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SB8C35CE8TM1KAKK0"
+              ],
+              "score": 0.035624999552965164,
+              "matched_terms": [
+                "goal:attention",
+                "goal:commute",
+                "goal:risk",
+                "state:future"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "source_content": null,
+              "target_id": "01KWK4YR2RRXKWEQ2QT3CS9Z28",
+              "target_content": "weekend laundry receipt sorting plan",
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRXKWEQ2QT3CS9Z28"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "source_content": null,
+              "target_id": "01KWK4YR2SEAX6FXY4VARXPXJF",
+              "target_content": "bike helmet color comparison",
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SEAX6FXY4VARXPXJF"
+              ],
+              "score": 0.0031250000465661287,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR2RRCJYWAM3WSWYSSAN",
+            "content": "tired mood reduces commute attention and raises scooter fall risk",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:attention",
+              "goal:commute",
+              "goal:risk",
+              "state:mood",
+              "state:tired"
+            ],
+            "path": [
+              "01KWK4YR2P837FEKCAHPW67DA7",
+              "01KWK4YR2RRCJYWAM3WSWYSSAN"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR2P837FEKCAHPW67DA7",
+              "content": "day01 skipped hydration before scooter commute lowered mood",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR2SB8C35CE8TM1KAKK0",
+              "content": "future commute mistake risk increases when attention narrows",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.14249999821186066,
+              "matched_terms": [
+                "goal:attention",
+                "goal:commute",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SB8C35CE8TM1KAKK0"
+              ]
+            },
+            {
+              "id": "01KWK4YR2RRXKWEQ2QT3CS9Z28",
+              "content": "weekend laundry receipt sorting plan",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10000000149011612,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRXKWEQ2QT3CS9Z28"
+              ]
+            },
+            {
+              "id": "01KWK4YR2SEAX6FXY4VARXPXJF",
+              "content": "bike helmet color comparison",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2P837FEKCAHPW67DA7",
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SEAX6FXY4VARXPXJF"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR2SB8C35CE8TM1KAKK0",
+              "content": "future commute mistake risk increases when attention narrows",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.25,
+              "matched_terms": [
+                "goal:attention",
+                "goal:commute",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SB8C35CE8TM1KAKK0"
+              ]
+            },
+            {
+              "id": "01KWK4YR2SEAX6FXY4VARXPXJF",
+              "content": "bike helmet color comparison",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2RRCJYWAM3WSWYSSAN",
+                "01KWK4YR2SEAX6FXY4VARXPXJF"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR2P837FEKCAHPW67DA7->01KWK4YR2RRCJYWAM3WSWYSSAN": 3.0,
+              "01KWK4YR2RRCJYWAM3WSWYSSAN->01KWK4YR2P837FEKCAHPW67DA7": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR2P837FEKCAHPW67DA7->01KWK4YR2RRCJYWAM3WSWYSSAN": 3.11,
+              "01KWK4YR2RRCJYWAM3WSWYSSAN->01KWK4YR2P837FEKCAHPW67DA7": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day02-review-avoidance",
+          "query": "day02 team pressure before architecture task",
+          "expected": {
+            "visible_seed": "day02 team pressure before architecture task triggered avoidance",
+            "hidden_influence": "subconscious avoidance reduces review quality and future error detection",
+            "future_influence": "future review misses error signals when avoidance dominates"
+          },
+          "status": "measured",
+          "latency_ms": 4.0549,
+          "returned": [
+            {
+              "id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "content": "day02 team pressure before architecture task triggered avoidance",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.013114753179252148,
+              "matched_terms": [
+                "fts"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "source_content": null,
+              "target_id": "01KWK4YR2VHEZRGZJKTMZPF4FE",
+              "target_content": "subconscious avoidance reduces review quality and future error detection",
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2VHEZRGZJKTMZPF4FE"
+              ],
+              "score": 0.25,
+              "matched_terms": [
+                "goal:error",
+                "goal:review",
+                "state:future",
+                "state:subconscious"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "source_content": null,
+              "target_id": "01KWK4YR2WZMX39JFX7VKFTV4M",
+              "target_content": "future review misses error signals when avoidance dominates",
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WZMX39JFX7VKFTV4M"
+              ],
+              "score": 0.030937500298023224,
+              "matched_terms": [
+                "goal:error",
+                "goal:review",
+                "state:future"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "source_content": null,
+              "target_id": "01KWK4YR2V2MZ9N7JASVZEJ32Y",
+              "target_content": "office plant watering rotation",
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2V2MZ9N7JASVZEJ32Y"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "source_content": null,
+              "target_id": "01KWK4YR2WA689B4KDTKZWQ4W7",
+              "target_content": "architecture diagram font preference",
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WA689B4KDTKZWQ4W7"
+              ],
+              "score": 0.0031250000465661287,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR2VHEZRGZJKTMZPF4FE",
+            "content": "subconscious avoidance reduces review quality and future error detection",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:error",
+              "goal:review",
+              "state:future",
+              "state:subconscious"
+            ],
+            "path": [
+              "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "01KWK4YR2VHEZRGZJKTMZPF4FE"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR2TFVV5S1HBA8P1GQHF",
+              "content": "day02 team pressure before architecture task triggered avoidance",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR2WZMX39JFX7VKFTV4M",
+              "content": "future review misses error signals when avoidance dominates",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.1237500011920929,
+              "matched_terms": [
+                "goal:error",
+                "goal:review",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WZMX39JFX7VKFTV4M"
+              ]
+            },
+            {
+              "id": "01KWK4YR2V2MZ9N7JASVZEJ32Y",
+              "content": "office plant watering rotation",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10000000149011612,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2V2MZ9N7JASVZEJ32Y"
+              ]
+            },
+            {
+              "id": "01KWK4YR2WA689B4KDTKZWQ4W7",
+              "content": "architecture diagram font preference",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2TFVV5S1HBA8P1GQHF",
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WA689B4KDTKZWQ4W7"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR2WZMX39JFX7VKFTV4M",
+              "content": "future review misses error signals when avoidance dominates",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:error",
+                "goal:review",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WZMX39JFX7VKFTV4M"
+              ]
+            },
+            {
+              "id": "01KWK4YR2WA689B4KDTKZWQ4W7",
+              "content": "architecture diagram font preference",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2VHEZRGZJKTMZPF4FE",
+                "01KWK4YR2WA689B4KDTKZWQ4W7"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR2TFVV5S1HBA8P1GQHF->01KWK4YR2VHEZRGZJKTMZPF4FE": 3.0,
+              "01KWK4YR2VHEZRGZJKTMZPF4FE->01KWK4YR2TFVV5S1HBA8P1GQHF": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR2TFVV5S1HBA8P1GQHF->01KWK4YR2VHEZRGZJKTMZPF4FE": 3.11,
+              "01KWK4YR2VHEZRGZJKTMZPF4FE->01KWK4YR2TFVV5S1HBA8P1GQHF": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day03-client-demo-tool",
+          "query": "day03 laptop charger missing before client demo",
+          "expected": {
+            "visible_seed": "day03 laptop charger missing before client demo caused anxious planning",
+            "hidden_influence": "missing tool creates task risk and anxious planning",
+            "future_influence": "future demo failure risk rises when tool planning consumes attention"
+          },
+          "status": "measured",
+          "latency_ms": 4.3870000000000005,
+          "returned": [
+            {
+              "id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "content": "day03 laptop charger missing before client demo caused anxious planning",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.013114753179252148,
+              "matched_terms": [
+                "fts"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "source_content": null,
+              "target_id": "01KWK4YR2YQSJKKD82H3BFGZ18",
+              "target_content": "missing tool creates task risk and anxious planning",
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YQSJKKD82H3BFGZ18"
+              ],
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:risk",
+                "goal:task",
+                "state:anxious"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "source_content": null,
+              "target_id": "01KWK4YR2ZVH5NJK98D7A7J7TM",
+              "target_content": "future demo failure risk rises when tool planning consumes attention",
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZVH5NJK98D7A7J7TM"
+              ],
+              "score": 0.030628126114606857,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "source_content": null,
+              "target_id": "01KWK4YR2YW1KN4PYMRTXKW0SK",
+              "target_content": "client demo slide color archive",
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YW1KN4PYMRTXKW0SK"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "source_content": null,
+              "target_id": "01KWK4YR2ZQX5NFWP1JYXCEMS0",
+              "target_content": "conference room snack inventory",
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZQX5NFWP1JYXCEMS0"
+              ],
+              "score": 0.0030937499832361937,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR2YQSJKKD82H3BFGZ18",
+            "content": "missing tool creates task risk and anxious planning",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:risk",
+              "goal:task",
+              "state:anxious"
+            ],
+            "path": [
+              "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "01KWK4YR2YQSJKKD82H3BFGZ18"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR2XKGXXZ281VTNVZEBD",
+              "content": "day03 laptop charger missing before client demo caused anxious planning",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR2ZVH5NJK98D7A7J7TM",
+              "content": "future demo failure risk rises when tool planning consumes attention",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.1237500011920929,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZVH5NJK98D7A7J7TM"
+              ]
+            },
+            {
+              "id": "01KWK4YR2YW1KN4PYMRTXKW0SK",
+              "content": "client demo slide color archive",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10101009905338287,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YW1KN4PYMRTXKW0SK"
+              ]
+            },
+            {
+              "id": "01KWK4YR2ZQX5NFWP1JYXCEMS0",
+              "content": "conference room snack inventory",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2XKGXXZ281VTNVZEBD",
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZQX5NFWP1JYXCEMS0"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR2ZVH5NJK98D7A7J7TM",
+              "content": "future demo failure risk rises when tool planning consumes attention",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZVH5NJK98D7A7J7TM"
+              ]
+            },
+            {
+              "id": "01KWK4YR2ZQX5NFWP1JYXCEMS0",
+              "content": "conference room snack inventory",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR2YQSJKKD82H3BFGZ18",
+                "01KWK4YR2ZQX5NFWP1JYXCEMS0"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR2XKGXXZ281VTNVZEBD->01KWK4YR2YQSJKKD82H3BFGZ18": 3.0,
+              "01KWK4YR2YQSJKKD82H3BFGZ18->01KWK4YR2XKGXXZ281VTNVZEBD": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR2XKGXXZ281VTNVZEBD->01KWK4YR2YQSJKKD82H3BFGZ18": 3.11,
+              "01KWK4YR2YQSJKKD82H3BFGZ18->01KWK4YR2XKGXXZ281VTNVZEBD": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day04-payment-bug",
+          "query": "day04 past payment bug repeating mistakes",
+          "expected": {
+            "visible_seed": "day04 past payment bug made repeated mistake fear salient",
+            "hidden_influence": "memory of failure changes future decision attention allocation",
+            "future_influence": "future decision risk increases when attention narrows around failure memory"
+          },
+          "status": "measured",
+          "latency_ms": 4.9388000000000005,
+          "returned": [
+            {
+              "id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "content": "day04 past payment bug made repeated mistake fear salient",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.026229506358504295,
+              "matched_terms": [
+                "fts",
+                "entity"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "source_content": null,
+              "target_id": "01KWK4YR316RQ6E9R4NK4CXBM0",
+              "target_content": "memory of failure changes future decision attention allocation",
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR316RQ6E9R4NK4CXBM0"
+              ],
+              "score": 0.25,
+              "matched_terms": [
+                "goal:attention",
+                "goal:decision",
+                "state:future",
+                "state:memory"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "source_content": null,
+              "target_id": "01KWK4YR32YFEGPSS24XAYE9ZD",
+              "target_content": "future decision risk increases when attention narrows around failure memory",
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR32YFEGPSS24XAYE9ZD"
+              ],
+              "score": 0.03750000149011612,
+              "matched_terms": [
+                "goal:attention",
+                "goal:decision",
+                "goal:risk",
+                "state:future",
+                "state:memory"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "source_content": null,
+              "target_id": "01KWK4YR32C5JA89KHCVFCA1WA",
+              "target_content": "receipt export naming preference",
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR32C5JA89KHCVFCA1WA"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "source_content": null,
+              "target_id": "01KWK4YR33R3GRV9YJ6390VGGW",
+              "target_content": "billing dashboard color note",
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR33R3GRV9YJ6390VGGW"
+              ],
+              "score": 0.0031250000465661287,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR316RQ6E9R4NK4CXBM0",
+            "content": "memory of failure changes future decision attention allocation",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:attention",
+              "goal:decision",
+              "state:future",
+              "state:memory"
+            ],
+            "path": [
+              "01KWK4YR304ZTPBD6E54DG2XKV",
+              "01KWK4YR316RQ6E9R4NK4CXBM0"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR304ZTPBD6E54DG2XKV",
+              "content": "day04 past payment bug made repeated mistake fear salient",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR32YFEGPSS24XAYE9ZD",
+              "content": "future decision risk increases when attention narrows around failure memory",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.15000000596046448,
+              "matched_terms": [
+                "goal:attention",
+                "goal:decision",
+                "goal:risk",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR32YFEGPSS24XAYE9ZD"
+              ]
+            },
+            {
+              "id": "01KWK4YR32C5JA89KHCVFCA1WA",
+              "content": "receipt export naming preference",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10000000149011612,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR32C5JA89KHCVFCA1WA"
+              ]
+            },
+            {
+              "id": "01KWK4YR33R3GRV9YJ6390VGGW",
+              "content": "billing dashboard color note",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR304ZTPBD6E54DG2XKV",
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR33R3GRV9YJ6390VGGW"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR32YFEGPSS24XAYE9ZD",
+              "content": "future decision risk increases when attention narrows around failure memory",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.25,
+              "matched_terms": [
+                "goal:attention",
+                "goal:decision",
+                "goal:risk",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR32YFEGPSS24XAYE9ZD"
+              ]
+            },
+            {
+              "id": "01KWK4YR33R3GRV9YJ6390VGGW",
+              "content": "billing dashboard color note",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR316RQ6E9R4NK4CXBM0",
+                "01KWK4YR33R3GRV9YJ6390VGGW"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR304ZTPBD6E54DG2XKV->01KWK4YR316RQ6E9R4NK4CXBM0": 3.0,
+              "01KWK4YR316RQ6E9R4NK4CXBM0->01KWK4YR304ZTPBD6E54DG2XKV": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR304ZTPBD6E54DG2XKV->01KWK4YR316RQ6E9R4NK4CXBM0": 3.11,
+              "01KWK4YR316RQ6E9R4NK4CXBM0->01KWK4YR304ZTPBD6E54DG2XKV": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day05-social-trust",
+          "query": "day05 trust message collaboration communication",
+          "expected": {
+            "visible_seed": "day05 trust message from collaboration changed communication tone",
+            "hidden_influence": "emotion affects communication decision and work attention",
+            "future_influence": "future communication risk drops when trust memory guides tone"
+          },
+          "status": "measured",
+          "latency_ms": 4.3112,
+          "returned": [
+            {
+              "id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "content": "day05 trust message from collaboration changed communication tone",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.013114753179252148,
+              "matched_terms": [
+                "fts"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "source_content": null,
+              "target_id": "01KWK4YR34K1CVJG0NQYR3H8RM",
+              "target_content": "emotion affects communication decision and work attention",
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR34K1CVJG0NQYR3H8RM"
+              ],
+              "score": 0.25,
+              "matched_terms": [
+                "goal:communication",
+                "goal:decision",
+                "goal:work",
+                "state:emotion"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "source_content": null,
+              "target_id": "01KWK4YR35CR21X0T2EBZ49ZD9",
+              "target_content": "future communication risk drops when trust memory guides tone",
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR35CR21X0T2EBZ49ZD9"
+              ],
+              "score": 0.029062500223517418,
+              "matched_terms": [
+                "goal:communication",
+                "state:future",
+                "state:memory"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "source_content": null,
+              "target_id": "01KWK4YR35GWQC6DKAC7D7BET6",
+              "target_content": "language history reading list",
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR35GWQC6DKAC7D7BET6"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "source_content": null,
+              "target_id": "01KWK4YR36KAEFFTDH6NH2Y4K2",
+              "target_content": "handoff template spacing preference",
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR36KAEFFTDH6NH2Y4K2"
+              ],
+              "score": 0.0031250000465661287,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR34K1CVJG0NQYR3H8RM",
+            "content": "emotion affects communication decision and work attention",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:communication",
+              "goal:decision",
+              "goal:work",
+              "state:emotion"
+            ],
+            "path": [
+              "01KWK4YR346FBGEZPRYMZFE83G",
+              "01KWK4YR34K1CVJG0NQYR3H8RM"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR346FBGEZPRYMZFE83G",
+              "content": "day05 trust message from collaboration changed communication tone",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR35CR21X0T2EBZ49ZD9",
+              "content": "future communication risk drops when trust memory guides tone",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.11625000089406967,
+              "matched_terms": [
+                "goal:communication",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR35CR21X0T2EBZ49ZD9"
+              ]
+            },
+            {
+              "id": "01KWK4YR35GWQC6DKAC7D7BET6",
+              "content": "language history reading list",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10000000149011612,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR35GWQC6DKAC7D7BET6"
+              ]
+            },
+            {
+              "id": "01KWK4YR36KAEFFTDH6NH2Y4K2",
+              "content": "handoff template spacing preference",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR346FBGEZPRYMZFE83G",
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR36KAEFFTDH6NH2Y4K2"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR35CR21X0T2EBZ49ZD9",
+              "content": "future communication risk drops when trust memory guides tone",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.23250000178813934,
+              "matched_terms": [
+                "goal:communication",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR35CR21X0T2EBZ49ZD9"
+              ]
+            },
+            {
+              "id": "01KWK4YR36KAEFFTDH6NH2Y4K2",
+              "content": "handoff template spacing preference",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR34K1CVJG0NQYR3H8RM",
+                "01KWK4YR36KAEFFTDH6NH2Y4K2"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR346FBGEZPRYMZFE83G->01KWK4YR34K1CVJG0NQYR3H8RM": 3.0,
+              "01KWK4YR34K1CVJG0NQYR3H8RM->01KWK4YR346FBGEZPRYMZFE83G": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR346FBGEZPRYMZFE83G->01KWK4YR34K1CVJG0NQYR3H8RM": 3.11,
+              "01KWK4YR34K1CVJG0NQYR3H8RM->01KWK4YR346FBGEZPRYMZFE83G": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day06-hunger-deployment",
+          "query": "day06 hunger incident deployment focus",
+          "expected": {
+            "visible_seed": "day06 hunger during deployment caused impatient focus",
+            "hidden_influence": "hungry state narrows attention and increases operational mistake risk",
+            "future_influence": "future operational mistake risk increases when attention narrows"
+          },
+          "status": "measured",
+          "latency_ms": 4.9897,
+          "returned": [
+            {
+              "id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "content": "day06 hunger during deployment caused impatient focus",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.026229506358504295,
+              "matched_terms": [
+                "fts",
+                "entity"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "source_content": null,
+              "target_id": "01KWK4YR38DCRYDFYFN91Y8WHE",
+              "target_content": "hungry state narrows attention and increases operational mistake risk",
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38DCRYDFYFN91Y8WHE"
+              ],
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:hungry"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "source_content": null,
+              "target_id": "01KWK4YR390RV70XVMAGET23ER",
+              "target_content": "future operational mistake risk increases when attention narrows",
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR390RV70XVMAGET23ER"
+              ],
+              "score": 0.030628126114606857,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "source_content": null,
+              "target_id": "01KWK4YR38J2MZC7D03B9Y3G9K",
+              "target_content": "snack shelf location map",
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38J2MZC7D03B9Y3G9K"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "source_content": null,
+              "target_id": "01KWK4YR39P2BX96Q0YZZJQN9E",
+              "target_content": "deployment checklist printer setting",
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR39P2BX96Q0YZZJQN9E"
+              ],
+              "score": 0.0030937499832361937,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR38DCRYDFYFN91Y8WHE",
+            "content": "hungry state narrows attention and increases operational mistake risk",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:attention",
+              "goal:risk",
+              "state:hungry"
+            ],
+            "path": [
+              "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "01KWK4YR38DCRYDFYFN91Y8WHE"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR37PHVGW3GMN2KYW3P5",
+              "content": "day06 hunger during deployment caused impatient focus",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR390RV70XVMAGET23ER",
+              "content": "future operational mistake risk increases when attention narrows",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.1237500011920929,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR390RV70XVMAGET23ER"
+              ]
+            },
+            {
+              "id": "01KWK4YR38J2MZC7D03B9Y3G9K",
+              "content": "snack shelf location map",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10101009905338287,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38J2MZC7D03B9Y3G9K"
+              ]
+            },
+            {
+              "id": "01KWK4YR39P2BX96Q0YZZJQN9E",
+              "content": "deployment checklist printer setting",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR37PHVGW3GMN2KYW3P5",
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR39P2BX96Q0YZZJQN9E"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR390RV70XVMAGET23ER",
+              "content": "future operational mistake risk increases when attention narrows",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:attention",
+                "goal:risk",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR390RV70XVMAGET23ER"
+              ]
+            },
+            {
+              "id": "01KWK4YR39P2BX96Q0YZZJQN9E",
+              "content": "deployment checklist printer setting",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR38DCRYDFYFN91Y8WHE",
+                "01KWK4YR39P2BX96Q0YZZJQN9E"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR37PHVGW3GMN2KYW3P5->01KWK4YR38DCRYDFYFN91Y8WHE": 3.0,
+              "01KWK4YR38DCRYDFYFN91Y8WHE->01KWK4YR37PHVGW3GMN2KYW3P5": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR37PHVGW3GMN2KYW3P5->01KWK4YR38DCRYDFYFN91Y8WHE": 3.11,
+              "01KWK4YR38DCRYDFYFN91Y8WHE->01KWK4YR37PHVGW3GMN2KYW3P5": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day07-feedback-handoff",
+          "query": "day07 social feedback concise chinese handoff",
+          "expected": {
+            "visible_seed": "day07 social feedback reinforced concise chinese handoff preference",
+            "hidden_influence": "preference memory guides communication decision and reduces review friction",
+            "future_influence": "future handoff quality improves when communication memory guides review"
+          },
+          "status": "measured",
+          "latency_ms": 4.4975,
+          "returned": [
+            {
+              "id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "content": "day07 social feedback reinforced concise chinese handoff preference",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.013114753179252148,
+              "matched_terms": [
+                "fts"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "source_content": null,
+              "target_id": "01KWK4YR3BMB2D18NBH9R8FQAD",
+              "target_content": "preference memory guides communication decision and reduces review friction",
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3BMB2D18NBH9R8FQAD"
+              ],
+              "score": 0.2475000023841858,
+              "matched_terms": [
+                "goal:communication",
+                "goal:review",
+                "state:memory"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "source_content": null,
+              "target_id": "01KWK4YR3CE02GKPP080QET61R",
+              "target_content": "future handoff quality improves when communication memory guides review",
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CE02GKPP080QET61R"
+              ],
+              "score": 0.03712500259280205,
+              "matched_terms": [
+                "goal:communication",
+                "goal:quality",
+                "goal:review",
+                "state:future",
+                "state:memory"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "source_content": null,
+              "target_id": "01KWK4YR3CRN08ZNGKKZE6M4KQ",
+              "target_content": "bibliography sorting note",
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3CRN08ZNGKKZE6M4KQ"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "source_content": null,
+              "target_id": "01KWK4YR3CP07SCZFTTPBBRTFC",
+              "target_content": "meeting room light switch note",
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CP07SCZFTTPBBRTFC"
+              ],
+              "score": 0.0030937499832361937,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR3BMB2D18NBH9R8FQAD",
+            "content": "preference memory guides communication decision and reduces review friction",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:communication",
+              "goal:review",
+              "state:memory"
+            ],
+            "path": [
+              "01KWK4YR3ADW7MM34G9962YAE9",
+              "01KWK4YR3BMB2D18NBH9R8FQAD"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR3ADW7MM34G9962YAE9",
+              "content": "day07 social feedback reinforced concise chinese handoff preference",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR3CE02GKPP080QET61R",
+              "content": "future handoff quality improves when communication memory guides review",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.15000000596046448,
+              "matched_terms": [
+                "goal:communication",
+                "goal:quality",
+                "goal:review",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CE02GKPP080QET61R"
+              ]
+            },
+            {
+              "id": "01KWK4YR3CRN08ZNGKKZE6M4KQ",
+              "content": "bibliography sorting note",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10101009905338287,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3CRN08ZNGKKZE6M4KQ"
+              ]
+            },
+            {
+              "id": "01KWK4YR3CP07SCZFTTPBBRTFC",
+              "content": "meeting room light switch note",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3ADW7MM34G9962YAE9",
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CP07SCZFTTPBBRTFC"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR3CE02GKPP080QET61R",
+              "content": "future handoff quality improves when communication memory guides review",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.25,
+              "matched_terms": [
+                "goal:communication",
+                "goal:quality",
+                "goal:review",
+                "state:future",
+                "state:memory"
+              ],
+              "path": [
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CE02GKPP080QET61R"
+              ]
+            },
+            {
+              "id": "01KWK4YR3CP07SCZFTTPBBRTFC",
+              "content": "meeting room light switch note",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3BMB2D18NBH9R8FQAD",
+                "01KWK4YR3CP07SCZFTTPBBRTFC"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR3ADW7MM34G9962YAE9->01KWK4YR3BMB2D18NBH9R8FQAD": 3.0,
+              "01KWK4YR3BMB2D18NBH9R8FQAD->01KWK4YR3ADW7MM34G9962YAE9": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR3ADW7MM34G9962YAE9->01KWK4YR3BMB2D18NBH9R8FQAD": 3.11,
+              "01KWK4YR3BMB2D18NBH9R8FQAD->01KWK4YR3ADW7MM34G9962YAE9": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        },
+        {
+          "label": "day08-complex-bug-review",
+          "query": "day08 complex review repeated bug avoidance",
+          "expected": {
+            "visible_seed": "day08 complex review after repeated bug triggered avoidance",
+            "hidden_influence": "subconscious avoidance can create future judgement error",
+            "future_influence": "future judgement error grows when review avoidance stays hidden"
+          },
+          "status": "measured",
+          "latency_ms": 4.5138,
+          "returned": [
+            {
+              "id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "content": "day08 complex review after repeated bug triggered avoidance",
+              "source": "visible_recall",
+              "rank": 1,
+              "score": 0.026229506358504295,
+              "matched_terms": [
+                "fts",
+                "entity"
+              ],
+              "path": []
+            }
+          ],
+          "evidence_paths": [
+            {
+              "source_id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "source_content": null,
+              "target_id": "01KWK4YR3ESB9V9AJPZPEQAS8M",
+              "target_content": "subconscious avoidance can create future judgement error",
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3ESB9V9AJPZPEQAS8M"
+              ],
+              "score": 0.25,
+              "matched_terms": [
+                "goal:error",
+                "goal:judgement",
+                "state:future",
+                "state:subconscious"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "source_content": null,
+              "target_id": "01KWK4YR3FFWRAQ23BGDWVB9D0",
+              "target_content": "future judgement error grows when review avoidance stays hidden",
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3FFWRAQ23BGDWVB9D0"
+              ],
+              "score": 0.035624999552965164,
+              "matched_terms": [
+                "goal:error",
+                "goal:judgement",
+                "goal:review",
+                "state:future"
+              ]
+            },
+            {
+              "source_id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "source_content": null,
+              "target_id": "01KWK4YR3F5VDWZNQRXVXG76N7",
+              "target_content": "checklist typography option",
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3F5VDWZNQRXVXG76N7"
+              ],
+              "score": 0.02500000037252903,
+              "matched_terms": []
+            },
+            {
+              "source_id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "source_content": null,
+              "target_id": "01KWK4YR3GSAHPSYSYF75E2Z2T",
+              "target_content": "label color preference",
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3GSAHPSYSYF75E2Z2T"
+              ],
+              "score": 0.0031250000465661287,
+              "matched_terms": []
+            }
+          ],
+          "dominant": {
+            "id": "01KWK4YR3ESB9V9AJPZPEQAS8M",
+            "content": "subconscious avoidance can create future judgement error",
+            "source": "dominant",
+            "rank": null,
+            "score": 1.0,
+            "matched_terms": [
+              "goal:error",
+              "goal:judgement",
+              "state:future",
+              "state:subconscious"
+            ],
+            "path": [
+              "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "01KWK4YR3ESB9V9AJPZPEQAS8M"
+            ]
+          },
+          "suppressed": [
+            {
+              "id": "01KWK4YR3DAHDACPCVZWRT2PNR",
+              "content": "day08 complex review after repeated bug triggered avoidance",
+              "source": "suppressed",
+              "rank": 1,
+              "score": 0.699999988079071,
+              "matched_terms": [],
+              "path": []
+            },
+            {
+              "id": "01KWK4YR3FFWRAQ23BGDWVB9D0",
+              "content": "future judgement error grows when review avoidance stays hidden",
+              "source": "suppressed",
+              "rank": 2,
+              "score": 0.14249999821186066,
+              "matched_terms": [
+                "goal:error",
+                "goal:judgement",
+                "goal:review",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3FFWRAQ23BGDWVB9D0"
+              ]
+            },
+            {
+              "id": "01KWK4YR3F5VDWZNQRXVXG76N7",
+              "content": "checklist typography option",
+              "source": "suppressed",
+              "rank": 3,
+              "score": 0.10000000149011612,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3F5VDWZNQRXVXG76N7"
+              ]
+            },
+            {
+              "id": "01KWK4YR3GSAHPSYSYF75E2Z2T",
+              "content": "label color preference",
+              "source": "suppressed",
+              "rank": 4,
+              "score": 0.012500000186264515,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3DAHDACPCVZWRT2PNR",
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3GSAHPSYSYF75E2Z2T"
+              ]
+            }
+          ],
+          "prediction_candidates": [
+            {
+              "id": "01KWK4YR3FFWRAQ23BGDWVB9D0",
+              "content": "future judgement error grows when review avoidance stays hidden",
+              "source": "prediction",
+              "rank": 1,
+              "score": 0.25,
+              "matched_terms": [
+                "goal:error",
+                "goal:judgement",
+                "goal:review",
+                "state:future"
+              ],
+              "path": [
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3FFWRAQ23BGDWVB9D0"
+              ]
+            },
+            {
+              "id": "01KWK4YR3GSAHPSYSYF75E2Z2T",
+              "content": "label color preference",
+              "source": "prediction",
+              "rank": 2,
+              "score": 0.02500000037252903,
+              "matched_terms": [],
+              "path": [
+                "01KWK4YR3ESB9V9AJPZPEQAS8M",
+                "01KWK4YR3GSAHPSYSYF75E2Z2T"
+              ]
+            }
+          ],
+          "reinforcement": {
+            "attempted": true,
+            "supported": true,
+            "isolated_after_report": true,
+            "expected_edges": 2,
+            "reinforced_edges": 2,
+            "edge_weights_before": {
+              "01KWK4YR3DAHDACPCVZWRT2PNR->01KWK4YR3ESB9V9AJPZPEQAS8M": 3.0,
+              "01KWK4YR3ESB9V9AJPZPEQAS8M->01KWK4YR3DAHDACPCVZWRT2PNR": 0.0
+            },
+            "edge_weights_after": {
+              "01KWK4YR3DAHDACPCVZWRT2PNR->01KWK4YR3ESB9V9AJPZPEQAS8M": 3.11,
+              "01KWK4YR3ESB9V9AJPZPEQAS8M->01KWK4YR3DAHDACPCVZWRT2PNR": 0.11000001
+            },
+            "notes": [
+              "Reinforcement ran after recall, trace, and prediction were captured."
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "future_continuation_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_dominant": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "hidden_influence_found": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "reinforcement_isolated": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "suppressed_alternatives_visible": {
+              "status": "hit",
+              "value": 1.0
+            },
+            "visible_seed_found": {
+              "status": "hit",
+              "value": 1.0
+            }
+          },
+          "notes": []
+        }
+      ],
+      "notes": [
+        "Measured locally with an in-memory Store and the exported cognitive session fixture.",
+        "Trace reinforcement is applied only after each chain report is captured."
+      ]
+    },
+    {
+      "system": "Graphiti/Zep",
+      "kind": "graphiti",
+      "version": "unknown",
+      "status": "not_configured",
+      "capabilities": {
+        "retrieval": "unknown",
+        "trace": "unknown",
+        "prediction": "unknown",
+        "reinforcement": "unknown",
+        "evidence_paths": "unknown"
+      },
+      "aggregate": {
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      },
+      "chains": [
+        {
+          "label": "day01-hydration-commute",
+          "query": "day01 skipped hydration before scooter commute",
+          "expected": {
+            "visible_seed": "day01 skipped hydration before scooter commute lowered mood",
+            "hidden_influence": "tired mood reduces commute attention and raises scooter fall risk",
+            "future_influence": "future commute mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day02-review-avoidance",
+          "query": "day02 team pressure before architecture task",
+          "expected": {
+            "visible_seed": "day02 team pressure before architecture task triggered avoidance",
+            "hidden_influence": "subconscious avoidance reduces review quality and future error detection",
+            "future_influence": "future review misses error signals when avoidance dominates"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day03-client-demo-tool",
+          "query": "day03 laptop charger missing before client demo",
+          "expected": {
+            "visible_seed": "day03 laptop charger missing before client demo caused anxious planning",
+            "hidden_influence": "missing tool creates task risk and anxious planning",
+            "future_influence": "future demo failure risk rises when tool planning consumes attention"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day04-payment-bug",
+          "query": "day04 past payment bug repeating mistakes",
+          "expected": {
+            "visible_seed": "day04 past payment bug made repeated mistake fear salient",
+            "hidden_influence": "memory of failure changes future decision attention allocation",
+            "future_influence": "future decision risk increases when attention narrows around failure memory"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day05-social-trust",
+          "query": "day05 trust message collaboration communication",
+          "expected": {
+            "visible_seed": "day05 trust message from collaboration changed communication tone",
+            "hidden_influence": "emotion affects communication decision and work attention",
+            "future_influence": "future communication risk drops when trust memory guides tone"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day06-hunger-deployment",
+          "query": "day06 hunger incident deployment focus",
+          "expected": {
+            "visible_seed": "day06 hunger during deployment caused impatient focus",
+            "hidden_influence": "hungry state narrows attention and increases operational mistake risk",
+            "future_influence": "future operational mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day07-feedback-handoff",
+          "query": "day07 social feedback concise chinese handoff",
+          "expected": {
+            "visible_seed": "day07 social feedback reinforced concise chinese handoff preference",
+            "hidden_influence": "preference memory guides communication decision and reduces review friction",
+            "future_influence": "future handoff quality improves when communication memory guides review"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        },
+        {
+          "label": "day08-complex-bug-review",
+          "query": "day08 complex review repeated bug avoidance",
+          "expected": {
+            "visible_seed": "day08 complex review after repeated bug triggered avoidance",
+            "hidden_influence": "subconscious avoidance can create future judgement error",
+            "future_influence": "future judgement error grows when review avoidance stays hidden"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY is not set; NEO4J_URI is not set; NEO4J_USER is not set; NEO4J_PASSWORD is not set"
+          ]
+        }
+      ],
+      "notes": [
+        "OPENAI_API_KEY is not set",
+        "NEO4J_URI is not set",
+        "NEO4J_USER is not set",
+        "NEO4J_PASSWORD is not set"
+      ]
+    },
+    {
+      "system": "Mem0",
+      "kind": "mem0",
+      "version": "2.0.11",
+      "status": "not_configured",
+      "capabilities": {
+        "retrieval": "unknown",
+        "trace": "unknown",
+        "prediction": "unknown",
+        "reinforcement": "unknown",
+        "evidence_paths": "unknown"
+      },
+      "aggregate": {
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      },
+      "chains": [
+        {
+          "label": "day01-hydration-commute",
+          "query": "day01 skipped hydration before scooter commute",
+          "expected": {
+            "visible_seed": "day01 skipped hydration before scooter commute lowered mood",
+            "hidden_influence": "tired mood reduces commute attention and raises scooter fall risk",
+            "future_influence": "future commute mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day02-review-avoidance",
+          "query": "day02 team pressure before architecture task",
+          "expected": {
+            "visible_seed": "day02 team pressure before architecture task triggered avoidance",
+            "hidden_influence": "subconscious avoidance reduces review quality and future error detection",
+            "future_influence": "future review misses error signals when avoidance dominates"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day03-client-demo-tool",
+          "query": "day03 laptop charger missing before client demo",
+          "expected": {
+            "visible_seed": "day03 laptop charger missing before client demo caused anxious planning",
+            "hidden_influence": "missing tool creates task risk and anxious planning",
+            "future_influence": "future demo failure risk rises when tool planning consumes attention"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day04-payment-bug",
+          "query": "day04 past payment bug repeating mistakes",
+          "expected": {
+            "visible_seed": "day04 past payment bug made repeated mistake fear salient",
+            "hidden_influence": "memory of failure changes future decision attention allocation",
+            "future_influence": "future decision risk increases when attention narrows around failure memory"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day05-social-trust",
+          "query": "day05 trust message collaboration communication",
+          "expected": {
+            "visible_seed": "day05 trust message from collaboration changed communication tone",
+            "hidden_influence": "emotion affects communication decision and work attention",
+            "future_influence": "future communication risk drops when trust memory guides tone"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day06-hunger-deployment",
+          "query": "day06 hunger incident deployment focus",
+          "expected": {
+            "visible_seed": "day06 hunger during deployment caused impatient focus",
+            "hidden_influence": "hungry state narrows attention and increases operational mistake risk",
+            "future_influence": "future operational mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day07-feedback-handoff",
+          "query": "day07 social feedback concise chinese handoff",
+          "expected": {
+            "visible_seed": "day07 social feedback reinforced concise chinese handoff preference",
+            "hidden_influence": "preference memory guides communication decision and reduces review friction",
+            "future_influence": "future handoff quality improves when communication memory guides review"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        },
+        {
+          "label": "day08-complex-bug-review",
+          "query": "day08 complex review repeated bug avoidance",
+          "expected": {
+            "visible_seed": "day08 complex review after repeated bug triggered avoidance",
+            "hidden_influence": "subconscious avoidance can create future judgement error",
+            "future_influence": "future judgement error grows when review avoidance stays hidden"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+            }
+          },
+          "notes": [
+            "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+          ]
+        }
+      ],
+      "notes": [
+        "OPENAI_API_KEY or DEEPSEEK_API_KEY is not set; Mem0 OSS defaults require OpenAI unless MEM0_CONFIG_JSON or MEM0_CONFIG_PATH is provided"
+      ]
+    },
+    {
+      "system": "Letta",
+      "kind": "letta",
+      "version": "1.12.1",
+      "status": "not_configured",
+      "capabilities": {
+        "retrieval": "unknown",
+        "trace": "unknown",
+        "prediction": "unknown",
+        "reinforcement": "unknown",
+        "evidence_paths": "unknown"
+      },
+      "aggregate": {
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      },
+      "chains": [
+        {
+          "label": "day01-hydration-commute",
+          "query": "day01 skipped hydration before scooter commute",
+          "expected": {
+            "visible_seed": "day01 skipped hydration before scooter commute lowered mood",
+            "hidden_influence": "tired mood reduces commute attention and raises scooter fall risk",
+            "future_influence": "future commute mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day02-review-avoidance",
+          "query": "day02 team pressure before architecture task",
+          "expected": {
+            "visible_seed": "day02 team pressure before architecture task triggered avoidance",
+            "hidden_influence": "subconscious avoidance reduces review quality and future error detection",
+            "future_influence": "future review misses error signals when avoidance dominates"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day03-client-demo-tool",
+          "query": "day03 laptop charger missing before client demo",
+          "expected": {
+            "visible_seed": "day03 laptop charger missing before client demo caused anxious planning",
+            "hidden_influence": "missing tool creates task risk and anxious planning",
+            "future_influence": "future demo failure risk rises when tool planning consumes attention"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day04-payment-bug",
+          "query": "day04 past payment bug repeating mistakes",
+          "expected": {
+            "visible_seed": "day04 past payment bug made repeated mistake fear salient",
+            "hidden_influence": "memory of failure changes future decision attention allocation",
+            "future_influence": "future decision risk increases when attention narrows around failure memory"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day05-social-trust",
+          "query": "day05 trust message collaboration communication",
+          "expected": {
+            "visible_seed": "day05 trust message from collaboration changed communication tone",
+            "hidden_influence": "emotion affects communication decision and work attention",
+            "future_influence": "future communication risk drops when trust memory guides tone"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day06-hunger-deployment",
+          "query": "day06 hunger incident deployment focus",
+          "expected": {
+            "visible_seed": "day06 hunger during deployment caused impatient focus",
+            "hidden_influence": "hungry state narrows attention and increases operational mistake risk",
+            "future_influence": "future operational mistake risk increases when attention narrows"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day07-feedback-handoff",
+          "query": "day07 social feedback concise chinese handoff",
+          "expected": {
+            "visible_seed": "day07 social feedback reinforced concise chinese handoff preference",
+            "hidden_influence": "preference memory guides communication decision and reduces review friction",
+            "future_influence": "future handoff quality improves when communication memory guides review"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        },
+        {
+          "label": "day08-complex-bug-review",
+          "query": "day08 complex review repeated bug avoidance",
+          "expected": {
+            "visible_seed": "day08 complex review after repeated bug triggered avoidance",
+            "hidden_influence": "subconscious avoidance can create future judgement error",
+            "future_influence": "future judgement error grows when review avoidance stays hidden"
+          },
+          "status": "not_configured",
+          "latency_ms": 0.0,
+          "returned": [],
+          "evidence_paths": [],
+          "suppressed": [],
+          "prediction_candidates": [],
+          "reinforcement": {
+            "attempted": false,
+            "supported": false,
+            "isolated_after_report": false,
+            "expected_edges": 0,
+            "reinforced_edges": 0,
+            "edge_weights_before": {},
+            "edge_weights_after": {},
+            "notes": [
+              "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            ]
+          },
+          "metrics": {
+            "evidence_path_available": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "future_continuation_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_dominant": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "hidden_influence_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "reinforcement_isolated": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "suppressed_alternatives_visible": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            },
+            "visible_seed_found": {
+              "status": "not_configured",
+              "value": null,
+              "note": "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+            }
+          },
+          "notes": [
+            "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+          ]
+        }
+      ],
+      "notes": [
+        "LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local is required"
+      ]
+    }
+  ],
+  "summary": {
+    "systems": 4,
+    "measured_systems": 1,
+    "not_configured_systems": 3,
+    "failed_systems": 0
+  }
+}

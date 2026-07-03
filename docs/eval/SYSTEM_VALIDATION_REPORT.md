@@ -98,12 +98,27 @@ mode, and Mem0 OSS with DeepSeek plus local Qdrant. Letta remained
 `not_configured`: `letta-client 1.12.1` is installed, but no
 `LETTA_API_KEY`, `LETTA_BASE_URL`, or local endpoint is configured.
 
+A hosted/official configuration probe is now recorded at
+`crates/eval/reports/external-comparison-hosted.json`. It forced Graphiti/Zep
+onto the Neo4j/OpenAI path, disabled the Mem0 DeepSeek fallback, and checked
+Letta for a real endpoint. In this environment, King Synapse was measured and
+all three external hosted/official systems were `not_configured`; no adapter
+failed.
+
 | System | Visible | Hidden | Dominant trace | Suppressed alternatives | Evidence paths | Future continuation | Reinforcement isolation |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | King Synapse | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 |
 | Graphiti/Zep local | 8/8 | 8/8 | unsupported | unsupported | 8/8 | unsupported | unsupported |
 | Mem0 OSS + DeepSeek | 7/8 | 8/8 | unsupported | unsupported | unsupported | unsupported | unsupported |
 | Letta | not configured | not configured | not configured | not configured | not configured | not configured | not configured |
+
+Hosted/official readiness:
+
+| System | Hosted / official status | Required before measurement |
+| --- | --- | --- |
+| Graphiti/Zep | not configured | `OPENAI_API_KEY`, `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD` |
+| Mem0 | not configured | `OPENAI_API_KEY` or `MEM0_CONFIG_JSON` / `MEM0_CONFIG_PATH` |
+| Letta | not configured | `LETTA_API_KEY`, `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local` |
 
 Comparative conclusion: King Synapse currently exposes the richest
 cognitive-trace surface in this fixture. Graphiti/Zep can surface graph-style
@@ -317,7 +332,7 @@ Performance analysis status:
 The project has not yet crossed the bar for:
 
 1. published-comparable official DMR answer-generation benchmark results;
-2. hosted Graphiti or hosted Mem0 comparison;
+2. measured hosted Graphiti or hosted Mem0 comparison;
 3. live Letta endpoint measurement;
 4. final DMR scoring-policy adoption beyond candidate punctuation matching;
 5. production-readiness claims.

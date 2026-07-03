@@ -77,6 +77,13 @@ agent memory blocks when `LETTA_API_KEY`, `LETTA_BASE_URL`, or
 `LETTA_ENVIRONMENT=local` is configured. If dependencies or credentials are
 missing, adapters report `not_configured` with the missing names.
 
+The checked-in hosted/official configuration probe is
+`crates/eval/reports/external-comparison-hosted.json`. It forces Graphiti onto
+the Neo4j/OpenAI path, disables the Mem0 DeepSeek fallback, and checks Letta for
+a real endpoint. In the current environment it records King Synapse as
+measured and Graphiti/Zep, Mem0, and Letta as `not_configured`, with zero
+adapter failures.
+
 ## LongMemEval / DMR Harness
 
 ```bash
