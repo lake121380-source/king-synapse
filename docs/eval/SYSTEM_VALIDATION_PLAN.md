@@ -240,4 +240,9 @@ task. The validation win condition is narrower and more important:
   `crates/eval/reports/official-dmr-5-extractive.json`, and
   `crates/eval/reports/official-dmr-50.json`; fixed LLM judge authorization and
   200/500 runs are still unresolved.
+- Ranking ablation: first DMR 50 reranker-pool pass is recorded at
+  `docs/eval/RANKING_ABLATION.md` and
+  `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`
+  remains the best Recall@10 setting in that pass, so no default change is
+  justified yet.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

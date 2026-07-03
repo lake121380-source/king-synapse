@@ -150,6 +150,12 @@ The official-style DMR answer-generation reports are fixed in:
 
 Readable summary: `docs/eval/OFFICIAL_DMR_RESULT.md`.
 
+The first ranking ablation report is fixed in:
+
+- `reports/ranking-ablation-dmr-50-reranker-pool.json`
+
+Readable summary: `docs/eval/RANKING_ABLATION.md`.
+
 ## Algorithm Benchmarks
 
 ```bash

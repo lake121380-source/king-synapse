@@ -162,6 +162,17 @@ The dominant evaluated failure mode is ranking. The dominant DMR data issue is
 mapping/chunking: 278 candidate rows were skipped before evaluation because the
 expected answer text was not found in generated memory chunks.
 
+Ranking ablation status:
+
+- `scripts/eval/ranking_ablation.py` records one-variable ranking experiments.
+- `docs/eval/RANKING_ABLATION.md` and
+  `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json` record the
+  first DMR 50 reranker-pool ablation.
+- Pool `50` remains the best Recall@10 setting in this pass (`0.468`).
+- Pool `100` slightly improves MRR (`0.623`) but lowers Recall@10 (`0.448`)
+  and roughly doubles P50 latency versus pool `50`.
+- The result does not justify changing the default reranker pool.
+
 DMR mapping audit status:
 
 - `docs/eval/DMR_MAPPING_AUDIT.md` and
@@ -234,5 +245,5 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, fix the LLM judge
-authorization/configuration, then rerun DMR 50 before expanding to DMR 200 /
-500.
+authorization/configuration, then continue ranking ablations for RRF/vector
+weighting and top-k before changing defaults.

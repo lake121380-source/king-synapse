@@ -243,6 +243,7 @@ cargo build --release
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |
+| `docs/eval/RANKING_ABLATION.md` | DMR 50 ranking ablation result for reranker pool size. |
 | `docs/eval/DMR_MAPPING_AUDIT.md` | DMR skipped-row mapping audit. |
 | `docs/eval/FAILURE_ANALYSIS.md` | Anonymous failure bucket analysis. |
 | `docs/eval/GPU_VALIDATION_2026-07-02.md` | CUDA validation status and runtime notes. |
