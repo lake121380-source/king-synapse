@@ -34,6 +34,7 @@ pub use hit::{RecallHit, RecallSource};
 pub use latent_activation::{LatentActivationContext, LatentActivationHit, LatentActivationProbe};
 pub use latent_booster::LatentActivationBooster;
 pub use query_latent::{QueryLatentActivationProbe, QueryLatentActivationReport};
+pub use rrf::{RrfBranchWeights, DEFAULT_RRF_K};
 
 /// Default candidate pool size handed to the reranker before top-k truncation.
 pub const DEFAULT_RERANK_POOL: usize = 50;

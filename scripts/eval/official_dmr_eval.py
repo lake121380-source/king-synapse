@@ -552,6 +552,10 @@ def main() -> int:
             vectors=bool(mode_config["vectors"]),
             rerank=bool(mode_config["rerank"]),
             rerank_pool=int(mode_config["rerank_pool"]),
+            rrf_k=60.0,
+            fts_weight=1.0,
+            entity_weight=1.0,
+            vector_weight=1.0,
         )
         retrieval_report = sanitize_eval_report(raw_report, examples)
         retrieval_report.update(

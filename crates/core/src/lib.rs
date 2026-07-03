@@ -40,7 +40,7 @@ pub use recall::{
     LatentActivationBooster, LatentActivationContext, LatentActivationHit, LatentActivationProbe,
     NoOpBooster, ProfiledRecall, QueryEmbedder, QueryLatentActivationProbe,
     QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallProfile,
-    RecallSource, DEFAULT_RERANK_POOL,
+    RecallSource, RrfBranchWeights, DEFAULT_RERANK_POOL, DEFAULT_RRF_K,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::{MemoryEdge, Store};

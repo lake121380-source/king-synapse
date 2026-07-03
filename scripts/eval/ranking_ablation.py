@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import math
 import shutil
 import tempfile
 from collections import Counter
@@ -43,6 +44,10 @@ from longmem_dmr_smoke import (
 from official_dmr_eval import build_official_dmr_dataset
 
 
+DEFAULT_RRF_K = 60.0
+DEFAULT_BRANCH_WEIGHT = 1.0
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run sanitized ranking ablations.")
     parser.add_argument("--endpoint", default=os.environ.get("HF_ENDPOINT", "https://huggingface.co"))
@@ -68,7 +73,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument(
         "--ablation",
-        choices=("reranker-pool", "top-k"),
+        choices=("reranker-pool", "top-k", "rrf-k", "vector-weight"),
         default="reranker-pool",
         help="Ranking parameter to vary. Exactly one parameter is varied per run.",
     )
@@ -81,6 +86,16 @@ def parse_args() -> argparse.Namespace:
         "--top-k-values",
         default="10,25,50",
         help="Comma-separated top-k values for --ablation top-k.",
+    )
+    parser.add_argument(
+        "--rrf-k-values",
+        default="20,40,60,80",
+        help="Comma-separated RRF k values for --ablation rrf-k.",
+    )
+    parser.add_argument(
+        "--vector-weights",
+        default="0.5,1.0,1.5,2.0",
+        help="Comma-separated vector branch weights for --ablation vector-weight.",
     )
     parser.add_argument("--fixed-reranker-pool", type=int, default=50)
     parser.add_argument("--embed-batch-size", type=int, default=None)
@@ -134,6 +149,36 @@ def parse_int_list(raw: str, *, name: str) -> list[int]:
     if not values:
         raise ValueError(f"no {name} values selected")
     return values
+
+
+def parse_float_list(raw: str, *, name: str) -> list[float]:
+    values: list[float] = []
+    for part in raw.split(","):
+        value = part.strip()
+        if not value:
+            continue
+        parsed = float(value)
+        if not math.isfinite(parsed) or parsed < 0.0:
+            raise ValueError(f"{name} values must be finite and non-negative: {parsed}")
+        values.append(parsed)
+    if not values:
+        raise ValueError(f"no {name} values selected")
+    return values
+
+
+def format_number(value: float) -> str:
+    return format(value, "g")
+
+
+def get_branch_weight(run: dict[str, Any], branch: str) -> float:
+    direct_key = f"{branch}_weight"
+    if direct_key in run and run.get(direct_key) is not None:
+        return float(run[direct_key])
+    weights = run.get("rrf_weights") or {}
+    value = weights.get(branch)
+    if value is not None:
+        return float(value)
+    return DEFAULT_BRANCH_WEIGHT
 
 
 def build_dataset_specs(args: argparse.Namespace, api: HfApi) -> tuple[list[dict[str, Any]], list[Path]]:
@@ -221,6 +266,10 @@ def run_reranker_pool_ablation(
             vectors=True,
             rerank=True,
             rerank_pool=pool,
+            rrf_k=DEFAULT_RRF_K,
+            fts_weight=DEFAULT_BRANCH_WEIGHT,
+            entity_weight=DEFAULT_BRANCH_WEIGHT,
+            vector_weight=DEFAULT_BRANCH_WEIGHT,
         )
         run = sanitize_eval_report(raw, examples)
         run.update(
@@ -230,6 +279,8 @@ def run_reranker_pool_ablation(
                 "ablated_value": pool,
                 "reranker_pool": pool,
                 "k": k,
+                "rrf_k": raw.get("rrf_k"),
+                "rrf_weights": raw.get("rrf_weights"),
                 "mode": "vectors-rerank",
                 "label": f"RRF + vectors + reranker pool {pool}",
                 "tag": raw.get("tag"),
@@ -261,6 +312,10 @@ def run_top_k_ablation(
             vectors=True,
             rerank=True,
             rerank_pool=reranker_pool,
+            rrf_k=DEFAULT_RRF_K,
+            fts_weight=DEFAULT_BRANCH_WEIGHT,
+            entity_weight=DEFAULT_BRANCH_WEIGHT,
+            vector_weight=DEFAULT_BRANCH_WEIGHT,
         )
         run = sanitize_eval_report(raw, examples)
         run.update(
@@ -270,8 +325,106 @@ def run_top_k_ablation(
                 "ablated_value": k,
                 "reranker_pool": reranker_pool,
                 "k": k,
+                "rrf_k": raw.get("rrf_k"),
+                "rrf_weights": raw.get("rrf_weights"),
                 "mode": "vectors-rerank",
                 "label": f"RRF + vectors + reranker top-k {k}",
+                "tag": raw.get("tag"),
+            }
+        )
+        runs.append(run)
+    return runs
+
+
+def run_rrf_k_ablation(
+    *,
+    dataset_path: Path,
+    output_dir: Path,
+    tag_base: str,
+    examples: list[dict[str, Any]],
+    k: int,
+    rrf_k_values: list[float],
+    reranker_pool: int,
+) -> list[dict[str, Any]]:
+    runs: list[dict[str, Any]] = []
+    for rrf_k in rrf_k_values:
+        tag = f"{tag_base}-rrf-k-{format_number(rrf_k)}"
+        raw_output = output_dir / f"{tag}-raw-report.json"
+        print(f"running {tag}...", flush=True)
+        raw = run_kr_eval(
+            dataset_path,
+            raw_output,
+            tag,
+            k,
+            vectors=True,
+            rerank=True,
+            rerank_pool=reranker_pool,
+            rrf_k=rrf_k,
+            fts_weight=DEFAULT_BRANCH_WEIGHT,
+            entity_weight=DEFAULT_BRANCH_WEIGHT,
+            vector_weight=DEFAULT_BRANCH_WEIGHT,
+        )
+        run = sanitize_eval_report(raw, examples)
+        run.update(
+            {
+                "variant_id": f"rrf-k-{format_number(rrf_k)}",
+                "ablated_parameter": "rrf_k",
+                "ablated_value": rrf_k,
+                "reranker_pool": reranker_pool,
+                "k": k,
+                "rrf_k": raw.get("rrf_k"),
+                "rrf_weights": raw.get("rrf_weights"),
+                "vector_weight": (raw.get("rrf_weights") or {}).get("vector"),
+                "mode": "vectors-rerank",
+                "label": f"RRF k {format_number(rrf_k)} + vectors + reranker",
+                "tag": raw.get("tag"),
+            }
+        )
+        runs.append(run)
+    return runs
+
+
+def run_vector_weight_ablation(
+    *,
+    dataset_path: Path,
+    output_dir: Path,
+    tag_base: str,
+    examples: list[dict[str, Any]],
+    k: int,
+    vector_weights: list[float],
+    reranker_pool: int,
+) -> list[dict[str, Any]]:
+    runs: list[dict[str, Any]] = []
+    for vector_weight in vector_weights:
+        tag = f"{tag_base}-vector-weight-{format_number(vector_weight)}"
+        raw_output = output_dir / f"{tag}-raw-report.json"
+        print(f"running {tag}...", flush=True)
+        raw = run_kr_eval(
+            dataset_path,
+            raw_output,
+            tag,
+            k,
+            vectors=True,
+            rerank=True,
+            rerank_pool=reranker_pool,
+            rrf_k=DEFAULT_RRF_K,
+            fts_weight=DEFAULT_BRANCH_WEIGHT,
+            entity_weight=DEFAULT_BRANCH_WEIGHT,
+            vector_weight=vector_weight,
+        )
+        run = sanitize_eval_report(raw, examples)
+        run.update(
+            {
+                "variant_id": f"vector-weight-{format_number(vector_weight)}",
+                "ablated_parameter": "vector_weight",
+                "ablated_value": vector_weight,
+                "reranker_pool": reranker_pool,
+                "k": k,
+                "rrf_k": raw.get("rrf_k"),
+                "rrf_weights": raw.get("rrf_weights"),
+                "vector_weight": (raw.get("rrf_weights") or {}).get("vector"),
+                "mode": "vectors-rerank",
+                "label": f"RRF vector weight {format_number(vector_weight)} + vectors + reranker",
                 "tag": raw.get("tag"),
             }
         )
@@ -296,6 +449,18 @@ def summarize_runs(runs: list[dict[str, Any]], ablated_parameter: str) -> dict[s
                 "ablated_value": run["ablated_value"],
                 "reranker_pool": run["reranker_pool"],
                 "k": run["k"],
+                "rrf_k": run.get("rrf_k"),
+                "fts_weight": get_branch_weight(run, "fts"),
+                "entity_weight": get_branch_weight(run, "entity"),
+                "vector_weight": get_branch_weight(run, "vector"),
+                "rrf_k_delta": safe_delta(run.get("rrf_k"), control.get("rrf_k")),
+                "fts_weight_delta": safe_delta(get_branch_weight(run, "fts"), get_branch_weight(control, "fts")),
+                "entity_weight_delta": safe_delta(
+                    get_branch_weight(run, "entity"), get_branch_weight(control, "entity")
+                ),
+                "vector_weight_delta": safe_delta(
+                    get_branch_weight(run, "vector"), get_branch_weight(control, "vector")
+                ),
                 "recall_at_10_delta": safe_delta(run.get("recall_at_10"), control.get("recall_at_10")),
                 "mrr_at_10_delta": safe_delta(run.get("mrr_at_10"), control.get("mrr_at_10")),
                 "p50_latency_ms_delta": safe_delta(run.get("p50_latency_ms"), control.get("p50_latency_ms")),
@@ -313,6 +478,16 @@ def control_run(runs: list[dict[str, Any]], ablated_parameter: str) -> dict[str,
         return next((run for run in runs if run.get("reranker_pool") == 50), runs[0])
     if ablated_parameter == "top_k":
         return next((run for run in runs if run.get("k") == 10), runs[0])
+    if ablated_parameter == "rrf_k":
+        return min(
+            runs,
+            key=lambda run: abs(
+                (float(run.get("rrf_k")) if run.get("rrf_k") is not None else DEFAULT_RRF_K)
+                - DEFAULT_RRF_K
+            ),
+        )
+    if ablated_parameter == "vector_weight":
+        return min(runs, key=lambda run: abs(get_branch_weight(run, "vector") - DEFAULT_BRANCH_WEIGHT))
     return runs[0]
 
 
@@ -323,6 +498,11 @@ def compact_run(run: dict[str, Any]) -> dict[str, Any]:
         "ablated_value": run.get("ablated_value"),
         "reranker_pool": run.get("reranker_pool"),
         "k": run.get("k"),
+        "rrf_k": run.get("rrf_k"),
+        "rrf_weights": run.get("rrf_weights"),
+        "fts_weight": get_branch_weight(run, "fts"),
+        "entity_weight": get_branch_weight(run, "entity"),
+        "vector_weight": get_branch_weight(run, "vector"),
         "recall_at_10": run.get("recall_at_10"),
         "mrr_at_10": run.get("mrr_at_10"),
         "ndcg_at_10": run.get("ndcg_at_10"),
@@ -383,9 +563,16 @@ def main() -> int:
         raise ValueError("--fixed-reranker-pool must be positive")
     reranker_pools = parse_int_list(args.reranker_pools, name="reranker-pools")
     top_k_values = parse_int_list(args.top_k_values, name="top-k-values")
+    rrf_k_values = parse_float_list(args.rrf_k_values, name="rrf-k-values")
+    vector_weights = parse_float_list(args.vector_weights, name="vector-weights")
     api = HfApi(endpoint=args.endpoint)
     specs, cleanup_paths = build_dataset_specs(args, api)
-    ablated_parameter = "reranker_pool" if args.ablation == "reranker-pool" else "top_k"
+    ablated_parameter = {
+        "reranker-pool": "reranker_pool",
+        "top-k": "top_k",
+        "rrf-k": "rrf_k",
+        "vector-weight": "vector_weight",
+    }[args.ablation]
 
     with tempfile.TemporaryDirectory(prefix="king-synapse-ranking-ablation-") as temp:
         temp_dir = Path(temp)
@@ -401,13 +588,33 @@ def main() -> int:
                     k=args.k,
                     reranker_pools=reranker_pools,
                 )
-            else:
+            elif args.ablation == "top-k":
                 spec["runs"] = run_top_k_ablation(
                     dataset_path=dataset_path,
                     output_dir=temp_dir,
                     tag_base=spec["tag_base"],
                     examples=spec["examples"],
                     top_k_values=top_k_values,
+                    reranker_pool=args.fixed_reranker_pool,
+                )
+            elif args.ablation == "rrf-k":
+                spec["runs"] = run_rrf_k_ablation(
+                    dataset_path=dataset_path,
+                    output_dir=temp_dir,
+                    tag_base=spec["tag_base"],
+                    examples=spec["examples"],
+                    k=args.k,
+                    rrf_k_values=rrf_k_values,
+                    reranker_pool=args.fixed_reranker_pool,
+                )
+            else:
+                spec["runs"] = run_vector_weight_ablation(
+                    dataset_path=dataset_path,
+                    output_dir=temp_dir,
+                    tag_base=spec["tag_base"],
+                    examples=spec["examples"],
+                    k=args.k,
+                    vector_weights=vector_weights,
                     reranker_pool=args.fixed_reranker_pool,
                 )
 
@@ -425,10 +632,22 @@ def main() -> int:
         },
         "ablation": {
             "parameter": ablated_parameter,
-            "values": reranker_pools if args.ablation == "reranker-pool" else top_k_values,
+            "values": (
+                reranker_pools
+                if args.ablation == "reranker-pool"
+                else top_k_values
+                if args.ablation == "top-k"
+                else rrf_k_values
+                if args.ablation == "rrf-k"
+                else vector_weights
+            ),
             "fixed": {
-                "k": args.k if args.ablation == "reranker-pool" else None,
-                "reranker_pool": args.fixed_reranker_pool if args.ablation == "top-k" else None,
+                "k": None if args.ablation == "top-k" else args.k,
+                "reranker_pool": None if args.ablation == "reranker-pool" else args.fixed_reranker_pool,
+                "rrf_k": None if args.ablation == "rrf-k" else DEFAULT_RRF_K,
+                "fts_weight": DEFAULT_BRANCH_WEIGHT,
+                "entity_weight": DEFAULT_BRANCH_WEIGHT,
+                "vector_weight": None if args.ablation == "vector-weight" else DEFAULT_BRANCH_WEIGHT,
                 "vectors": True,
                 "rerank": True,
             },
@@ -437,7 +656,8 @@ def main() -> int:
         "accelerator": accelerator,
         "datasets": [dataset_report(spec, spec["runs"], ablated_parameter) for spec in specs],
         "limits": [
-            f"This pass varies {ablated_parameter} only; RRF/vector weights, chunking, and query expansion are not exposed by the current CLI.",
+            f"This pass varies {ablated_parameter} only; top-k, chunking, and query expansion stay fixed.",
+            "RRF k and branch weights are now exposed in kr-eval and can be swept independently.",
             "Report excludes raw questions, answers, dialogs, and session text.",
             "Results are ranking evidence, not official answer-generation DMR scores.",
         ],

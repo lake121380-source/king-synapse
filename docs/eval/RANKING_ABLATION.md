@@ -67,8 +67,9 @@ Everything else is fixed:
 - embedding batch `32`, embedding max length `256`;
 - reranker batch `32`, reranker max length `256`.
 
-RRF weights, vector weights, chunk size, and query expansion are not exposed by
-the current CLI, so they are not varied in this pass.
+`kr-eval` now exposes `--rrf-k`, `--fts-weight`, `--entity-weight`, and
+`--vector-weight`. This pass still varies only `reranker_pool`; chunk size and
+query expansion remain in their own runners.
 
 ## Reranker Pool Command
 
@@ -663,11 +664,12 @@ than Recall@10 alone.
 
 The next useful ranking work is:
 
-1. expose and test RRF/vector weighting without changing the memory schema;
-2. design a safer ranking signal for the top-50-only DMR cases;
-3. test smaller, overlap-aware chunking instead of full-session merging;
-4. avoid blunt keyword-boost query expansion unless a future answer-free
+1. sweep `rrf-k` on the same DMR and LongMemEval validation sets;
+2. sweep `vector-weight` without changing the memory schema;
+3. design a safer ranking signal for the top-50-only DMR cases;
+4. test smaller, overlap-aware chunking instead of full-session merging;
+5. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-5. inspect top-50 retrieval misses separately from late-ranking cases;
-6. test candidate-retrieval coverage separately from reranker ordering;
-7. keep answer-generation scoring separate from retrieval-ranking scoring.
+6. inspect top-50 retrieval misses separately from late-ranking cases;
+7. test candidate-retrieval coverage separately from reranker ordering;
+8. keep answer-generation scoring separate from retrieval-ranking scoring.

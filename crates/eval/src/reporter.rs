@@ -10,6 +10,10 @@ pub fn print_table(r: &Report) {
         r.rerank_enabled, r.rerank_pool
     );
     println!(
+        "rrf:            k={:.1} weights=fts:{:.2} entity:{:.2} vector:{:.2}",
+        r.rrf_k, r.rrf_weights.fts, r.rrf_weights.entity, r.rrf_weights.vector
+    );
+    println!(
         "corpus:         {} memories / {} queries / top-{}",
         r.n_memories, r.n_queries, r.k
     );

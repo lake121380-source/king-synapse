@@ -19,6 +19,9 @@ These commands use the real workspace package and binary names directly. If
 you add a local Cargo alias later, keep it as a shortcut for this command
 shape.
 
+`kr-eval` also exposes `--rrf-k`, `--fts-weight`, `--entity-weight`, and
+`--vector-weight` for ranking sweeps. The defaults keep the current behavior.
+
 ## External Comparison Harness
 
 ```bash

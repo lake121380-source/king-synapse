@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use synapse_core::RecallProfile;
+use synapse_core::{RecallProfile, RrfBranchWeights};
 
 #[derive(Debug, Deserialize)]
 pub struct Dataset {
@@ -47,6 +47,8 @@ pub struct Report {
     pub vectors_enabled: bool,
     pub rerank_enabled: bool,
     pub rerank_pool: usize,
+    pub rrf_k: f64,
+    pub rrf_weights: RrfBranchWeights,
     pub k: usize,
     pub n_memories: usize,
     pub n_queries: usize,
@@ -96,5 +98,7 @@ pub struct BenchOptions {
     pub vectors: bool,
     pub rerank: bool,
     pub rerank_pool: usize,
+    pub rrf_k: f64,
+    pub rrf_weights: RrfBranchWeights,
     pub tag: String,
 }

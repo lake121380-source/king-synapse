@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 use std::path::PathBuf;
+use synapse_core::RrfBranchWeights;
 use synapse_eval::{default_dataset_path, print_table, run, BenchOptions};
 
 #[derive(Parser)]
@@ -21,6 +22,18 @@ struct Cli {
     /// Candidate pool size passed to the reranker before truncating to top-k.
     #[arg(long, default_value = "50")]
     rerank_pool: usize,
+    /// Reciprocal Rank Fusion k constant. Lower values emphasize the top ranks more.
+    #[arg(long, default_value = "60.0")]
+    rrf_k: f64,
+    /// Weight applied to the FTS branch during RRF.
+    #[arg(long, default_value = "1.0")]
+    fts_weight: f64,
+    /// Weight applied to the entity branch during RRF.
+    #[arg(long, default_value = "1.0")]
+    entity_weight: f64,
+    /// Weight applied to the vector branch during RRF.
+    #[arg(long, default_value = "1.0")]
+    vector_weight: f64,
     /// Write the full report as JSON to this path (in addition to the table).
     #[arg(long)]
     json: Option<PathBuf>,
@@ -37,6 +50,8 @@ fn main() -> Result<()> {
         vectors: cli.vectors,
         rerank: cli.rerank,
         rerank_pool: cli.rerank_pool,
+        rrf_k: cli.rrf_k,
+        rrf_weights: RrfBranchWeights::new(cli.fts_weight, cli.entity_weight, cli.vector_weight),
         tag: cli.tag,
     };
     let report = run(opts)?;

@@ -1091,6 +1091,10 @@ def run_kr_eval(
     vectors: bool = False,
     rerank: bool = False,
     rerank_pool: int = 50,
+    rrf_k: float | None = None,
+    fts_weight: float | None = None,
+    entity_weight: float | None = None,
+    vector_weight: float | None = None,
 ) -> dict[str, Any]:
     cmd = [
         "cargo",
@@ -1113,6 +1117,14 @@ def run_kr_eval(
         cmd.append("--vectors")
     if rerank:
         cmd.extend(["--rerank", "--rerank-pool", str(rerank_pool)])
+    if rrf_k is not None:
+        cmd.extend(["--rrf-k", str(rrf_k)])
+    if fts_weight is not None:
+        cmd.extend(["--fts-weight", str(fts_weight)])
+    if entity_weight is not None:
+        cmd.extend(["--entity-weight", str(entity_weight)])
+    if vector_weight is not None:
+        cmd.extend(["--vector-weight", str(vector_weight)])
     result, process_metrics = profiled_subprocess_run(cmd, repo_root())
     if result.returncode != 0:
         raise RuntimeError(
@@ -1145,6 +1157,10 @@ def run_smoke_configs(
             vectors=config["vectors"],
             rerank=config["rerank"],
             rerank_pool=config["rerank_pool"],
+            rrf_k=60.0,
+            fts_weight=1.0,
+            entity_weight=1.0,
+            vector_weight=1.0,
         )
         run = sanitize_eval_report(raw, examples)
         run.update(
@@ -1219,6 +1235,8 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "vectors_enabled": raw.get("vectors_enabled"),
         "rerank_enabled": raw.get("rerank_enabled"),
         "rerank_pool": raw.get("rerank_pool"),
+        "rrf_k": raw.get("rrf_k"),
+        "rrf_weights": raw.get("rrf_weights"),
         "n_memories": raw.get("n_memories"),
         "n_queries": raw.get("n_queries"),
         "recall_at_5": raw.get("recall_at_5"),

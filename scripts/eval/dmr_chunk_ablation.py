@@ -355,6 +355,10 @@ def main() -> int:
                 vectors=bool(config["vectors"]),
                 rerank=bool(config["rerank"]),
                 rerank_pool=int(config["rerank_pool"]),
+                rrf_k=60.0,
+                fts_weight=1.0,
+                entity_weight=1.0,
+                vector_weight=1.0,
             )
             run = sanitize_eval_report(raw, examples)
             run.update(

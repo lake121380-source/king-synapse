@@ -74,6 +74,13 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         None
     };
 
+    let rrf_k = if opts.rrf_k.is_finite() && opts.rrf_k >= 0.0 {
+        opts.rrf_k
+    } else {
+        synapse_core::DEFAULT_RRF_K
+    };
+    let rrf_weights = opts.rrf_weights.sanitized();
+
     let id_to_key: HashMap<String, String> = key_to_id
         .iter()
         .map(|(k, v)| (v.clone(), k.clone()))
@@ -100,6 +107,7 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
             if let Some(rr) = reranker.as_mut() {
                 engine = engine.with_reranker(rr, opts.rerank_pool);
             }
+            engine = engine.with_rrf_k(rrf_k).with_rrf_weights(rrf_weights);
             engine.recall_profiled(&rq)?
         };
         let hits = profiled.hits;
@@ -149,6 +157,8 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         vectors_enabled: opts.vectors,
         rerank_enabled: opts.rerank,
         rerank_pool: opts.rerank_pool,
+        rrf_k,
+        rrf_weights,
         k: opts.k,
         n_memories: dataset.memories.len(),
         n_queries: dataset.queries.len(),

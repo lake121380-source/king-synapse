@@ -6,7 +6,7 @@ use crate::error::{Error, Result};
 use crate::model::{Memory, MemoryKind, RecallQuery};
 use crate::recall::booster::{BoosterContext, RecallBooster};
 use crate::recall::hit::{RecallHit, RecallHitBuilder, RecallSource};
-use crate::recall::rrf::{rrf_fuse, RrfInput, DEFAULT_RRF_K};
+use crate::recall::rrf::{rrf_fuse, sanitize_k, RrfBranchWeights, RrfInput, DEFAULT_RRF_K};
 use crate::recall::{QueryEmbedder, DEFAULT_RERANK_POOL};
 use crate::rerank::Reranker;
 use crate::store::Store;
@@ -51,6 +51,8 @@ pub struct RecallEngine<'a> {
     pub(crate) reranker: Option<&'a mut dyn Reranker>,
     pub(crate) boosters: Vec<&'a dyn RecallBooster>,
     pub(crate) rerank_pool: usize,
+    pub(crate) rrf_k: f64,
+    pub(crate) rrf_weights: RrfBranchWeights,
     pub(crate) session_id: Option<SessionId>,
 }
 
@@ -62,6 +64,8 @@ impl<'a> RecallEngine<'a> {
             reranker: None,
             boosters: Vec::new(),
             rerank_pool: DEFAULT_RERANK_POOL,
+            rrf_k: DEFAULT_RRF_K,
+            rrf_weights: RrfBranchWeights::default(),
             session_id: None,
         }
     }
@@ -79,6 +83,16 @@ impl<'a> RecallEngine<'a> {
 
     pub fn with_booster(mut self, booster: &'a dyn RecallBooster) -> Self {
         self.boosters.push(booster);
+        self
+    }
+
+    pub fn with_rrf_k(mut self, rrf_k: f64) -> Self {
+        self.rrf_k = sanitize_k(rrf_k);
+        self
+    }
+
+    pub fn with_rrf_weights(mut self, weights: RrfBranchWeights) -> Self {
+        self.rrf_weights = weights.sanitized();
         self
     }
 
@@ -183,17 +197,20 @@ impl<'a> RecallEngine<'a> {
                 RrfInput {
                     name: "fts",
                     ids: &fts_ids,
+                    weight: self.rrf_weights.fts,
                 },
                 RrfInput {
                     name: "entity",
                     ids: &entity_ids,
+                    weight: self.rrf_weights.entity,
                 },
                 RrfInput {
                     name: "vector",
                     ids: &vec_ids,
+                    weight: self.rrf_weights.vector,
                 },
             ],
-            DEFAULT_RRF_K,
+            self.rrf_k,
         );
         profile.rrf_fusion_ms = elapsed_ms(fusion_start);
 
