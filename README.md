@@ -215,7 +215,10 @@ misses unchanged and also hurts ranking. These are ranking tradeoffs, not
 simple default changes. The DMR 50 transition audit keeps vector retrieval and
 reranking as the productive direction; the DMR 200 transition audit repeats the
 same pattern at larger scale, while also recording the reranker's small
-regression surface. CUDA validation status is recorded in
+regression surface. The latest pool-signal guard audit finds a safer
+evaluation candidate (`fts-only` / `not-vector-only` single-source top-1), but
+it still needs larger LongMemEval and DMR reruns before any default ranking
+change. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
@@ -257,6 +260,7 @@ comparison adapters or optional embedding/reranking paths.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and DeepSeek judge scoring is now live on `deepseek-v4-flash`, but judge-output stability still needs work.
+- Ranking guard work has a screened eval-only candidate, but no default ranking policy has been changed.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 

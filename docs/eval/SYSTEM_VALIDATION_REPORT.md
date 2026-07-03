@@ -425,6 +425,14 @@ Ranking ablation status:
   queries but lowers Recall@10 by `-0.020`, lowers MRR by `-0.005`, and adds
   `2` misses. This blocks `top1_single_source` as a global default and turns
   it into a DMR-specific research candidate until a LongMemEval guard exists.
+- `crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
+  records the first guard audit over DMR 200, DMR 50, and LongMemEval 50. The
+  unguarded `top1_single_source` trigger still has the largest DMR gain but
+  fails the LongMemEval safety check. `top1_single_source_fts_only` and
+  `top1_single_source_not_vector_only` keep positive DMR movement (`+0.0050`
+  Recall@10 on DMR 200 and `+0.010` on DMR 50) while showing `0.000`
+  LongMemEval 50 Recall@10 delta and zero LongMemEval top-10 suppressions.
+  This creates a screened evaluation candidate, not a runtime default.
 
 DMR mapping audit status:
 
@@ -509,7 +517,7 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The immediate next gate is auditing why LongMemEval
-`top1_single_source` cases suppress top-10 hits while DMR cases improve. Keep
-answer-synthesis work in evaluation mode until the official-style DMR protocol
-is finalized.
+default. The immediate next gate is rerunning the screened pool-signal guards
+on larger DMR and LongMemEval samples; require zero LongMemEval Recall@10
+regression before any runtime ranking policy. Keep answer-synthesis work in
+evaluation mode until the official-style DMR protocol is finalized.

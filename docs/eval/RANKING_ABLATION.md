@@ -3,8 +3,9 @@
 Date: 2026-07-03
 
 Status: DMR 50 ranking ablations, DMR 50 chunk-policy/query-expansion
-ablations, DMR 200 ranking-failure expansion, DMR 200 transition audit, and
-DMR/LongMemEval 50 RRF/vector-weight cross-checks complete.
+ablations, DMR 200 ranking-failure expansion, DMR 200 transition audit,
+DMR/LongMemEval 50 RRF/vector-weight cross-checks, and pool-signal guard audit
+complete.
 
 Machine-readable reports:
 
@@ -50,6 +51,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-pool-signal-crosscheck-dmr-longmem-50.json`
 
+`crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
@@ -81,6 +84,10 @@ Pool signal trigger audit runner:
 Pool signal cross-check runner:
 
 `scripts/eval/ranking_pool_signal_crosscheck.py`
+
+Pool signal guard audit runner:
+
+`scripts/eval/ranking_pool_signal_guard_audit.py`
 
 Chunk-policy runner:
 
@@ -1260,6 +1267,47 @@ why LongMemEval's single-source top-1 cases behave differently from DMR's. A
 safe conditional policy needs a guard that preserves LongMemEval top-10
 coverage.
 
+## Pool Signal Guard Audit
+
+This pass audits answer-free guards for the conditional pool `100` trigger
+across DMR 200, DMR 50, and LongMemEval 50. It uses only sanitized rank,
+metric, source, and score summaries from existing reports.
+
+Report:
+
+`crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_pool_signal_guard_audit.py
+```
+
+### Guard Result
+
+| Guard | DMR 200 Recall@10 delta | DMR 50 Recall@10 delta | LongMemEval 50 Recall@10 delta | LongMemEval suppressions | Read |
+| --- | ---: | ---: | ---: | ---: | --- |
+| `top1_single_source` | +0.0117 | +0.010 | -0.020 | 2 | Best DMR gain, blocked globally. |
+| `top1_single_source_fts_only` | +0.0050 | +0.010 | 0.000 | 0 | Passes the initial safety screen. |
+| `top1_single_source_not_vector_only` | +0.0050 | +0.010 | 0.000 | 0 | Same current effect as FTS-only; excludes the harmful LongMemEval vector-only cases. |
+| `top1_single_source_vector_only` | +0.0067 | 0.000 | -0.020 | 2 | Explains the LongMemEval regression. |
+
+### Guard Read
+
+The guard audit explains the cross-dataset conflict. On the fixed 50-sample
+LongMemEval run, the harmful `top1_single_source` cases are concentrated in
+`vector-only` top-1 results. On DMR 50, the useful movement comes from
+single-source `fts` top-1 cases. DMR 200 still gains from vector-only cases,
+so simply banning vector-only is a safety tradeoff: it preserves DMR gains,
+but gives up part of the DMR 200 upside.
+
+The first screened safe candidates are `top1_single_source_fts_only` and
+`top1_single_source_not_vector_only`. They keep positive DMR movement on DMR
+200 and DMR 50 while avoiding the LongMemEval 50 recall regression and
+top-10 suppressions in this audit. They are not default policies yet. The
+next gate is to rerun the guarded trigger on larger LongMemEval and DMR
+samples before changing runtime ranking behavior.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -1301,15 +1349,17 @@ to pool `100` when the pool `50` top-1 result has only one retrieval source.
 That is still an eval-only candidate until DMR 50 and LongMemEval cross-checks
 are recorded. The cross-check is now recorded and it blocks a global default:
 the signal helps DMR 50 but hurts LongMemEval 50. It can remain a DMR-specific
-research candidate, but not a system-wide policy.
+research candidate, but not a system-wide policy. The guard audit finds an
+initial safer direction (`fts-only` / `not-vector-only`), but it stays
+evaluation-only until larger cross-dataset runs confirm that it preserves
+LongMemEval while retaining useful DMR gains.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. audit the LongMemEval `top1_single_source` suppressions against DMR's
-   successful single-source cases;
-2. look for an answer-free guard that preserves LongMemEval Recall@10;
+1. rerun the screened guards on larger LongMemEval and DMR samples;
+2. require zero LongMemEval Recall@10 regression before any runtime policy;
 3. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;
 4. test smaller, overlap-aware chunking instead of full-session merging;
