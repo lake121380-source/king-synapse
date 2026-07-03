@@ -83,6 +83,7 @@ DMR ranking failure audit:
 
 - `docs/eval/RANKING_ABLATION.md`
 - `crates/eval/reports/ranking-failure-audit-dmr-50.json`
+- `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 The punctuation-normalized DMR 50 final-mode failures now split into:
 
@@ -97,6 +98,22 @@ The audit also shows that the reranker recovered 14 samples into top-10 and
 promoted 12 samples to top-1, while suppressing 1 sample from top-10 and
 demoting 1 top-1 sample. This confirms that reranking is valuable but not yet
 fully reliable.
+
+DMR 200 ranking expansion:
+
+| Bucket | Count |
+| --- | ---: |
+| Top-1 hit | 74 |
+| Top-10 not top-1 | 66 |
+| Top-50 only late rank | 17 |
+| Top-50 retrieval miss | 43 |
+
+The 200-sample run confirms the DMR 50 diagnosis but sharpens it. Reranking
+still helps strongly: top-1 hits rise from 20 in vector mode to 74 after
+reranking. However, 43 cases remain top-50 retrieval misses, so the larger
+sample no longer supports treating ranking as the only active DMR bottleneck.
+Future DMR work should keep late-ranking cases separate from true top-50
+retrieval misses.
 
 ## LongMemEval Anonymous Cases
 
@@ -143,6 +160,6 @@ The current system boundary is sharper now:
 - DMR needs both vector retrieval and reranking, but the current candidate
   mapping skips too many rows before evaluation.
 - Remaining evaluated failures are mostly ranking failures. The latest DMR
-  audit splits them into late-ranking failures and top-50 retrieval misses, so
-  the next technical investigation should focus on candidate ordering and chunk
-  mapping before changing memory architecture.
+  audits split them into late-ranking failures and top-50 retrieval misses, so
+  the next technical investigation should separate candidate ordering from
+  candidate retrieval coverage before changing memory architecture.

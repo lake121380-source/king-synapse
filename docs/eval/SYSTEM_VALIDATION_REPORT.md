@@ -213,6 +213,17 @@ Ranking ablation status:
   baseline/vector/reranker/top-k runs. It shows the reranker recovered `14`
   samples into top-10 and promoted `12` to top-1, but also suppressed `1`
   sample from top-10 and demoted `1` top-1 sample.
+- DMR 200 ranking expansion is recorded at
+  `crates/eval/reports/dmr-200-punctuation-validation.json`,
+  `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and
+  `crates/eval/reports/ranking-failure-audit-dmr-200.json`. On 200
+  punctuation-mapped samples, Recall@10 is `0.145` for baseline RRF, `0.323`
+  with vectors, and `0.411` with vectors + reranker. The reranker promotes
+  top-1 hits from `20` in vector mode to `74`.
+- The DMR 200 failure audit splits final outcomes into `74` top-1 hits, `66`
+  top-10-not-top-1 cases, `17` top-50-only late-ranking cases, and `43`
+  top-50 retrieval misses. This confirms ranking remains important, but true
+  candidate retrieval misses are also material at larger sample size.
 
 DMR mapping audit status:
 

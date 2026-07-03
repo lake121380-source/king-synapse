@@ -38,6 +38,10 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=root / "crates/eval/reports/ranking-failure-audit-dmr-50.json",
     )
+    parser.add_argument(
+        "--dataset-label",
+        default="DMR candidate MSC-Self-Instruct, punctuation-normalized 50",
+    )
     return parser.parse_args()
 
 
@@ -221,7 +225,7 @@ def main() -> int:
                 "sha256": sha256_file(args.top_k_report),
             },
         },
-        "dataset": "DMR candidate MSC-Self-Instruct, punctuation-normalized 50",
+        "dataset": args.dataset_label,
         "raw_records_committed": False,
         "raw_questions_committed": False,
         "raw_answers_committed": False,

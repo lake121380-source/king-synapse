@@ -143,6 +143,7 @@ Policy review: `docs/eval/DMR_MAPPING_POLICY_REVIEW.md`.
 The current punctuation-normalized DMR candidate rerun is fixed in:
 
 - `reports/dmr-50-punctuation-validation.json`
+- `reports/dmr-200-punctuation-validation.json`
 
 Readable summary: `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
 
@@ -160,6 +161,8 @@ The first ranking ablation report is fixed in:
 - `reports/ranking-ablation-dmr-50-reranker-pool.json`
 - `reports/ranking-ablation-dmr-50-top-k.json`
 - `reports/ranking-failure-audit-dmr-50.json`
+- `reports/ranking-ablation-dmr-200-top-k.json`
+- `reports/ranking-failure-audit-dmr-200.json`
 
 Readable summary: `docs/eval/RANKING_ABLATION.md`.
 

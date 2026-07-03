@@ -229,7 +229,7 @@ finds a blocking bug.
 | 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
 | 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
-| 6 | Expand ranking failure localization beyond DMR 50. | Late-ranking cases and true retrieval misses are split on a larger sample before changing reranker defaults. |
+| 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split before changing reranker defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Any DMR-driven ranking change must not degrade LongMemEval without a recorded tradeoff. |
 | 8 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
 | 9 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
@@ -307,4 +307,11 @@ finds a blocking bug.
   `crates/eval/reports/ranking-failure-audit-dmr-50.json`; it confirms 6
   top-50-only late-ranking cases, 6 top-50 retrieval misses, 14 reranker
   recoveries into top-10, and 1 reranker suppression from top-10.
+- DMR 200 ranking failure expansion is recorded at
+  `crates/eval/reports/dmr-200-punctuation-validation.json`,
+  `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and
+  `crates/eval/reports/ranking-failure-audit-dmr-200.json`; it confirms 17
+  top-50-only late-ranking cases, 43 top-50 retrieval misses, 40 reranker
+  recoveries into top-10, 49 reranker promotions to top-1, 3 reranker
+  suppressions from top-10, and 5 reranker demotions from top-1.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

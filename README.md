@@ -163,9 +163,10 @@ large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
 review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 
 So the project is not in "add more features" mode. The current validation read
-is: the architecture still holds, and the next work is narrower, focused on DMR
-mapping/chunk skips and final candidate ranking before changing the memory
-schema or product surface. CUDA validation status is recorded in
+is: the architecture still holds, and the next work is narrower. DMR mapping
+policy is now pinned to punctuation full-answer matching, and DMR 200 ranking
+failure analysis shows both late-ranking cases and true top-50 retrieval
+misses before any default ranking change. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:

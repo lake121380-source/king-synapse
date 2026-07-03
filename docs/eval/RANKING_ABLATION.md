@@ -2,7 +2,8 @@
 
 Date: 2026-07-03
 
-Status: first DMR 50 ranking ablations complete.
+Status: DMR 50 ranking ablations and DMR 200 ranking-failure expansion
+complete.
 
 Machine-readable reports:
 
@@ -11,6 +12,12 @@ Machine-readable reports:
 `crates/eval/reports/ranking-ablation-dmr-50-top-k.json`
 
 `crates/eval/reports/ranking-failure-audit-dmr-50.json`
+
+`crates/eval/reports/dmr-200-punctuation-validation.json`
+
+`crates/eval/reports/ranking-ablation-dmr-200-top-k.json`
+
+`crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 Runner:
 
@@ -199,6 +206,90 @@ Read:
 - The remaining 12 non-top-10 cases split cleanly into 6 late-ranking failures
   and 6 top-50 retrieval misses.
 
+## DMR 200 Expansion
+
+The DMR 50 failure structure was expanded to 200 punctuation-mapped samples.
+This pass keeps the same feature-freeze rule: no memory schema changes, no new
+ranking defaults, and one varied top-k parameter in the ablation.
+
+Candidate report:
+
+`crates/eval/reports/dmr-200-punctuation-validation.json`
+
+Top-k report:
+
+`crates/eval/reports/ranking-ablation-dmr-200-top-k.json`
+
+Failure audit:
+
+`crates/eval/reports/ranking-failure-audit-dmr-200.json`
+
+### DMR 200 Candidate Result
+
+| Mode | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Top-50 | Misses |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Baseline RRF | 0.145 | 0.129 | 109.9 ms | 14 | 34 | 86 | 66 |
+| RRF + vectors | 0.323 | 0.224 | 133.9 ms | 20 | 83 | 46 | 51 |
+| RRF + vectors + reranker | 0.411 | 0.476 | 712.4 ms | 74 | 65 | 18 | 43 |
+
+### DMR 200 Top-K Result
+
+| Top-k | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Top-50 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10 | 0.413 | 0.472 | 676.6 ms | 74 | 66 | 0 | 60 |
+| 25 | 0.409 | 0.473 | 687.7 ms | 74 | 64 | 12 | 50 |
+| 50 | 0.411 | 0.476 | 731.7 ms | 74 | 65 | 18 | 43 |
+
+### DMR 200 Failure Audit
+
+| Bucket | Count |
+| --- | ---: |
+| Top-1 hit | 74 |
+| Top-10 not top-1 | 66 |
+| Top-50 only late rank | 17 |
+| Top-50 retrieval miss | 43 |
+
+The standalone top-k `50` run has 18 top-50 bucket cases. The cross-run failure
+audit counts 17 top-50-only late-rank cases because one sample is already a
+top-10 hit in the top-k `10` run.
+
+Vector effect:
+
+| Effect | Count |
+| --- | ---: |
+| Vector recovered to top-10 | 60 |
+| Vector suppressed from top-10 | 5 |
+| Stable top-1 | 9 |
+| Top-10 preserved | 34 |
+| No top-10 change | 92 |
+
+Reranker effect:
+
+| Effect | Count |
+| --- | ---: |
+| Reranker recovered to top-10 | 40 |
+| Reranker promoted to top-1 | 49 |
+| Reranker suppressed from top-10 | 3 |
+| Reranker demoted from top-1 | 5 |
+| Stable top-1 | 14 |
+| Top-10 preserved | 32 |
+| No top-10 change | 57 |
+
+Read:
+
+- The 200-sample result confirms that vectors and reranking both help DMR:
+  Recall@10 rises from `0.145` to `0.323` with vectors, then to `0.411` with
+  the reranker.
+- The reranker is valuable but not free of regressions: it recovers 40 samples
+  into top-10 and promotes 49 to top-1, while suppressing 3 from top-10 and
+  demoting 5 top-1 samples.
+- Increasing top-k is diagnostic, not a solution. It reduces apparent misses
+  from 60 at top-k `10` to 43 at top-k `50`, but Recall@10 and top-1 hits do
+  not improve.
+- The remaining DMR 200 non-top-10 cases split into 17 late-ranking cases and
+  43 top-50 retrieval misses. Compared with DMR 50, the larger sample shows
+  that candidate retrieval remains an active bottleneck alongside ranking.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -206,14 +297,17 @@ Do not change the default reranker pool from this evidence.
 The result supports the current diagnosis: DMR ranking is sensitive to
 candidate pool size and output window, but the remaining weakness is not solved
 by simply making the pool bigger or returning more items. Returning top 50 helps
-diagnosis; it does not fix the top-10 ranking objective.
+diagnosis; it does not fix the top-10 ranking objective. The DMR 200 expansion
+adds that true top-50 retrieval misses are also material and should be
+separated from late-ranking cases before default changes.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
 1. expose and test RRF/vector weighting without changing the memory schema;
-2. design a safer ranking signal for the six top-50-only DMR cases;
-3. repeat the strongest DMR setting on LongMemEval 50 before changing any
+2. design a safer ranking signal for the top-50-only DMR cases;
+3. inspect top-50 retrieval misses separately from late-ranking cases;
+4. repeat the strongest DMR setting on LongMemEval 50 before changing any
    default;
-4. keep answer-generation scoring separate from retrieval-ranking scoring.
+5. keep answer-generation scoring separate from retrieval-ranking scoring.
