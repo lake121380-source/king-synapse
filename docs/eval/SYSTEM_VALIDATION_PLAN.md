@@ -2,7 +2,7 @@
 
 Status: Active validation phase
 
-Date: 2026-07-02
+Date: 2026-07-03
 
 ## Phase Decision
 
@@ -37,6 +37,29 @@ Allowed work:
 - evaluation manifests and reports;
 - dataset fetch/cache instructions;
 - documentation that clarifies the validation state.
+
+## Experiment Report Discipline
+
+Every Phase 6 experiment that can influence a project decision should record:
+
+- Git commit used for the run;
+- dataset name, source revision, checksum, and license when available;
+- configuration version or report schema;
+- accelerator, device, batch sizes, and max-length limits;
+- model names and dependency versions when embeddings, rerankers, or judges are
+  involved;
+- date, requested sample size, scored sample size, and skipped count by reason;
+- whether raw records, gold answers, generated answers, or temporary datasets
+  were committed.
+
+Readable reports should separate:
+
+- engineering result: the measured numbers and whether the run completed;
+- research interpretation: the narrower hypothesis supported by those numbers.
+
+Do not turn one experiment into a universal claim. Treat it as current evidence
+until the trend repeats across larger samples, a second dataset, or an external
+comparison.
 
 ## Validation Questions
 
@@ -194,6 +217,22 @@ task. The validation win condition is narrower and more important:
 5. every claim in README can be traced to a local report, benchmark, or source
    note.
 
+## Immediate Execution Plan
+
+This is the current order of work. Do not reorder it unless a validation run
+finds a blocking bug.
+
+| Step | Work | Exit condition |
+| --- | --- | --- |
+| 1 | Close the DMR 200 documentation pass and sync it to GitHub. | `official-dmr-200.json` is documented, checked for raw data / secrets, committed, and pushed. |
+| 2 | Fix LLM judge authorization/configuration outside the repository. | A 5-10 sample judge probe succeeds without writing an API key or raw answer text. |
+| 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
+| 4 | Run DMR 500 local scoring on CUDA. | A 500-sample report records sample count, mapping skips, Recall@10, answer metrics, latency, GPU memory, and raw-data policy. |
+| 5 | Expand ranking failure localization beyond DMR 50. | Late-ranking cases and true retrieval misses are split on a larger sample before changing reranker defaults. |
+| 6 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Any DMR-driven ranking change must not degrade LongMemEval without a recorded tradeoff. |
+| 7 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
+| 8 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+
 ## Current Open Items
 
 - Stage 1 internal baseline: passed in `docs/eval/VALIDATION_RUN_2026-07-02.md`.
@@ -235,11 +274,13 @@ task. The validation win condition is narrower and more important:
   pre-eval skipped rows are now localized to strict answer-string mapping, not
   empty chunk generation. A punctuation-normalized candidate rerun is pinned at
   `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md`.
-- Official-style DMR answer generation: 5-query smoke and 50-query CUDA
-  extractive scoring are recorded at `docs/eval/OFFICIAL_DMR_RESULT.md`,
-  `crates/eval/reports/official-dmr-5-extractive.json`, and
-  `crates/eval/reports/official-dmr-50.json`; fixed LLM judge authorization and
-  200/500 runs are still unresolved.
+- Official-style DMR answer generation: 5-query smoke, 50-query CUDA scoring,
+  and 200-query CUDA local scoring are recorded at
+  `docs/eval/OFFICIAL_DMR_RESULT.md`,
+  `crates/eval/reports/official-dmr-5-extractive.json`,
+  `crates/eval/reports/official-dmr-50.json`, and
+  `crates/eval/reports/official-dmr-200.json`; fixed LLM judge authorization
+  and DMR 500 are still unresolved.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`

@@ -1,8 +1,9 @@
 # System Validation Report
 
-Date: 2026-07-02
+Date: 2026-07-03
 
-Status: scoped validation passed.
+Status: scoped validation passed; official-style DMR 200 local scoring is now
+recorded.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run, but does not claim that full LongMemEval,
@@ -133,10 +134,25 @@ DMR boundary:
   retrieval Recall@10 `0.468`, exact accuracy `0.000`, punctuation accuracy
   `0.020`, gold-answer substring accuracy `0.060`, and ROUGE-L F1 mean
   `0.041`.
+- The same official-style path now has a DMR 200 CUDA local scoring report:
+  retrieval Recall@10 `0.409`, MRR@10 `0.469`, exact accuracy `0.000`,
+  punctuation accuracy `0.000`, gold-answer substring accuracy `0.040`, and
+  ROUGE-L F1 mean `0.037`.
 - The DeepSeek judge path was attempted, but all 50 requests returned
   authorization errors, so LLM-judge accuracy is not available yet.
-- Full official DMR still requires successful fixed-judge scoring and 200/500
+- DMR 200 intentionally skipped the LLM judge after the DMR 50 authorization
+  failure, so it is lexical / ROUGE-L local scoring only.
+- Full official DMR still requires successful fixed-judge scoring and DMR 500
   query expansion.
+
+Engineering result: the 5, 50, and 200 sample official-style DMR runs now prove
+that retrieval -> answer generation -> local answer scoring is executable on
+CUDA without committing raw third-party records.
+
+Research interpretation: these results do not overturn the Synapse
+architecture. They localize the current DMR weakness to retrieval/ranking
+quality plus a weak deterministic extractive answer generator, with LLM judge
+configuration still unresolved.
 
 The 50-sample reports are:
 
@@ -256,5 +272,6 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, fix the LLM judge
-authorization/configuration, then continue ranking work on the six top-50-only
-late-ranking cases before changing defaults.
+authorization/configuration, run a small successful judge probe, then continue
+DMR 500 local scoring and ranking work on the six top-50-only late-ranking
+cases before changing defaults.

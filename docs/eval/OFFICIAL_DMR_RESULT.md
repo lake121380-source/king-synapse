@@ -2,12 +2,16 @@
 
 Date: 2026-07-03
 
-Status: DMR 50 answer-generation scoring passed locally; LLM judge was
-attempted but not authorized.
+Status: DMR 200 answer-generation scoring passed locally on CUDA; fixed LLM
+judge scoring is still unresolved.
 
 Machine-readable report:
 
 Primary report:
+
+`crates/eval/reports/official-dmr-200.json`
+
+Pinned DMR 50 report:
 
 `crates/eval/reports/official-dmr-50.json`
 
@@ -27,6 +31,75 @@ Synapse now has a DMR evaluation path that goes beyond candidate retrieval:
 The runner is:
 
 `scripts/eval/official_dmr_eval.py`
+
+## Experiment Version
+
+| Field | Value |
+| --- | --- |
+| Git commit used for the run | `5ce4bef462eaa10fb251f4827d5a2860f91c7d1e` |
+| Report schema | `king-synapse.official-dmr-answer-eval.v1` |
+| Dataset | `MemGPT/MSC-Self-Instruct`, `msc_self_instruct.jsonl` |
+| Dataset revision | `5138f416f8fa76b75b2e080da87e8a8e346e1500` |
+| Dataset SHA-256 | `d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e` |
+| Accelerator | CUDA device `0` |
+| Embedder / reranker | `fastembed 5.17.2`, `multilingual-e5-base`, `bge-reranker-base` |
+| Raw data policy | Raw records, raw answers, and generated answers are not committed. |
+
+## Run Coverage
+
+| Run | Requested | Scored | Mapping skips before selection | Judge status |
+| --- | ---: | ---: | ---: | --- |
+| DMR 5 smoke | 5 | 5 | 1 | not requested |
+| DMR 50 | 50 | 50 | 31 | 50 authorization errors |
+| DMR 200 | 200 | 200 | 111 | not requested |
+
+The mapping-skip number is the count of source rows rejected before building
+the scored sample because the answer-to-memory mapping policy did not find the
+answer in generated memory chunks. It is not a runtime failure count.
+
+## DMR 200 Run
+
+```powershell
+python scripts/eval/official_dmr_eval.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 200 `
+  --dmr-answer-match punctuation `
+  --mode vectors-rerank `
+  --k 10 `
+  --generator extractive `
+  --llm-judge none `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/official-dmr-200.json `
+  --cleanup-cache
+```
+
+## DMR 200 Result
+
+| Metric | Value |
+| --- | ---: |
+| Sample size | 200 |
+| Scored samples | 200/200 |
+| Retrieval mode | vectors + reranker |
+| Retrieval Recall@10 | 0.409 |
+| Retrieval MRR@10 | 0.469 |
+| Generator | extractive |
+| Exact accuracy | 0.000 |
+| Punctuation-normalized accuracy | 0.000 |
+| Gold-answer substring accuracy | 0.040 |
+| ROUGE-L precision mean | 0.024 |
+| ROUGE-L recall mean | 0.097 |
+| ROUGE-L F1 mean | 0.037 |
+| LLM judge status | 200/200 not requested |
+| LLM judge accuracy | not available |
+| P50 query latency | 667.3 ms |
+| P95 query latency | 749.0 ms |
+| Query wall time | 135.1 s |
+| Peak GPU total memory | 4279.5 MiB |
 
 ## DMR 50 Run
 
@@ -108,19 +181,29 @@ python scripts/eval/official_dmr_eval.py `
 
 ## Read
 
-These runs prove the official DMR task shape can execute locally on CUDA:
-retrieval -> answer generation -> gold-answer scoring.
+Engineering result:
 
-They also show the next real gap. Candidate retrieval can surface
-answer-bearing chunks, but a simple deterministic extractive generator does not
-reliably turn those chunks into a clean answer. On DMR 50, retrieval Recall@10
-is `0.468`, while answer substring accuracy is only `0.060` and ROUGE-L F1 is
-only `0.041`.
+These runs prove the official-style DMR task shape can execute locally on
+CUDA: retrieval -> answer generation -> gold-answer scoring. The largest
+completed local pass is now DMR 200, with `200/200` selected samples scored.
+
+The DMR 200 result confirms the DMR 50 trend on a larger local sample:
+retrieval remains useful but not enough. Recall@10 moved from `0.468` on DMR
+50 to `0.409` on DMR 200. Gold-answer substring accuracy moved from `0.060` to
+`0.040`, and ROUGE-L F1 moved from `0.041` to `0.037`.
+
+Research interpretation:
+
+The current evidence does not point to a core architecture failure. It points
+to a narrower DMR boundary: candidate retrieval/ranking is imperfect, and the
+simple deterministic extractive generator does not reliably turn returned
+chunks into clean answers.
 
 The LLM judge path was exercised but did not produce judged samples because the
 provider returned `HTTP Error 401: Authorization Required` for every request.
 This is a judge authorization/configuration failure, not a retrieval or answer
-scoring failure.
+scoring failure. DMR 200 therefore skipped the judge intentionally and should
+be read as lexical / ROUGE-L local scoring only.
 
 ## Boundary
 
@@ -137,5 +220,6 @@ Reasons:
 
 ## Next Step
 
-Fix the judge authorization/configuration, rerun DMR 50 with a successful fixed
-judge, then expand to DMR 200 / 500.
+Do not retry the LLM judge until the authorization/configuration is fixed.
+After that, run a small judge probe, rerun DMR 50 with a successful fixed
+judge, then expand to DMR 500 local scoring.

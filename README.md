@@ -145,9 +145,19 @@ The Phase 6 replay baseline is fixed in
 | DMR candidate 50 | 0.188 | 0.438 | 0.584 | DMR improves strongly with vectors and reranking, but mapping/chunk skips remain large. |
 
 The DMR row above is a candidate retrieval validation, not an official DMR
-accuracy / ROUGE-L result. Official DMR requires generated answers judged
-against gold answers; that boundary is tracked in
-[OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
+accuracy / ROUGE-L result. A separate official-style answer-generation runner
+now scores generated answers against gold answers without committing raw
+questions, answers, or generated text:
+[OFFICIAL_DMR_RESULT.md](docs/eval/OFFICIAL_DMR_RESULT.md).
+
+| Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | authorization failed |
+| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | not requested |
+
+This is still not a published-comparable official DMR result. The remaining
+boundary is a successful fixed LLM judge and a larger DMR 500 pass. The scoring
+review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower, focused on DMR
@@ -192,7 +202,7 @@ comparison adapters or optional embedding/reranking paths.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
-- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official DMR answer-generation validation is not finished.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 sample reports, but fixed LLM-judge scoring is not finished.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
@@ -239,7 +249,7 @@ cargo build --release
 | `crates/eval/reports/phase6-substage-timing-probe.json` | Small CUDA sub-stage and process metrics probe for embedding/vector/reranker/CPU/memory/GPU-memory costs. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
-| `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation smoke and DMR 50 result. |
+| `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation smoke, DMR 50, and DMR 200 results. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |
