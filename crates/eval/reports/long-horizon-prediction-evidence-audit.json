@@ -1,0 +1,304 @@
+{
+  "schema_version": "king-synapse.long-horizon-prediction-evidence-audit.v1",
+  "generated_at": "2026-07-03T16:16:26.234989+00:00",
+  "runner": "scripts\\eval\\long_horizon_prediction_evidence_audit.py",
+  "inputs": {
+    "stability_report": {
+      "path": "crates\\eval\\reports\\long-horizon-stability-audit.json",
+      "sha256": "fb1d703f470052440dd97f679e6d02d5242e85cba0b9fa82f44f45468f92d100",
+      "schema_version": "king-synapse.long-horizon-stability-audit.v3"
+    },
+    "fixture_source": {
+      "path": "crates\\eval\\src\\algorithms.rs",
+      "sha256": "9698a26aaf9c3933ca33a2d7ea5dfcce185472a2a9fc7956e7c87d53d35fbf95"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "external_dataset_content_committed": false,
+  "aggregate": {
+    "case_count": 8,
+    "candidate_present_all_phases_count": 8,
+    "matched_evidence_all_phases_count": 6,
+    "candidate_without_matched_terms_labels": [
+      "day03-charger-demo",
+      "day05-trust-message"
+    ],
+    "fixture_future_context_overlap_missing_labels": [
+      "day03-charger-demo",
+      "day05-trust-message"
+    ],
+    "source_report_future_candidate_without_matched_terms_labels": [
+      "day03-charger-demo",
+      "day05-trust-message"
+    ],
+    "context_overlap_explains_all_reported_matched_misses": true,
+    "minimum_reinforcement_consistency": 1.0,
+    "dominant_trace_drift_failure_labels": [],
+    "prediction_evidence_drift_failure_labels": [
+      "day03-charger-demo",
+      "day05-trust-message"
+    ]
+  },
+  "cases": [
+    {
+      "case_label": "day01-hydration-commute",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:commute"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:attention",
+        "goal:commute",
+        "state:mood",
+        "state:tired"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:commute"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    },
+    {
+      "case_label": "day02-pressure-review",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:future",
+        "goal:review"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:error",
+        "goal:future",
+        "goal:review",
+        "state:subconscious"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:future",
+        "goal:review"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    },
+    {
+      "case_label": "day03-charger-demo",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": null,
+        "full": null,
+        "final": null
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": false,
+      "future_context_matched_terms_by_fixture_text": [],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:risk",
+        "goal:task",
+        "state:anxious"
+      ],
+      "reported_final_candidate_matched_terms": [],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": false,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_without_target_context_overlap",
+      "read": "Expected future candidate is present in every phase, but the future target text has no state/goal term overlap under the current substring evidence rule; activation is therefore visible as a network candidate, not as matched target-side evidence."
+    },
+    {
+      "case_label": "day04-past-bug",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:attention",
+        "goal:future"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:attention",
+        "goal:future",
+        "state:memory"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:attention",
+        "goal:future"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    },
+    {
+      "case_label": "day05-trust-message",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": null,
+        "full": null,
+        "final": null
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": false,
+      "future_context_matched_terms_by_fixture_text": [],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:decision",
+        "goal:work",
+        "state:emotion"
+      ],
+      "reported_final_candidate_matched_terms": [],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": false,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_without_target_context_overlap",
+      "read": "Expected future candidate is present in every phase, but the future target text has no state/goal term overlap under the current substring evidence rule; activation is therefore visible as a network candidate, not as matched target-side evidence."
+    },
+    {
+      "case_label": "day06-hunger-incident",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:risk"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:attention",
+        "goal:risk",
+        "state:hungry"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:risk"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    },
+    {
+      "case_label": "day07-social-feedback",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:review"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:communication",
+        "goal:review",
+        "state:memory"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:review"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    },
+    {
+      "case_label": "day08-complex-review",
+      "candidate_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "matched_evidence_ranks": {
+        "prefix": 1,
+        "full": 1,
+        "final": 1
+      },
+      "candidate_present_all_phases": true,
+      "matched_evidence_all_phases": true,
+      "future_context_matched_terms_by_fixture_text": [
+        "goal:future"
+      ],
+      "hidden_context_matched_terms_by_fixture_text": [
+        "goal:error",
+        "goal:future",
+        "state:subconscious"
+      ],
+      "reported_final_candidate_matched_terms": [
+        "goal:future"
+      ],
+      "dominant_trace_stable_after_reinforcement": true,
+      "prediction_evidence_stable_after_reinforcement": true,
+      "reinforcement_consistency": 1.0,
+      "classification": "candidate_present_with_target_context_overlap",
+      "read": "Expected future candidate is present and carries target-side matched context terms under the current evidence rule."
+    }
+  ],
+  "read": {
+    "conclusion": "The long-horizon 0.750 future-evidence score is explained by target-side context-term overlap, not by candidate recall loss. All eight expected future candidates are present in prefix, full, and final checks; the two evidence misses are exactly the two future targets whose text has no state/goal term overlap under the current substring evidence rule.",
+    "system_interpretation": "The network path is intact in the deterministic fixture: hidden dominance, candidate continuation, and reinforcement stay stable. The weak surface is evidence labeling for future candidates whose target text is semantically related but does not repeat the active state/goal terms.",
+    "next_gate": "Future work should add validation-only evidence-path diagnostics or an explicit target-side evidence policy before product claims; do not change memory schema, cognitive layers, CLI behavior, or runtime defaults from this audit alone."
+  },
+  "limits": [
+    "Reads the existing deterministic stability report and committed fixture source only.",
+    "Does not run retrieval, ranking, answer generation, LLM judges, or external adapters.",
+    "Does not inspect or commit third-party raw records.",
+    "Does not change runtime behavior or product-facing defaults."
+  ]
+}

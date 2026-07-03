@@ -1,9 +1,10 @@
 # Long-Horizon Cognitive Validation
 
-Date: 2026-07-03
+Date: 2026-07-04
 
 Status: deterministic long-horizon cognitive-memory benchmark passed; detailed
-stability audit is now recorded and exposes a future evidence-matching gap.
+stability audit is recorded, and the future evidence-matching gap now has a
+separate diagnostic audit.
 
 Machine-readable report:
 
@@ -12,6 +13,10 @@ Machine-readable report:
 Detailed stability audit:
 
 `crates/eval/reports/long-horizon-stability-audit.json`
+
+Prediction evidence audit:
+
+`crates/eval/reports/long-horizon-prediction-evidence-audit.json`
 
 Command:
 
@@ -23,6 +28,12 @@ Detailed audit command:
 
 ```powershell
 cargo bench -p synapse-eval --bench long_horizon_stability_audit
+```
+
+Prediction evidence audit command:
+
+```powershell
+python scripts/eval/long_horizon_prediction_evidence_audit.py
 ```
 
 ## Scope
@@ -100,6 +111,30 @@ matched rank is `null`. Schema v3 also records
 in prefix, full, and final checks. This is therefore a context/evidence-matching
 miss, not a continuation-candidate miss.
 
+## Prediction Evidence Audit
+
+The prediction evidence audit explains the `0.750` future-evidence score
+without running new retrieval or changing product behavior.
+
+Report:
+
+`crates/eval/reports/long-horizon-prediction-evidence-audit.json`
+
+| Check | Value | Read |
+| --- | ---: | --- |
+| Expected future candidate present in prefix/full/final | 8/8 | Long-horizon continuation candidates are not being lost. |
+| Matched target-side evidence present in prefix/full/final | 6/8 | The two weak cases still lack matched evidence terms. |
+| Candidate without matched terms | 2/8 | `day03-charger-demo`, `day05-trust-message`. |
+| Context-overlap explanation covers all reported misses | true | The two weak future targets are exactly the targets with no state/goal term overlap under the current substring evidence rule. |
+| Minimum reinforcement consistency | 1.000 | Reinforcement still strengthens the expected visible-hidden edges. |
+
+Read: the future candidate path is intact. The weaker surface is evidence
+labeling for future targets whose text is semantically related to the trace but
+does not repeat the active state/goal terms. In the two weak cases, the hidden
+memory carries the active context terms, the expected future candidate remains
+rank 1, and reinforcement remains consistent; the target future sentence simply
+does not expose a target-side matched term under the current evidence rule.
+
 ## Read
 
 Engineering result:
@@ -112,9 +147,10 @@ reinforcement remains consistent.
 The detailed audit adds a sharper read: visible recall, older/newer memory
 separation, hidden trace dominance, and dominant-trace drift resistance are
 stable on this fixture. Future candidate recall is also stable at `8/8`, but
-future matched evidence is weaker at `6/8`. The two misses are candidate-present
-but evidence-missing cases: the candidate path exists, while the candidate text
-does not expose trace-context terms under the current matching rule.
+future matched evidence is weaker at `6/8`. The prediction evidence audit now
+localizes the two misses as candidate-present, target-overlap-missing cases:
+the candidate path exists, while the future target text does not expose
+trace-context terms under the current matching rule.
 
 Research interpretation:
 
@@ -151,15 +187,19 @@ This validation does not yet prove:
 
 Keep feature growth frozen. Treat `long-horizon-cognitive-memory` as the
 current deterministic regression gate, and treat
-`long-horizon-stability-audit` as the sharper diagnostic baseline. The next
-long-horizon weakness to investigate is future evidence matching, not visible
-recall, hidden trace dominance, or candidate recall.
+`long-horizon-stability-audit` plus
+`long-horizon-prediction-evidence-audit` as the sharper diagnostic baseline.
+The next long-horizon weakness is not visible recall, hidden trace dominance,
+candidate recall, or reinforcement consistency. It is whether future evidence
+should remain a strict target-text overlap check or gain a separate
+validation-only evidence-path policy.
 
 ## Next Work
 
 1. Preserve `long-horizon-cognitive-memory` at `1.000` for all fixed metrics.
-2. Explain the two future-continuation evidence misses in the stability audit
-   without changing product-facing behavior.
+2. Keep the two future-continuation evidence misses documented as
+   target-overlap-missing cases unless a new validation-only evidence-path
+   policy is explicitly tested.
 3. Add broader long-horizon evidence only as validation work, not product
    surface expansion.
 4. Complete hosted/official external comparisons before productization claims.

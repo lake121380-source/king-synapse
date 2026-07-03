@@ -1,12 +1,12 @@
 # System Validation Report
 
-Date: 2026-07-03
+Date: 2026-07-04
 
 Status: scoped validation passed; official-style DMR 200 local scoring is now
 recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
 samples, DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`,
-and the deterministic long-horizon cognitive gate plus detailed stability audit
-are recorded.
+and the deterministic long-horizon cognitive gate plus detailed stability /
+prediction-evidence audits are recorded.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -71,6 +71,11 @@ reinforcement consistency at `1.000`; future candidate presence is also
 future misses are present as continuation candidates at rank 1, but do not
 carry matched evidence terms. The v3 audit records this directly in empty
 `*_prediction_candidate_matched_terms` arrays for the two miss labels.
+`crates/eval/reports/long-horizon-prediction-evidence-audit.json` now explains
+that boundary: all `8/8` expected future candidates are present in prefix,
+full, and final checks, while the two evidence misses are exactly the two
+future targets with no target-side state/goal term overlap under the current
+substring evidence rule.
 The LongMemEval / DMR smoke path can run and report aggregate metrics, but full
 public long-memory stability is not yet proven.
 
@@ -99,9 +104,11 @@ boundary: future candidate presence remains `8/8`, while matched-evidence
 future prediction currently hits `6/8` cases. The two misses are
 `day03-charger-demo` and `day05-trust-message`; both keep the expected future
 candidate at rank 1 before and after reinforcement, but their matched rank is
-`null` and their candidate matched-term arrays are empty. This is enough to say
-the core design is coherent in the validated scope, but not enough to claim
-long-horizon real-world consistency yet.
+`null` and their candidate matched-term arrays are empty. The prediction
+evidence audit localizes those misses to target-side context-overlap absence,
+not continuation-candidate loss. This is enough to say the core design is
+coherent in the validated scope, but not enough to claim long-horizon
+real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
 
@@ -279,9 +286,15 @@ Long-horizon cognitive validation:
   expected future candidate at rank 1 in prefix, full, and final
   post-reinforcement checks, but have no matched evidence rank and no candidate
   matched terms.
+- `crates/eval/reports/long-horizon-prediction-evidence-audit.json` explains
+  the `0.750` future-evidence score without running new retrieval. It records
+  future candidate presence in all phases at `8/8`, matched target-side
+  evidence in all phases at `6/8`, and confirms that the two reported misses
+  are exactly the two future targets with no state/goal term overlap under the
+  current substring evidence rule.
 - This supports the network-memory thesis in a shared long-session store, but
-  it also identifies future evidence matching as the weaker long-horizon
-  surface.
+  it also identifies target-side future evidence labeling as the weaker
+  long-horizon surface.
   It is a regression gate and diagnostic baseline, not a substitute for public
   long-memory benchmarks or hosted external comparisons.
 
