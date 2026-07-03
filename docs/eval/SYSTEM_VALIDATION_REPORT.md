@@ -451,6 +451,13 @@ Ranking ablation status:
   500 is `75.2 ms/query` amortized over all queries and `545.2 ms` on each
   triggered query on average. The report's `best_safe_guard_id` is now `null`:
   no tested pool-signal guard should become a runtime default.
+- `crates/eval/reports/ranking-objective-conflict-audit.json` consolidates
+  existing one-variable DMR / LongMemEval ranking evidence. It records RRF k as
+  flat, vector weight `1.5` as a coverage tradeoff, reranker-pool choice as a
+  DMR-vs-LongMemEval conflict, and pool `50` versus `100` as a Recall@10/MRR
+  metric tradeoff. The report's `global_default_candidate` is `null`. This
+  sharpens the current conclusion: ranking is not blocked by a broad
+  architecture failure, but by objective conflict and ordering tradeoffs.
 
 DMR mapping audit status:
 
@@ -530,16 +537,15 @@ GPU validation status:
   total GPU memory sample.
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
-Next required action: keep feature growth frozen, keep the judge path on
-`deepseek-v4-flash`, and continue ranking / answer-synthesis validation before
-any product claim. The next ranking work should separate candidate-retrieval
-coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
-band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The LongMemEval 500 expansion blocks the last screened pool-signal
-guard, so the immediate next ranking gate is no longer another rerun of
-`top1_single_source_rerank_margin_gt_1`; it is a new answer-free ordering
-signal, or an explicit split between DMR and LongMemEval objectives. Any future
-runtime ranking policy still needs zero LongMemEval Recall@10 regression, zero
-top-10 suppressions, and an explicit triggered-query latency budget. Keep
+Next required action: keep feature growth frozen and continue ranking /
+answer-synthesis validation before any product claim. The next ranking work
+should separate candidate-retrieval coverage from reranker ordering on DMR 200
+and target the rank 11-25 late-rank band without adopting `vector_weight = 1.5`
+or reranker pool `100` as a default. The LongMemEval 500 expansion and the
+objective-conflict audit block the current global-default path, so the
+immediate next ranking gate is a new answer-free ordering signal, or an
+explicit split between DMR and LongMemEval objectives. Any future runtime
+ranking policy still needs zero LongMemEval Recall@10 regression, zero top-10
+suppressions, and an explicit triggered-query latency budget. Keep
 answer-synthesis work in evaluation mode until the official-style DMR protocol
-is finalized.
+is finalized and a valid top-context judge configuration is available again.

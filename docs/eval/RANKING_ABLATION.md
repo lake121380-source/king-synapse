@@ -1,11 +1,11 @@
 # Ranking Ablation
 
-Date: 2026-07-03
+Date: 2026-07-04
 
 Status: DMR 50 ranking ablations, DMR 50 chunk-policy/query-expansion
 ablations, DMR 200 ranking-failure expansion, DMR 200 transition audit,
-DMR/LongMemEval 50 RRF/vector-weight cross-checks, and pool-signal guard audit
-complete.
+DMR/LongMemEval 50 RRF/vector-weight cross-checks, pool-signal guard audit, and
+objective-conflict audit complete.
 
 Machine-readable reports:
 
@@ -59,6 +59,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
 
+`crates/eval/reports/ranking-objective-conflict-audit.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
@@ -94,6 +96,10 @@ Pool signal cross-check runner:
 Pool signal guard audit runner:
 
 `scripts/eval/ranking_pool_signal_guard_audit.py`
+
+Objective-conflict audit runner:
+
+`scripts/eval/ranking_objective_conflict_audit.py`
 
 Chunk-policy runner:
 
@@ -1430,6 +1436,39 @@ The latency audit does not adopt a runtime budget. It records the cost surface
 for a guard that is now quality-blocked. Before any future implementation, the
 project still needs an explicit budget such as maximum amortized latency per
 query and maximum triggered-query tail latency.
+
+## Objective Conflict Audit
+
+This pass consolidates the existing DMR / LongMemEval ranking ablations without
+running new retrieval. It reads only sanitized aggregate metrics from the
+checked reports.
+
+Report:
+
+`crates/eval/reports/ranking-objective-conflict-audit.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_objective_conflict_audit.py
+```
+
+| View | Read | Evidence |
+| --- | --- | --- |
+| RRF k 20/40/60/80 | Flat | DMR Recall@10 is unchanged at `0.4683`; LongMemEval Recall@10 is unchanged at `0.5900`. |
+| Vector weight 0.5/1.0/1.5/2.0 | Tradeoff | `1.5` improves Recall@10 on both DMR (`+0.0067`) and LongMemEval (`+0.0167`) versus `1.0`, but DMR top-1 drops by `1` and MRR drops on both datasets. |
+| Reranker pool 10/25/50/100 | Conflict | DMR 50 is best by Recall@10 at pool `50`; LongMemEval 50 is best among reranker variants at pool `25`. |
+| Pool 50 vs 100 signal view | Metric tradeoff | Both DMR 50 and LongMemEval 50 keep better Recall@10 at pool `50`, while MRR nudges toward pool `100`; pool `100` is also more expensive. |
+| Pool-signal guards | Blocked | The guard audit has `best_safe_guard_id: null`; no checked guard passes the current safety screen. |
+
+Read: the current ranking evidence does not support a new global default. The
+active problem is not a broad architecture failure; it is an objective
+conflict. DMR wants better late-rank ordering and answer synthesis, while
+LongMemEval is more sensitive to top-10 coverage and top-10 suppressions. A
+future ranking policy needs either a new answer-free ordering signal that
+preserves LongMemEval, or an explicit DMR/LongMemEval objective split. In both
+cases, runtime adoption still requires zero LongMemEval top-10 suppressions and
+an explicit latency budget.
 
 ## Decision
 
