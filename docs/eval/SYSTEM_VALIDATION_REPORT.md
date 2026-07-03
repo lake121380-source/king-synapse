@@ -231,6 +231,13 @@ DMR boundary:
   scale view. It also records that the extractive baseline reports are
   judge-backed on all pinned runs, while the `top-context-extractive`
   candidate reports were not judge-scored.
+- `crates/eval/reports/official-dmr-top-context-judge-preflight.json` records
+  the current top-context candidate judge boundary. A DMR 50 candidate judge
+  attempt was blocked by DeepSeek HTTP `401`, and the isolated preflight on
+  `deepseek-v4-flash` also returns `authorization_error`. This does not change
+  the pinned extractive judge-backed reports; it keeps the top-context
+  generator as lexical/ROUGE-only evidence until a valid judge configuration is
+  available again.
 - DMR 200 and the DMR 500-request run now carry judge-backed samples on
   `deepseek-v4-flash`, so the judge signal is now part of the usable local
   evidence rather than a partial signal.

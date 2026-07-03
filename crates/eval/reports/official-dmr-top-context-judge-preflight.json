@@ -1,0 +1,30 @@
+{
+  "schema_version": "king-synapse.deepseek-judge-preflight.v1",
+  "generated_at": "2026-07-03T15:57:47.936102+00:00",
+  "runner": "scripts/eval/deepseek_judge_preflight.py",
+  "llm_judge": {
+    "policy": "deepseek",
+    "model": "deepseek-v4-flash",
+    "base_url_recorded": true,
+    "api_key_present": true,
+    "api_key_recorded": false
+  },
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "raw_records_committed": false,
+  "result": {
+    "models_probe": {
+      "status": "http_error",
+      "http_status": 401,
+      "wall_ms": 146.68830001028255,
+      "reason": "Authorization Required",
+      "response_body_hash": "568320815b206ffd"
+    },
+    "status": "authorization_error",
+    "http_status": 401,
+    "reason": "Authorization Required",
+    "response_body_hash": "568320815b206ffd",
+    "wall_ms": 109.76900000241585
+  },
+  "decision": "judge_configuration_still_blocked"
+}

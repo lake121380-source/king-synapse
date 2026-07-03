@@ -178,12 +178,13 @@ questions, answers, or generated text:
 | 500 request / 323 scored CUDA samples | 0.381 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
-This is still not a published-comparable official DMR result. The isolated
-DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`, and the
-pinned 5 / 50 / 200 / 500-request runs are fully judged locally. The remaining
-boundary is no longer auth; it is published-comparable scoring policy,
-answer-generation quality, and the fact that the honest large-run claim is
-still `500 request / 323 scored`, not `500/500`.
+This is still not a published-comparable official DMR result. The pinned
+extractive 5 / 50 / 200 / 500-request runs are fully judged locally on
+`deepseek-v4-flash`, but a later top-context candidate judge preflight now
+returns HTTP `401` in the current environment. The remaining boundary is
+published-comparable scoring policy, answer-generation quality, candidate
+judge scoring, and the honest large-run claim of `500 request / 323 scored`,
+not `500/500`.
 The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
@@ -199,9 +200,9 @@ ablation summary is recorded in
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
 
 So answer synthesis is now a real optimization target, but it is still
-eval-only evidence. The LLM judge path is reachable and stable on the pinned
-extractive local runs; the top-context generator ablation has not been
-judge-scored yet. Official DMR or product claims still need a finalized
+eval-only evidence. The top-context generator ablation has not been
+judge-scored yet; the current DeepSeek configuration blocks that next judge
+pass with HTTP `401`. Official DMR or product claims still need a finalized
 published-comparable protocol and better answer-generation quality.
 
 So the project is not in "add more features" mode. The current validation read

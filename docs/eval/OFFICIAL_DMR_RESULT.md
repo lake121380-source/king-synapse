@@ -61,6 +61,10 @@ Judge preflight:
 
 `crates/eval/reports/official-dmr-judge-preflight.json`
 
+Top-context candidate judge preflight:
+
+`crates/eval/reports/official-dmr-top-context-judge-preflight.json`
+
 Answer-synthesis audit:
 
 `crates/eval/reports/official-dmr-answer-synthesis-audit.json`
@@ -453,8 +457,38 @@ python scripts/eval/deepseek_judge_preflight.py `
 | HTTP status | 200 |
 | Decision | ready_for_official_dmr_judge_rerun |
 
-Read: the judge path is now open before DMR scoring starts, and the pinned
-official runs now serialize cleanly through it.
+Read: this preflight opened the path for the pinned extractive official runs,
+and those runs now serialize cleanly through it.
+
+## Top-Context Candidate Judge Preflight
+
+After the extractive baseline became judge-backed, the next evidence gap was
+the `top-context-extractive` candidate. A DMR 50 candidate judge run was
+attempted first, but all judge calls returned authorization errors. The
+separate preflight below confirms the current environment boundary without
+committing prompt text, raw response text, raw DMR records, answers, generated
+answers, or API keys.
+
+```powershell
+python scripts/eval/deepseek_judge_preflight.py `
+  --judge-model deepseek-v4-flash `
+  --output crates/eval/reports/official-dmr-top-context-judge-preflight.json
+```
+
+| Field | Value |
+| --- | --- |
+| API key present | true |
+| API key committed | false |
+| Prompt text recorded | false |
+| Raw response committed | false |
+| Model | deepseek-v4-flash |
+| Status | authorization_error |
+| HTTP status | 401 |
+| Decision | judge_configuration_still_blocked |
+
+Read: the pinned extractive reports remain judge-backed evidence, but the
+top-context generator is still lexical/ROUGE-only evidence until a valid judge
+configuration is available again.
 
 ## Answer-Synthesis Audit
 
