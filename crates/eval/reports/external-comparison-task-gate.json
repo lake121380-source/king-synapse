@@ -1,0 +1,759 @@
+{
+  "schema_version": "king-synapse.external-comparison-task-gate.v1",
+  "generated_at": "2026-07-03T17:29:01.546676+00:00",
+  "runner": "scripts\\eval\\external_comparison_task_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "dd1d63eaf2efd606d52f8099a8e9141ceb9281eb",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "external_comparison_latest": {
+      "path": "crates\\eval\\reports\\external-comparison-latest.json",
+      "exists": true,
+      "sha256": "6dd03d25dfb78cee86f56c3c752366dae37a5151a75ebe28c168bd05dfb36747"
+    },
+    "external_comparison_hosted": {
+      "path": "crates\\eval\\reports\\external-comparison-hosted.json",
+      "exists": true,
+      "sha256": "606ecb6ff5834ab47af8a5ae8b38c0bc2834a8a153132188e1350ca2d9e36888"
+    },
+    "external_comparison_manifest": {
+      "path": "crates\\eval\\reports\\external-comparison-manifest.json",
+      "exists": true,
+      "sha256": "ac7bf0b264e4906fe6fe09eb06d74f6191a9886de9e2b6e5ec75fb16cb2ef0ad"
+    },
+    "phase6_next_gate_readiness": {
+      "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+      "exists": true,
+      "sha256": "b1f15f488cf323e3c715a3ffb4b43edd11537891c2ce7ba5544e109c89205f0c"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "local_comparison": {
+    "summary": {
+      "systems": 4,
+      "measured_systems": 3,
+      "not_configured_systems": 1,
+      "failed_systems": 0
+    },
+    "systems": [
+      {
+        "system": "King Synapse",
+        "kind": "king-synapse",
+        "version": "0.0.1",
+        "status": "measured",
+        "capabilities": {
+          "retrieval": "supported",
+          "trace": "supported",
+          "prediction": "supported",
+          "reinforcement": "supported",
+          "evidence_paths": "supported"
+        },
+        "chains": 8,
+        "mean_latency_ms": 4.511125,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Graphiti/Zep",
+        "kind": "graphiti",
+        "version": "0.29.2",
+        "status": "measured",
+        "capabilities": {
+          "retrieval": "supported",
+          "trace": "unsupported",
+          "prediction": "unsupported",
+          "reinforcement": "unsupported",
+          "evidence_paths": "partial"
+        },
+        "chains": 8,
+        "mean_latency_ms": 136.5536499999962,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Mem0",
+        "kind": "mem0",
+        "version": "2.0.11",
+        "status": "measured",
+        "capabilities": {
+          "retrieval": "supported",
+          "trace": "unsupported",
+          "prediction": "unsupported",
+          "reinforcement": "unsupported",
+          "evidence_paths": "unsupported"
+        },
+        "chains": 8,
+        "mean_latency_ms": 2995.50183749966,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 7,
+            "miss": 1,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 8,
+            "not_configured": 0,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Letta",
+        "kind": "letta",
+        "version": "1.12.1",
+        "status": "not_configured",
+        "capabilities": {
+          "retrieval": "unknown",
+          "trace": "unknown",
+          "prediction": "unknown",
+          "reinforcement": "unknown",
+          "evidence_paths": "unknown"
+        },
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      }
+    ]
+  },
+  "hosted_official_probe": {
+    "summary": {
+      "systems": 4,
+      "measured_systems": 1,
+      "not_configured_systems": 3,
+      "failed_systems": 0
+    },
+    "systems": [
+      {
+        "system": "King Synapse",
+        "kind": "king-synapse",
+        "version": "0.0.1",
+        "status": "measured",
+        "capabilities": {
+          "retrieval": "supported",
+          "trace": "supported",
+          "prediction": "supported",
+          "reinforcement": "supported",
+          "evidence_paths": "supported"
+        },
+        "chains": 8,
+        "mean_latency_ms": 4.5571125,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 8,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 0,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Graphiti/Zep",
+        "kind": "graphiti",
+        "version": "unknown",
+        "status": "not_configured",
+        "capabilities": {
+          "retrieval": "unknown",
+          "trace": "unknown",
+          "prediction": "unknown",
+          "reinforcement": "unknown",
+          "evidence_paths": "unknown"
+        },
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Mem0",
+        "kind": "mem0",
+        "version": "2.0.11",
+        "status": "not_configured",
+        "capabilities": {
+          "retrieval": "unknown",
+          "trace": "unknown",
+          "prediction": "unknown",
+          "reinforcement": "unknown",
+          "evidence_paths": "unknown"
+        },
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      },
+      {
+        "system": "Letta",
+        "kind": "letta",
+        "version": "1.12.1",
+        "status": "not_configured",
+        "capabilities": {
+          "retrieval": "unknown",
+          "trace": "unknown",
+          "prediction": "unknown",
+          "reinforcement": "unknown",
+          "evidence_paths": "unknown"
+        },
+        "chains": 8,
+        "mean_latency_ms": 0.0,
+        "metrics": {
+          "visible_seed_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "hidden_influence_dominant": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "suppressed_alternatives_visible": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "evidence_path_available": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "future_continuation_found": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          },
+          "reinforcement_isolated": {
+            "hit": 0,
+            "miss": 0,
+            "unsupported": 0,
+            "not_configured": 8,
+            "failed": 0
+          }
+        }
+      }
+    ],
+    "requirements": {
+      "graphiti_zep_ready": false,
+      "mem0_official_ready": false,
+      "letta_ready": false,
+      "letta_environment_local": false,
+      "all_hosted_ready": false,
+      "missing_for_graphiti_zep": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ],
+      "missing_for_mem0_official": [
+        "OPENAI_API_KEY or MEM0_CONFIG_JSON or MEM0_CONFIG_PATH"
+      ],
+      "missing_for_letta": [
+        "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+      ]
+    }
+  },
+  "manifest": {
+    "validated_commit": "781dfd1745ca4e82199faa38d385aa42f0e5f964",
+    "packages": {
+      "graphiti-core": "0.29.2",
+      "kuzu": "0.11.3",
+      "mem0ai": "2.0.11",
+      "qdrant-client": "1.18.0",
+      "letta-client": "1.12.1"
+    },
+    "systems": [
+      {
+        "system": "King Synapse",
+        "status": "measured",
+        "mode": "local in-memory Store with exported cognitive session fixture",
+        "credentials": [],
+        "missing": [],
+        "secrets_recorded": null,
+        "hosted_mode_credentials_not_used": []
+      },
+      {
+        "system": "Graphiti/Zep",
+        "status": "measured",
+        "mode": "local Kuzu graph driver with deterministic local embeddings and explicit fixture triplets",
+        "credentials": [],
+        "missing": [],
+        "secrets_recorded": null,
+        "hosted_mode_credentials_not_used": [
+          "OPENAI_API_KEY",
+          "NEO4J_URI",
+          "NEO4J_USER",
+          "NEO4J_PASSWORD"
+        ]
+      },
+      {
+        "system": "Mem0",
+        "status": "measured",
+        "mode": "Mem0 OSS SDK with DeepSeek, deterministic local embedder, and local Qdrant",
+        "credentials": [
+          "DEEPSEEK_API_KEY"
+        ],
+        "missing": [],
+        "secrets_recorded": false,
+        "hosted_mode_credentials_not_used": []
+      },
+      {
+        "system": "Letta",
+        "status": "not_configured",
+        "mode": "official Python SDK adapter",
+        "credentials": [],
+        "missing": [
+          "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+        ],
+        "secrets_recorded": null,
+        "hosted_mode_credentials_not_used": []
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "shared_cognitive_fixture_registered",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json",
+        "crates\\eval\\reports\\external-comparison-hosted.json"
+      ],
+      "conclusion": "Local and hosted-probe external reports use the same 8-chain cognitive fixture.",
+      "remaining": []
+    },
+    {
+      "id": "local_external_comparison_measured",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "Local external comparison measures King Synapse, Graphiti/Zep local, and Mem0 OSS, with Letta marked not_configured and zero failed systems.",
+      "remaining": []
+    },
+    {
+      "id": "unsupported_and_not_configured_are_separate",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "Unsupported trace surfaces and not_configured Letta surfaces are counted separately from failures.",
+      "remaining": []
+    },
+    {
+      "id": "local_synapse_trace_surface_complete",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "King Synapse records 8/8 hits for dominant trace, suppressed alternatives, evidence path, future continuation, and reinforcement isolation.",
+      "remaining": []
+    },
+    {
+      "id": "hosted_official_comparison_not_ready",
+      "status": "blocked_external",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-hosted.json",
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json"
+      ],
+      "conclusion": "Hosted/official comparison is not ready: hosted report has 1 measured system, 3 not_configured systems, and zero failed systems.",
+      "remaining": [
+        "Configure Graphiti/Zep Neo4j/OpenAI credentials.",
+        "Configure official Mem0 OpenAI/custom config.",
+        "Configure Letta hosted or local endpoint."
+      ]
+    },
+    {
+      "id": "secrets_not_recorded",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-manifest.json"
+      ],
+      "conclusion": "External comparison manifest records credential names only and does not record secret values.",
+      "remaining": []
+    }
+  ],
+  "status_counts": {
+    "satisfied": 5,
+    "blocked_external": 1
+  },
+  "status": {
+    "local_external_comparison_gate_passed": true,
+    "local_trace_advantage_supported": true,
+    "unsupported_counted_separately": true,
+    "hosted_official_external_ready": false,
+    "hosted_official_comparison_complete": false,
+    "hosted_competitor_superiority_claim_allowed": false,
+    "hard_failures": [],
+    "open_gates": [
+      "hosted_graphiti_zep_not_configured",
+      "official_mem0_not_configured",
+      "letta_endpoint_not_configured"
+    ]
+  },
+  "read": {
+    "current_conclusion": "Local external comparison supports Synapse's inspectable cognitive-trace advantage on the shared fixture, but hosted/official competitor comparison is still not configured.",
+    "strongest_supported_result": "On the 8-chain cognitive fixture, King Synapse hits dominant trace, suppressed alternatives, evidence paths, future continuation, and reinforcement isolation 8/8 while measured adapters expose some of those surfaces as unsupported.",
+    "weak_surfaces": [
+      "Hosted Graphiti/Zep Neo4j/OpenAI comparison is not configured.",
+      "Official/recommended Mem0 configuration is not configured.",
+      "Live or local Letta endpoint is not configured.",
+      "Local adapter evidence is not the same as hosted/official fairness."
+    ],
+    "next_action": "Keep feature freeze. Configure hosted competitor credentials/endpoints before rerunning the fair external comparison; until then, do not claim hosted competitor superiority."
+  },
+  "limits": [
+    "This gate reads committed aggregate external-comparison reports only.",
+    "It does not run hosted adapters, external services, benchmarks, LLM judges, or product code.",
+    "It records credential names and readiness statuses only, not secret values.",
+    "A passing local external comparison gate is not a hosted/official competitor superiority claim."
+  ]
+}

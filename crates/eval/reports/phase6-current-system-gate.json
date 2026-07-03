@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T17:22:24.607496+00:00",
+  "generated_at": "2026-07-03T17:29:12.713701+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "cc9e871b180b3bb3996d129a3d868d83d46da69e",
+    "commit": "dd1d63eaf2efd606d52f8099a8e9141ceb9281eb",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "4a8315c9c32a542e95c0caf73386bfabcb529b96e000df54d9163e49239f4fd4"
+      "sha256": "e340abe2723a39c541d08de99672f36cd2ced8e0f4e01c300672b0b4713f10d5"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -37,6 +37,11 @@
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
       "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+    },
+    "external_comparison_task_gate": {
+      "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
+      "exists": true,
+      "sha256": "89e160ee5cefc548814424bafc44739235140e72ed1e86d5209316e2a18078b7"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -109,6 +114,24 @@
       "conclusion": "Safe global runtime ranking default is still explicitly not ready."
     },
     {
+      "id": "local_external_comparison_gate_passed",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "Local external comparison gate is passed on the shared cognitive fixture."
+    },
+    {
+      "id": "hosted_official_external_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "Hosted/official external comparison is still explicitly not ready."
+    },
+    {
       "id": "raw_or_generated_data_not_committed",
       "status": "passed",
       "severity": "required",
@@ -119,6 +142,7 @@
         "crates\\eval\\reports\\readme-claims-support-audit.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json",
         "crates\\eval\\reports\\ranking-task-gate.json",
+        "crates\\eval\\reports\\external-comparison-task-gate.json",
         "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
@@ -189,6 +213,14 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "external_comparison_task_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
@@ -216,6 +248,7 @@
       "Local non-external baseline health is passed.",
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
       "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
+      "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],

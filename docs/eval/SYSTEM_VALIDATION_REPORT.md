@@ -613,6 +613,21 @@ Ranking task gate:
   answer-free ordering signal, unresolved DMR/LongMemEval objective split, and
   no adopted latency acceptance threshold.
 
+External comparison task gate:
+
+- `crates/eval/reports/external-comparison-task-gate.json` consolidates the
+  current Phase 4 external comparison evidence into one gate.
+- The local gate is passed:
+  `local_external_comparison_gate_passed: true`. On the shared 8-chain
+  cognitive fixture, King Synapse records 8/8 hits for dominant trace,
+  suppressed alternatives, evidence path, future continuation, and
+  reinforcement isolation.
+- The same gate keeps `hosted_official_external_ready: false` and
+  `hosted_official_comparison_complete: false`.
+- Unsupported competitor surfaces and not-configured Letta surfaces remain
+  counted separately from failures. The open hosted gates are Graphiti/Zep
+  Neo4j/OpenAI credentials, official Mem0 configuration, and a Letta endpoint.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README
