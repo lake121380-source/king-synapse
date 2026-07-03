@@ -181,6 +181,12 @@ DMR boundary:
 - `crates/eval/reports/official-dmr-judge-probe.json` records a later
   5-sample judge probe using the same sanitized official-style path. It also
   returned `5/5` DeepSeek authorization errors with HTTP status `401`.
+- `crates/eval/reports/official-dmr-answer-synthesis-audit.json` records a
+  sanitized answer-synthesis audit over the existing official-style reports.
+  It shows that answer synthesis is a separate bottleneck: in the 323-scored
+  DMR 500-request report, `128` samples have a relevant chunk at rank 1, but
+  `118` of those top-1 hits still do not include the gold answer substring in
+  the generated answer.
 - DMR 200 and the DMR 500-request run intentionally skipped the LLM judge after
   the DMR 50 authorization failure, so they are lexical / ROUGE-L local scoring
   only.
@@ -196,10 +202,10 @@ prove that retrieval -> answer generation -> local answer scoring is executable
 on CUDA without committing raw third-party records.
 
 Research interpretation: these results do not overturn the Synapse
-architecture. They localize the current DMR weakness to retrieval/ranking
-quality plus a weak deterministic extractive answer generator. The larger
-request also shows that answer-to-memory mapping is a separate validation
-boundary, with LLM judge configuration still unresolved.
+architecture. They localize the current DMR weakness to three separable
+boundaries: retrieval/ranking quality, answer synthesis after a relevant chunk
+is already retrieved, and answer-to-memory mapping coverage. LLM judge
+configuration is still unresolved.
 
 Long-horizon cognitive validation:
 

@@ -173,6 +173,10 @@ boundary is a successful fixed LLM judge. The mapping-policy review keeps
 punctuation full-answer mapping as the pinned local boundary, so the honest
 large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
 review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
+The answer-synthesis audit adds another boundary: in the 323-scored
+DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
+gold answer substring in the generated answer, so answer synthesis is now a
+separate bottleneck from retrieval/ranking.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
@@ -280,7 +284,7 @@ cargo build --release
 | `crates/eval/reports/phase6-substage-timing-probe.json` | Small CUDA sub-stage and process metrics probe for embedding/vector/reranker/CPU/memory/GPU-memory costs. |
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
-| `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation smoke, DMR 50, DMR 200, and DMR 500-request results. |
+| `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation, judge probe, and answer-synthesis audit results. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

@@ -312,6 +312,13 @@ finds a blocking bug.
   authorization errors. The DMR 500-request pass scored `323/500` requested
   samples because the pinned punctuation mapping skipped 177 source rows before
   selection.
+- Official-style DMR answer-synthesis audit is recorded at
+  `crates/eval/reports/official-dmr-answer-synthesis-audit.json`; it separates
+  retrieval misses from generator opportunity loss. In the 323-scored DMR
+  500-request report, 128 samples have a relevant chunk at rank 1, but 118 of
+  those top-1 hits still do not include the gold answer substring in the
+  generated answer. This keeps answer synthesis as a separate Phase 6
+  bottleneck from retrieval/ranking.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`

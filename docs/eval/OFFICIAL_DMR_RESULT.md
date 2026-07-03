@@ -28,6 +28,10 @@ Judge probe:
 
 `crates/eval/reports/official-dmr-judge-probe.json`
 
+Answer-synthesis audit:
+
+`crates/eval/reports/official-dmr-answer-synthesis-audit.json`
+
 ## What Changed
 
 Synapse now has a DMR evaluation path that goes beyond candidate retrieval:
@@ -281,6 +285,35 @@ python scripts/eval/official_dmr_eval.py `
 | HTTP status | 401 |
 | LLM judge accuracy | not available |
 
+## Answer-Synthesis Audit
+
+The answer-synthesis audit reads the existing sanitized official-style reports
+and separates retrieval misses from generator opportunity loss. It uses only
+sample IDs, ranks, lengths, hashes, generation trace metadata, and scores.
+
+The 50, 200, and 500-request reports are deterministic expansions of the same
+source order, so the rows overlap. Treat the table below as three scale views,
+not as independent samples to sum.
+
+```powershell
+python scripts/eval/official_dmr_answer_audit.py `
+  --output crates/eval/reports/official-dmr-answer-synthesis-audit.json
+```
+
+| Run | Top-1 hits | Top-1 without gold substring | Top-10 hits without gold substring | Not retrieved in top-10 | Top-1 selected non-first context |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| DMR 50 | 28 | 25 | 35 | 12 | 23 |
+| DMR 200 | 74 | 68 | 130 | 62 | 57 |
+| DMR 500 request / 323 scored | 128 | 118 | 195 | 115 | 98 |
+
+Bucket-level substring accuracy:
+
+| Run | Top-1 bucket | Top-10 not top-1 bucket | Not retrieved top-10 bucket |
+| --- | ---: | ---: | ---: |
+| DMR 50 | 0.107 | 0.000 | 0.000 |
+| DMR 200 | 0.081 | 0.031 | 0.000 |
+| DMR 500 request / 323 scored | 0.078 | 0.038 | 0.017 |
+
 ## Read
 
 Engineering result:
@@ -295,6 +328,13 @@ enough. Recall@10 moved from `0.468` on DMR 50 to `0.409` on DMR 200 and
 `0.380` on the DMR 500-request run. Gold-answer substring accuracy stayed low:
 `0.060`, `0.040`, then `0.046`. ROUGE-L F1 also stayed low: `0.041`, `0.037`,
 then `0.039`.
+
+The answer-synthesis audit sharpens that diagnosis. Even when retrieval returns
+a relevant chunk at rank 1, the deterministic extractive generator usually does
+not place the gold answer in the final generated answer: `25/28` top-1 DMR 50
+hits, `68/74` top-1 DMR 200 hits, and `118/128` top-1 hits in the 323-scored
+DMR 500-request run still miss the gold substring. This makes answer synthesis
+a separate bottleneck from retrieval/ranking.
 
 Research interpretation:
 
