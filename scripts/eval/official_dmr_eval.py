@@ -49,6 +49,7 @@ from longmem_dmr_smoke import (
 
 GENERATOR_POLICIES = {
     "extractive": "deterministic sentence/window selection from returned chunks; no gold-answer access",
+    "top-context-extractive": "deterministic sentence/window selection restricted to the top returned chunk; no gold-answer access",
 }
 
 JUDGE_POLICIES = {
@@ -265,6 +266,21 @@ def generate_extractive_answer(question: str, contexts: list[str], max_chars: in
     }
 
 
+def generate_top_context_extractive_answer(
+    question: str, contexts: list[str], max_chars: int = 320
+) -> tuple[str, dict[str, Any]]:
+    answer, trace = generate_extractive_answer(question, contexts[:1], max_chars=max_chars)
+    trace.update(
+        {
+            "policy": "top-context-extractive",
+            "context_count": len(contexts),
+            "candidate_context_count": min(len(contexts), 1),
+            "search_scope": "top_returned_context_only",
+        }
+    )
+    return answer, trace
+
+
 def lcs_length(left: list[str], right: list[str]) -> int:
     if not left or not right:
         return 0
@@ -393,6 +409,10 @@ def score_answers(
         contexts = [memory_by_key[key] for key in returned_keys if key in memory_by_key]
         if generator == "extractive":
             prediction, generation_trace = generate_extractive_answer(query_result.get("query", ""), contexts)
+        elif generator == "top-context-extractive":
+            prediction, generation_trace = generate_top_context_extractive_answer(
+                query_result.get("query", ""), contexts
+            )
         else:
             raise ValueError(f"unknown generator: {generator}")
 

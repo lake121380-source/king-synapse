@@ -209,7 +209,7 @@ def combined_summary(audits: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "reports": len(audits),
         "sample_sets_overlap": True,
-        "overlap_note": "DMR 50, 200, and 500-request reports are deterministic expansions and should not be summed as independent unique examples.",
+        "overlap_note": "Input reports may be deterministic expansions or generator variants; do not sum report rows as independent unique examples unless the inputs are known disjoint.",
         "total_report_rows": sum(int(audit["sample_size_used"]) for audit in audits),
         "top1_without_answer_substring_report_rows": sum(
             audit["answer_generation"]["opportunity_loss"][

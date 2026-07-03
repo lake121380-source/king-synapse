@@ -165,8 +165,10 @@ The official-style DMR answer-generation reports are fixed in:
 - `reports/official-dmr-500.json`
 - `reports/official-dmr-200.json`
 - `reports/official-dmr-50.json`
+- `reports/official-dmr-50-top-context-extractive.json`
 - `reports/official-dmr-judge-probe.json`
 - `reports/official-dmr-answer-synthesis-audit.json`
+- `reports/official-dmr-generator-ablation-dmr-50.json`
 - `reports/official-dmr-5-extractive.json`
 
 Readable summary: `docs/eval/OFFICIAL_DMR_RESULT.md`.

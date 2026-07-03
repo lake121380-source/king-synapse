@@ -20,6 +20,14 @@ Pinned DMR 50 report:
 
 `crates/eval/reports/official-dmr-50.json`
 
+DMR 50 generator ablation report:
+
+`crates/eval/reports/official-dmr-50-top-context-extractive.json`
+
+DMR 50 generator ablation audit:
+
+`crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`
+
 Smoke report:
 
 `crates/eval/reports/official-dmr-5-extractive.json`
@@ -64,6 +72,7 @@ The runner is:
 | --- | ---: | ---: | ---: | --- |
 | DMR 5 smoke | 5 | 5 | 1 | not requested |
 | DMR 50 | 50 | 50 | 31 | 50 authorization errors |
+| DMR 50 top-context generator | 50 | 50 | 31 | not requested |
 | DMR 200 | 200 | 200 | 111 | not requested |
 | DMR 500 request | 500 | 323 | 177 | not requested |
 | Judge probe | 5 | 5 | 1 | 5 authorization errors |
@@ -206,6 +215,43 @@ python scripts/eval/official_dmr_eval.py `
 | LLM judge accuracy | not available |
 | Peak GPU total memory | 5304.2 MiB |
 
+## DMR 50 Generator Ablation
+
+This is an evaluation-only answer-synthesis ablation. It changes only the
+deterministic generator policy from `extractive` to `top-context-extractive`.
+Retrieval mode, sample selection, mapping policy, CUDA settings, and top-k stay
+fixed. The policy does not inspect gold answers; it restricts sentence
+selection to the top returned memory chunk.
+
+```powershell
+python scripts/eval/official_dmr_eval.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 50 `
+  --dmr-answer-match punctuation `
+  --mode vectors-rerank `
+  --k 10 `
+  --generator top-context-extractive `
+  --llm-judge none `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/official-dmr-50-top-context-extractive.json `
+  --cleanup-cache
+```
+
+| Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Top-1 without substring |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| extractive | 0.468 | 0.000 | 0.020 | 0.060 | 0.041 | 25/28 |
+| top-context-extractive | 0.468 | 0.000 | 0.020 | 0.220 | 0.103 | 17/28 |
+
+Read: keeping the highest-ranked returned chunk as the generator search scope
+improves substring accuracy and ROUGE-L on DMR 50. This does not make the
+answer generator strong enough for official DMR claims, but it proves the low
+answer score is not only a retrieval/ranking problem.
+
 ## Smoke Run
 
 ```powershell
@@ -300,6 +346,15 @@ python scripts/eval/official_dmr_answer_audit.py `
   --output crates/eval/reports/official-dmr-answer-synthesis-audit.json
 ```
 
+The same audit runner also records the DMR 50 generator ablation:
+
+```powershell
+python scripts/eval/official_dmr_answer_audit.py `
+  --reports crates/eval/reports/official-dmr-50.json `
+            crates/eval/reports/official-dmr-50-top-context-extractive.json `
+  --output crates/eval/reports/official-dmr-generator-ablation-dmr-50.json
+```
+
 | Run | Top-1 hits | Top-1 without gold substring | Top-10 hits without gold substring | Not retrieved in top-10 | Top-1 selected non-first context |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | DMR 50 | 28 | 25 | 35 | 12 | 23 |
@@ -336,6 +391,12 @@ hits, `68/74` top-1 DMR 200 hits, and `118/128` top-1 hits in the 323-scored
 DMR 500-request run still miss the gold substring. This makes answer synthesis
 a separate bottleneck from retrieval/ranking.
 
+The DMR 50 generator ablation confirms the bottleneck is actionable. With
+retrieval unchanged, `top-context-extractive` raises gold-answer substring
+accuracy from `0.060` to `0.220` and ROUGE-L F1 from `0.041` to `0.103`.
+It also reduces top-1 retrieval hits without a gold substring from `25/28` to
+`17/28`.
+
 Research interpretation:
 
 The current evidence does not point to a core architecture failure. It points
@@ -363,6 +424,8 @@ Reasons:
 
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
+- the better DMR 50 generator ablation is eval-only evidence and has not been
+  validated on DMR 200/500, LongMemEval, or an LLM judge;
 - the LLM judge did not authenticate successfully;
 - the DMR 500-request run scored 323/500 requested samples because the pinned
   answer-to-memory mapping policy exhausted mappable rows;

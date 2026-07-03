@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T05:54:05.011394+00:00",
+  "generated_at": "2026-07-03T06:00:55.523094+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
@@ -24,7 +24,7 @@
   "summary": {
     "reports": 3,
     "sample_sets_overlap": true,
-    "overlap_note": "DMR 50, 200, and 500-request reports are deterministic expansions and should not be summed as independent unique examples.",
+    "overlap_note": "Input reports may be deterministic expansions or generator variants; do not sum report rows as independent unique examples unless the inputs are known disjoint.",
     "total_report_rows": 573,
     "top1_without_answer_substring_report_rows": 211,
     "top10_without_answer_substring_report_rows": 360,

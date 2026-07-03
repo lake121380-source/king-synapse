@@ -187,6 +187,12 @@ DMR boundary:
   DMR 500-request report, `128` samples have a relevant chunk at rank 1, but
   `118` of those top-1 hits still do not include the gold answer substring in
   the generated answer.
+- `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
+  eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
+  sentence selection to the top returned context raises gold-answer substring
+  accuracy from `0.060` to `0.220` and ROUGE-L F1 from `0.041` to `0.103`.
+  This makes answer synthesis an actionable bottleneck, but it is not a
+  default-policy decision.
 - DMR 200 and the DMR 500-request run intentionally skipped the LLM judge after
   the DMR 50 authorization failure, so they are lexical / ROUGE-L local scoring
   only.
@@ -204,8 +210,10 @@ on CUDA without committing raw third-party records.
 Research interpretation: these results do not overturn the Synapse
 architecture. They localize the current DMR weakness to three separable
 boundaries: retrieval/ranking quality, answer synthesis after a relevant chunk
-is already retrieved, and answer-to-memory mapping coverage. LLM judge
-configuration is still unresolved.
+is already retrieved, and answer-to-memory mapping coverage. The DMR 50
+top-context generator ablation shows the answer-synthesis boundary can move
+without changing retrieval, but it still needs larger-sample and judge
+validation. LLM judge configuration is still unresolved.
 
 Long-horizon cognitive validation:
 

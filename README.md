@@ -163,6 +163,7 @@ questions, answers, or generated text:
 | Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
 | --- | ---: | ---: | ---: | ---: | --- |
 | 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | authorization failed |
+| 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | not requested |
 | 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | authorization failed |
 | 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | not requested |
 | 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
@@ -176,7 +177,10 @@ review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
 gold answer substring in the generated answer, so answer synthesis is now a
-separate bottleneck from retrieval/ranking.
+separate bottleneck from retrieval/ranking. A DMR 50 generator ablation confirms
+that this is actionable: keeping answer extraction inside the top returned
+chunk raises substring accuracy from `0.060` to `0.220` without changing
+retrieval.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping

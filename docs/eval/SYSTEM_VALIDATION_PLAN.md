@@ -319,6 +319,13 @@ finds a blocking bug.
   those top-1 hits still do not include the gold answer substring in the
   generated answer. This keeps answer synthesis as a separate Phase 6
   bottleneck from retrieval/ranking.
+- Official-style DMR 50 generator ablation is recorded at
+  `crates/eval/reports/official-dmr-50-top-context-extractive.json` and
+  `crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`. With
+  retrieval unchanged, restricting extraction to the top returned context raises
+  DMR 50 gold-answer substring accuracy from `0.060` to `0.220` and ROUGE-L F1
+  from `0.041` to `0.103`. This is eval-only evidence; do not promote it to a
+  default without DMR 200/500 and judge validation.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`
