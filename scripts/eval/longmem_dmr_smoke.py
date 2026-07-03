@@ -1203,6 +1203,66 @@ def failure_type_for_rank(rank: int | None) -> str:
     return "wrong_rank"
 
 
+def compact_hit_diagnostic(hit: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not hit:
+        return None
+    branch_ranks = [
+        value
+        for value in (
+            hit.get("fts_rank"),
+            hit.get("entity_rank"),
+            hit.get("vector_rank"),
+        )
+        if value is not None
+    ]
+    return {
+        "rank": hit.get("rank"),
+        "score": hit.get("score"),
+        "rrf_score": hit.get("rrf_score"),
+        "rerank_score": hit.get("rerank_score"),
+        "activation_bonus": hit.get("activation_bonus"),
+        "source_count": len(hit.get("sources") or []),
+        "sources": sorted(hit.get("sources") or []),
+        "best_branch_rank": min(branch_ranks) if branch_ranks else None,
+        "fts_rank": hit.get("fts_rank"),
+        "entity_rank": hit.get("entity_rank"),
+        "vector_rank": hit.get("vector_rank"),
+        "entity_hits": hit.get("entity_hits"),
+    }
+
+
+def safe_numeric_delta(left: Any, right: Any) -> float | None:
+    if left is None or right is None:
+        return None
+    return float(left) - float(right)
+
+
+def ranking_signal_summary(query_result: dict[str, Any], relevant: set[str]) -> dict[str, Any]:
+    diagnostics = query_result.get("returned_hit_diagnostics") or []
+    top1 = diagnostics[0] if len(diagnostics) >= 1 else None
+    top2 = diagnostics[1] if len(diagnostics) >= 2 else None
+    relevant_hits = [hit for hit in diagnostics if hit.get("key") in relevant]
+    first_relevant = relevant_hits[0] if relevant_hits else None
+    return {
+        "available": bool(diagnostics),
+        "top1": compact_hit_diagnostic(top1),
+        "top2": compact_hit_diagnostic(top2),
+        "top1_top2_score_margin": safe_numeric_delta(
+            (top1 or {}).get("score"), (top2 or {}).get("score")
+        ),
+        "top1_top2_rerank_margin": safe_numeric_delta(
+            (top1 or {}).get("rerank_score"), (top2 or {}).get("rerank_score")
+        ),
+        "top1_top2_rrf_margin": safe_numeric_delta(
+            (top1 or {}).get("rrf_score"), (top2 or {}).get("rrf_score")
+        ),
+        "first_relevant": compact_hit_diagnostic(first_relevant),
+        "first_relevant_score_gap_vs_top1": safe_numeric_delta(
+            (top1 or {}).get("score"), (first_relevant or {}).get("score")
+        ),
+    }
+
+
 def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) -> dict[str, Any]:
     per_query = []
     for index, query_result in enumerate(raw.get("per_query", [])):
@@ -1227,6 +1287,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
                 "ndcg_at_10": query_result.get("ndcg_at_10"),
                 "latency_ms": query_result.get("latency_ms"),
                 "profile": query_result.get("profile"),
+                "ranking_signal_summary": ranking_signal_summary(query_result, relevant),
             }
         )
     return {

@@ -1,5 +1,8 @@
 use crate::metrics::{ndcg_at_k, percentile, recall_at_k, reciprocal_rank};
-use crate::types::{BenchOptions, Dataset, QueryResult, RecallProfileMeanMs, Report, TimingReport};
+use crate::types::{
+    BenchOptions, Dataset, QueryResult, RecallProfileMeanMs, Report, ReturnedHitDiagnostic,
+    TimingReport,
+};
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -117,11 +120,23 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
 
         let returned: Vec<String> = hits
             .iter()
-            .map(|h: &RecallHit| {
-                id_to_key
-                    .get(&h.memory.id)
-                    .cloned()
-                    .unwrap_or_else(|| h.memory.id.clone())
+            .map(|h: &RecallHit| hit_key(h, &id_to_key))
+            .collect();
+        let returned_hit_diagnostics: Vec<ReturnedHitDiagnostic> = hits
+            .iter()
+            .enumerate()
+            .map(|(index, h)| ReturnedHitDiagnostic {
+                key: hit_key(h, &id_to_key),
+                rank: index + 1,
+                score: h.score,
+                rrf_score: h.rrf_score,
+                rerank_score: h.rerank_score,
+                activation_bonus: h.activation_bonus,
+                fts_rank: h.fts_rank,
+                entity_rank: h.entity_rank,
+                vector_rank: h.vector_rank,
+                entity_hits: h.entity_hits,
+                sources: h.sources.iter().map(|source| source.to_string()).collect(),
             })
             .collect();
         let relevant: Vec<String> = q.relevant.clone();
@@ -133,6 +148,7 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
             query: q.query.clone(),
             relevant,
             returned,
+            returned_hit_diagnostics,
             recall_at_5: recall_5,
             recall_at_10: recall_10,
             rr,
@@ -186,6 +202,13 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
 
 fn elapsed_ms(start: Instant) -> f64 {
     start.elapsed().as_secs_f64() * 1000.0
+}
+
+fn hit_key(h: &RecallHit, id_to_key: &HashMap<String, String>) -> String {
+    id_to_key
+        .get(&h.memory.id)
+        .cloned()
+        .unwrap_or_else(|| h.memory.id.clone())
 }
 
 fn add_profile(total: &mut RecallProfile, profile: &RecallProfile) {

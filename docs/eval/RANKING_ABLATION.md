@@ -26,6 +26,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-200-reranker-pool.json`
 
+`crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json`
+
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
@@ -41,6 +43,8 @@ Machine-readable reports:
 `crates/eval/reports/ranking-late-rank-audit-dmr-50-200.json`
 
 `crates/eval/reports/ranking-reranker-pool-transition-audit-dmr-200.json`
+
+`crates/eval/reports/ranking-pool-signal-trigger-audit-dmr-200.json`
 
 Runner:
 
@@ -65,6 +69,10 @@ Late-rank audit runner:
 Reranker-pool transition audit runner:
 
 `scripts/eval/ranking_reranker_pool_transition_audit.py`
+
+Pool signal trigger audit runner:
+
+`scripts/eval/ranking_pool_signal_trigger_audit.py`
 
 Chunk-policy runner:
 
@@ -1054,6 +1062,114 @@ pool. A safer policy needs a second-stage ordering signal that can help the
 rank 11-25 cases without suppressing existing top-10/top-1 hits or paying the
 full pool `100` latency on every query.
 
+## DMR 200 Pool Signal Trigger Audit
+
+The previous result showed that full pool `100` is too expensive as a global
+default. This pass adds evaluation-only ranking diagnostics to the sanitized
+report and simulates conditional use of pool `100` from answer-free signals in
+the pool `50` control run.
+
+The added diagnostics are rank/score/source summaries only. They do not record
+raw questions, answers, dialogs, sessions, memory content, or generated answer
+text.
+
+Reports:
+
+`crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json`
+
+`crates/eval/reports/ranking-pool-signal-trigger-audit-dmr-200.json`
+
+Signal run command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets dmr `
+  --dmr-sample-size 200 `
+  --dmr-answer-match punctuation `
+  --ablation reranker-pool `
+  --reranker-pools 50,100 `
+  --k 10 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json `
+  --cleanup-cache
+```
+
+Trigger audit command:
+
+```powershell
+python scripts/eval/ranking_pool_signal_trigger_audit.py
+```
+
+### Pool Signal Trigger Result
+
+Control pool `50`:
+
+| Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.411 | 0.472 | 644.9 ms | 74 | 65 | 61 |
+
+Full pool `100`:
+
+| Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.416 | 0.483 | 1203.9 ms | 77 | 67 | 56 |
+
+Best simulated trigger:
+
+`top1_single_source`
+
+This trigger uses pool `100` only when the pool `50` top-1 hit came from
+exactly one retrieval branch. It triggered on `43/200` queries.
+
+Projected result versus pool `50`:
+
+| Metric | Delta |
+| --- | ---: |
+| Recall@10 | +0.0117 |
+| MRR@10 | +0.0131 |
+| NDCG@10 | +0.0094 |
+| P50 latency estimate | +8.5 ms |
+| P95 latency estimate | +520.3 ms |
+| Top-1 | +3 |
+| Top-10 not top-1 | +2 |
+| Retrieval misses | -5 |
+
+Triggered transitions:
+
+| Transition | Count |
+| --- | ---: |
+| Promoted to top-1 | 3 |
+| Recovered to top-10 | 2 |
+| Stable top-1 | 8 |
+| Top-10 preserved | 13 |
+| Miss unchanged | 17 |
+
+The important detail: this trigger has no triggered top-10 suppressions or
+top-1 demotions in the DMR 200 simulation, while full pool `100` still has
+suppression/demotion risk.
+
+### Pool Signal Trigger Read
+
+This is the first ranking result that points to a plausible conditional policy
+instead of a global parameter change.
+
+`top1_single_source` is answer-free: it depends only on the control run's
+retrieval source composition, not on gold answers or raw text. It captures the
+same aggregate miss reduction as full pool `100` in this simulation, while
+triggering only `21.5%` of queries and avoiding the harmful pool `100`
+transitions that appear outside the triggered set.
+
+But this is not a default yet. It is a DMR 200 offline simulation using
+existing pool `50` and pool `100` reports. The next gate is to rerun the same
+signal-trigger audit on DMR 50 and LongMemEval 50. If it helps DMR but hurts
+LongMemEval, it stays dataset-specific or remains a research finding.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -1090,16 +1206,20 @@ first target ordering inside the existing candidate pool and keep top-50
 retrieval misses as a separate coverage problem. The DMR 200 reranker-pool
 check adds that pool `25` is too lossy and pool `100` is too expensive for a
 global default, even though pool `100` gives a small aggregate quality gain.
+The signal-trigger audit gives a better next candidate: conditionally expanding
+to pool `100` when the pool `50` top-1 result has only one retrieval source.
+That is still an eval-only candidate until DMR 50 and LongMemEval cross-checks
+are recorded.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. design a conditional second-stage ordering signal for DMR 200 rank 11-25
-   cases without running pool `100` for every query;
-2. separate top-50 retrieval misses from late-rank ordering failures in the
+1. cross-check `top1_single_source` on DMR 50 and LongMemEval 50;
+2. compare it against full pool `100` and pool `50` on the same fixed samples;
+3. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;
-3. test smaller, overlap-aware chunking instead of full-session merging;
-4. avoid blunt keyword-boost query expansion unless a future answer-free
+4. test smaller, overlap-aware chunking instead of full-session merging;
+5. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-5. keep answer-generation scoring separate from retrieval-ranking scoring.
+6. keep answer-generation scoring separate from retrieval-ranking scoring.

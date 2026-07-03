@@ -1,0 +1,1468 @@
+{
+  "schema_version": "king-synapse.ranking-pool-signal-trigger-audit.v1",
+  "generated_at": "2026-07-03T12:18:21.695478+00:00",
+  "runner": "scripts/eval/ranking_pool_signal_trigger_audit.py",
+  "inputs": {
+    "signal_report": {
+      "path": "crates\\eval\\reports\\ranking-ablation-dmr-200-reranker-pool-signal.json",
+      "sha256": "8c19e4886b9cc2faa29738cfa58c273537182e1d649c19955836c8a2eb4b0ec7"
+    },
+    "late_rank_report": {
+      "path": "crates\\eval\\reports\\ranking-late-rank-audit-dmr-50-200.json",
+      "sha256": "4809e4944ebc2e6c6843ad0e877dd3ede2ea500ce3f13b201ed1ac4085e19bc5"
+    }
+  },
+  "dataset": "DMR candidate MSC-Self-Instruct, punctuation-normalized 200",
+  "control_pool": 50,
+  "candidate_pool": 100,
+  "control": {
+    "variant_id": "reranker-pool-50",
+    "reranker_pool": 50,
+    "recall_at_10": 0.41074999999999995,
+    "mrr_at_10": 0.4718988095238095,
+    "ndcg_at_10": 0.3518202674199433,
+    "p50_latency_ms": 644.9045,
+    "p95_latency_ms": 703.0336000000001,
+    "rank_bucket_counts": {
+      "absent": 61,
+      "top_1": 74,
+      "top_10": 65
+    },
+    "failure_type_counts": {
+      "hit_top_1": 74,
+      "retrieval_miss": 61,
+      "top_10_not_top_1": 65
+    }
+  },
+  "candidate": {
+    "variant_id": "reranker-pool-100",
+    "reranker_pool": 100,
+    "recall_at_10": 0.4159166666666667,
+    "mrr_at_10": 0.483267857142857,
+    "ndcg_at_10": 0.360479063189895,
+    "p50_latency_ms": 1203.8979000000002,
+    "p95_latency_ms": 1275.827,
+    "rank_bucket_counts": {
+      "absent": 56,
+      "top_1": 77,
+      "top_10": 67
+    },
+    "failure_type_counts": {
+      "hit_top_1": 77,
+      "retrieval_miss": 56,
+      "top_10_not_top_1": 67
+    }
+  },
+  "candidate_transition_counts": {
+    "demoted_from_top1": 2,
+    "miss_unchanged": 49,
+    "promoted_to_top1": 5,
+    "recovered_to_top10": 7,
+    "stable_top1": 72,
+    "suppressed_from_top10": 7,
+    "top10_preserved": 58
+  },
+  "subset_sizes": {
+    "late_rank_11_25": 10,
+    "late_rank_26_50": 7,
+    "late_rank_all": 17,
+    "top50_retrieval_miss": 43
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "trigger_evaluations": [
+    {
+      "id": "top1_single_source",
+      "description": "top1 hit came from exactly one retrieval branch",
+      "field": "top1_source_count",
+      "operator": "lte",
+      "threshold": 1,
+      "triggered_count": 43,
+      "triggered_fraction": 0.215,
+      "triggered_transition_counts": {
+        "miss_unchanged": 17,
+        "promoted_to_top1": 3,
+        "recovered_to_top10": 2,
+        "stable_top1": 8,
+        "top10_preserved": 13
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 2,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "57b6b989521797c9",
+            "8ccceb153421d162",
+            "a9c92ff5ce995d83"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 2,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 6,
+          "transition_counts": {
+            "miss_unchanged": 4,
+            "promoted_to_top1": 1,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "57b6b989521797c9",
+            "7c8159d2c1581c61",
+            "8ccceb153421d162",
+            "92a5b492c87f88f9",
+            "a9c92ff5ce995d83",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 16,
+          "transition_counts": {
+            "miss_unchanged": 13,
+            "promoted_to_top1": 2,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "1e69717693095efe",
+            "223449f3f1271cf6",
+            "4bd4b8dfb62c479e",
+            "54bf81d84ba6650e",
+            "678896f37145c5e4",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71714276bfbbc47d",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "89ac2fdca85e4ed0",
+            "998d8210bc75f2bf",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "d64b1f541eadbecf"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.42241666666666666,
+        "mrr_at_10": 0.4850297619047619,
+        "ndcg_at_10": 0.36122761011407506,
+        "p50_latency_ms_estimate": 653.4463499999999,
+        "p95_latency_ms_estimate": 1223.34687,
+        "rank_bucket_counts": {
+          "absent": 56,
+          "top_1": 77,
+          "top_10": 67
+        },
+        "failure_type_counts": {
+          "hit_top_1": 77,
+          "retrieval_miss": 56,
+          "top_10_not_top_1": 67
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.011666666666666714,
+        "mrr_at_10": 0.013130952380952354,
+        "ndcg_at_10": 0.009407342694131737,
+        "p50_latency_ms_estimate": 8.541849999999954,
+        "p95_latency_ms_estimate": 520.31327,
+        "top1": 3,
+        "top10_not_top1": 2,
+        "retrieval_miss": -5
+      }
+    },
+    {
+      "id": "score_margin_p50",
+      "description": "top1/top2 final-score margin <= p50",
+      "field": "score_margin",
+      "operator": "lte",
+      "threshold": 0.0356666085,
+      "triggered_count": 100,
+      "triggered_fraction": 0.5,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 2,
+        "miss_unchanged": 30,
+        "promoted_to_top1": 5,
+        "recovered_to_top10": 3,
+        "stable_top1": 17,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 40
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 7,
+          "transition_counts": {
+            "miss_unchanged": 7
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "57b6b989521797c9",
+            "80a1b939a7e18a9f",
+            "86d36285f59b7db4",
+            "91292ebab64f4d15",
+            "a9c92ff5ce995d83"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 4,
+          "transition_counts": {
+            "miss_unchanged": 3,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 11,
+          "transition_counts": {
+            "miss_unchanged": 10,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "491ae3d40cf1a72c",
+            "57b6b989521797c9",
+            "7c8159d2c1581c61",
+            "80a1b939a7e18a9f",
+            "86d36285f59b7db4",
+            "91292ebab64f4d15",
+            "92a5b492c87f88f9",
+            "a9c92ff5ce995d83",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 26,
+          "transition_counts": {
+            "miss_unchanged": 19,
+            "promoted_to_top1": 4,
+            "recovered_to_top10": 3
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "07b99a0afeb815dd",
+            "132b8bf9e0085039",
+            "223449f3f1271cf6",
+            "299487814ed07842",
+            "36ab285fb5815521",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "5fc96f6a32c7b611",
+            "63974db9fde144a0",
+            "6481289551ed1a75",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "7c19a3ed85d4e5d2",
+            "89ac2fdca85e4ed0",
+            "a0037e23ea27eee7",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "cb0afadae76e4a2c",
+            "cfa67e046b577700",
+            "f2659c820d628fc6"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4186666666666667,
+        "mrr_at_10": 0.4836785714285714,
+        "ndcg_at_10": 0.36163062431013826,
+        "p50_latency_ms_estimate": 938.6845000000001,
+        "p95_latency_ms_estimate": 1247.485165,
+        "rank_bucket_counts": {
+          "absent": 56,
+          "top_1": 77,
+          "top_10": 67
+        },
+        "failure_type_counts": {
+          "hit_top_1": 77,
+          "retrieval_miss": 56,
+          "top_10_not_top_1": 67
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.007916666666666738,
+        "mrr_at_10": 0.011779761904761876,
+        "ndcg_at_10": 0.009810356890194938,
+        "p50_latency_ms_estimate": 293.7800000000001,
+        "p95_latency_ms_estimate": 544.451565,
+        "top1": 3,
+        "top10_not_top1": 2,
+        "retrieval_miss": -5
+      }
+    },
+    {
+      "id": "rerank_margin_p50",
+      "description": "top1/top2 rerank-logit margin <= p50",
+      "field": "rerank_margin",
+      "operator": "lte",
+      "threshold": 1.4579525,
+      "triggered_count": 100,
+      "triggered_fraction": 0.5,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 27,
+        "promoted_to_top1": 4,
+        "recovered_to_top10": 5,
+        "stable_top1": 13,
+        "suppressed_from_top10": 4,
+        "top10_preserved": 46
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 4,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "2a7675ca93763373",
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "57b6b989521797c9",
+            "86d36285f59b7db4"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 4,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a",
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 10,
+          "transition_counts": {
+            "miss_unchanged": 8,
+            "promoted_to_top1": 1,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "2a7675ca93763373",
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "491ae3d40cf1a72c",
+            "57b6b989521797c9",
+            "7c8159d2c1581c61",
+            "86d36285f59b7db4",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a",
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 25,
+          "transition_counts": {
+            "miss_unchanged": 18,
+            "promoted_to_top1": 3,
+            "recovered_to_top10": 4
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "07b99a0afeb815dd",
+            "132b8bf9e0085039",
+            "299487814ed07842",
+            "36ab285fb5815521",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "54bf81d84ba6650e",
+            "5fc96f6a32c7b611",
+            "63974db9fde144a0",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "7c19a3ed85d4e5d2",
+            "86db935013168e52",
+            "89ac2fdca85e4ed0",
+            "a0037e23ea27eee7",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "c5bb8f5a25117416",
+            "cb0afadae76e4a2c"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.41741666666666666,
+        "mrr_at_10": 0.48275595238095237,
+        "ndcg_at_10": 0.35884935392365563,
+        "p50_latency_ms_estimate": 935.0463500000001,
+        "p95_latency_ms_estimate": 1241.9185450000002,
+        "rank_bucket_counts": {
+          "absent": 56,
+          "top_1": 77,
+          "top_10": 67
+        },
+        "failure_type_counts": {
+          "hit_top_1": 77,
+          "retrieval_miss": 56,
+          "top_10_not_top_1": 67
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.00666666666666671,
+        "mrr_at_10": 0.010857142857142843,
+        "ndcg_at_10": 0.007029086503712312,
+        "p50_latency_ms_estimate": 290.1418500000001,
+        "p95_latency_ms_estimate": 538.8849450000001,
+        "top1": 3,
+        "top10_not_top1": 2,
+        "retrieval_miss": -5
+      }
+    },
+    {
+      "id": "top1_vector_only",
+      "description": "top1 hit came only from vector branch",
+      "field": "top1_sources",
+      "operator": "equals",
+      "threshold": [
+        "vector"
+      ],
+      "triggered_count": 17,
+      "triggered_fraction": 0.085,
+      "triggered_transition_counts": {
+        "miss_unchanged": 4,
+        "promoted_to_top1": 2,
+        "recovered_to_top10": 1,
+        "stable_top1": 3,
+        "top10_preserved": 7
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "8ccceb153421d162"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 0,
+          "transition_counts": {},
+          "sample_ids": []
+        },
+        "late_rank_all": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "8ccceb153421d162"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 6,
+          "transition_counts": {
+            "miss_unchanged": 4,
+            "promoted_to_top1": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "4bd4b8dfb62c479e",
+            "6fbb9786ee7edd32",
+            "72b85d2f721e72d6",
+            "aa22a4450ed7ae65",
+            "d64b1f541eadbecf"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.41741666666666666,
+        "mrr_at_10": 0.4813690476190476,
+        "ndcg_at_10": 0.3585092784757453,
+        "p50_latency_ms_estimate": 648.05715,
+        "p95_latency_ms_estimate": 1196.6229200000002,
+        "rank_bucket_counts": {
+          "absent": 58,
+          "top_1": 76,
+          "top_10": 66
+        },
+        "failure_type_counts": {
+          "hit_top_1": 76,
+          "retrieval_miss": 58,
+          "top_10_not_top_1": 66
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.00666666666666671,
+        "mrr_at_10": 0.00947023809523806,
+        "ndcg_at_10": 0.006689011055801997,
+        "p50_latency_ms_estimate": 3.152649999999994,
+        "p95_latency_ms_estimate": 493.58932000000016,
+        "top1": 2,
+        "top10_not_top1": 1,
+        "retrieval_miss": -3
+      }
+    },
+    {
+      "id": "top1_branch_rank_gt20",
+      "description": "best branch rank for top1 is worse than 20",
+      "field": "top1_best_branch_rank",
+      "operator": "gt",
+      "threshold": 20,
+      "triggered_count": 9,
+      "triggered_fraction": 0.045,
+      "triggered_transition_counts": {
+        "miss_unchanged": 3,
+        "promoted_to_top1": 1,
+        "stable_top1": 1,
+        "top10_preserved": 4
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 0,
+          "transition_counts": {},
+          "sample_ids": []
+        },
+        "late_rank_26_50": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 2,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "5fc96f6a32c7b611",
+            "71c87a668c1e8aa2",
+            "cfa67e046b577700"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4140833333333333,
+        "mrr_at_10": 0.4761964285714286,
+        "ndcg_at_10": 0.3557419575208291,
+        "p50_latency_ms_estimate": 646.29325,
+        "p95_latency_ms_estimate": 738.4264650000001,
+        "rank_bucket_counts": {
+          "absent": 60,
+          "top_1": 75,
+          "top_10": 65
+        },
+        "failure_type_counts": {
+          "hit_top_1": 75,
+          "retrieval_miss": 60,
+          "top_10_not_top_1": 65
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.003333333333333355,
+        "mrr_at_10": 0.00429761904761905,
+        "ndcg_at_10": 0.003921690100885777,
+        "p50_latency_ms_estimate": 1.388749999999959,
+        "p95_latency_ms_estimate": 35.39286500000003,
+        "top1": 1,
+        "top10_not_top1": 0,
+        "retrieval_miss": -1
+      }
+    },
+    {
+      "id": "score_margin_p40",
+      "description": "top1/top2 final-score margin <= p40",
+      "field": "score_margin",
+      "operator": "lte",
+      "threshold": 0.01689388441999999,
+      "triggered_count": 80,
+      "triggered_fraction": 0.4,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 24,
+        "promoted_to_top1": 5,
+        "recovered_to_top10": 2,
+        "stable_top1": 10,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 35
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 5
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "86d36285f59b7db4",
+            "91292ebab64f4d15",
+            "a9c92ff5ce995d83"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 4,
+          "transition_counts": {
+            "miss_unchanged": 3,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 9,
+          "transition_counts": {
+            "miss_unchanged": 8,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "86d36285f59b7db4",
+            "91292ebab64f4d15",
+            "92a5b492c87f88f9",
+            "a9c92ff5ce995d83",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 21,
+          "transition_counts": {
+            "miss_unchanged": 15,
+            "promoted_to_top1": 4,
+            "recovered_to_top10": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "132b8bf9e0085039",
+            "223449f3f1271cf6",
+            "299487814ed07842",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "5fc96f6a32c7b611",
+            "6481289551ed1a75",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "7c19a3ed85d4e5d2",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "cb0afadae76e4a2c",
+            "cfa67e046b577700"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4136666666666667,
+        "mrr_at_10": 0.48638690476190477,
+        "ndcg_at_10": 0.3607910583623464,
+        "p50_latency_ms_estimate": 678.17425,
+        "p95_latency_ms_estimate": 1240.606395,
+        "rank_bucket_counts": {
+          "absent": 57,
+          "top_1": 78,
+          "top_10": 65
+        },
+        "failure_type_counts": {
+          "hit_top_1": 78,
+          "retrieval_miss": 57,
+          "top_10_not_top_1": 65
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.002916666666666734,
+        "mrr_at_10": 0.014488095238095244,
+        "ndcg_at_10": 0.00897079094240305,
+        "p50_latency_ms_estimate": 33.269750000000045,
+        "p95_latency_ms_estimate": 537.5727949999999,
+        "top1": 4,
+        "top10_not_top1": 0,
+        "retrieval_miss": -4
+      }
+    },
+    {
+      "id": "rerank_margin_p40",
+      "description": "top1/top2 rerank-logit margin <= p40",
+      "field": "rerank_margin",
+      "operator": "lte",
+      "threshold": 1.0827520400000004,
+      "triggered_count": 80,
+      "triggered_fraction": 0.4,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 26,
+        "promoted_to_top1": 3,
+        "recovered_to_top10": 4,
+        "stable_top1": 7,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 36
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 4,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "2a7675ca93763373",
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "57b6b989521797c9",
+            "86d36285f59b7db4"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 4,
+          "transition_counts": {
+            "miss_unchanged": 4
+          },
+          "sample_ids": [
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 9,
+          "transition_counts": {
+            "miss_unchanged": 8,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "2a7675ca93763373",
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "491ae3d40cf1a72c",
+            "57b6b989521797c9",
+            "7c8159d2c1581c61",
+            "86d36285f59b7db4",
+            "92a5b492c87f88f9",
+            "ff5c63b3f30f749e"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 23,
+          "transition_counts": {
+            "miss_unchanged": 17,
+            "promoted_to_top1": 3,
+            "recovered_to_top10": 3
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "07b99a0afeb815dd",
+            "132b8bf9e0085039",
+            "299487814ed07842",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "54bf81d84ba6650e",
+            "5fc96f6a32c7b611",
+            "63974db9fde144a0",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "7c19a3ed85d4e5d2",
+            "86db935013168e52",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "c5bb8f5a25117416",
+            "cb0afadae76e4a2c"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.41283333333333333,
+        "mrr_at_10": 0.47958333333333336,
+        "ndcg_at_10": 0.35637475077021397,
+        "p50_latency_ms_estimate": 677.5651,
+        "p95_latency_ms_estimate": 1238.6859899999997,
+        "rank_bucket_counts": {
+          "absent": 57,
+          "top_1": 76,
+          "top_10": 67
+        },
+        "failure_type_counts": {
+          "hit_top_1": 76,
+          "retrieval_miss": 57,
+          "top_10_not_top_1": 67
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": 0.0020833333333333814,
+        "mrr_at_10": 0.0076845238095238355,
+        "ndcg_at_10": 0.004554483350270644,
+        "p50_latency_ms_estimate": 32.660600000000045,
+        "p95_latency_ms_estimate": 535.6523899999996,
+        "top1": 2,
+        "top10_not_top1": 2,
+        "retrieval_miss": -4
+      }
+    },
+    {
+      "id": "score_margin_p10",
+      "description": "top1/top2 final-score margin <= p10",
+      "field": "score_margin",
+      "operator": "lte",
+      "threshold": 0.00044569726,
+      "triggered_count": 20,
+      "triggered_fraction": 0.1,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 8,
+        "promoted_to_top1": 2,
+        "stable_top1": 1,
+        "suppressed_from_top10": 2,
+        "top10_preserved": 6
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 3
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 7,
+          "transition_counts": {
+            "miss_unchanged": 5,
+            "promoted_to_top1": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "5fc96f6a32c7b611",
+            "777d4343332b7222",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4086666666666667,
+        "mrr_at_10": 0.47731547619047615,
+        "ndcg_at_10": 0.35582378692728467,
+        "p50_latency_ms_estimate": 647.35015,
+        "p95_latency_ms_estimate": 1198.08353,
+        "rank_bucket_counts": {
+          "absent": 61,
+          "top_1": 75,
+          "top_10": 64
+        },
+        "failure_type_counts": {
+          "hit_top_1": 75,
+          "retrieval_miss": 61,
+          "top_10_not_top_1": 64
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.0020833333333332704,
+        "mrr_at_10": 0.005416666666666625,
+        "ndcg_at_10": 0.0040035195073413465,
+        "p50_latency_ms_estimate": 2.4456500000000005,
+        "p95_latency_ms_estimate": 495.04993,
+        "top1": 1,
+        "top10_not_top1": -1,
+        "retrieval_miss": 0
+      }
+    },
+    {
+      "id": "rerank_margin_p30",
+      "description": "top1/top2 rerank-logit margin <= p30",
+      "field": "rerank_margin",
+      "operator": "lte",
+      "threshold": 0.737333658,
+      "triggered_count": 60,
+      "triggered_fraction": 0.3,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 20,
+        "promoted_to_top1": 3,
+        "recovered_to_top10": 2,
+        "stable_top1": 3,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 28
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 3
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "57b6b989521797c9"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 5
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "57b6b989521797c9",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 19,
+          "transition_counts": {
+            "miss_unchanged": 14,
+            "promoted_to_top1": 3,
+            "recovered_to_top10": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "07b99a0afeb815dd",
+            "132b8bf9e0085039",
+            "299487814ed07842",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "63974db9fde144a0",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "86db935013168e52",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "c5bb8f5a25117416"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4078333333333333,
+        "mrr_at_10": 0.4776666666666667,
+        "ndcg_at_10": 0.35392610580435574,
+        "p50_latency_ms_estimate": 658.92985,
+        "p95_latency_ms_estimate": 1229.82671,
+        "rank_bucket_counts": {
+          "absent": 59,
+          "top_1": 76,
+          "top_10": 65
+        },
+        "failure_type_counts": {
+          "hit_top_1": 76,
+          "retrieval_miss": 59,
+          "top_10_not_top_1": 65
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.002916666666666623,
+        "mrr_at_10": 0.005767857142857158,
+        "ndcg_at_10": 0.0021058383844124173,
+        "p50_latency_ms_estimate": 14.025350000000003,
+        "p95_latency_ms_estimate": 526.79311,
+        "top1": 2,
+        "top10_not_top1": 0,
+        "retrieval_miss": -2
+      }
+    },
+    {
+      "id": "score_margin_p30",
+      "description": "top1/top2 final-score margin <= p30",
+      "field": "score_margin",
+      "operator": "lte",
+      "threshold": 0.008399306826,
+      "triggered_count": 60,
+      "triggered_fraction": 0.3,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 20,
+        "promoted_to_top1": 4,
+        "recovered_to_top10": 1,
+        "stable_top1": 5,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 26
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 4,
+          "transition_counts": {
+            "miss_unchanged": 3,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 6,
+          "transition_counts": {
+            "miss_unchanged": 5,
+            "promoted_to_top1": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "491ae3d40cf1a72c",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9",
+            "c1ab88a6cd33024a"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 18,
+          "transition_counts": {
+            "miss_unchanged": 14,
+            "promoted_to_top1": 3,
+            "recovered_to_top10": 1
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "132b8bf9e0085039",
+            "223449f3f1271cf6",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "5fc96f6a32c7b611",
+            "6a1e49f9a2cc23fd",
+            "6fbb9786ee7edd32",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "7c19a3ed85d4e5d2",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "cb0afadae76e4a2c"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.4061666666666667,
+        "mrr_at_10": 0.48279761904761903,
+        "ndcg_at_10": 0.3558092697423801,
+        "p50_latency_ms_estimate": 658.2102,
+        "p95_latency_ms_estimate": 1228.4881799999998,
+        "rank_bucket_counts": {
+          "absent": 59,
+          "top_1": 77,
+          "top_10": 64
+        },
+        "failure_type_counts": {
+          "hit_top_1": 77,
+          "retrieval_miss": 59,
+          "top_10_not_top_1": 64
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.004583333333333273,
+        "mrr_at_10": 0.010898809523809505,
+        "ndcg_at_10": 0.003989002322436763,
+        "p50_latency_ms_estimate": 13.305700000000002,
+        "p95_latency_ms_estimate": 525.4545799999997,
+        "top1": 3,
+        "top10_not_top1": -1,
+        "retrieval_miss": -2
+      }
+    },
+    {
+      "id": "rerank_margin_p20",
+      "description": "top1/top2 rerank-logit margin <= p20",
+      "field": "rerank_margin",
+      "operator": "lte",
+      "threshold": 0.38806526000000025,
+      "triggered_count": 40,
+      "triggered_fraction": 0.2,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 16,
+        "promoted_to_top1": 1,
+        "recovered_to_top10": 2,
+        "stable_top1": 1,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 16
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 4,
+          "transition_counts": {
+            "miss_unchanged": 4
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "44e99e4000e03d20",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 15,
+          "transition_counts": {
+            "miss_unchanged": 12,
+            "promoted_to_top1": 1,
+            "recovered_to_top10": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "132b8bf9e0085039",
+            "299487814ed07842",
+            "3d7a62a3a9e865b5",
+            "4758e8e192f85508",
+            "4bd4b8dfb62c479e",
+            "63974db9fde144a0",
+            "6a1e49f9a2cc23fd",
+            "71c87a668c1e8aa2",
+            "72b85d2f721e72d6",
+            "777d4343332b7222",
+            "86db935013168e52",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.40575000000000006,
+        "mrr_at_10": 0.4724047619047619,
+        "ndcg_at_10": 0.35233904731665744,
+        "p50_latency_ms_estimate": 650.6667500000001,
+        "p95_latency_ms_estimate": 1223.268065,
+        "rank_bucket_counts": {
+          "absent": 61,
+          "top_1": 74,
+          "top_10": 65
+        },
+        "failure_type_counts": {
+          "hit_top_1": 74,
+          "retrieval_miss": 61,
+          "top_10_not_top_1": 65
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.004999999999999893,
+        "mrr_at_10": 0.000505952380952357,
+        "ndcg_at_10": 0.0005187798967141166,
+        "p50_latency_ms_estimate": 5.762250000000108,
+        "p95_latency_ms_estimate": 520.2344649999999,
+        "top1": 0,
+        "top10_not_top1": 0,
+        "retrieval_miss": 0
+      }
+    },
+    {
+      "id": "score_margin_p20",
+      "description": "top1/top2 final-score margin <= p20",
+      "field": "score_margin",
+      "operator": "lte",
+      "threshold": 0.0014744504999999997,
+      "triggered_count": 40,
+      "triggered_fraction": 0.2,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 14,
+        "promoted_to_top1": 2,
+        "stable_top1": 3,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 17
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 3,
+          "transition_counts": {
+            "miss_unchanged": 3
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "7c8159d2c1581c61",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 12,
+          "transition_counts": {
+            "miss_unchanged": 10,
+            "promoted_to_top1": 2
+          },
+          "sample_ids": [
+            "0529a49ecbea3eac",
+            "3d7a62a3a9e865b5",
+            "4bd4b8dfb62c479e",
+            "5139cc6aae7bfc63",
+            "5fc96f6a32c7b611",
+            "6a1e49f9a2cc23fd",
+            "71c87a668c1e8aa2",
+            "777d4343332b7222",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65",
+            "c46541722e486083",
+            "cb0afadae76e4a2c"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.40325000000000005,
+        "mrr_at_10": 0.4741666666666666,
+        "ndcg_at_10": 0.3518436507249841,
+        "p50_latency_ms_estimate": 651.6364000000001,
+        "p95_latency_ms_estimate": 1219.64132,
+        "rank_bucket_counts": {
+          "absent": 62,
+          "top_1": 75,
+          "top_10": 63
+        },
+        "failure_type_counts": {
+          "hit_top_1": 75,
+          "retrieval_miss": 62,
+          "top_10_not_top_1": 63
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.007499999999999896,
+        "mrr_at_10": 0.0022678571428570993,
+        "ndcg_at_10": 2.3383305040758362e-05,
+        "p50_latency_ms_estimate": 6.73190000000011,
+        "p95_latency_ms_estimate": 516.6077199999999,
+        "top1": 1,
+        "top10_not_top1": -2,
+        "retrieval_miss": 1
+      }
+    },
+    {
+      "id": "rerank_margin_p10",
+      "description": "top1/top2 rerank-logit margin <= p10",
+      "field": "rerank_margin",
+      "operator": "lte",
+      "threshold": 0.18549310599999952,
+      "triggered_count": 20,
+      "triggered_fraction": 0.1,
+      "triggered_transition_counts": {
+        "demoted_from_top1": 1,
+        "miss_unchanged": 7,
+        "stable_top1": 1,
+        "suppressed_from_top10": 2,
+        "top10_preserved": 9
+      },
+      "subset_trigger_summary": {
+        "late_rank_11_25": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "3208a959ca882fb4"
+          ]
+        },
+        "late_rank_26_50": {
+          "triggered_count": 1,
+          "transition_counts": {
+            "miss_unchanged": 1
+          },
+          "sample_ids": [
+            "92a5b492c87f88f9"
+          ]
+        },
+        "late_rank_all": {
+          "triggered_count": 2,
+          "transition_counts": {
+            "miss_unchanged": 2
+          },
+          "sample_ids": [
+            "3208a959ca882fb4",
+            "92a5b492c87f88f9"
+          ]
+        },
+        "top50_retrieval_miss": {
+          "triggered_count": 5,
+          "transition_counts": {
+            "miss_unchanged": 5
+          },
+          "sample_ids": [
+            "4bd4b8dfb62c479e",
+            "63974db9fde144a0",
+            "777d4343332b7222",
+            "89ac2fdca85e4ed0",
+            "aa22a4450ed7ae65"
+          ]
+        }
+      },
+      "projected": {
+        "recall_at_10": 0.40325000000000005,
+        "mrr_at_10": 0.46756547619047617,
+        "ndcg_at_10": 0.34836696249391763,
+        "p50_latency_ms_estimate": 647.0968499999999,
+        "p95_latency_ms_estimate": 1213.8777850000001,
+        "rank_bucket_counts": {
+          "absent": 63,
+          "top_1": 73,
+          "top_10": 64
+        },
+        "failure_type_counts": {
+          "hit_top_1": 73,
+          "retrieval_miss": 63,
+          "top_10_not_top_1": 64
+        }
+      },
+      "deltas_vs_control": {
+        "recall_at_10": -0.007499999999999896,
+        "mrr_at_10": -0.004333333333333356,
+        "ndcg_at_10": -0.003453304926025691,
+        "p50_latency_ms_estimate": 2.1923499999999194,
+        "p95_latency_ms_estimate": 510.84418500000004,
+        "top1": -1,
+        "top10_not_top1": -1,
+        "retrieval_miss": 2
+      }
+    }
+  ],
+  "limits": [
+    "Uses sanitized per-query ranks, metrics, and score summaries only.",
+    "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
+    "Simulates conditional use of the candidate reranker pool; it does not change retrieval or ranking behavior.",
+    "Projected latency uses per-query wall-clock latency from existing reports and is an estimate, not a fresh conditional runtime."
+  ]
+}

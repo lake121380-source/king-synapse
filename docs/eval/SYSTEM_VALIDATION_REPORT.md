@@ -406,6 +406,17 @@ Ranking ablation status:
   Pool `25` rescues 5 rank 11-25 late-rank cases but causes 12 top-10
   suppressions and 4 top-1 demotions overall. This argues against a global
   pool change and toward a conditional second-stage ordering policy.
+- `crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json` and
+  `crates/eval/reports/ranking-pool-signal-trigger-audit-dmr-200.json` record
+  the first conditional-pool simulation. The eval report now carries
+  sanitized rank/score/source summaries only. The best answer-free trigger is
+  `top1_single_source`: use pool `100` only when the pool `50` top-1 result
+  came from exactly one retrieval branch. On DMR 200 it triggers `43/200`
+  queries and projects Recall@10 `+0.0117`, MRR `+0.0131`, top-1 `+3`, misses
+  `-5`, and P50 latency `+8.5 ms` versus pool `50`, with no triggered top-10
+  suppressions or top-1 demotions. This is the strongest current ranking
+  candidate, but it is not a default until DMR 50 and LongMemEval 50
+  cross-checks are recorded.
 
 DMR mapping audit status:
 
@@ -490,5 +501,6 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. Keep answer-synthesis work in evaluation mode until the
-official-style DMR protocol is finalized.
+default. The immediate next gate is cross-checking `top1_single_source` on DMR
+50 and LongMemEval 50. Keep answer-synthesis work in evaluation mode until
+the official-style DMR protocol is finalized.

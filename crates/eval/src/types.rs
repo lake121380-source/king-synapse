@@ -32,12 +32,28 @@ pub struct QueryResult {
     pub query: String,
     pub relevant: Vec<String>,
     pub returned: Vec<String>,
+    pub returned_hit_diagnostics: Vec<ReturnedHitDiagnostic>,
     pub recall_at_5: f64,
     pub recall_at_10: f64,
     pub rr: f64,
     pub ndcg_at_10: f64,
     pub latency_ms: f64,
     pub profile: RecallProfile,
+}
+
+#[derive(Debug, Serialize)]
+pub struct ReturnedHitDiagnostic {
+    pub key: String,
+    pub rank: usize,
+    pub score: f32,
+    pub rrf_score: f32,
+    pub rerank_score: Option<f32>,
+    pub activation_bonus: f32,
+    pub fts_rank: Option<u32>,
+    pub entity_rank: Option<u32>,
+    pub vector_rank: Option<u32>,
+    pub entity_hits: u32,
+    pub sources: Vec<String>,
 }
 
 #[derive(Debug, Serialize)]
