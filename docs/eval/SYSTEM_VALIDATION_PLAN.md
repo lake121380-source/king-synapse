@@ -250,4 +250,8 @@ task. The validation win condition is narrower and more important:
   reveals six answer-bearing chunks between rank 11 and 50 but does not improve
   Recall@10 or top-1 hits, so it is diagnostic evidence rather than a default
   change.
+- DMR 50 ranking failure audit is recorded at
+  `crates/eval/reports/ranking-failure-audit-dmr-50.json`; it confirms 6
+  top-50-only late-ranking cases, 6 top-50 retrieval misses, 14 reranker
+  recoveries into top-10, and 1 reranker suppression from top-10.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

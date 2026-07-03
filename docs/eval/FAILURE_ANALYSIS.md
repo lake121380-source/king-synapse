@@ -79,6 +79,25 @@ Punctuation-normalized DMR 50 rerun:
 This rerun is tracked separately from the strict-string DMR baseline because it
 admits a different candidate set.
 
+DMR ranking failure audit:
+
+- `docs/eval/RANKING_ABLATION.md`
+- `crates/eval/reports/ranking-failure-audit-dmr-50.json`
+
+The punctuation-normalized DMR 50 final-mode failures now split into:
+
+| Bucket | Count |
+| --- | ---: |
+| Top-1 hit | 28 |
+| Top-10 not top-1 | 10 |
+| Top-50 only late rank | 6 |
+| Top-50 retrieval miss | 6 |
+
+The audit also shows that the reranker recovered 14 samples into top-10 and
+promoted 12 samples to top-1, while suppressing 1 sample from top-10 and
+demoting 1 top-1 sample. This confirms that reranking is valuable but not yet
+fully reliable.
+
 ## LongMemEval Anonymous Cases
 
 Final-mode examples, limited to the first 20 non-top-1 cases:
@@ -123,6 +142,7 @@ The current system boundary is sharper now:
   top-10 coverage.
 - DMR needs both vector retrieval and reranking, but the current candidate
   mapping skips too many rows before evaluation.
-- Remaining evaluated failures are mostly ranking failures, so the next
-  technical investigation should focus on candidate ordering and chunk mapping
-  before changing memory architecture.
+- Remaining evaluated failures are mostly ranking failures. The latest DMR
+  audit splits them into late-ranking failures and top-50 retrieval misses, so
+  the next technical investigation should focus on candidate ordering and chunk
+  mapping before changing memory architecture.

@@ -179,6 +179,10 @@ Ranking ablation status:
   chunks between ranks 11 and 50.
 - This confirms a ranking boundary: several failures are late-ranking failures,
   not missing-memory failures.
+- `crates/eval/reports/ranking-failure-audit-dmr-50.json` compares sanitized
+  baseline/vector/reranker/top-k runs. It shows the reranker recovered `14`
+  samples into top-10 and promoted `12` to top-1, but also suppressed `1`
+  sample from top-10 and demoted `1` top-1 sample.
 
 DMR mapping audit status:
 
@@ -252,5 +256,5 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, fix the LLM judge
-authorization/configuration, then continue ranking ablations for RRF/vector
-weighting before changing defaults.
+authorization/configuration, then continue ranking work on the six top-50-only
+late-ranking cases before changing defaults.

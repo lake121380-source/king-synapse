@@ -10,9 +10,15 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-50-top-k.json`
 
+`crates/eval/reports/ranking-failure-audit-dmr-50.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
+
+Failure audit runner:
+
+`scripts/eval/ranking_failure_audit.py`
 
 ## Reranker Pool Scope
 
@@ -137,6 +143,62 @@ This is useful diagnostic evidence: some DMR failures are not pure retrieval
 absence. They are late-ranking failures where the relevant memory exists in the
 wider candidate list but does not reach the top 10.
 
+## Failure Audit
+
+The sanitized failure audit compares:
+
+- baseline RRF;
+- RRF + vectors;
+- RRF + vectors + reranker;
+- top-k `10`, `25`, and `50`.
+
+It does not inspect raw questions, answers, dialogs, sessions, or generated
+answer text.
+
+Report:
+
+`crates/eval/reports/ranking-failure-audit-dmr-50.json`
+
+| Bucket | Count |
+| --- | ---: |
+| Top-1 hit | 28 |
+| Top-10 not top-1 | 10 |
+| Top-50 only late rank | 6 |
+| Top-50 retrieval miss | 6 |
+
+Vector effect:
+
+| Effect | Count |
+| --- | ---: |
+| Vector recovered to top-10 | 10 |
+| Vector suppressed from top-10 | 2 |
+| Stable top-1 | 5 |
+| Top-10 preserved | 10 |
+| No top-10 change | 23 |
+
+Reranker effect:
+
+| Effect | Count |
+| --- | ---: |
+| Reranker recovered to top-10 | 14 |
+| Reranker promoted to top-1 | 12 |
+| Reranker suppressed from top-10 | 1 |
+| Reranker demoted from top-1 | 1 |
+| Stable top-1 | 8 |
+| Top-10 preserved | 3 |
+| No top-10 change | 11 |
+
+Read:
+
+- Vector retrieval helps, but it is not uniformly safe: it recovers 10 samples
+  into top-10 and suppresses 2 from top-10.
+- The reranker is doing real work: it recovers 14 samples into top-10 and
+  promotes 12 to top-1.
+- The reranker also has a small but real downside: 1 sample is suppressed from
+  top-10 and 1 top-1 sample is demoted.
+- The remaining 12 non-top-10 cases split cleanly into 6 late-ranking failures
+  and 6 top-50 retrieval misses.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -151,7 +213,7 @@ diagnosis; it does not fix the top-10 ranking objective.
 The next useful ranking work is:
 
 1. expose and test RRF/vector weighting without changing the memory schema;
-2. inspect the six top-50-only DMR cases to design a safer ranking signal;
+2. design a safer ranking signal for the six top-50-only DMR cases;
 3. repeat the strongest DMR setting on LongMemEval 50 before changing any
    default;
 4. keep answer-generation scoring separate from retrieval-ranking scoring.
