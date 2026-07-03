@@ -182,8 +182,8 @@ DMR boundary:
 - The same official-style path now has a DMR 200 CUDA local scoring report:
   retrieval Recall@10 `0.409`, MRR@10 `0.469`, exact accuracy `0.000`,
   punctuation accuracy `0.000`, gold-answer substring accuracy `0.040`, and
-  ROUGE-L F1 mean `0.037`. DeepSeek judge on `deepseek-v4-flash` returned `83`
-  judged samples and `117` JSON/response errors.
+  ROUGE-L F1 mean `0.037`. DeepSeek judge on `deepseek-v4-flash` returned
+  `200` judged samples and `0` JSON/response errors.
 - A DMR 500-request CUDA local scoring report is now recorded with `323/500`
   requested samples scored. The remaining `177` source rows were skipped
   before selection because the pinned punctuation answer-to-memory mapping
@@ -191,14 +191,14 @@ DMR boundary:
   samples, retrieval Recall@10 was `0.380`, MRR@10 was `0.469`, exact accuracy
   was `0.000`, punctuation accuracy was `0.000`, gold-answer substring
   accuracy was `0.046`, and ROUGE-L F1 mean was `0.039`. DeepSeek judge on
-  `deepseek-v4-flash` returned `128` judged samples and `195`
+  `deepseek-v4-flash` returned `323` judged samples and `0`
   JSON/response errors.
-- The DeepSeek judge path is now live on `deepseek-v4-flash`; the remaining
-  issue is malformed JSON responses, so LLM-judge accuracy is only a partial
-  evidence signal.
+- The DeepSeek judge path is now live on `deepseek-v4-flash`; the pinned
+  official runs now return fully judged outputs, so LLM-judge accuracy is a
+  usable evidence signal.
 - `crates/eval/reports/official-dmr-judge-probe.json` records a later
   5-sample judge probe using the same sanitized official-style path. It
-  returned `3/5` judged samples and `2/5` malformed-response errors.
+  returned `5/5` judged samples.
 - `crates/eval/reports/official-dmr-judge-preflight.json` records an isolated
   synthetic DeepSeek judge preflight. It returned `judged` with HTTP `200`
   before any DMR retrieval or answer generation step ran.
@@ -230,15 +230,14 @@ DMR boundary:
   `+0.062`, `+0.030`, and `+0.035`, and lower top-1 opportunity loss at every
   scale view.
 - DMR 200 and the DMR 500-request run now carry judge-backed samples on
-  `deepseek-v4-flash`, but malformed judge JSON still makes the judge signal
-  partial, so they are local scoring evidence rather than full benchmark
-  claims.
+  `deepseek-v4-flash`, so the judge signal is now part of the usable local
+  evidence rather than a partial signal.
 - `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` now records the policy decision:
   keep punctuation full-answer mapping as the pinned local boundary, do not
   claim 500/500 under that policy, and treat relaxed token mapping as a
   separately labeled diagnostic option.
-- Full official DMR still requires stable fixed-judge scoring and an explicit
-  statement of mapping policy coverage.
+- Full official DMR still requires an explicit statement of mapping policy
+  coverage.
 
 Engineering result: the 5, 50, 200, and 500-request official-style DMR runs now
 prove that retrieval -> answer generation -> local answer scoring is executable
@@ -251,9 +250,9 @@ is already retrieved, and answer-to-memory mapping coverage. The DMR 50
 top-context generator ablation shows the answer-synthesis boundary can move,
 and the DMR 200 plus 500-request cross-checks repeat the direction. The
 consolidated generator summary now records that repeated direction in one
-machine-readable file. It still needs judge-output stabilization before
-becoming a default or product claim. The isolated preflight confirms the
-remaining block is malformed judge content, not authorization.
+machine-readable file. The judge path is now stable on the pinned runs, so the
+remaining block is mapping coverage and generator quality, not judge
+serialization.
 
 Long-horizon cognitive validation:
 
@@ -455,6 +454,6 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, keep the judge path on
-`deepseek-v4-flash`, and reduce malformed judge output before any product
-claim. Keep answer-synthesis work in evaluation mode until a stable judge
-response contract confirms the local lexical trend.
+`deepseek-v4-flash`, and continue ranking / answer-synthesis validation before
+any product claim. Keep answer-synthesis work in evaluation mode until the
+official-style DMR protocol is finalized.

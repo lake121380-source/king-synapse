@@ -3,8 +3,9 @@
 Date: 2026-07-03
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
-323 mappable samples; DeepSeek judge preflight now returns `judged` on
-`deepseek-v4-flash`, but judge-output stability is still incomplete.
+323 mappable samples; DeepSeek judge preflight and judge probe now return
+`judged` on `deepseek-v4-flash`, and the pinned 5 / 50 / 200 / 500-request
+runs are now fully judged locally.
 
 Machine-readable report:
 
@@ -95,13 +96,13 @@ The runner is:
 | Run | Requested | Scored | Mapping skips before selection | Judge status |
 | --- | ---: | ---: | ---: | --- |
 | DMR 5 smoke | 5 | 5 | 1 | not requested |
-| DMR 50 | 50 | 50 | 31 | 17 judged / 33 error |
+| DMR 50 | 50 | 50 | 31 | 50 judged / 0 error |
 | DMR 50 top-context generator | 50 | 50 | 31 | not requested |
-| DMR 200 | 200 | 200 | 111 | 83 judged / 117 error |
+| DMR 200 | 200 | 200 | 111 | 200 judged / 0 error |
 | DMR 200 top-context generator | 200 | 200 | 111 | not requested |
-| DMR 500 request | 500 | 323 | 177 | 128 judged / 195 error |
+| DMR 500 request | 500 | 323 | 177 | 323 judged / 0 error |
 | DMR 500-request top-context generator | 500 | 323 | 177 | not requested |
-| Judge probe | 5 | 5 | 1 | 3 judged / 2 error |
+| Judge probe | 5 | 5 | 1 | 5 judged / 0 error |
 | Judge preflight | 1 synthetic request | 0 DMR samples | 0 | judged / HTTP 200 |
 
 The mapping-skip number is the count of source rows rejected before building
@@ -151,8 +152,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.027 |
 | ROUGE-L recall mean | 0.103 |
 | ROUGE-L F1 mean | 0.039 |
-| LLM judge status | 128 judged / 195 error |
-| LLM judge accuracy | 0.0390625 |
+| LLM judge status | 323 judged / 0 error |
+| LLM judge accuracy | 0.04953560371517028 |
 | P50 query latency | 753.8 ms |
 | P95 query latency | 1043.3 ms |
 | Query wall time | 253.7 s |
@@ -229,8 +230,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.024 |
 | ROUGE-L recall mean | 0.097 |
 | ROUGE-L F1 mean | 0.037 |
-| LLM judge status | 83 judged / 117 error |
-| LLM judge accuracy | 0.03614457831325301 |
+| LLM judge status | 200 judged / 0 error |
+| LLM judge accuracy | 0.06 |
 | P50 query latency | 667.3 ms |
 | P95 query latency | 749.0 ms |
 | Query wall time | 135.1 s |
@@ -310,8 +311,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.033 |
 | ROUGE-L recall mean | 0.102 |
 | ROUGE-L F1 mean | 0.041 |
-| LLM judge status | 17 judged / 33 error |
-| LLM judge accuracy | 0.11764705882352941 |
+| LLM judge status | 50 judged / 0 error |
+| LLM judge accuracy | 0.08 |
 | Peak GPU total memory | 5304.2 MiB |
 
 ## DMR 50 Generator Ablation
@@ -427,9 +428,9 @@ python scripts/eval/official_dmr_eval.py `
 | Punctuation-normalized accuracy | 0.000 |
 | Gold-answer substring accuracy | 0.200 |
 | ROUGE-L F1 mean | 0.082 |
-| LLM judge status | 3 judged / 2 error |
+| LLM judge status | 5 judged / 0 error |
 | HTTP status | 200 |
-| LLM judge accuracy | 0.3333333333333333 |
+| LLM judge accuracy | 0.2 |
 
 ## Judge Preflight
 
@@ -452,8 +453,8 @@ python scripts/eval/deepseek_judge_preflight.py `
 | HTTP status | 200 |
 | Decision | ready_for_official_dmr_judge_rerun |
 
-Read: the judge path is now open before DMR scoring starts. The remaining
-boundary is judge-output stability, not auth.
+Read: the judge path is now open before DMR scoring starts, and the pinned
+official runs now serialize cleanly through it.
 
 ## Answer-Synthesis Audit
 
@@ -579,16 +580,15 @@ not yield 500 scored official-style examples. The mapping policy review keeps
 punctuation full-answer mapping as the pinned local boundary and treats
 relaxed-token mapping as a separate diagnostic option.
 
-The LLM judge path now produces judged samples on `deepseek-v4-flash`. The DMR
-50 run returned `17` judged samples and `33` malformed-response errors. The
-later 5-sample judge probe returned `3` judged samples and `2` malformed
-responses. The isolated DeepSeek preflight now confirms HTTP `200` with an API
-key present, before any DMR retrieval or answer generation runs. This is no
-longer an authorization/configuration failure; the remaining issue is judge
-output stability, not retrieval or answer scoring.
-DMR 200 and the DMR 500-request run therefore carry partial judge-backed
-evidence and should still be read as local scoring plus judge samples, not as a
-fully stable official benchmark.
+The LLM judge path now produces judged samples on `deepseek-v4-flash` for the
+pinned official runs. The DMR 50 run returned `50` judged samples; the DMR 200
+run returned `200` judged samples; and the 500-request run returned `323`
+judged samples on the mappable subset. The 5-sample probe also returned `5/5`
+judged samples, and the isolated DeepSeek preflight confirms HTTP `200` with an
+API key present before any DMR retrieval or answer generation runs. Judge output
+is now stable on the pinned runs, so the remaining evidence boundaries are
+retrieval/ranking quality, answer synthesis, and answer-to-memory mapping
+coverage.
 
 ## Boundary
 
@@ -599,8 +599,10 @@ Reasons:
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
 - the better DMR 50/200/500-request generator ablation is eval-only evidence
-  and has not been validated by LongMemEval or a fully stable LLM judge;
-- the LLM judge still returns malformed JSON on many requests;
+  and has not been validated by LongMemEval or a published-comparable official
+  DMR protocol;
+- the LLM judge path is now stable on the pinned runs; the remaining evidence
+  boundary is answer-to-memory mapping coverage;
 - the DMR 500-request run scored 323/500 requested samples because the pinned
   answer-to-memory mapping policy exhausted mappable rows;
 - the public DMR candidate mapping still uses the pinned punctuation policy;
@@ -610,6 +612,6 @@ Reasons:
 ## Next Step
 
 Keep feature growth frozen, keep the judge path on `deepseek-v4-flash`, and
-stabilize malformed judge output before any product claim. Ranking work should
-continue on the pinned punctuation-mapped dataset; any relaxed-token coverage
-run must be separately labeled and validated before it is used for conclusions.
+continue ranking work on the pinned punctuation-mapped dataset. Any
+relaxed-token coverage run must be separately labeled and validated before it
+is used for conclusions.

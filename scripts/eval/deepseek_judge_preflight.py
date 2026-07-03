@@ -111,7 +111,11 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
             {
                 "role": "user",
                 "content": (
-                    "Return only JSON with keys correct (boolean) and reason (short string).\n"
+                    "Judge whether the predicted answer contains the same fact as the gold answer.\n"
+                    "Return exactly one JSON object and nothing else.\n"
+                    "Use exactly two keys: correct (boolean) and reason (short string).\n"
+                    "If the prediction states the same fact with different wording, mark correct true.\n"
+                    "Example: {\"correct\": true, \"reason\": \"same fact\"}\n\n"
                     "Question: What color is the sky in the test fact?\n"
                     "Gold answer: blue\n"
                     "Predicted answer: blue\n"
@@ -121,6 +125,7 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
         "temperature": 0,
         "max_tokens": 80,
         "response_format": {"type": "json_object"},
+        "thinking": {"type": "disabled"},
     }
     data = json.dumps(payload).encode("utf-8")
     started = time.perf_counter()
@@ -160,7 +165,10 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
 
     try:
         parsed = json.loads(body)
-        content = parsed["choices"][0]["message"]["content"]
+        message = parsed["choices"][0]["message"]
+        content = (message.get("content") or message.get("reasoning_content") or "").strip()
+        if not content:
+            raise ValueError("empty judge content")
         judged = json.loads(content)
     except (KeyError, IndexError, json.JSONDecodeError, TypeError) as exc:
         return {

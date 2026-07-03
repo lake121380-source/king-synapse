@@ -335,59 +335,72 @@ def judge_deepseek(
     if not api_key:
         return {"status": "not_configured", "reason": "DEEPSEEK_API_KEY is not set"}
 
-    prompt = (
-        "You are judging whether a predicted answer correctly answers a DMR question.\n"
-        "Return exactly one JSON object and nothing else. Do not use markdown, code fences, "
-        "or commentary. The JSON object must have exactly two keys: correct (boolean) and "
-        "reason (short string).\n"
-        "Do not require exact wording if the predicted answer contains the same fact.\n\n"
+    prompt_base = (
+        "Judge whether the predicted answer contains the same fact as the gold answer.\n"
+        "Return exactly one JSON object and nothing else.\n"
+        "Use exactly two keys: correct (boolean) and reason (short string).\n"
+        "If the prediction states the same fact with different wording, mark correct true.\n"
+        "Example: {\"correct\": true, \"reason\": \"same fact\"}\n\n"
         f"Question:\n{question}\n\nGold answer:\n{gold}\n\nPredicted answer:\n{prediction}\n"
     )
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "You are a strict answer correctness judge."},
-            {"role": "user", "content": prompt},
-        ],
-        "temperature": 0,
-        "max_tokens": 120,
-        "response_format": {"type": "json_object"},
-    }
-    data = json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(
-        base_url.rstrip("/") + "/chat/completions",
-        data=data,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            body = response.read().decode("utf-8", errors="replace")
-    except urllib.error.HTTPError as exc:
-        status = "authorization_error" if exc.code in {401, 403} else "http_error"
-        return {
-            "status": status,
-            "http_status": exc.code,
-            "reason": str(exc.reason or exc)[:300],
+
+    last_error: str | None = None
+    for attempt in range(2):
+        prompt = prompt_base if attempt == 0 else (
+            prompt_base
+            + "\nReturn only the JSON object. No markdown, no fences, no explanation outside JSON.\n"
+        )
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": "You are a strict answer correctness judge."},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0,
+            "max_tokens": 160,
+            "response_format": {"type": "json_object"},
+            "thinking": {"type": "disabled"},
         }
-    except (urllib.error.URLError, TimeoutError) as exc:
-        return {"status": "error", "reason": str(exc)[:300]}
+        data = json.dumps(payload).encode("utf-8")
+        request = urllib.request.Request(
+            base_url.rstrip("/") + "/chat/completions",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                body = response.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as exc:
+            status = "authorization_error" if exc.code in {401, 403} else "http_error"
+            return {
+                "status": status,
+                "http_status": exc.code,
+                "reason": str(exc.reason or exc)[:300],
+            }
+        except (urllib.error.URLError, TimeoutError) as exc:
+            return {"status": "error", "reason": str(exc)[:300]}
 
-    try:
-        parsed = json.loads(body)
-        content = parsed["choices"][0]["message"]["content"]
-        judged = parse_judge_content(content)
-    except (KeyError, IndexError, json.JSONDecodeError, TypeError) as exc:
-        return {"status": "error", "reason": f"invalid judge response: {exc}"[:300]}
+        try:
+            parsed = json.loads(body)
+            message = parsed["choices"][0]["message"]
+            content = (message.get("content") or message.get("reasoning_content") or "").strip()
+            if not content:
+                raise ValueError("empty judge content")
+            judged = parse_judge_content(content)
+            return {
+                "status": "judged",
+                "correct": bool(judged.get("correct")),
+                "reason_hash": stable_hash(str(judged.get("reason", "")), 16),
+            }
+        except (KeyError, IndexError, json.JSONDecodeError, TypeError, ValueError) as exc:
+            last_error = f"invalid judge response: {exc}"[:300]
+            continue
 
-    return {
-        "status": "judged",
-        "correct": bool(judged.get("correct")),
-        "reason_hash": stable_hash(str(judged.get("reason", "")), 16),
-    }
+    return {"status": "error", "reason": last_error or "invalid judge response"}
 
 
 def parse_judge_content(content: str) -> dict[str, Any]:
