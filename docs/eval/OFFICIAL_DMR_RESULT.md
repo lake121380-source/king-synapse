@@ -3,7 +3,8 @@
 Date: 2026-07-03
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
-323 mappable samples; fixed LLM judge scoring is still unresolved.
+323 mappable samples; the latest 5-sample DeepSeek judge probe still returns
+authorization errors, so fixed LLM judge scoring is unresolved.
 
 Machine-readable report:
 
@@ -22,6 +23,10 @@ Pinned DMR 50 report:
 Smoke report:
 
 `crates/eval/reports/official-dmr-5-extractive.json`
+
+Judge probe:
+
+`crates/eval/reports/official-dmr-judge-probe.json`
 
 ## What Changed
 
@@ -57,6 +62,7 @@ The runner is:
 | DMR 50 | 50 | 50 | 31 | 50 authorization errors |
 | DMR 200 | 200 | 200 | 111 | not requested |
 | DMR 500 request | 500 | 323 | 177 | not requested |
+| Judge probe | 5 | 5 | 1 | 5 authorization errors |
 
 The mapping-skip number is the count of source rows rejected before building
 the scored sample because the answer-to-memory mapping policy did not find the
@@ -233,6 +239,48 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L F1 mean | 0.082 |
 | Peak GPU total memory | 4031.5 MiB |
 
+## Judge Probe
+
+This probe re-ran the official-style 5-sample path with `--llm-judge deepseek`
+after the previous DMR 50 judge failure. It uses CUDA retrieval and the same
+sanitized answer-generation report shape. It does not commit raw questions,
+answers, dialogs, sessions, generated answers, or the API key.
+
+```powershell
+python scripts/eval/official_dmr_eval.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 5 `
+  --dmr-answer-match punctuation `
+  --mode vectors-rerank `
+  --k 10 `
+  --generator extractive `
+  --llm-judge deepseek `
+  --judge-model deepseek-chat `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/official-dmr-judge-probe.json `
+  --cleanup-cache
+```
+
+| Metric | Value |
+| --- | ---: |
+| Sample size | 5 |
+| Scored samples | 5/5 |
+| Mapping skips before selection | 1 |
+| Retrieval Recall@10 | 0.667 |
+| Retrieval MRR@10 | 0.700 |
+| Exact accuracy | 0.000 |
+| Punctuation-normalized accuracy | 0.000 |
+| Gold-answer substring accuracy | 0.200 |
+| ROUGE-L F1 mean | 0.082 |
+| LLM judge status | 5/5 authorization errors |
+| HTTP status | 401 |
+| LLM judge accuracy | not available |
+
 ## Read
 
 Engineering result:
@@ -259,11 +307,13 @@ not yield 500 scored official-style examples. The mapping policy review keeps
 punctuation full-answer mapping as the pinned local boundary and treats
 relaxed-token mapping as a separate diagnostic option.
 
-The LLM judge path was exercised but did not produce judged samples because the
-provider returned `HTTP Error 401: Authorization Required` for every request.
-This is a judge authorization/configuration failure, not a retrieval or answer
-scoring failure. DMR 200 and the DMR 500-request run therefore skipped the
-judge intentionally and should be read as lexical / ROUGE-L local scoring only.
+The LLM judge path was exercised twice and did not produce judged samples. The
+DMR 50 run returned authorization errors for all 50 requests. The later
+5-sample judge probe also returned `authorization_error` for all 5 requests,
+with HTTP status `401`. This is a judge authorization/configuration failure,
+not a retrieval or answer scoring failure. DMR 200 and the DMR 500-request run
+therefore skipped the judge intentionally and should be read as lexical /
+ROUGE-L local scoring only.
 
 ## Boundary
 
@@ -282,8 +332,9 @@ Reasons:
 
 ## Next Step
 
-Do not retry the LLM judge until the authorization/configuration is fixed.
-After that, run a small judge probe and rerun DMR 50 with a successful fixed
+Do not rerun the DMR 50 judge path until the authorization/configuration is
+fixed outside the repository. The next judge gate is a small probe with at
+least one successful `judged` sample. After that, rerun DMR 50 with the fixed
 judge. Ranking work should continue on the pinned punctuation-mapped dataset;
 any relaxed-token coverage run must be separately labeled and validated before
 it is used for conclusions.

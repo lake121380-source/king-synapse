@@ -178,6 +178,9 @@ DMR boundary:
   accuracy was `0.046`, and ROUGE-L F1 mean was `0.039`.
 - The DeepSeek judge path was attempted, but all 50 requests returned
   authorization errors, so LLM-judge accuracy is not available yet.
+- `crates/eval/reports/official-dmr-judge-probe.json` records a later
+  5-sample judge probe using the same sanitized official-style path. It also
+  returned `5/5` DeepSeek authorization errors with HTTP status `401`.
 - DMR 200 and the DMR 500-request run intentionally skipped the LLM judge after
   the DMR 50 authorization failure, so they are lexical / ROUGE-L local scoring
   only.
@@ -387,6 +390,7 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, fix the LLM judge
-authorization/configuration, run a small successful judge probe, then continue
-ranking work by separating the DMR 200 late-ranking cases from the top-50
-retrieval misses before changing defaults.
+authorization/configuration outside the repository, run a small probe with at
+least one successful `judged` sample, then continue ranking work by separating
+the DMR 200 late-ranking cases from the top-50 retrieval misses before changing
+defaults.

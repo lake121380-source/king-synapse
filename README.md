@@ -163,10 +163,12 @@ questions, answers, or generated text:
 | Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
 | --- | ---: | ---: | ---: | ---: | --- |
 | 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | authorization failed |
+| 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | authorization failed |
 | 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | not requested |
 | 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
 
-This is still not a published-comparable official DMR result. The remaining
+This is still not a published-comparable official DMR result. A later 5-sample
+judge probe still returned DeepSeek authorization errors, so the remaining
 boundary is a successful fixed LLM judge. The mapping-policy review keeps
 punctuation full-answer mapping as the pinned local boundary, so the honest
 large-run claim is `500 request / 323 scored`, not `500/500`. The scoring

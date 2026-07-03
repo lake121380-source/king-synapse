@@ -241,7 +241,7 @@ finds a blocking bug.
 | Step | Work | Exit condition |
 | --- | --- | --- |
 | 1 | Close the DMR 200 documentation pass and sync it to GitHub. | `official-dmr-200.json` is documented, checked for raw data / secrets, committed, and pushed. |
-| 2 | Fix LLM judge authorization/configuration outside the repository. | A 5-10 sample judge probe succeeds without writing an API key or raw answer text. |
+| 2 | Fix LLM judge authorization/configuration outside the repository. | Still open: latest 5-sample DeepSeek probe records 5/5 HTTP 401 authorization errors without writing an API key or raw answer text. Exit requires at least one successful `judged` sample. |
 | 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
 | 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
@@ -306,8 +306,10 @@ finds a blocking bug.
   `crates/eval/reports/official-dmr-5-extractive.json`,
   `crates/eval/reports/official-dmr-50.json`, and
   `crates/eval/reports/official-dmr-200.json`, and
-  `crates/eval/reports/official-dmr-500.json`; fixed LLM judge authorization
-  is still unresolved. The DMR 500-request pass scored `323/500` requested
+  `crates/eval/reports/official-dmr-500.json`; the latest judge probe is
+  recorded at `crates/eval/reports/official-dmr-judge-probe.json`. Fixed LLM
+  judge authorization is still unresolved: the probe returned 5/5 HTTP 401
+  authorization errors. The DMR 500-request pass scored `323/500` requested
   samples because the pinned punctuation mapping skipped 177 source rows before
   selection.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at

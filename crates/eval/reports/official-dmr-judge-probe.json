@@ -1,0 +1,558 @@
+{
+  "schema_version": "king-synapse.official-dmr-answer-eval.v1",
+  "generated_at": "2026-07-03T05:45:48.028020+00:00",
+  "runner": "scripts/eval/official_dmr_eval.py",
+  "endpoint": "https://hf-mirror.com",
+  "source": {
+    "repo_id": "MemGPT/MSC-Self-Instruct",
+    "revision": "5138f416f8fa76b75b2e080da87e8a8e346e1500",
+    "license": "apache-2.0",
+    "filename": "msc_self_instruct.jsonl",
+    "sha256": "d3dbea36848b41dc46c0f1548d0ebf74eeaf6390d6f3fe9318e8480dc984495e",
+    "bytes": 8558741
+  },
+  "cache_policy": {
+    "cache_root_recorded": false,
+    "fastembed_cache_dir_recorded": false,
+    "fastembed_cache_configured": true,
+    "raw_cache_retained": false,
+    "raw_records_committed": false
+  },
+  "sample_size_requested": 5,
+  "sample_size_used": 5,
+  "selection_policy": "stable source order after answer-to-memory mapping policy",
+  "answer_match_policy": "punctuation",
+  "answer_match_policy_description": "casefold + punctuation-normalized full answer substring",
+  "accelerator": {
+    "requested": "cuda",
+    "king_synapse_accelerator": "cuda",
+    "cuda_device_id": "0",
+    "cuda_runtime": {
+      "path_added": true,
+      "root_recorded": false,
+      "root_exists": true,
+      "dll_dir_count": 9
+    },
+    "embedding": {
+      "batch_size": {
+        "value": "32",
+        "source": "argument"
+      },
+      "max_length": {
+        "value": "256",
+        "source": "argument"
+      }
+    },
+    "rerank_batch": {
+      "value": "32",
+      "source": "argument"
+    },
+    "rerank_max_length": {
+      "value": "256",
+      "source": "argument"
+    },
+    "directml_device_id": null
+  },
+  "retrieval_mode": "vectors-rerank",
+  "generator": {
+    "policy": "extractive",
+    "description": "deterministic sentence/window selection from returned chunks; no gold-answer access"
+  },
+  "llm_judge": {
+    "policy": "deepseek",
+    "description": "DeepSeek chat judge through DEEPSEEK_API_KEY",
+    "model": "deepseek-chat",
+    "base_url_recorded": true,
+    "api_key_recorded": false
+  },
+  "temporary_dataset_committed": false,
+  "raw_records_committed": false,
+  "raw_answers_committed": false,
+  "generated_answers_committed": false,
+  "memory_chunks": 25,
+  "skipped": {
+    "answer_not_found_in_memory_chunks": 1
+  },
+  "retrieval": {
+    "tag": "official-dmr-extractive-vectors-rerank",
+    "k": 10,
+    "vectors_enabled": true,
+    "rerank_enabled": true,
+    "rerank_pool": 50,
+    "n_memories": 25,
+    "n_queries": 5,
+    "recall_at_5": 0.6666666666666666,
+    "recall_at_10": 0.6666666666666666,
+    "mrr_at_10": 0.7,
+    "ndcg_at_10": 0.6094221818240376,
+    "p50_latency_ms": 302.4632,
+    "p95_latency_ms": 379.5894,
+    "total_ms": 1588.7544,
+    "timing": {
+      "dataset_load_ms": 11.344,
+      "store_write_ms": 173.5894,
+      "embedder_load_ms": 7448.3345,
+      "corpus_embedding_ms": 1581.7202,
+      "embedding_write_ms": 8.745700000000001,
+      "reranker_load_ms": 7131.702899999999,
+      "query_wall_ms": 1588.7544,
+      "recall_profile_totals": {
+        "total_ms": 1588.1954,
+        "fts_ms": 22.5793,
+        "entity_ms": 4.7589,
+        "query_embedding_ms": 64.538,
+        "vector_search_ms": 10.9074,
+        "memory_hydration_ms": 0.5487,
+        "rrf_fusion_ms": 1.8482000000000003,
+        "hit_build_ms": 0.6902,
+        "reranker_ms": 1453.5396999999998,
+        "booster_ms": 0.0,
+        "final_score_ms": 0.1305,
+        "record_access_ms": 28.3858,
+        "fts_candidates": 125,
+        "entity_candidates": 80,
+        "vector_candidates": 125,
+        "hydrated_memories": 125,
+        "fused_candidates": 125,
+        "rerank_candidates": 125,
+        "returned_hits": 50
+      },
+      "recall_profile_mean_ms": {
+        "total_ms": 317.63908000000004,
+        "fts_ms": 4.51586,
+        "entity_ms": 0.95178,
+        "query_embedding_ms": 12.907599999999999,
+        "vector_search_ms": 2.18148,
+        "memory_hydration_ms": 0.10973999999999999,
+        "rrf_fusion_ms": 0.3696400000000001,
+        "hit_build_ms": 0.13804,
+        "reranker_ms": 290.70793999999995,
+        "booster_ms": 0.0,
+        "final_score_ms": 0.0261,
+        "record_access_ms": 5.67716
+      }
+    },
+    "process_metrics": {
+      "available": true,
+      "unavailable_reason": null,
+      "platform": "nt",
+      "sample_interval_ms": 100.0,
+      "sample_count": 97,
+      "elapsed_wall_ms": 20101.01610000129,
+      "max_process_count": 3,
+      "peak_working_set_bytes": 2646740992,
+      "peak_private_bytes": 5946347520,
+      "cpu_seconds": 19.4375,
+      "process_tree_includes_cargo_wrapper": true,
+      "gpu_memory": {
+        "available": true,
+        "unavailable_reason": null,
+        "provider": "windows_performance_counter_gpu_process_memory",
+        "sample_interval_ms": 5000.0,
+        "sample_count": 4,
+        "peak_dedicated_bytes": 3071774720,
+        "peak_shared_bytes": 69206016,
+        "peak_total_bytes": 3140980736
+      }
+    },
+    "per_query": [
+      {
+        "sample_id": "6fbb9786ee7edd32",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 3,
+        "returned_relevant_count": 2,
+        "returned_count": 10,
+        "first_relevant_rank": 1,
+        "rank_bucket": "top_1",
+        "failure_type": "hit_top_1",
+        "recall_at_5": 0.6666666666666666,
+        "recall_at_10": 0.6666666666666666,
+        "rr": 1.0,
+        "ndcg_at_10": 0.7653606369886217,
+        "latency_ms": 379.5894,
+        "profile": {
+          "total_ms": 379.5249,
+          "fts_ms": 4.3659,
+          "entity_ms": 0.9600000000000001,
+          "query_embedding_ms": 19.7851,
+          "vector_search_ms": 2.2878,
+          "memory_hydration_ms": 0.1303,
+          "rrf_fusion_ms": 0.3893,
+          "hit_build_ms": 0.1414,
+          "reranker_ms": 345.64489999999995,
+          "booster_ms": 0.0,
+          "final_score_ms": 0.0496,
+          "record_access_ms": 5.7159,
+          "fts_candidates": 25,
+          "entity_candidates": 16,
+          "vector_candidates": 25,
+          "hydrated_memories": 25,
+          "fused_candidates": 25,
+          "rerank_candidates": 25,
+          "returned_hits": 10
+        }
+      },
+      {
+        "sample_id": "cfa67e046b577700",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "returned_relevant_count": 1,
+        "returned_count": 10,
+        "first_relevant_rank": 1,
+        "rank_bucket": "top_1",
+        "failure_type": "hit_top_1",
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "rr": 1.0,
+        "ndcg_at_10": 1.0,
+        "latency_ms": 301.4789,
+        "profile": {
+          "total_ms": 301.40840000000003,
+          "fts_ms": 3.732,
+          "entity_ms": 0.9203,
+          "query_embedding_ms": 10.9214,
+          "vector_search_ms": 2.2477,
+          "memory_hydration_ms": 0.1099,
+          "rrf_fusion_ms": 0.3683,
+          "hit_build_ms": 0.1405,
+          "reranker_ms": 278.5508,
+          "booster_ms": 0.0,
+          "final_score_ms": 0.0208,
+          "record_access_ms": 4.343299999999999,
+          "fts_candidates": 25,
+          "entity_candidates": 16,
+          "vector_candidates": 25,
+          "hydrated_memories": 25,
+          "fused_candidates": 25,
+          "rerank_candidates": 25,
+          "returned_hits": 10
+        }
+      },
+      {
+        "sample_id": "f1555b8a2d041362",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 3,
+        "returned_relevant_count": 2,
+        "returned_count": 10,
+        "first_relevant_rank": 1,
+        "rank_bucket": "top_1",
+        "failure_type": "hit_top_1",
+        "recall_at_5": 0.6666666666666666,
+        "recall_at_10": 0.6666666666666666,
+        "rr": 1.0,
+        "ndcg_at_10": 0.6508205185601091,
+        "latency_ms": 307.7759,
+        "profile": {
+          "total_ms": 307.7085,
+          "fts_ms": 6.8717,
+          "entity_ms": 0.9824,
+          "query_embedding_ms": 11.9474,
+          "vector_search_ms": 2.2817,
+          "memory_hydration_ms": 0.1066,
+          "rrf_fusion_ms": 0.3682,
+          "hit_build_ms": 0.1343,
+          "reranker_ms": 275.6072,
+          "booster_ms": 0.0,
+          "final_score_ms": 0.0196,
+          "record_access_ms": 9.3352,
+          "fts_candidates": 25,
+          "entity_candidates": 16,
+          "vector_candidates": 25,
+          "hydrated_memories": 25,
+          "fused_candidates": 25,
+          "rerank_candidates": 25,
+          "returned_hits": 10
+        }
+      },
+      {
+        "sample_id": "71714276bfbbc47d",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "returned_relevant_count": 0,
+        "returned_count": 10,
+        "first_relevant_rank": null,
+        "rank_bucket": "absent",
+        "failure_type": "retrieval_miss",
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "rr": 0.0,
+        "ndcg_at_10": 0.0,
+        "latency_ms": 302.4632,
+        "profile": {
+          "total_ms": 302.4067,
+          "fts_ms": 3.7848,
+          "entity_ms": 0.9890999999999999,
+          "query_embedding_ms": 11.861500000000001,
+          "vector_search_ms": 2.0301,
+          "memory_hydration_ms": 0.0994,
+          "rrf_fusion_ms": 0.3623,
+          "hit_build_ms": 0.1341,
+          "reranker_ms": 279.9313,
+          "booster_ms": 0.0,
+          "final_score_ms": 0.0195,
+          "record_access_ms": 3.1365999999999996,
+          "fts_candidates": 25,
+          "entity_candidates": 16,
+          "vector_candidates": 25,
+          "hydrated_memories": 25,
+          "fused_candidates": 25,
+          "rerank_candidates": 25,
+          "returned_hits": 10
+        }
+      },
+      {
+        "sample_id": "1e69717693095efe",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "returned_relevant_count": 1,
+        "returned_count": 10,
+        "first_relevant_rank": 2,
+        "rank_bucket": "top_10",
+        "failure_type": "top_10_not_top_1",
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "rr": 0.5,
+        "ndcg_at_10": 0.6309297535714575,
+        "latency_ms": 297.209,
+        "profile": {
+          "total_ms": 297.1469,
+          "fts_ms": 3.8249,
+          "entity_ms": 0.9071,
+          "query_embedding_ms": 10.022599999999999,
+          "vector_search_ms": 2.0601,
+          "memory_hydration_ms": 0.1025,
+          "rrf_fusion_ms": 0.36010000000000003,
+          "hit_build_ms": 0.13990000000000002,
+          "reranker_ms": 273.8055,
+          "booster_ms": 0.0,
+          "final_score_ms": 0.020999999999999998,
+          "record_access_ms": 5.8548,
+          "fts_candidates": 25,
+          "entity_candidates": 16,
+          "vector_candidates": 25,
+          "hydrated_memories": 25,
+          "fused_candidates": 25,
+          "rerank_candidates": 25,
+          "returned_hits": 10
+        }
+      }
+    ],
+    "rank_bucket_counts": {
+      "absent": 1,
+      "top_1": 3,
+      "top_10": 1
+    },
+    "failure_type_counts": {
+      "hit_top_1": 3,
+      "retrieval_miss": 1,
+      "top_10_not_top_1": 1
+    },
+    "mode": "vectors-rerank",
+    "label": "RRF + vectors + reranker"
+  },
+  "answer_generation": {
+    "aggregate": {
+      "n_queries": 5,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.0,
+      "answer_substring_accuracy": 0.2,
+      "rouge_l_precision_mean": 0.049760765550239235,
+      "rouge_l_recall_mean": 0.32222222222222224,
+      "rouge_l_f1_mean": 0.0824016563146998,
+      "llm_judge_status_counts": {
+        "authorization_error": 5
+      },
+      "llm_judge_accuracy": null,
+      "generation_wall_ms": 762.4686999915866
+    },
+    "per_query": [
+      {
+        "sample_id": "6fbb9786ee7edd32",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 3,
+        "gold_answer_sha256": "15f32377ef9b39dc163c0a81057d2628b6609e44f0313f78913dac9addf472d2",
+        "gold_answer_length": 13,
+        "generated_answer_sha256": "7c771379b58477d86b3dece7e278a9bc323f22fdac455ada7519f55f1a9ec8a0",
+        "generated_answer_length": 132,
+        "retrieved_context_count": 10,
+        "first_relevant_rank": 1,
+        "generation_trace": {
+          "policy": "extractive",
+          "context_count": 10,
+          "selected_context_rank": 2,
+          "selected_sentence_rank": 13,
+          "query_term_count": 13,
+          "max_chars": 320
+        },
+        "scores": {
+          "exact_match": false,
+          "punctuation_match": false,
+          "answer_substring_match": true,
+          "rouge_l": {
+            "precision": 0.09090909090909091,
+            "recall": 1.0,
+            "f1": 0.16666666666666669
+          }
+        },
+        "llm_judge": {
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required"
+        }
+      },
+      {
+        "sample_id": "cfa67e046b577700",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "gold_answer_sha256": "eaffbeccd2d6562c3250ae6fa0fc371484ed5092fd4a2e4cef375dca75d73662",
+        "gold_answer_length": 43,
+        "generated_answer_sha256": "55445cd34d3c55efdff377ec42ef1608d3810169000a7c16b6d205d984cf9149",
+        "generated_answer_length": 101,
+        "retrieved_context_count": 10,
+        "first_relevant_rank": 1,
+        "generation_trace": {
+          "policy": "extractive",
+          "context_count": 10,
+          "selected_context_rank": 9,
+          "selected_sentence_rank": 50,
+          "query_term_count": 13,
+          "max_chars": 320
+        },
+        "scores": {
+          "exact_match": false,
+          "punctuation_match": false,
+          "answer_substring_match": false,
+          "rouge_l": {
+            "precision": 0.05263157894736842,
+            "recall": 0.1111111111111111,
+            "f1": 0.07142857142857142
+          }
+        },
+        "llm_judge": {
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required"
+        }
+      },
+      {
+        "sample_id": "f1555b8a2d041362",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 3,
+        "gold_answer_sha256": "97c69147b5750e96b6d2648c2f3d0da20d09d0276495b7ecdd48d797e5deaab8",
+        "gold_answer_length": 12,
+        "generated_answer_sha256": "eabf260e0b012bf9958053c1f955f12e5de31b80f1b2117f525f52a5e6cf0c6c",
+        "generated_answer_length": 123,
+        "retrieved_context_count": 10,
+        "first_relevant_rank": 1,
+        "generation_trace": {
+          "policy": "extractive",
+          "context_count": 10,
+          "selected_context_rank": 3,
+          "selected_sentence_rank": 21,
+          "query_term_count": 15,
+          "max_chars": 320
+        },
+        "scores": {
+          "exact_match": false,
+          "punctuation_match": false,
+          "answer_substring_match": false,
+          "rouge_l": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "llm_judge": {
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required"
+        }
+      },
+      {
+        "sample_id": "71714276bfbbc47d",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "gold_answer_sha256": "33c912b67ed109e845d876322cb8f6e3230be6a55bed930055eb6e7ee91ad74e",
+        "gold_answer_length": 12,
+        "generated_answer_sha256": "55445cd34d3c55efdff377ec42ef1608d3810169000a7c16b6d205d984cf9149",
+        "generated_answer_length": 101,
+        "retrieved_context_count": 10,
+        "first_relevant_rank": null,
+        "generation_trace": {
+          "policy": "extractive",
+          "context_count": 10,
+          "selected_context_rank": 9,
+          "selected_sentence_rank": 50,
+          "query_term_count": 17,
+          "max_chars": 320
+        },
+        "scores": {
+          "exact_match": false,
+          "punctuation_match": false,
+          "answer_substring_match": false,
+          "rouge_l": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "llm_judge": {
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required"
+        }
+      },
+      {
+        "sample_id": "1e69717693095efe",
+        "category": "dmr-answer-generation",
+        "source_session_count": 5,
+        "relevant_count": 1,
+        "gold_answer_sha256": "dcec1b9b3638698ad48766737542c1c818f54292a6ae1dadf6a92c8a45555f9f",
+        "gold_answer_length": 13,
+        "generated_answer_sha256": "55445cd34d3c55efdff377ec42ef1608d3810169000a7c16b6d205d984cf9149",
+        "generated_answer_length": 101,
+        "retrieved_context_count": 10,
+        "first_relevant_rank": 2,
+        "generation_trace": {
+          "policy": "extractive",
+          "context_count": 10,
+          "selected_context_rank": 9,
+          "selected_sentence_rank": 50,
+          "query_term_count": 12,
+          "max_chars": 320
+        },
+        "scores": {
+          "exact_match": false,
+          "punctuation_match": false,
+          "answer_substring_match": false,
+          "rouge_l": {
+            "precision": 0.10526315789473684,
+            "recall": 0.5,
+            "f1": 0.17391304347826086
+          }
+        },
+        "llm_judge": {
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required"
+        }
+      }
+    ]
+  },
+  "limits": [
+    "This is an answer-generation DMR evaluation shape, but the default extractive generator is not a published DMR agent policy.",
+    "Exact, punctuation-normalized, and ROUGE-L metrics are computed locally.",
+    "LLM judge scores are included only when explicitly requested and configured.",
+    "Report excludes raw questions, answers, dialogs, sessions, and generated answer text.",
+    "Small samples should not be compared with published DMR results."
+  ]
+}

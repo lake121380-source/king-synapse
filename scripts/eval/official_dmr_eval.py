@@ -348,6 +348,13 @@ def judge_deepseek(
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
             body = response.read().decode("utf-8", errors="replace")
+    except urllib.error.HTTPError as exc:
+        status = "authorization_error" if exc.code in {401, 403} else "http_error"
+        return {
+            "status": status,
+            "http_status": exc.code,
+            "reason": str(exc.reason or exc)[:300],
+        }
     except (urllib.error.URLError, TimeoutError) as exc:
         return {"status": "error", "reason": str(exc)[:300]}
 
