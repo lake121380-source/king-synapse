@@ -600,6 +600,20 @@ README claims support audit:
   a safe global ranking default, production readiness, and v0.1 release
   readiness.
 
+Current system gate:
+
+- `crates/eval/reports/phase6-current-system-gate.json` consolidates the
+  Phase 6 requirements audit, objective coverage audit, next-gate readiness,
+  README claims audit, and latest baseline health replay into one current
+  go/no-go read.
+- The current result is `current_system_gate_passed: true`, with
+  `current_work_mode: validation_only`.
+- This means the evidence chain is coherent enough to keep validating the
+  system, but the same gate keeps `heavy_next_gate_ready: false`,
+  `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
+- The blocked next gates remain top-context candidate judge scoring, hosted
+  external comparison, and productization.
+
 Phase 6 next-gate readiness:
 
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
