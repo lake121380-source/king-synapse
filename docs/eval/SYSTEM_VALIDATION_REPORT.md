@@ -10,7 +10,9 @@ returns HTTP `401`, and the deterministic long-horizon cognitive gate plus
 detailed stability / prediction-evidence audits are recorded. A consolidated
 long-horizon task gate now records the deterministic fixture as passed while
 keeping public real-world long-memory claims blocked. A productization
-decision gate now records the current decision as no-go / validation-only.
+decision gate now records the current decision as no-go / validation-only. A
+next-validation action gate now records that no heavy rerun is allowed until
+external preconditions change.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -672,6 +674,23 @@ Productization decision gate:
   decision: keep validating before starting Web demo, API server, Docker, or
   v0.1 packaging work.
 
+Next validation action gate:
+
+- `crates/eval/reports/next-validation-action-gate.json` consolidates the
+  current action choice after the task gates and productization decision.
+- The current result is `next_validation_action_gate_passed: true`, with
+  `recommended_action: wait_for_external_preconditions` and
+  `heavy_validation_allowed: false`.
+- The gate keeps both heavy branches closed: top-context DMR 50 judge scoring
+  is blocked until valid judge authorization is available, and hosted external
+  comparison is blocked until Graphiti/Zep, official Mem0, and Letta are
+  configured.
+- The recorded DMR command template preserves the Phase 6 GPU rule:
+  `--accelerator cuda --cuda-device-id 0`.
+- Allowed work at this checkpoint is no-model / no-external evidence
+  maintenance and documentation/report synchronization that does not change
+  runtime behavior.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README
@@ -694,7 +713,8 @@ Current system gate:
   Phase 6 requirements audit, objective coverage audit, next-gate readiness,
   README claims audit, official DMR task gate, ranking task gate, external
   comparison task gate, long-horizon task gate, productization decision gate,
-  and latest baseline health replay into one current go/no-go read.
+  next validation action gate, and latest baseline health replay into one
+  current go/no-go read.
 - The current result is `current_system_gate_passed: true`, with
   `current_work_mode: validation_only`.
 - This means the evidence chain is coherent enough to keep validating the
@@ -702,7 +722,8 @@ Current system gate:
   `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
 - The blocked next gates remain top-context candidate judge scoring, hosted
   external comparison, future evidence labeling, public real-world long-memory
-  validation, productization decision no-go, and productization.
+  validation, productization decision no-go, next validation action waiting on
+  external preconditions, and productization.
 
 Phase 6 next-gate readiness:
 
@@ -735,9 +756,10 @@ GPU validation status:
 
 Next required action: keep feature growth frozen and do not start product work.
 The current productization decision is no-go / validation-only. No heavy
-next-gate run is currently ready: top-context DMR judge scoring needs valid
-authorization, and hosted external comparison needs competitor
-credentials/endpoints. Once one of those gates is ready, continue in validation
-mode only: judge-score the top-context DMR candidate, or run the hosted
-external comparison. Do not adopt `vector_weight = 1.5`, reranker pool `100`,
-or any pool-signal guard as a runtime default from the current evidence.
+next-gate run is currently ready: the next-action gate records
+`recommended_action: wait_for_external_preconditions`. Top-context DMR judge
+scoring needs valid authorization, and hosted external comparison needs
+competitor credentials/endpoints. Once one of those gates is ready, continue in
+validation mode only: judge-score the top-context DMR candidate, or run the
+hosted external comparison. Do not adopt `vector_weight = 1.5`, reranker pool
+`100`, or any pool-signal guard as a runtime default from the current evidence.

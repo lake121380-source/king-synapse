@@ -151,6 +151,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/long-horizon-task-gate.json",
         "productization_decision_gate": root
         / "crates/eval/reports/productization-decision-gate.json",
+        "next_validation_action_gate": root
+        / "crates/eval/reports/next-validation-action-gate.json",
     }
 
     readme_text = paths["readme"].read_text(encoding="utf-8")
@@ -169,6 +171,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence"])
     long_horizon_gate = load_json(paths["long_horizon_task_gate"])
     productization_gate = load_json(paths["productization_decision_gate"])
+    next_action_gate = load_json(paths["next_validation_action_gate"])
 
     external_systems = {
         system.get("system"): system for system in external_latest.get("systems", [])
@@ -346,6 +349,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             conclusion=safe_get(productization_gate, ["read", "current_conclusion"], ""),
         ),
         claim(
+            claim_id="next_validation_action_gate",
+            readme_snippet="recommended_action: wait_for_external_preconditions",
+            status="supported",
+            evidence=[report_path(paths["next_validation_action_gate"])],
+            conclusion=safe_get(next_action_gate, ["read", "current_conclusion"], ""),
+        ),
+        claim(
             claim_id="productization_blocked",
             readme_snippet="productization is not ready",
             status="supported",
@@ -420,6 +430,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "release_v0_1_allowed": safe_get(
                 productization_gate, ["status", "release_v0_1_allowed"]
+            ),
+            "next_validation_action_gate_passed": safe_get(
+                next_action_gate, ["status", "next_validation_action_gate_passed"]
+            ),
+            "recommended_next_validation_action": safe_get(
+                next_action_gate, ["status", "recommended_action"]
+            ),
+            "heavy_validation_allowed": safe_get(
+                next_action_gate, ["status", "heavy_validation_allowed"]
             ),
         },
         "read": {

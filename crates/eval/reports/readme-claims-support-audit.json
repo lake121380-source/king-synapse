@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.readme-claims-support-audit.v1",
-  "generated_at": "2026-07-03T17:46:31.722063+00:00",
+  "generated_at": "2026-07-03T17:52:47.573693+00:00",
   "runner": "scripts\\eval\\readme_claims_support_audit.py",
   "git": {
     "branch": "main",
-    "commit": "a52e33267df4a60bda29c4ff146ee886eec77518",
+    "commit": "4dd6d71d0d5fffb86d58d4c30737ce852b1de095",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "readme": {
       "path": "README.md",
       "exists": true,
-      "sha256": "3748d428b841035f49e361019ba40e9056c6ab0b586f497a89c5dfc21a1fd20c"
+      "sha256": "1469b5adfc3f8b2e0d054307c010761986d4227caf1ebcf2c8401a521cb8f216"
     },
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "82eb4c03fcf96d4b662697979a0036c2b008796b6715f75e4ee540285b17de60"
+      "sha256": "3c3b937fba4f0e3da7da5c76f8fd96d6b1e1b7c1e1727ec07c5125e009fae8aa"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "8c7e3bb6440b0c2565c97b48dc582a23492ba2355a0943fcfc3b0fef7b6c1211"
+      "sha256": "46ebac773d7f2dd54292d21f14cc7b191891bc7513ba25d9dd105de2bd2396b0"
     },
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
@@ -102,6 +102,11 @@
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
       "sha256": "6e100465bd55f1f78daf484b91fde3a15a23fc37ef00dbf7434e188818ba9d96"
+    },
+    "next_validation_action_gate": {
+      "path": "crates\\eval\\reports\\next-validation-action-gate.json",
+      "exists": true,
+      "sha256": "c1c46c3d98c641ace47adafb59d4e7f778c7f26cd478ab9cf4bf641567fc7d8a"
     }
   },
   "raw_records_committed": false,
@@ -242,6 +247,17 @@
       "present_in_readme": true
     },
     {
+      "id": "next_validation_action_gate",
+      "readme_snippet": "recommended_action: wait_for_external_preconditions",
+      "status": "supported",
+      "evidence": [
+        "crates\\eval\\reports\\next-validation-action-gate.json"
+      ],
+      "conclusion": "No heavy next validation run is ready; the correct next action is to keep feature freeze and wait for either valid top-context judge authorization or hosted external comparison credentials/endpoints.",
+      "required_scope_note": null,
+      "present_in_readme": true
+    },
+    {
       "id": "productization_blocked",
       "readme_snippet": "productization is not ready",
       "status": "supported",
@@ -256,7 +272,7 @@
   ],
   "status_counts": {
     "supported_with_scope": 4,
-    "supported": 8
+    "supported": 9
   },
   "unsupported_claims": [],
   "supported_with_scope_claims": [
@@ -310,7 +326,10 @@
     "public_real_world_long_memory_ready": false,
     "productization_decision_gate_passed": true,
     "productization_ready": false,
-    "release_v0_1_allowed": false
+    "release_v0_1_allowed": false,
+    "next_validation_action_gate_passed": true,
+    "recommended_next_validation_action": "wait_for_external_preconditions",
+    "heavy_validation_allowed": false
   },
   "read": {
     "readme_claims_conservative_enough": true,

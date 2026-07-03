@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T17:46:38.449098+00:00",
+  "generated_at": "2026-07-03T17:52:57.769936+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "a52e33267df4a60bda29c4ff146ee886eec77518",
+    "commit": "4dd6d71d0d5fffb86d58d4c30737ce852b1de095",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "3c3f31542eebecb794be797eced6e14d1dd7a5b2ea27a319d3251c2365e14e02"
+      "sha256": "d82978dcc96c95c425f6029c870157956d2c54bd7df5cae538b985a97077b0f0"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -52,6 +52,11 @@
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
       "sha256": "6e100465bd55f1f78daf484b91fde3a15a23fc37ef00dbf7434e188818ba9d96"
+    },
+    "next_validation_action_gate": {
+      "path": "crates\\eval\\reports\\next-validation-action-gate.json",
+      "exists": true,
+      "sha256": "c1c46c3d98c641ace47adafb59d4e7f778c7f26cd478ab9cf4bf641567fc7d8a"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -205,6 +210,33 @@
       "conclusion": "v0.1 release readiness is still explicitly not allowed."
     },
     {
+      "id": "next_validation_action_gate_passed",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\next-validation-action-gate.json"
+      ],
+      "conclusion": "Next validation action gate is passed as an evidence-backed action-selection decision."
+    },
+    {
+      "id": "heavy_validation_action_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\next-validation-action-gate.json"
+      ],
+      "conclusion": "No heavy validation run is currently allowed by the action gate."
+    },
+    {
+      "id": "next_action_waits_on_external_preconditions",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\next-validation-action-gate.json"
+      ],
+      "conclusion": "The current next action is to wait for valid judge authorization or hosted competitor configuration."
+    },
+    {
       "id": "raw_or_generated_data_not_committed",
       "status": "passed",
       "severity": "required",
@@ -218,6 +250,7 @@
         "crates\\eval\\reports\\external-comparison-task-gate.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\productization-decision-gate.json",
+        "crates\\eval\\reports\\next-validation-action-gate.json",
         "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
@@ -305,6 +338,14 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "next_validation_action_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
@@ -323,6 +364,9 @@
     "productization_decision_gate_passed": true,
     "productization_ready": false,
     "release_v0_1_allowed": false,
+    "next_validation_action_gate_passed": true,
+    "recommended_next_validation_action": "wait_for_external_preconditions",
+    "heavy_validation_allowed_by_action_gate": false,
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
@@ -331,6 +375,7 @@
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
       "productization_decision_no_go",
+      "next_validation_action_waiting_on_external_preconditions",
       "productization_not_ready"
     ]
   },
@@ -344,6 +389,7 @@
       "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
       "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
       "Productization decision is gate-backed as no-go / validation-only.",
+      "Next validation action is gate-backed: wait for external preconditions before heavy reruns.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],
@@ -354,6 +400,7 @@
       "Complete future evidence labeling for long-horizon prediction.",
       "Public real-world long-memory stability.",
       "Safe global runtime ranking default.",
+      "Any heavy next validation rerun at this checkpoint.",
       "Production readiness, web/API/Docker product work, or v0.1 release readiness."
     ],
     "next_action": "Keep feature freeze. Continue only validation work until either valid judge authorization enables top-context DMR scoring or hosted competitor credentials/endpoints enable fair external comparison."

@@ -90,6 +90,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/productization-decision-gate.json",
     )
     parser.add_argument(
+        "--next-validation-action-gate",
+        type=Path,
+        default=root / "crates/eval/reports/next-validation-action-gate.json",
+    )
+    parser.add_argument(
         "--baseline-health",
         type=Path,
         default=latest_baseline_health_report(root),
@@ -203,6 +208,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "productization_decision_gate": normalize_path_arg(
             args.productization_decision_gate
         ),
+        "next_validation_action_gate": normalize_path_arg(
+            args.next_validation_action_gate
+        ),
         "baseline_health": normalize_path_arg(args.baseline_health),
     }
     reports = {name: load_json(path) for name, path in paths.items()}
@@ -217,6 +225,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     external = reports["external_comparison_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
     productization = reports["productization_decision_gate"]
+    next_action = reports["next_validation_action_gate"]
     baseline = reports["baseline_health"]
 
     baseline_passed = safe_get(baseline, ["read", "current_baseline_health"]) == "passed"
@@ -275,6 +284,16 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     release_v0_1_not_overstated = not bool(
         safe_get(productization, ["status", "release_v0_1_allowed"])
+    )
+    next_validation_action_gate_passed = bool(
+        safe_get(next_action, ["status", "next_validation_action_gate_passed"])
+    )
+    heavy_validation_not_allowed_by_action_gate = not bool(
+        safe_get(next_action, ["status", "heavy_validation_allowed"])
+    )
+    next_action_waiting_on_external = (
+        safe_get(next_action, ["status", "recommended_action"])
+        == "wait_for_external_preconditions"
     )
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -394,6 +413,27 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             failure="v0.1 release appears allowed and needs a separate release decision.",
         ),
         check(
+            "next_validation_action_gate_passed",
+            next_validation_action_gate_passed,
+            evidence=[paths["next_validation_action_gate"]],
+            conclusion="Next validation action gate is passed as an evidence-backed action-selection decision.",
+            failure="Next validation action gate is not passed.",
+        ),
+        check(
+            "heavy_validation_action_not_overstated",
+            heavy_validation_not_allowed_by_action_gate,
+            evidence=[paths["next_validation_action_gate"]],
+            conclusion="No heavy validation run is currently allowed by the action gate.",
+            failure="A heavy validation run appears allowed and needs separate execution control.",
+        ),
+        check(
+            "next_action_waits_on_external_preconditions",
+            next_action_waiting_on_external,
+            evidence=[paths["next_validation_action_gate"]],
+            conclusion="The current next action is to wait for valid judge authorization or hosted competitor configuration.",
+            failure="The next action is not the expected external-precondition wait state.",
+        ),
+        check(
             "raw_or_generated_data_not_committed",
             raw_clean,
             evidence=list(paths.values()),
@@ -435,6 +475,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("public_real_world_long_memory_not_validated")
     if productization_ready_not_overstated:
         blocked_next_gates.append("productization_decision_no_go")
+    if heavy_validation_not_allowed_by_action_gate:
+        blocked_next_gates.append("next_validation_action_waiting_on_external_preconditions")
     if productization_blocked:
         blocked_next_gates.append("productization_not_ready")
 
@@ -478,6 +520,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "productization_decision_gate_passed": productization_decision_gate_passed,
             "productization_ready": not productization_ready_not_overstated,
             "release_v0_1_allowed": not release_v0_1_not_overstated,
+            "next_validation_action_gate_passed": next_validation_action_gate_passed,
+            "recommended_next_validation_action": safe_get(
+                next_action, ["status", "recommended_action"]
+            ),
+            "heavy_validation_allowed_by_action_gate": not heavy_validation_not_allowed_by_action_gate,
             "productization_allowed": False,
             "runtime_ranking_change_allowed": False,
             "blocked_next_gates": blocked_next_gates,
@@ -497,6 +544,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
+                "Next validation action is gate-backed: wait for external preconditions before heavy reruns.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],
@@ -507,6 +555,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Complete future evidence labeling for long-horizon prediction.",
                 "Public real-world long-memory stability.",
                 "Safe global runtime ranking default.",
+                "Any heavy next validation rerun at this checkpoint.",
                 "Production readiness, web/API/Docker product work, or v0.1 release readiness.",
             ],
             "next_action": (
