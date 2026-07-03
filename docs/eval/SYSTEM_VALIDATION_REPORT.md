@@ -599,6 +599,20 @@ Official DMR task gate:
   mapping policy, and answer-synthesis quality. It does not permit runtime
   generator or ranking changes.
 
+Ranking task gate:
+
+- `crates/eval/reports/ranking-task-gate.json` consolidates the current Phase 3
+  ranking evidence into one no-default gate.
+- The current result is `ranking_evidence_gate_passed: true`: the repo has
+  registered one-variable ablation views, DMR 50/200 failure buckets,
+  vector/reranker transition effects, pool-signal guard screening, and
+  LongMemEval regression protection.
+- The same gate keeps `safe_global_ranking_default_ready: false` and
+  `runtime_ranking_change_allowed: false`.
+- Its open gates are: no safe global ranking default, need for a new
+  answer-free ordering signal, unresolved DMR/LongMemEval objective split, and
+  no adopted latency acceptance threshold.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README

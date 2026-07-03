@@ -1,0 +1,504 @@
+{
+  "schema_version": "king-synapse.ranking-task-gate.v1",
+  "generated_at": "2026-07-03T17:22:17.630675+00:00",
+  "runner": "scripts\\eval\\ranking_task_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "cc9e871b180b3bb3996d129a3d868d83d46da69e",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "objective_conflict": {
+      "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+      "exists": true,
+      "sha256": "d13faef56a19309fc0b6c67aa6f958f2ff7582be985434e6823abd23c629a20b"
+    },
+    "pool_signal_guard": {
+      "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+      "exists": true,
+      "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
+    },
+    "failure_dmr_50": {
+      "path": "crates\\eval\\reports\\ranking-failure-audit-dmr-50.json",
+      "exists": true,
+      "sha256": "4a288ccfaa7689f68069c55c749a11547b8fe03b07e6b06c6cda78579ed706c6"
+    },
+    "failure_dmr_200": {
+      "path": "crates\\eval\\reports\\ranking-failure-audit-dmr-200.json",
+      "exists": true,
+      "sha256": "5a9ad49dcb4a18829d1a53f6d3e486605f798059122416cc8d60f52e01869329"
+    },
+    "transition_dmr_50": {
+      "path": "crates\\eval\\reports\\ranking-transition-audit-dmr-50.json",
+      "exists": true,
+      "sha256": "2daf535659b2bfb948dabba4fa5350af9b41e3e37b0593d0e8e8874f14c016ce"
+    },
+    "transition_dmr_200": {
+      "path": "crates\\eval\\reports\\ranking-transition-audit-dmr-200.json",
+      "exists": true,
+      "sha256": "a25a3c5554b1ca78bb858a0c0af33ef352fb42d62289eee3272e7f2d05a97996"
+    },
+    "reranker_pool_transition_dmr_200": {
+      "path": "crates\\eval\\reports\\ranking-reranker-pool-transition-audit-dmr-200.json",
+      "exists": true,
+      "sha256": "8f4be4a26b499958cc595097f107e58b0bd0fbd30721172a5a85aa017e22ae4a"
+    },
+    "vector_weight_transition": {
+      "path": "crates\\eval\\reports\\ranking-vector-weight-transition-audit-dmr-longmem-50.json",
+      "exists": true,
+      "sha256": "7452ba8ed7843b8250f466175e36e1a35a5efe9671aad8d2fb2220183c0e78ab"
+    },
+    "late_rank_audit": {
+      "path": "crates\\eval\\reports\\ranking-late-rank-audit-dmr-50-200.json",
+      "exists": true,
+      "sha256": "4809e4944ebc2e6c6843ad0e877dd3ede2ea500ce3f13b201ed1ac4085e19bc5"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "raw_policy": {
+    "clean": true,
+    "details": {
+      "objective_conflict": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "pool_signal_guard": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "failure_dmr_50": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false
+      },
+      "failure_dmr_200": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false
+      },
+      "transition_dmr_50": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false
+      },
+      "transition_dmr_200": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false
+      },
+      "reranker_pool_transition_dmr_200": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "vector_weight_transition": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "late_rank_audit": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      }
+    }
+  },
+  "one_variable_views": [
+    {
+      "id": "rrf_k_50",
+      "parameter": "rrf_k",
+      "control_value": 60.0,
+      "source_reports": [
+        "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-rrf-k.json"
+      ],
+      "dmr_best_by_recall": 60.0,
+      "dmr_best_by_mrr": 60.0,
+      "longmem_best_by_recall": 40.0,
+      "longmem_best_by_mrr": 80.0
+    },
+    {
+      "id": "vector_weight_50",
+      "parameter": "vector_weight",
+      "control_value": 1.0,
+      "source_reports": [
+        "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-vector-weight.json"
+      ],
+      "dmr_best_by_recall": 1.5,
+      "dmr_best_by_mrr": 1.0,
+      "longmem_best_by_recall": 1.5,
+      "longmem_best_by_mrr": 0.5
+    },
+    {
+      "id": "reranker_pool_50",
+      "parameter": "reranker_pool",
+      "control_value": 50,
+      "source_reports": [
+        "crates\\eval\\reports\\ranking-ablation-dmr-50-reranker-pool.json",
+        "crates\\eval\\reports\\ranking-ablation-longmem-50-reranker-pool.json"
+      ],
+      "dmr_best_by_recall": 50,
+      "dmr_best_by_mrr": 100,
+      "longmem_best_by_recall": 25,
+      "longmem_best_by_mrr": 25
+    },
+    {
+      "id": "reranker_pool_50_vs_100_signal",
+      "parameter": "reranker_pool",
+      "control_value": 50,
+      "source_reports": [
+        "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-reranker-pool-signal.json"
+      ],
+      "dmr_best_by_recall": 50,
+      "dmr_best_by_mrr": 100,
+      "longmem_best_by_recall": 50,
+      "longmem_best_by_mrr": 100
+    }
+  ],
+  "objective_read": {
+    "conflict_or_tradeoff_views": [
+      "vector_weight_50",
+      "reranker_pool_50",
+      "reranker_pool_50_vs_100_signal"
+    ],
+    "flat_views": [
+      "rrf_k_50"
+    ],
+    "global_default_candidate": null,
+    "conclusion": "Existing one-variable ranking evidence does not support a new global default. RRF k is mostly flat, vector weight improves coverage with MRR/top-1 tradeoffs, reranker-pool preferences diverge between DMR and LongMemEval, and pool-signal guards have no screened safe default.",
+    "next_ranking_gate": "Future ranking work should use a new answer-free ordering signal or an explicit DMR/LongMemEval objective split, with zero LongMemEval top-10 suppressions before runtime adoption."
+  },
+  "failure_bucket_summary": {
+    "dmr_50": {
+      "top10_not_top1": 10,
+      "top1_hit": 28,
+      "top50_only_late_rank": 6,
+      "top50_retrieval_miss": 6
+    },
+    "dmr_200": {
+      "top10_not_top1": 66,
+      "top1_hit": 74,
+      "top50_only_late_rank": 17,
+      "top50_retrieval_miss": 43
+    }
+  },
+  "transition_summary": {
+    "dmr_50": {
+      "baseline_to_vector": {
+        "bucket_changed_outside_top10": 7,
+        "no_top10_change": 16,
+        "promoted_to_top1": 4,
+        "recovered_to_top10": 10,
+        "stable_top1": 5,
+        "suppressed_from_top10": 2,
+        "top10_preserved": 6
+      },
+      "vector_to_reranker": {
+        "bucket_changed_outside_top10": 4,
+        "demoted_from_top1": 1,
+        "no_top10_change": 7,
+        "promoted_to_top1": 12,
+        "recovered_to_top10": 14,
+        "stable_top1": 8,
+        "suppressed_from_top10": 1,
+        "top10_preserved": 3
+      }
+    },
+    "dmr_200": {
+      "baseline_to_vector": {
+        "bucket_changed_outside_top10": 25,
+        "demoted_from_top1": 5,
+        "no_top10_change": 67,
+        "promoted_to_top1": 9,
+        "recovered_to_top10": 60,
+        "stable_top1": 9,
+        "suppressed_from_top10": 5,
+        "top10_preserved": 20
+      },
+      "vector_to_reranker": {
+        "bucket_changed_outside_top10": 14,
+        "demoted_from_top1": 5,
+        "no_top10_change": 43,
+        "promoted_to_top1": 49,
+        "recovered_to_top10": 40,
+        "stable_top1": 14,
+        "suppressed_from_top10": 3,
+        "top10_preserved": 32
+      }
+    }
+  },
+  "guard_screening": {
+    "guard_count": 8,
+    "best_safe_guard_id": null,
+    "safe_guard_ids": [],
+    "guard_passes": [],
+    "longmem_blocking_datasets": [
+      "longmem_200",
+      "longmem_50",
+      "longmem_500"
+    ],
+    "dataset_views": [
+      {
+        "dataset_key": "dmr_200",
+        "dataset_id": "dmr",
+        "sample_size": 200,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": 0.005166666666666764,
+        "mrr_at_10_delta": 0.011369047619047501,
+        "top1_delta": 3,
+        "retrieval_miss_delta": -5,
+        "p50_latency_ms_delta": 558.9934000000002,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 2,
+          "miss_unchanged": 49,
+          "promoted_to_top1": 5,
+          "recovered_to_top10": 7,
+          "stable_top1": 72,
+          "suppressed_from_top10": 7,
+          "top10_preserved": 58
+        }
+      },
+      {
+        "dataset_key": "dmr_500_request_323_scored",
+        "dataset_id": "dmr",
+        "sample_size": 323,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": 0.0019607843137254277,
+        "mrr_at_10_delta": 0.004179566563467463,
+        "top1_delta": 0,
+        "retrieval_miss_delta": -6,
+        "p50_latency_ms_delta": 511.1855999999999,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 6,
+          "miss_unchanged": 100,
+          "promoted_to_top1": 6,
+          "recovered_to_top10": 9,
+          "stable_top1": 122,
+          "suppressed_from_top10": 8,
+          "top10_preserved": 72
+        }
+      },
+      {
+        "dataset_key": "dmr_50",
+        "dataset_id": "dmr",
+        "sample_size": 50,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": -0.019999999999999907,
+        "mrr_at_10_delta": 0.004833333333333356,
+        "top1_delta": 0,
+        "retrieval_miss_delta": 0,
+        "p50_latency_ms_delta": 543.4222999999998,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 1,
+          "miss_unchanged": 10,
+          "promoted_to_top1": 1,
+          "recovered_to_top10": 1,
+          "stable_top1": 27,
+          "suppressed_from_top10": 2,
+          "top10_preserved": 8
+        }
+      },
+      {
+        "dataset_key": "longmem_50",
+        "dataset_id": "longmem",
+        "sample_size": 50,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": -0.036666666666666736,
+        "mrr_at_10_delta": 0.0012777777777777666,
+        "top1_delta": 0,
+        "retrieval_miss_delta": 1,
+        "p50_latency_ms_delta": 789.5260000000003,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 1,
+          "miss_unchanged": 12,
+          "promoted_to_top1": 1,
+          "recovered_to_top10": 2,
+          "stable_top1": 18,
+          "suppressed_from_top10": 3,
+          "top10_preserved": 13
+        }
+      },
+      {
+        "dataset_key": "longmem_200",
+        "dataset_id": "longmem",
+        "sample_size": 200,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": -0.0065833333333333854,
+        "mrr_at_10_delta": 0.0016210317460315649,
+        "top1_delta": 1,
+        "retrieval_miss_delta": 3,
+        "p50_latency_ms_delta": 565.8768999999998,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 1,
+          "miss_unchanged": 73,
+          "promoted_to_top1": 2,
+          "recovered_to_top10": 5,
+          "stable_top1": 64,
+          "suppressed_from_top10": 8,
+          "top10_preserved": 47
+        }
+      },
+      {
+        "dataset_key": "longmem_500",
+        "dataset_id": "longmem",
+        "sample_size": 500,
+        "control_variant": "reranker-pool-50",
+        "candidate_variant": "reranker-pool-100",
+        "recall_at_10_delta": 0.008799999999999975,
+        "mrr_at_10_delta": 0.002023809523809539,
+        "top1_delta": -3,
+        "retrieval_miss_delta": -6,
+        "p50_latency_ms_delta": 547.9877000000001,
+        "candidate_transition_counts": {
+          "demoted_from_top1": 7,
+          "miss_unchanged": 231,
+          "promoted_to_top1": 4,
+          "recovered_to_top10": 15,
+          "stable_top1": 111,
+          "suppressed_from_top10": 13,
+          "top10_preserved": 119
+        }
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "one_variable_ablation_views_registered",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json"
+      ],
+      "conclusion": "One-variable ranking views are registered for RRF k, vector weight, reranker pool, and pool-signal checks.",
+      "remaining": []
+    },
+    {
+      "id": "dmr_failure_buckets_registered",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-failure-audit-dmr-50.json",
+        "crates\\eval\\reports\\ranking-failure-audit-dmr-200.json"
+      ],
+      "conclusion": "DMR 50 and DMR 200 classify top-1 hits, top-10-not-top-1 cases, late top-50 ranks, and top-50 retrieval misses.",
+      "remaining": []
+    },
+    {
+      "id": "vector_and_reranker_effects_classified",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-transition-audit-dmr-50.json",
+        "crates\\eval\\reports\\ranking-transition-audit-dmr-200.json"
+      ],
+      "conclusion": "Vector and reranker transition effects are classified for DMR 50 and DMR 200.",
+      "remaining": []
+    },
+    {
+      "id": "objective_conflicts_block_global_default",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json"
+      ],
+      "conclusion": "Objective conflict audit supports no global ranking default.",
+      "remaining": []
+    },
+    {
+      "id": "pool_signal_guard_blocks_runtime_default",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+      ],
+      "conclusion": "Pool-signal guard audit has no safe guard ready for implementation.",
+      "remaining": []
+    },
+    {
+      "id": "longmem_regression_protection_active",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+      ],
+      "conclusion": "LongMemEval regressions or suppressions are detected and block runtime adoption.",
+      "remaining": []
+    },
+    {
+      "id": "latency_threshold_not_adopted",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+      ],
+      "conclusion": "Quality screening and latency budget remain separate; no runtime latency threshold is adopted.",
+      "remaining": []
+    },
+    {
+      "id": "raw_or_generated_data_not_committed",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "crates\\eval\\reports\\ranking-failure-audit-dmr-50.json",
+        "crates\\eval\\reports\\ranking-failure-audit-dmr-200.json",
+        "crates\\eval\\reports\\ranking-transition-audit-dmr-50.json",
+        "crates\\eval\\reports\\ranking-transition-audit-dmr-200.json",
+        "crates\\eval\\reports\\ranking-reranker-pool-transition-audit-dmr-200.json",
+        "crates\\eval\\reports\\ranking-vector-weight-transition-audit-dmr-longmem-50.json",
+        "crates\\eval\\reports\\ranking-late-rank-audit-dmr-50-200.json"
+      ],
+      "conclusion": "Audited ranking reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers.",
+      "remaining": []
+    }
+  ],
+  "status_counts": {
+    "satisfied": 8
+  },
+  "status": {
+    "ranking_evidence_gate_passed": true,
+    "ranking_validated_bottleneck": true,
+    "safe_global_ranking_default_ready": false,
+    "runtime_ranking_change_allowed": false,
+    "hard_failures": [],
+    "open_gates": [
+      "no_safe_global_ranking_default",
+      "new_answer_free_ordering_signal_needed",
+      "dmr_longmem_objective_split_not_decided",
+      "latency_acceptance_threshold_not_adopted"
+    ]
+  },
+  "read": {
+    "current_conclusion": "Ranking is a validated bottleneck, but current one-variable evidence does not support a global runtime default.",
+    "strongest_supported_result": "DMR failure buckets and transition audits show ranking movement, while objective conflict and guard audits block runtime adoption because gains trade off against LongMemEval and latency.",
+    "weak_surfaces": [
+      "RRF k is mostly flat.",
+      "Vector weight improves coverage only with MRR/top-1 tradeoffs.",
+      "Reranker-pool preferences diverge between DMR and LongMemEval.",
+      "Pool-signal guards have no screened safe default."
+    ],
+    "next_action": "Future ranking work should use a new answer-free ordering signal or an explicit DMR/LongMemEval objective split, with zero LongMemEval top-10 suppressions before runtime adoption."
+  },
+  "limits": [
+    "This gate reads committed sanitized aggregate ranking reports only.",
+    "It does not rerun retrieval, ranking, hosted adapters, LLM judges, or product code.",
+    "It does not inspect raw questions, answers, dialogs, memory content, generated answers, prompts, responses, or API keys.",
+    "A passing ranking evidence gate is a no-default validation decision, not an optimization success claim."
+  ]
+}

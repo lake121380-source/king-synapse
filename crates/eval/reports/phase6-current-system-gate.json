@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T17:15:04.260033+00:00",
+  "generated_at": "2026-07-03T17:22:24.607496+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "e355664575ef47cbbb08f2318a1f1b9372946d2b",
+    "commit": "cc9e871b180b3bb3996d129a3d868d83d46da69e",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,12 +26,17 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "bd56f94be72f604613bccbc4b15471649f63647ae0431b812e5df8637b4cd716"
+      "sha256": "4a8315c9c32a542e95c0caf73386bfabcb529b96e000df54d9163e49239f4fd4"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
       "sha256": "b7caf4e8851d45bc9d3e0de9b1fac7d127ce915fb841df10d7d8420a0daa0533"
+    },
+    "ranking_task_gate": {
+      "path": "crates\\eval\\reports\\ranking-task-gate.json",
+      "exists": true,
+      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -86,6 +91,24 @@
       "conclusion": "Published-comparable official DMR is still explicitly not ready."
     },
     {
+      "id": "ranking_evidence_gate_passed",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-task-gate.json"
+      ],
+      "conclusion": "Ranking evidence gate is passed as a no-default validation decision."
+    },
+    {
+      "id": "safe_ranking_default_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-task-gate.json"
+      ],
+      "conclusion": "Safe global runtime ranking default is still explicitly not ready."
+    },
+    {
       "id": "raw_or_generated_data_not_committed",
       "status": "passed",
       "severity": "required",
@@ -95,6 +118,7 @@
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\readme-claims-support-audit.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json",
+        "crates\\eval\\reports\\ranking-task-gate.json",
         "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
@@ -157,6 +181,14 @@
         "generated_answers_committed": false
       },
       "official_dmr_task_gate": {},
+      "ranking_task_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
@@ -183,6 +215,7 @@
       "Feature freeze is active.",
       "Local non-external baseline health is passed.",
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
+      "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],

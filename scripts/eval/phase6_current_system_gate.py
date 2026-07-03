@@ -70,6 +70,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/official-dmr-task-gate.json",
     )
     parser.add_argument(
+        "--ranking-task-gate",
+        type=Path,
+        default=root / "crates/eval/reports/ranking-task-gate.json",
+    )
+    parser.add_argument(
         "--baseline-health",
         type=Path,
         default=latest_baseline_health_report(root),
@@ -175,6 +180,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "next_gate_readiness": normalize_path_arg(args.next_gate_readiness),
         "readme_claims_audit": normalize_path_arg(args.readme_claims_audit),
         "official_dmr_task_gate": normalize_path_arg(args.official_dmr_task_gate),
+        "ranking_task_gate": normalize_path_arg(args.ranking_task_gate),
         "baseline_health": normalize_path_arg(args.baseline_health),
     }
     reports = {name: load_json(path) for name, path in paths.items()}
@@ -185,6 +191,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readiness = reports["next_gate_readiness"]
     readme = reports["readme_claims_audit"]
     official_dmr = reports["official_dmr_task_gate"]
+    ranking = reports["ranking_task_gate"]
     baseline = reports["baseline_health"]
 
     baseline_passed = safe_get(baseline, ["read", "current_baseline_health"]) == "passed"
@@ -210,6 +217,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     published_comparable_dmr_not_ready = not bool(
         safe_get(official_dmr, ["status", "published_comparable_official_dmr_ready"])
+    )
+    ranking_evidence_gate_passed = bool(
+        safe_get(ranking, ["status", "ranking_evidence_gate_passed"])
+    )
+    safe_ranking_default_not_ready = not bool(
+        safe_get(ranking, ["status", "safe_global_ranking_default_ready"])
     )
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -250,6 +263,20 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["official_dmr_task_gate"]],
             conclusion="Published-comparable official DMR is still explicitly not ready.",
             failure="Published-comparable official DMR appears ready and needs a separate release decision.",
+        ),
+        check(
+            "ranking_evidence_gate_passed",
+            ranking_evidence_gate_passed,
+            evidence=[paths["ranking_task_gate"]],
+            conclusion="Ranking evidence gate is passed as a no-default validation decision.",
+            failure="Ranking evidence gate is not passed.",
+        ),
+        check(
+            "safe_ranking_default_not_overstated",
+            safe_ranking_default_not_ready,
+            evidence=[paths["ranking_task_gate"]],
+            conclusion="Safe global runtime ranking default is still explicitly not ready.",
+            failure="Safe global runtime ranking default appears ready and needs a separate implementation decision.",
         ),
         check(
             "raw_or_generated_data_not_committed",
@@ -339,6 +366,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Feature freeze is active.",
                 "Local non-external baseline health is passed.",
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
+                "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],
