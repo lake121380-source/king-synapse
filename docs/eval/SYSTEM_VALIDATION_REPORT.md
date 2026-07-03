@@ -3,13 +3,13 @@
 Date: 2026-07-03
 
 Status: scoped validation passed; official-style DMR 200 local scoring is now
-recorded, and a DMR 500-request local scoring pass is recorded with 323
-mappable samples.
+recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
+samples, and the deterministic long-horizon cognitive gate is recorded.
 
 This report answers only the three system-validation questions. It includes a
-small LongMemEval / DMR smoke run, but does not claim that full LongMemEval,
-official DMR, hosted Graphiti, hosted Mem0, or a live Letta endpoint have been
-fully measured.
+small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
+fixture, but does not claim that full LongMemEval, official DMR, hosted
+Graphiti, hosted Mem0, or a live Letta endpoint have been fully measured.
 
 ## 1. Is The System Stable?
 
@@ -21,6 +21,17 @@ Evidence:
 - `cargo fmt --all -- --check` passed.
 - `cargo test -p synapse-eval` passed with `40 passed; 0 failed`.
 - `cargo bench -p synapse-eval --bench exported_cognitive_session` reported:
+
+```json
+{
+  "RecallAt10": 1.0,
+  "HebbianConsistency": 1.0,
+  "CognitiveTraceDominance": 1.0
+}
+```
+
+- `cargo bench -p synapse-eval --bench long_horizon_cognitive_memory`
+  reported:
 
 ```json
 {
@@ -49,9 +60,10 @@ Observed mean-latency range for the five repeatability runs:
 4.52 ms .. 4.70 ms
 ```
 
-Stability conclusion: stable on the current deterministic cognitive fixture.
-The LongMemEval / DMR smoke path can run and report aggregate metrics, but
-full long-memory stability is not yet proven.
+Stability conclusion: stable on the current deterministic cognitive fixtures,
+including the fixed long-horizon cognitive-memory gate. The LongMemEval / DMR
+smoke path can run and report aggregate metrics, but full public long-memory
+stability is not yet proven.
 
 ## 2. Is The System Internally Consistent?
 
@@ -72,9 +84,10 @@ trace evidence, prediction, or reinforcement isolation:
   already-scored result.
 
 Consistency conclusion: the system's main cognitive-memory layers agree with
-each other under the exported cognitive-session fixture. This is enough to say
-the core design is coherent in the validated scope, but not enough to claim
-long-horizon real-world consistency yet.
+each other under the exported cognitive-session fixture and the deterministic
+long-horizon cognitive fixture. This is enough to say the core design is
+coherent in the validated scope, but not enough to claim long-horizon
+real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
 
@@ -116,6 +129,8 @@ The project has crossed the basic bar for:
 2. internally consistent recall, trace, prediction, and reinforcement reports;
 3. visible comparative value on cognitive-trace introspection.
 4. fixed benchmark and golden replay baselines for the current Phase 6 scope.
+5. a deterministic long-horizon cognitive regression gate with all fixed
+   metrics at `1.000`.
 
 Long-memory 50-sample evidence now exists across three retrieval modes:
 
@@ -167,6 +182,17 @@ architecture. They localize the current DMR weakness to retrieval/ranking
 quality plus a weak deterministic extractive answer generator. The larger
 request also shows that answer-to-memory mapping is a separate validation
 boundary, with LLM judge configuration still unresolved.
+
+Long-horizon cognitive validation:
+
+- `docs/eval/LONG_HORIZON_VALIDATION.md` records the deterministic
+  long-horizon cognitive-memory fixture.
+- `crates/eval/reports/long-horizon-cognitive-memory.json` records
+  Recall@10 `1.000`, HebbianConsistency `1.000`, and
+  CognitiveTraceDominance `1.000`.
+- This supports the network-memory thesis in a shared long-session store, but
+  it is a regression gate, not a substitute for public long-memory benchmarks
+  or hosted external comparisons.
 
 The 50-sample reports are:
 

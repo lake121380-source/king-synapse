@@ -139,6 +139,12 @@ The Phase 6 replay baseline is fixed in
 [BENCHMARK_BASELINE.md](docs/eval/BENCHMARK_BASELINE.md) and
 [GOLDEN_DATASET.md](docs/eval/GOLDEN_DATASET.md).
 
+The deterministic long-horizon cognitive gate is also recorded:
+[LONG_HORIZON_VALIDATION.md](docs/eval/LONG_HORIZON_VALIDATION.md) and
+[long-horizon-cognitive-memory.json](crates/eval/reports/long-horizon-cognitive-memory.json).
+It passes the fixed long-session fixture with Recall@10 `1.000`,
+CognitiveTraceDominance `1.000`, and HebbianConsistency `1.000`.
+
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
 | LongMemEval cleaned 50 | 0.503 | 0.663 | 0.590 | Vector recall helps; reranker improves top-1 / MRR but can hurt top-10 coverage. |
@@ -208,6 +214,7 @@ comparison adapters or optional embedding/reranking paths.
 - Core architecture is stable.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
+- The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep, and Mem0 are measured; Letta still needs a live endpoint.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, but fixed LLM-judge scoring is not finished.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
@@ -224,6 +231,9 @@ cargo bench -p synapse-eval --bench exported_cognitive_session
 
 # Run the expanded 20-chain cognitive/prediction replay fixture
 cargo bench -p synapse-eval --bench expanded_cognitive_replay
+
+# Run the deterministic long-horizon cognitive-memory fixture
+cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
@@ -249,6 +259,7 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |
 | `docs/eval/GOLDEN_DATASET.md` | Golden dataset registry and replay policy. |

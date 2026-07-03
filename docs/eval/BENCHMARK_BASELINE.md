@@ -54,6 +54,10 @@ These metrics are deterministic `BenchmarkReport` values. A future change that
 lowers one of them is a regression unless the change is intentionally approved
 and documented.
 
+The checked long-horizon cognitive-memory report is
+`crates/eval/reports/long-horizon-cognitive-memory.json`. Its readable boundary
+is recorded in `docs/eval/LONG_HORIZON_VALIDATION.md`.
+
 `expanded-cognitive-replay` loads
 `crates/eval/datasets/regression/expanded_cognitive_replay.toml`. It fixes 20
 cognitive trace replays and 20 prediction replays without changing the

@@ -83,6 +83,7 @@ cargo fmt --all -- --check
 cargo test -p synapse-eval
 cargo bench -p synapse-eval --bench exported_cognitive_session
 cargo bench -p synapse-eval --bench expanded_cognitive_replay
+cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 ```
 
 Required result:
@@ -93,6 +94,9 @@ Required result:
   trace, suppressed alternatives, prediction, and reinforcement checks intact.
 - expanded cognitive replay keeps 20 cognitive trace checks and 20 prediction
   checks intact.
+- long-horizon cognitive memory keeps visible recall, hidden influence
+  dominance, and Hebbian reinforcement intact in one shared long-session
+  store.
 
 ### 2. Current External Comparison
 
@@ -231,8 +235,9 @@ finds a blocking bug.
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
 | 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split before changing reranker defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
-| 8 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
-| 9 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
+| 9 | Complete fair external comparison gaps. | Letta endpoint, hosted Graphiti, and official-embedding Mem0 are either measured or explicitly marked unavailable. |
+| 10 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -319,4 +324,9 @@ finds a blocking bug.
   `25` is best among reranker variants, but vector-only remains the strongest
   Recall@10 baseline. This blocks a global reranker-pool default change from
   the current DMR evidence.
+- Long-horizon cognitive-memory validation is recorded at
+  `docs/eval/LONG_HORIZON_VALIDATION.md` and
+  `crates/eval/reports/long-horizon-cognitive-memory.json`; the fixed
+  deterministic fixture passes Recall@10, HebbianConsistency, and
+  CognitiveTraceDominance at `1.000`.
 - Hosted Graphiti and official-embedding Mem0 reruns: not started.

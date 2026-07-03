@@ -120,6 +120,12 @@ The current Phase 6 replay baseline is fixed in:
 Readable summaries live in `docs/eval/BENCHMARK_BASELINE.md` and
 `docs/eval/GOLDEN_DATASET.md`.
 
+The current deterministic long-horizon cognitive gate is fixed in:
+
+- `reports/long-horizon-cognitive-memory.json`
+
+Readable summary: `docs/eval/LONG_HORIZON_VALIDATION.md`.
+
 The current Phase 6 performance profile is fixed in:
 
 - `reports/phase6-performance-profile.json`
@@ -275,7 +281,9 @@ The long-horizon cognitive-memory benchmark emits one `BenchmarkReport` value:
 It writes several day-stamped cognitive chains into one shared in-memory store,
 including visible distractors and hidden distractors. It then verifies ordinary
 recall, cognitive trace dominance, and post-trace reinforcement in that shared
-long-session memory graph.
+long-session memory graph. The checked report records Recall@10 `1.000`,
+CognitiveTraceDominance `1.000`, and HebbianConsistency `1.000` for the fixed
+fixture.
 
 The exported cognitive-session benchmark emits one `BenchmarkReport` value:
 
