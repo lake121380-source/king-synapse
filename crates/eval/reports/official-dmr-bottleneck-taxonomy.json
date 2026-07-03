@@ -1,0 +1,214 @@
+{
+  "schema_version": "king-synapse.official-dmr-bottleneck-taxonomy.v1",
+  "generated_at": "2026-07-03T16:30:24.148043+00:00",
+  "runner": "scripts\\eval\\official_dmr_bottleneck_taxonomy.py",
+  "inputs": {
+    "answer_audit": {
+      "path": "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
+      "sha256": "6562432c7ee7737a0e6cee621aab7f816486b59db30e963eff6ba7a793bacf4c"
+    },
+    "generator_summary": {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
+      "sha256": "752ca7ec7a11aaa492d9f90f2de4c03705d1ff0362cfb4bb78389520d9e3ddc5"
+    },
+    "mapping_policy_review": {
+      "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+      "sha256": "0e7da9317d0605e0f6825b0b2dbc3dda0cc3f772c3578a8b322bd7ee983bb0b2"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "generated_answers_committed": false,
+  "mapping_boundary": {
+    "source_rows": 500,
+    "punctuation_full_answer_coverage": 323,
+    "punctuation_full_answer_coverage_ratio": 0.646,
+    "rejected_by_punctuation": 177,
+    "token_containment_rejected_by_punctuation": 122,
+    "no_diagnostic_match": 3
+  },
+  "views": [
+    {
+      "label": "DMR 50",
+      "report": "crates\\eval\\reports\\official-dmr-50.json",
+      "requested_samples": 50,
+      "scored_samples": 50,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "retrieval_buckets": {
+        "top1_count": 28,
+        "top10_not_top1_count": 10,
+        "not_retrieved_top10_count": 12,
+        "top1_rate": 0.56,
+        "top10_not_top1_rate": 0.2,
+        "not_retrieved_top10_rate": 0.24
+      },
+      "baseline_answer_synthesis": {
+        "answer_substring_accuracy": 0.06,
+        "rouge_l_f1_mean": 0.041027,
+        "top1_without_answer_substring_count": 25,
+        "top1_without_answer_substring_rate_within_top1": 0.892857,
+        "top10_without_answer_substring_count": 35,
+        "top10_without_answer_substring_rate_within_retrieved_top10": 0.921053,
+        "top1_selected_non_first_context_count": 23,
+        "top1_selected_non_first_context_rate_within_top1": 0.821429,
+        "bucket_substring_accuracy": {
+          "top1": 0.107143,
+          "top10_not_top1": 0.0,
+          "not_retrieved_top10": 0.0
+        },
+        "alignment_counts": {
+          "no_relevant_context_in_top10": 12,
+          "selected_after_first_relevant_context": 27,
+          "selected_before_first_relevant_context": 6,
+          "selected_first_relevant_context": 5
+        }
+      },
+      "candidate_generator_effect": {
+        "answer_substring_accuracy": 0.22,
+        "rouge_l_f1_mean": 0.102852,
+        "answer_substring_accuracy_delta": 0.16,
+        "rouge_l_f1_mean_delta": 0.061825,
+        "top1_without_answer_substring_count_delta": -8,
+        "candidate_top1_without_answer_substring_count": 17,
+        "candidate_top10_without_answer_substring_count": 27,
+        "candidate_not_retrieved_top10_count": 12
+      },
+      "read": {
+        "primary_boundary": "mixed",
+        "why": "Mapping, retrieval/ranking, and answer synthesis are all visible. Top-context extraction improves answer metrics but leaves a large residual generator loss, so it is evidence for a direction rather than a complete fix."
+      }
+    },
+    {
+      "label": "DMR 200",
+      "report": "crates\\eval\\reports\\official-dmr-200.json",
+      "requested_samples": 200,
+      "scored_samples": 200,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "retrieval_buckets": {
+        "top1_count": 74,
+        "top10_not_top1_count": 65,
+        "not_retrieved_top10_count": 61,
+        "top1_rate": 0.37,
+        "top10_not_top1_rate": 0.325,
+        "not_retrieved_top10_rate": 0.305
+      },
+      "baseline_answer_synthesis": {
+        "answer_substring_accuracy": 0.04,
+        "rouge_l_f1_mean": 0.036509,
+        "top1_without_answer_substring_count": 68,
+        "top1_without_answer_substring_rate_within_top1": 0.918919,
+        "top10_without_answer_substring_count": 131,
+        "top10_without_answer_substring_rate_within_retrieved_top10": 0.942446,
+        "top1_selected_non_first_context_count": 57,
+        "top1_selected_non_first_context_rate_within_top1": 0.77027,
+        "bucket_substring_accuracy": {
+          "top1": 0.081081,
+          "top10_not_top1": 0.030769,
+          "not_retrieved_top10": 0.0
+        },
+        "alignment_counts": {
+          "no_relevant_context_in_top10": 61,
+          "selected_after_first_relevant_context": 87,
+          "selected_before_first_relevant_context": 31,
+          "selected_first_relevant_context": 21
+        }
+      },
+      "candidate_generator_effect": {
+        "answer_substring_accuracy": 0.12,
+        "rouge_l_f1_mean": 0.066766,
+        "answer_substring_accuracy_delta": 0.08,
+        "rouge_l_f1_mean_delta": 0.030257,
+        "top1_without_answer_substring_count_delta": -16,
+        "candidate_top1_without_answer_substring_count": 52,
+        "candidate_top10_without_answer_substring_count": 117,
+        "candidate_not_retrieved_top10_count": 61
+      },
+      "read": {
+        "primary_boundary": "mixed",
+        "why": "Mapping, retrieval/ranking, and answer synthesis are all visible. Top-context extraction improves answer metrics but leaves a large residual generator loss, so it is evidence for a direction rather than a complete fix."
+      }
+    },
+    {
+      "label": "DMR 500 request / 323 scored",
+      "report": "crates\\eval\\reports\\official-dmr-500.json",
+      "requested_samples": 500,
+      "scored_samples": 323,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "retrieval_buckets": {
+        "top1_count": 128,
+        "top10_not_top1_count": 81,
+        "not_retrieved_top10_count": 114,
+        "top1_rate": 0.396285,
+        "top10_not_top1_rate": 0.250774,
+        "not_retrieved_top10_rate": 0.352941
+      },
+      "baseline_answer_synthesis": {
+        "answer_substring_accuracy": 0.04644,
+        "rouge_l_f1_mean": 0.039487,
+        "top1_without_answer_substring_count": 118,
+        "top1_without_answer_substring_rate_within_top1": 0.921875,
+        "top10_without_answer_substring_count": 196,
+        "top10_without_answer_substring_rate_within_retrieved_top10": 0.937799,
+        "top1_selected_non_first_context_count": 99,
+        "top1_selected_non_first_context_rate_within_top1": 0.773438,
+        "bucket_substring_accuracy": {
+          "top1": 0.078125,
+          "top10_not_top1": 0.037037,
+          "not_retrieved_top10": 0.017544
+        },
+        "alignment_counts": {
+          "no_relevant_context_in_top10": 114,
+          "selected_after_first_relevant_context": 134,
+          "selected_before_first_relevant_context": 38,
+          "selected_first_relevant_context": 37
+        }
+      },
+      "candidate_generator_effect": {
+        "answer_substring_accuracy": 0.120743,
+        "rouge_l_f1_mean": 0.074678,
+        "answer_substring_accuracy_delta": 0.074303,
+        "rouge_l_f1_mean_delta": 0.035191,
+        "top1_without_answer_substring_count_delta": -28,
+        "candidate_top1_without_answer_substring_count": 90,
+        "candidate_top10_without_answer_substring_count": 170,
+        "candidate_not_retrieved_top10_count": 115
+      },
+      "read": {
+        "primary_boundary": "mixed",
+        "why": "Mapping, retrieval/ranking, and answer synthesis are all visible. Top-context extraction improves answer metrics but leaves a large residual generator loss, so it is evidence for a direction rather than a complete fix."
+      }
+    }
+  ],
+  "largest_local_view": {
+    "label": "DMR 500 request / 323 scored",
+    "scored_samples": 323,
+    "retrieved_top10_count": 209,
+    "not_retrieved_top10_count": 114,
+    "top1_count": 128,
+    "baseline_top1_without_answer_substring_count": 118,
+    "baseline_top10_without_answer_substring_count": 196,
+    "baseline_top1_selected_non_first_context_count": 99,
+    "candidate_top1_without_answer_substring_count": 90,
+    "candidate_top10_without_answer_substring_count": 170,
+    "candidate_substring_accuracy_delta": 0.074303,
+    "candidate_rouge_l_f1_delta": 0.035191
+  },
+  "read": {
+    "conclusion": "Official-style DMR is blocked by three separate bottlenecks: mapping coverage, retrieval/ranking, and answer synthesis. The largest pinned local view has 177 punctuation-mapping rejections before scoring, 114 scored samples without a relevant top-10 retrieval, and 118 top-1 retrieval hits whose extractive answer still lacks the gold substring.",
+    "generator_read": "Top-context extraction is the clearest current answer-synthesis direction: it improves substring and ROUGE-L on every scale view and reduces top-1 opportunity loss. But on the largest local view it still leaves 90 top-1 hits without the gold substring, so it is not enough for an official DMR claim.",
+    "ranking_read": "Ranking remains necessary because a large top10-not-top1 bucket and true top10 retrieval-miss bucket remain after answer scoring. Generator work cannot recover samples that never receive a relevant top-10 context.",
+    "mapping_read": "The 500-request run is 323-scored under punctuation full-answer mapping. Relaxed token containment would increase coverage, but it is a separate diagnostic policy and cannot be silently promoted.",
+    "next_action": "Do not change runtime defaults. If judge authorization is fixed, judge-score the top-context candidate; otherwise continue with validation-only generator diagnostics or hosted external comparison."
+  },
+  "limits": [
+    "Reads existing sanitized reports only.",
+    "Does not rerun DMR retrieval, answer generation, or LLM judge calls.",
+    "Does not inspect raw questions, answers, dialogs, memory content, generated answers, or API keys.",
+    "Does not change runtime generator, retrieval, ranking, schema, cognitive layers, or CLI behavior."
+  ]
+}

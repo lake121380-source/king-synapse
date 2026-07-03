@@ -215,6 +215,13 @@ DMR boundary:
   DMR 500-request report, `128` samples have a relevant chunk at rank 1, but
   `118` of those top-1 hits still do not include the gold answer substring in
   the generated answer.
+- `crates/eval/reports/official-dmr-bottleneck-taxonomy.json` consolidates the
+  DMR bottleneck split. On the largest pinned local view, the current boundary
+  is not a single failure: `177` source rows are rejected by punctuation
+  mapping before scoring, `114/323` scored samples have no relevant top-10
+  retrieval, and `118/128` top-1 retrieval hits still miss the gold substring
+  under the extractive generator. Top-context extraction lowers that top-1
+  residual to `90`, but does not solve answer generation.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -266,9 +273,10 @@ is already retrieved, and answer-to-memory mapping coverage. The DMR 50
 top-context generator ablation shows the answer-synthesis boundary can move,
 and the DMR 200 plus 500-request cross-checks repeat the direction. The
 consolidated generator summary now records that repeated direction in one
-machine-readable file. The judge path is now stable on the pinned runs, so the
-remaining block is mapping coverage and generator quality, not judge
-serialization.
+machine-readable file, while the bottleneck taxonomy records that mapping,
+retrieval/ranking, and generator quality all remain material. The judge path is
+now stable on the pinned runs, so the remaining block is mapping coverage and
+generator quality, not judge serialization.
 
 Long-horizon cognitive validation:
 

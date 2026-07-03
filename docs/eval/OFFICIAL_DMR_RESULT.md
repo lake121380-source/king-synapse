@@ -1,11 +1,12 @@
 # Official DMR Answer-Generation Result
 
-Date: 2026-07-03
+Date: 2026-07-04
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
 323 mappable samples; DeepSeek judge preflight and judge probe now return
 `judged` on `deepseek-v4-flash`, and the pinned 5 / 50 / 200 / 500-request
-runs are now fully judged locally.
+runs are now fully judged locally. A sanitized bottleneck taxonomy now
+separates mapping coverage, retrieval/ranking, and answer-synthesis limits.
 
 Machine-readable report:
 
@@ -68,6 +69,10 @@ Top-context candidate judge preflight:
 Answer-synthesis audit:
 
 `crates/eval/reports/official-dmr-answer-synthesis-audit.json`
+
+Bottleneck taxonomy:
+
+`crates/eval/reports/official-dmr-bottleneck-taxonomy.json`
 
 ## What Changed
 
@@ -539,6 +544,13 @@ sanitized audit files:
 python scripts/eval/dmr_generator_ablation_summary.py
 ```
 
+The bottleneck taxonomy consolidates mapping, retrieval/ranking, and generator
+opportunity loss:
+
+```powershell
+python scripts/eval/official_dmr_bottleneck_taxonomy.py
+```
+
 | Run | Top-1 hits | Top-1 without gold substring | Top-10 hits without gold substring | Not retrieved in top-10 | Top-1 selected non-first context |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | DMR 50 | 28 | 25 | 35 | 12 | 23 |
@@ -560,6 +572,22 @@ Generator delta summary:
 | DMR 50 | +0.160 | +0.062 | -8 |
 | DMR 200 | +0.080 | +0.030 | -16 |
 | DMR 500 request / 323 scored | +0.074 | +0.035 | -28 |
+
+## Bottleneck Taxonomy
+
+The taxonomy report makes the current DMR boundary explicit:
+
+| Boundary | Largest local view | Read |
+| --- | ---: | --- |
+| Mapping coverage | 177 punctuation-mapping rejections before scoring | The 500-request view honestly scores `323/500`; relaxed token containment is diagnostic only. |
+| Retrieval / ranking | 114/323 scored samples without a relevant top-10 retrieval | Generator work cannot recover samples without a relevant top-10 context. |
+| Answer synthesis after top-1 retrieval | 118/128 top-1 hits still miss the gold substring | Retrieval can find a relevant top chunk while the extractive generator still fails to answer. |
+| Top-context residual | 90 top-1 hits still miss after top-context extraction | The candidate generator improves the direction but is not enough for official claims. |
+
+Read: DMR is not blocked by one single defect. The current evidence separates
+three bottlenecks: mapping coverage, retrieval/ranking, and answer synthesis.
+Top-context extraction is the clearest generator direction, but it remains
+eval-only and still leaves substantial residual loss.
 
 ## Read
 

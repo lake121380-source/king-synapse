@@ -196,7 +196,9 @@ DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
 gold answer substring in the generated answer. That means the system can find a
 relevant chunk and still fail to turn it into the final answer. The generator
 ablation summary is recorded in
-[official-dmr-generator-ablation-summary.json](crates/eval/reports/official-dmr-generator-ablation-summary.json):
+[official-dmr-generator-ablation-summary.json](crates/eval/reports/official-dmr-generator-ablation-summary.json).
+The bottleneck taxonomy is recorded in
+[official-dmr-bottleneck-taxonomy.json](crates/eval/reports/official-dmr-bottleneck-taxonomy.json).
 
 | DMR scale | Extractive substring | Top-context substring | Extractive ROUGE-L F1 | Top-context ROUGE-L F1 |
 | --- | ---: | ---: | ---: | ---: |

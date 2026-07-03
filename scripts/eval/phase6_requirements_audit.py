@@ -143,6 +143,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "official_dmr_500": root / "crates/eval/reports/official-dmr-500.json",
         "official_dmr_generator_summary": root
         / "crates/eval/reports/official-dmr-generator-ablation-summary.json",
+        "official_dmr_bottleneck_taxonomy": root
+        / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
         "official_dmr_top_context_judge_preflight": root
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
         "ranking_objective_conflict_audit": root
@@ -168,6 +170,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     dmr_200 = load_json(paths["official_dmr_200"])
     dmr_500 = load_json(paths["official_dmr_500"])
     generator_summary = load_json(paths["official_dmr_generator_summary"])
+    bottleneck_taxonomy = load_json(paths["official_dmr_bottleneck_taxonomy"])
     top_context_preflight = load_json(paths["official_dmr_top_context_judge_preflight"])
     ranking_conflict = load_json(paths["ranking_objective_conflict_audit"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard_audit"])
@@ -224,6 +227,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_200"]),
                 report_path(paths["official_dmr_500"]),
                 report_path(paths["official_dmr_generator_summary"]),
+                report_path(paths["official_dmr_bottleneck_taxonomy"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
             ],
             conclusion=(
@@ -237,6 +241,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "500-request run honestly scores 323 mappable samples, not 500/500.",
                 "Top-context candidate judge scoring is blocked by the latest DeepSeek authorization preflight.",
                 "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
+                "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits.",
             ],
             next_action="Restore valid judge configuration for top-context scoring, then judge-score the candidate generator before any claim.",
         ),
@@ -363,6 +368,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "top_context_judge_preflight": {
                     "result": top_context_preflight.get("result"),
                     "decision": top_context_preflight.get("decision"),
+                },
+                "bottleneck_taxonomy": {
+                    "mapping_boundary": bottleneck_taxonomy["mapping_boundary"],
+                    "largest_local_view": bottleneck_taxonomy["largest_local_view"],
+                    "conclusion": bottleneck_taxonomy["read"]["conclusion"],
                 },
             },
             "ranking": {
