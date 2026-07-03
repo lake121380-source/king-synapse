@@ -324,6 +324,11 @@ finds a blocking bug.
   `crates/eval/reports/ranking-failure-audit-dmr-50.json`; it confirms 6
   top-50-only late-ranking cases, 6 top-50 retrieval misses, 14 reranker
   recoveries into top-10, and 1 reranker suppression from top-10.
+- DMR 50 chunk-policy ablation is recorded at
+  `crates/eval/reports/ranking-ablation-dmr-50-chunk-policy.json`; merging
+  each source row into one session chunk removes the 6 top-50 retrieval misses
+  but drops Recall@10 from `0.468` to `0.360` and top-1 hits from `28` to `7`,
+  so full-session merging is not a safe default fix.
 - DMR 200 ranking failure expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and

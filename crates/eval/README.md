@@ -173,6 +173,7 @@ The first ranking ablation report is fixed in:
 
 - `reports/ranking-ablation-dmr-50-reranker-pool.json`
 - `reports/ranking-ablation-dmr-50-top-k.json`
+- `reports/ranking-ablation-dmr-50-chunk-policy.json`
 - `reports/ranking-failure-audit-dmr-50.json`
 - `reports/ranking-ablation-dmr-200-top-k.json`
 - `reports/ranking-failure-audit-dmr-200.json`

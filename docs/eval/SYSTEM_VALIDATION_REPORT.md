@@ -254,6 +254,15 @@ Ranking ablation status:
   baseline/vector/reranker/top-k runs. It shows the reranker recovered `14`
   samples into top-10 and promoted `12` to top-1, but also suppressed `1`
   sample from top-10 and demoted `1` top-1 sample.
+- `scripts/eval/dmr_chunk_ablation.py` and
+  `crates/eval/reports/ranking-ablation-dmr-50-chunk-policy.json` compare the
+  current dialog chunk policy with merged-session chunks on the same 50 DMR
+  source rows. Merged-session chunks remove the 6 top-50 retrieval misses, but
+  Recall@10 falls from `0.468` to `0.360`, MRR@10 falls from `0.623` to
+  `0.211`, and top-1 hits fall from `28` to `7`.
+- The chunk result argues against simply merging full sessions as the next
+  default. It improves broad candidate coverage but weakens the ranking signal
+  needed for top-10 placement.
 - DMR 200 ranking expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and

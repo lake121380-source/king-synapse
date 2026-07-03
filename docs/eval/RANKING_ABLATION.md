@@ -2,14 +2,16 @@
 
 Date: 2026-07-03
 
-Status: DMR 50 ranking ablations and DMR 200 ranking-failure expansion
-complete.
+Status: DMR 50 ranking ablations, DMR 50 chunk-policy ablation, and DMR 200
+ranking-failure expansion complete.
 
 Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`
 
 `crates/eval/reports/ranking-ablation-dmr-50-top-k.json`
+
+`crates/eval/reports/ranking-ablation-dmr-50-chunk-policy.json`
 
 `crates/eval/reports/ranking-failure-audit-dmr-50.json`
 
@@ -28,6 +30,10 @@ Runner:
 Failure audit runner:
 
 `scripts/eval/ranking_failure_audit.py`
+
+Chunk-policy runner:
+
+`scripts/eval/dmr_chunk_ablation.py`
 
 ## Reranker Pool Scope
 
@@ -151,6 +157,70 @@ rank 11 and rank 50. The DMR 50 miss count drops from `12` at top-k `10` to
 This is useful diagnostic evidence: some DMR failures are not pure retrieval
 absence. They are late-ranking failures where the relevant memory exists in the
 wider candidate list but does not reach the top 10.
+
+## Chunk-Policy Scope
+
+This pass varies one data-mapping parameter only:
+
+`chunk_policy`
+
+Everything else is fixed:
+
+- dataset: DMR candidate MSC-Self-Instruct;
+- sample size: 50;
+- answer mapping: punctuation-normalized;
+- sample selection: same 50 source rows selected by the current dialog chunk
+  policy;
+- retrieval mode: RRF + vectors + reranker;
+- top-k returned by `kr-eval`: 50;
+- reranker pool: 50;
+- accelerator: CUDA device `0`;
+- embedding batch `32`, embedding max length `256`;
+- reranker batch `32`, reranker max length `256`.
+
+This is an evaluation-only ablation. It does not change the memory schema,
+recall defaults, product CLI, or ranking semantics.
+
+## Chunk-Policy Command
+
+```powershell
+python scripts/eval/dmr_chunk_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 50 `
+  --k 50 `
+  --mode vectors-rerank `
+  --reranker-pool 50 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-50-chunk-policy.json `
+  --cleanup-cache
+```
+
+## Chunk-Policy Result
+
+| Chunk policy | Memory chunks | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Top-50 only | Misses |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| dialog | 250 | 0.468 | 0.623 | 689.1 ms | 28 | 10 | 6 | 6 |
+| merged-session | 50 | 0.360 | 0.211 | 921.6 ms | 7 | 11 | 32 | 0 |
+
+## Chunk-Policy Read
+
+The merged-session policy removes the six top-50 retrieval misses in this DMR
+50 sample, so larger chunks improve broad candidate coverage.
+
+But it sharply hurts ranking quality: Recall@10 drops from `0.468` to `0.360`,
+MRR@10 drops from `0.623` to `0.211`, and top-1 hits fall from `28` to `7`.
+The missed evidence mostly moves into the top-50-only bucket (`32` cases), not
+into the decision surface.
+
+This means the current DMR issue is not solved by simply merging dialogs into
+larger memory chunks. Coarse chunks make the answer-bearing memory easier to
+include somewhere in the candidate set, but they dilute the ranking signal
+needed to place it in top 10.
 
 ## Failure Audit
 
@@ -354,11 +424,13 @@ Read:
 Do not change the default reranker pool from this evidence.
 
 The result supports the current diagnosis: DMR ranking is sensitive to
-candidate pool size and output window, but the remaining weakness is not solved
-by simply making the pool bigger or returning more items. Returning top 50 helps
-diagnosis; it does not fix the top-10 ranking objective. The DMR 200 expansion
-adds that true top-50 retrieval misses are also material and should be
-separated from late-ranking cases before default changes.
+candidate pool size, output window, and chunk policy, but the remaining
+weakness is not solved by simply making the pool bigger, returning more items,
+or merging all session content into one larger chunk. Returning top 50 helps
+diagnosis; merged-session chunks improve broad top-50 coverage but damage
+top-10 and top-1 placement. The DMR 200 expansion adds that true top-50
+retrieval misses are also material and should be separated from late-ranking
+cases before default changes.
 
 The LongMemEval cross-check also argues against a global default change. DMR 50
 prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among
@@ -372,6 +444,7 @@ The next useful ranking work is:
 
 1. expose and test RRF/vector weighting without changing the memory schema;
 2. design a safer ranking signal for the top-50-only DMR cases;
-3. inspect top-50 retrieval misses separately from late-ranking cases;
-4. test candidate-retrieval coverage separately from reranker ordering;
-5. keep answer-generation scoring separate from retrieval-ranking scoring.
+3. test smaller, overlap-aware chunking instead of full-session merging;
+4. inspect top-50 retrieval misses separately from late-ranking cases;
+5. test candidate-retrieval coverage separately from reranker ordering;
+6. keep answer-generation scoring separate from retrieval-ranking scoring.
