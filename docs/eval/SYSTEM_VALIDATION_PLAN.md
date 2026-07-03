@@ -86,6 +86,12 @@ cargo bench -p synapse-eval --bench expanded_cognitive_replay
 cargo bench -p synapse-eval --bench long_horizon_cognitive_memory
 ```
 
+The repeatable local health wrapper for the current Phase 6 baseline is:
+
+```bash
+python scripts/eval/phase6_baseline_health_check.py
+```
+
 Required result:
 
 - formatting passes;

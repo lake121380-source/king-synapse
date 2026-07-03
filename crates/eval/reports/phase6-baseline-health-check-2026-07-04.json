@@ -1,7 +1,13 @@
 {
   "schema_version": "king-synapse.phase6-baseline-health-check.v1",
-  "generated_at": "2026-07-03T16:48:10.2388207Z",
-  "validated_commit": "ea319f39ceb0a526a11874d73da2e738898312f6",
+  "generated_at": "2026-07-03T18:13:48.049871+00:00",
+  "runner": "scripts\\eval\\phase6_baseline_health_check.py",
+  "validated_commit": "172f5e7518538fd92ec6f0dc06210ffcc669695f",
+  "git": {
+    "branch": "main",
+    "commit": "172f5e7518538fd92ec6f0dc06210ffcc669695f",
+    "origin_main_delta": "0\t0"
+  },
   "feature_freeze_preserved": true,
   "memory_schema_changed": false,
   "cognitive_layer_changed": false,
@@ -17,18 +23,21 @@
     {
       "id": "cargo-fmt",
       "command": "cargo fmt --all -- --check",
-      "status": "passed"
+      "status": "passed",
+      "duration_ms": 833.289
     },
     {
       "id": "python-eval-py-compile",
-      "command": "Get-ChildItem -LiteralPath scripts/eval -Filter *.py | python -m py_compile",
+      "command": "python -m py_compile D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\deepseek_judge_preflight.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_chunk_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_generator_ablation_summary.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_mapping_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_mapping_policy_review.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_query_expansion_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\external_comparison_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\graphiti_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\letta_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\long_horizon_prediction_evidence_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\long_horizon_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\longmem_dmr_smoke.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\mem0_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\next_validation_action_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_answer_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_bottleneck_taxonomy.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_eval.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_baseline_health_check.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_current_system_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_next_gate_readiness.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_objective_coverage_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_requirements_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\productization_decision_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_failure_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_late_rank_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_objective_conflict_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_crosscheck.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_guard_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_trigger_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_reranker_pool_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_vector_weight_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\readme_claims_support_audit.py",
       "status": "passed",
-      "note": "The successful check used explicit PowerShell file enumeration."
+      "duration_ms": 345.943,
+      "compiled_files": 36
     },
     {
       "id": "synapse-eval-tests",
       "command": "cargo test -p synapse-eval",
       "status": "passed",
+      "duration_ms": 5151.202,
       "tests_passed": 44,
       "tests_failed": 0
     },
@@ -36,26 +45,41 @@
       "id": "exported-cognitive-session",
       "command": "cargo bench -p synapse-eval --bench exported_cognitive_session",
       "status": "passed",
+      "duration_ms": 1203.465,
       "metrics": {
         "RecallAt10": 1.0,
         "HebbianConsistency": 1.0,
         "CognitiveTraceDominance": 1.0
-      }
+      },
+      "benchmark": "exported-cognitive-session",
+      "schema_version": null,
+      "raw_records_committed": null,
+      "raw_dialogs_committed": null,
+      "raw_questions_committed": null,
+      "raw_answers_committed": null
     },
     {
       "id": "long-horizon-cognitive-memory",
       "command": "cargo bench -p synapse-eval --bench long_horizon_cognitive_memory",
       "status": "passed",
+      "duration_ms": 1193.159,
       "metrics": {
         "RecallAt10": 1.0,
         "HebbianConsistency": 1.0,
         "CognitiveTraceDominance": 1.0
-      }
+      },
+      "benchmark": "long-horizon-cognitive-memory",
+      "schema_version": null,
+      "raw_records_committed": null,
+      "raw_dialogs_committed": null,
+      "raw_questions_committed": null,
+      "raw_answers_committed": null
     },
     {
       "id": "long-horizon-stability-audit",
       "command": "cargo bench -p synapse-eval --bench long_horizon_stability_audit",
       "status": "passed",
+      "duration_ms": 1434.517,
       "aggregate": {
         "visible_seed_retention": 1.0,
         "old_memory_preservation": 1.0,
@@ -67,6 +91,9 @@
         "prediction_drift_resistance": 0.75,
         "reinforcement_drift_resistance": 0.75,
         "reinforcement_consistency": 1.0,
+        "old_cases": 4,
+        "newer_cases": 4,
+        "drift_rounds_per_case": 3,
         "future_prediction_miss_labels": [
           "day03-charger-demo",
           "day05-trust-message"
@@ -80,9 +107,25 @@
           "day03-charger-demo",
           "day05-trust-message"
         ]
-      }
+      },
+      "benchmark": "long-horizon-stability-audit",
+      "schema_version": "king-synapse.long-horizon-stability-audit.v3",
+      "raw_records_committed": false,
+      "raw_dialogs_committed": false,
+      "raw_questions_committed": false,
+      "raw_answers_committed": false
     }
   ],
+  "status": {
+    "baseline_health_check_passed": true,
+    "hard_failures": [],
+    "fixed_cognitive_metrics_stable": true,
+    "known_future_evidence_boundary_stable": true,
+    "future_matched_evidence_count": 6,
+    "future_candidate_presence": 1.0,
+    "tests_passed": 44,
+    "tests_failed": 0
+  },
   "read": {
     "current_baseline_health": "passed",
     "conclusion": "The current Phase 6 baseline remains healthy under local non-external gates. Core cognitive fixture metrics are stable, while the known long-horizon future-evidence boundary remains unchanged at 6/8 matched evidence cases.",
