@@ -161,6 +161,13 @@ present in top 10 for `8/8` cases, but only `6/8` currently carry matched
 evidence terms. The audit records the two misses with empty candidate
 matched-term arrays, so they are evidence-matching misses, not candidate-recall
 misses.
+The consolidated long-horizon task gate is
+[long-horizon-task-gate.json](crates/eval/reports/long-horizon-task-gate.json):
+`long_horizon_gate_passed: true`, `deterministic_fixture_stable: true`, and
+`future_candidate_recall_stable: true`. It also keeps
+`future_evidence_labeling_complete: false` and
+`public_real_world_long_memory_ready: false`, so this is not a public
+real-world long-memory claim yet.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
@@ -276,7 +283,7 @@ comparison adapters or optional embedding/reranking paths.
 - The official DMR task gate passes only for the local extractive baseline: `local_official_style_dmr_gate_passed: true`, while `published_comparable_official_dmr_ready: false`.
 - The ranking task gate passes as a no-default decision: `ranking_evidence_gate_passed: true`, while `safe_global_ranking_default_ready: false`.
 - The external comparison task gate passes only for the local fixture: `local_external_comparison_gate_passed: true`, while `hosted_official_external_ready: false`.
-- The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
+- The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
 - The next-gate readiness audit currently blocks heavy follow-up runs: top-context DMR judge preflight returns HTTP `401`, and hosted competitor comparison still lacks credentials or endpoints.
@@ -330,6 +337,7 @@ cargo build --release
 | `crates/eval/reports/official-dmr-task-gate.json` | One-file DMR task gate: local official-style DMR evidence passes, while published-comparable DMR remains blocked. |
 | `crates/eval/reports/ranking-task-gate.json` | One-file ranking task gate: ranking evidence is consolidated, while global runtime defaults remain blocked. |
 | `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains blocked. |
+| `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |

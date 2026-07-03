@@ -147,6 +147,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/long-horizon-cognitive-memory.json",
         "long_horizon_prediction_evidence": root
         / "crates/eval/reports/long-horizon-prediction-evidence-audit.json",
+        "long_horizon_task_gate": root
+        / "crates/eval/reports/long-horizon-task-gate.json",
     }
 
     readme_text = paths["readme"].read_text(encoding="utf-8")
@@ -163,6 +165,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence"])
+    long_horizon_gate = load_json(paths["long_horizon_task_gate"])
 
     external_systems = {
         system.get("system"): system for system in external_latest.get("systems", [])
@@ -326,6 +329,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             conclusion=safe_get(ranking_conflict, ["read", "conclusion"], ""),
         ),
         claim(
+            claim_id="long_horizon_task_gate",
+            readme_snippet="long_horizon_gate_passed: true",
+            status="supported",
+            evidence=[report_path(paths["long_horizon_task_gate"])],
+            conclusion=safe_get(long_horizon_gate, ["read", "current_conclusion"], ""),
+        ),
+        claim(
             claim_id="productization_blocked",
             readme_snippet="productization is not ready",
             status="supported",
@@ -384,6 +394,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "long_horizon_fixed_metrics": long_horizon.get("metrics", {}),
             "long_horizon_matched_evidence_count": safe_get(
                 long_horizon_evidence, ["aggregate", "matched_evidence_all_phases_count"]
+            ),
+            "long_horizon_gate_passed": safe_get(
+                long_horizon_gate, ["status", "long_horizon_gate_passed"]
+            ),
+            "public_real_world_long_memory_ready": safe_get(
+                long_horizon_gate, ["status", "public_real_world_long_memory_ready"]
             ),
         },
         "read": {

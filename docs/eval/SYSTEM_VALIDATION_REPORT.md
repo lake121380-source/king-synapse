@@ -7,7 +7,9 @@ recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
 samples, pinned extractive DMR judge runs have returned `0` errors on
 `deepseek-v4-flash`, the top-context candidate judge preflight currently
 returns HTTP `401`, and the deterministic long-horizon cognitive gate plus
-detailed stability / prediction-evidence audits are recorded.
+detailed stability / prediction-evidence audits are recorded. A consolidated
+long-horizon task gate now records the deterministic fixture as passed while
+keeping public real-world long-memory claims blocked.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -170,7 +172,7 @@ The project has crossed the basic bar for:
 3. visible comparative value on cognitive-trace introspection.
 4. fixed benchmark and golden replay baselines for the current Phase 6 scope.
 5. a deterministic long-horizon cognitive regression gate with all fixed
-   metrics at `1.000`.
+   metrics at `1.000`, now wrapped by a long-horizon task gate.
 
 Long-memory 50-sample evidence now exists across three retrieval modes:
 
@@ -309,6 +311,14 @@ Long-horizon cognitive validation:
   long-horizon surface.
   It is a regression gate and diagnostic baseline, not a substitute for public
   long-memory benchmarks or hosted external comparisons.
+- `crates/eval/reports/long-horizon-task-gate.json` consolidates those
+  reports into the Phase 5 task gate. The current result is
+  `long_horizon_gate_passed: true`, with `deterministic_fixture_stable: true`
+  and `future_candidate_recall_stable: true`. The same gate keeps
+  `future_evidence_labeling_complete: false`,
+  `public_real_world_long_memory_ready: false`,
+  `runtime_behavior_change_allowed: false`, and
+  `productization_allowed: false`.
 
 The 50-sample reports are:
 
@@ -628,6 +638,21 @@ External comparison task gate:
   counted separately from failures. The open hosted gates are Graphiti/Zep
   Neo4j/OpenAI credentials, official Mem0 configuration, and a Letta endpoint.
 
+Long-horizon task gate:
+
+- `crates/eval/reports/long-horizon-task-gate.json` consolidates the current
+  Phase 5 long-horizon evidence into one gate.
+- The current result is `long_horizon_gate_passed: true`: deterministic
+  long-session fixture metrics are stable, old and new memories remain
+  addressable, hidden trace dominance is stable, reinforcement remains
+  consistent, and all `8/8` expected future candidates are present.
+- The same gate keeps `future_evidence_labeling_complete: false` because only
+  `6/8` cases carry matched target-side future evidence under the current
+  substring evidence rule.
+- It also keeps `public_real_world_long_memory_ready: false`; this gate does
+  not permit runtime behavior changes, productization, or public real-world
+  long-memory stability claims.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README
@@ -648,15 +673,17 @@ Current system gate:
 
 - `crates/eval/reports/phase6-current-system-gate.json` consolidates the
   Phase 6 requirements audit, objective coverage audit, next-gate readiness,
-  README claims audit, and latest baseline health replay into one current
-  go/no-go read.
+  README claims audit, official DMR task gate, ranking task gate, external
+  comparison task gate, long-horizon task gate, and latest baseline health
+  replay into one current go/no-go read.
 - The current result is `current_system_gate_passed: true`, with
   `current_work_mode: validation_only`.
 - This means the evidence chain is coherent enough to keep validating the
   system, but the same gate keeps `heavy_next_gate_ready: false`,
   `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
 - The blocked next gates remain top-context candidate judge scoring, hosted
-  external comparison, and productization.
+  external comparison, future evidence labeling, public real-world long-memory
+  validation, and productization.
 
 Phase 6 next-gate readiness:
 

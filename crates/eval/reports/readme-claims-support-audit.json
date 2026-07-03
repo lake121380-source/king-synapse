@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.readme-claims-support-audit.v1",
-  "generated_at": "2026-07-03T17:29:02.169162+00:00",
+  "generated_at": "2026-07-03T17:38:46.968397+00:00",
   "runner": "scripts\\eval\\readme_claims_support_audit.py",
   "git": {
     "branch": "main",
-    "commit": "dd1d63eaf2efd606d52f8099a8e9141ceb9281eb",
+    "commit": "d3901f2d5896fb021969444efd80de72271f03d3",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "readme": {
       "path": "README.md",
       "exists": true,
-      "sha256": "9bad238015b4b667ae61a7de762abb1677c174b6e5d9a2f21d62ba21cc8ce52e"
+      "sha256": "1e76f0775836a80d3e93e911aa4bba05c0d475ca3480aa5fe1e75994b5b1621b"
     },
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "1567b8845ae30f5ac9b1896dfc3d26d01918a200372524e644e11570f9bc28eb"
+      "sha256": "6c66c347138f11973124235b598759f80e8b7dbac90e2309fe7f2d151b8abf3b"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "afc86be15446095d16214154f9da23f4e5bfd9f72587a169643e9607a337c539"
+      "sha256": "78cf98ae2f4d5da8e8d349bf72f82b9907a06869544b4a84e09e82367f6e8f14"
     },
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
@@ -92,6 +92,11 @@
       "path": "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json",
       "exists": true,
       "sha256": "bf74ce324c6e801131e733bcb2bcf525a42072ad44fc6d315dd018886428d8fb"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
     }
   },
   "raw_records_committed": false,
@@ -210,6 +215,17 @@
       "present_in_readme": true
     },
     {
+      "id": "long_horizon_task_gate",
+      "readme_snippet": "long_horizon_gate_passed: true",
+      "status": "supported",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Long-horizon deterministic evidence supports stable network-memory behavior, but it does not yet support public real-world long-memory or product claims.",
+      "required_scope_note": null,
+      "present_in_readme": true
+    },
+    {
       "id": "productization_blocked",
       "readme_snippet": "productization is not ready",
       "status": "supported",
@@ -224,7 +240,7 @@
   ],
   "status_counts": {
     "supported_with_scope": 4,
-    "supported": 6
+    "supported": 7
   },
   "unsupported_claims": [],
   "supported_with_scope_claims": [
@@ -273,7 +289,9 @@
       "HebbianConsistency": 1.0,
       "CognitiveTraceDominance": 1.0
     },
-    "long_horizon_matched_evidence_count": 6
+    "long_horizon_matched_evidence_count": 6,
+    "long_horizon_gate_passed": true,
+    "public_real_world_long_memory_ready": false
   },
   "read": {
     "readme_claims_conservative_enough": true,

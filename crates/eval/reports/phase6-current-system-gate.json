@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T17:29:12.713701+00:00",
+  "generated_at": "2026-07-03T17:38:53.095228+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "dd1d63eaf2efd606d52f8099a8e9141ceb9281eb",
+    "commit": "d3901f2d5896fb021969444efd80de72271f03d3",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "e340abe2723a39c541d08de99672f36cd2ced8e0f4e01c300672b0b4713f10d5"
+      "sha256": "24443d93e08944b6a4585fff8beb18d2b1215c5ab4951e20d08da241cb6bf2ab"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -42,6 +42,11 @@
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
       "sha256": "89e160ee5cefc548814424bafc44739235140e72ed1e86d5209316e2a18078b7"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -132,6 +137,33 @@
       "conclusion": "Hosted/official external comparison is still explicitly not ready."
     },
     {
+      "id": "long_horizon_task_gate_passed",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Long-horizon task gate is passed for deterministic fixture stability."
+    },
+    {
+      "id": "future_evidence_boundary_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Future evidence labeling is still explicitly incomplete and not overstated."
+    },
+    {
+      "id": "public_real_world_long_memory_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Public real-world long-memory stability is still explicitly not ready."
+    },
+    {
       "id": "raw_or_generated_data_not_committed",
       "status": "passed",
       "severity": "required",
@@ -143,6 +175,7 @@
         "crates\\eval\\reports\\official-dmr-task-gate.json",
         "crates\\eval\\reports\\ranking-task-gate.json",
         "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
@@ -221,6 +254,7 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "long_horizon_task_gate": {},
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
@@ -233,11 +267,16 @@
     "heavy_next_gate_ready": false,
     "top_context_judge_ready": false,
     "hosted_external_ready": false,
+    "long_horizon_gate_passed": true,
+    "future_evidence_labeling_complete": false,
+    "public_real_world_long_memory_ready": false,
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
       "top_context_candidate_not_judge_scored",
       "hosted_external_comparison_not_configured",
+      "future_evidence_labeling_boundary",
+      "public_real_world_long_memory_not_validated",
       "productization_not_ready"
     ]
   },
@@ -249,6 +288,7 @@
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
       "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
       "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
+      "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],
@@ -256,6 +296,8 @@
       "Top-context DMR candidate judge scoring.",
       "Published-comparable official DMR performance.",
       "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
+      "Complete future evidence labeling for long-horizon prediction.",
+      "Public real-world long-memory stability.",
       "Safe global runtime ranking default.",
       "Production readiness or v0.1 release readiness."
     ],
