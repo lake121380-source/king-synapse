@@ -149,6 +149,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/long-horizon-prediction-evidence-audit.json",
         "long_horizon_task_gate": root
         / "crates/eval/reports/long-horizon-task-gate.json",
+        "productization_decision_gate": root
+        / "crates/eval/reports/productization-decision-gate.json",
     }
 
     readme_text = paths["readme"].read_text(encoding="utf-8")
@@ -166,6 +168,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence"])
     long_horizon_gate = load_json(paths["long_horizon_task_gate"])
+    productization_gate = load_json(paths["productization_decision_gate"])
 
     external_systems = {
         system.get("system"): system for system in external_latest.get("systems", [])
@@ -336,6 +339,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             conclusion=safe_get(long_horizon_gate, ["read", "current_conclusion"], ""),
         ),
         claim(
+            claim_id="productization_decision_gate",
+            readme_snippet="productization_ready: false",
+            status="supported",
+            evidence=[report_path(paths["productization_decision_gate"])],
+            conclusion=safe_get(productization_gate, ["read", "current_conclusion"], ""),
+        ),
+        claim(
             claim_id="productization_blocked",
             readme_snippet="productization is not ready",
             status="supported",
@@ -400,6 +410,16 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "public_real_world_long_memory_ready": safe_get(
                 long_horizon_gate, ["status", "public_real_world_long_memory_ready"]
+            ),
+            "productization_decision_gate_passed": safe_get(
+                productization_gate,
+                ["status", "productization_decision_gate_passed"],
+            ),
+            "productization_ready": safe_get(
+                productization_gate, ["status", "productization_ready"]
+            ),
+            "release_v0_1_allowed": safe_get(
+                productization_gate, ["status", "release_v0_1_allowed"]
             ),
         },
         "read": {

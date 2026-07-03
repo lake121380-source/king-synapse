@@ -9,7 +9,8 @@ samples, pinned extractive DMR judge runs have returned `0` errors on
 returns HTTP `401`, and the deterministic long-horizon cognitive gate plus
 detailed stability / prediction-evidence audits are recorded. A consolidated
 long-horizon task gate now records the deterministic fixture as passed while
-keeping public real-world long-memory claims blocked.
+keeping public real-world long-memory claims blocked. A productization
+decision gate now records the current decision as no-go / validation-only.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -653,6 +654,24 @@ Long-horizon task gate:
   not permit runtime behavior changes, productization, or public real-world
   long-memory stability claims.
 
+Productization decision gate:
+
+- `crates/eval/reports/productization-decision-gate.json` consolidates the
+  current Phase 6 productization decision into one gate.
+- The current result is `productization_decision_gate_passed: true`, with
+  `current_decision: no_go_validation_only`, `productization_ready: false`,
+  `productization_allowed: false`, and `release_v0_1_allowed: false`.
+- The gate records what is ready: local cognitive-trace advantage, pinned
+  extractive official-style DMR execution, ranking bottleneck diagnosis, and
+  deterministic long-horizon fixture stability.
+- The same gate records what blocks productization: published-comparable DMR,
+  top-context judge scoring, hosted/official external comparison, safe runtime
+  ranking defaults, public real-world long-memory evidence, GPU/latency
+  acceptance, and public demo/release packaging.
+- This is not a failure of the current architecture. It is the current release
+  decision: keep validating before starting Web demo, API server, Docker, or
+  v0.1 packaging work.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README
@@ -674,8 +693,8 @@ Current system gate:
 - `crates/eval/reports/phase6-current-system-gate.json` consolidates the
   Phase 6 requirements audit, objective coverage audit, next-gate readiness,
   README claims audit, official DMR task gate, ranking task gate, external
-  comparison task gate, long-horizon task gate, and latest baseline health
-  replay into one current go/no-go read.
+  comparison task gate, long-horizon task gate, productization decision gate,
+  and latest baseline health replay into one current go/no-go read.
 - The current result is `current_system_gate_passed: true`, with
   `current_work_mode: validation_only`.
 - This means the evidence chain is coherent enough to keep validating the
@@ -683,7 +702,7 @@ Current system gate:
   `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
 - The blocked next gates remain top-context candidate judge scoring, hosted
   external comparison, future evidence labeling, public real-world long-memory
-  validation, and productization.
+  validation, productization decision no-go, and productization.
 
 Phase 6 next-gate readiness:
 
@@ -715,8 +734,9 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen and do not start product work.
-No heavy next-gate run is currently ready: top-context DMR judge scoring needs
-valid authorization, and hosted external comparison needs competitor
+The current productization decision is no-go / validation-only. No heavy
+next-gate run is currently ready: top-context DMR judge scoring needs valid
+authorization, and hosted external comparison needs competitor
 credentials/endpoints. Once one of those gates is ready, continue in validation
 mode only: judge-score the top-context DMR candidate, or run the hosted
 external comparison. Do not adopt `vector_weight = 1.5`, reranker pool `100`,

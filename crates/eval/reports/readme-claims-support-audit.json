@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.readme-claims-support-audit.v1",
-  "generated_at": "2026-07-03T17:38:46.968397+00:00",
+  "generated_at": "2026-07-03T17:46:31.722063+00:00",
   "runner": "scripts\\eval\\readme_claims_support_audit.py",
   "git": {
     "branch": "main",
-    "commit": "d3901f2d5896fb021969444efd80de72271f03d3",
+    "commit": "a52e33267df4a60bda29c4ff146ee886eec77518",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "readme": {
       "path": "README.md",
       "exists": true,
-      "sha256": "1e76f0775836a80d3e93e911aa4bba05c0d475ca3480aa5fe1e75994b5b1621b"
+      "sha256": "3748d428b841035f49e361019ba40e9056c6ab0b586f497a89c5dfc21a1fd20c"
     },
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "6c66c347138f11973124235b598759f80e8b7dbac90e2309fe7f2d151b8abf3b"
+      "sha256": "82eb4c03fcf96d4b662697979a0036c2b008796b6715f75e4ee540285b17de60"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "78cf98ae2f4d5da8e8d349bf72f82b9907a06869544b4a84e09e82367f6e8f14"
+      "sha256": "8c7e3bb6440b0c2565c97b48dc582a23492ba2355a0943fcfc3b0fef7b6c1211"
     },
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
@@ -97,6 +97,11 @@
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
       "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    },
+    "productization_decision_gate": {
+      "path": "crates\\eval\\reports\\productization-decision-gate.json",
+      "exists": true,
+      "sha256": "6e100465bd55f1f78daf484b91fde3a15a23fc37ef00dbf7434e188818ba9d96"
     }
   },
   "raw_records_committed": false,
@@ -226,6 +231,17 @@
       "present_in_readme": true
     },
     {
+      "id": "productization_decision_gate",
+      "readme_snippet": "productization_ready: false",
+      "status": "supported",
+      "evidence": [
+        "crates\\eval\\reports\\productization-decision-gate.json"
+      ],
+      "conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, but official DMR, hosted external comparison, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
+      "required_scope_note": null,
+      "present_in_readme": true
+    },
+    {
       "id": "productization_blocked",
       "readme_snippet": "productization is not ready",
       "status": "supported",
@@ -240,7 +256,7 @@
   ],
   "status_counts": {
     "supported_with_scope": 4,
-    "supported": 7
+    "supported": 8
   },
   "unsupported_claims": [],
   "supported_with_scope_claims": [
@@ -291,7 +307,10 @@
     },
     "long_horizon_matched_evidence_count": 6,
     "long_horizon_gate_passed": true,
-    "public_real_world_long_memory_ready": false
+    "public_real_world_long_memory_ready": false,
+    "productization_decision_gate_passed": true,
+    "productization_ready": false,
+    "release_v0_1_allowed": false
   },
   "read": {
     "readme_claims_conservative_enough": true,

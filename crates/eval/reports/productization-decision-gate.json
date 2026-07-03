@@ -1,0 +1,353 @@
+{
+  "schema_version": "king-synapse.productization-decision-gate.v1",
+  "generated_at": "2026-07-03T17:46:24.180287+00:00",
+  "runner": "scripts\\eval\\productization_decision_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "a52e33267df4a60bda29c4ff146ee886eec77518",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "requirements_audit": {
+      "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
+      "exists": true,
+      "sha256": "1abac37af93673c5dae6f3381eaa4fb1355c0c5843431838ec569ad6c1608f26"
+    },
+    "objective_coverage": {
+      "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
+      "exists": true,
+      "sha256": "7ca33a6fd8c746b9bdae45eced48f142b931f06cecc0a7d09d3a11de9d8f98dd"
+    },
+    "next_gate_readiness": {
+      "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+      "exists": true,
+      "sha256": "b1f15f488cf323e3c715a3ffb4b43edd11537891c2ce7ba5544e109c89205f0c"
+    },
+    "official_dmr_task_gate": {
+      "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
+      "exists": true,
+      "sha256": "b7caf4e8851d45bc9d3e0de9b1fac7d127ce915fb841df10d7d8420a0daa0533"
+    },
+    "ranking_task_gate": {
+      "path": "crates\\eval\\reports\\ranking-task-gate.json",
+      "exists": true,
+      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+    },
+    "external_comparison_task_gate": {
+      "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
+      "exists": true,
+      "sha256": "89e160ee5cefc548814424bafc44739235140e72ed1e86d5209316e2a18078b7"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    },
+    "performance_profile": {
+      "path": "crates\\eval\\reports\\phase6-performance-profile.json",
+      "exists": true,
+      "sha256": "f1f481542c64c6ccbc5100fa1ef858835e931b5b9d54fa82a3a50cb86810ac4f"
+    },
+    "system_validation_report": {
+      "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
+      "exists": true,
+      "sha256": "82eb4c03fcf96d4b662697979a0036c2b008796b6715f75e4ee540285b17de60"
+    },
+    "experiment_log": {
+      "path": "docs\\eval\\EXPERIMENT_LOG.md",
+      "exists": true,
+      "sha256": "8c7e3bb6440b0c2565c97b48dc582a23492ba2355a0943fcfc3b0fef7b6c1211"
+    },
+    "demo_doc": {
+      "path": "docs\\DEMO.md",
+      "exists": true,
+      "sha256": "6e57182ffee814786d94a40dc02e94d2ee44cbbb3d13028eec0c58e836ba643c"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "raw_policy": {
+    "clean": true,
+    "details": {
+      "requirements_audit": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "generated_answers_committed": false
+      },
+      "objective_coverage": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
+      "next_gate_readiness": {
+        "raw_records_committed": false,
+        "raw_response_committed": false,
+        "prompt_text_recorded": false
+      },
+      "official_dmr_task_gate": {},
+      "ranking_task_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
+      "external_comparison_task_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
+      "long_horizon_task_gate": {},
+      "performance_profile": {}
+    }
+  },
+  "productization_questions": [
+    {
+      "id": "clear_supported_task_boundaries",
+      "question": "Synapse 在什么任务上明确强？",
+      "status": "partial",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\official-dmr-task-gate.json",
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "The supported strength is clear but scoped: local cognitive-trace introspection and deterministic long-horizon fixture stability. Official DMR remains local and not published-comparable.",
+      "remaining": [
+        "Do not generalize local cognitive-trace strength into broad long-memory superiority.",
+        "Keep DMR claims local until published-comparable policy and scoring are ready."
+      ]
+    },
+    {
+      "id": "weaknesses_vs_competitors_known",
+      "question": "在什么任务上不如 Mem0 / Graphiti / Zep？",
+      "status": "blocked_external",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet.",
+      "remaining": [
+        "Configure hosted Graphiti/Zep Neo4j/OpenAI.",
+        "Configure official Mem0 embedding/recommended config.",
+        "Configure a live or local Letta endpoint."
+      ]
+    },
+    {
+      "id": "unique_trace_capabilities_supported",
+      "question": "哪些能力是别人没有的？",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "Local fixture evidence supports Synapse's inspectable dominant trace, suppressed alternatives, future continuation, and reinforcement isolation surfaces.",
+      "remaining": []
+    },
+    {
+      "id": "gpu_cost_acceptance_ready",
+      "question": "GPU 成本是否能接受？",
+      "status": "not_ready",
+      "evidence": [
+        "crates\\eval\\reports\\phase6-performance-profile.json",
+        "crates\\eval\\reports\\ranking-task-gate.json"
+      ],
+      "conclusion": "GPU and latency costs are measured, but no product acceptance threshold is adopted; reranking remains a cost boundary.",
+      "remaining": [
+        "Adopt an explicit latency/GPU acceptance threshold before product claims.",
+        "Do not ship a ranking policy while latency acceptance is unresolved."
+      ]
+    },
+    {
+      "id": "official_dmr_supports_readme_claims",
+      "question": "DMR 官方结果是否能支撑 README 的说法？",
+      "status": "not_ready",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-task-gate.json"
+      ],
+      "conclusion": "README can describe local official-style evidence, but published-comparable official DMR is not ready.",
+      "remaining": [
+        "Judge-score the top-context candidate after authorization is fixed.",
+        "Finalize published-comparable mapping and scoring policy.",
+        "Improve answer synthesis quality before stronger public claims."
+      ]
+    },
+    {
+      "id": "stable_public_demo_ready",
+      "question": "是否有稳定 demo 可以让别人一眼看懂？",
+      "status": "partial",
+      "evidence": [
+        "docs\\DEMO.md",
+        "docs\\eval\\SYSTEM_VALIDATION_REPORT.md"
+      ],
+      "conclusion": "A disposable CLI demo exists, but product demo criteria for web/API/Docker/v0.1 are not open yet.",
+      "remaining": [
+        "Keep demo work documentation-only until productization opens.",
+        "Do not start Web demo, API server, Docker, or v0.1 packaging from current evidence."
+      ]
+    },
+    {
+      "id": "runtime_defaults_ready",
+      "question": "是否可以改变运行时默认策略？",
+      "status": "not_ready",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-task-gate.json"
+      ],
+      "conclusion": "Ranking is a validated bottleneck, but no safe global runtime ranking default is ready.",
+      "remaining": [
+        "Find a cross-dataset safe ordering signal or explicitly split DMR and LongMemEval objectives.",
+        "Keep memory schema, cognitive layers, CLI, and runtime ranking defaults frozen."
+      ]
+    },
+    {
+      "id": "public_long_memory_ready",
+      "question": "长期记忆是否能作为公开产品主张？",
+      "status": "not_ready",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Deterministic long-horizon fixture is stable, but public real-world long-memory evidence is not ready.",
+      "remaining": [
+        "Close future evidence labeling boundary.",
+        "Add broader public long-memory validation before product claims."
+      ]
+    },
+    {
+      "id": "feature_freeze_and_no_product_work",
+      "question": "现在是否应该继续冻结功能？",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\phase6-requirements-audit.json",
+        "crates\\eval\\reports\\phase6-objective-coverage-audit.json"
+      ],
+      "conclusion": "Feature freeze remains active and Phase 6 is still validation-only with productization blocked.",
+      "remaining": []
+    },
+    {
+      "id": "raw_or_generated_data_not_committed",
+      "question": "产品化决策证据链是否保持干净？",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\phase6-requirements-audit.json",
+        "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
+        "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+        "crates\\eval\\reports\\official-dmr-task-gate.json",
+        "crates\\eval\\reports\\ranking-task-gate.json",
+        "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\long-horizon-task-gate.json",
+        "crates\\eval\\reports\\phase6-performance-profile.json"
+      ],
+      "conclusion": "Audited reports do not record committed raw records, prompts, responses, answers, dialogs, memory content, or generated answers.",
+      "remaining": []
+    }
+  ],
+  "status_counts": {
+    "partial": 2,
+    "blocked_external": 1,
+    "satisfied": 3,
+    "not_ready": 4
+  },
+  "performance_summary": {
+    "measurement_coverage": {
+      "latency": "measured end-to-end per query and per run",
+      "memory": "instrumented in LongMemEval / DMR 50-sample process_metrics and phase6-substage-timing-probe CPU/GPU process metrics",
+      "cpu": "instrumented in LongMemEval / DMR 50-sample reports and phase6-substage-timing-probe process_metrics",
+      "embedding_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
+      "vector_search_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
+      "reranker_time": "instrumented in the 50-sample reports and summarized in phase6-substage-timing-probe",
+      "gpu": "CUDA path validated and GPU Process Memory counter sampled for the small DMR CUDA sub-stage probe"
+    },
+    "reranker_p50_latency_ms": [
+      {
+        "dataset": "LongMemEval cleaned 50",
+        "p50_latency_ms": 1265.0664,
+        "p95_latency_ms": 1874.1819
+      },
+      {
+        "dataset": "DMR candidate 50",
+        "p50_latency_ms": 618.7488,
+        "p95_latency_ms": 651.7819000000001
+      }
+    ],
+    "branch_delta": [
+      {
+        "dataset": "LongMemEval cleaned 50",
+        "reranker_p50_delta_ms": 683.0750999999999,
+        "reranker_total_delta_ms": 34689.4396
+      },
+      {
+        "dataset": "DMR candidate 50",
+        "reranker_p50_delta_ms": 540.6890999999999,
+        "reranker_total_delta_ms": 27133.4019
+      }
+    ]
+  },
+  "status": {
+    "productization_decision_gate_passed": true,
+    "current_decision": "no_go_validation_only",
+    "productization_ready": false,
+    "productization_allowed": false,
+    "release_v0_1_allowed": false,
+    "web_demo_allowed": false,
+    "api_server_allowed": false,
+    "docker_allowed": false,
+    "runtime_default_change_allowed": false,
+    "heavy_next_gate_ready": false,
+    "hard_failures": [],
+    "blocking_criteria": [
+      "clear_supported_task_boundaries",
+      "weaknesses_vs_competitors_known",
+      "gpu_cost_acceptance_ready",
+      "official_dmr_supports_readme_claims",
+      "stable_public_demo_ready",
+      "runtime_defaults_ready",
+      "public_long_memory_ready"
+    ],
+    "open_gates": [
+      "published_comparable_official_dmr_not_ready",
+      "top_context_candidate_not_judge_scored",
+      "hosted_external_comparison_not_configured",
+      "safe_runtime_ranking_default_not_ready",
+      "future_evidence_labeling_boundary",
+      "public_real_world_long_memory_not_validated",
+      "gpu_latency_acceptance_threshold_not_adopted",
+      "stable_public_demo_not_productized"
+    ]
+  },
+  "read": {
+    "current_conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, but official DMR, hosted external comparison, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
+    "what_is_ready": [
+      "Local cognitive-trace advantage is supported on the shared fixture.",
+      "Pinned extractive official-style DMR is locally executable and judge-backed.",
+      "Ranking bottlenecks are validated without adopting a runtime default.",
+      "Deterministic long-horizon fixture stability is gate-backed.",
+      "A disposable CLI demo exists for local explanation."
+    ],
+    "what_blocks_productization": [
+      "Published-comparable official DMR is not ready.",
+      "Top-context DMR candidate is not judge-scored.",
+      "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
+      "No safe global runtime ranking default exists.",
+      "Public real-world long-memory stability is not validated.",
+      "GPU/latency acceptance threshold is not adopted.",
+      "Web demo, API server, Docker, and v0.1 packaging should not start yet."
+    ],
+    "next_action": "Keep feature freeze and validation-only mode. The next true gate requires either valid judge authorization for top-context DMR scoring or hosted competitor credentials/endpoints."
+  },
+  "limits": [
+    "This gate reads committed aggregate evidence and docs only.",
+    "It does not run benchmarks, hosted adapters, LLM judges, product code, or external services.",
+    "It does not inspect raw questions, answers, dialogs, memory content, generated answers, prompts, responses, or API keys.",
+    "A passing productization decision gate means the no-go decision is evidence-backed; it is not product readiness."
+  ]
+}

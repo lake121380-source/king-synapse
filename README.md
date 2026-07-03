@@ -284,6 +284,7 @@ comparison adapters or optional embedding/reranking paths.
 - The ranking task gate passes as a no-default decision: `ranking_evidence_gate_passed: true`, while `safe_global_ranking_default_ready: false`.
 - The external comparison task gate passes only for the local fixture: `local_external_comparison_gate_passed: true`, while `hosted_official_external_ready: false`.
 - The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
+- The productization decision gate is a no-go gate: `productization_decision_gate_passed: true`, `productization_ready: false`, `productization_allowed: false`, and `release_v0_1_allowed: false`.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
 - The next-gate readiness audit currently blocks heavy follow-up runs: top-context DMR judge preflight returns HTTP `401`, and hosted competitor comparison still lacks credentials or endpoints.
@@ -338,6 +339,7 @@ cargo build --release
 | `crates/eval/reports/ranking-task-gate.json` | One-file ranking task gate: ranking evidence is consolidated, while global runtime defaults remain blocked. |
 | `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains blocked. |
 | `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
+| `crates/eval/reports/productization-decision-gate.json` | One-file productization decision gate: current decision is no-go / validation-only. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |

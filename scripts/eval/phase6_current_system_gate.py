@@ -85,6 +85,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/long-horizon-task-gate.json",
     )
     parser.add_argument(
+        "--productization-decision-gate",
+        type=Path,
+        default=root / "crates/eval/reports/productization-decision-gate.json",
+    )
+    parser.add_argument(
         "--baseline-health",
         type=Path,
         default=latest_baseline_health_report(root),
@@ -195,6 +200,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             args.external_comparison_task_gate
         ),
         "long_horizon_task_gate": normalize_path_arg(args.long_horizon_task_gate),
+        "productization_decision_gate": normalize_path_arg(
+            args.productization_decision_gate
+        ),
         "baseline_health": normalize_path_arg(args.baseline_health),
     }
     reports = {name: load_json(path) for name, path in paths.items()}
@@ -208,6 +216,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     ranking = reports["ranking_task_gate"]
     external = reports["external_comparison_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
+    productization = reports["productization_decision_gate"]
     baseline = reports["baseline_health"]
 
     baseline_passed = safe_get(baseline, ["read", "current_baseline_health"]) == "passed"
@@ -254,6 +263,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     public_real_world_long_memory_not_ready = not bool(
         safe_get(long_horizon, ["status", "public_real_world_long_memory_ready"])
+    )
+    productization_decision_gate_passed = bool(
+        safe_get(productization, ["status", "productization_decision_gate_passed"])
+    )
+    productization_ready_not_overstated = not bool(
+        safe_get(productization, ["status", "productization_ready"])
+    )
+    productization_allowed_not_overstated = not bool(
+        safe_get(productization, ["status", "productization_allowed"])
+    )
+    release_v0_1_not_overstated = not bool(
+        safe_get(productization, ["status", "release_v0_1_allowed"])
     )
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -345,6 +366,34 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             failure="Public real-world long-memory stability appears ready and needs a separate release decision.",
         ),
         check(
+            "productization_decision_gate_passed",
+            productization_decision_gate_passed,
+            evidence=[paths["productization_decision_gate"]],
+            conclusion="Productization decision gate is passed as an evidence-backed no-go decision.",
+            failure="Productization decision gate is not passed.",
+        ),
+        check(
+            "productization_ready_not_overstated",
+            productization_ready_not_overstated,
+            evidence=[paths["productization_decision_gate"]],
+            conclusion="Productization readiness is still explicitly false.",
+            failure="Productization readiness appears true and needs a separate release decision.",
+        ),
+        check(
+            "productization_allowed_not_overstated",
+            productization_allowed_not_overstated,
+            evidence=[paths["productization_decision_gate"]],
+            conclusion="Productization work is still explicitly not allowed.",
+            failure="Productization work appears allowed and needs a separate scope decision.",
+        ),
+        check(
+            "release_v0_1_not_overstated",
+            release_v0_1_not_overstated,
+            evidence=[paths["productization_decision_gate"]],
+            conclusion="v0.1 release readiness is still explicitly not allowed.",
+            failure="v0.1 release appears allowed and needs a separate release decision.",
+        ),
+        check(
             "raw_or_generated_data_not_committed",
             raw_clean,
             evidence=list(paths.values()),
@@ -384,6 +433,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("future_evidence_labeling_boundary")
     if public_real_world_long_memory_not_ready:
         blocked_next_gates.append("public_real_world_long_memory_not_validated")
+    if productization_ready_not_overstated:
+        blocked_next_gates.append("productization_decision_no_go")
     if productization_blocked:
         blocked_next_gates.append("productization_not_ready")
 
@@ -424,6 +475,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "long_horizon_gate_passed": long_horizon_gate_passed,
             "future_evidence_labeling_complete": not future_evidence_boundary_not_overstated,
             "public_real_world_long_memory_ready": not public_real_world_long_memory_not_ready,
+            "productization_decision_gate_passed": productization_decision_gate_passed,
+            "productization_ready": not productization_ready_not_overstated,
+            "release_v0_1_allowed": not release_v0_1_not_overstated,
             "productization_allowed": False,
             "runtime_ranking_change_allowed": False,
             "blocked_next_gates": blocked_next_gates,
@@ -442,6 +496,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
+                "Productization decision is gate-backed as no-go / validation-only.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],
@@ -452,7 +507,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Complete future evidence labeling for long-horizon prediction.",
                 "Public real-world long-memory stability.",
                 "Safe global runtime ranking default.",
-                "Production readiness or v0.1 release readiness.",
+                "Production readiness, web/API/Docker product work, or v0.1 release readiness.",
             ],
             "next_action": (
                 "Keep feature freeze. Continue only validation work until either "
