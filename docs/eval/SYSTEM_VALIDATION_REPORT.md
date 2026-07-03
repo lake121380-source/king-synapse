@@ -398,6 +398,14 @@ Ranking ablation status:
   top-25, while 7 sit at ranks 26-50. This separates ordering failures from
   true top-50 retrieval misses and argues for an ordering-focused DMR 200
   experiment before schema, chunk, or global branch-weight changes.
+- `crates/eval/reports/ranking-ablation-dmr-200-reranker-pool.json` and
+  `crates/eval/reports/ranking-reranker-pool-transition-audit-dmr-200.json`
+  record the DMR 200 reranker-pool ordering check. Pool `100` improves
+  Recall@10 from `0.411` to `0.416`, MRR from `0.472` to `0.483`, and top-1
+  from `74` to `77`, but P50 latency rises from `643.8 ms` to `1205.9 ms`.
+  Pool `25` rescues 5 rank 11-25 late-rank cases but causes 12 top-10
+  suppressions and 4 top-1 demotions overall. This argues against a global
+  pool change and toward a conditional second-stage ordering policy.
 
 DMR mapping audit status:
 
@@ -481,6 +489,6 @@ Next required action: keep feature growth frozen, keep the judge path on
 `deepseek-v4-flash`, and continue ranking / answer-synthesis validation before
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
-band without adopting `vector_weight = 1.5` as a default. Keep
-answer-synthesis work in evaluation mode until the official-style DMR protocol
-is finalized.
+band without adopting `vector_weight = 1.5` or reranker pool `100` as a
+default. Keep answer-synthesis work in evaluation mode until the
+official-style DMR protocol is finalized.

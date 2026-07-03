@@ -24,6 +24,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`
 
+`crates/eval/reports/ranking-ablation-dmr-200-reranker-pool.json`
+
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
@@ -37,6 +39,8 @@ Machine-readable reports:
 `crates/eval/reports/ranking-vector-weight-transition-audit-dmr-longmem-50.json`
 
 `crates/eval/reports/ranking-late-rank-audit-dmr-50-200.json`
+
+`crates/eval/reports/ranking-reranker-pool-transition-audit-dmr-200.json`
 
 Runner:
 
@@ -57,6 +61,10 @@ Vector-weight transition audit runner:
 Late-rank audit runner:
 
 `scripts/eval/ranking_late_rank_audit.py`
+
+Reranker-pool transition audit runner:
+
+`scripts/eval/ranking_reranker_pool_transition_audit.py`
 
 Chunk-policy runner:
 
@@ -939,6 +947,113 @@ The key split remains: top-50-only late ranks are ranking/order failures,
 while top-50 misses are candidate-retrieval failures. The next experiment
 should keep those two buckets separate.
 
+## DMR 200 Reranker-Pool Ordering Check
+
+This pass varies only `reranker_pool` on the DMR 200 punctuation-mapped sample.
+It is an ordering/latency check after the late-rank audit showed a larger
+rank 11-25 band in DMR 200 than in DMR 50.
+
+Reports:
+
+`crates/eval/reports/ranking-ablation-dmr-200-reranker-pool.json`
+
+`crates/eval/reports/ranking-reranker-pool-transition-audit-dmr-200.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets dmr `
+  --dmr-sample-size 200 `
+  --dmr-answer-match punctuation `
+  --ablation reranker-pool `
+  --reranker-pools 25,50,100 `
+  --k 10 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-200-reranker-pool.json `
+  --cleanup-cache
+```
+
+Transition audit command:
+
+```powershell
+python scripts/eval/ranking_reranker_pool_transition_audit.py
+```
+
+### DMR 200 Reranker-Pool Result
+
+| Reranker pool | Recall@10 | MRR@10 | P50 latency | P95 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 25 | 0.390 | 0.454 | 346.6 ms | 413.8 ms | 73 | 56 | 71 |
+| 50 | 0.411 | 0.472 | 643.8 ms | 709.5 ms | 74 | 65 | 61 |
+| 100 | 0.416 | 0.483 | 1205.9 ms | 1262.7 ms | 77 | 67 | 56 |
+
+Pool `100` is best on aggregate ranking quality in this DMR 200 pass, but the
+gain is small relative to cost: versus pool `50`, Recall@10 rises by `+0.005`,
+MRR rises by `+0.011`, top-1 rises by `+3`, and misses fall by `5`; P50
+latency rises by `+562.1 ms`.
+
+### DMR 200 Reranker-Pool Transition Result
+
+Pool `25` versus control pool `50`:
+
+| Transition | Count |
+| --- | ---: |
+| Recovered to top-10 | 6 |
+| Promoted to top-1 | 3 |
+| Suppressed from top-10 | 12 |
+| Demoted from top-1 | 4 |
+| Stable top-1 | 70 |
+| Top-10 preserved | 50 |
+| Miss unchanged | 55 |
+
+Pool `25` rescues `5/10` DMR 200 rank 11-25 late-rank cases, but it also
+causes `12` top-10 suppressions and `4` top-1 demotions overall. It is faster,
+but the quality loss is too large for a default.
+
+Pool `100` versus control pool `50`:
+
+| Transition | Count |
+| --- | ---: |
+| Recovered to top-10 | 7 |
+| Promoted to top-1 | 5 |
+| Suppressed from top-10 | 7 |
+| Demoted from top-1 | 2 |
+| Stable top-1 | 72 |
+| Top-10 preserved | 58 |
+| Miss unchanged | 49 |
+
+Subset movement for pool `100`:
+
+| Subset | Helpful movement | Unchanged misses |
+| --- | ---: | ---: |
+| Late rank 11-25 | 2 recovered to top-10 | 8 |
+| Late rank 26-50 | 1 recovered to top-10, 1 promoted to top-1 | 5 |
+| Top-50 retrieval miss | 4 recovered to top-10, 4 promoted to top-1 | 35 |
+
+### DMR 200 Reranker-Pool Read
+
+The experiment separates two effects:
+
+- Pool `25` is a targeted rank 11-25 rescue but has too much collateral
+  damage. It recovers half of the DMR 200 rank 11-25 late-rank set, while
+  increasing misses and suppressing many existing top-10 hits.
+- Pool `100` is a broad candidate expansion, not a focused late-rank fix. It
+  improves aggregate Recall@10/MRR/top-1, but most of its helpful movement is
+  outside the rank 11-25 late-rank subset and it roughly doubles P50 latency
+  versus pool `50`.
+
+This supports the next direction: do not simply change the global reranker
+pool. A safer policy needs a second-stage ordering signal that can help the
+rank 11-25 cases without suppressing existing top-10/top-1 hits or paying the
+full pool `100` latency on every query.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -972,16 +1087,19 @@ Better coverage alone is not enough when ordering/top-1 tradeoffs appear.
 The late-rank audit narrows the next step. DMR 50 late-rank cases mostly sit
 below rank 25, while DMR 200 has a larger 11-25 band. A safe ranking fix should
 first target ordering inside the existing candidate pool and keep top-50
-retrieval misses as a separate coverage problem.
+retrieval misses as a separate coverage problem. The DMR 200 reranker-pool
+check adds that pool `25` is too lossy and pool `100` is too expensive for a
+global default, even though pool `100` gives a small aggregate quality gain.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. separate candidate-retrieval coverage from reranker ordering on DMR 200;
-2. test a safer second-stage ordering signal for rank 11-25 cases;
+1. design a conditional second-stage ordering signal for DMR 200 rank 11-25
+   cases without running pool `100` for every query;
+2. separate top-50 retrieval misses from late-rank ordering failures in the
+   next coverage experiment;
 3. test smaller, overlap-aware chunking instead of full-session merging;
 4. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-5. inspect top-50 retrieval misses separately from late-ranking cases;
-6. keep answer-generation scoring separate from retrieval-ranking scoring.
+5. keep answer-generation scoring separate from retrieval-ranking scoring.
