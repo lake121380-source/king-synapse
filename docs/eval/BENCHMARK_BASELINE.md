@@ -63,7 +63,8 @@ The detailed long-horizon stability audit is
 `BenchmarkReport` contract value; it is a diagnostic report that records old /
 new memory separation, future continuation, and reinforcement drift checks.
 Current diagnostic read: visible / trace stability is `1.000`, while future
-continuation is `0.750`.
+continuation is `0.750`. The two future misses are absent from continuation
+top 10, so this is a candidate-generation diagnostic gap.
 
 `expanded-cognitive-replay` loads
 `crates/eval/datasets/regression/expanded_cognitive_replay.toml`. It fixes 20

@@ -152,7 +152,7 @@ A detailed stability audit is also checked in at
 [long-horizon-stability-audit.json](crates/eval/reports/long-horizon-stability-audit.json):
 visible seed retention, old/new memory separation, hidden trace dominance, and
 dominant-trace drift resistance are `1.000`, while future continuation is
-`0.750`.
+`0.750`. The two future misses are absent from continuation top 10.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |

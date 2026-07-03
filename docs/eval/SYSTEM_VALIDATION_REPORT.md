@@ -66,6 +66,9 @@ including the fixed long-horizon cognitive-memory gate. The detailed
 long-horizon audit also keeps visible seed retention, old/new memory
 separation, hidden trace dominance, dominant drift resistance, and
 reinforcement consistency at `1.000`; future continuation is weaker at `0.750`.
+The two future misses are absent from continuation top 10, so the current
+long-horizon prediction gap is candidate generation, not merely ranking inside
+top 10.
 The LongMemEval / DMR smoke path can run and report aggregate metrics, but full
 public long-memory stability is not yet proven.
 
@@ -91,8 +94,10 @@ Consistency conclusion: the system's main cognitive-memory layers agree with
 each other under the exported cognitive-session fixture and the deterministic
 long-horizon cognitive fixture. The sharper long-horizon audit adds one
 boundary: future continuation currently hits `6/8` cases, while visible recall
-and hidden trace dominance remain `8/8`. This is enough to say the core design
-is coherent in the validated scope, but not enough to claim long-horizon
+and hidden trace dominance remain `8/8`. The two misses are
+`day03-charger-demo` and `day05-trust-message`, and both are missing from
+continuation top 10 before and after reinforcement. This is enough to say the
+core design is coherent in the validated scope, but not enough to claim long-horizon
 real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
@@ -249,7 +254,9 @@ Long-horizon cognitive validation:
   diagnostic audit. It keeps visible seed retention, old memory preservation,
   newer memory addressability, hidden trace dominance, dominant drift
   resistance, and reinforcement consistency at `1.000`; future prediction
-  stability and prediction drift resistance are `0.750`.
+  stability and prediction drift resistance are `0.750`. It also records
+  continuation top-10 ranks: the two misses have no expected future rank in
+  prefix, full, or final post-reinforcement checks.
 - This supports the network-memory thesis in a shared long-session store, but
   it also identifies future continuation as the weaker long-horizon surface.
   It is a regression gate and diagnostic baseline, not a substitute for public

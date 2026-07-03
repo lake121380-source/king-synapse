@@ -90,7 +90,11 @@ frozen benchmark contract:
 The two future-continuation misses are `day03-charger-demo` and
 `day05-trust-message`. They do not break visible recall or hidden trace
 dominance, but they show that the future-prediction part of the long-horizon
-story is weaker than the trace part.
+story is weaker than the trace part. The rank-localization fields in
+`long-horizon-stability-audit.json` show that the expected future node is not
+present in continuation top 10 for those two cases in the prefix store, the
+full store, or after three reinforcement rounds. This is therefore a
+continuation-candidate miss, not just a low-ranking case inside top 10.
 
 ## Read
 
@@ -104,7 +108,8 @@ reinforcement remains consistent.
 The detailed audit adds a sharper read: visible recall, older/newer memory
 separation, hidden trace dominance, and dominant-trace drift resistance are
 stable on this fixture. Future continuation is not yet equally strong: `6/8`
-cases hit the expected future node.
+cases hit the expected future node, and the two misses are absent from
+continuation top 10.
 
 Research interpretation:
 
@@ -148,8 +153,8 @@ or hidden trace dominance.
 ## Next Work
 
 1. Preserve `long-horizon-cognitive-memory` at `1.000` for all fixed metrics.
-2. Improve or explain the two future-continuation misses in the stability
-   audit without changing product-facing behavior.
+2. Explain the two future-continuation candidate misses in the stability audit
+   without changing product-facing behavior.
 3. Add broader long-horizon evidence only as validation work, not product
    surface expansion.
 4. Complete hosted/official external comparisons before productization claims.

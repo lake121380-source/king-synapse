@@ -411,7 +411,9 @@ finds a blocking bug.
   seed retention, old memory preservation, newer memory addressability, hidden
   trace dominance, dominant drift resistance, and reinforcement consistency at
   `1.000`; future prediction stability and prediction drift resistance are
-  `0.750`. This makes future continuation the next long-horizon diagnostic
+  `0.750`. The two missed expected future nodes are absent from continuation
+  top 10 in prefix, full, and final post-reinforcement checks. This makes
+  future-continuation candidate generation the next long-horizon diagnostic
   target, not visible recall or hidden trace dominance.
 - Hosted/official external comparison probe is recorded at
   `crates/eval/reports/external-comparison-hosted.json`; Graphiti/Zep
