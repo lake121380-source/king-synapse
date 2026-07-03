@@ -2,8 +2,8 @@
 """Cross-ablation DMR ranking transition audit.
 
 This script reads existing sanitized reports and compares rank transitions for
-the same DMR 50 sample set. It does not inspect raw third-party questions,
-answers, dialogs, sessions, memory content, or generated text.
+the same DMR sample set. It does not inspect raw third-party questions, answers,
+dialogs, sessions, memory content, or generated text.
 """
 
 from __future__ import annotations
@@ -43,6 +43,15 @@ def parse_args() -> argparse.Namespace:
         "--query-report",
         type=Path,
         default=root / "crates/eval/reports/ranking-ablation-dmr-50-query-expansion.json",
+    )
+    parser.add_argument(
+        "--skip-cross-ablation-controls",
+        action="store_true",
+        help="Only audit baseline/vector/reranker/top-k transitions.",
+    )
+    parser.add_argument(
+        "--dataset-label",
+        default="DMR candidate MSC-Self-Instruct, punctuation-normalized 50",
     )
     parser.add_argument(
         "--output",
@@ -150,9 +159,12 @@ def compact_case(
     baseline: int | None,
     vectors: int | None,
     rerank_top10: int | None,
+    rerank_top25: int | None,
     rerank_top50: int | None,
     merged_session: int | None,
     keyword_boost: int | None,
+    has_chunk_control: bool,
+    has_query_control: bool,
 ) -> dict[str, Any]:
     return {
         "sample_id": sample_id,
@@ -160,6 +172,7 @@ def compact_case(
             "baseline_rrf": baseline,
             "vectors": vectors,
             "reranker_top10": rerank_top10,
+            "reranker_top25": rerank_top25,
             "reranker_top50": rerank_top50,
             "merged_session_top50": merged_session,
             "keyword_boost_top50": keyword_boost,
@@ -167,8 +180,14 @@ def compact_case(
         "control_bucket": decision_bucket(rerank_top10, rerank_top50),
         "baseline_to_vector": effect(baseline, vectors),
         "vector_to_reranker": effect(vectors, rerank_top10),
-        "dialog_to_merged_session": effect(rerank_top50, merged_session),
-        "original_to_keyword_boost": effect(rerank_top50, keyword_boost),
+        "top10_to_top25": effect(rerank_top10, rerank_top25),
+        "top25_to_top50": effect(rerank_top25, rerank_top50),
+        "dialog_to_merged_session": (
+            effect(rerank_top50, merged_session) if has_chunk_control else None
+        ),
+        "original_to_keyword_boost": (
+            effect(rerank_top50, keyword_boost) if has_query_control else None
+        ),
     }
 
 
@@ -201,20 +220,23 @@ def audit(
     *,
     candidate_report: dict[str, Any],
     top_k_report: dict[str, Any],
-    chunk_report: dict[str, Any],
-    query_report: dict[str, Any],
+    chunk_report: dict[str, Any] | None,
+    query_report: dict[str, Any] | None,
 ) -> dict[str, Any]:
     candidate = candidate_runs(candidate_report)
     top_k = top_k_runs(top_k_report)
-    chunk = ablation_runs(chunk_report, "chunk_policy")
-    query = ablation_runs(query_report, "query_policy")
+    chunk = ablation_runs(chunk_report, "chunk_policy") if chunk_report is not None else {}
+    query = ablation_runs(query_report, "query_policy") if query_report is not None else {}
+    has_chunk_control = "merged-session" in chunk
+    has_query_control = "keyword-boost" in query
 
     baseline = per_query_by_sample(candidate["baseline-rrf"])
     vectors = per_query_by_sample(candidate["vectors"])
     top10 = per_query_by_sample(top_k[10])
+    top25 = per_query_by_sample(top_k[25])
     top50 = per_query_by_sample(top_k[50])
-    merged = per_query_by_sample(chunk["merged-session"])
-    keyword = per_query_by_sample(query["keyword-boost"])
+    merged = per_query_by_sample(chunk["merged-session"]) if has_chunk_control else {}
+    keyword = per_query_by_sample(query["keyword-boost"]) if has_query_control else {}
 
     sample_ids = sorted(set(top50) | set(top10) | set(baseline) | set(vectors))
     cases = [
@@ -223,9 +245,12 @@ def audit(
             baseline=rank(baseline.get(sample_id)),
             vectors=rank(vectors.get(sample_id)),
             rerank_top10=rank(top10.get(sample_id)),
+            rerank_top25=rank(top25.get(sample_id)),
             rerank_top50=rank(top50.get(sample_id)),
             merged_session=rank(merged.get(sample_id)),
             keyword_boost=rank(keyword.get(sample_id)),
+            has_chunk_control=has_chunk_control,
+            has_query_control=has_query_control,
         )
         for sample_id in sample_ids
     ]
@@ -241,16 +266,24 @@ def audit(
     keyword_hurt_top1 = [
         case
         for case in cases
-        if case["ranks"]["reranker_top50"] == 1 and case["ranks"]["keyword_boost_top50"] != 1
+        if has_query_control
+        and case["ranks"]["reranker_top50"] == 1
+        and case["ranks"]["keyword_boost_top50"] != 1
     ]
     merged_hurt_top1 = [
         case
         for case in cases
-        if case["ranks"]["reranker_top50"] == 1 and case["ranks"]["merged_session_top50"] != 1
+        if has_chunk_control
+        and case["ranks"]["reranker_top50"] == 1
+        and case["ranks"]["merged_session_top50"] != 1
     ]
 
-    return {
+    result: dict[str, Any] = {
         "sample_size": len(cases),
+        "optional_control_reports": {
+            "chunk_policy": has_chunk_control,
+            "query_policy": has_query_control,
+        },
         "control_bucket_counts": dict(sorted(Counter(case["control_bucket"] for case in cases).items())),
         "baseline_to_vector_effect_counts": dict(
             sorted(Counter(case["baseline_to_vector"] for case in cases).items())
@@ -258,11 +291,11 @@ def audit(
         "vector_to_reranker_effect_counts": dict(
             sorted(Counter(case["vector_to_reranker"] for case in cases).items())
         ),
-        "dialog_to_merged_session_effect_counts": dict(
-            sorted(Counter(case["dialog_to_merged_session"] for case in cases).items())
+        "top10_to_top25_effect_counts": dict(
+            sorted(Counter(case["top10_to_top25"] for case in cases).items())
         ),
-        "original_to_keyword_boost_effect_counts": dict(
-            sorted(Counter(case["original_to_keyword_boost"] for case in cases).items())
+        "top25_to_top50_effect_counts": dict(
+            sorted(Counter(case["top25_to_top50"] for case in cases).items())
         ),
         "top50_only_cases": summarize_subset(
             top50_only,
@@ -273,18 +306,6 @@ def audit(
         "top50_retrieval_miss_under_control": {
             "count": len(top50_miss),
             "sample_ids": [case["sample_id"] for case in top50_miss],
-            "merged_session_result": summarize_subset(
-                top50_miss,
-                source_rank_name="reranker_top50",
-                target_rank_name="merged_session_top50",
-                effect_name="dialog_to_merged_session",
-            ),
-            "keyword_boost_result": summarize_subset(
-                top50_miss,
-                source_rank_name="reranker_top50",
-                target_rank_name="keyword_boost_top50",
-                effect_name="original_to_keyword_boost",
-            ),
         },
         "reranker_suppressed_top10_cases": summarize_subset(
             reranker_suppressed,
@@ -298,20 +319,41 @@ def audit(
             target_rank_name="reranker_top10",
             effect_name="vector_to_reranker",
         ),
-        "merged_session_hurt_top1_cases": summarize_subset(
+        "cases": cases,
+    }
+    if has_chunk_control:
+        result["dialog_to_merged_session_effect_counts"] = dict(
+            sorted(Counter(case["dialog_to_merged_session"] for case in cases).items())
+        )
+        result["top50_retrieval_miss_under_control"]["merged_session_result"] = summarize_subset(
+            top50_miss,
+            source_rank_name="reranker_top50",
+            target_rank_name="merged_session_top50",
+            effect_name="dialog_to_merged_session",
+        )
+        result["merged_session_hurt_top1_cases"] = summarize_subset(
             merged_hurt_top1,
             source_rank_name="reranker_top50",
             target_rank_name="merged_session_top50",
             effect_name="dialog_to_merged_session",
-        ),
-        "keyword_boost_hurt_top1_cases": summarize_subset(
+        )
+    if has_query_control:
+        result["original_to_keyword_boost_effect_counts"] = dict(
+            sorted(Counter(case["original_to_keyword_boost"] for case in cases).items())
+        )
+        result["top50_retrieval_miss_under_control"]["keyword_boost_result"] = summarize_subset(
+            top50_miss,
+            source_rank_name="reranker_top50",
+            target_rank_name="keyword_boost_top50",
+            effect_name="original_to_keyword_boost",
+        )
+        result["keyword_boost_hurt_top1_cases"] = summarize_subset(
             keyword_hurt_top1,
             source_rank_name="reranker_top50",
             target_rank_name="keyword_boost_top50",
             effect_name="original_to_keyword_boost",
-        ),
-        "cases": cases,
-    }
+        )
+    return result
 
 
 def main() -> int:
@@ -321,8 +363,8 @@ def main() -> int:
 
     candidate_report = load_json(args.candidate_report)
     top_k_report = load_json(args.top_k_report)
-    chunk_report = load_json(args.chunk_report)
-    query_report = load_json(args.query_report)
+    chunk_report = None if args.skip_cross_ablation_controls else load_json(args.chunk_report)
+    query_report = None if args.skip_cross_ablation_controls else load_json(args.query_report)
     result = audit(
         candidate_report=candidate_report,
         top_k_report=top_k_report,
@@ -331,7 +373,7 @@ def main() -> int:
     )
 
     report = {
-        "schema_version": "king-synapse.ranking-transition-audit.v1",
+        "schema_version": "king-synapse.ranking-transition-audit.v2",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "runner": "scripts/eval/ranking_transition_audit.py",
         "inputs": {
@@ -343,16 +385,8 @@ def main() -> int:
                 "path": report_path(args.top_k_report),
                 "sha256": sha256_file(args.top_k_report),
             },
-            "chunk_report": {
-                "path": report_path(args.chunk_report),
-                "sha256": sha256_file(args.chunk_report),
-            },
-            "query_report": {
-                "path": report_path(args.query_report),
-                "sha256": sha256_file(args.query_report),
-            },
         },
-        "dataset": "DMR candidate MSC-Self-Instruct, punctuation-normalized 50",
+        "dataset": args.dataset_label,
         "raw_records_committed": False,
         "raw_questions_committed": False,
         "raw_answers_committed": False,
@@ -364,6 +398,15 @@ def main() -> int:
             "Classifies cross-ablation rank transitions; it does not change retrieval or ranking behavior.",
         ],
     }
+    if not args.skip_cross_ablation_controls:
+        report["inputs"]["chunk_report"] = {
+            "path": report_path(args.chunk_report),
+            "sha256": sha256_file(args.chunk_report),
+        }
+        report["inputs"]["query_report"] = {
+            "path": report_path(args.query_report),
+            "sha256": sha256_file(args.query_report),
+        }
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(
         json.dumps(
@@ -373,8 +416,14 @@ def main() -> int:
                 "control_bucket_counts": result["control_bucket_counts"],
                 "baseline_to_vector_effect_counts": result["baseline_to_vector_effect_counts"],
                 "vector_to_reranker_effect_counts": result["vector_to_reranker_effect_counts"],
-                "dialog_to_merged_session_effect_counts": result["dialog_to_merged_session_effect_counts"],
-                "original_to_keyword_boost_effect_counts": result["original_to_keyword_boost_effect_counts"],
+                "top10_to_top25_effect_counts": result["top10_to_top25_effect_counts"],
+                "top25_to_top50_effect_counts": result["top25_to_top50_effect_counts"],
+                "dialog_to_merged_session_effect_counts": result.get(
+                    "dialog_to_merged_session_effect_counts"
+                ),
+                "original_to_keyword_boost_effect_counts": result.get(
+                    "original_to_keyword_boost_effect_counts"
+                ),
             },
             indent=2,
         )

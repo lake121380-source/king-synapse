@@ -3,7 +3,8 @@
 Date: 2026-07-03
 
 Status: DMR 50 ranking ablations, DMR 50 chunk-policy/query-expansion
-ablations, and DMR 200 ranking-failure expansion complete.
+ablations, DMR 200 ranking-failure expansion, and DMR 200 transition audit
+complete.
 
 Machine-readable reports:
 
@@ -24,6 +25,8 @@ Machine-readable reports:
 `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`
 
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
+
+`crates/eval/reports/ranking-transition-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`
 
@@ -467,6 +470,10 @@ Failure audit:
 
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
+Transition audit:
+
+`crates/eval/reports/ranking-transition-audit-dmr-200.json`
+
 ### DMR 200 Candidate Result
 
 | Mode | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Top-50 | Misses |
@@ -517,6 +524,43 @@ Reranker effect:
 | Stable top-1 | 14 |
 | Top-10 preserved | 32 |
 | No top-10 change | 57 |
+
+### DMR 200 Transition Audit
+
+The DMR 200 transition audit reads only sanitized sample IDs and ranks from the
+existing DMR 200 candidate and top-k reports. Unlike the DMR 50 transition
+audit, it does not include chunk-policy or query-expansion controls because
+those controls were only run on the 50-sample set.
+
+Command:
+
+```powershell
+python scripts/eval/ranking_transition_audit.py `
+  --candidate-report crates/eval/reports/dmr-200-punctuation-validation.json `
+  --top-k-report crates/eval/reports/ranking-ablation-dmr-200-top-k.json `
+  --skip-cross-ablation-controls `
+  --dataset-label "DMR candidate MSC-Self-Instruct, punctuation-normalized 200" `
+  --output crates/eval/reports/ranking-transition-audit-dmr-200.json
+```
+
+Engineering result:
+
+| Transition | Helpful movement | Harmful movement |
+| --- | ---: | ---: |
+| Baseline RRF -> vector | 60 recovered to top-10, 9 promoted to top-1 | 5 suppressed from top-10, 5 demoted from top-1 |
+| Vector -> reranker | 40 recovered to top-10, 49 promoted to top-1 | 3 suppressed from top-10, 5 demoted from top-1 |
+| Top-k 10 -> 25 | 0 recovered to top-10 | 2 suppressed from top-10 |
+| Top-k 25 -> 50 | 1 recovered to top-10 | 0 suppressed from top-10 |
+
+Research interpretation:
+
+- The DMR 50 direction repeats at larger sample size: vectors and reranking
+  are still the productive ranking signals.
+- The reranker has a real positive effect on top-1 placement, but the
+  regression surface is no longer negligible at 200 samples: 3 top-10
+  suppressions and 5 top-1 demotions must be preserved in future audits.
+- Returning more candidates is mainly diagnostic. Top-k `50` exposes more
+  answer-bearing chunks, but it does not solve top-10 placement by itself.
 
 Read:
 
@@ -604,7 +648,10 @@ boosting keeps retrieval misses unchanged and also damages ranking. The DMR
 50 transition audit shows why: the simple fixes recover a few misses while
 suppressing many stronger hits. The DMR 200 expansion adds that true top-50
 retrieval misses are material and should be separated from late-ranking cases
-before default changes.
+before default changes. The DMR 200 transition audit repeats the productive
+direction at larger scale: vector retrieval recovers 60 samples into top-10,
+and reranking recovers 40 more while promoting 49 to top-1. It also records
+the regression surface: 3 reranker top-10 suppressions and 5 top-1 demotions.
 
 The LongMemEval cross-check also argues against a global default change. DMR 50
 prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among

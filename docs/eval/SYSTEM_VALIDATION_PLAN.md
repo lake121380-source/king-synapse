@@ -245,7 +245,7 @@ finds a blocking bug.
 | 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
 | 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
-| 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split before changing reranker defaults. |
+| 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split, and the DMR 200 transition audit records vector/reranker gains plus regression cases before changing defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
 | 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
@@ -346,6 +346,12 @@ finds a blocking bug.
   top-50-only late-ranking cases, 43 top-50 retrieval misses, 40 reranker
   recoveries into top-10, 49 reranker promotions to top-1, 3 reranker
   suppressions from top-10, and 5 reranker demotions from top-1.
+- DMR 200 transition audit is recorded at
+  `crates/eval/reports/ranking-transition-audit-dmr-200.json`; it confirms the
+  same productive direction at larger sample size: vectors recover 60 samples
+  into top-10, reranking recovers 40 into top-10 and promotes 49 to top-1, and
+  the regression surface is 3 reranker top-10 suppressions plus 5 top-1
+  demotions.
 - LongMemEval 50 reranker-pool cross-check is recorded at
   `crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`; pool
   `25` is best among reranker variants, but vector-only remains the strongest

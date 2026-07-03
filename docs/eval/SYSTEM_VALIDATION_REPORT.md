@@ -292,6 +292,12 @@ Ranking ablation status:
   top-10-not-top-1 cases, `17` top-50-only late-ranking cases, and `43`
   top-50 retrieval misses. This confirms ranking remains important, but true
   candidate retrieval misses are also material at larger sample size.
+- `crates/eval/reports/ranking-transition-audit-dmr-200.json` records the DMR
+  200 transition audit. Vectors recover `60` samples into top-10 and promote
+  `9` to top-1. Reranking recovers `40` samples into top-10 and promotes `49`
+  to top-1, while also suppressing `3` from top-10 and demoting `5` top-1
+  cases. This repeats the DMR 50 direction while making the regression surface
+  explicit.
 - LongMemEval 50 reranker-pool cross-check is recorded at
   `crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`.
   Among reranker variants, pool `25` is best on LongMemEval Recall@10 (`0.637`)
@@ -382,5 +388,5 @@ GPU validation status:
 
 Next required action: keep feature growth frozen, fix the LLM judge
 authorization/configuration, run a small successful judge probe, then continue
-ranking work on the six top-50-only late-ranking cases before changing
-defaults.
+ranking work by separating the DMR 200 late-ranking cases from the top-50
+retrieval misses before changing defaults.

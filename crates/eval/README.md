@@ -179,6 +179,7 @@ The first ranking ablation report is fixed in:
 - `reports/ranking-transition-audit-dmr-50.json`
 - `reports/ranking-ablation-dmr-200-top-k.json`
 - `reports/ranking-failure-audit-dmr-200.json`
+- `reports/ranking-transition-audit-dmr-200.json`
 - `reports/ranking-ablation-longmem-50-reranker-pool.json`
 
 Readable summary: `docs/eval/RANKING_ABLATION.md`.

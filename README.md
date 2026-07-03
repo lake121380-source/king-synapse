@@ -183,7 +183,9 @@ chunk-policy ablation shows that full-session merging removes top-50 misses
 but hurts top-10 and top-1 placement, while keyword-boost query expansion keeps
 misses unchanged and also hurts ranking. These are ranking tradeoffs, not
 simple default changes. The DMR 50 transition audit keeps vector retrieval and
-reranking as the productive direction. CUDA validation status is recorded in
+reranking as the productive direction; the DMR 200 transition audit repeats the
+same pattern at larger scale, while also recording the reranker's small
+regression surface. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
@@ -280,7 +282,7 @@ cargo build --release
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |
-| `docs/eval/RANKING_ABLATION.md` | DMR 50 ranking ablation and failure-audit results. |
+| `docs/eval/RANKING_ABLATION.md` | DMR ranking ablations, transition audits, and LongMemEval cross-checks. |
 | `docs/eval/DMR_MAPPING_AUDIT.md` | DMR skipped-row mapping audit. |
 | `docs/eval/DMR_MAPPING_POLICY_REVIEW.md` | DMR mapping-policy coverage and the punctuation-boundary decision. |
 | `docs/eval/FAILURE_ANALYSIS.md` | Anonymous failure bucket analysis. |
