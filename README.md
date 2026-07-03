@@ -151,8 +151,10 @@ CognitiveTraceDominance `1.000`, and HebbianConsistency `1.000`.
 A detailed stability audit is also checked in at
 [long-horizon-stability-audit.json](crates/eval/reports/long-horizon-stability-audit.json):
 visible seed retention, old/new memory separation, hidden trace dominance, and
-dominant-trace drift resistance are `1.000`, while future continuation is
-`0.750`. The two future misses are absent from continuation top 10.
+dominant-trace drift resistance are `1.000`. Expected future candidates are
+present in top 10 for `8/8` cases, but only `6/8` currently carry matched
+evidence terms. The two misses are therefore evidence-matching misses, not
+candidate-recall misses.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |

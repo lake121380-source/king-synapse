@@ -20,7 +20,7 @@ surface.
 Evidence:
 
 - `cargo fmt --all -- --check` passed.
-- `cargo test -p synapse-eval` passed with `40 passed; 0 failed`.
+- `cargo test -p synapse-eval` passed with `44 passed; 0 failed`.
 - `cargo bench -p synapse-eval --bench exported_cognitive_session` reported:
 
 ```json
@@ -65,10 +65,10 @@ Stability conclusion: stable on the current deterministic cognitive fixtures,
 including the fixed long-horizon cognitive-memory gate. The detailed
 long-horizon audit also keeps visible seed retention, old/new memory
 separation, hidden trace dominance, dominant drift resistance, and
-reinforcement consistency at `1.000`; future continuation is weaker at `0.750`.
-The two future misses are absent from continuation top 10, so the current
-long-horizon prediction gap is candidate generation, not merely ranking inside
-top 10.
+reinforcement consistency at `1.000`; future candidate presence is also
+`1.000`. Future matched-evidence stability is weaker at `0.750`: the two
+future misses are present as continuation candidates at rank 1, but do not
+carry matched evidence terms.
 The LongMemEval / DMR smoke path can run and report aggregate metrics, but full
 public long-memory stability is not yet proven.
 
@@ -93,12 +93,12 @@ trace evidence, prediction, or reinforcement isolation:
 Consistency conclusion: the system's main cognitive-memory layers agree with
 each other under the exported cognitive-session fixture and the deterministic
 long-horizon cognitive fixture. The sharper long-horizon audit adds one
-boundary: future continuation currently hits `6/8` cases, while visible recall
-and hidden trace dominance remain `8/8`. The two misses are
-`day03-charger-demo` and `day05-trust-message`, and both are missing from
-continuation top 10 before and after reinforcement. This is enough to say the
-core design is coherent in the validated scope, but not enough to claim long-horizon
-real-world consistency yet.
+boundary: future candidate presence remains `8/8`, while matched-evidence
+future prediction currently hits `6/8` cases. The two misses are
+`day03-charger-demo` and `day05-trust-message`; both keep the expected future
+candidate at rank 1 before and after reinforcement, but their matched rank is
+`null`. This is enough to say the core design is coherent in the validated
+scope, but not enough to claim long-horizon real-world consistency yet.
 
 ## 3. Does King Synapse Expose More Cognitive-Trace Ability?
 
@@ -253,12 +253,14 @@ Long-horizon cognitive validation:
 - `crates/eval/reports/long-horizon-stability-audit.json` records the detailed
   diagnostic audit. It keeps visible seed retention, old memory preservation,
   newer memory addressability, hidden trace dominance, dominant drift
-  resistance, and reinforcement consistency at `1.000`; future prediction
-  stability and prediction drift resistance are `0.750`. It also records
-  continuation top-10 ranks: the two misses have no expected future rank in
-  prefix, full, or final post-reinforcement checks.
+  resistance, reinforcement consistency, and future candidate presence at
+  `1.000`; future prediction stability and prediction drift resistance are
+  `0.750`. It also records continuation top-10 ranks: the two misses keep the
+  expected future candidate at rank 1 in prefix, full, and final
+  post-reinforcement checks, but have no matched evidence rank.
 - This supports the network-memory thesis in a shared long-session store, but
-  it also identifies future continuation as the weaker long-horizon surface.
+  it also identifies future evidence matching as the weaker long-horizon
+  surface.
   It is a regression gate and diagnostic baseline, not a substitute for public
   long-memory benchmarks or hosted external comparisons.
 

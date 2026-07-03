@@ -3,7 +3,7 @@
 Date: 2026-07-03
 
 Status: deterministic long-horizon cognitive-memory benchmark passed; detailed
-stability audit is now recorded and exposes a future-prediction gap.
+stability audit is now recorded and exposes a future evidence-matching gap.
 
 Machine-readable report:
 
@@ -82,19 +82,21 @@ frozen benchmark contract:
 | Old memory preservation | 1.000 | The first four cases keep visible recall and dominant hidden trace after later writes. |
 | Newer memory addressability | 1.000 | The last four cases remain addressable despite older memories already being present. |
 | Hidden trace dominance | 1.000 | The expected hidden influence wins in all eight cases. |
-| Future prediction stability | 0.750 | Six of eight cases predict the expected future continuation. |
+| Future candidate presence | 1.000 | Every expected future candidate appears in continuation top 10. |
+| Future prediction stability | 0.750 | Six of eight cases attach matched evidence terms to the expected future continuation. |
 | Dominant drift resistance | 1.000 | Dominant hidden traces do not drift after three reinforcement rounds. |
-| Prediction drift resistance | 0.750 | The same two future-continuation misses remain after reinforcement. |
+| Prediction drift resistance | 0.750 | The same two matched-evidence misses remain after reinforcement. |
 | Reinforcement consistency | 1.000 | Expected visible-hidden edges strengthen during reinforcement. |
 
 The two future-continuation misses are `day03-charger-demo` and
 `day05-trust-message`. They do not break visible recall or hidden trace
 dominance, but they show that the future-prediction part of the long-horizon
 story is weaker than the trace part. The rank-localization fields in
-`long-horizon-stability-audit.json` show that the expected future node is not
-present in continuation top 10 for those two cases in the prefix store, the
-full store, or after three reinforcement rounds. This is therefore a
-continuation-candidate miss, not just a low-ranking case inside top 10.
+`long-horizon-stability-audit.json` now split candidate rank from matched rank.
+For those two cases, the expected future candidate is present at rank 1 in the
+prefix store, the full store, and after three reinforcement rounds, but its
+matched rank is `null`. This is therefore a context/evidence-matching miss,
+not a continuation-candidate miss.
 
 ## Read
 
@@ -107,9 +109,9 @@ reinforcement remains consistent.
 
 The detailed audit adds a sharper read: visible recall, older/newer memory
 separation, hidden trace dominance, and dominant-trace drift resistance are
-stable on this fixture. Future continuation is not yet equally strong: `6/8`
-cases hit the expected future node, and the two misses are absent from
-continuation top 10.
+stable on this fixture. Future candidate recall is also stable at `8/8`, but
+future matched evidence is weaker at `6/8`. The two misses are candidate-present
+but evidence-missing cases.
 
 Research interpretation:
 
@@ -147,13 +149,13 @@ This validation does not yet prove:
 Keep feature growth frozen. Treat `long-horizon-cognitive-memory` as the
 current deterministic regression gate, and treat
 `long-horizon-stability-audit` as the sharper diagnostic baseline. The next
-long-horizon weakness to investigate is future continuation, not visible recall
-or hidden trace dominance.
+long-horizon weakness to investigate is future evidence matching, not visible
+recall, hidden trace dominance, or candidate recall.
 
 ## Next Work
 
 1. Preserve `long-horizon-cognitive-memory` at `1.000` for all fixed metrics.
-2. Explain the two future-continuation candidate misses in the stability audit
+2. Explain the two future-continuation evidence misses in the stability audit
    without changing product-facing behavior.
 3. Add broader long-horizon evidence only as validation work, not product
    surface expansion.
