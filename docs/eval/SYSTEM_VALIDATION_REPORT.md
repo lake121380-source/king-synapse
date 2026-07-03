@@ -224,6 +224,15 @@ Ranking ablation status:
   top-10-not-top-1 cases, `17` top-50-only late-ranking cases, and `43`
   top-50 retrieval misses. This confirms ranking remains important, but true
   candidate retrieval misses are also material at larger sample size.
+- LongMemEval 50 reranker-pool cross-check is recorded at
+  `crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`.
+  Among reranker variants, pool `25` is best on LongMemEval Recall@10 (`0.637`)
+  and MRR@10 (`0.521`), while pool `50` falls to Recall@10 `0.590` and pool
+  `100` falls to `0.553`.
+- LongMemEval still keeps vector-only as the strongest top-10 coverage baseline
+  (`0.663` Recall@10). This means reranking improves top-1 / MRR but can harm
+  top-10 coverage, so DMR-driven reranker-pool choices cannot become a global
+  default without a recorded tradeoff.
 
 DMR mapping audit status:
 

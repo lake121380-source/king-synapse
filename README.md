@@ -166,7 +166,10 @@ So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
 policy is now pinned to punctuation full-answer matching, and DMR 200 ranking
 failure analysis shows both late-ranking cases and true top-50 retrieval
-misses before any default ranking change. CUDA validation status is recorded in
+misses before any default ranking change. LongMemEval cross-check blocks a
+global reranker-pool change for now because it prefers a different pool and
+still keeps vector-only as the strongest top-10 coverage baseline. CUDA
+validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:

@@ -19,6 +19,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
+`crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`
+
 Runner:
 
 `scripts/eval/ranking_ablation.py`
@@ -290,6 +292,63 @@ Read:
   43 top-50 retrieval misses. Compared with DMR 50, the larger sample shows
   that candidate retrieval remains an active bottleneck alongside ranking.
 
+## LongMemEval Cross-Check
+
+DMR-driven ranking decisions must not be adopted until they are checked against
+LongMemEval. This pass varies only `reranker_pool` on the fixed LongMemEval 50
+sample.
+
+Report:
+
+`crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets longmem `
+  --longmem-sample-size 50 `
+  --ablation reranker-pool `
+  --reranker-pools 10,25,50,100 `
+  --k 10 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json `
+  --cleanup-cache
+```
+
+### LongMemEval 50 Reranker-Pool Result
+
+| Reranker pool | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10 | 0.600 | 0.473 | 612.9 ms | 18 | 18 | 14 |
+| 25 | 0.637 | 0.521 | 829.4 ms | 20 | 18 | 12 |
+| 50 | 0.590 | 0.483 | 1261.7 ms | 18 | 18 | 14 |
+| 100 | 0.553 | 0.504 | 2098.7 ms | 20 | 15 | 15 |
+
+Reference from `crates/eval/reports/longmem-50-validation.json`:
+
+| Mode | Recall@10 | MRR@10 | Top-1 | Misses |
+| --- | ---: | ---: | ---: | ---: |
+| RRF + vectors | 0.663 | 0.425 | 13 | 5 |
+| RRF + vectors + reranker pool 50 | 0.590 | 0.523 | 21 | 6 |
+
+Read:
+
+- Pool `25` is the best LongMemEval reranker-pool setting in this pass:
+  Recall@10 `0.637`, MRR@10 `0.521`, and P50 `829.4 ms`.
+- Pool `50`, the current DMR-favored setting, is worse on LongMemEval
+  Recall@10 and latency than pool `25`.
+- Pool `100` is not justified: it is slowest and has the lowest Recall@10.
+- Even the best LongMemEval reranker-pool setting (`25`) still trails
+  vector-only Recall@10 (`0.637` vs `0.663`), while improving MRR and top-1.
+  This is a quality tradeoff, not a clean default win.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -301,6 +360,12 @@ diagnosis; it does not fix the top-10 ranking objective. The DMR 200 expansion
 adds that true top-50 retrieval misses are also material and should be
 separated from late-ranking cases before default changes.
 
+The LongMemEval cross-check also argues against a global default change. DMR 50
+prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among
+reranker variants and still prefers vector-only for top-10 coverage. Any
+ranking change now needs either dataset-specific policy or a broader objective
+than Recall@10 alone.
+
 ## Next Ablations
 
 The next useful ranking work is:
@@ -308,6 +373,5 @@ The next useful ranking work is:
 1. expose and test RRF/vector weighting without changing the memory schema;
 2. design a safer ranking signal for the top-50-only DMR cases;
 3. inspect top-50 retrieval misses separately from late-ranking cases;
-4. repeat the strongest DMR setting on LongMemEval 50 before changing any
-   default;
+4. test candidate-retrieval coverage separately from reranker ordering;
 5. keep answer-generation scoring separate from retrieval-ranking scoring.
