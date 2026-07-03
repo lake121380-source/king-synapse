@@ -82,7 +82,7 @@ The runner is:
 
 | Field | Value |
 | --- | --- |
-| Git commit used for the DMR 500 run | `eb95b6d20a7fe97bb615d055d3a1cf0eb2759bc6` |
+| Git commit used for the DMR 500 run | `5ac1b69d052f9e5edd79fedb5e1b503a0d6e912f` |
 | Report schema | `king-synapse.official-dmr-answer-eval.v1` |
 | Dataset | `MemGPT/MSC-Self-Instruct`, `msc_self_instruct.jsonl` |
 | Dataset revision | `5138f416f8fa76b75b2e080da87e8a8e346e1500` |
