@@ -326,6 +326,13 @@ finds a blocking bug.
   DMR 50 gold-answer substring accuracy from `0.060` to `0.220` and ROUGE-L F1
   from `0.041` to `0.103`. This is eval-only evidence; do not promote it to a
   default without DMR 200/500 and judge validation.
+- Official-style DMR 200 generator cross-check is recorded at
+  `crates/eval/reports/official-dmr-200-top-context-extractive.json` and
+  `crates/eval/reports/official-dmr-generator-ablation-dmr-200.json`. With the
+  same retrieval configuration rerun on CUDA, gold-answer substring accuracy
+  rises from `0.040` to `0.120` and ROUGE-L F1 rises from `0.037` to `0.067`.
+  This repeats the DMR 50 direction, but still needs DMR 500 and judge
+  validation before default or product claims.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`

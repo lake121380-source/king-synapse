@@ -16,6 +16,14 @@ Pinned DMR 200 report:
 
 `crates/eval/reports/official-dmr-200.json`
 
+DMR 200 generator ablation report:
+
+`crates/eval/reports/official-dmr-200-top-context-extractive.json`
+
+DMR 200 generator ablation audit:
+
+`crates/eval/reports/official-dmr-generator-ablation-dmr-200.json`
+
 Pinned DMR 50 report:
 
 `crates/eval/reports/official-dmr-50.json`
@@ -74,6 +82,7 @@ The runner is:
 | DMR 50 | 50 | 50 | 31 | 50 authorization errors |
 | DMR 50 top-context generator | 50 | 50 | 31 | not requested |
 | DMR 200 | 200 | 200 | 111 | not requested |
+| DMR 200 top-context generator | 200 | 200 | 111 | not requested |
 | DMR 500 request | 500 | 323 | 177 | not requested |
 | Judge probe | 5 | 5 | 1 | 5 authorization errors |
 
@@ -173,6 +182,43 @@ python scripts/eval/official_dmr_eval.py `
 | P95 query latency | 749.0 ms |
 | Query wall time | 135.1 s |
 | Peak GPU total memory | 4279.5 MiB |
+
+## DMR 200 Generator Cross-Check
+
+This repeats the `top-context-extractive` generator ablation on the 200-sample
+DMR run. It is still evaluation-only: same sample size, mapping policy,
+retrieval mode, top-k, CUDA settings, and no LLM judge.
+
+```powershell
+python scripts/eval/official_dmr_eval.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 200 `
+  --dmr-answer-match punctuation `
+  --mode vectors-rerank `
+  --k 10 `
+  --generator top-context-extractive `
+  --llm-judge none `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/official-dmr-200-top-context-extractive.json `
+  --cleanup-cache
+```
+
+| Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Top-1 without substring |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| extractive | 0.409 | 0.000 | 0.000 | 0.040 | 0.037 | 68/74 |
+| top-context-extractive | 0.411 | 0.000 | 0.000 | 0.120 | 0.067 | 52/74 |
+
+The retrieval numbers are from separate CUDA runs with the same configuration,
+so they are aligned but not bit-identical. The answer-generation direction
+repeats: restricting extraction to the top returned context improves substring
+accuracy and ROUGE-L on the 200-sample run, but the absolute answer score is
+still low.
+
 
 ## DMR 50 Run
 
@@ -355,6 +401,15 @@ python scripts/eval/official_dmr_answer_audit.py `
   --output crates/eval/reports/official-dmr-generator-ablation-dmr-50.json
 ```
 
+And the DMR 200 generator ablation:
+
+```powershell
+python scripts/eval/official_dmr_answer_audit.py `
+  --reports crates/eval/reports/official-dmr-200.json `
+            crates/eval/reports/official-dmr-200-top-context-extractive.json `
+  --output crates/eval/reports/official-dmr-generator-ablation-dmr-200.json
+```
+
 | Run | Top-1 hits | Top-1 without gold substring | Top-10 hits without gold substring | Not retrieved in top-10 | Top-1 selected non-first context |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | DMR 50 | 28 | 25 | 35 | 12 | 23 |
@@ -397,6 +452,13 @@ accuracy from `0.060` to `0.220` and ROUGE-L F1 from `0.041` to `0.103`.
 It also reduces top-1 retrieval hits without a gold substring from `25/28` to
 `17/28`.
 
+The DMR 200 cross-check repeats the same direction at larger sample size:
+substring accuracy rises from `0.040` to `0.120`, ROUGE-L F1 rises from
+`0.037` to `0.067`, and top-1 hits without the gold substring fall from
+`68/74` to `52/74`. The improvement is smaller than DMR 50 and still not
+enough for official DMR claims, but it confirms answer synthesis is a real
+optimization surface.
+
 Research interpretation:
 
 The current evidence does not point to a core architecture failure. It points
@@ -424,8 +486,8 @@ Reasons:
 
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
-- the better DMR 50 generator ablation is eval-only evidence and has not been
-  validated on DMR 200/500, LongMemEval, or an LLM judge;
+- the better DMR 50/200 generator ablation is eval-only evidence and has not
+  been validated on DMR 500, LongMemEval, or an LLM judge;
 - the LLM judge did not authenticate successfully;
 - the DMR 500-request run scored 323/500 requested samples because the pinned
   answer-to-memory mapping policy exhausted mappable rows;
