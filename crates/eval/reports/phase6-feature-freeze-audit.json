@@ -1,14 +1,14 @@
 {
   "schema_version": "king-synapse.phase6-feature-freeze-audit.v1",
-  "generated_at": "2026-07-03T18:39:50.687707+00:00",
+  "generated_at": "2026-07-03T18:47:47.062611+00:00",
   "runner": "scripts\\eval\\phase6_feature_freeze_audit.py",
   "git": {
     "branch": "main",
-    "commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
+    "commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
     "origin_main_delta": "0\t0",
     "base_ref": "origin/main",
-    "base_commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
-    "head_commit": "f1903340c91964389127f8ed1b3297d13981e0a2",
+    "base_commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
+    "head_commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
     "base_ref_resolved": true,
     "worktree_dirty": true,
     "worktree_status_count": 13
@@ -59,12 +59,22 @@
     {
       "source": "working_tree",
       "status": "M",
-      "path": "README.md"
+      "path": "crates/eval/reports/external-comparison-task-gate.json"
     },
     {
       "source": "working_tree",
       "status": "M",
       "path": "crates/eval/reports/next-validation-action-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/official-dmr-task-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/official-dmr-top-context-judge-preflight.json"
     },
     {
       "source": "working_tree",
@@ -75,6 +85,16 @@
       "source": "working_tree",
       "status": "M",
       "path": "crates/eval/reports/phase6-evidence-freshness-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-feature-freeze-audit.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "crates/eval/reports/phase6-next-gate-readiness.json"
     },
     {
       "source": "working_tree",
@@ -100,26 +120,6 @@
       "source": "working_tree",
       "status": "M",
       "path": "docs/eval/EXPERIMENT_LOG.md"
-    },
-    {
-      "source": "working_tree",
-      "status": "M",
-      "path": "docs/eval/SYSTEM_VALIDATION_REPORT.md"
-    },
-    {
-      "source": "working_tree",
-      "status": "M",
-      "path": "scripts/eval/phase6_current_system_gate.py"
-    },
-    {
-      "source": "untracked",
-      "status": "??",
-      "path": "crates/eval/reports/phase6-feature-freeze-audit.json"
-    },
-    {
-      "source": "untracked",
-      "status": "??",
-      "path": "scripts/eval/phase6_feature_freeze_audit.py"
     }
   ],
   "status": {
@@ -127,8 +127,7 @@
     "base_ref_resolved": true,
     "change_count": 13,
     "change_source_counts": {
-      "untracked": 2,
-      "working_tree": 11
+      "working_tree": 13
     },
     "protected_change_count": 0,
     "protected_changes": [],
