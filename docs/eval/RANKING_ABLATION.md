@@ -1358,6 +1358,21 @@ Guard simulation:
 | `top1_single_source_not_vector_only` | -0.0039 | +0.0050 | +0.010 | 0.000 | -0.0012 | DMR 323 | Worse than FTS-only at DMR 323. |
 | `top1_single_source_rerank_margin_gt_1` | +0.0057 | +0.0063 | 0.000 | 0.000 | +0.0025 | none | Only current guard passing the five-sample-set screen. |
 
+Latency budget for `top1_single_source_rerank_margin_gt_1`:
+
+| Dataset | Triggered | Mean extra / triggered query | Mean extra / all queries | P95 extra / triggered query |
+| --- | ---: | ---: | ---: | ---: |
+| DMR 50 | 3/50 | +544.2 ms | +32.6 ms | +555.1 ms |
+| DMR 200 | 22/200 | +559.3 ms | +61.5 ms | +580.9 ms |
+| DMR 500 request / 323 scored | 45/323 | +509.2 ms | +70.9 ms | +527.5 ms |
+| LongMemEval 50 | 1/50 | +799.9 ms | +16.0 ms | +799.9 ms |
+| LongMemEval 200 | 15/200 | +556.9 ms | +41.8 ms | +584.9 ms |
+
+Across the checked sample sets, the guarded policy adds `55.9 ms` per query
+on average when amortized over all queries, with the largest dataset-level
+mean at `70.9 ms/query`. Triggered queries themselves still pay the larger
+pool cost, usually about `0.5-0.8 s`.
+
 ### Guard Read
 
 The LongMemEval 200 and DMR 323 expansions tighten the conclusion. The
@@ -1378,6 +1393,10 @@ The useful result is negative as much as positive: larger LongMemEval evidence
 blocks the simpler source-only guards. Any runtime policy now needs a latency
 budget and at least one more LongMemEval expansion, because even guarded pool
 expansion still pays candidate reranking cost on triggered queries.
+
+The latency audit does not adopt a runtime budget. It only records the cost
+surface. Before implementation, the project needs an explicit budget such as
+maximum amortized latency per query and maximum triggered-query tail latency.
 
 ## Decision
 
@@ -1424,19 +1443,21 @@ research candidate, but not a system-wide policy. The LongMemEval 200 guard
 audit also blocks the simpler `fts-only` / `not-vector-only` guards. The DMR
 323 expansion repeats that block on the DMR side. The only current five-set
 screened candidate is `top1_single_source_rerank_margin_gt_1`, and it stays
-evaluation-only until a latency budget and additional LongMemEval expansion
-confirm that it preserves LongMemEval while retaining useful DMR gains.
+evaluation-only until an explicit latency budget and additional LongMemEval
+expansion confirm that it preserves LongMemEval while retaining useful DMR
+gains.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
 1. rerun `top1_single_source_rerank_margin_gt_1` on a larger LongMemEval
-   sample and record the latency budget;
-2. require zero LongMemEval Recall@10 regression before any runtime policy;
-3. separate top-50 retrieval misses from late-rank ordering failures in the
+   sample;
+2. define a runtime latency budget before any implementation;
+3. require zero LongMemEval Recall@10 regression before any runtime policy;
+4. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;
-4. test smaller, overlap-aware chunking instead of full-session merging;
-5. avoid blunt keyword-boost query expansion unless a future answer-free
+5. test smaller, overlap-aware chunking instead of full-session merging;
+6. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-6. keep answer-generation scoring separate from retrieval-ranking scoring.
+7. keep answer-generation scoring separate from retrieval-ranking scoring.

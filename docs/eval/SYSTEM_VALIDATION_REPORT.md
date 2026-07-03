@@ -440,7 +440,11 @@ Ranking ablation status:
   `top1_single_source_rerank_margin_gt_1`: DMR 323 Recall@10 `+0.0057`, DMR
   200 Recall@10 `+0.0063`, DMR 50 unchanged, LongMemEval 50 unchanged,
   LongMemEval 200 Recall@10 `+0.0025`, with zero top-10 suppressions in the
-  checked sample sets. This remains eval-only evidence, not a runtime default.
+  checked sample sets. The same report now records latency budget data: the
+  guarded candidate adds `55.9 ms/query` amortized over all checked queries,
+  with the largest dataset-level mean at `70.9 ms/query`; triggered queries
+  themselves still pay about `0.5-0.8 s` extra. This remains eval-only
+  evidence, not a runtime default.
 
 DMR mapping audit status:
 
@@ -525,8 +529,8 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The immediate next gate is a larger LongMemEval expansion plus a
-latency budget for `top1_single_source_rerank_margin_gt_1`; require zero
-LongMemEval Recall@10 regression and acceptable triggered-query cost before
-any runtime ranking policy. Keep answer-synthesis work in evaluation mode
-until the official-style DMR protocol is finalized.
+default. The immediate next gate is a larger LongMemEval expansion plus an
+explicit latency budget for `top1_single_source_rerank_margin_gt_1`; require
+zero LongMemEval Recall@10 regression and acceptable triggered-query cost
+before any runtime ranking policy. Keep answer-synthesis work in evaluation
+mode until the official-style DMR protocol is finalized.

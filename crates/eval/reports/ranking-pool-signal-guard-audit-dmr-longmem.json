@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.ranking-pool-signal-guard-audit.v1",
-  "generated_at": "2026-07-03T13:56:52.315446+00:00",
+  "generated_at": "2026-07-03T14:06:16.482004+00:00",
   "runner": "scripts/eval/ranking_pool_signal_guard_audit.py",
   "inputs": {
     "dmr_200_signal_report": {
@@ -48,6 +48,12 @@
       "dmr_mrr_at_10_delta_sum": 0.010198492554916894,
       "dmr_top1_delta_sum": 1,
       "dmr_retrieval_miss_delta_sum": -7,
+      "latency_budget": {
+        "total_extra_ms": 46003.5646,
+        "mean_extra_ms_per_all_queries": 55.89740534629404,
+        "max_dataset_mean_extra_ms_per_query": 70.94034241486068,
+        "max_dataset_p95_extra_ms_per_triggered_query": 799.8847999999999
+      },
       "negative_recall_datasets": [],
       "suppression_datasets": [],
       "passes_screening_gate": true,
@@ -65,6 +71,16 @@
           "triggered_top1_source_counts": {
             "fts": 14,
             "vector": 8
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 22,
+            "total_extra_ms": 12304.1539,
+            "mean_extra_ms_per_triggered_query": 559.2797227272727,
+            "mean_extra_ms_per_all_queries": 61.5207695,
+            "p50_extra_ms_per_triggered_query": 566.2299499999999,
+            "p95_extra_ms_per_triggered_query": 580.912285,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "deltas_vs_control": {
             "recall_at_10": 0.006250000000000089,
@@ -93,6 +109,16 @@
             "fts": 21,
             "vector": 23
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 45,
+            "total_extra_ms": 22913.7306,
+            "mean_extra_ms_per_triggered_query": 509.1940133333333,
+            "mean_extra_ms_per_all_queries": 70.94034241486068,
+            "p50_extra_ms_per_triggered_query": 510.15060000000005,
+            "p95_extra_ms_per_triggered_query": 527.5350599999999,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.005675954592363253,
             "mrr_at_10": 0.003906825888250143,
@@ -115,6 +141,16 @@
             "fts": 2,
             "vector": 1
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 3,
+            "total_extra_ms": 1632.4879000000003,
+            "mean_extra_ms_per_triggered_query": 544.1626333333335,
+            "mean_extra_ms_per_all_queries": 32.649758000000006,
+            "p50_extra_ms_per_triggered_query": 538.8987000000003,
+            "p95_extra_ms_per_triggered_query": 555.06486,
+            "max_extra_ms_per_triggered_query": 556.8611,
+            "min_extra_ms_per_triggered_query": 536.7281
+          },
           "deltas_vs_control": {
             "recall_at_10": 1.1102230246251565e-16,
             "mrr_at_10": 1.1102230246251565e-16,
@@ -134,6 +170,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 799.8847999999999,
+            "mean_extra_ms_per_triggered_query": 799.8847999999999,
+            "mean_extra_ms_per_all_queries": 15.997695999999998,
+            "p50_extra_ms_per_triggered_query": 799.8847999999999,
+            "p95_extra_ms_per_triggered_query": 799.8847999999999,
+            "max_extra_ms_per_triggered_query": 799.8847999999999,
+            "min_extra_ms_per_triggered_query": 799.8847999999999
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0,
@@ -157,6 +203,16 @@
           "triggered_top1_source_counts": {
             "fts": 5,
             "vector": 10
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 15,
+            "total_extra_ms": 8353.307400000002,
+            "mean_extra_ms_per_triggered_query": 556.8871600000001,
+            "mean_extra_ms_per_all_queries": 41.76653700000001,
+            "p50_extra_ms_per_triggered_query": 557.4863,
+            "p95_extra_ms_per_triggered_query": 584.8645999999999,
+            "max_extra_ms_per_triggered_query": 586.3038000000001,
+            "min_extra_ms_per_triggered_query": 519.7625000000003
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0025000000000000022,
@@ -186,6 +242,12 @@
       "dmr_mrr_at_10_delta_sum": 0.03871230773010964,
       "dmr_top1_delta_sum": 5,
       "dmr_retrieval_miss_delta_sum": -11,
+      "latency_budget": {
+        "total_extra_ms": 109074.4606,
+        "mean_extra_ms_per_all_queries": 132.5327589307412,
+        "max_dataset_mean_extra_ms_per_query": 148.11509164086686,
+        "max_dataset_p95_extra_ms_per_triggered_query": 831.3039650000002
+      },
       "negative_recall_datasets": [
         "longmem_50",
         "longmem_200"
@@ -211,6 +273,16 @@
             "entity": 2,
             "fts": 24,
             "vector": 17
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 43,
+            "total_extra_ms": 23941.2042,
+            "mean_extra_ms_per_triggered_query": 556.7721906976744,
+            "mean_extra_ms_per_all_queries": 119.706021,
+            "p50_extra_ms_per_triggered_query": 558.1259999999999,
+            "p95_extra_ms_per_triggered_query": 578.8716700000001,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "deltas_vs_control": {
             "recall_at_10": 0.011666666666666714,
@@ -240,6 +312,16 @@
             "fts": 42,
             "vector": 49
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 94,
+            "total_extra_ms": 47841.1746,
+            "mean_extra_ms_per_triggered_query": 508.9486659574468,
+            "mean_extra_ms_per_all_queries": 148.11509164086686,
+            "p50_extra_ms_per_triggered_query": 510.4572000000002,
+            "p95_extra_ms_per_triggered_query": 524.9380299999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.0036119711042311153,
             "mrr_at_10": 0.005581355349157269,
@@ -262,6 +344,16 @@
           "triggered_top1_source_counts": {
             "fts": 6,
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 4386.7564,
+            "mean_extra_ms_per_triggered_query": 548.34455,
+            "mean_extra_ms_per_all_queries": 87.735128,
+            "p50_extra_ms_per_triggered_query": 548.6935000000001,
+            "p95_extra_ms_per_triggered_query": 569.14337,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
           },
           "deltas_vs_control": {
             "recall_at_10": 0.010000000000000064,
@@ -286,6 +378,16 @@
           "triggered_top1_source_counts": {
             "fts": 1,
             "vector": 7
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 6198.5089,
+            "mean_extra_ms_per_triggered_query": 774.8136125,
+            "mean_extra_ms_per_all_queries": 123.97017799999999,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 831.3039650000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
           },
           "deltas_vs_control": {
             "recall_at_10": -0.020000000000000018,
@@ -313,6 +415,16 @@
             "entity": 1,
             "fts": 13,
             "vector": 34
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 48,
+            "total_extra_ms": 26706.8165,
+            "mean_extra_ms_per_triggered_query": 556.3920104166667,
+            "mean_extra_ms_per_all_queries": 133.5340825,
+            "p50_extra_ms_per_triggered_query": 557.1237000000001,
+            "p95_extra_ms_per_triggered_query": 588.6438699999999,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
           },
           "deltas_vs_control": {
             "recall_at_10": -0.006166666666666654,
@@ -347,6 +459,12 @@
       "dmr_mrr_at_10_delta_sum": 0.039207387340901345,
       "dmr_top1_delta_sum": 6,
       "dmr_retrieval_miss_delta_sum": -8,
+      "latency_budget": {
+        "total_extra_ms": 67078.6286,
+        "mean_extra_ms_per_all_queries": 81.50501652490887,
+        "max_dataset_mean_extra_ms_per_query": 123.97017799999999,
+        "max_dataset_p95_extra_ms_per_triggered_query": 831.3039650000002
+      },
       "negative_recall_datasets": [
         "longmem_50",
         "longmem_200"
@@ -371,6 +489,16 @@
             "entity": 1,
             "fts": 14,
             "vector": 10
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 25,
+            "total_extra_ms": 13895.9117,
+            "mean_extra_ms_per_triggered_query": 555.836468,
+            "mean_extra_ms_per_all_queries": 69.4795585,
+            "p50_extra_ms_per_triggered_query": 556.5234,
+            "p95_extra_ms_per_triggered_query": 576.1273400000001,
+            "max_extra_ms_per_triggered_query": 577.0093999999999,
+            "min_extra_ms_per_triggered_query": 537.0543000000002
           },
           "deltas_vs_control": {
             "recall_at_10": 0.007916666666666738,
@@ -400,6 +528,16 @@
             "fts": 23,
             "vector": 29
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 54,
+            "total_extra_ms": 27457.7985,
+            "mean_extra_ms_per_triggered_query": 508.47775,
+            "mean_extra_ms_per_all_queries": 85.0086640866873,
+            "p50_extra_ms_per_triggered_query": 509.5714499999999,
+            "p95_extra_ms_per_triggered_query": 524.7739049999999,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.0036119711042311153,
             "mrr_at_10": 0.007534768293282312,
@@ -422,6 +560,16 @@
           "triggered_top1_source_counts": {
             "fts": 4,
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3311.1296,
+            "mean_extra_ms_per_triggered_query": 551.8549333333334,
+            "mean_extra_ms_per_all_queries": 66.222592,
+            "p50_extra_ms_per_triggered_query": 551.3494,
+            "p95_extra_ms_per_triggered_query": 571.03295,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
           },
           "deltas_vs_control": {
             "recall_at_10": 0.010000000000000064,
@@ -446,6 +594,16 @@
           "triggered_top1_source_counts": {
             "fts": 1,
             "vector": 7
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 6198.5089,
+            "mean_extra_ms_per_triggered_query": 774.8136125,
+            "mean_extra_ms_per_all_queries": 123.97017799999999,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 831.3039650000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
           },
           "deltas_vs_control": {
             "recall_at_10": -0.020000000000000018,
@@ -473,6 +631,16 @@
             "entity": 1,
             "fts": 6,
             "vector": 22
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 29,
+            "total_extra_ms": 16215.279900000001,
+            "mean_extra_ms_per_triggered_query": 559.1475827586207,
+            "mean_extra_ms_per_all_queries": 81.07639950000001,
+            "p50_extra_ms_per_triggered_query": 559.4978999999998,
+            "p95_extra_ms_per_triggered_query": 589.4419200000001,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
           },
           "deltas_vs_control": {
             "recall_at_10": -0.0050000000000000044,
@@ -507,6 +675,12 @@
       "dmr_mrr_at_10_delta_sum": 0.02475489581797652,
       "dmr_top1_delta_sum": 5,
       "dmr_retrieval_miss_delta_sum": -11,
+      "latency_budget": {
+        "total_extra_ms": 77337.9575,
+        "mean_extra_ms_per_all_queries": 93.97078675577157,
+        "max_dataset_mean_extra_ms_per_query": 99.7607035,
+        "max_dataset_p95_extra_ms_per_triggered_query": 808.31225
+      },
       "negative_recall_datasets": [
         "longmem_50",
         "longmem_200"
@@ -532,6 +706,16 @@
             "entity": 2,
             "fts": 17,
             "vector": 12
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 31,
+            "total_extra_ms": 17311.6202,
+            "mean_extra_ms_per_triggered_query": 558.4393612903226,
+            "mean_extra_ms_per_all_queries": 86.55810100000001,
+            "p50_extra_ms_per_triggered_query": 561.8226,
+            "p95_extra_ms_per_triggered_query": 579.1041,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 526.0626
           },
           "deltas_vs_control": {
             "recall_at_10": 0.011666666666666714,
@@ -561,6 +745,16 @@
             "fts": 29,
             "vector": 32
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 62,
+            "total_extra_ms": 31585.2441,
+            "mean_extra_ms_per_triggered_query": 509.4394209677419,
+            "mean_extra_ms_per_all_queries": 97.78713343653251,
+            "p50_extra_ms_per_triggered_query": 510.88430000000005,
+            "p95_extra_ms_per_triggered_query": 523.7921549999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.005159958720330204,
             "mrr_at_10": 0.009451324389404991,
@@ -582,6 +776,16 @@
           "triggered_top1_source_counts": {
             "fts": 5,
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 7,
+            "total_extra_ms": 3857.6229000000003,
+            "mean_extra_ms_per_triggered_query": 551.0889857142857,
+            "mean_extra_ms_per_all_queries": 77.15245800000001,
+            "p50_extra_ms_per_triggered_query": 550.7076999999999,
+            "p95_extra_ms_per_triggered_query": 570.08816,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 536.7281
           },
           "deltas_vs_control": {
             "recall_at_10": 1.1102230246251565e-16,
@@ -606,6 +810,16 @@
           "triggered_top1_source_counts": {
             "fts": 1,
             "vector": 5
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 4631.3296,
+            "mean_extra_ms_per_triggered_query": 771.8882666666667,
+            "mean_extra_ms_per_all_queries": 92.626592,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 808.31225,
+            "max_extra_ms_per_triggered_query": 811.1214,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
           },
           "deltas_vs_control": {
             "recall_at_10": -0.020000000000000018,
@@ -632,6 +846,16 @@
             "entity": 1,
             "fts": 7,
             "vector": 28
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 36,
+            "total_extra_ms": 19952.1407,
+            "mean_extra_ms_per_triggered_query": 554.2261305555555,
+            "mean_extra_ms_per_all_queries": 99.7607035,
+            "p50_extra_ms_per_triggered_query": 552.5418500000001,
+            "p95_extra_ms_per_triggered_query": 584.3569249999999,
+            "max_extra_ms_per_triggered_query": 587.6494999999998,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
           },
           "deltas_vs_control": {
             "recall_at_10": -0.006166666666666654,
@@ -668,6 +892,12 @@
       "dmr_mrr_at_10_delta_sum": 0.0213952466951694,
       "dmr_top1_delta_sum": 0,
       "dmr_retrieval_miss_delta_sum": -4,
+      "latency_budget": {
+        "total_extra_ms": 46066.8941,
+        "mean_extra_ms_per_all_queries": 55.974354921020655,
+        "max_dataset_mean_extra_ms_per_query": 66.63067849999999,
+        "max_dataset_p95_extra_ms_per_triggered_query": 784.7066999999995
+      },
       "negative_recall_datasets": [
         "dmr_500_request_323_scored",
         "longmem_200"
@@ -689,6 +919,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 24
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 24,
+            "total_extra_ms": 13326.135699999999,
+            "mean_extra_ms_per_triggered_query": 555.2556541666667,
+            "mean_extra_ms_per_all_queries": 66.63067849999999,
+            "p50_extra_ms_per_triggered_query": 556.0658999999998,
+            "p95_extra_ms_per_triggered_query": 577.110595,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "deltas_vs_control": {
             "recall_at_10": 0.00500000000000006,
@@ -715,6 +955,16 @@
           "triggered_top1_source_counts": {
             "fts": 42
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 42,
+            "total_extra_ms": 21385.4068,
+            "mean_extra_ms_per_triggered_query": 509.1763523809524,
+            "mean_extra_ms_per_all_queries": 66.20868978328174,
+            "p50_extra_ms_per_triggered_query": 510.19669999999996,
+            "p95_extra_ms_per_triggered_query": 523.7921549999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": -0.0007739938080495445,
             "mrr_at_10": -0.0022654675905449118,
@@ -737,6 +987,16 @@
           "triggered_top1_source_counts": {
             "fts": 6
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3283.2160000000003,
+            "mean_extra_ms_per_triggered_query": 547.2026666666667,
+            "mean_extra_ms_per_all_queries": 65.66432,
+            "p50_extra_ms_per_triggered_query": 544.8032000000001,
+            "p95_extra_ms_per_triggered_query": 569.81545,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.010000000000000064,
             "mrr_at_10": 0.020000000000000018,
@@ -756,6 +1016,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 784.7066999999995,
+            "mean_extra_ms_per_triggered_query": 784.7066999999995,
+            "mean_extra_ms_per_all_queries": 15.69413399999999,
+            "p50_extra_ms_per_triggered_query": 784.7066999999995,
+            "p95_extra_ms_per_triggered_query": 784.7066999999995,
+            "max_extra_ms_per_triggered_query": 784.7066999999995,
+            "min_extra_ms_per_triggered_query": 784.7066999999995
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0,
@@ -779,6 +1049,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 13
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 13,
+            "total_extra_ms": 7287.428900000001,
+            "mean_extra_ms_per_triggered_query": 560.5714538461539,
+            "mean_extra_ms_per_all_queries": 36.4371445,
+            "p50_extra_ms_per_triggered_query": 557.4863,
+            "p95_extra_ms_per_triggered_query": 593.30778,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
           },
           "deltas_vs_control": {
             "recall_at_10": -0.0011666666666666492,
@@ -815,6 +1095,12 @@
       "dmr_mrr_at_10_delta_sum": 0.018146340114993442,
       "dmr_top1_delta_sum": 5,
       "dmr_retrieval_miss_delta_sum": -8,
+      "latency_budget": {
+        "total_extra_ms": 59818.72519999999,
+        "mean_extra_ms_per_all_queries": 72.68374872417982,
+        "max_dataset_mean_extra_ms_per_query": 108.276044,
+        "max_dataset_p95_extra_ms_per_triggered_query": 832.8564700000002
+      },
       "negative_recall_datasets": [
         "longmem_50",
         "longmem_200"
@@ -837,6 +1123,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 17
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 17,
+            "total_extra_ms": 9521.734100000001,
+            "mean_extra_ms_per_triggered_query": 560.1020058823531,
+            "mean_extra_ms_per_all_queries": 47.60867050000001,
+            "p50_extra_ms_per_triggered_query": 563.9187,
+            "p95_extra_ms_per_triggered_query": 579.4480600000002,
+            "max_extra_ms_per_triggered_query": 581.0099,
+            "min_extra_ms_per_triggered_query": 526.0626
           },
           "deltas_vs_control": {
             "recall_at_10": 0.00666666666666671,
@@ -863,6 +1159,16 @@
           "triggered_top1_source_counts": {
             "vector": 49
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 49,
+            "total_extra_ms": 24943.9074,
+            "mean_extra_ms_per_triggered_query": 509.05933469387753,
+            "mean_extra_ms_per_all_queries": 77.22571950464396,
+            "p50_extra_ms_per_triggered_query": 510.9071,
+            "p95_extra_ms_per_triggered_query": 525.54098,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.0074819401444787825,
             "mrr_at_10": 0.008676102019755272,
@@ -883,6 +1189,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 2,
+            "total_extra_ms": 1103.5404,
+            "mean_extra_ms_per_triggered_query": 551.7702,
+            "mean_extra_ms_per_all_queries": 22.070808000000003,
+            "p50_extra_ms_per_triggered_query": 551.7702,
+            "p95_extra_ms_per_triggered_query": 556.35201,
+            "max_extra_ms_per_triggered_query": 556.8611,
+            "min_extra_ms_per_triggered_query": 546.6793000000001
           },
           "deltas_vs_control": {
             "recall_at_10": 1.1102230246251565e-16,
@@ -905,6 +1221,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 7
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 7,
+            "total_extra_ms": 5413.8022,
+            "mean_extra_ms_per_triggered_query": 773.4003142857143,
+            "mean_extra_ms_per_all_queries": 108.276044,
+            "p50_extra_ms_per_triggered_query": 794.0963000000002,
+            "p95_extra_ms_per_triggered_query": 832.8564700000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
           },
           "deltas_vs_control": {
             "recall_at_10": -0.020000000000000018,
@@ -929,6 +1255,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 34
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 34,
+            "total_extra_ms": 18835.7411,
+            "mean_extra_ms_per_triggered_query": 553.9923852941176,
+            "mean_extra_ms_per_all_queries": 94.17870549999999,
+            "p50_extra_ms_per_triggered_query": 554.7413000000001,
+            "p95_extra_ms_per_triggered_query": 586.25755,
+            "max_extra_ms_per_triggered_query": 589.6170000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
           },
           "deltas_vs_control": {
             "recall_at_10": -0.0050000000000000044,
@@ -965,6 +1301,12 @@
       "dmr_mrr_at_10_delta_sum": 0.02056596761511631,
       "dmr_top1_delta_sum": 0,
       "dmr_retrieval_miss_delta_sum": -3,
+      "latency_budget": {
+        "total_extra_ms": 49255.735400000005,
+        "mean_extra_ms_per_all_queries": 59.84901020656137,
+        "max_dataset_mean_extra_ms_per_query": 72.0973505,
+        "max_dataset_p95_extra_ms_per_triggered_query": 784.7066999999995
+      },
       "negative_recall_datasets": [
         "dmr_500_request_323_scored",
         "longmem_200"
@@ -987,6 +1329,16 @@
           "triggered_top1_source_counts": {
             "entity": 2,
             "fts": 24
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 26,
+            "total_extra_ms": 14419.4701,
+            "mean_extra_ms_per_triggered_query": 554.5950038461539,
+            "mean_extra_ms_per_all_queries": 72.0973505,
+            "p50_extra_ms_per_triggered_query": 553.59795,
+            "p95_extra_ms_per_triggered_query": 577.0521249999999,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "deltas_vs_control": {
             "recall_at_10": 0.00500000000000006,
@@ -1014,6 +1366,16 @@
             "entity": 3,
             "fts": 42
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 45,
+            "total_extra_ms": 22897.2672,
+            "mean_extra_ms_per_triggered_query": 508.82815999999997,
+            "mean_extra_ms_per_all_queries": 70.8893721362229,
+            "p50_extra_ms_per_triggered_query": 510.15060000000005,
+            "p95_extra_ms_per_triggered_query": 523.3111199999998,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": -0.003869969040247667,
             "mrr_at_10": -0.003094746670598003,
@@ -1036,6 +1398,16 @@
           "triggered_top1_source_counts": {
             "fts": 6
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3283.2160000000003,
+            "mean_extra_ms_per_triggered_query": 547.2026666666667,
+            "mean_extra_ms_per_all_queries": 65.66432,
+            "p50_extra_ms_per_triggered_query": 544.8032000000001,
+            "p95_extra_ms_per_triggered_query": 569.81545,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
+          },
           "deltas_vs_control": {
             "recall_at_10": 0.010000000000000064,
             "mrr_at_10": 0.020000000000000018,
@@ -1055,6 +1427,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 784.7066999999995,
+            "mean_extra_ms_per_triggered_query": 784.7066999999995,
+            "mean_extra_ms_per_all_queries": 15.69413399999999,
+            "p50_extra_ms_per_triggered_query": 784.7066999999995,
+            "p95_extra_ms_per_triggered_query": 784.7066999999995,
+            "max_extra_ms_per_triggered_query": 784.7066999999995,
+            "min_extra_ms_per_triggered_query": 784.7066999999995
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0,
@@ -1079,6 +1461,16 @@
           "triggered_top1_source_counts": {
             "entity": 1,
             "fts": 13
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 14,
+            "total_extra_ms": 7871.0754,
+            "mean_extra_ms_per_triggered_query": 562.2196714285714,
+            "mean_extra_ms_per_all_queries": 39.355377,
+            "p50_extra_ms_per_triggered_query": 557.7194000000001,
+            "p95_extra_ms_per_triggered_query": 592.6004949999999,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
           },
           "deltas_vs_control": {
             "recall_at_10": -0.0011666666666666492,
@@ -1113,6 +1505,12 @@
       "dmr_mrr_at_10_delta_sum": 0.013957411912133344,
       "dmr_top1_delta_sum": 0,
       "dmr_retrieval_miss_delta_sum": 0,
+      "latency_budget": {
+        "total_extra_ms": 31736.503099999998,
+        "mean_extra_ms_per_all_queries": 38.56197217496962,
+        "max_dataset_mean_extra_ms_per_query": 50.32795820433436,
+        "max_dataset_p95_extra_ms_per_triggered_query": 836.3133150000001
+      },
       "negative_recall_datasets": [
         "dmr_500_request_323_scored"
       ],
@@ -1133,6 +1531,16 @@
           "triggered_top1_source_counts": {
             "fts": 7,
             "vector": 5
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 12,
+            "total_extra_ms": 6629.584000000001,
+            "mean_extra_ms_per_triggered_query": 552.4653333333334,
+            "mean_extra_ms_per_all_queries": 33.147920000000006,
+            "p50_extra_ms_per_triggered_query": 554.4284,
+            "p95_extra_ms_per_triggered_query": 575.1179500000001,
+            "max_extra_ms_per_triggered_query": 579.0576000000002,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "deltas_vs_control": {
             "recall_at_10": 5.551115123125783e-17,
@@ -1160,6 +1568,16 @@
             "fts": 13,
             "vector": 17
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 32,
+            "total_extra_ms": 16255.930499999999,
+            "mean_extra_ms_per_triggered_query": 507.99782812499996,
+            "mean_extra_ms_per_all_queries": 50.32795820433436,
+            "p50_extra_ms_per_triggered_query": 506.4810000000002,
+            "p95_extra_ms_per_triggered_query": 525.8288149999998,
+            "max_extra_ms_per_triggered_query": 530.4739,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
+          },
           "deltas_vs_control": {
             "recall_at_10": -0.001547987616099089,
             "mrr_at_10": -0.0038699690402476117,
@@ -1179,6 +1597,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 529.1335,
+            "mean_extra_ms_per_triggered_query": 529.1335,
+            "mean_extra_ms_per_all_queries": 10.58267,
+            "p50_extra_ms_per_triggered_query": 529.1335,
+            "p95_extra_ms_per_triggered_query": 529.1335,
+            "max_extra_ms_per_triggered_query": 529.1335,
+            "min_extra_ms_per_triggered_query": 529.1335
           },
           "deltas_vs_control": {
             "recall_at_10": 0.010000000000000064,
@@ -1200,6 +1628,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 2,
+            "total_extra_ms": 1567.1793,
+            "mean_extra_ms_per_triggered_query": 783.58965,
+            "mean_extra_ms_per_all_queries": 31.343586000000002,
+            "p50_extra_ms_per_triggered_query": 783.58965,
+            "p95_extra_ms_per_triggered_query": 836.3133150000001,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 725.0077999999999
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0,
@@ -1225,6 +1663,16 @@
           "triggered_top1_source_counts": {
             "fts": 6,
             "vector": 6
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 12,
+            "total_extra_ms": 6754.675800000001,
+            "mean_extra_ms_per_triggered_query": 562.8896500000001,
+            "mean_extra_ms_per_all_queries": 33.773379000000006,
+            "p50_extra_ms_per_triggered_query": 562.23295,
+            "p95_extra_ms_per_triggered_query": 595.0971900000002,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
           },
           "deltas_vs_control": {
             "recall_at_10": 0.0,
@@ -1318,6 +1766,16 @@
             "fts": 24,
             "vector": 17
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 43,
+            "total_extra_ms": 23941.2042,
+            "mean_extra_ms_per_triggered_query": 556.7721906976744,
+            "mean_extra_ms_per_all_queries": 119.706021,
+            "p50_extra_ms_per_triggered_query": 558.1259999999999,
+            "p95_extra_ms_per_triggered_query": 578.8716700000001,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
+          },
           "projected": {
             "recall_at_10": 0.42241666666666666,
             "mrr_at_10": 0.4850297619047619,
@@ -1376,6 +1834,16 @@
             "entity": 2,
             "fts": 24
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 26,
+            "total_extra_ms": 14419.4701,
+            "mean_extra_ms_per_triggered_query": 554.5950038461539,
+            "mean_extra_ms_per_all_queries": 72.0973505,
+            "p50_extra_ms_per_triggered_query": 553.59795,
+            "p95_extra_ms_per_triggered_query": 577.0521249999999,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
+          },
           "projected": {
             "recall_at_10": 0.41575,
             "mrr_at_10": 0.4755595238095238,
@@ -1432,6 +1900,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 24
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 24,
+            "total_extra_ms": 13326.135699999999,
+            "mean_extra_ms_per_triggered_query": 555.2556541666667,
+            "mean_extra_ms_per_all_queries": 66.63067849999999,
+            "p50_extra_ms_per_triggered_query": 556.0658999999998,
+            "p95_extra_ms_per_triggered_query": 577.110595,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "projected": {
             "recall_at_10": 0.41575,
@@ -1490,6 +1968,16 @@
           "triggered_top1_source_counts": {
             "vector": 17
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 17,
+            "total_extra_ms": 9521.734100000001,
+            "mean_extra_ms_per_triggered_query": 560.1020058823531,
+            "mean_extra_ms_per_all_queries": 47.60867050000001,
+            "p50_extra_ms_per_triggered_query": 563.9187,
+            "p95_extra_ms_per_triggered_query": 579.4480600000002,
+            "max_extra_ms_per_triggered_query": 581.0099,
+            "min_extra_ms_per_triggered_query": 526.0626
+          },
           "projected": {
             "recall_at_10": 0.41741666666666666,
             "mrr_at_10": 0.4813690476190476,
@@ -1543,6 +2031,16 @@
           "triggered_top1_source_counts": {
             "fts": 7,
             "vector": 5
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 12,
+            "total_extra_ms": 6629.584000000001,
+            "mean_extra_ms_per_triggered_query": 552.4653333333334,
+            "mean_extra_ms_per_all_queries": 33.147920000000006,
+            "p50_extra_ms_per_triggered_query": 554.4284,
+            "p95_extra_ms_per_triggered_query": 575.1179500000001,
+            "max_extra_ms_per_triggered_query": 579.0576000000002,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "projected": {
             "recall_at_10": 0.41075,
@@ -1601,6 +2099,16 @@
             "fts": 17,
             "vector": 12
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 31,
+            "total_extra_ms": 17311.6202,
+            "mean_extra_ms_per_triggered_query": 558.4393612903226,
+            "mean_extra_ms_per_all_queries": 86.55810100000001,
+            "p50_extra_ms_per_triggered_query": 561.8226,
+            "p95_extra_ms_per_triggered_query": 579.1041,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 526.0626
+          },
           "projected": {
             "recall_at_10": 0.42241666666666666,
             "mrr_at_10": 0.48720238095238094,
@@ -1657,6 +2165,16 @@
             "fts": 14,
             "vector": 10
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 25,
+            "total_extra_ms": 13895.9117,
+            "mean_extra_ms_per_triggered_query": 555.836468,
+            "mean_extra_ms_per_all_queries": 69.4795585,
+            "p50_extra_ms_per_triggered_query": 556.5234,
+            "p95_extra_ms_per_triggered_query": 576.1273400000001,
+            "max_extra_ms_per_triggered_query": 577.0093999999999,
+            "min_extra_ms_per_triggered_query": 537.0543000000002
+          },
           "projected": {
             "recall_at_10": 0.4186666666666667,
             "mrr_at_10": 0.48357142857142854,
@@ -1712,6 +2230,16 @@
           "triggered_top1_source_counts": {
             "fts": 14,
             "vector": 8
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 22,
+            "total_extra_ms": 12304.1539,
+            "mean_extra_ms_per_triggered_query": 559.2797227272727,
+            "mean_extra_ms_per_all_queries": 61.5207695,
+            "p50_extra_ms_per_triggered_query": 566.2299499999999,
+            "p95_extra_ms_per_triggered_query": 580.912285,
+            "max_extra_ms_per_triggered_query": 583.3749999999999,
+            "min_extra_ms_per_triggered_query": 504.481
           },
           "projected": {
             "recall_at_10": 0.41700000000000004,
@@ -1822,6 +2350,16 @@
             "fts": 42,
             "vector": 49
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 94,
+            "total_extra_ms": 47841.1746,
+            "mean_extra_ms_per_triggered_query": 508.9486659574468,
+            "mean_extra_ms_per_all_queries": 148.11509164086686,
+            "p50_extra_ms_per_triggered_query": 510.4572000000002,
+            "p95_extra_ms_per_triggered_query": 524.9380299999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "projected": {
             "recall_at_10": 0.38415892672858615,
             "mrr_at_10": 0.47482431569118877,
@@ -1881,6 +2419,16 @@
             "entity": 3,
             "fts": 42
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 45,
+            "total_extra_ms": 22897.2672,
+            "mean_extra_ms_per_triggered_query": 508.82815999999997,
+            "mean_extra_ms_per_all_queries": 70.8893721362229,
+            "p50_extra_ms_per_triggered_query": 510.15060000000005,
+            "p95_extra_ms_per_triggered_query": 523.3111199999998,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
+          },
           "projected": {
             "recall_at_10": 0.37667698658410737,
             "mrr_at_10": 0.4661482136714335,
@@ -1938,6 +2486,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 42
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 42,
+            "total_extra_ms": 21385.4068,
+            "mean_extra_ms_per_triggered_query": 509.1763523809524,
+            "mean_extra_ms_per_all_queries": 66.20868978328174,
+            "p50_extra_ms_per_triggered_query": 510.19669999999996,
+            "p95_extra_ms_per_triggered_query": 523.7921549999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
           },
           "projected": {
             "recall_at_10": 0.3797729618163055,
@@ -1997,6 +2555,16 @@
           "triggered_top1_source_counts": {
             "vector": 49
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 49,
+            "total_extra_ms": 24943.9074,
+            "mean_extra_ms_per_triggered_query": 509.05933469387753,
+            "mean_extra_ms_per_all_queries": 77.22571950464396,
+            "p50_extra_ms_per_triggered_query": 510.9071,
+            "p95_extra_ms_per_triggered_query": 525.54098,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "projected": {
             "recall_at_10": 0.3880288957688338,
             "mrr_at_10": 0.4779190623617868,
@@ -2053,6 +2621,16 @@
             "entity": 2,
             "fts": 13,
             "vector": 17
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 32,
+            "total_extra_ms": 16255.930499999999,
+            "mean_extra_ms_per_triggered_query": 507.99782812499996,
+            "mean_extra_ms_per_all_queries": 50.32795820433436,
+            "p50_extra_ms_per_triggered_query": 506.4810000000002,
+            "p95_extra_ms_per_triggered_query": 525.8288149999998,
+            "max_extra_ms_per_triggered_query": 530.4739,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
           },
           "projected": {
             "recall_at_10": 0.37899896800825594,
@@ -2113,6 +2691,16 @@
             "fts": 29,
             "vector": 32
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 62,
+            "total_extra_ms": 31585.2441,
+            "mean_extra_ms_per_triggered_query": 509.4394209677419,
+            "mean_extra_ms_per_all_queries": 97.78713343653251,
+            "p50_extra_ms_per_triggered_query": 510.88430000000005,
+            "p95_extra_ms_per_triggered_query": 523.7921549999999,
+            "max_extra_ms_per_triggered_query": 530.7158,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "projected": {
             "recall_at_10": 0.38570691434468524,
             "mrr_at_10": 0.4786942847314365,
@@ -2172,6 +2760,16 @@
             "fts": 23,
             "vector": 29
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 54,
+            "total_extra_ms": 27457.7985,
+            "mean_extra_ms_per_triggered_query": 508.47775,
+            "mean_extra_ms_per_all_queries": 85.0086640866873,
+            "p50_extra_ms_per_triggered_query": 509.5714499999999,
+            "p95_extra_ms_per_triggered_query": 524.7739049999999,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 458.7108999999999
+          },
           "projected": {
             "recall_at_10": 0.38415892672858615,
             "mrr_at_10": 0.4767777286353138,
@@ -2229,6 +2827,16 @@
             "entity": 1,
             "fts": 21,
             "vector": 23
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 45,
+            "total_extra_ms": 22913.7306,
+            "mean_extra_ms_per_triggered_query": 509.1940133333333,
+            "mean_extra_ms_per_all_queries": 70.94034241486068,
+            "p50_extra_ms_per_triggered_query": 510.15060000000005,
+            "p95_extra_ms_per_triggered_query": 527.5350599999999,
+            "max_extra_ms_per_triggered_query": 530.6631,
+            "min_extra_ms_per_triggered_query": 481.9383999999999
           },
           "projected": {
             "recall_at_10": 0.3862229102167183,
@@ -2334,6 +2942,16 @@
             "fts": 6,
             "vector": 2
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 4386.7564,
+            "mean_extra_ms_per_triggered_query": 548.34455,
+            "mean_extra_ms_per_all_queries": 87.735128,
+            "p50_extra_ms_per_triggered_query": 548.6935000000001,
+            "p95_extra_ms_per_triggered_query": 569.14337,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
+          },
           "projected": {
             "recall_at_10": 0.47833333333333333,
             "mrr_at_10": 0.6383333333333333,
@@ -2388,6 +3006,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 6
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3283.2160000000003,
+            "mean_extra_ms_per_triggered_query": 547.2026666666667,
+            "mean_extra_ms_per_all_queries": 65.66432,
+            "p50_extra_ms_per_triggered_query": 544.8032000000001,
+            "p95_extra_ms_per_triggered_query": 569.81545,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
           },
           "projected": {
             "recall_at_10": 0.47833333333333333,
@@ -2444,6 +3072,16 @@
           "triggered_top1_source_counts": {
             "fts": 6
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3283.2160000000003,
+            "mean_extra_ms_per_triggered_query": 547.2026666666667,
+            "mean_extra_ms_per_all_queries": 65.66432,
+            "p50_extra_ms_per_triggered_query": 544.8032000000001,
+            "p95_extra_ms_per_triggered_query": 569.81545,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
+          },
           "projected": {
             "recall_at_10": 0.47833333333333333,
             "mrr_at_10": 0.6383333333333333,
@@ -2498,6 +3136,16 @@
           "triggered_top1_source_counts": {
             "vector": 2
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 2,
+            "total_extra_ms": 1103.5404,
+            "mean_extra_ms_per_triggered_query": 551.7702,
+            "mean_extra_ms_per_all_queries": 22.070808000000003,
+            "p50_extra_ms_per_triggered_query": 551.7702,
+            "p95_extra_ms_per_triggered_query": 556.35201,
+            "max_extra_ms_per_triggered_query": 556.8611,
+            "min_extra_ms_per_triggered_query": 546.6793000000001
+          },
           "projected": {
             "recall_at_10": 0.4683333333333334,
             "mrr_at_10": 0.6183333333333334,
@@ -2548,6 +3196,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 529.1335,
+            "mean_extra_ms_per_triggered_query": 529.1335,
+            "mean_extra_ms_per_all_queries": 10.58267,
+            "p50_extra_ms_per_triggered_query": 529.1335,
+            "p95_extra_ms_per_triggered_query": 529.1335,
+            "max_extra_ms_per_triggered_query": 529.1335,
+            "min_extra_ms_per_triggered_query": 529.1335
           },
           "projected": {
             "recall_at_10": 0.47833333333333333,
@@ -2601,6 +3259,16 @@
           "triggered_top1_source_counts": {
             "fts": 5,
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 7,
+            "total_extra_ms": 3857.6229000000003,
+            "mean_extra_ms_per_triggered_query": 551.0889857142857,
+            "mean_extra_ms_per_all_queries": 77.15245800000001,
+            "p50_extra_ms_per_triggered_query": 550.7076999999999,
+            "p95_extra_ms_per_triggered_query": 570.08816,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 536.7281
           },
           "projected": {
             "recall_at_10": 0.4683333333333334,
@@ -2656,6 +3324,16 @@
             "fts": 4,
             "vector": 2
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 3311.1296,
+            "mean_extra_ms_per_triggered_query": 551.8549333333334,
+            "mean_extra_ms_per_all_queries": 66.222592,
+            "p50_extra_ms_per_triggered_query": 551.3494,
+            "p95_extra_ms_per_triggered_query": 571.03295,
+            "max_extra_ms_per_triggered_query": 575.7569,
+            "min_extra_ms_per_triggered_query": 529.1335
+          },
           "projected": {
             "recall_at_10": 0.47833333333333333,
             "mrr_at_10": 0.6383333333333333,
@@ -2708,6 +3386,16 @@
           "triggered_top1_source_counts": {
             "fts": 2,
             "vector": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 3,
+            "total_extra_ms": 1632.4879000000003,
+            "mean_extra_ms_per_triggered_query": 544.1626333333335,
+            "mean_extra_ms_per_all_queries": 32.649758000000006,
+            "p50_extra_ms_per_triggered_query": 538.8987000000003,
+            "p95_extra_ms_per_triggered_query": 555.06486,
+            "max_extra_ms_per_triggered_query": 556.8611,
+            "min_extra_ms_per_triggered_query": 536.7281
           },
           "projected": {
             "recall_at_10": 0.4683333333333334,
@@ -2814,6 +3502,16 @@
             "fts": 1,
             "vector": 7
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 6198.5089,
+            "mean_extra_ms_per_triggered_query": 774.8136125,
+            "mean_extra_ms_per_all_queries": 123.97017799999999,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 831.3039650000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
+          },
           "projected": {
             "recall_at_10": 0.57,
             "mrr_at_10": 0.491,
@@ -2867,6 +3565,16 @@
           "triggered_top1_source_counts": {
             "fts": 1
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 784.7066999999995,
+            "mean_extra_ms_per_triggered_query": 784.7066999999995,
+            "mean_extra_ms_per_all_queries": 15.69413399999999,
+            "p50_extra_ms_per_triggered_query": 784.7066999999995,
+            "p95_extra_ms_per_triggered_query": 784.7066999999995,
+            "max_extra_ms_per_triggered_query": 784.7066999999995,
+            "min_extra_ms_per_triggered_query": 784.7066999999995
+          },
           "projected": {
             "recall_at_10": 0.59,
             "mrr_at_10": 0.49607936507936506,
@@ -2919,6 +3627,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 784.7066999999995,
+            "mean_extra_ms_per_triggered_query": 784.7066999999995,
+            "mean_extra_ms_per_all_queries": 15.69413399999999,
+            "p50_extra_ms_per_triggered_query": 784.7066999999995,
+            "p95_extra_ms_per_triggered_query": 784.7066999999995,
+            "max_extra_ms_per_triggered_query": 784.7066999999995,
+            "min_extra_ms_per_triggered_query": 784.7066999999995
           },
           "projected": {
             "recall_at_10": 0.59,
@@ -2975,6 +3693,16 @@
           "triggered_top1_source_counts": {
             "vector": 7
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 7,
+            "total_extra_ms": 5413.8022,
+            "mean_extra_ms_per_triggered_query": 773.4003142857143,
+            "mean_extra_ms_per_all_queries": 108.276044,
+            "p50_extra_ms_per_triggered_query": 794.0963000000002,
+            "p95_extra_ms_per_triggered_query": 832.8564700000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
+          },
           "projected": {
             "recall_at_10": 0.57,
             "mrr_at_10": 0.491,
@@ -3026,6 +3754,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 2
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 2,
+            "total_extra_ms": 1567.1793,
+            "mean_extra_ms_per_triggered_query": 783.58965,
+            "mean_extra_ms_per_all_queries": 31.343586000000002,
+            "p50_extra_ms_per_triggered_query": 783.58965,
+            "p95_extra_ms_per_triggered_query": 836.3133150000001,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 725.0077999999999
           },
           "projected": {
             "recall_at_10": 0.59,
@@ -3082,6 +3820,16 @@
             "fts": 1,
             "vector": 5
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 6,
+            "total_extra_ms": 4631.3296,
+            "mean_extra_ms_per_triggered_query": 771.8882666666667,
+            "mean_extra_ms_per_all_queries": 92.626592,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 808.31225,
+            "max_extra_ms_per_triggered_query": 811.1214,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
+          },
           "projected": {
             "recall_at_10": 0.57,
             "mrr_at_10": 0.4913571428571429,
@@ -3137,6 +3885,16 @@
             "fts": 1,
             "vector": 7
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 8,
+            "total_extra_ms": 6198.5089,
+            "mean_extra_ms_per_triggered_query": 774.8136125,
+            "mean_extra_ms_per_all_queries": 123.97017799999999,
+            "p50_extra_ms_per_triggered_query": 789.4014999999998,
+            "p95_extra_ms_per_triggered_query": 831.3039650000002,
+            "max_extra_ms_per_triggered_query": 842.1715000000002,
+            "min_extra_ms_per_triggered_query": 710.1570000000002
+          },
           "projected": {
             "recall_at_10": 0.57,
             "mrr_at_10": 0.491,
@@ -3187,6 +3945,16 @@
           },
           "triggered_top1_source_counts": {
             "vector": 1
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 1,
+            "total_extra_ms": 799.8847999999999,
+            "mean_extra_ms_per_triggered_query": 799.8847999999999,
+            "mean_extra_ms_per_all_queries": 15.997695999999998,
+            "p50_extra_ms_per_triggered_query": 799.8847999999999,
+            "p95_extra_ms_per_triggered_query": 799.8847999999999,
+            "max_extra_ms_per_triggered_query": 799.8847999999999,
+            "min_extra_ms_per_triggered_query": 799.8847999999999
           },
           "projected": {
             "recall_at_10": 0.59,
@@ -3296,6 +4064,16 @@
             "fts": 13,
             "vector": 34
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 48,
+            "total_extra_ms": 26706.8165,
+            "mean_extra_ms_per_triggered_query": 556.3920104166667,
+            "mean_extra_ms_per_all_queries": 133.5340825,
+            "p50_extra_ms_per_triggered_query": 557.1237000000001,
+            "p95_extra_ms_per_triggered_query": 588.6438699999999,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
+          },
           "projected": {
             "recall_at_10": 0.4676666666666667,
             "mrr_at_10": 0.4005019841269841,
@@ -3353,6 +4131,16 @@
             "entity": 1,
             "fts": 13
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 14,
+            "total_extra_ms": 7871.0754,
+            "mean_extra_ms_per_triggered_query": 562.2196714285714,
+            "mean_extra_ms_per_all_queries": 39.355377,
+            "p50_extra_ms_per_triggered_query": 557.7194000000001,
+            "p95_extra_ms_per_triggered_query": 592.6004949999999,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
+          },
           "projected": {
             "recall_at_10": 0.4726666666666667,
             "mrr_at_10": 0.40148015873015874,
@@ -3408,6 +4196,16 @@
           },
           "triggered_top1_source_counts": {
             "fts": 13
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 13,
+            "total_extra_ms": 7287.428900000001,
+            "mean_extra_ms_per_triggered_query": 560.5714538461539,
+            "mean_extra_ms_per_all_queries": 36.4371445,
+            "p50_extra_ms_per_triggered_query": 557.4863,
+            "p95_extra_ms_per_triggered_query": 593.30778,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
           },
           "projected": {
             "recall_at_10": 0.4726666666666667,
@@ -3466,6 +4264,16 @@
           "triggered_top1_source_counts": {
             "vector": 34
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 34,
+            "total_extra_ms": 18835.7411,
+            "mean_extra_ms_per_triggered_query": 553.9923852941176,
+            "mean_extra_ms_per_all_queries": 94.17870549999999,
+            "p50_extra_ms_per_triggered_query": 554.7413000000001,
+            "p95_extra_ms_per_triggered_query": 586.25755,
+            "max_extra_ms_per_triggered_query": 589.6170000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
+          },
           "projected": {
             "recall_at_10": 0.4688333333333333,
             "mrr_at_10": 0.3975019841269841,
@@ -3521,6 +4329,16 @@
           "triggered_top1_source_counts": {
             "fts": 6,
             "vector": 6
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 12,
+            "total_extra_ms": 6754.675800000001,
+            "mean_extra_ms_per_triggered_query": 562.8896500000001,
+            "mean_extra_ms_per_all_queries": 33.773379000000006,
+            "p50_extra_ms_per_triggered_query": 562.23295,
+            "p95_extra_ms_per_triggered_query": 595.0971900000002,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
           },
           "projected": {
             "recall_at_10": 0.47383333333333333,
@@ -3578,6 +4396,16 @@
             "entity": 1,
             "fts": 7,
             "vector": 28
+          },
+          "latency_cost": {
+            "triggered_with_latency_count": 36,
+            "total_extra_ms": 19952.1407,
+            "mean_extra_ms_per_triggered_query": 554.2261305555555,
+            "mean_extra_ms_per_all_queries": 99.7607035,
+            "p50_extra_ms_per_triggered_query": 552.5418500000001,
+            "p95_extra_ms_per_triggered_query": 584.3569249999999,
+            "max_extra_ms_per_triggered_query": 587.6494999999998,
+            "min_extra_ms_per_triggered_query": 516.5402000000001
           },
           "projected": {
             "recall_at_10": 0.4676666666666667,
@@ -3637,6 +4465,16 @@
             "fts": 6,
             "vector": 22
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 29,
+            "total_extra_ms": 16215.279900000001,
+            "mean_extra_ms_per_triggered_query": 559.1475827586207,
+            "mean_extra_ms_per_all_queries": 81.07639950000001,
+            "p50_extra_ms_per_triggered_query": 559.4978999999998,
+            "p95_extra_ms_per_triggered_query": 589.4419200000001,
+            "max_extra_ms_per_triggered_query": 601.7952000000002,
+            "min_extra_ms_per_triggered_query": 513.3752
+          },
           "projected": {
             "recall_at_10": 0.4688333333333333,
             "mrr_at_10": 0.40059126984126986,
@@ -3691,6 +4529,16 @@
             "fts": 5,
             "vector": 10
           },
+          "latency_cost": {
+            "triggered_with_latency_count": 15,
+            "total_extra_ms": 8353.307400000002,
+            "mean_extra_ms_per_triggered_query": 556.8871600000001,
+            "mean_extra_ms_per_all_queries": 41.76653700000001,
+            "p50_extra_ms_per_triggered_query": 557.4863,
+            "p95_extra_ms_per_triggered_query": 584.8645999999999,
+            "max_extra_ms_per_triggered_query": 586.3038000000001,
+            "min_extra_ms_per_triggered_query": 519.7625000000003
+          },
           "projected": {
             "recall_at_10": 0.47633333333333333,
             "mrr_at_10": 0.3989265873015873,
@@ -3728,12 +4576,13 @@
     "safe_guard_ids": [
       "top1_single_source_rerank_margin_gt_1"
     ],
-    "current_conclusion": "The initial screen finds FTS-only and not-vector-only guards that keep DMR gains while avoiding the LongMemEval recall regression in the checked samples. They are evaluation candidates, not default ranking policies, until larger LongMemEval and DMR cross-checks pass."
+    "current_conclusion": "The checked sample sets leave top1_single_source_rerank_margin_gt_1 as the only quality-screened guard. It remains evaluation-only because triggered queries still pay the larger reranker-pool cost; latency budget data is reported separately and must pass before any runtime policy."
   },
   "limits": [
     "Uses sanitized per-query ranks, metrics, and answer-free ranking signal summaries only.",
     "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
     "Simulates conditional use of the candidate reranker pool; it does not change retrieval or ranking behavior.",
-    "Screening gates are based on the checked DMR and LongMemEval samples only; they are not product defaults."
+    "Screening gates are based on the checked DMR and LongMemEval samples only; they are not product defaults.",
+    "Quality screening and latency budget are reported separately; no runtime latency threshold is adopted here."
   ]
 }

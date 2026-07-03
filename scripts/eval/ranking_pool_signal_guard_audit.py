@@ -255,6 +255,41 @@ def compact_delta(deltas: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def percentile(values: list[float], pct: float) -> float | None:
+    if not values:
+        return None
+    sorted_values = sorted(values)
+    if len(sorted_values) == 1:
+        return sorted_values[0]
+    position = (len(sorted_values) - 1) * pct / 100.0
+    low = int(position)
+    high = min(low + 1, len(sorted_values) - 1)
+    fraction = position - low
+    return sorted_values[low] * (1.0 - fraction) + sorted_values[high] * fraction
+
+
+def latency_cost(triggered: list[dict[str, Any]], total_case_count: int) -> dict[str, Any]:
+    deltas: list[float] = []
+    for case in triggered:
+        control_latency = case["control"].get("latency_ms")
+        candidate_latency = case["candidate"].get("latency_ms")
+        if control_latency is None or candidate_latency is None:
+            continue
+        deltas.append(float(candidate_latency) - float(control_latency))
+
+    total_extra_ms = sum(deltas)
+    return {
+        "triggered_with_latency_count": len(deltas),
+        "total_extra_ms": total_extra_ms,
+        "mean_extra_ms_per_triggered_query": total_extra_ms / len(deltas) if deltas else 0.0,
+        "mean_extra_ms_per_all_queries": total_extra_ms / total_case_count if total_case_count else 0.0,
+        "p50_extra_ms_per_triggered_query": percentile(deltas, 50.0),
+        "p95_extra_ms_per_triggered_query": percentile(deltas, 95.0),
+        "max_extra_ms_per_triggered_query": max(deltas) if deltas else None,
+        "min_extra_ms_per_triggered_query": min(deltas) if deltas else None,
+    }
+
+
 def evaluate_guard(
     cases: list[dict[str, Any]],
     guard: dict[str, Any],
@@ -272,6 +307,7 @@ def evaluate_guard(
         "triggered_fraction": len(triggered) / len(cases) if cases else 0.0,
         "triggered_transition_counts": dict(sorted(Counter(case["transition"] for case in triggered).items())),
         "triggered_top1_source_counts": dict(sorted(Counter(source_key(case) for case in triggered).items())),
+        "latency_cost": latency_cost(triggered, len(cases)),
         "projected": projected,
         "deltas_vs_control": compact_delta(deltas),
     }
@@ -316,11 +352,16 @@ def aggregate_guard(guard: dict[str, Any], datasets: list[dict[str, Any]]) -> di
     dmr_top1_delta = 0
     dmr_miss_delta = 0
     total_triggered = 0
+    total_latency_extra_ms = 0.0
+    total_case_count = 0
+    max_mean_extra_ms_per_query = 0.0
+    max_p95_extra_ms_per_trigger = 0.0
 
     for dataset in datasets:
         result = next(item for item in dataset["guard_results"] if item["id"] == guard["id"])
         deltas = result["deltas_vs_control"]
         transitions = result["triggered_transition_counts"]
+        latency = result["latency_cost"]
         dataset_key = dataset["dataset_key"]
         if deltas["recall_at_10"] < -EPSILON:
             negative_recall_datasets.append(dataset_key)
@@ -332,12 +373,22 @@ def aggregate_guard(guard: dict[str, Any], datasets: list[dict[str, Any]]) -> di
             dmr_top1_delta += int(deltas["top1"])
             dmr_miss_delta += int(deltas["retrieval_miss"])
         total_triggered += int(result["triggered_count"])
+        total_latency_extra_ms += float(latency["total_extra_ms"])
+        total_case_count += int(dataset["sample_size"] or 0)
+        max_mean_extra_ms_per_query = max(
+            max_mean_extra_ms_per_query,
+            float(latency["mean_extra_ms_per_all_queries"]),
+        )
+        p95_latency = latency.get("p95_extra_ms_per_triggered_query")
+        if p95_latency is not None:
+            max_p95_extra_ms_per_trigger = max(max_p95_extra_ms_per_trigger, float(p95_latency))
         per_dataset.append(
             {
                 "dataset_key": dataset_key,
                 "triggered_count": result["triggered_count"],
                 "triggered_transition_counts": transitions,
                 "triggered_top1_source_counts": result["triggered_top1_source_counts"],
+                "latency_cost": latency,
                 "deltas_vs_control": deltas,
             }
         )
@@ -357,6 +408,12 @@ def aggregate_guard(guard: dict[str, Any], datasets: list[dict[str, Any]]) -> di
         "dmr_mrr_at_10_delta_sum": dmr_mrr_delta,
         "dmr_top1_delta_sum": dmr_top1_delta,
         "dmr_retrieval_miss_delta_sum": dmr_miss_delta,
+        "latency_budget": {
+            "total_extra_ms": total_latency_extra_ms,
+            "mean_extra_ms_per_all_queries": total_latency_extra_ms / total_case_count if total_case_count else 0.0,
+            "max_dataset_mean_extra_ms_per_query": max_mean_extra_ms_per_query,
+            "max_dataset_p95_extra_ms_per_triggered_query": max_p95_extra_ms_per_trigger,
+        },
         "negative_recall_datasets": negative_recall_datasets,
         "suppression_datasets": suppression_datasets,
         "passes_screening_gate": passes_screen,
@@ -458,9 +515,9 @@ def main() -> int:
             "best_safe_guard_description": best_safe["description"] if best_safe else None,
             "safe_guard_ids": [item["id"] for item in safe_guards],
             "current_conclusion": (
-                "The initial screen finds FTS-only and not-vector-only guards that keep DMR gains "
-                "while avoiding the LongMemEval recall regression in the checked samples. They are evaluation candidates, "
-                "not default ranking policies, until larger LongMemEval and DMR cross-checks pass."
+                "The checked sample sets leave top1_single_source_rerank_margin_gt_1 as the only quality-screened "
+                "guard. It remains evaluation-only because triggered queries still pay the larger reranker-pool cost; "
+                "latency budget data is reported separately and must pass before any runtime policy."
                 if safe_guards
                 else "No screened guard is ready for implementation."
             ),
@@ -470,6 +527,7 @@ def main() -> int:
             "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
             "Simulates conditional use of the candidate reranker pool; it does not change retrieval or ranking behavior.",
             "Screening gates are based on the checked DMR and LongMemEval samples only; they are not product defaults.",
+            "Quality screening and latency budget are reported separately; no runtime latency threshold is adopted here.",
         ],
     }
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -485,6 +543,7 @@ def main() -> int:
                         "passes_screening_gate": item["passes_screening_gate"],
                         "dmr_recall_at_10_delta_sum": item["dmr_recall_at_10_delta_sum"],
                         "dmr_mrr_at_10_delta_sum": item["dmr_mrr_at_10_delta_sum"],
+                        "latency_budget": item["latency_budget"],
                         "negative_recall_datasets": item["negative_recall_datasets"],
                         "suppression_datasets": item["suppression_datasets"],
                     }

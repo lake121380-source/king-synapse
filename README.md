@@ -219,9 +219,10 @@ regression surface. The latest pool-signal guard audit finds a safer
 evaluation candidate (`top1_single_source_rerank_margin_gt_1`), after
 LongMemEval 200 blocked the simpler `fts-only` / `not-vector-only` guards.
 DMR 500-request / 323-scored keeps that guarded candidate positive, but the
-gain is still small and pool expansion is expensive, so it needs a larger
-LongMemEval rerun and a latency budget before any default ranking change. CUDA
-validation status is recorded in
+gain is still small and pool expansion is expensive: the checked guard adds
+about `56 ms/query` amortized, while triggered queries pay roughly `0.5-0.8 s`
+extra. It still needs a larger LongMemEval rerun and an explicit latency
+budget before any default ranking change. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
