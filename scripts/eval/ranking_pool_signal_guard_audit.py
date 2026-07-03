@@ -54,6 +54,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=root / "crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json",
     )
+    parser.add_argument(
+        "--longmem-500-report",
+        type=Path,
+        default=root / "crates/eval/reports/ranking-ablation-longmem-500-reranker-pool-signal.json",
+    )
     parser.add_argument("--control-pool", type=int, default=50)
     parser.add_argument("--candidate-pool", type=int, default=100)
     parser.add_argument(
@@ -426,6 +431,7 @@ def dataset_inputs(
     dmr_500_report: dict[str, Any],
     crosscheck_report: dict[str, Any],
     longmem_200_report: dict[str, Any],
+    longmem_500_report: dict[str, Any],
 ) -> list[tuple[str, dict[str, Any]]]:
     inputs: list[tuple[str, dict[str, Any]]] = [("dmr_200", dmr_200_report["datasets"][0])]
     for dataset in dmr_500_report.get("datasets", []):
@@ -439,6 +445,9 @@ def dataset_inputs(
     for dataset in longmem_200_report.get("datasets", []):
         if dataset.get("id") == "longmem":
             inputs.append(("longmem_200", dataset))
+    for dataset in longmem_500_report.get("datasets", []):
+        if dataset.get("id") == "longmem":
+            inputs.append(("longmem_500", dataset))
     return inputs
 
 
@@ -448,6 +457,7 @@ def main() -> int:
     args.dmr_500_report = normalize_path_arg(args.dmr_500_report)
     args.crosscheck_report = normalize_path_arg(args.crosscheck_report)
     args.longmem_200_report = normalize_path_arg(args.longmem_200_report)
+    args.longmem_500_report = normalize_path_arg(args.longmem_500_report)
     args.output = normalize_path_arg(args.output)
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -455,6 +465,7 @@ def main() -> int:
     dmr_500_report = load_json(args.dmr_500_report)
     crosscheck_report = load_json(args.crosscheck_report)
     longmem_200_report = load_json(args.longmem_200_report)
+    longmem_500_report = load_json(args.longmem_500_report)
     guards = guard_definitions()
     datasets = [
         audit_dataset(
@@ -464,7 +475,13 @@ def main() -> int:
             candidate_pool=args.candidate_pool,
             guards=guards,
         )
-        for dataset_key, dataset in dataset_inputs(dmr_200_report, dmr_500_report, crosscheck_report, longmem_200_report)
+        for dataset_key, dataset in dataset_inputs(
+            dmr_200_report,
+            dmr_500_report,
+            crosscheck_report,
+            longmem_200_report,
+            longmem_500_report,
+        )
     ]
     guard_summaries = [aggregate_guard(guard, datasets) for guard in guards]
     guard_summaries.sort(
@@ -499,6 +516,10 @@ def main() -> int:
             "longmem_200_signal_report": {
                 "path": report_path(args.longmem_200_report),
                 "sha256": sha256_file(args.longmem_200_report),
+            },
+            "longmem_500_signal_report": {
+                "path": report_path(args.longmem_500_report),
+                "sha256": sha256_file(args.longmem_500_report),
             },
         },
         "control_pool": args.control_pool,

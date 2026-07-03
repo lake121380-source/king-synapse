@@ -35,6 +35,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json`
 
+`crates/eval/reports/ranking-ablation-longmem-500-reranker-pool-signal.json`
+
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
@@ -1275,7 +1277,7 @@ coverage.
 
 This pass audits answer-free guards for the conditional pool `100` trigger
 across DMR 200, DMR 500-request / 323-scored, DMR 50, LongMemEval 50, and
-LongMemEval 200. It uses only sanitized rank, metric, source, and score
+LongMemEval 200 / 500. It uses only sanitized rank, metric, source, and score
 summaries from existing reports.
 
 Report:
@@ -1285,6 +1287,10 @@ Report:
 LongMemEval 200 signal report:
 
 `crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json`
+
+LongMemEval 500 signal report:
+
+`crates/eval/reports/ranking-ablation-longmem-500-reranker-pool-signal.json`
 
 DMR 500-request / 323-scored signal report:
 
@@ -1309,6 +1315,25 @@ python scripts/eval/ranking_ablation.py `
   --rerank-batch-size 32 `
   --rerank-max-length 256 `
   --output crates/eval/reports/ranking-ablation-dmr-500-reranker-pool-signal.json `
+  --cleanup-cache
+```
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets longmem `
+  --longmem-sample-size 500 `
+  --ablation reranker-pool `
+  --reranker-pools 50,100 `
+  --k 10 `
+  --cargo-profile release `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-longmem-500-reranker-pool-signal.json `
   --cleanup-cache
 ```
 
@@ -1343,6 +1368,12 @@ Full LongMemEval 200 pool `100` versus pool `50`:
 | ---: | ---: | ---: | ---: | ---: |
 | -0.0066 | +0.0016 | +565.9 ms | +1 | +3 |
 
+Full LongMemEval 500 pool `100` versus pool `50`:
+
+| Recall@10 delta | MRR@10 delta | P50 latency delta | Top-1 delta | Miss delta |
+| ---: | ---: | ---: | ---: | ---: |
+| +0.0088 | +0.0020 | +548.0 ms | -3 | -6 |
+
 Full DMR 500-request / 323-scored pool `100` versus pool `50`:
 
 | Recall@10 delta | MRR@10 delta | P50 latency delta | Top-1 delta | Miss delta |
@@ -1351,12 +1382,12 @@ Full DMR 500-request / 323-scored pool `100` versus pool `50`:
 
 Guard simulation:
 
-| Guard | DMR 323 Recall@10 delta | DMR 200 Recall@10 delta | DMR 50 Recall@10 delta | LongMem 50 Recall@10 delta | LongMem 200 Recall@10 delta | Suppression datasets | Read |
-| --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
-| `top1_single_source` | +0.0036 | +0.0117 | +0.010 | -0.020 | -0.0062 | DMR 323, LongMem 50/200 | Best DMR gain, blocked globally. |
-| `top1_single_source_fts_only` | -0.0008 | +0.0050 | +0.010 | 0.000 | -0.0012 | DMR 323 | Source-only guard does not hold at larger samples. |
-| `top1_single_source_not_vector_only` | -0.0039 | +0.0050 | +0.010 | 0.000 | -0.0012 | DMR 323 | Worse than FTS-only at DMR 323. |
-| `top1_single_source_rerank_margin_gt_1` | +0.0057 | +0.0063 | 0.000 | 0.000 | +0.0025 | none | Only current guard passing the five-sample-set screen. |
+| Guard | DMR 323 Recall@10 delta | DMR 200 Recall@10 delta | DMR 50 Recall@10 delta | LongMem 50 Recall@10 delta | LongMem 200 Recall@10 delta | LongMem 500 Recall@10 delta | Suppression datasets | Read |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| `top1_single_source` | +0.0036 | +0.0117 | +0.010 | -0.020 | -0.0062 | +0.0001 | DMR 323, LongMem 50/200/500 | Best DMR gain, blocked globally. |
+| `top1_single_source_fts_only` | -0.0008 | +0.0050 | +0.010 | 0.000 | -0.0012 | +0.0006 | DMR 323, LongMem 500 | Source-only guard does not hold at larger samples. |
+| `top1_single_source_not_vector_only` | -0.0039 | +0.0050 | +0.010 | 0.000 | -0.0012 | +0.0006 | DMR 323, LongMem 500 | Worse than FTS-only at DMR 323. |
+| `top1_single_source_rerank_margin_gt_1` | +0.0057 | +0.0063 | 0.000 | 0.000 | +0.0025 | +0.0004 | LongMem 500 | Last screened guard is now blocked by LongMem 500 suppressions. |
 
 Latency budget for `top1_single_source_rerank_margin_gt_1`:
 
@@ -1367,36 +1398,38 @@ Latency budget for `top1_single_source_rerank_margin_gt_1`:
 | DMR 500 request / 323 scored | 45/323 | +509.2 ms | +70.9 ms | +527.5 ms |
 | LongMemEval 50 | 1/50 | +799.9 ms | +16.0 ms | +799.9 ms |
 | LongMemEval 200 | 15/200 | +556.9 ms | +41.8 ms | +584.9 ms |
+| LongMemEval 500 | 69/500 | +545.2 ms | +75.2 ms | +642.4 ms |
 
-Across the checked sample sets, the guarded policy adds `55.9 ms` per query
-on average when amortized over all queries, with the largest dataset-level
-mean at `70.9 ms/query`. Triggered queries themselves still pay the larger
-pool cost, usually about `0.5-0.8 s`.
+Across the checked sample sets, this guard adds `63.2 ms` per query on average
+when amortized over all queries, with the largest dataset-level mean at
+`75.2 ms/query`. Triggered queries themselves still pay the larger pool cost,
+usually about `0.5-0.8 s`.
 
 ### Guard Read
 
-The LongMemEval 200 and DMR 323 expansions tighten the conclusion. The
-50-sample read made `fts-only` and `not-vector-only` look safe, but
-LongMemEval 200 shows a small Recall@10 regression for both, and DMR 323 shows
-that both source-only guards can also regress DMR ranking. They cannot become
-defaults.
+The LongMemEval 200 and DMR 323 expansions tightened the conclusion, and the
+LongMemEval 500 expansion tightens it again. The 50-sample read made
+`fts-only` and `not-vector-only` look safe, but LongMemEval 200 shows a small
+Recall@10 regression for both, and DMR 323 shows that both source-only guards
+can also regress DMR ranking. They cannot become defaults.
 
-The only guard that currently passes DMR 323, DMR 200, DMR 50, LongMemEval
-50, and LongMemEval 200 is `top1_single_source_rerank_margin_gt_1`. It is more
-conservative: it keeps DMR 323 positive (`+0.0057` Recall@10, `+0.0039` MRR,
-misses `-4`), keeps DMR 200 positive (`+0.0063` Recall@10, `+0.0063` MRR,
-misses `-3`), gives LongMemEval 200 a small positive Recall@10 movement, and
-has no top-10 suppressions in the checked sample sets. It gives no gain on DMR
-50, so it is a screened candidate, not a default policy.
+Before LongMemEval 500, `top1_single_source_rerank_margin_gt_1` was the only
+guard passing the checked quality screen. LongMemEval 500 now blocks it: it
+keeps Recall@10 slightly positive (`+0.0004`) but introduces `3`
+`suppressed_from_top10` transitions and one top-1 demotion. That violates the
+Phase 6 ranking rule. There is currently no pool-signal guard in this audit
+that can become a runtime default.
 
 The useful result is negative as much as positive: larger LongMemEval evidence
-blocks the simpler source-only guards. Any runtime policy now needs a latency
-budget and at least one more LongMemEval expansion, because even guarded pool
-expansion still pays candidate reranking cost on triggered queries.
+blocks every tested source/margin guard. The next ranking work should stop
+trying to rescue pool `100` with these simple triggers and move to a different
+answer-free ordering signal, or separate LongMemEval and DMR objectives more
+explicitly.
 
-The latency audit does not adopt a runtime budget. It only records the cost
-surface. Before implementation, the project needs an explicit budget such as
-maximum amortized latency per query and maximum triggered-query tail latency.
+The latency audit does not adopt a runtime budget. It records the cost surface
+for a guard that is now quality-blocked. Before any future implementation, the
+project still needs an explicit budget such as maximum amortized latency per
+query and maximum triggered-query tail latency.
 
 ## Decision
 
@@ -1441,20 +1474,19 @@ are recorded. The cross-check is now recorded and it blocks a global default:
 the signal helps DMR 50 but hurts LongMemEval 50. It can remain a DMR-specific
 research candidate, but not a system-wide policy. The LongMemEval 200 guard
 audit also blocks the simpler `fts-only` / `not-vector-only` guards. The DMR
-323 expansion repeats that block on the DMR side. The only current five-set
-screened candidate is `top1_single_source_rerank_margin_gt_1`, and it stays
-evaluation-only until an explicit latency budget and additional LongMemEval
-expansion confirm that it preserves LongMemEval while retaining useful DMR
-gains.
+323 expansion repeats that block on the DMR side. LongMemEval 500 now blocks
+the last screened guard, `top1_single_source_rerank_margin_gt_1`, because it
+introduces top-10 suppressions. No tested pool-signal guard should become a
+runtime default.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. rerun `top1_single_source_rerank_margin_gt_1` on a larger LongMemEval
-   sample;
-2. define a runtime latency budget before any implementation;
-3. require zero LongMemEval Recall@10 regression before any runtime policy;
+1. stop pursuing the current source/margin pool-signal guards as defaults;
+2. define a runtime latency budget before any future ranking implementation;
+3. require zero LongMemEval Recall@10 regression and zero top-10 suppressions
+   before any runtime policy;
 4. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;
 5. test smaller, overlap-aware chunking instead of full-session merging;

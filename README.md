@@ -170,20 +170,20 @@ questions, answers, or generated text:
 
 | Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
 | --- | ---: | ---: | ---: | ---: | --- |
-| 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | 17 judged / 33 error |
+| 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | 50 judged / 0 error |
 | 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | not requested |
-| 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | 3 judged / 2 error |
-| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | 83 judged / 117 error |
+| 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | 5 judged / 0 error |
+| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | 200 judged / 0 error |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.067 | not requested |
-| 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | 128 judged / 195 error |
+| 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
 This is still not a published-comparable official DMR result. The isolated
-DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`, so the
-remaining boundary is judge-output stability rather than auth. The
-mapping-policy review keeps punctuation full-answer mapping as the pinned local
-boundary, so the honest large-run claim is still `500 request / 323 scored`,
-not `500/500`. Most judge misses are malformed JSON responses, not HTTP 401s.
+DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`, and the
+pinned 5 / 50 / 200 / 500-request runs are fully judged locally. The remaining
+boundary is no longer auth; it is published-comparable scoring policy,
+answer-generation quality, and the fact that the honest large-run claim is
+still `500 request / 323 scored`, not `500/500`.
 The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
@@ -199,8 +199,9 @@ ablation summary is recorded in
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
 
 So answer synthesis is now a real optimization target, but it is still
-eval-only evidence. The LLM judge is now reachable, but judge-output stability
-is still too weak for official DMR or product claims.
+eval-only evidence. The LLM judge path is reachable and stable on the pinned
+local runs; official DMR or product claims still need a finalized published-
+comparable protocol and better answer-generation quality.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
@@ -215,14 +216,14 @@ misses unchanged and also hurts ranking. These are ranking tradeoffs, not
 simple default changes. The DMR 50 transition audit keeps vector retrieval and
 reranking as the productive direction; the DMR 200 transition audit repeats the
 same pattern at larger scale, while also recording the reranker's small
-regression surface. The latest pool-signal guard audit finds a safer
-evaluation candidate (`top1_single_source_rerank_margin_gt_1`), after
-LongMemEval 200 blocked the simpler `fts-only` / `not-vector-only` guards.
-DMR 500-request / 323-scored keeps that guarded candidate positive, but the
-gain is still small and pool expansion is expensive: the checked guard adds
-about `56 ms/query` amortized, while triggered queries pay roughly `0.5-0.8 s`
-extra. It still needs a larger LongMemEval rerun and an explicit latency
-budget before any default ranking change. CUDA validation status is recorded in
+regression surface. The latest pool-signal guard audit adds LongMemEval 500
+and changes the decision: the last screened guard
+(`top1_single_source_rerank_margin_gt_1`) is now blocked. It keeps Recall@10
+slightly positive on LongMemEval 500 (`+0.0004`) but introduces `3` top-10
+suppressions and one top-1 demotion, while adding `75.2 ms/query` amortized
+latency on that dataset and about `0.5-0.8 s` on triggered queries. So no
+tested pool-signal guard should become a runtime default. CUDA validation
+status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:
@@ -263,8 +264,8 @@ comparison adapters or optional embedding/reranking paths.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
-- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and DeepSeek judge scoring is now live on `deepseek-v4-flash`, but judge-output stability still needs work.
-- Ranking guard work has a screened eval-only candidate, but no default ranking policy has been changed.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
+- Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 

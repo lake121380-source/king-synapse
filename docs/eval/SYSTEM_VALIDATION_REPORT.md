@@ -427,24 +427,21 @@ Ranking ablation status:
   it into a DMR-specific research candidate until a LongMemEval guard exists.
 - `crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
   now records the guard audit over DMR 200, DMR 500-request / 323-scored, DMR
-  50, LongMemEval 50, and LongMemEval 200. LongMemEval 200 tightens the
-  result: full pool `100` lowers LongMemEval Recall@10 by `-0.0066`, adds `3`
-  misses, and adds about `565.9 ms` P50 latency versus pool `50`. DMR
-  500-request / 323-scored shows full pool `100` is only a small quality gain
-  with large cost: Recall@10 `+0.0020`, MRR `+0.0042`, misses `-6`, P50
-  latency `+511.2 ms`, top-1 unchanged. The unguarded `top1_single_source`
-  trigger still has the largest DMR gain but fails both LongMemEval safety
-  checks and triggers DMR 323 suppressions. The simpler `fts-only` and
-  `not-vector-only` guards that looked safe at LongMemEval 50 also regress
-  LongMemEval 200 and DMR 323. The only current five-set screened candidate is
-  `top1_single_source_rerank_margin_gt_1`: DMR 323 Recall@10 `+0.0057`, DMR
-  200 Recall@10 `+0.0063`, DMR 50 unchanged, LongMemEval 50 unchanged,
-  LongMemEval 200 Recall@10 `+0.0025`, with zero top-10 suppressions in the
-  checked sample sets. The same report now records latency budget data: the
-  guarded candidate adds `55.9 ms/query` amortized over all checked queries,
-  with the largest dataset-level mean at `70.9 ms/query`; triggered queries
-  themselves still pay about `0.5-0.8 s` extra. This remains eval-only
-  evidence, not a runtime default.
+  50, LongMemEval 50, LongMemEval 200, and LongMemEval 500. LongMemEval 200
+  first tightened the result: full pool `100` lowered LongMemEval Recall@10 by
+  `-0.0066`, added `3` misses, and added about `565.9 ms` P50 latency versus
+  pool `50`. DMR 500-request / 323-scored showed full pool `100` is only a
+  small quality gain with large cost: Recall@10 `+0.0020`, MRR `+0.0042`,
+  misses `-6`, P50 latency `+511.2 ms`, top-1 unchanged. LongMemEval 500 then
+  blocked the last screened guard, `top1_single_source_rerank_margin_gt_1`.
+  Full pool `100` improved LongMemEval 500 Recall@10 by `+0.0088` and reduced
+  misses by `6`, but top-1 fell by `3` and P50 latency rose by `548.0 ms`.
+  The guarded policy itself triggered on `69/500` LongMemEval queries, kept
+  Recall@10 only slightly positive (`+0.0004`), and introduced `3`
+  top-10 suppressions plus one top-1 demotion. Its latency cost on LongMemEval
+  500 is `75.2 ms/query` amortized over all queries and `545.2 ms` on each
+  triggered query on average. The report's `best_safe_guard_id` is now `null`:
+  no tested pool-signal guard should become a runtime default.
 
 DMR mapping audit status:
 
@@ -529,8 +526,11 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The immediate next gate is a larger LongMemEval expansion plus an
-explicit latency budget for `top1_single_source_rerank_margin_gt_1`; require
-zero LongMemEval Recall@10 regression and acceptable triggered-query cost
-before any runtime ranking policy. Keep answer-synthesis work in evaluation
-mode until the official-style DMR protocol is finalized.
+default. The LongMemEval 500 expansion blocks the last screened pool-signal
+guard, so the immediate next ranking gate is no longer another rerun of
+`top1_single_source_rerank_margin_gt_1`; it is a new answer-free ordering
+signal, or an explicit split between DMR and LongMemEval objectives. Any future
+runtime ranking policy still needs zero LongMemEval Recall@10 regression, zero
+top-10 suppressions, and an explicit triggered-query latency budget. Keep
+answer-synthesis work in evaluation mode until the official-style DMR protocol
+is finalized.
