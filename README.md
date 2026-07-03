@@ -173,9 +173,9 @@ questions, answers, or generated text:
 | 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | 50 judged / 0 error |
 | 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | not requested |
 | 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | 5 judged / 0 error |
-| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | 200 judged / 0 error |
+| 200 CUDA samples | 0.411 | 0.000 | 0.040 | 0.037 | 200 judged / 0 error |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.067 | not requested |
-| 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
+| 500 request / 323 scored CUDA samples | 0.381 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
 This is still not a published-comparable official DMR result. The isolated
@@ -200,8 +200,9 @@ ablation summary is recorded in
 
 So answer synthesis is now a real optimization target, but it is still
 eval-only evidence. The LLM judge path is reachable and stable on the pinned
-local runs; official DMR or product claims still need a finalized published-
-comparable protocol and better answer-generation quality.
+extractive local runs; the top-context generator ablation has not been
+judge-scored yet. Official DMR or product claims still need a finalized
+published-comparable protocol and better answer-generation quality.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping

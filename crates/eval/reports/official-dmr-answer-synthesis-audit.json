@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T10:25:11.340865+00:00",
+  "generated_at": "2026-07-03T15:44:52.034394+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
@@ -2722,6 +2722,6 @@
     "Uses sanitized official DMR reports only.",
     "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
     "Classifies answer-synthesis opportunity loss; it does not change retrieval, ranking, or generation behavior.",
-    "LLM judge accuracy remains unavailable until a configured judge returns successful judged samples."
+    "LLM judge status is copied from input reports; this audit does not run or reinterpret judge calls."
   ]
 }

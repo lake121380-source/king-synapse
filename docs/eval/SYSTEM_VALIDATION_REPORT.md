@@ -180,7 +180,7 @@ DMR boundary:
   `0.020`, gold-answer substring accuracy `0.060`, and ROUGE-L F1 mean
   `0.041`.
 - The same official-style path now has a DMR 200 CUDA local scoring report:
-  retrieval Recall@10 `0.409`, MRR@10 `0.469`, exact accuracy `0.000`,
+  retrieval Recall@10 `0.411`, MRR@10 `0.472`, exact accuracy `0.000`,
   punctuation accuracy `0.000`, gold-answer substring accuracy `0.040`, and
   ROUGE-L F1 mean `0.037`. DeepSeek judge on `deepseek-v4-flash` returned
   `200` judged samples and `0` JSON/response errors.
@@ -188,7 +188,7 @@ DMR boundary:
   requested samples scored. The remaining `177` source rows were skipped
   before selection because the pinned punctuation answer-to-memory mapping
   policy did not find the answer in generated memory chunks. On the 323 scored
-  samples, retrieval Recall@10 was `0.380`, MRR@10 was `0.469`, exact accuracy
+  samples, retrieval Recall@10 was `0.381`, MRR@10 was `0.469`, exact accuracy
   was `0.000`, punctuation accuracy was `0.000`, gold-answer substring
   accuracy was `0.046`, and ROUGE-L F1 mean was `0.039`. DeepSeek judge on
   `deepseek-v4-flash` returned `323` judged samples and `0`
@@ -228,7 +228,9 @@ DMR boundary:
   consolidates the DMR 50, 200, and 500-request generator deltas. It records
   substring gains of `+0.160`, `+0.080`, and `+0.074`, ROUGE-L F1 gains of
   `+0.062`, `+0.030`, and `+0.035`, and lower top-1 opportunity loss at every
-  scale view.
+  scale view. It also records that the extractive baseline reports are
+  judge-backed on all pinned runs, while the `top-context-extractive`
+  candidate reports were not judge-scored.
 - DMR 200 and the DMR 500-request run now carry judge-backed samples on
   `deepseek-v4-flash`, so the judge signal is now part of the usable local
   evidence rather than a partial signal.

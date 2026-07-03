@@ -258,7 +258,7 @@ def main() -> int:
             "Uses sanitized official DMR reports only.",
             "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
             "Classifies answer-synthesis opportunity loss; it does not change retrieval, ranking, or generation behavior.",
-            "LLM judge accuracy remains unavailable until a configured judge returns successful judged samples.",
+            "LLM judge status is copied from input reports; this audit does not run or reinterpret judge calls.",
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

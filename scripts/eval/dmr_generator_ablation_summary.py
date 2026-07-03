@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import subprocess
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -151,6 +152,30 @@ def delta(base: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def merge_status_counts(runs: list[dict[str, Any]], side: str) -> dict[str, int]:
+    counts: Counter[str] = Counter()
+    for run in runs:
+        counts.update(run[side].get("llm_judge_status_counts", {}))
+    return dict(sorted(counts.items()))
+
+
+def judge_status_read(runs: list[dict[str, Any]]) -> str:
+    baseline_counts = merge_status_counts(runs, "baseline")
+    candidate_counts = merge_status_counts(runs, "candidate")
+    baseline_judged = baseline_counts.get("judged", 0)
+    baseline_errors = baseline_counts.get("error", 0)
+    candidate_not_requested = candidate_counts.get("not_requested", 0)
+    if baseline_judged and baseline_errors == 0 and candidate_not_requested:
+        return (
+            "The extractive baseline reports are judge-backed on the pinned "
+            "runs; the top-context generator ablation was not judge-scored."
+        )
+    return (
+        "Judge status is mixed across generator views; inspect "
+        "judge_status_counts_by_generator before using judge-based claims."
+    )
+
+
 def scale_view(
     *,
     run_id: str,
@@ -251,15 +276,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 < 0
                 for run in runs
             ),
-            "judge_status": (
-                "not available; DeepSeek probe returned "
-                "authorization_error/HTTP 401 in the recorded judge probe"
-            ),
+            "judge_status": judge_status_read(runs),
+            "judge_status_counts_by_generator": {
+                "baseline_extractive": merge_status_counts(runs, "baseline"),
+                "candidate_top_context_extractive": merge_status_counts(
+                    runs, "candidate"
+                ),
+            },
             "decision": (
                 "The top-context-extractive generator direction repeats across "
                 "DMR 50, 200, and 500-request/323-scored local views, but "
-                "remains evaluation-only evidence until fixed LLM judge scoring "
-                "succeeds and absolute answer quality improves."
+                "remains evaluation-only evidence until the candidate generator "
+                "is judge-scored and absolute answer quality improves."
             ),
         },
         "runs": runs,

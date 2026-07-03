@@ -1,11 +1,11 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T06:23:33.857587+00:00",
+  "generated_at": "2026-07-03T15:44:52.056619+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
       "path": "crates\\eval\\reports\\official-dmr-500.json",
-      "sha256": "a304d07d273ca835347429489f18f9b7e02143431acae4da44dfa169ece7eb68"
+      "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
@@ -23,8 +23,8 @@
     "overlap_note": "Input reports may be deterministic expansions or generator variants; do not sum report rows as independent unique examples unless the inputs are known disjoint.",
     "total_report_rows": 646,
     "top1_without_answer_substring_report_rows": 208,
-    "top10_without_answer_substring_report_rows": 365,
-    "not_retrieved_top10_report_rows": 230
+    "top10_without_answer_substring_report_rows": 366,
+    "not_retrieved_top10_report_rows": 229
   },
   "audits": [
     {
@@ -35,14 +35,14 @@
       "retrieval_mode": "vectors-rerank",
       "generator_policy": "extractive",
       "llm_judge_status_counts": {
-        "not_requested": 323
+        "judged": 323
       },
       "retrieval": {
-        "recall_at_10": 0.3797729618163055,
-        "mrr_at_10": 0.46890387734040984,
+        "recall_at_10": 0.38054695562435503,
+        "mrr_at_10": 0.4692429603420315,
         "top1_count": 128,
-        "top10_not_top1_count": 80,
-        "not_retrieved_top10_count": 115
+        "top10_not_top1_count": 81,
+        "not_retrieved_top10_count": 114
       },
       "answer_generation": {
         "overall": {
@@ -52,13 +52,13 @@
           "answer_substring_accuracy": 0.04643962848297214,
           "rouge_l_f1_mean": 0.03948663072683106,
           "rouge_l_recall_mean": 0.10266597867217063,
-          "generated_length_mean": 78.69659442724458,
+          "generated_length_mean": 79.22910216718266,
           "gold_length_mean": 15.445820433436532,
           "alignment_counts": {
-            "no_relevant_context_in_top10": 115,
-            "selected_after_first_relevant_context": 133,
-            "selected_before_first_relevant_context": 37,
-            "selected_first_relevant_context": 38
+            "no_relevant_context_in_top10": 114,
+            "selected_after_first_relevant_context": 134,
+            "selected_before_first_relevant_context": 38,
+            "selected_first_relevant_context": 37
           }
         },
         "by_retrieval_bucket": {
@@ -69,46 +69,46 @@
             "answer_substring_accuracy": 0.078125,
             "rouge_l_f1_mean": 0.04728156546344298,
             "rouge_l_recall_mean": 0.12051711309523809,
-            "generated_length_mean": 78.25,
+            "generated_length_mean": 78.3828125,
             "gold_length_mean": 15.09375,
             "alignment_counts": {
-              "selected_after_first_relevant_context": 98,
-              "selected_first_relevant_context": 30
+              "selected_after_first_relevant_context": 99,
+              "selected_first_relevant_context": 29
             }
           },
           "top10_not_top1": {
-            "count": 80,
+            "count": 81,
             "exact_accuracy": 0.0,
             "punctuation_accuracy": 0.0,
-            "answer_substring_accuracy": 0.0375,
-            "rouge_l_f1_mean": 0.0395267068414386,
-            "rouge_l_recall_mean": 0.08990079365079365,
-            "generated_length_mean": 78.9625,
-            "gold_length_mean": 14.9625,
+            "answer_substring_accuracy": 0.037037037037037035,
+            "rouge_l_f1_mean": 0.039038722806359116,
+            "rouge_l_recall_mean": 0.08879090730942583,
+            "generated_length_mean": 78.80246913580247,
+            "gold_length_mean": 14.839506172839506,
             "alignment_counts": {
               "selected_after_first_relevant_context": 35,
-              "selected_before_first_relevant_context": 37,
+              "selected_before_first_relevant_context": 38,
               "selected_first_relevant_context": 8
             }
           },
           "not_retrieved_top10": {
-            "count": 115,
+            "count": 114,
             "exact_accuracy": 0.0,
             "punctuation_accuracy": 0.0,
-            "answer_substring_accuracy": 0.017391304347826087,
-            "rouge_l_f1_mean": 0.030782650418527322,
-            "rouge_l_recall_mean": 0.09167701863354037,
-            "generated_length_mean": 79.00869565217391,
-            "gold_length_mean": 16.17391304347826,
+            "answer_substring_accuracy": 0.017543859649122806,
+            "rouge_l_f1_mean": 0.031052673667812652,
+            "rouge_l_recall_mean": 0.09248120300751879,
+            "generated_length_mean": 80.48245614035088,
+            "gold_length_mean": 16.271929824561404,
             "alignment_counts": {
-              "no_relevant_context_in_top10": 115
+              "no_relevant_context_in_top10": 114
             }
           }
         },
         "opportunity_loss": {
           "top1_without_answer_substring_count": 118,
-          "top10_without_answer_substring_count": 195,
-          "top1_selected_non_first_context_count": 98
+          "top10_without_answer_substring_count": 196,
+          "top1_selected_non_first_context_count": 99
         }
       },
       "sanitized_case_samples": {
@@ -1894,6 +1894,6 @@
     "Uses sanitized official DMR reports only.",
     "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
     "Classifies answer-synthesis opportunity loss; it does not change retrieval, ranking, or generation behavior.",
-    "LLM judge accuracy remains unavailable until a configured judge returns successful judged samples."
+    "LLM judge status is copied from input reports; this audit does not run or reinterpret judge calls."
   ]
 }

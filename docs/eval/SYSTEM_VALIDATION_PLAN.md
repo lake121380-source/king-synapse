@@ -244,9 +244,9 @@ finds a blocking bug.
 | Step | Work | Exit condition |
 | --- | --- | --- |
 | 1 | Close the DMR 200 documentation pass and sync it to GitHub. | `official-dmr-200.json` is documented, checked for raw data / secrets, committed, and pushed. |
-| 2 | Fix LLM judge authorization/configuration outside the repository. | Done: the isolated DeepSeek preflight now returns `judged` with HTTP `200` on `deepseek-v4-flash`, without writing the API key, prompt text, raw response, or raw answer text. The remaining issue is judge-output stability, not auth. |
+| 2 | Fix LLM judge authorization/configuration outside the repository. | Done: the isolated DeepSeek preflight now returns `judged` with HTTP `200` on `deepseek-v4-flash`, without writing the API key, prompt text, raw response, or raw answer text. The pinned extractive DMR runs now return fully judged outputs. |
 | 3 | Rerun DMR 50 with the fixed judge. | Done: judge-backed samples are recorded, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
-| 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, DeepSeek judge returned 128 judged / 195 JSON-response errors, raw data not committed. |
+| 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, DeepSeek judge returned 323 judged / 0 error, raw data not committed. |
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
 | 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split, and the DMR 200 transition audit records vector/reranker gains plus regression cases before changing defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
@@ -314,11 +314,11 @@ finds a blocking bug.
   `crates/eval/reports/official-dmr-500.json`; the latest judge probe is
   recorded at `crates/eval/reports/official-dmr-judge-probe.json`, and the
   isolated judge preflight is recorded at
-  `crates/eval/reports/official-dmr-judge-preflight.json`. Judge auth now
-  succeeds on `deepseek-v4-flash`; the remaining issue is malformed judge
-  output, not HTTP 401. The DMR 500-request pass scored `323/500` requested
-  samples because the pinned punctuation mapping skipped 177 source rows before
-  selection.
+  `crates/eval/reports/official-dmr-judge-preflight.json`. The pinned
+  extractive runs now return fully judged outputs on `deepseek-v4-flash`; the
+  top-context generator ablation reports were run with `--llm-judge none`. The
+  DMR 500-request pass scored `323/500` requested samples because the pinned
+  punctuation mapping skipped 177 source rows before selection.
 - Official-style DMR answer-synthesis audit is recorded at
   `crates/eval/reports/official-dmr-answer-synthesis-audit.json`; it separates
   retrieval misses from generator opportunity loss. In the 323-scored DMR
@@ -332,30 +332,32 @@ finds a blocking bug.
   retrieval unchanged, restricting extraction to the top returned context raises
   DMR 50 gold-answer substring accuracy from `0.060` to `0.220` and ROUGE-L F1
   from `0.041` to `0.103`. This is eval-only evidence; do not promote it to a
-  default without DMR 200/500 and judge validation.
+  default until the candidate generator is judge-scored and absolute answer
+  quality improves.
 - Official-style DMR 200 generator cross-check is recorded at
   `crates/eval/reports/official-dmr-200-top-context-extractive.json` and
   `crates/eval/reports/official-dmr-generator-ablation-dmr-200.json`. With the
   same retrieval configuration rerun on CUDA, gold-answer substring accuracy
   rises from `0.040` to `0.120` and ROUGE-L F1 rises from `0.037` to `0.067`.
-  This repeats the DMR 50 direction, but still needs judge validation before
-  default or product claims.
+  This repeats the DMR 50 direction, but the candidate generator still needs
+  judge scoring before default or product claims.
 - Official-style DMR 500-request generator cross-check is recorded at
   `crates/eval/reports/official-dmr-500-top-context-extractive.json` and
   `crates/eval/reports/official-dmr-generator-ablation-dmr-500.json`. On the
   323 scored samples available under the pinned punctuation policy, substring
   accuracy rises from `0.046` to `0.121` and ROUGE-L F1 rises from `0.039` to
   `0.075`. The answer-synthesis direction now repeats across DMR 50, 200, and
-  the largest local request, but it still needs LLM judge validation before
-  official or product claims.
+  the largest local request, but the candidate generator still needs judge
+  scoring before official or product claims.
 - Official-style DMR generator ablation summary is recorded at
   `crates/eval/reports/official-dmr-generator-ablation-summary.json` and
   generated by `scripts/eval/dmr_generator_ablation_summary.py`. It
   consolidates the three scale views into one machine-readable report:
   substring improves by `+0.160`, `+0.080`, and `+0.074`, ROUGE-L F1 improves
   by `+0.062`, `+0.030`, and `+0.035`, and top-1 hits without the gold
-  substring fall at every scale view. This confirms the direction but does not
-  change defaults.
+  substring fall at every scale view. The report records `573` judged baseline
+  rows and `573` not-requested candidate rows. This confirms the direction but
+  does not change defaults.
 - Ranking ablation: first DMR 50 reranker-pool pass is recorded at
   `docs/eval/RANKING_ABLATION.md` and
   `crates/eval/reports/ranking-ablation-dmr-50-reranker-pool.json`; pool `50`

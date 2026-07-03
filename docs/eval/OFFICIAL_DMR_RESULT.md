@@ -143,7 +143,7 @@ python scripts/eval/official_dmr_eval.py `
 | Scored samples | 323/500 |
 | Mapping skips before selection | 177 |
 | Retrieval mode | vectors + reranker |
-| Retrieval Recall@10 | 0.380 |
+| Retrieval Recall@10 | 0.381 |
 | Retrieval MRR@10 | 0.469 |
 | Generator | extractive |
 | Exact accuracy | 0.000 |
@@ -186,7 +186,7 @@ python scripts/eval/official_dmr_eval.py `
 
 | Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Top-1 without substring |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| extractive | 0.380 | 0.000 | 0.000 | 0.046 | 0.039 | 118/128 |
+| extractive | 0.381 | 0.000 | 0.000 | 0.046 | 0.039 | 118/128 |
 | top-context-extractive | 0.380 | 0.000 | 0.000 | 0.121 | 0.075 | 90/127 |
 
 The largest local cross-check repeats the same answer-synthesis direction:
@@ -221,8 +221,8 @@ python scripts/eval/official_dmr_eval.py `
 | Sample size | 200 |
 | Scored samples | 200/200 |
 | Retrieval mode | vectors + reranker |
-| Retrieval Recall@10 | 0.409 |
-| Retrieval MRR@10 | 0.469 |
+| Retrieval Recall@10 | 0.411 |
+| Retrieval MRR@10 | 0.472 |
 | Generator | extractive |
 | Exact accuracy | 0.000 |
 | Punctuation-normalized accuracy | 0.000 |
@@ -264,7 +264,7 @@ python scripts/eval/official_dmr_eval.py `
 
 | Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Top-1 without substring |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| extractive | 0.409 | 0.000 | 0.000 | 0.040 | 0.037 | 68/74 |
+| extractive | 0.411 | 0.000 | 0.000 | 0.040 | 0.037 | 68/74 |
 | top-context-extractive | 0.411 | 0.000 | 0.000 | 0.120 | 0.067 | 52/74 |
 
 The retrieval numbers are from separate CUDA runs with the same configuration,
@@ -537,8 +537,8 @@ completed local pass is now the DMR 500-request run, with `323/500` requested
 samples scored under the pinned punctuation mapping policy.
 
 The larger runs confirm the DMR 50 trend: retrieval remains useful but not
-enough. Recall@10 moved from `0.468` on DMR 50 to `0.409` on DMR 200 and
-`0.380` on the DMR 500-request run. Gold-answer substring accuracy stayed low:
+enough. Recall@10 moved from `0.468` on DMR 50 to `0.411` on DMR 200 and
+`0.381` on the DMR 500-request run. Gold-answer substring accuracy stayed low:
 `0.060`, `0.040`, then `0.046`. ROUGE-L F1 also stayed low: `0.041`, `0.037`,
 then `0.039`.
 
@@ -566,8 +566,11 @@ The DMR 500-request cross-check completes the local scale check. On the
 323-scored sample, substring accuracy rises from `0.046` to `0.121`, ROUGE-L F1
 rises from `0.039` to `0.075`, and top-1 hits without the gold substring fall
 from `118/128` to `90/127`. This makes the generator direction repeat across
-DMR 50, 200, and the largest pinned local run. The consolidated machine-readable
-summary is `crates/eval/reports/official-dmr-generator-ablation-summary.json`.
+DMR 50, 200, and the largest pinned local run. The consolidated
+machine-readable summary is
+`crates/eval/reports/official-dmr-generator-ablation-summary.json`; it also
+records that the extractive baseline reports are judge-backed on all pinned
+runs while the top-context generator ablation is not judge-scored.
 
 Research interpretation:
 
@@ -598,11 +601,12 @@ Reasons:
 
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
-- the better DMR 50/200/500-request generator ablation is eval-only evidence
-  and has not been validated by LongMemEval or a published-comparable official
-  DMR protocol;
-- the LLM judge path is now stable on the pinned runs; the remaining evidence
-  boundary is answer-to-memory mapping coverage;
+- the better DMR 50/200/500-request generator ablation is eval-only evidence;
+  it has not been judge-scored, validated by LongMemEval, or evaluated under a
+  published-comparable official DMR protocol;
+- the LLM judge path is now stable on the pinned extractive runs; the remaining
+  evidence boundaries are candidate-generator judge scoring, answer-generation
+  quality, and answer-to-memory mapping coverage;
 - the DMR 500-request run scored 323/500 requested samples because the pinned
   answer-to-memory mapping policy exhausted mappable rows;
 - the public DMR candidate mapping still uses the pinned punctuation policy;

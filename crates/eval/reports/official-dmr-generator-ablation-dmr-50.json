@@ -1,11 +1,11 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T06:00:55.415368+00:00",
+  "generated_at": "2026-07-03T15:44:51.998367+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
       "path": "crates\\eval\\reports\\official-dmr-50.json",
-      "sha256": "602da612d492b9a6d235bcc752ffe2a6b45b5d42ba86d74ca84a46caed32d36c"
+      "sha256": "5eb227a2c8c596a9fd45a76fd8797475468d2df611dcfd2067811e304e95c16f"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
@@ -35,11 +35,11 @@
       "retrieval_mode": "vectors-rerank",
       "generator_policy": "extractive",
       "llm_judge_status_counts": {
-        "error": 50
+        "judged": 50
       },
       "retrieval": {
         "recall_at_10": 0.46833333333333327,
-        "mrr_at_10": 0.6185555555555555,
+        "mrr_at_10": 0.6183333333333333,
         "top1_count": 28,
         "top10_not_top1_count": 10,
         "not_retrieved_top10_count": 12
@@ -1627,6 +1627,6 @@
     "Uses sanitized official DMR reports only.",
     "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
     "Classifies answer-synthesis opportunity loss; it does not change retrieval, ranking, or generation behavior.",
-    "LLM judge accuracy remains unavailable until a configured judge returns successful judged samples."
+    "LLM judge status is copied from input reports; this audit does not run or reinterpret judge calls."
   ]
 }

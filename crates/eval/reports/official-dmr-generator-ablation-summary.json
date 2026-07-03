@@ -1,20 +1,20 @@
 {
   "schema_version": "king-synapse.official-dmr-generator-ablation-summary.v1",
-  "generated_at": "2026-07-03T10:25:11.368469+00:00",
-  "git_commit": "8071e83ed6abc7557d94d9b02b13c5971b429f1c",
+  "generated_at": "2026-07-03T15:44:59.997290+00:00",
+  "git_commit": "af63a3fd96261f1241d2f2972b6f78d9259b1ae0",
   "runner": "scripts\\eval\\dmr_generator_ablation_summary.py",
   "inputs": [
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-50.json",
-      "sha256": "11952c271cf30d4ee0190ca726aad402bc830383d82e99998910153c557e1c5b"
+      "sha256": "b709ffac7eedf3c090ce64f050439365bb9843969278f26a35d79aff75594692"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-200.json",
-      "sha256": "e11971c3b87ceb2837eecb0647c7af4421b3c9b9d41738cb989f5954a0ba1c94"
+      "sha256": "b9867fd712f8ed543dc562a81ae4544b297768f24a62aba80f0f833253a65fd5"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-500.json",
-      "sha256": "a79865a141268007255dfba29840b9c654172b693fdd0a77814c812c09021d11"
+      "sha256": "e3c1af09e6c40c4486c952da3a3b5489f4a9cb87f8d60ee8d4b247dc81c53633"
     }
   ],
   "raw_records_committed": false,
@@ -34,8 +34,16 @@
     "candidate_improves_substring_on_all_scale_views": true,
     "candidate_improves_rouge_l_f1_on_all_scale_views": true,
     "candidate_reduces_top1_without_substring_count_on_all_scale_views": true,
-    "judge_status": "not available; DeepSeek probe returned authorization_error/HTTP 401 in the recorded judge probe",
-    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until fixed LLM judge scoring succeeds and absolute answer quality improves."
+    "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator ablation was not judge-scored.",
+    "judge_status_counts_by_generator": {
+      "baseline_extractive": {
+        "judged": 573
+      },
+      "candidate_top_context_extractive": {
+        "not_requested": 573
+      }
+    },
+    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until the candidate generator is judge-scored and absolute answer quality improves."
   },
   "runs": [
     {
@@ -49,7 +57,7 @@
       "candidate_generator": "top-context-extractive",
       "baseline": {
         "retrieval_recall_at_10": 0.468333,
-        "retrieval_mrr_at_10": 0.618556,
+        "retrieval_mrr_at_10": 0.618333,
         "top1_count": 28,
         "top10_not_top1_count": 10,
         "not_retrieved_top10_count": 12,
@@ -63,7 +71,7 @@
         "top10_without_answer_substring_count": 35,
         "top1_selected_non_first_context_count": 23,
         "llm_judge_status_counts": {
-          "error": 50
+          "judged": 50
         }
       },
       "candidate": {
@@ -104,22 +112,22 @@
       "baseline_generator": "extractive",
       "candidate_generator": "top-context-extractive",
       "baseline": {
-        "retrieval_recall_at_10": 0.4095,
-        "retrieval_mrr_at_10": 0.469454,
+        "retrieval_recall_at_10": 0.41075,
+        "retrieval_mrr_at_10": 0.471899,
         "top1_count": 74,
-        "top10_not_top1_count": 64,
-        "not_retrieved_top10_count": 62,
+        "top10_not_top1_count": 65,
+        "not_retrieved_top10_count": 61,
         "exact_accuracy": 0.0,
         "punctuation_accuracy": 0.0,
         "answer_substring_accuracy": 0.04,
-        "rouge_l_f1_mean": 0.036614,
-        "rouge_l_recall_mean": 0.097181,
+        "rouge_l_f1_mean": 0.036509,
+        "rouge_l_recall_mean": 0.097097,
         "top1_without_answer_substring_count": 68,
         "top1_without_answer_substring_rate": 0.918919,
-        "top10_without_answer_substring_count": 130,
+        "top10_without_answer_substring_count": 131,
         "top1_selected_non_first_context_count": 57,
         "llm_judge_status_counts": {
-          "not_requested": 200
+          "judged": 200
         }
       },
       "candidate": {
@@ -142,10 +150,10 @@
         }
       },
       "delta_candidate_minus_baseline": {
-        "retrieval_recall_at_10_delta": 0.00125,
+        "retrieval_recall_at_10_delta": 0.0,
         "answer_substring_accuracy_delta": 0.08,
         "answer_substring_accuracy_multiplier": 3.0,
-        "rouge_l_f1_mean_delta": 0.030152,
+        "rouge_l_f1_mean_delta": 0.030257,
         "top1_without_answer_substring_count_delta": -16,
         "top1_without_answer_substring_rate_delta": -0.216216
       }
@@ -160,11 +168,11 @@
       "baseline_generator": "extractive",
       "candidate_generator": "top-context-extractive",
       "baseline": {
-        "retrieval_recall_at_10": 0.379773,
-        "retrieval_mrr_at_10": 0.468904,
+        "retrieval_recall_at_10": 0.380547,
+        "retrieval_mrr_at_10": 0.469243,
         "top1_count": 128,
-        "top10_not_top1_count": 80,
-        "not_retrieved_top10_count": 115,
+        "top10_not_top1_count": 81,
+        "not_retrieved_top10_count": 114,
         "exact_accuracy": 0.0,
         "punctuation_accuracy": 0.0,
         "answer_substring_accuracy": 0.04644,
@@ -172,10 +180,10 @@
         "rouge_l_recall_mean": 0.102666,
         "top1_without_answer_substring_count": 118,
         "top1_without_answer_substring_rate": 0.921875,
-        "top10_without_answer_substring_count": 195,
-        "top1_selected_non_first_context_count": 98,
+        "top10_without_answer_substring_count": 196,
+        "top1_selected_non_first_context_count": 99,
         "llm_judge_status_counts": {
-          "not_requested": 323
+          "judged": 323
         }
       },
       "candidate": {
@@ -198,7 +206,7 @@
         }
       },
       "delta_candidate_minus_baseline": {
-        "retrieval_recall_at_10_delta": 0.0,
+        "retrieval_recall_at_10_delta": -0.000774,
         "answer_substring_accuracy_delta": 0.074303,
         "answer_substring_accuracy_multiplier": 2.599978,
         "rouge_l_f1_mean_delta": 0.035191,
