@@ -566,6 +566,24 @@ top-context candidate output is not judge-scored, no global ranking default is
 supported, hosted external comparison is not configured, and productization is
 not ready.
 
+Phase 6 objective coverage audit:
+
+- `crates/eval/reports/phase6-objective-coverage-audit.json` maps the full
+  user-defined six-stage objective to current committed evidence.
+- The current coverage read is
+  `phase6_validation_in_progress_productization_blocked`.
+- The audit separates supported work from incomplete gates instead of treating
+  Phase 6 as done: `satisfied` requirements exist for local trace behavior,
+  official-style DMR scoring, ranking diagnostics, and deterministic
+  long-horizon validation; `partial`, `blocked_external`, and `not_ready`
+  entries remain for published-comparable DMR, hosted external comparison,
+  safe ranking defaults, public long-memory evidence, GPU cost acceptance, and
+  productization.
+- Its most important open gates are: top-context candidate not judge-scored,
+  hosted external comparison not configured, published-comparable DMR mapping
+  policy not final, no safe global ranking default, and productization not
+  ready.
+
 Phase 6 next-gate readiness:
 
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
