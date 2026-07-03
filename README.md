@@ -180,8 +180,9 @@ misses before any default ranking change. LongMemEval cross-check blocks a
 global reranker-pool change for now because it prefers a different pool and
 still keeps vector-only as the strongest top-10 coverage baseline. DMR 50
 chunk-policy ablation shows that full-session merging removes top-50 misses
-but hurts top-10 and top-1 placement, so chunking is a ranking tradeoff rather
-than a simple default change. CUDA validation status is recorded in
+but hurts top-10 and top-1 placement, while keyword-boost query expansion keeps
+misses unchanged and also hurts ranking. These are ranking tradeoffs, not
+simple default changes. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:

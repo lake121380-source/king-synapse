@@ -329,6 +329,11 @@ finds a blocking bug.
   each source row into one session chunk removes the 6 top-50 retrieval misses
   but drops Recall@10 from `0.468` to `0.360` and top-1 hits from `28` to `7`,
   so full-session merging is not a safe default fix.
+- DMR 50 query-expansion ablation is recorded at
+  `crates/eval/reports/ranking-ablation-dmr-50-query-expansion.json`;
+  question-derived keyword boosting keeps the 6 retrieval misses unchanged,
+  drops Recall@10 from `0.468` to `0.403`, and drops top-1 hits from `28` to
+  `21`, so blunt query expansion is not a safe default fix.
 - DMR 200 ranking failure expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and

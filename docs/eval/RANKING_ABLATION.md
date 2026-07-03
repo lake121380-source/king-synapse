@@ -2,8 +2,8 @@
 
 Date: 2026-07-03
 
-Status: DMR 50 ranking ablations, DMR 50 chunk-policy ablation, and DMR 200
-ranking-failure expansion complete.
+Status: DMR 50 ranking ablations, DMR 50 chunk-policy/query-expansion
+ablations, and DMR 200 ranking-failure expansion complete.
 
 Machine-readable reports:
 
@@ -12,6 +12,8 @@ Machine-readable reports:
 `crates/eval/reports/ranking-ablation-dmr-50-top-k.json`
 
 `crates/eval/reports/ranking-ablation-dmr-50-chunk-policy.json`
+
+`crates/eval/reports/ranking-ablation-dmr-50-query-expansion.json`
 
 `crates/eval/reports/ranking-failure-audit-dmr-50.json`
 
@@ -34,6 +36,10 @@ Failure audit runner:
 Chunk-policy runner:
 
 `scripts/eval/dmr_chunk_ablation.py`
+
+Query-expansion runner:
+
+`scripts/eval/dmr_query_expansion_ablation.py`
 
 ## Reranker Pool Scope
 
@@ -221,6 +227,70 @@ This means the current DMR issue is not solved by simply merging dialogs into
 larger memory chunks. Coarse chunks make the answer-bearing memory easier to
 include somewhere in the candidate set, but they dilute the ranking signal
 needed to place it in top 10.
+
+## Query-Expansion Scope
+
+This pass varies one query-mapping parameter only:
+
+`query_policy`
+
+Everything else is fixed:
+
+- dataset: DMR candidate MSC-Self-Instruct;
+- sample size: 50;
+- answer mapping: punctuation-normalized;
+- sample selection: same 50 source rows selected by the current dialog chunk
+  policy;
+- chunk policy: dialog chunks;
+- retrieval mode: RRF + vectors + reranker;
+- top-k returned by `kr-eval`: 50;
+- reranker pool: 50;
+- accelerator: CUDA device `0`;
+- embedding batch `32`, embedding max length `256`;
+- reranker batch `32`, reranker max length `256`.
+
+The tested `keyword-boost` policy appends question-derived content keywords
+twice. It uses only the question text and does not inspect memory chunks or
+gold answers.
+
+## Query-Expansion Command
+
+```powershell
+python scripts/eval/dmr_query_expansion_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --sample-size 50 `
+  --k 50 `
+  --mode vectors-rerank `
+  --reranker-pool 50 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-50-query-expansion.json `
+  --cleanup-cache
+```
+
+## Query-Expansion Result
+
+| Query policy | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Top-50 only | Misses |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| original | 0.468 | 0.623 | 638.8 ms | 28 | 10 | 6 | 6 |
+| keyword-boost | 0.403 | 0.523 | 663.6 ms | 21 | 15 | 8 | 6 |
+
+`keyword-boost` expanded all 50 queries. It appended a mean of `21.48` tokens
+per query from a mean of `10.74` question-derived keywords.
+
+## Query-Expansion Read
+
+The tested keyword-boost expansion does not solve DMR ranking. It keeps the
+same six retrieval misses, lowers Recall@10 by `0.065`, lowers MRR@10 by
+`0.099`, and loses seven top-1 hits.
+
+This means simple question-keyword repetition is not a safe ranking fix. It
+adds more lexical signal, but that signal is too broad: several relevant chunks
+move down from top-1 into lower top-10 or top-50 positions.
 
 ## Failure Audit
 
@@ -424,13 +494,14 @@ Read:
 Do not change the default reranker pool from this evidence.
 
 The result supports the current diagnosis: DMR ranking is sensitive to
-candidate pool size, output window, and chunk policy, but the remaining
-weakness is not solved by simply making the pool bigger, returning more items,
-or merging all session content into one larger chunk. Returning top 50 helps
-diagnosis; merged-session chunks improve broad top-50 coverage but damage
-top-10 and top-1 placement. The DMR 200 expansion adds that true top-50
-retrieval misses are also material and should be separated from late-ranking
-cases before default changes.
+candidate pool size, output window, chunk policy, and query policy, but the
+remaining weakness is not solved by simply making the pool bigger, returning
+more items, merging all session content into one larger chunk, or repeating
+question keywords. Returning top 50 helps diagnosis; merged-session chunks
+improve broad top-50 coverage but damage top-10 and top-1 placement; keyword
+boosting keeps retrieval misses unchanged and also damages ranking. The DMR
+200 expansion adds that true top-50 retrieval misses are material and should
+be separated from late-ranking cases before default changes.
 
 The LongMemEval cross-check also argues against a global default change. DMR 50
 prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among
@@ -445,6 +516,8 @@ The next useful ranking work is:
 1. expose and test RRF/vector weighting without changing the memory schema;
 2. design a safer ranking signal for the top-50-only DMR cases;
 3. test smaller, overlap-aware chunking instead of full-session merging;
-4. inspect top-50 retrieval misses separately from late-ranking cases;
-5. test candidate-retrieval coverage separately from reranker ordering;
-6. keep answer-generation scoring separate from retrieval-ranking scoring.
+4. avoid blunt keyword-boost query expansion unless a future answer-free
+   rewrite policy proves it helps on both DMR and LongMemEval;
+5. inspect top-50 retrieval misses separately from late-ranking cases;
+6. test candidate-retrieval coverage separately from reranker ordering;
+7. keep answer-generation scoring separate from retrieval-ranking scoring.

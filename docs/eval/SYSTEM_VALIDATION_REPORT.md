@@ -263,6 +263,14 @@ Ranking ablation status:
 - The chunk result argues against simply merging full sessions as the next
   default. It improves broad candidate coverage but weakens the ranking signal
   needed for top-10 placement.
+- `scripts/eval/dmr_query_expansion_ablation.py` and
+  `crates/eval/reports/ranking-ablation-dmr-50-query-expansion.json` compare
+  the original query with question-derived keyword boosting on the same 50 DMR
+  source rows. Keyword boosting keeps the same 6 retrieval misses, drops
+  Recall@10 from `0.468` to `0.403`, drops MRR@10 from `0.623` to `0.523`,
+  and drops top-1 hits from `28` to `21`.
+- The query-expansion result argues against blunt keyword repetition. It adds
+  lexical signal, but the added signal is too broad and harms ranking.
 - DMR 200 ranking expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and
