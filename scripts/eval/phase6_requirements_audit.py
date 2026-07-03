@@ -163,6 +163,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/long-horizon-prediction-evidence-audit.json",
         "phase6_benchmark_baseline": root
         / "crates/eval/reports/phase6-benchmark-baseline.json",
+        "phase6_baseline_health_check": root
+        / "crates/eval/reports/phase6-baseline-health-check-2026-07-04.json",
         "phase6_performance_profile": root
         / "crates/eval/reports/phase6-performance-profile.json",
     }
@@ -182,6 +184,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence_audit"])
     performance = load_json(paths["phase6_performance_profile"])
     baseline = load_json(paths["phase6_benchmark_baseline"])
+    baseline_health = load_json(paths["phase6_baseline_health_check"])
 
     dmr_runs = {
         "dmr_50": dmr_run_summary(dmr_50),
@@ -210,11 +213,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["experiment_log"]),
                 report_path(paths["gpu_validation"]),
                 report_path(paths["phase6_benchmark_baseline"]),
+                report_path(paths["phase6_baseline_health_check"]),
                 report_path(paths["phase6_performance_profile"]),
             ],
             conclusion=(
                 "Feature growth is frozen by policy, Phase 6 replay baselines are "
-                "registered, and heavy validation is documented on CUDA device 0."
+                "registered, local health checks pass, and heavy validation is "
+                "documented on CUDA device 0."
             ),
             remaining=[
                 "Keep future changes in evaluation reports/scripts unless a later decision explicitly opens productization.",
@@ -419,6 +424,22 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "performance": {
                 "gpu_configuration": gpu_configuration,
                 "recall_baseline_count": len(recall_baselines),
+            },
+            "baseline_health": {
+                "validated_commit": baseline_health.get("validated_commit"),
+                "current_baseline_health": safe_get(
+                    baseline_health, ["read", "current_baseline_health"]
+                ),
+                "feature_freeze_preserved": baseline_health.get(
+                    "feature_freeze_preserved"
+                ),
+                "heavy_external_calls_run": baseline_health.get(
+                    "heavy_external_calls_run"
+                ),
+                "checks": {
+                    check.get("id"): check.get("status")
+                    for check in baseline_health.get("checks", [])
+                },
             },
         },
         "read": {

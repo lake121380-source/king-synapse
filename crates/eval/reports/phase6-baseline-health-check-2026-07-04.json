@@ -1,0 +1,96 @@
+{
+  "schema_version": "king-synapse.phase6-baseline-health-check.v1",
+  "generated_at": "2026-07-03T16:48:10.2388207Z",
+  "validated_commit": "ea319f39ceb0a526a11874d73da2e738898312f6",
+  "feature_freeze_preserved": true,
+  "memory_schema_changed": false,
+  "cognitive_layer_changed": false,
+  "cli_feature_changed": false,
+  "heavy_external_calls_run": false,
+  "gpu_heavy_validation_run": false,
+  "api_keys_recorded": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "raw_records_committed": false,
+  "generated_answers_committed": false,
+  "checks": [
+    {
+      "id": "cargo-fmt",
+      "command": "cargo fmt --all -- --check",
+      "status": "passed"
+    },
+    {
+      "id": "python-eval-py-compile",
+      "command": "Get-ChildItem -LiteralPath scripts/eval -Filter *.py | python -m py_compile",
+      "status": "passed",
+      "note": "The successful check used explicit PowerShell file enumeration."
+    },
+    {
+      "id": "synapse-eval-tests",
+      "command": "cargo test -p synapse-eval",
+      "status": "passed",
+      "tests_passed": 44,
+      "tests_failed": 0
+    },
+    {
+      "id": "exported-cognitive-session",
+      "command": "cargo bench -p synapse-eval --bench exported_cognitive_session",
+      "status": "passed",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      }
+    },
+    {
+      "id": "long-horizon-cognitive-memory",
+      "command": "cargo bench -p synapse-eval --bench long_horizon_cognitive_memory",
+      "status": "passed",
+      "metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      }
+    },
+    {
+      "id": "long-horizon-stability-audit",
+      "command": "cargo bench -p synapse-eval --bench long_horizon_stability_audit",
+      "status": "passed",
+      "aggregate": {
+        "visible_seed_retention": 1.0,
+        "old_memory_preservation": 1.0,
+        "newer_memory_addressability": 1.0,
+        "hidden_trace_dominance": 1.0,
+        "future_candidate_presence": 1.0,
+        "future_prediction_stability": 0.75,
+        "dominant_drift_resistance": 1.0,
+        "prediction_drift_resistance": 0.75,
+        "reinforcement_drift_resistance": 0.75,
+        "reinforcement_consistency": 1.0,
+        "future_prediction_miss_labels": [
+          "day03-charger-demo",
+          "day05-trust-message"
+        ],
+        "future_candidate_miss_labels": [],
+        "future_candidate_without_matched_terms_labels": [
+          "day03-charger-demo",
+          "day05-trust-message"
+        ],
+        "future_matched_miss_labels": [
+          "day03-charger-demo",
+          "day05-trust-message"
+        ]
+      }
+    }
+  ],
+  "read": {
+    "current_baseline_health": "passed",
+    "conclusion": "The current Phase 6 baseline remains healthy under local non-external gates. Core cognitive fixture metrics are stable, while the known long-horizon future-evidence boundary remains unchanged at 6/8 matched evidence cases.",
+    "next_action": "Keep feature freeze. Do not productize. Resume heavy validation only when top-context judge authorization or hosted external credentials/endpoints are ready."
+  },
+  "limits": [
+    "This report records a local health replay only.",
+    "It does not run LongMemEval/DMR heavy retrieval, LLM judging, or hosted external adapters.",
+    "It does not replace official DMR, hosted external comparison, or public long-memory validation."
+  ]
+}

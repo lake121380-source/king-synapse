@@ -23,6 +23,9 @@ Evidence:
 
 - `cargo fmt --all -- --check` passed.
 - `cargo test -p synapse-eval` passed with `44 passed; 0 failed`.
+- `crates/eval/reports/phase6-baseline-health-check-2026-07-04.json`
+  records the latest local non-external health replay for commit
+  `ea319f39ceb0a526a11874d73da2e738898312f6`.
 - `cargo bench -p synapse-eval --bench exported_cognitive_session` reported:
 
 ```json

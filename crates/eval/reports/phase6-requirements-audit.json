@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-03T16:43:46.157056+00:00",
+  "generated_at": "2026-07-03T16:49:33.265559+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "1b256f93c9e91fac0d6df991d12b5195000c4010",
+    "commit": "ea319f39ceb0a526a11874d73da2e738898312f6",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "60a59c97f2e94d622218bf02b8b076f37a43ba167bab251f762dfef585cde884"
+      "sha256": "39fb1aedae876f21c49d301e01a8a00392cbc9aedbb24691149858b6dfed98aa"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "86036eacec1d9ff55d44ce92b25261a1edc116024762bfe3df93034519f0cf22"
+      "sha256": "65d1820f4b5f003ab7b8e4b79fb78f590f8245e3bb933423987fbeb5d810ec43"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -113,6 +113,11 @@
       "exists": true,
       "sha256": "da94c36c84da8553b1adc6c8d181d0ceb995d0cce1bc5769bfdd4041a8a25a75"
     },
+    "phase6_baseline_health_check": {
+      "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
+      "exists": true,
+      "sha256": "6d0db164a59e316c13bf4881377ae635df0f32723458dba0a891e85dee0409fb"
+    },
     "phase6_performance_profile": {
       "path": "crates\\eval\\reports\\phase6-performance-profile.json",
       "exists": true,
@@ -134,9 +139,10 @@
         "docs\\eval\\EXPERIMENT_LOG.md",
         "docs\\eval\\GPU_VALIDATION_2026-07-02.md",
         "crates\\eval\\reports\\phase6-benchmark-baseline.json",
+        "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
         "crates\\eval\\reports\\phase6-performance-profile.json"
       ],
-      "conclusion": "Feature growth is frozen by policy, Phase 6 replay baselines are registered, and heavy validation is documented on CUDA device 0.",
+      "conclusion": "Feature growth is frozen by policy, Phase 6 replay baselines are registered, local health checks pass, and heavy validation is documented on CUDA device 0.",
       "remaining": [
         "Keep future changes in evaluation reports/scripts unless a later decision explicitly opens productization.",
         "Do not change memory schema, cognitive layers, CLI behavior, or runtime ranking defaults from current evidence."
@@ -475,6 +481,20 @@
         "rerank_pool": 50
       },
       "recall_baseline_count": 3
+    },
+    "baseline_health": {
+      "validated_commit": "ea319f39ceb0a526a11874d73da2e738898312f6",
+      "current_baseline_health": "passed",
+      "feature_freeze_preserved": true,
+      "heavy_external_calls_run": false,
+      "checks": {
+        "cargo-fmt": "passed",
+        "python-eval-py-compile": "passed",
+        "synapse-eval-tests": "passed",
+        "exported-cognitive-session": "passed",
+        "long-horizon-cognitive-memory": "passed",
+        "long-horizon-stability-audit": "passed"
+      }
     }
   },
   "read": {
