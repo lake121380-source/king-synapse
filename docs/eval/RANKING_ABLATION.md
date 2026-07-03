@@ -17,6 +17,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-failure-audit-dmr-50.json`
 
+`crates/eval/reports/ranking-transition-audit-dmr-50.json`
+
 `crates/eval/reports/dmr-200-punctuation-validation.json`
 
 `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`
@@ -32,6 +34,10 @@ Runner:
 Failure audit runner:
 
 `scripts/eval/ranking_failure_audit.py`
+
+Transition audit runner:
+
+`scripts/eval/ranking_transition_audit.py`
 
 Chunk-policy runner:
 
@@ -292,6 +298,101 @@ This means simple question-keyword repetition is not a safe ranking fix. It
 adds more lexical signal, but that signal is too broad: several relevant chunks
 move down from top-1 into lower top-10 or top-50 positions.
 
+## DMR 50 Transition Audit
+
+The transition audit reads the existing sanitized DMR 50 reports and compares
+rank movement for the same sample IDs. It does not inspect raw questions,
+answers, dialogs, sessions, memory content, or generated answer text.
+
+Report:
+
+`crates/eval/reports/ranking-transition-audit-dmr-50.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_transition_audit.py `
+  --output crates/eval/reports/ranking-transition-audit-dmr-50.json
+```
+
+### DMR 50 Transition Result
+
+Control outcome:
+
+| Bucket | Count |
+| --- | ---: |
+| Top-1 hit | 28 |
+| Top-10 not top-1 | 10 |
+| Top-50 only late rank | 6 |
+| Top-50 retrieval miss | 6 |
+
+Baseline RRF -> vector effect:
+
+| Effect | Count |
+| --- | ---: |
+| Recovered to top-10 | 10 |
+| Promoted to top-1 | 4 |
+| Stable top-1 | 5 |
+| Top-10 preserved | 6 |
+| Suppressed from top-10 | 2 |
+| Bucket changed outside top-10 | 7 |
+| No top-10 change | 16 |
+
+Vector -> reranker effect:
+
+| Effect | Count |
+| --- | ---: |
+| Recovered to top-10 | 14 |
+| Promoted to top-1 | 12 |
+| Stable top-1 | 8 |
+| Top-10 preserved | 3 |
+| Suppressed from top-10 | 1 |
+| Demoted from top-1 | 1 |
+| Bucket changed outside top-10 | 4 |
+| No top-10 change | 7 |
+
+Dialog chunk -> merged-session effect:
+
+| Effect | Count |
+| --- | ---: |
+| Recovered to top-10 | 1 |
+| Promoted to top-1 | 2 |
+| Stable top-1 | 4 |
+| Top-10 preserved | 2 |
+| Suppressed from top-10 | 21 |
+| Demoted from top-1 | 9 |
+| Bucket changed outside top-10 | 5 |
+| No top-10 change | 6 |
+
+Original query -> keyword-boost effect:
+
+| Effect | Count |
+| --- | ---: |
+| Recovered to top-10 | 2 |
+| Stable top-1 | 21 |
+| Top-10 preserved | 7 |
+| Suppressed from top-10 | 4 |
+| Demoted from top-1 | 6 |
+| Bucket changed outside top-10 | 1 |
+| No top-10 change | 9 |
+
+### DMR 50 Transition Read
+
+The transition audit strengthens the current diagnosis:
+
+- Vector search and reranking are the two productive ranking additions in this
+  sample. Vector recovers 10 samples into top-10, while the reranker recovers
+  14 into top-10 and promotes 12 to top-1.
+- The reranker still has a small risk surface: 1 vector top-10 hit is
+  suppressed and 1 vector top-1 hit is demoted.
+- Merged-session chunks recover the six control top-50 misses into top-50, but
+  only one reaches top-10; meanwhile 21 samples are suppressed from top-10 and
+  9 top-1 hits are demoted. This explains why merged-session recall drops even
+  though broad coverage improves.
+- Keyword boost recovers 2 of the six control top-50 misses into top-10, but
+  leaves 4 absent and causes 4 top-10 suppressions plus 6 top-1 demotions. It
+  is not a safe default either.
+
 ## Failure Audit
 
 The sanitized failure audit compares:
@@ -500,8 +601,10 @@ more items, merging all session content into one larger chunk, or repeating
 question keywords. Returning top 50 helps diagnosis; merged-session chunks
 improve broad top-50 coverage but damage top-10 and top-1 placement; keyword
 boosting keeps retrieval misses unchanged and also damages ranking. The DMR
-200 expansion adds that true top-50 retrieval misses are material and should
-be separated from late-ranking cases before default changes.
+50 transition audit shows why: the simple fixes recover a few misses while
+suppressing many stronger hits. The DMR 200 expansion adds that true top-50
+retrieval misses are material and should be separated from late-ranking cases
+before default changes.
 
 The LongMemEval cross-check also argues against a global default change. DMR 50
 prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among

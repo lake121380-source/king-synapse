@@ -271,6 +271,16 @@ Ranking ablation status:
   and drops top-1 hits from `28` to `21`.
 - The query-expansion result argues against blunt keyword repetition. It adds
   lexical signal, but the added signal is too broad and harms ranking.
+- `scripts/eval/ranking_transition_audit.py` and
+  `crates/eval/reports/ranking-transition-audit-dmr-50.json` compare rank
+  movement across the existing DMR 50 candidate, top-k, chunk-policy, and
+  query-expansion reports. Vector search recovers 10 samples into top-10, and
+  reranking recovers 14 into top-10 while promoting 12 to top-1. By contrast,
+  merged-session chunks suppress 21 samples from top-10 and keyword boosting
+  suppresses 4 from top-10.
+- The transition audit explains the current boundary: the productive signals
+  are vector retrieval and reranking; the simple fixes recover a few misses but
+  suppress too many stronger hits.
 - DMR 200 ranking expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and

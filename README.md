@@ -182,7 +182,8 @@ still keeps vector-only as the strongest top-10 coverage baseline. DMR 50
 chunk-policy ablation shows that full-session merging removes top-50 misses
 but hurts top-10 and top-1 placement, while keyword-boost query expansion keeps
 misses unchanged and also hurts ranking. These are ranking tradeoffs, not
-simple default changes. CUDA validation status is recorded in
+simple default changes. The DMR 50 transition audit keeps vector retrieval and
+reranking as the productive direction. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:

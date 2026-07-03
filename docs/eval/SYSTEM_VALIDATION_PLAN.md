@@ -334,6 +334,11 @@ finds a blocking bug.
   question-derived keyword boosting keeps the 6 retrieval misses unchanged,
   drops Recall@10 from `0.468` to `0.403`, and drops top-1 hits from `28` to
   `21`, so blunt query expansion is not a safe default fix.
+- DMR 50 transition audit is recorded at
+  `crates/eval/reports/ranking-transition-audit-dmr-50.json`; it confirms
+  vector search and reranking are the productive additions, while
+  merged-session chunks and blunt keyword boosting recover a few misses but
+  suppress too many stronger top-10/top-1 hits.
 - DMR 200 ranking failure expansion is recorded at
   `crates/eval/reports/dmr-200-punctuation-validation.json`,
   `crates/eval/reports/ranking-ablation-dmr-200-top-k.json`, and
