@@ -28,6 +28,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json`
 
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json`
+
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
@@ -45,6 +47,8 @@ Machine-readable reports:
 `crates/eval/reports/ranking-reranker-pool-transition-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-pool-signal-trigger-audit-dmr-200.json`
+
+`crates/eval/reports/ranking-pool-signal-crosscheck-dmr-longmem-50.json`
 
 Runner:
 
@@ -73,6 +77,10 @@ Reranker-pool transition audit runner:
 Pool signal trigger audit runner:
 
 `scripts/eval/ranking_pool_signal_trigger_audit.py`
+
+Pool signal cross-check runner:
+
+`scripts/eval/ranking_pool_signal_crosscheck.py`
 
 Chunk-policy runner:
 
@@ -1170,6 +1178,88 @@ existing pool `50` and pool `100` reports. The next gate is to rerun the same
 signal-trigger audit on DMR 50 and LongMemEval 50. If it helps DMR but hurts
 LongMemEval, it stays dataset-specific or remains a research finding.
 
+## Pool Signal Cross-Check
+
+This pass cross-checks the DMR 200 `top1_single_source` candidate on the fixed
+DMR 50 and LongMemEval 50 samples. It reruns pool `50` and pool `100` with the
+same sanitized ranking signal summaries, then simulates the same conditional
+trigger.
+
+Reports:
+
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json`
+
+`crates/eval/reports/ranking-pool-signal-crosscheck-dmr-longmem-50.json`
+
+Signal run command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets all `
+  --dmr-sample-size 50 `
+  --longmem-sample-size 50 `
+  --dmr-answer-match punctuation `
+  --ablation reranker-pool `
+  --reranker-pools 50,100 `
+  --k 10 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json `
+  --cleanup-cache
+```
+
+Cross-check command:
+
+```powershell
+python scripts/eval/ranking_pool_signal_crosscheck.py
+```
+
+### Cross-Check Result
+
+Full pool `100` versus pool `50`:
+
+| Dataset | Recall@10 delta | MRR@10 delta | P50 latency delta | Top-1 delta | Miss delta |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| DMR 50 | -0.020 | +0.0048 | +543.4 ms | 0 | 0 |
+| LongMemEval 50 | -0.0367 | +0.0013 | +789.5 ms | 0 | +1 |
+
+The full pool `100` result is not a global fix. It hurts top-10 coverage on
+both fixed 50-sample cross-checks and substantially increases latency.
+
+`top1_single_source` simulation:
+
+| Dataset | Triggered | Recall@10 delta | MRR@10 delta | P50 latency estimate delta | Top-1 delta | Miss delta |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DMR 50 | 8/50 | +0.010 | +0.020 | +2.3 ms | +1 | -1 |
+| LongMemEval 50 | 8/50 | -0.020 | -0.0051 | +75.7 ms | 0 | +2 |
+
+Triggered transitions:
+
+| Dataset | Helpful movement | Harmful movement | Unchanged |
+| --- | ---: | ---: | ---: |
+| DMR 50 | 1 promoted to top-1 | 0 suppressions / 0 demotions | 5 misses unchanged, 2 stable top-1 |
+| LongMemEval 50 | 0 recoveries / 0 promotions | 2 suppressed from top-10 | 2 misses unchanged, 1 stable top-1, 3 top-10 preserved |
+
+### Cross-Check Read
+
+The cross-check disqualifies `top1_single_source` as a global default.
+
+It remains interesting for DMR: it helps both DMR 200 and DMR 50 without
+triggered suppressions in those two runs. But it hurts LongMemEval 50 by
+suppressing two top-10 hits and adding two misses. That violates the Phase 6
+ranking rule: if a parameter or policy helps one dataset and hurts another, it
+cannot become the default.
+
+The next useful step is not to implement `top1_single_source`; it is to audit
+why LongMemEval's single-source top-1 cases behave differently from DMR's. A
+safe conditional policy needs a guard that preserves LongMemEval top-10
+coverage.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
@@ -1209,14 +1299,17 @@ global default, even though pool `100` gives a small aggregate quality gain.
 The signal-trigger audit gives a better next candidate: conditionally expanding
 to pool `100` when the pool `50` top-1 result has only one retrieval source.
 That is still an eval-only candidate until DMR 50 and LongMemEval cross-checks
-are recorded.
+are recorded. The cross-check is now recorded and it blocks a global default:
+the signal helps DMR 50 but hurts LongMemEval 50. It can remain a DMR-specific
+research candidate, but not a system-wide policy.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. cross-check `top1_single_source` on DMR 50 and LongMemEval 50;
-2. compare it against full pool `100` and pool `50` on the same fixed samples;
+1. audit the LongMemEval `top1_single_source` suppressions against DMR's
+   successful single-source cases;
+2. look for an answer-free guard that preserves LongMemEval Recall@10;
 3. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;
 4. test smaller, overlap-aware chunking instead of full-session merging;

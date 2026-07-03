@@ -417,6 +417,14 @@ Ranking ablation status:
   suppressions or top-1 demotions. This is the strongest current ranking
   candidate, but it is not a default until DMR 50 and LongMemEval 50
   cross-checks are recorded.
+- `crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json`
+  and `crates/eval/reports/ranking-pool-signal-crosscheck-dmr-longmem-50.json`
+  record that cross-check. On DMR 50, `top1_single_source` triggers `8/50`
+  queries and improves Recall@10 by `+0.010`, MRR by `+0.020`, top-1 by `+1`,
+  and misses by `-1`. On LongMemEval 50, the same trigger also fires on `8/50`
+  queries but lowers Recall@10 by `-0.020`, lowers MRR by `-0.005`, and adds
+  `2` misses. This blocks `top1_single_source` as a global default and turns
+  it into a DMR-specific research candidate until a LongMemEval guard exists.
 
 DMR mapping audit status:
 
@@ -501,6 +509,7 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The immediate next gate is cross-checking `top1_single_source` on DMR
-50 and LongMemEval 50. Keep answer-synthesis work in evaluation mode until
-the official-style DMR protocol is finalized.
+default. The immediate next gate is auditing why LongMemEval
+`top1_single_source` cases suppress top-10 hits while DMR cases improve. Keep
+answer-synthesis work in evaluation mode until the official-style DMR protocol
+is finalized.
