@@ -98,6 +98,18 @@ def default_fastembed_cache_dir() -> Path:
     return Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "king-synapse" / "fastembed-cache"
 
 
+def eval_cargo_profile() -> str:
+    raw = os.environ.get("KING_SYNAPSE_EVAL_CARGO_PROFILE", "debug").strip().lower()
+    aliases = {
+        "dev": "debug",
+        "debug": "debug",
+        "release": "release",
+    }
+    if raw not in aliases:
+        raise ValueError("KING_SYNAPSE_EVAL_CARGO_PROFILE must be debug or release")
+    return aliases[raw]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run LongMemEval / DMR smoke validation.")
     parser.add_argument("--endpoint", default=os.environ.get("HF_ENDPOINT", "https://huggingface.co"))
@@ -1096,23 +1108,30 @@ def run_kr_eval(
     entity_weight: float | None = None,
     vector_weight: float | None = None,
 ) -> dict[str, Any]:
+    cargo_profile = eval_cargo_profile()
     cmd = [
         "cargo",
         "run",
-        "-p",
-        "synapse-eval",
-        "--bin",
-        "kr-eval",
-        "--",
-        "--dataset",
-        str(dataset_path),
-        "--k",
-        str(k),
-        "--tag",
-        tag,
-        "--json",
-        str(output_path),
     ]
+    if cargo_profile == "release":
+        cmd.append("--release")
+    cmd.extend(
+        [
+            "-p",
+            "synapse-eval",
+            "--bin",
+            "kr-eval",
+            "--",
+            "--dataset",
+            str(dataset_path),
+            "--k",
+            str(k),
+            "--tag",
+            tag,
+            "--json",
+            str(output_path),
+        ]
+    )
     if vectors:
         cmd.append("--vectors")
     if rerank:
@@ -1131,6 +1150,8 @@ def run_kr_eval(
             f"kr-eval failed for {tag}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
         )
     raw = json.loads(output_path.read_text(encoding="utf-8"))
+    raw["cargo_profile"] = cargo_profile
+    process_metrics["cargo_profile"] = cargo_profile
     raw["process_metrics"] = process_metrics
     return raw
 
@@ -1309,6 +1330,7 @@ def sanitize_eval_report(raw: dict[str, Any], examples: list[dict[str, Any]]) ->
         "total_ms": raw.get("total_ms"),
         "timing": raw.get("timing"),
         "process_metrics": raw.get("process_metrics"),
+        "cargo_profile": raw.get("cargo_profile"),
         "per_query": per_query,
         "rank_bucket_counts": dict(sorted(Counter(item["rank_bucket"] for item in per_query).items())),
         "failure_type_counts": dict(sorted(Counter(item["failure_type"] for item in per_query).items())),

@@ -426,13 +426,18 @@ Ranking ablation status:
   `2` misses. This blocks `top1_single_source` as a global default and turns
   it into a DMR-specific research candidate until a LongMemEval guard exists.
 - `crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
-  records the first guard audit over DMR 200, DMR 50, and LongMemEval 50. The
-  unguarded `top1_single_source` trigger still has the largest DMR gain but
-  fails the LongMemEval safety check. `top1_single_source_fts_only` and
-  `top1_single_source_not_vector_only` keep positive DMR movement (`+0.0050`
-  Recall@10 on DMR 200 and `+0.010` on DMR 50) while showing `0.000`
-  LongMemEval 50 Recall@10 delta and zero LongMemEval top-10 suppressions.
-  This creates a screened evaluation candidate, not a runtime default.
+  now records the guard audit over DMR 200, DMR 50, LongMemEval 50, and
+  LongMemEval 200. LongMemEval 200 tightens the result: full pool `100`
+  lowers LongMemEval Recall@10 by `-0.0066`, adds `3` misses, and adds about
+  `565.9 ms` P50 latency versus pool `50`. The unguarded
+  `top1_single_source` trigger still has the largest DMR gain but fails both
+  LongMemEval safety checks. The simpler `fts-only` and `not-vector-only`
+  guards that looked safe at LongMemEval 50 also regress LongMemEval 200
+  Recall@10 by `-0.0012`. The only current four-set screened candidate is
+  `top1_single_source_rerank_margin_gt_1`: DMR 200 Recall@10 `+0.0063`, DMR
+  50 unchanged, LongMemEval 50 unchanged, LongMemEval 200 Recall@10 `+0.0025`,
+  with zero LongMemEval top-10 suppressions. This remains eval-only evidence,
+  not a runtime default.
 
 DMR mapping audit status:
 
@@ -517,7 +522,9 @@ Next required action: keep feature growth frozen, keep the judge path on
 any product claim. The next ranking work should separate candidate-retrieval
 coverage from reranker ordering on DMR 200 and target the rank 11-25 late-rank
 band without adopting `vector_weight = 1.5` or reranker pool `100` as a
-default. The immediate next gate is rerunning the screened pool-signal guards
-on larger DMR and LongMemEval samples; require zero LongMemEval Recall@10
-regression before any runtime ranking policy. Keep answer-synthesis work in
-evaluation mode until the official-style DMR protocol is finalized.
+default. The immediate next gate is rerunning
+`top1_single_source_rerank_margin_gt_1` on a larger matched DMR and
+LongMemEval sample; require zero LongMemEval Recall@10 regression and an
+acceptable latency budget before any runtime ranking policy. Keep
+answer-synthesis work in evaluation mode until the official-style DMR protocol
+is finalized.

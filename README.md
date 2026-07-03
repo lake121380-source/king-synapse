@@ -216,9 +216,10 @@ simple default changes. The DMR 50 transition audit keeps vector retrieval and
 reranking as the productive direction; the DMR 200 transition audit repeats the
 same pattern at larger scale, while also recording the reranker's small
 regression surface. The latest pool-signal guard audit finds a safer
-evaluation candidate (`fts-only` / `not-vector-only` single-source top-1), but
-it still needs larger LongMemEval and DMR reruns before any default ranking
-change. CUDA validation status is recorded in
+evaluation candidate (`top1_single_source_rerank_margin_gt_1`), after
+LongMemEval 200 blocked the simpler `fts-only` / `not-vector-only` guards.
+It still needs a larger matched DMR / LongMemEval rerun and a latency budget
+before any default ranking change. CUDA validation status is recorded in
 [GPU_VALIDATION_2026-07-02.md](docs/eval/GPU_VALIDATION_2026-07-02.md).
 
 Run the same comparison:

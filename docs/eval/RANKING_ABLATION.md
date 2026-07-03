@@ -31,6 +31,8 @@ Machine-readable reports:
 
 `crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json`
 
+`crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json`
+
 `crates/eval/reports/ranking-failure-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
@@ -1270,14 +1272,37 @@ coverage.
 ## Pool Signal Guard Audit
 
 This pass audits answer-free guards for the conditional pool `100` trigger
-across DMR 200, DMR 50, and LongMemEval 50. It uses only sanitized rank,
-metric, source, and score summaries from existing reports.
+across DMR 200, DMR 50, LongMemEval 50, and LongMemEval 200. It uses only
+sanitized rank, metric, source, and score summaries from existing reports.
 
 Report:
 
 `crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json`
 
+LongMemEval 200 signal report:
+
+`crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json`
+
 Command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets longmem `
+  --longmem-sample-size 200 `
+  --ablation reranker-pool `
+  --reranker-pools 50,100 `
+  --k 10 `
+  --cargo-profile release `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json `
+  --cleanup-cache
+```
 
 ```powershell
 python scripts/eval/ranking_pool_signal_guard_audit.py
@@ -1285,28 +1310,38 @@ python scripts/eval/ranking_pool_signal_guard_audit.py
 
 ### Guard Result
 
-| Guard | DMR 200 Recall@10 delta | DMR 50 Recall@10 delta | LongMemEval 50 Recall@10 delta | LongMemEval suppressions | Read |
-| --- | ---: | ---: | ---: | ---: | --- |
-| `top1_single_source` | +0.0117 | +0.010 | -0.020 | 2 | Best DMR gain, blocked globally. |
-| `top1_single_source_fts_only` | +0.0050 | +0.010 | 0.000 | 0 | Passes the initial safety screen. |
-| `top1_single_source_not_vector_only` | +0.0050 | +0.010 | 0.000 | 0 | Same current effect as FTS-only; excludes the harmful LongMemEval vector-only cases. |
-| `top1_single_source_vector_only` | +0.0067 | 0.000 | -0.020 | 2 | Explains the LongMemEval regression. |
+Full LongMemEval 200 pool `100` versus pool `50`:
+
+| Recall@10 delta | MRR@10 delta | P50 latency delta | Top-1 delta | Miss delta |
+| ---: | ---: | ---: | ---: | ---: |
+| -0.0066 | +0.0016 | +565.9 ms | +1 | +3 |
+
+Guard simulation:
+
+| Guard | DMR 200 Recall@10 delta | DMR 50 Recall@10 delta | LongMem 50 Recall@10 delta | LongMem 200 Recall@10 delta | LongMem suppressions | Read |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `top1_single_source` | +0.0117 | +0.010 | -0.020 | -0.0062 | 5 | Best DMR gain, blocked globally. |
+| `top1_single_source_fts_only` | +0.0050 | +0.010 | 0.000 | -0.0012 | 0 | 50-sample safe read did not hold at 200. |
+| `top1_single_source_not_vector_only` | +0.0050 | +0.010 | 0.000 | -0.0012 | 0 | Still slightly regresses LongMemEval 200. |
+| `top1_single_source_rerank_margin_gt_1` | +0.0063 | 0.000 | 0.000 | +0.0025 | 0 | Only current guard passing the four-sample-set screen. |
 
 ### Guard Read
 
-The guard audit explains the cross-dataset conflict. On the fixed 50-sample
-LongMemEval run, the harmful `top1_single_source` cases are concentrated in
-`vector-only` top-1 results. On DMR 50, the useful movement comes from
-single-source `fts` top-1 cases. DMR 200 still gains from vector-only cases,
-so simply banning vector-only is a safety tradeoff: it preserves DMR gains,
-but gives up part of the DMR 200 upside.
+The LongMemEval 200 expansion tightens the conclusion. The 50-sample read
+made `fts-only` and `not-vector-only` look safe, but LongMemEval 200 shows a
+small Recall@10 regression for both. That means they cannot become defaults.
 
-The first screened safe candidates are `top1_single_source_fts_only` and
-`top1_single_source_not_vector_only`. They keep positive DMR movement on DMR
-200 and DMR 50 while avoiding the LongMemEval 50 recall regression and
-top-10 suppressions in this audit. They are not default policies yet. The
-next gate is to rerun the guarded trigger on larger LongMemEval and DMR
-samples before changing runtime ranking behavior.
+The only guard that currently passes DMR 200, DMR 50, LongMemEval 50, and
+LongMemEval 200 is `top1_single_source_rerank_margin_gt_1`. It is more
+conservative: it keeps DMR 200 positive (`+0.0063` Recall@10, `+0.0063` MRR,
+misses `-3`) and gives LongMemEval 200 a small positive Recall@10 movement
+without top-10 suppressions. It gives no gain on DMR 50, so it is a screened
+candidate, not a default policy.
+
+The useful result is negative as much as positive: larger LongMemEval evidence
+blocks the simpler source-only guards. Any runtime policy now needs one more
+larger DMR/LongMemEval pass and a latency budget, because even guarded pool
+expansion still pays candidate reranking cost on triggered queries.
 
 ## Decision
 
@@ -1349,16 +1384,18 @@ to pool `100` when the pool `50` top-1 result has only one retrieval source.
 That is still an eval-only candidate until DMR 50 and LongMemEval cross-checks
 are recorded. The cross-check is now recorded and it blocks a global default:
 the signal helps DMR 50 but hurts LongMemEval 50. It can remain a DMR-specific
-research candidate, but not a system-wide policy. The guard audit finds an
-initial safer direction (`fts-only` / `not-vector-only`), but it stays
-evaluation-only until larger cross-dataset runs confirm that it preserves
-LongMemEval while retaining useful DMR gains.
+research candidate, but not a system-wide policy. The LongMemEval 200 guard
+audit also blocks the simpler `fts-only` / `not-vector-only` guards. The only
+current four-set screened candidate is `top1_single_source_rerank_margin_gt_1`,
+and it stays evaluation-only until larger cross-dataset runs confirm that it
+preserves LongMemEval while retaining useful DMR gains.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. rerun the screened guards on larger LongMemEval and DMR samples;
+1. rerun `top1_single_source_rerank_margin_gt_1` on a larger matched DMR and
+   LongMemEval sample;
 2. require zero LongMemEval Recall@10 regression before any runtime policy;
 3. separate top-50 retrieval misses from late-rank ordering failures in the
    next coverage experiment;

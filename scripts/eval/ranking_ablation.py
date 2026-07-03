@@ -103,6 +103,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rerank-batch-size", type=int, default=None)
     parser.add_argument("--rerank-max-length", type=int, default=None)
     parser.add_argument(
+        "--cargo-profile",
+        choices=("debug", "release"),
+        default=os.environ.get("KING_SYNAPSE_EVAL_CARGO_PROFILE", "debug"),
+        help="Cargo profile used by kr-eval subprocesses. Use release for larger Phase 6 runs.",
+    )
+    parser.add_argument(
         "--accelerator",
         choices=("env", "cpu", "cuda", "directml"),
         default="cuda",
@@ -570,6 +576,7 @@ def main() -> int:
     root = repo_root()
     os.environ["HF_ENDPOINT"] = args.endpoint
     os.environ["FASTEMBED_CACHE_DIR"] = str(args.fastembed_cache_dir)
+    os.environ["KING_SYNAPSE_EVAL_CARGO_PROFILE"] = args.cargo_profile
     args.output = args.output if args.output.is_absolute() else root / args.output
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.cache_root.mkdir(parents=True, exist_ok=True)
@@ -669,6 +676,7 @@ def main() -> int:
             },
             "one_variable_policy": True,
         },
+        "cargo_profile": args.cargo_profile,
         "accelerator": accelerator,
         "datasets": [dataset_report(spec, spec["runs"], ablated_parameter) for spec in specs],
         "limits": [
@@ -692,6 +700,7 @@ def main() -> int:
                 "datasets": {spec["id"]: len(spec["queries"]) for spec in specs},
                 "ablation": ablated_parameter,
                 "values": ablation_values,
+                "cargo_profile": args.cargo_profile,
                 "accelerator": accelerator,
                 "cleanup_cache": args.cleanup_cache,
             },

@@ -2,7 +2,7 @@
 """Audit answer-free guards for conditional reranker-pool expansion.
 
 This is a sanitized post-processing audit. It compares candidate guards for
-the `top1_single_source` signal across DMR 200, DMR 50, and LongMemEval 50
+the `top1_single_source` signal across DMR and LongMemEval signal reports
 without reading raw questions, answers, dialogs, sessions, memory text, or
 generated answer text.
 """
@@ -43,6 +43,11 @@ def parse_args() -> argparse.Namespace:
         "--crosscheck-report",
         type=Path,
         default=root / "crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json",
+    )
+    parser.add_argument(
+        "--longmem-200-report",
+        type=Path,
+        default=root / "crates/eval/reports/ranking-ablation-longmem-200-reranker-pool-signal.json",
     )
     parser.add_argument("--control-pool", type=int, default=50)
     parser.add_argument("--candidate-pool", type=int, default=100)
@@ -354,13 +359,20 @@ def aggregate_guard(guard: dict[str, Any], datasets: list[dict[str, Any]]) -> di
     }
 
 
-def dataset_inputs(dmr_200_report: dict[str, Any], crosscheck_report: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def dataset_inputs(
+    dmr_200_report: dict[str, Any],
+    crosscheck_report: dict[str, Any],
+    longmem_200_report: dict[str, Any],
+) -> list[tuple[str, dict[str, Any]]]:
     inputs: list[tuple[str, dict[str, Any]]] = [("dmr_200", dmr_200_report["datasets"][0])]
     for dataset in crosscheck_report.get("datasets", []):
         if dataset.get("id") == "dmr":
             inputs.append(("dmr_50", dataset))
         elif dataset.get("id") == "longmem":
             inputs.append(("longmem_50", dataset))
+    for dataset in longmem_200_report.get("datasets", []):
+        if dataset.get("id") == "longmem":
+            inputs.append(("longmem_200", dataset))
     return inputs
 
 
@@ -368,11 +380,13 @@ def main() -> int:
     args = parse_args()
     args.dmr_200_report = normalize_path_arg(args.dmr_200_report)
     args.crosscheck_report = normalize_path_arg(args.crosscheck_report)
+    args.longmem_200_report = normalize_path_arg(args.longmem_200_report)
     args.output = normalize_path_arg(args.output)
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
     dmr_200_report = load_json(args.dmr_200_report)
     crosscheck_report = load_json(args.crosscheck_report)
+    longmem_200_report = load_json(args.longmem_200_report)
     guards = guard_definitions()
     datasets = [
         audit_dataset(
@@ -382,7 +396,7 @@ def main() -> int:
             candidate_pool=args.candidate_pool,
             guards=guards,
         )
-        for dataset_key, dataset in dataset_inputs(dmr_200_report, crosscheck_report)
+        for dataset_key, dataset in dataset_inputs(dmr_200_report, crosscheck_report, longmem_200_report)
     ]
     guard_summaries = [aggregate_guard(guard, datasets) for guard in guards]
     guard_summaries.sort(
@@ -410,6 +424,10 @@ def main() -> int:
                 "path": report_path(args.crosscheck_report),
                 "sha256": sha256_file(args.crosscheck_report),
             },
+            "longmem_200_signal_report": {
+                "path": report_path(args.longmem_200_report),
+                "sha256": sha256_file(args.longmem_200_report),
+            },
         },
         "control_pool": args.control_pool,
         "candidate_pool": args.candidate_pool,
@@ -426,7 +444,7 @@ def main() -> int:
             "safe_guard_ids": [item["id"] for item in safe_guards],
             "current_conclusion": (
                 "The initial screen finds FTS-only and not-vector-only guards that keep DMR gains "
-                "while avoiding the LongMemEval 50 recall regression. They are evaluation candidates, "
+                "while avoiding the LongMemEval recall regression in the checked samples. They are evaluation candidates, "
                 "not default ranking policies, until larger LongMemEval and DMR cross-checks pass."
                 if safe_guards
                 else "No screened guard is ready for implementation."
@@ -436,7 +454,7 @@ def main() -> int:
             "Uses sanitized per-query ranks, metrics, and answer-free ranking signal summaries only.",
             "Does not inspect raw questions, answers, dialogs, sessions, memory content, or generated answer text.",
             "Simulates conditional use of the candidate reranker pool; it does not change retrieval or ranking behavior.",
-            "Screening gates are based on DMR 200, DMR 50, and LongMemEval 50 only; they are not product defaults.",
+            "Screening gates are based on the checked DMR and LongMemEval samples only; they are not product defaults.",
         ],
     }
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
