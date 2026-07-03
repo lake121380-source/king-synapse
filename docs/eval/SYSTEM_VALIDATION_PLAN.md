@@ -185,6 +185,11 @@ Current hosted/official probe:
 This records the current environment boundary. It is not a hosted measurement
 of the competitor systems.
 
+The exact next-run preconditions and command templates are recorded in
+`docs/eval/NEXT_VALIDATION_PRECONDITIONS.md`. Do not run a heavy DMR judge pass
+or hosted external comparison until that runbook's corresponding branch is
+unblocked by the action gates.
+
 ### 6. Benchmark And Golden Replay Baselines
 
 The current Phase 6 replay baseline is fixed in:

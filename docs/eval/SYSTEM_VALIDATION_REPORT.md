@@ -693,6 +693,8 @@ Next validation action gate:
   configured.
 - The recorded DMR command template preserves the Phase 6 GPU rule:
   `--accelerator cuda --cuda-device-id 0`.
+- The operational runbook for both blocked branches is
+  `docs/eval/NEXT_VALIDATION_PRECONDITIONS.md`.
 - Allowed work at this checkpoint is no-model / no-external evidence
   maintenance and documentation/report synchronization that does not change
   runtime behavior.
