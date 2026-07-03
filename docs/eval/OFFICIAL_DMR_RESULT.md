@@ -3,8 +3,8 @@
 Date: 2026-07-03
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
-323 mappable samples; the latest DeepSeek judge preflight still returns HTTP
-401 with an API key present, so fixed LLM judge scoring is unresolved.
+323 mappable samples; DeepSeek judge preflight now returns `judged` on
+`deepseek-v4-flash`, but judge-output stability is still incomplete.
 
 Machine-readable report:
 
@@ -95,14 +95,14 @@ The runner is:
 | Run | Requested | Scored | Mapping skips before selection | Judge status |
 | --- | ---: | ---: | ---: | --- |
 | DMR 5 smoke | 5 | 5 | 1 | not requested |
-| DMR 50 | 50 | 50 | 31 | 50 authorization errors |
+| DMR 50 | 50 | 50 | 31 | 17 judged / 33 error |
 | DMR 50 top-context generator | 50 | 50 | 31 | not requested |
-| DMR 200 | 200 | 200 | 111 | not requested |
+| DMR 200 | 200 | 200 | 111 | 83 judged / 117 error |
 | DMR 200 top-context generator | 200 | 200 | 111 | not requested |
-| DMR 500 request | 500 | 323 | 177 | not requested |
+| DMR 500 request | 500 | 323 | 177 | 128 judged / 195 error |
 | DMR 500-request top-context generator | 500 | 323 | 177 | not requested |
-| Judge probe | 5 | 5 | 1 | 5 authorization errors |
-| Judge preflight | 1 synthetic request | 0 DMR samples | 0 | HTTP 401 authorization error |
+| Judge probe | 5 | 5 | 1 | 3 judged / 2 error |
+| Judge preflight | 1 synthetic request | 0 DMR samples | 0 | judged / HTTP 200 |
 
 The mapping-skip number is the count of source rows rejected before building
 the scored sample because the answer-to-memory mapping policy did not find the
@@ -122,7 +122,8 @@ python scripts/eval/official_dmr_eval.py `
   --mode vectors-rerank `
   --k 10 `
   --generator extractive `
-  --llm-judge none `
+  --llm-judge deepseek `
+  --judge-model deepseek-v4-flash `
   --accelerator cuda `
   --cuda-device-id 0 `
   --embed-batch-size 32 `
@@ -150,8 +151,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.027 |
 | ROUGE-L recall mean | 0.103 |
 | ROUGE-L F1 mean | 0.039 |
-| LLM judge status | 323/323 not requested |
-| LLM judge accuracy | not available |
+| LLM judge status | 128 judged / 195 error |
+| LLM judge accuracy | 0.0390625 |
 | P50 query latency | 753.8 ms |
 | P95 query latency | 1043.3 ms |
 | Query wall time | 253.7 s |
@@ -200,7 +201,8 @@ python scripts/eval/official_dmr_eval.py `
   --mode vectors-rerank `
   --k 10 `
   --generator extractive `
-  --llm-judge none `
+  --llm-judge deepseek `
+  --judge-model deepseek-v4-flash `
   --accelerator cuda `
   --cuda-device-id 0 `
   --embed-batch-size 32 `
@@ -227,8 +229,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.024 |
 | ROUGE-L recall mean | 0.097 |
 | ROUGE-L F1 mean | 0.037 |
-| LLM judge status | 200/200 not requested |
-| LLM judge accuracy | not available |
+| LLM judge status | 83 judged / 117 error |
+| LLM judge accuracy | 0.03614457831325301 |
 | P50 query latency | 667.3 ms |
 | P95 query latency | 749.0 ms |
 | Query wall time | 135.1 s |
@@ -282,7 +284,7 @@ python scripts/eval/official_dmr_eval.py `
   --k 10 `
   --generator extractive `
   --llm-judge deepseek `
-  --judge-model deepseek-chat `
+  --judge-model deepseek-v4-flash `
   --accelerator cuda `
   --cuda-device-id 0 `
   --embed-batch-size 32 `
@@ -308,8 +310,8 @@ python scripts/eval/official_dmr_eval.py `
 | ROUGE-L precision mean | 0.033 |
 | ROUGE-L recall mean | 0.102 |
 | ROUGE-L F1 mean | 0.041 |
-| LLM judge status | 50/50 authorization errors |
-| LLM judge accuracy | not available |
+| LLM judge status | 17 judged / 33 error |
+| LLM judge accuracy | 0.11764705882352941 |
 | Peak GPU total memory | 5304.2 MiB |
 
 ## DMR 50 Generator Ablation
@@ -389,9 +391,10 @@ python scripts/eval/official_dmr_eval.py `
 ## Judge Probe
 
 This probe re-ran the official-style 5-sample path with `--llm-judge deepseek`
-after the previous DMR 50 judge failure. It uses CUDA retrieval and the same
-sanitized answer-generation report shape. It does not commit raw questions,
-answers, dialogs, sessions, generated answers, or the API key.
+after judge authorization was fixed on `deepseek-v4-flash`. It uses CUDA
+retrieval and the same sanitized answer-generation report shape. It does not
+commit raw questions, answers, dialogs, sessions, generated answers, or the API
+key.
 
 ```powershell
 python scripts/eval/official_dmr_eval.py `
@@ -402,7 +405,7 @@ python scripts/eval/official_dmr_eval.py `
   --k 10 `
   --generator extractive `
   --llm-judge deepseek `
-  --judge-model deepseek-chat `
+  --judge-model deepseek-v4-flash `
   --accelerator cuda `
   --cuda-device-id 0 `
   --embed-batch-size 32 `
@@ -424,9 +427,9 @@ python scripts/eval/official_dmr_eval.py `
 | Punctuation-normalized accuracy | 0.000 |
 | Gold-answer substring accuracy | 0.200 |
 | ROUGE-L F1 mean | 0.082 |
-| LLM judge status | 5/5 authorization errors |
-| HTTP status | 401 |
-| LLM judge accuracy | not available |
+| LLM judge status | 3 judged / 2 error |
+| HTTP status | 200 |
+| LLM judge accuracy | 0.3333333333333333 |
 
 ## Judge Preflight
 
@@ -445,12 +448,12 @@ python scripts/eval/deepseek_judge_preflight.py `
 | API key committed | false |
 | Prompt text recorded | false |
 | Raw response committed | false |
-| Status | authorization_error |
-| HTTP status | 401 |
-| Decision | judge_configuration_still_blocked |
+| Status | judged |
+| HTTP status | 200 |
+| Decision | ready_for_official_dmr_judge_rerun |
 
-Read: the judge path is blocked before DMR scoring starts. Do not spend GPU time
-rerunning DMR judge reports until this preflight returns `judged`.
+Read: the judge path is now open before DMR scoring starts. The remaining
+boundary is judge-output stability, not auth.
 
 ## Answer-Synthesis Audit
 
@@ -576,14 +579,16 @@ not yield 500 scored official-style examples. The mapping policy review keeps
 punctuation full-answer mapping as the pinned local boundary and treats
 relaxed-token mapping as a separate diagnostic option.
 
-The LLM judge path has not produced judged samples. The DMR 50 run returned
-authorization errors for all 50 requests. The later 5-sample judge probe also
-returned `authorization_error` for all 5 requests, with HTTP status `401`. The
-isolated DeepSeek preflight now confirms the same HTTP `401` with an API key
-present, before any DMR retrieval or answer generation runs. This is a judge
-authorization/configuration failure, not a retrieval or answer scoring failure.
-DMR 200 and the DMR 500-request run therefore skipped the judge intentionally
-and should be read as lexical / ROUGE-L local scoring only.
+The LLM judge path now produces judged samples on `deepseek-v4-flash`. The DMR
+50 run returned `17` judged samples and `33` malformed-response errors. The
+later 5-sample judge probe returned `3` judged samples and `2` malformed
+responses. The isolated DeepSeek preflight now confirms HTTP `200` with an API
+key present, before any DMR retrieval or answer generation runs. This is no
+longer an authorization/configuration failure; the remaining issue is judge
+output stability, not retrieval or answer scoring.
+DMR 200 and the DMR 500-request run therefore carry partial judge-backed
+evidence and should still be read as local scoring plus judge samples, not as a
+fully stable official benchmark.
 
 ## Boundary
 
@@ -594,8 +599,8 @@ Reasons:
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
 - the better DMR 50/200/500-request generator ablation is eval-only evidence
-  and has not been validated by LongMemEval or an LLM judge;
-- the LLM judge did not authenticate successfully;
+  and has not been validated by LongMemEval or a fully stable LLM judge;
+- the LLM judge still returns malformed JSON on many requests;
 - the DMR 500-request run scored 323/500 requested samples because the pinned
   answer-to-memory mapping policy exhausted mappable rows;
 - the public DMR candidate mapping still uses the pinned punctuation policy;
@@ -604,9 +609,7 @@ Reasons:
 
 ## Next Step
 
-Do not rerun the DMR 50 judge path until the authorization/configuration is
-fixed outside the repository. The next judge gate is
-`official-dmr-judge-preflight.json` returning `judged`; after that, rerun the
-5-sample DMR judge probe, then DMR 50 with the fixed judge. Ranking work should
+Keep feature growth frozen, keep the judge path on `deepseek-v4-flash`, and
+stabilize malformed judge output before any product claim. Ranking work should
 continue on the pinned punctuation-mapped dataset; any relaxed-token coverage
 run must be separately labeled and validated before it is used for conclusions.

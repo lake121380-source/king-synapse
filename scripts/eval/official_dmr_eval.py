@@ -336,8 +336,10 @@ def judge_deepseek(
         return {"status": "not_configured", "reason": "DEEPSEEK_API_KEY is not set"}
 
     prompt = (
-        "You are judging whether a predicted answer correctly answers a DMR question. "
-        "Return only JSON with keys correct (boolean) and reason (short string). "
+        "You are judging whether a predicted answer correctly answers a DMR question.\n"
+        "Return exactly one JSON object and nothing else. Do not use markdown, code fences, "
+        "or commentary. The JSON object must have exactly two keys: correct (boolean) and "
+        "reason (short string).\n"
         "Do not require exact wording if the predicted answer contains the same fact.\n\n"
         f"Question:\n{question}\n\nGold answer:\n{gold}\n\nPredicted answer:\n{prediction}\n"
     )
@@ -377,7 +379,7 @@ def judge_deepseek(
     try:
         parsed = json.loads(body)
         content = parsed["choices"][0]["message"]["content"]
-        judged = json.loads(content)
+        judged = parse_judge_content(content)
     except (KeyError, IndexError, json.JSONDecodeError, TypeError) as exc:
         return {"status": "error", "reason": f"invalid judge response: {exc}"[:300]}
 
@@ -386,6 +388,23 @@ def judge_deepseek(
         "correct": bool(judged.get("correct")),
         "reason_hash": stable_hash(str(judged.get("reason", "")), 16),
     }
+
+
+def parse_judge_content(content: str) -> dict[str, Any]:
+    text = content.strip()
+    if text.startswith("```"):
+        text = text.strip("`")
+        if text.startswith("json"):
+            text = text[4:].lstrip()
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        start = text.find("{")
+        end = text.rfind("}")
+        if start >= 0 and end > start:
+            return json.loads(text[start : end + 1])
+        raise
 
 
 def score_answers(

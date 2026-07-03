@@ -170,20 +170,21 @@ questions, answers, or generated text:
 
 | Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
 | --- | ---: | ---: | ---: | ---: | --- |
-| 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | authorization failed |
+| 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | 17 judged / 33 error |
 | 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | not requested |
-| 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | authorization failed |
-| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | not requested |
+| 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | 3 judged / 2 error |
+| 200 CUDA samples | 0.409 | 0.000 | 0.040 | 0.037 | 83 judged / 117 error |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.067 | not requested |
-| 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
+| 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | 128 judged / 195 error |
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
-This is still not a published-comparable official DMR result. A later isolated
-DeepSeek judge preflight still returned HTTP 401 with an API key present, so the
-remaining boundary is a successful fixed LLM judge. The mapping-policy review keeps
-punctuation full-answer mapping as the pinned local boundary, so the honest
-large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
-review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
+This is still not a published-comparable official DMR result. The isolated
+DeepSeek judge preflight now returns `judged` on `deepseek-v4-flash`, so the
+remaining boundary is judge-output stability rather than auth. The
+mapping-policy review keeps punctuation full-answer mapping as the pinned local
+boundary, so the honest large-run claim is still `500 request / 323 scored`,
+not `500/500`. Most judge misses are malformed JSON responses, not HTTP 401s.
+The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
 gold answer substring in the generated answer. That means the system can find a
@@ -198,8 +199,8 @@ ablation summary is recorded in
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
 
 So answer synthesis is now a real optimization target, but it is still
-eval-only evidence. The LLM judge is not working yet, and the absolute answer
-scores are still too low for official DMR or product claims.
+eval-only evidence. The LLM judge is now reachable, but judge-output stability
+is still too weak for official DMR or product claims.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
@@ -255,7 +256,7 @@ comparison adapters or optional embedding/reranking paths.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
-- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, but fixed LLM-judge scoring is not finished.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and DeepSeek judge scoring is now live on `deepseek-v4-flash`, but judge-output stability still needs work.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 

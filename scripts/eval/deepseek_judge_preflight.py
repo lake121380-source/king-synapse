@@ -46,7 +46,63 @@ def parse_args() -> argparse.Namespace:
 def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dict[str, Any]:
     api_key = os.environ.get("DEEPSEEK_API_KEY")
     if not api_key:
-        return {"status": "not_configured", "reason": "DEEPSEEK_API_KEY is not set"}
+        return {
+            "models_probe": {"status": "not_configured", "reason": "DEEPSEEK_API_KEY is not set"},
+            "status": "not_configured",
+            "reason": "DEEPSEEK_API_KEY is not set",
+        }
+
+    def run_request(url: str, payload: dict[str, Any] | None = None) -> tuple[int | None, str, dict[str, Any]]:
+        data = json.dumps(payload).encode("utf-8") if payload is not None else None
+        request = urllib.request.Request(
+            url,
+            data=data,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            method="POST" if payload is not None else "GET",
+        )
+
+        started = time.perf_counter()
+        try:
+            with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+                body = response.read().decode("utf-8", errors="replace")
+                return response.status, body, {
+                    "wall_ms": (time.perf_counter() - started) * 1000.0,
+                }
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            return exc.code, body, {
+                "wall_ms": (time.perf_counter() - started) * 1000.0,
+                "reason": str(exc.reason or exc)[:120],
+                "response_body_hash": stable_hash(body, 16) if body else None,
+            }
+        except (urllib.error.URLError, TimeoutError) as exc:
+            return None, "", {
+                "wall_ms": (time.perf_counter() - started) * 1000.0,
+                "reason": str(exc)[:120],
+            }
+
+    models_status, models_body, models_meta = run_request(base_url.rstrip("/") + "/models", None)
+    models_probe: dict[str, Any]
+    if models_status is None:
+        models_probe = {"status": "error", **models_meta}
+    elif models_status == 200:
+        try:
+            parsed = json.loads(models_body)
+            models_count = len(parsed.get("data", [])) if isinstance(parsed, dict) else None
+        except json.JSONDecodeError:
+            models_count = None
+        models_probe = {
+            "status": "ok",
+            "http_status": models_status,
+            "models_count": models_count,
+            "response_body_hash": stable_hash(models_body, 16),
+            **models_meta,
+        }
+    else:
+        models_probe = {"status": "http_error", "http_status": models_status, **models_meta}
 
     payload = {
         "model": model,
@@ -67,25 +123,27 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
         "response_format": {"type": "json_object"},
     }
     data = json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(
-        base_url.rstrip("/") + "/chat/completions",
-        data=data,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-
     started = time.perf_counter()
     try:
-        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+        with urllib.request.urlopen(
+            urllib.request.Request(
+                base_url.rstrip("/") + "/chat/completions",
+                data=data,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            ),
+            timeout=timeout_seconds,
+        ) as response:
             body = response.read().decode("utf-8", errors="replace")
             http_status = response.status
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", errors="replace")
         status = "authorization_error" if exc.code in {401, 403} else "http_error"
         return {
+            "models_probe": models_probe,
             "status": status,
             "http_status": exc.code,
             "reason": str(exc.reason or exc)[:120],
@@ -94,6 +152,7 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
         }
     except (urllib.error.URLError, TimeoutError) as exc:
         return {
+            "models_probe": models_probe,
             "status": "error",
             "reason": str(exc)[:120],
             "wall_ms": (time.perf_counter() - started) * 1000.0,
@@ -105,6 +164,7 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
         judged = json.loads(content)
     except (KeyError, IndexError, json.JSONDecodeError, TypeError) as exc:
         return {
+            "models_probe": models_probe,
             "status": "error",
             "http_status": http_status,
             "reason": f"invalid judge response: {exc}"[:120],
@@ -113,6 +173,7 @@ def judge_preflight(*, base_url: str, model: str, timeout_seconds: float) -> dic
         }
 
     return {
+        "models_probe": models_probe,
         "status": "judged",
         "http_status": http_status,
         "correct": bool(judged.get("correct")),

@@ -2,8 +2,9 @@
 
 Date checked: 2026-07-02
 
-Status: answer-generation DMR 50 local scoring exists; full official
-reproduction is not complete because the LLM judge is not yet authorized.
+Status: answer-generation DMR 50 local scoring exists; the DeepSeek judge now
+authenticates on `deepseek-v4-flash`, but judge-output stability is still
+incomplete.
 
 ## Short Answer
 
@@ -58,6 +59,10 @@ failure mode.
 Current reports:
 
 - `crates/eval/reports/official-dmr-50.json`
+- `crates/eval/reports/official-dmr-200.json`
+- `crates/eval/reports/official-dmr-500.json`
+- `crates/eval/reports/official-dmr-judge-probe.json`
+- `crates/eval/reports/official-dmr-judge-preflight.json`
 - `crates/eval/reports/official-dmr-5-extractive.json`
 - `docs/eval/OFFICIAL_DMR_RESULT.md`
 
@@ -65,8 +70,10 @@ The 50-query CUDA run completed local answer scoring. Exact accuracy was
 `0.000`, punctuation-normalized accuracy was `0.020`, answer-substring accuracy
 was `0.060`, and ROUGE-L F1 mean was `0.041`.
 
-The DeepSeek judge path was attempted, but all 50 requests returned
-authorization errors, so no LLM-judge accuracy is available yet.
+The DeepSeek judge path is now live on `deepseek-v4-flash`, but it still
+returns malformed JSON on many requests. The 50, 200, and 500 request runs all
+have judged samples, so judge-backed scoring is available, but it is not yet
+fully stable enough for official DMR claims.
 
 ## What Official DMR Still Requires
 
@@ -74,7 +81,7 @@ Before this repo can claim an official DMR result, it needs:
 
 1. fixed official dataset and split policy;
 2. conversation ingestion that matches the benchmark's intended setup;
-3. successful fixed LLM judge authorization and scoring;
+3. successful fixed LLM judge scoring with stable JSON output;
 4. 200/500-query answer-generation runs after the DMR 50 path is stable;
 5. accuracy and ROUGE-L style reporting that can be compared with MemGPT/Zep
    numbers;
@@ -95,5 +102,5 @@ Keep the existing DMR reports as candidate retrieval baselines:
 Do not compare their Recall@10 values directly with MemGPT or Zep DMR accuracy
 claims. The current conclusion remains narrower: Synapse has a retrieval and
 ranking signal on the public DMR candidate data, while official DMR
-answer-generation validation has started, while full official DMR reproduction
-remains a Phase 6 gap.
+answer-generation validation has started, but judge-output stability still
+needs work before full official reproduction can be claimed.

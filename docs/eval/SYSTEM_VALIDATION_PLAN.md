@@ -244,9 +244,9 @@ finds a blocking bug.
 | Step | Work | Exit condition |
 | --- | --- | --- |
 | 1 | Close the DMR 200 documentation pass and sync it to GitHub. | `official-dmr-200.json` is documented, checked for raw data / secrets, committed, and pushed. |
-| 2 | Fix LLM judge authorization/configuration outside the repository. | Still open: latest isolated DeepSeek preflight records HTTP 401 with an API key present, without writing the API key, prompt text, raw response, or raw answer text. Exit requires the preflight, then the 5-sample probe, to return at least one successful `judged` sample. |
-| 3 | Rerun DMR 50 with the fixed judge. | Judge status has successful scored samples, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
-| 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, raw data not committed. |
+| 2 | Fix LLM judge authorization/configuration outside the repository. | Done: the isolated DeepSeek preflight now returns `judged` with HTTP `200` on `deepseek-v4-flash`, without writing the API key, prompt text, raw response, or raw answer text. The remaining issue is judge-output stability, not auth. |
+| 3 | Rerun DMR 50 with the fixed judge. | Done: judge-backed samples are recorded, skipped/error counts are explicit, and lexical metrics still match the local scoring path. |
+| 4 | Run DMR 500-request local scoring on CUDA. | Done as `official-dmr-500.json`: requested 500, scored 323, mapping skips 177, DeepSeek judge returned 128 judged / 195 JSON-response errors, raw data not committed. |
 | 5 | Review DMR mapping policy before claiming 500/500 coverage. | Done in `DMR_MAPPING_POLICY_REVIEW.md`: keep punctuation-only mapping as the pinned local boundary; relaxed-token coverage must be separately labeled. |
 | 6 | Expand ranking failure localization beyond DMR 50. | Done for DMR 200: 17 top-50-only late-ranking cases and 43 top-50 retrieval misses are split, and the DMR 200 transition audit records vector/reranker gains plus regression cases before changing defaults. |
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
@@ -314,9 +314,9 @@ finds a blocking bug.
   `crates/eval/reports/official-dmr-500.json`; the latest judge probe is
   recorded at `crates/eval/reports/official-dmr-judge-probe.json`, and the
   isolated judge preflight is recorded at
-  `crates/eval/reports/official-dmr-judge-preflight.json`. Fixed LLM judge
-  authorization is still unresolved: the preflight returned HTTP 401 even with
-  an API key present. The DMR 500-request pass scored `323/500` requested
+  `crates/eval/reports/official-dmr-judge-preflight.json`. Judge auth now
+  succeeds on `deepseek-v4-flash`; the remaining issue is malformed judge
+  output, not HTTP 401. The DMR 500-request pass scored `323/500` requested
   samples because the pinned punctuation mapping skipped 177 source rows before
   selection.
 - Official-style DMR answer-synthesis audit is recorded at
