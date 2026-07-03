@@ -142,6 +142,11 @@ the repo and commit only aggregate, redacted metrics:
 The Phase 6 replay baseline is fixed in
 [BENCHMARK_BASELINE.md](docs/eval/BENCHMARK_BASELINE.md) and
 [GOLDEN_DATASET.md](docs/eval/GOLDEN_DATASET.md).
+A current six-stage requirements audit is recorded in
+[phase6-requirements-audit.json](crates/eval/reports/phase6-requirements-audit.json):
+official-style DMR is local but not published-comparable, no global ranking
+default is supported yet, hosted external comparisons are still open, and
+productization is not ready.
 
 The deterministic long-horizon cognitive gate is also recorded:
 [LONG_HORIZON_VALIDATION.md](docs/eval/LONG_HORIZON_VALIDATION.md) and
@@ -264,6 +269,7 @@ comparison adapters or optional embedding/reranking paths.
 - Core architecture is stable.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
+- The Phase 6 requirements audit keeps productization blocked until official DMR, hosted comparison, ranking, and demo-claim gaps close.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
@@ -313,6 +319,7 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result, stability audit, and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |

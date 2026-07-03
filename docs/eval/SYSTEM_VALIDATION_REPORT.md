@@ -534,6 +534,26 @@ The project has not yet crossed the bar for:
 4. final DMR scoring-policy adoption beyond candidate punctuation matching;
 5. production-readiness claims.
 
+Phase 6 requirements audit status:
+
+- `crates/eval/reports/phase6-requirements-audit.json` consolidates the
+  six-stage validation objective against current evidence. It is an evidence
+  matrix, not a new benchmark run.
+
+| Phase | Status | Current read |
+| --- | --- | --- |
+| Lock current version | `active_policy` | Feature growth remains frozen; Phase 6 baselines and CUDA validation are recorded. |
+| Official-style DMR | `local_official_style_complete_not_published_comparable` | 50/200/500-request local answer scoring exists, but published-comparable DMR and top-context judge scoring remain open. |
+| Ranking without architecture change | `validated_no_global_default` | Current ranking evidence supports no new global default. |
+| External fair comparison | `partial_local_complete_hosted_open` | Local fixture evidence exists; hosted Graphiti/Zep, official Mem0, and live Letta remain unmeasured. |
+| Long-horizon stability | `deterministic_fixture_complete_public_long_memory_open` | Deterministic long-session behavior is stable; public real-world long-memory evidence is still open. |
+| Productization decision | `not_ready` | Do not start productization until DMR, hosted comparison, ranking, and demo-claim gaps close. |
+
+The audit's blocking gaps are: published-comparable DMR is not finished,
+top-context candidate output is not judge-scored, no global ranking default is
+supported, hosted external comparison is not configured, and productization is
+not ready.
+
 GPU validation status:
 
 - CUDA execution-provider selection is wired through

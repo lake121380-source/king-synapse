@@ -1,0 +1,463 @@
+{
+  "schema_version": "king-synapse.phase6-requirements-audit.v1",
+  "generated_at": "2026-07-03T16:25:11.908348+00:00",
+  "runner": "scripts\\eval\\phase6_requirements_audit.py",
+  "git": {
+    "branch": "main",
+    "commit": "642ab5c8a9d8a9dab7e6ac78b9bd622e034e3cd5",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "system_validation_report": {
+      "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
+      "exists": true,
+      "sha256": "0176ed548cecc032d8c201b4570af038d09342a2994743fadeaa088e2d5dac34"
+    },
+    "experiment_log": {
+      "path": "docs\\eval\\EXPERIMENT_LOG.md",
+      "exists": true,
+      "sha256": "5e9f7ef72b91b04d72fef99e937a0f0743f0c0677f780fd33fa8888c92d385fd"
+    },
+    "official_dmr_result": {
+      "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
+      "exists": true,
+      "sha256": "96670a7599148ce899abe4fadb61813e9f14982ed0d8edc0313d6837c33ddb00"
+    },
+    "ranking_ablation": {
+      "path": "docs\\eval\\RANKING_ABLATION.md",
+      "exists": true,
+      "sha256": "e74ffd4b79bb64461853fa29384bbd2fb180c6a5a6634aeabceaf2b577a336ee"
+    },
+    "external_validation": {
+      "path": "docs\\eval\\EXTERNAL_VALIDATION.md",
+      "exists": true,
+      "sha256": "65552c74c782afbca1bd35478a525decb89b36fda1bd6e4e514bafa20dadaed8"
+    },
+    "long_horizon_validation": {
+      "path": "docs\\eval\\LONG_HORIZON_VALIDATION.md",
+      "exists": true,
+      "sha256": "9115da3d9f96f65e4210dcfd0796c17eff4a34ee1bb2fd143c907e9d3874e34e"
+    },
+    "gpu_validation": {
+      "path": "docs\\eval\\GPU_VALIDATION_2026-07-02.md",
+      "exists": true,
+      "sha256": "b25bcbb794e59eeed24257cee5b993b49f02baad5679005e8068599d17fab127"
+    },
+    "official_dmr_50": {
+      "path": "crates\\eval\\reports\\official-dmr-50.json",
+      "exists": true,
+      "sha256": "5eb227a2c8c596a9fd45a76fd8797475468d2df611dcfd2067811e304e95c16f"
+    },
+    "official_dmr_200": {
+      "path": "crates\\eval\\reports\\official-dmr-200.json",
+      "exists": true,
+      "sha256": "48385325c61761b4d26974e565377c8cca1ae12a25caad48cb04f0929de8a6db"
+    },
+    "official_dmr_500": {
+      "path": "crates\\eval\\reports\\official-dmr-500.json",
+      "exists": true,
+      "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
+    },
+    "official_dmr_generator_summary": {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
+      "exists": true,
+      "sha256": "752ca7ec7a11aaa492d9f90f2de4c03705d1ff0362cfb4bb78389520d9e3ddc5"
+    },
+    "official_dmr_top_context_judge_preflight": {
+      "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
+      "exists": true,
+      "sha256": "2b41d89cb6359d6840b1389fb711845cdf1c2a757c0563193c9c6e9da3c92915"
+    },
+    "ranking_objective_conflict_audit": {
+      "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+      "exists": true,
+      "sha256": "d13faef56a19309fc0b6c67aa6f958f2ff7582be985434e6823abd23c629a20b"
+    },
+    "ranking_pool_signal_guard_audit": {
+      "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+      "exists": true,
+      "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
+    },
+    "external_comparison_hosted": {
+      "path": "crates\\eval\\reports\\external-comparison-hosted.json",
+      "exists": true,
+      "sha256": "606ecb6ff5834ab47af8a5ae8b38c0bc2834a8a153132188e1350ca2d9e36888"
+    },
+    "long_horizon_cognitive_memory": {
+      "path": "crates\\eval\\reports\\long-horizon-cognitive-memory.json",
+      "exists": true,
+      "sha256": "fe6192e3ea29512569f4b78f507652f011ac0bdfb5a093b6be6c3a538fbd1137"
+    },
+    "long_horizon_stability_audit": {
+      "path": "crates\\eval\\reports\\long-horizon-stability-audit.json",
+      "exists": true,
+      "sha256": "fb1d703f470052440dd97f679e6d02d5242e85cba0b9fa82f44f45468f92d100"
+    },
+    "long_horizon_prediction_evidence_audit": {
+      "path": "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json",
+      "exists": true,
+      "sha256": "bf74ce324c6e801131e733bcb2bcf525a42072ad44fc6d315dd018886428d8fb"
+    },
+    "phase6_benchmark_baseline": {
+      "path": "crates\\eval\\reports\\phase6-benchmark-baseline.json",
+      "exists": true,
+      "sha256": "da94c36c84da8553b1adc6c8d181d0ceb995d0cce1bc5769bfdd4041a8a25a75"
+    },
+    "phase6_performance_profile": {
+      "path": "crates\\eval\\reports\\phase6-performance-profile.json",
+      "exists": true,
+      "sha256": "f1f481542c64c6ccbc5100fa1ef858835e931b5b9d54fa82a3a50cb86810ac4f"
+    }
+  },
+  "missing_inputs": [],
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "generated_answers_committed": false,
+  "phase_status": [
+    {
+      "phase": "1_lock_current_version",
+      "status": "active_policy",
+      "evidence": [
+        "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
+        "docs\\eval\\EXPERIMENT_LOG.md",
+        "docs\\eval\\GPU_VALIDATION_2026-07-02.md",
+        "crates\\eval\\reports\\phase6-benchmark-baseline.json",
+        "crates\\eval\\reports\\phase6-performance-profile.json"
+      ],
+      "conclusion": "Feature growth is frozen by policy, Phase 6 replay baselines are registered, and heavy validation is documented on CUDA device 0.",
+      "remaining": [
+        "Keep future changes in evaluation reports/scripts unless a later decision explicitly opens productization.",
+        "Do not change memory schema, cognitive layers, CLI behavior, or runtime ranking defaults from current evidence."
+      ],
+      "next_action": "Continue using current main as the validation baseline and log every experiment."
+    },
+    {
+      "phase": "2_official_style_dmr",
+      "status": "local_official_style_complete_not_published_comparable",
+      "evidence": [
+        "docs\\eval\\OFFICIAL_DMR_RESULT.md",
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json",
+        "crates\\eval\\reports\\official-dmr-500.json",
+        "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
+        "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
+      ],
+      "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, but absolute answer quality remains low and the top-context candidate is not judge-scored.",
+      "remaining": [
+        "Published-comparable DMR mapping/scoring policy is not finalized.",
+        "500-request run honestly scores 323 mappable samples, not 500/500.",
+        "Top-context candidate judge scoring is blocked by the latest DeepSeek authorization preflight.",
+        "Answer synthesis remains weak even when retrieval finds a relevant chunk."
+      ],
+      "next_action": "Restore valid judge configuration for top-context scoring, then judge-score the candidate generator before any claim."
+    },
+    {
+      "phase": "3_ranking_without_architecture_change",
+      "status": "validated_no_global_default",
+      "evidence": [
+        "docs\\eval\\RANKING_ABLATION.md",
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+      ],
+      "conclusion": "Existing one-variable ranking evidence does not support a new global default. RRF k is mostly flat, vector weight improves coverage with MRR/top-1 tradeoffs, reranker-pool preferences diverge between DMR and LongMemEval, and pool-signal guards have no screened safe default.",
+      "remaining": [
+        "No screened pool-signal guard is ready for implementation.",
+        "DMR and LongMemEval ranking objectives still conflict.",
+        "Any runtime ranking policy still needs zero LongMemEval top-10 suppressions and an explicit latency budget."
+      ],
+      "next_action": "Future ranking work should use a new answer-free ordering signal or an explicit DMR/LongMemEval objective split, with zero LongMemEval top-10 suppressions before runtime adoption."
+    },
+    {
+      "phase": "4_external_fair_comparison",
+      "status": "partial_local_complete_hosted_open",
+      "evidence": [
+        "docs\\eval\\EXTERNAL_VALIDATION.md",
+        "crates\\eval\\reports\\external-comparison-hosted.json"
+      ],
+      "conclusion": "The cognitive fixture shows Synapse's local trace surface, but hosted Graphiti/Zep, official Mem0, and live Letta are not configured in the current environment.",
+      "remaining": [
+        "Graphiti/Zep hosted or standard Neo4j/OpenAI run is not measured.",
+        "Mem0 official/recommended embedding configuration is not measured.",
+        "Letta live endpoint is not measured."
+      ],
+      "next_action": "Provide or configure hosted competitor credentials/endpoints, then rerun the shared cognitive fixture."
+    },
+    {
+      "phase": "5_long_horizon_stability",
+      "status": "deterministic_fixture_complete_public_long_memory_open",
+      "evidence": [
+        "docs\\eval\\LONG_HORIZON_VALIDATION.md",
+        "crates\\eval\\reports\\long-horizon-cognitive-memory.json",
+        "crates\\eval\\reports\\long-horizon-stability-audit.json",
+        "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json"
+      ],
+      "conclusion": "The deterministic long-session fixture passes fixed metrics at 1.000. The remaining weak surface is target-side future evidence labeling, not candidate recall, hidden-trace drift, or reinforcement.",
+      "remaining": [
+        "Fixture is deterministic and hand-shaped, not public real-world long-memory evidence.",
+        "Future evidence policy remains validation-only and should not become a product claim yet."
+      ],
+      "next_action": "Keep the regression gate fixed and add broader long-horizon evidence only as validation work."
+    },
+    {
+      "phase": "6_productization_decision",
+      "status": "not_ready",
+      "evidence": [
+        "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
+        "crates\\eval\\reports\\external-comparison-hosted.json",
+        "docs\\eval\\OFFICIAL_DMR_RESULT.md"
+      ],
+      "conclusion": "Productization is premature. The system has a validated cognitive trace advantage in local fixtures, but official DMR, hosted competitor measurements, and stable demo/product claims are not fully supported yet.",
+      "remaining": [
+        "Need clear supported task boundaries.",
+        "Need measured hosted competitor comparisons.",
+        "Need stronger DMR answer-generation quality and finalized scoring policy.",
+        "Need explicit GPU cost acceptance and stable public demo criteria."
+      ],
+      "next_action": "Do not start web demo, API server, Docker, release packaging, or product README claims until validation gaps close."
+    }
+  ],
+  "key_metrics": {
+    "official_style_dmr": {
+      "runs": {
+        "dmr_50": {
+          "requested": 50,
+          "scored": 50,
+          "accelerator": {
+            "requested": "cuda",
+            "king_synapse_accelerator": "cuda",
+            "cuda_device_id": "0",
+            "cuda_runtime": {
+              "path_added": true,
+              "root_recorded": false,
+              "root_exists": true,
+              "dll_dir_count": 9
+            },
+            "embedding": {
+              "batch_size": {
+                "value": "32",
+                "source": "argument"
+              },
+              "max_length": {
+                "value": "256",
+                "source": "argument"
+              }
+            },
+            "rerank_batch": {
+              "value": "32",
+              "source": "argument"
+            },
+            "rerank_max_length": {
+              "value": "256",
+              "source": "argument"
+            },
+            "directml_device_id": null
+          },
+          "generator": {
+            "policy": "extractive",
+            "description": "deterministic sentence/window selection from returned chunks; no gold-answer access"
+          },
+          "retrieval_recall_at_10": 0.46833333333333327,
+          "retrieval_mrr_at_10": 0.6183333333333333,
+          "exact_accuracy": 0.0,
+          "substring_accuracy": 0.06,
+          "rouge_l_f1_mean": 0.04102707749766574,
+          "llm_judge_accuracy": 0.08,
+          "raw_records_committed": false,
+          "raw_answers_committed": false,
+          "generated_answers_committed": false
+        },
+        "dmr_200": {
+          "requested": 200,
+          "scored": 200,
+          "accelerator": {
+            "requested": "cuda",
+            "king_synapse_accelerator": "cuda",
+            "cuda_device_id": "0",
+            "cuda_runtime": {
+              "path_added": true,
+              "root_recorded": false,
+              "root_exists": true,
+              "dll_dir_count": 9
+            },
+            "embedding": {
+              "batch_size": {
+                "value": "32",
+                "source": "argument"
+              },
+              "max_length": {
+                "value": "256",
+                "source": "argument"
+              }
+            },
+            "rerank_batch": {
+              "value": "32",
+              "source": "argument"
+            },
+            "rerank_max_length": {
+              "value": "256",
+              "source": "argument"
+            },
+            "directml_device_id": null
+          },
+          "generator": {
+            "policy": "extractive",
+            "description": "deterministic sentence/window selection from returned chunks; no gold-answer access"
+          },
+          "retrieval_recall_at_10": 0.41074999999999995,
+          "retrieval_mrr_at_10": 0.4718988095238095,
+          "exact_accuracy": 0.0,
+          "substring_accuracy": 0.04,
+          "rouge_l_f1_mean": 0.036509368242205624,
+          "llm_judge_accuracy": 0.06,
+          "raw_records_committed": false,
+          "raw_answers_committed": false,
+          "generated_answers_committed": false
+        },
+        "dmr_500_request": {
+          "requested": 500,
+          "scored": 323,
+          "accelerator": {
+            "requested": "cuda",
+            "king_synapse_accelerator": "cuda",
+            "cuda_device_id": "0",
+            "cuda_runtime": {
+              "path_added": true,
+              "root_recorded": false,
+              "root_exists": true,
+              "dll_dir_count": 9
+            },
+            "embedding": {
+              "batch_size": {
+                "value": "32",
+                "source": "argument"
+              },
+              "max_length": {
+                "value": "256",
+                "source": "argument"
+              }
+            },
+            "rerank_batch": {
+              "value": "32",
+              "source": "argument"
+            },
+            "rerank_max_length": {
+              "value": "256",
+              "source": "argument"
+            },
+            "directml_device_id": null
+          },
+          "generator": {
+            "policy": "extractive",
+            "description": "deterministic sentence/window selection from returned chunks; no gold-answer access"
+          },
+          "retrieval_recall_at_10": 0.38054695562435503,
+          "retrieval_mrr_at_10": 0.4692429603420315,
+          "exact_accuracy": 0.0,
+          "substring_accuracy": 0.04643962848297214,
+          "rouge_l_f1_mean": 0.03948663072683106,
+          "llm_judge_accuracy": 0.04953560371517028,
+          "raw_records_committed": false,
+          "raw_answers_committed": false,
+          "generated_answers_committed": false
+        }
+      },
+      "generator_ablation": {
+        "improves_substring_all_scale_views": true,
+        "improves_rouge_l_all_scale_views": true,
+        "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator ablation was not judge-scored.",
+        "judge_status_counts_by_generator": {
+          "baseline_extractive": {
+            "judged": 573
+          },
+          "candidate_top_context_extractive": {
+            "not_requested": 573
+          }
+        }
+      },
+      "top_context_judge_preflight": {
+        "result": {
+          "models_probe": {
+            "status": "http_error",
+            "http_status": 401,
+            "wall_ms": 146.68830001028255,
+            "reason": "Authorization Required",
+            "response_body_hash": "568320815b206ffd"
+          },
+          "status": "authorization_error",
+          "http_status": 401,
+          "reason": "Authorization Required",
+          "response_body_hash": "568320815b206ffd",
+          "wall_ms": 109.76900000241585
+        },
+        "decision": "judge_configuration_still_blocked"
+      }
+    },
+    "ranking": {
+      "global_default_candidate": null,
+      "conflict_or_tradeoff_views": [
+        "vector_weight_50",
+        "reranker_pool_50",
+        "reranker_pool_50_vs_100_signal"
+      ],
+      "best_safe_guard_id": null,
+      "safe_guard_ids": []
+    },
+    "external_hosted": {
+      "measured_systems": 1,
+      "not_configured_systems": 3,
+      "failed_systems": 0
+    },
+    "long_horizon": {
+      "fixed_metrics": {
+        "RecallAt10": 1.0,
+        "HebbianConsistency": 1.0,
+        "CognitiveTraceDominance": 1.0
+      },
+      "candidate_present_all_phases_count": 8,
+      "matched_evidence_all_phases_count": 6,
+      "context_overlap_explains_all_reported_matched_misses": true
+    },
+    "performance": {
+      "gpu_configuration": {
+        "accelerator": "cuda",
+        "cuda_device_id": "0",
+        "embed_batch_size": 32,
+        "embed_max_length": 256,
+        "rerank_batch_size": 32,
+        "rerank_max_length": 256,
+        "rerank_pool": 50
+      },
+      "recall_baseline_count": 3
+    }
+  },
+  "read": {
+    "current_state": "Synapse is still in Phase 6 system validation. Current evidence supports the architecture on deterministic cognitive fixtures and local official-style DMR execution, but not productization.",
+    "strongest_supported_claims": [
+      "Cognitive trace introspection is richer than the measured local adapters in the shared fixture.",
+      "Official-style DMR local scoring is executable on CUDA without committing raw records.",
+      "Ranking and answer synthesis are the active bottlenecks, not a disproven core architecture.",
+      "Long-horizon candidate recall and hidden trace behavior are stable in the deterministic fixture."
+    ],
+    "claims_not_yet_supported": [
+      "Published-comparable official DMR performance.",
+      "Hosted Graphiti/Zep, official Mem0, or live Letta superiority.",
+      "A safe global ranking-default change.",
+      "Production readiness or v0.1 release readiness."
+    ],
+    "blocking_gaps": [
+      "published_comparable_dmr_not_finished",
+      "top_context_candidate_not_judge_scored",
+      "no_global_ranking_default_supported",
+      "hosted_external_comparison_not_configured",
+      "productization_not_ready"
+    ],
+    "recommended_next_action": "Keep feature freeze. The next highest-value validation step is judge-scored top-context DMR if DeepSeek authorization is fixed; otherwise proceed with hosted external comparison configuration."
+  },
+  "limits": [
+    "This is an evidence consolidation pass only.",
+    "It does not rerun benchmarks or verify external service availability.",
+    "It should not be used to claim product readiness."
+  ]
+}
