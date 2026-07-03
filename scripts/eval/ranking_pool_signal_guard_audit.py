@@ -40,6 +40,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/ranking-ablation-dmr-200-reranker-pool-signal.json",
     )
     parser.add_argument(
+        "--dmr-500-report",
+        type=Path,
+        default=root / "crates/eval/reports/ranking-ablation-dmr-500-reranker-pool-signal.json",
+    )
+    parser.add_argument(
         "--crosscheck-report",
         type=Path,
         default=root / "crates/eval/reports/ranking-ablation-dmr-longmem-50-reranker-pool-signal.json",
@@ -361,10 +366,14 @@ def aggregate_guard(guard: dict[str, Any], datasets: list[dict[str, Any]]) -> di
 
 def dataset_inputs(
     dmr_200_report: dict[str, Any],
+    dmr_500_report: dict[str, Any],
     crosscheck_report: dict[str, Any],
     longmem_200_report: dict[str, Any],
 ) -> list[tuple[str, dict[str, Any]]]:
     inputs: list[tuple[str, dict[str, Any]]] = [("dmr_200", dmr_200_report["datasets"][0])]
+    for dataset in dmr_500_report.get("datasets", []):
+        if dataset.get("id") == "dmr":
+            inputs.append(("dmr_500_request_323_scored", dataset))
     for dataset in crosscheck_report.get("datasets", []):
         if dataset.get("id") == "dmr":
             inputs.append(("dmr_50", dataset))
@@ -379,12 +388,14 @@ def dataset_inputs(
 def main() -> int:
     args = parse_args()
     args.dmr_200_report = normalize_path_arg(args.dmr_200_report)
+    args.dmr_500_report = normalize_path_arg(args.dmr_500_report)
     args.crosscheck_report = normalize_path_arg(args.crosscheck_report)
     args.longmem_200_report = normalize_path_arg(args.longmem_200_report)
     args.output = normalize_path_arg(args.output)
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
     dmr_200_report = load_json(args.dmr_200_report)
+    dmr_500_report = load_json(args.dmr_500_report)
     crosscheck_report = load_json(args.crosscheck_report)
     longmem_200_report = load_json(args.longmem_200_report)
     guards = guard_definitions()
@@ -396,7 +407,7 @@ def main() -> int:
             candidate_pool=args.candidate_pool,
             guards=guards,
         )
-        for dataset_key, dataset in dataset_inputs(dmr_200_report, crosscheck_report, longmem_200_report)
+        for dataset_key, dataset in dataset_inputs(dmr_200_report, dmr_500_report, crosscheck_report, longmem_200_report)
     ]
     guard_summaries = [aggregate_guard(guard, datasets) for guard in guards]
     guard_summaries.sort(
@@ -419,6 +430,10 @@ def main() -> int:
             "dmr_200_signal_report": {
                 "path": report_path(args.dmr_200_report),
                 "sha256": sha256_file(args.dmr_200_report),
+            },
+            "dmr_500_signal_report": {
+                "path": report_path(args.dmr_500_report),
+                "sha256": sha256_file(args.dmr_500_report),
             },
             "dmr_longmem_50_signal_report": {
                 "path": report_path(args.crosscheck_report),
