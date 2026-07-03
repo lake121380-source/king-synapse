@@ -1,12 +1,21 @@
 {
   "schema_version": "king-synapse.phase6-baseline-health-check.v1",
-  "generated_at": "2026-07-03T18:13:48.049871+00:00",
+  "generated_at": "2026-07-03T18:21:01.297105+00:00",
   "runner": "scripts\\eval\\phase6_baseline_health_check.py",
-  "validated_commit": "172f5e7518538fd92ec6f0dc06210ffcc669695f",
+  "validated_commit": "f90c032070bd0d2b2bfc8fd84928b37c46173980",
+  "validated_commit_semantics": "HEAD at the start of this local replay. The commit that stores this generated report is expected to be a descendant, because writing the report changes repository state.",
+  "report_commit_model": {
+    "self_validating_commit": false,
+    "validated_commit_is_replay_head": true,
+    "containing_commit_expected_to_be_descendant": true,
+    "reason": "The generated report file cannot contain the hash of its own future commit without changing that hash."
+  },
   "git": {
     "branch": "main",
-    "commit": "172f5e7518538fd92ec6f0dc06210ffcc669695f",
-    "origin_main_delta": "0\t0"
+    "commit": "f90c032070bd0d2b2bfc8fd84928b37c46173980",
+    "origin_main_delta": "0\t1",
+    "worktree_dirty_at_start": false,
+    "worktree_status_count_at_start": 0
   },
   "feature_freeze_preserved": true,
   "memory_schema_changed": false,
@@ -24,20 +33,20 @@
       "id": "cargo-fmt",
       "command": "cargo fmt --all -- --check",
       "status": "passed",
-      "duration_ms": 833.289
+      "duration_ms": 805.757
     },
     {
       "id": "python-eval-py-compile",
       "command": "python -m py_compile D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\deepseek_judge_preflight.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_chunk_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_generator_ablation_summary.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_mapping_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_mapping_policy_review.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\dmr_query_expansion_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\external_comparison_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\graphiti_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\letta_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\long_horizon_prediction_evidence_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\long_horizon_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\longmem_dmr_smoke.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\mem0_adapter.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\next_validation_action_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_answer_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_bottleneck_taxonomy.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_eval.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\official_dmr_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_baseline_health_check.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_current_system_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_next_gate_readiness.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_objective_coverage_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\phase6_requirements_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\productization_decision_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_ablation.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_failure_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_late_rank_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_objective_conflict_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_crosscheck.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_guard_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_pool_signal_trigger_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_reranker_pool_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_task_gate.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\ranking_vector_weight_transition_audit.py D:\\lake\\jiaoben\\king_recall\\scripts\\eval\\readme_claims_support_audit.py",
       "status": "passed",
-      "duration_ms": 345.943,
+      "duration_ms": 347.055,
       "compiled_files": 36
     },
     {
       "id": "synapse-eval-tests",
       "command": "cargo test -p synapse-eval",
       "status": "passed",
-      "duration_ms": 5151.202,
+      "duration_ms": 5182.757,
       "tests_passed": 44,
       "tests_failed": 0
     },
@@ -45,7 +54,7 @@
       "id": "exported-cognitive-session",
       "command": "cargo bench -p synapse-eval --bench exported_cognitive_session",
       "status": "passed",
-      "duration_ms": 1203.465,
+      "duration_ms": 1195.135,
       "metrics": {
         "RecallAt10": 1.0,
         "HebbianConsistency": 1.0,
@@ -62,7 +71,7 @@
       "id": "long-horizon-cognitive-memory",
       "command": "cargo bench -p synapse-eval --bench long_horizon_cognitive_memory",
       "status": "passed",
-      "duration_ms": 1193.159,
+      "duration_ms": 1188.81,
       "metrics": {
         "RecallAt10": 1.0,
         "HebbianConsistency": 1.0,
@@ -79,7 +88,7 @@
       "id": "long-horizon-stability-audit",
       "command": "cargo bench -p synapse-eval --bench long_horizon_stability_audit",
       "status": "passed",
-      "duration_ms": 1434.517,
+      "duration_ms": 1424.043,
       "aggregate": {
         "visible_seed_retention": 1.0,
         "old_memory_preservation": 1.0,
@@ -128,7 +137,7 @@
   },
   "read": {
     "current_baseline_health": "passed",
-    "conclusion": "The current Phase 6 baseline remains healthy under local non-external gates. Core cognitive fixture metrics are stable, while the known long-horizon future-evidence boundary remains unchanged at 6/8 matched evidence cases.",
+    "conclusion": "The current Phase 6 baseline remains healthy under local non-external gates. Core cognitive fixture metrics are stable, while the known long-horizon future-evidence boundary remains unchanged at 6/8 matched evidence cases. The report validates the replay HEAD recorded in validated_commit; the commit that stores the report is expected to be a descendant.",
     "next_action": "Keep feature freeze. Do not productize. Resume heavy validation only when top-context judge authorization or hosted external credentials/endpoints are ready."
   },
   "limits": [
