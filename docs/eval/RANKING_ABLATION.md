@@ -3,8 +3,8 @@
 Date: 2026-07-03
 
 Status: DMR 50 ranking ablations, DMR 50 chunk-policy/query-expansion
-ablations, DMR 200 ranking-failure expansion, and DMR 200 transition audit
-complete.
+ablations, DMR 200 ranking-failure expansion, DMR 200 transition audit, and
+DMR/LongMemEval 50 RRF/vector-weight cross-checks complete.
 
 Machine-readable reports:
 
@@ -29,6 +29,10 @@ Machine-readable reports:
 `crates/eval/reports/ranking-transition-audit-dmr-200.json`
 
 `crates/eval/reports/ranking-ablation-longmem-50-reranker-pool.json`
+
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-rrf-k.json`
+
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-vector-weight.json`
 
 Runner:
 
@@ -635,41 +639,168 @@ Read:
   vector-only Recall@10 (`0.637` vs `0.663`), while improving MRR and top-1.
   This is a quality tradeoff, not a clean default win.
 
+## RRF-K Cross-Check
+
+This pass varies only `rrf_k` on the same DMR 50 and LongMemEval 50 validation
+sets. It keeps vectors, reranking, top-k `10`, reranker pool `50`, and the
+default branch weights fixed.
+
+Report:
+
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-rrf-k.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets all `
+  --dmr-sample-size 50 `
+  --longmem-sample-size 50 `
+  --ablation rrf-k `
+  --rrf-k-values 20,40,60,80 `
+  --fixed-reranker-pool 50 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-longmem-50-rrf-k.json `
+  --cleanup-cache
+```
+
+### RRF-K Result
+
+DMR 50:
+
+| RRF k | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20 | 0.468 | 0.618 | 598.4 ms | 28 | 10 | 12 |
+| 40 | 0.468 | 0.618 | 598.8 ms | 28 | 10 | 12 |
+| 60 | 0.468 | 0.618 | 598.0 ms | 28 | 10 | 12 |
+| 80 | 0.468 | 0.618 | 598.9 ms | 28 | 10 | 12 |
+
+LongMemEval 50:
+
+| RRF k | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20 | 0.590 | 0.486 | 1212.2 ms | 18 | 18 | 14 |
+| 40 | 0.590 | 0.486 | 1198.6 ms | 18 | 18 | 14 |
+| 60 | 0.590 | 0.486 | 1202.9 ms | 18 | 18 | 14 |
+| 80 | 0.590 | 0.493 | 1213.3 ms | 19 | 17 | 14 |
+
+Read:
+
+- DMR 50 is insensitive to the tested RRF k range.
+- LongMemEval 50 shows only a tiny MRR/top-1 movement at k `80`, with unchanged
+  Recall@10 and misses.
+- This is not enough evidence to change the default RRF k.
+
+## Vector-Weight Cross-Check
+
+This pass varies only the vector branch weight. It keeps RRF k `60`, FTS and
+entity weights `1.0`, vectors, reranking, top-k `10`, and reranker pool `50`
+fixed.
+
+Report:
+
+`crates/eval/reports/ranking-ablation-dmr-longmem-50-vector-weight.json`
+
+Command:
+
+```powershell
+python scripts/eval/ranking_ablation.py `
+  --endpoint https://hf-mirror.com `
+  --datasets all `
+  --dmr-sample-size 50 `
+  --longmem-sample-size 50 `
+  --ablation vector-weight `
+  --vector-weights 0.5,1.0,1.5,2.0 `
+  --fixed-reranker-pool 50 `
+  --accelerator cuda `
+  --cuda-device-id 0 `
+  --embed-batch-size 32 `
+  --embed-max-length 256 `
+  --rerank-batch-size 32 `
+  --rerank-max-length 256 `
+  --output crates/eval/reports/ranking-ablation-dmr-longmem-50-vector-weight.json `
+  --cleanup-cache
+```
+
+### Vector-Weight Result
+
+DMR 50:
+
+| Vector weight | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.5 | 0.432 | 0.603 | 597.8 ms | 28 | 7 | 15 |
+| 1.0 | 0.468 | 0.618 | 597.4 ms | 28 | 10 | 12 |
+| 1.5 | 0.475 | 0.617 | 593.2 ms | 27 | 12 | 11 |
+| 2.0 | 0.465 | 0.597 | 589.9 ms | 26 | 12 | 12 |
+
+LongMemEval 50:
+
+| Vector weight | Recall@10 | MRR@10 | P50 latency | Top-1 | Top-10 not top-1 | Misses |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.5 | 0.570 | 0.507 | 1215.5 ms | 20 | 15 | 15 |
+| 1.0 | 0.590 | 0.496 | 1203.7 ms | 19 | 17 | 14 |
+| 1.5 | 0.607 | 0.486 | 1188.4 ms | 19 | 17 | 14 |
+| 2.0 | 0.587 | 0.476 | 1187.1 ms | 19 | 16 | 15 |
+
+Read:
+
+- Vector weight `1.5` improves Recall@10 on both DMR 50 and LongMemEval 50 in
+  this pass.
+- The improvement is a tradeoff, not a clean default win: DMR top-1 drops from
+  `28` to `27`, DMR MRR slightly drops, and LongMemEval MRR drops versus the
+  same-run control.
+- Vector weight `0.5` improves LongMemEval MRR/top-1 but hurts Recall@10 and
+  adds misses on both datasets.
+- Vector weight `2.0` is not justified: it lowers DMR MRR/top-1 and does not
+  improve LongMemEval Recall@10 versus `1.5`.
+- Do not change the global default from this evidence. Treat `vector_weight =
+  1.5` as a candidate for a follow-up focused on Recall@10 coverage, not as a
+  production setting.
+
 ## Decision
 
 Do not change the default reranker pool from this evidence.
 
 The result supports the current diagnosis: DMR ranking is sensitive to
-candidate pool size, output window, chunk policy, and query policy, but the
-remaining weakness is not solved by simply making the pool bigger, returning
-more items, merging all session content into one larger chunk, or repeating
-question keywords. Returning top 50 helps diagnosis; merged-session chunks
-improve broad top-50 coverage but damage top-10 and top-1 placement; keyword
-boosting keeps retrieval misses unchanged and also damages ranking. The DMR
-50 transition audit shows why: the simple fixes recover a few misses while
-suppressing many stronger hits. The DMR 200 expansion adds that true top-50
-retrieval misses are material and should be separated from late-ranking cases
-before default changes. The DMR 200 transition audit repeats the productive
-direction at larger scale: vector retrieval recovers 60 samples into top-10,
-and reranking recovers 40 more while promoting 49 to top-1. It also records
-the regression surface: 3 reranker top-10 suppressions and 5 top-1 demotions.
+candidate pool size, output window, chunk policy, query policy, and vector
+branch weighting, but the remaining weakness is not solved by simply making
+the pool bigger, returning more items, merging all session content into one
+larger chunk, repeating question keywords, or changing RRF k. Returning top 50
+helps diagnosis; merged-session chunks improve broad top-50 coverage but
+damage top-10 and top-1 placement; keyword boosting keeps retrieval misses
+unchanged and also damages ranking. The DMR 50 transition audit shows why: the
+simple fixes recover a few misses while suppressing many stronger hits. The
+DMR 200 expansion adds that true top-50 retrieval misses are material and
+should be separated from late-ranking cases before default changes. The DMR
+200 transition audit repeats the productive direction at larger scale: vector
+retrieval recovers 60 samples into top-10, and reranking recovers 40 more
+while promoting 49 to top-1. It also records the regression surface: 3
+reranker top-10 suppressions and 5 top-1 demotions.
 
 The LongMemEval cross-check also argues against a global default change. DMR 50
 prefers pool `50` on Recall@10, while LongMemEval 50 prefers pool `25` among
 reranker variants and still prefers vector-only for top-10 coverage. Any
 ranking change now needs either dataset-specific policy or a broader objective
-than Recall@10 alone.
+than Recall@10 alone. The vector-weight cross-check adds a possible Recall@10
+candidate (`1.5`) but also repeats the same rule: better coverage alone is not
+enough when MRR/top-1 tradeoffs appear.
 
 ## Next Ablations
 
 The next useful ranking work is:
 
-1. sweep `rrf-k` on the same DMR and LongMemEval validation sets;
-2. sweep `vector-weight` without changing the memory schema;
-3. design a safer ranking signal for the top-50-only DMR cases;
-4. test smaller, overlap-aware chunking instead of full-session merging;
-5. avoid blunt keyword-boost query expansion unless a future answer-free
+1. analyze which samples vector weight `1.5` recovers and which top-1 hits it
+   demotes;
+2. design a safer ranking signal for the top-50-only DMR cases;
+3. test smaller, overlap-aware chunking instead of full-session merging;
+4. avoid blunt keyword-boost query expansion unless a future answer-free
    rewrite policy proves it helps on both DMR and LongMemEval;
-6. inspect top-50 retrieval misses separately from late-ranking cases;
-7. test candidate-retrieval coverage separately from reranker ordering;
-8. keep answer-generation scoring separate from retrieval-ranking scoring.
+5. inspect top-50 retrieval misses separately from late-ranking cases;
+6. test candidate-retrieval coverage separately from reranker ordering;
+7. keep answer-generation scoring separate from retrieval-ranking scoring.

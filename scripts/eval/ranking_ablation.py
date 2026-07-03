@@ -181,6 +181,23 @@ def get_branch_weight(run: dict[str, Any], branch: str) -> float:
     return DEFAULT_BRANCH_WEIGHT
 
 
+def selected_ablation_values(
+    args: argparse.Namespace,
+    *,
+    reranker_pools: list[int],
+    top_k_values: list[int],
+    rrf_k_values: list[float],
+    vector_weights: list[float],
+) -> list[int] | list[float]:
+    if args.ablation == "reranker-pool":
+        return reranker_pools
+    if args.ablation == "top-k":
+        return top_k_values
+    if args.ablation == "rrf-k":
+        return rrf_k_values
+    return vector_weights
+
+
 def build_dataset_specs(args: argparse.Namespace, api: HfApi) -> tuple[list[dict[str, Any]], list[Path]]:
     selected = parse_dataset_selection(args.datasets)
     specs: list[dict[str, Any]] = []
@@ -573,6 +590,13 @@ def main() -> int:
         "rrf-k": "rrf_k",
         "vector-weight": "vector_weight",
     }[args.ablation]
+    ablation_values = selected_ablation_values(
+        args,
+        reranker_pools=reranker_pools,
+        top_k_values=top_k_values,
+        rrf_k_values=rrf_k_values,
+        vector_weights=vector_weights,
+    )
 
     with tempfile.TemporaryDirectory(prefix="king-synapse-ranking-ablation-") as temp:
         temp_dir = Path(temp)
@@ -632,15 +656,7 @@ def main() -> int:
         },
         "ablation": {
             "parameter": ablated_parameter,
-            "values": (
-                reranker_pools
-                if args.ablation == "reranker-pool"
-                else top_k_values
-                if args.ablation == "top-k"
-                else rrf_k_values
-                if args.ablation == "rrf-k"
-                else vector_weights
-            ),
+            "values": ablation_values,
             "fixed": {
                 "k": None if args.ablation == "top-k" else args.k,
                 "reranker_pool": None if args.ablation == "reranker-pool" else args.fixed_reranker_pool,
@@ -675,7 +691,7 @@ def main() -> int:
                 "output": str(args.output),
                 "datasets": {spec["id"]: len(spec["queries"]) for spec in specs},
                 "ablation": ablated_parameter,
-                "values": reranker_pools if args.ablation == "reranker-pool" else top_k_values,
+                "values": ablation_values,
                 "accelerator": accelerator,
                 "cleanup_cache": args.cleanup_cache,
             },

@@ -374,6 +374,15 @@ Ranking ablation status:
   (`0.663` Recall@10). This means reranking improves top-1 / MRR but can harm
   top-10 coverage, so DMR-driven reranker-pool choices cannot become a global
   default without a recorded tradeoff.
+- DMR / LongMemEval 50 RRF-k cross-check is recorded at
+  `crates/eval/reports/ranking-ablation-dmr-longmem-50-rrf-k.json`. DMR 50 is
+  unchanged across k `20,40,60,80`; LongMemEval 50 only shows a small MRR/top-1
+  movement at k `80`. This does not justify changing the default RRF k.
+- DMR / LongMemEval 50 vector-weight cross-check is recorded at
+  `crates/eval/reports/ranking-ablation-dmr-longmem-50-vector-weight.json`.
+  Vector weight `1.5` improves Recall@10 on both datasets in this pass, but it
+  lowers DMR top-1 and lowers MRR versus same-run controls. Treat it as a
+  coverage candidate for follow-up audits, not as a default.
 
 DMR mapping audit status:
 
