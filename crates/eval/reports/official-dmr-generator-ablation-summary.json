@@ -1,0 +1,210 @@
+{
+  "schema_version": "king-synapse.official-dmr-generator-ablation-summary.v1",
+  "generated_at": "2026-07-03T06:34:54.801045+00:00",
+  "git_commit": "f5c36c3209d4e2ee4e5e93edde266570c79f732b",
+  "runner": "scripts\\eval\\dmr_generator_ablation_summary.py",
+  "inputs": [
+    {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-50.json",
+      "sha256": "11952c271cf30d4ee0190ca726aad402bc830383d82e99998910153c557e1c5b"
+    },
+    {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-200.json",
+      "sha256": "e11971c3b87ceb2837eecb0647c7af4421b3c9b9d41738cb989f5954a0ba1c94"
+    },
+    {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-500.json",
+      "sha256": "a79865a141268007255dfba29840b9c654172b693fdd0a77814c812c09021d11"
+    }
+  ],
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "generated_answers_committed": false,
+  "aggregate_findings": {
+    "scale_views": 3,
+    "scales": [
+      "DMR 50",
+      "DMR 200",
+      "DMR 500 request / 323 scored"
+    ],
+    "sample_sets_overlap": true,
+    "overlap_note": "The 50, 200, and 500-request reports are deterministic scale views from the same source order; do not sum them as independent examples.",
+    "candidate_improves_substring_on_all_scale_views": true,
+    "candidate_improves_rouge_l_f1_on_all_scale_views": true,
+    "candidate_reduces_top1_without_substring_count_on_all_scale_views": true,
+    "judge_status": "not available; DeepSeek probe returned authorization_error/HTTP 401 in the recorded judge probe",
+    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until fixed LLM judge scoring succeeds and absolute answer quality improves."
+  },
+  "runs": [
+    {
+      "id": "dmr_50",
+      "label": "DMR 50",
+      "requested_samples": 50,
+      "scored_samples": 50,
+      "mapping_note": "Pinned punctuation mapping; requested samples scored.",
+      "sample_sets_overlap_previous_scale_views": true,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "baseline": {
+        "retrieval_recall_at_10": 0.468333,
+        "retrieval_mrr_at_10": 0.618556,
+        "top1_count": 28,
+        "top10_not_top1_count": 10,
+        "not_retrieved_top10_count": 12,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.02,
+        "answer_substring_accuracy": 0.06,
+        "rouge_l_f1_mean": 0.041027,
+        "rouge_l_recall_mean": 0.102381,
+        "top1_without_answer_substring_count": 25,
+        "top1_without_answer_substring_rate": 0.892857,
+        "top10_without_answer_substring_count": 35,
+        "top1_selected_non_first_context_count": 23,
+        "llm_judge_status_counts": {
+          "error": 50
+        }
+      },
+      "candidate": {
+        "retrieval_recall_at_10": 0.468333,
+        "retrieval_mrr_at_10": 0.618556,
+        "top1_count": 28,
+        "top10_not_top1_count": 10,
+        "not_retrieved_top10_count": 12,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.02,
+        "answer_substring_accuracy": 0.22,
+        "rouge_l_f1_mean": 0.102852,
+        "rouge_l_recall_mean": 0.288048,
+        "top1_without_answer_substring_count": 17,
+        "top1_without_answer_substring_rate": 0.607143,
+        "top10_without_answer_substring_count": 27,
+        "top1_selected_non_first_context_count": 0,
+        "llm_judge_status_counts": {
+          "not_requested": 50
+        }
+      },
+      "delta_candidate_minus_baseline": {
+        "retrieval_recall_at_10_delta": 0.0,
+        "answer_substring_accuracy_delta": 0.16,
+        "answer_substring_accuracy_multiplier": 3.666667,
+        "rouge_l_f1_mean_delta": 0.061825,
+        "top1_without_answer_substring_count_delta": -8,
+        "top1_without_answer_substring_rate_delta": -0.285714
+      }
+    },
+    {
+      "id": "dmr_200",
+      "label": "DMR 200",
+      "requested_samples": 200,
+      "scored_samples": 200,
+      "mapping_note": "Pinned punctuation mapping; requested samples scored.",
+      "sample_sets_overlap_previous_scale_views": true,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "baseline": {
+        "retrieval_recall_at_10": 0.4095,
+        "retrieval_mrr_at_10": 0.469454,
+        "top1_count": 74,
+        "top10_not_top1_count": 64,
+        "not_retrieved_top10_count": 62,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.0,
+        "answer_substring_accuracy": 0.04,
+        "rouge_l_f1_mean": 0.036614,
+        "rouge_l_recall_mean": 0.097181,
+        "top1_without_answer_substring_count": 68,
+        "top1_without_answer_substring_rate": 0.918919,
+        "top10_without_answer_substring_count": 130,
+        "top1_selected_non_first_context_count": 57,
+        "llm_judge_status_counts": {
+          "not_requested": 200
+        }
+      },
+      "candidate": {
+        "retrieval_recall_at_10": 0.41075,
+        "retrieval_mrr_at_10": 0.471954,
+        "top1_count": 74,
+        "top10_not_top1_count": 65,
+        "not_retrieved_top10_count": 61,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.0,
+        "answer_substring_accuracy": 0.12,
+        "rouge_l_f1_mean": 0.066766,
+        "rouge_l_recall_mean": 0.168425,
+        "top1_without_answer_substring_count": 52,
+        "top1_without_answer_substring_rate": 0.702703,
+        "top10_without_answer_substring_count": 117,
+        "top1_selected_non_first_context_count": 0,
+        "llm_judge_status_counts": {
+          "not_requested": 200
+        }
+      },
+      "delta_candidate_minus_baseline": {
+        "retrieval_recall_at_10_delta": 0.00125,
+        "answer_substring_accuracy_delta": 0.08,
+        "answer_substring_accuracy_multiplier": 3.0,
+        "rouge_l_f1_mean_delta": 0.030152,
+        "top1_without_answer_substring_count_delta": -16,
+        "top1_without_answer_substring_rate_delta": -0.216216
+      }
+    },
+    {
+      "id": "dmr_500_request_323_scored",
+      "label": "DMR 500 request / 323 scored",
+      "requested_samples": 500,
+      "scored_samples": 323,
+      "mapping_note": "DMR 500 request scored 323 samples under pinned punctuation mapping.",
+      "sample_sets_overlap_previous_scale_views": true,
+      "baseline_generator": "extractive",
+      "candidate_generator": "top-context-extractive",
+      "baseline": {
+        "retrieval_recall_at_10": 0.379773,
+        "retrieval_mrr_at_10": 0.468904,
+        "top1_count": 128,
+        "top10_not_top1_count": 80,
+        "not_retrieved_top10_count": 115,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.0,
+        "answer_substring_accuracy": 0.04644,
+        "rouge_l_f1_mean": 0.039487,
+        "rouge_l_recall_mean": 0.102666,
+        "top1_without_answer_substring_count": 118,
+        "top1_without_answer_substring_rate": 0.921875,
+        "top10_without_answer_substring_count": 195,
+        "top1_selected_non_first_context_count": 98,
+        "llm_judge_status_counts": {
+          "not_requested": 323
+        }
+      },
+      "candidate": {
+        "retrieval_recall_at_10": 0.379773,
+        "retrieval_mrr_at_10": 0.466147,
+        "top1_count": 127,
+        "top10_not_top1_count": 81,
+        "not_retrieved_top10_count": 115,
+        "exact_accuracy": 0.0,
+        "punctuation_accuracy": 0.0,
+        "answer_substring_accuracy": 0.120743,
+        "rouge_l_f1_mean": 0.074678,
+        "rouge_l_recall_mean": 0.183901,
+        "top1_without_answer_substring_count": 90,
+        "top1_without_answer_substring_rate": 0.708661,
+        "top10_without_answer_substring_count": 170,
+        "top1_selected_non_first_context_count": 0,
+        "llm_judge_status_counts": {
+          "not_requested": 323
+        }
+      },
+      "delta_candidate_minus_baseline": {
+        "retrieval_recall_at_10_delta": 0.0,
+        "answer_substring_accuracy_delta": 0.074303,
+        "answer_substring_accuracy_multiplier": 2.599978,
+        "rouge_l_f1_mean_delta": 0.035191,
+        "top1_without_answer_substring_count_delta": -28,
+        "top1_without_answer_substring_rate_delta": -0.213214
+      }
+    }
+  ]
+}

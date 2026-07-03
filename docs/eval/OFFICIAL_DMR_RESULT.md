@@ -44,6 +44,10 @@ DMR 50 generator ablation audit:
 
 `crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`
 
+Consolidated generator ablation summary:
+
+`crates/eval/reports/official-dmr-generator-ablation-summary.json`
+
 Smoke report:
 
 `crates/eval/reports/official-dmr-5-extractive.json`
@@ -461,6 +465,13 @@ python scripts/eval/official_dmr_answer_audit.py `
   --output crates/eval/reports/official-dmr-generator-ablation-dmr-500.json
 ```
 
+The consolidated generator ablation summary is generated from those three
+sanitized audit files:
+
+```powershell
+python scripts/eval/dmr_generator_ablation_summary.py
+```
+
 | Run | Top-1 hits | Top-1 without gold substring | Top-10 hits without gold substring | Not retrieved in top-10 | Top-1 selected non-first context |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | DMR 50 | 28 | 25 | 35 | 12 | 23 |
@@ -474,6 +485,14 @@ Bucket-level substring accuracy:
 | DMR 50 | 0.107 | 0.000 | 0.000 |
 | DMR 200 | 0.081 | 0.031 | 0.000 |
 | DMR 500 request / 323 scored | 0.078 | 0.038 | 0.017 |
+
+Generator delta summary:
+
+| Run | Substring delta | ROUGE-L F1 delta | Top-1 without substring delta |
+| --- | ---: | ---: | ---: |
+| DMR 50 | +0.160 | +0.062 | -8 |
+| DMR 200 | +0.080 | +0.030 | -16 |
+| DMR 500 request / 323 scored | +0.074 | +0.035 | -28 |
 
 ## Read
 
@@ -514,7 +533,8 @@ The DMR 500-request cross-check completes the local scale check. On the
 323-scored sample, substring accuracy rises from `0.046` to `0.121`, ROUGE-L F1
 rises from `0.039` to `0.075`, and top-1 hits without the gold substring fall
 from `118/128` to `90/127`. This makes the generator direction repeat across
-DMR 50, 200, and the largest pinned local run.
+DMR 50, 200, and the largest pinned local run. The consolidated machine-readable
+summary is `crates/eval/reports/official-dmr-generator-ablation-summary.json`.
 
 Research interpretation:
 

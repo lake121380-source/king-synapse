@@ -178,13 +178,20 @@ large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
 review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
-gold answer substring in the generated answer, so answer synthesis is now a
-separate bottleneck from retrieval/ranking. A DMR 50 generator ablation confirms
-that this is actionable: keeping answer extraction inside the top returned
-chunk raises substring accuracy from `0.060` to `0.220` without changing
-retrieval. The same direction repeats on DMR 200, where substring rises from
-`0.040` to `0.120`, and on the 323-scored DMR 500-request run, where substring
-rises from `0.046` to `0.121`.
+gold answer substring in the generated answer. That means the system can find a
+relevant chunk and still fail to turn it into the final answer. The generator
+ablation summary is recorded in
+[official-dmr-generator-ablation-summary.json](crates/eval/reports/official-dmr-generator-ablation-summary.json):
+
+| DMR scale | Extractive substring | Top-context substring | Extractive ROUGE-L F1 | Top-context ROUGE-L F1 |
+| --- | ---: | ---: | ---: | ---: |
+| 50 | 0.060 | 0.220 | 0.041 | 0.103 |
+| 200 | 0.040 | 0.120 | 0.037 | 0.067 |
+| 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
+
+So answer synthesis is now a real optimization target, but it is still
+eval-only evidence. The LLM judge is not working yet, and the absolute answer
+scores are still too low for official DMR or product claims.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
