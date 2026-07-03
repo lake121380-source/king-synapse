@@ -65,6 +65,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/readme-claims-support-audit.json",
     )
     parser.add_argument(
+        "--official-dmr-task-gate",
+        type=Path,
+        default=root / "crates/eval/reports/official-dmr-task-gate.json",
+    )
+    parser.add_argument(
         "--baseline-health",
         type=Path,
         default=latest_baseline_health_report(root),
@@ -169,6 +174,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "objective_coverage": normalize_path_arg(args.objective_coverage),
         "next_gate_readiness": normalize_path_arg(args.next_gate_readiness),
         "readme_claims_audit": normalize_path_arg(args.readme_claims_audit),
+        "official_dmr_task_gate": normalize_path_arg(args.official_dmr_task_gate),
         "baseline_health": normalize_path_arg(args.baseline_health),
     }
     reports = {name: load_json(path) for name, path in paths.items()}
@@ -178,6 +184,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     objective = reports["objective_coverage"]
     readiness = reports["next_gate_readiness"]
     readme = reports["readme_claims_audit"]
+    official_dmr = reports["official_dmr_task_gate"]
     baseline = reports["baseline_health"]
 
     baseline_passed = safe_get(baseline, ["read", "current_baseline_health"]) == "passed"
@@ -197,6 +204,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     no_ranking_default = (
         safe_get(objective, ["key_metrics", "ranking_global_default_candidate"]) is None
         and safe_get(objective, ["key_metrics", "ranking_best_safe_guard_id"]) is None
+    )
+    official_dmr_local_gate_passed = bool(
+        safe_get(official_dmr, ["status", "local_official_style_dmr_gate_passed"])
+    )
+    published_comparable_dmr_not_ready = not bool(
+        safe_get(official_dmr, ["status", "published_comparable_official_dmr_ready"])
     )
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -223,6 +236,20 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["readme_claims_audit"]],
             conclusion="README public claims remain conservative enough for validation-stage presentation.",
             failure="README contains an unsupported or missing audited claim.",
+        ),
+        check(
+            "official_dmr_local_gate_passed",
+            official_dmr_local_gate_passed,
+            evidence=[paths["official_dmr_task_gate"]],
+            conclusion="Local official-style DMR gate is passed for the pinned extractive baseline.",
+            failure="Local official-style DMR gate is not passed.",
+        ),
+        check(
+            "published_comparable_dmr_not_overstated",
+            published_comparable_dmr_not_ready,
+            evidence=[paths["official_dmr_task_gate"]],
+            conclusion="Published-comparable official DMR is still explicitly not ready.",
+            failure="Published-comparable official DMR appears ready and needs a separate release decision.",
         ),
         check(
             "raw_or_generated_data_not_committed",
@@ -308,14 +335,16 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 if current_system_gate_passed
                 else "Current Synapse needs evidence-chain repair before continuing."
             ),
-            "what_is_stable": [
+        "what_is_stable": [
                 "Feature freeze is active.",
                 "Local non-external baseline health is passed.",
+                "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],
             "what_is_not_ready": [
                 "Top-context DMR candidate judge scoring.",
+                "Published-comparable official DMR performance.",
                 "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
                 "Safe global runtime ranking default.",
                 "Production readiness or v0.1 release readiness.",

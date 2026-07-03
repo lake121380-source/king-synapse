@@ -1,0 +1,409 @@
+{
+  "schema_version": "king-synapse.official-dmr-task-gate.v1",
+  "generated_at": "2026-07-03T17:15:03.406040+00:00",
+  "runner": "scripts\\eval\\official_dmr_task_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "e355664575ef47cbbb08f2318a1f1b9372946d2b",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "official_dmr_50": {
+      "path": "crates\\eval\\reports\\official-dmr-50.json",
+      "exists": true,
+      "sha256": "5eb227a2c8c596a9fd45a76fd8797475468d2df611dcfd2067811e304e95c16f"
+    },
+    "official_dmr_200": {
+      "path": "crates\\eval\\reports\\official-dmr-200.json",
+      "exists": true,
+      "sha256": "48385325c61761b4d26974e565377c8cca1ae12a25caad48cb04f0929de8a6db"
+    },
+    "official_dmr_500": {
+      "path": "crates\\eval\\reports\\official-dmr-500.json",
+      "exists": true,
+      "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
+    },
+    "top_context_50": {
+      "path": "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
+      "exists": true,
+      "sha256": "b4769947933cdae3d42ab8def31efe0b92714fd034e11ae8137ab40809ee1b48"
+    },
+    "top_context_200": {
+      "path": "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+      "exists": true,
+      "sha256": "c598e47b6435788b01621bdd4e66eadb167431a9c13d27e709355f963bde2c8d"
+    },
+    "top_context_500": {
+      "path": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+      "exists": true,
+      "sha256": "f429d5d757711f74e865a910f769b0eac17b9e588b8c314e24628c71eb28c2a5"
+    },
+    "answer_synthesis_audit": {
+      "path": "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
+      "exists": true,
+      "sha256": "6562432c7ee7737a0e6cee621aab7f816486b59db30e963eff6ba7a793bacf4c"
+    },
+    "generator_ablation_summary": {
+      "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
+      "exists": true,
+      "sha256": "752ca7ec7a11aaa492d9f90f2de4c03705d1ff0362cfb4bb78389520d9e3ddc5"
+    },
+    "bottleneck_taxonomy": {
+      "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
+      "exists": true,
+      "sha256": "f9ab2e3fd19c6da26a44eaf6cf5f903f4a4f34308549badea8faf591dd970714"
+    },
+    "mapping_policy_review": {
+      "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+      "exists": true,
+      "sha256": "0e7da9317d0605e0f6825b0b2dbc3dda0cc3f772c3578a8b322bd7ee983bb0b2"
+    },
+    "top_context_judge_preflight": {
+      "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
+      "exists": true,
+      "sha256": "7a9f5c79747f02e69e8c410bc9e506b031fea6f2de15ac6e92246d45fdc8355f"
+    }
+  },
+  "raw_policy": {
+    "clean": true,
+    "details": {
+      "official_dmr_50": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "official_dmr_200": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "official_dmr_500": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "top_context_50": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "top_context_200": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "top_context_500": {
+        "raw_records_committed": false,
+        "raw_answers_committed": false,
+        "generated_answers_committed": false
+      },
+      "answer_synthesis_audit": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "generated_answers_committed": false
+      },
+      "generator_ablation_summary": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "generated_answers_committed": false
+      },
+      "bottleneck_taxonomy": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "generated_answers_committed": false
+      },
+      "mapping_policy_review": {},
+      "top_context_judge_preflight": {
+        "raw_records_committed": false,
+        "raw_response_committed": false,
+        "prompt_text_recorded": false
+      }
+    }
+  },
+  "baseline_runs": {
+    "dmr_50": {
+      "requested": 50,
+      "scored": 50,
+      "mapping_skipped": 0,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.46833333333333327,
+      "retrieval_mrr_at_10": 0.6183333333333333,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.02,
+      "answer_substring_accuracy": 0.06,
+      "rouge_l_f1_mean": 0.04102707749766574,
+      "llm_judge_count": 50,
+      "llm_judge_accuracy": 0.08
+    },
+    "dmr_200": {
+      "requested": 200,
+      "scored": 200,
+      "mapping_skipped": 0,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.41074999999999995,
+      "retrieval_mrr_at_10": 0.4718988095238095,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.0,
+      "answer_substring_accuracy": 0.04,
+      "rouge_l_f1_mean": 0.036509368242205624,
+      "llm_judge_count": 200,
+      "llm_judge_accuracy": 0.06
+    },
+    "dmr_500_request": {
+      "requested": 500,
+      "scored": 323,
+      "mapping_skipped": 177,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.38054695562435503,
+      "retrieval_mrr_at_10": 0.4692429603420315,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.0,
+      "answer_substring_accuracy": 0.04643962848297214,
+      "rouge_l_f1_mean": 0.03948663072683106,
+      "llm_judge_count": 323,
+      "llm_judge_accuracy": 0.04953560371517028
+    }
+  },
+  "top_context_runs": {
+    "dmr_50": {
+      "requested": 50,
+      "scored": 50,
+      "mapping_skipped": 0,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "top-context-extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.46833333333333327,
+      "retrieval_mrr_at_10": 0.6185555555555555,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.02,
+      "answer_substring_accuracy": 0.22,
+      "rouge_l_f1_mean": 0.10285224775224774,
+      "llm_judge_count": 0,
+      "llm_judge_accuracy": null
+    },
+    "dmr_200": {
+      "requested": 200,
+      "scored": 200,
+      "mapping_skipped": 0,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "top-context-extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.41074999999999995,
+      "retrieval_mrr_at_10": 0.4719543650793651,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.0,
+      "answer_substring_accuracy": 0.12,
+      "rouge_l_f1_mean": 0.06676574478740842,
+      "llm_judge_count": 0,
+      "llm_judge_accuracy": null
+    },
+    "dmr_500_request": {
+      "requested": 500,
+      "scored": 323,
+      "mapping_skipped": 177,
+      "answer_match_policy": "punctuation",
+      "retrieval_mode": "vectors-rerank",
+      "generator_policy": "top-context-extractive",
+      "accelerator_requested": "cuda",
+      "cuda_device_id": "0",
+      "retrieval_recall_at_10": 0.3797729618163055,
+      "retrieval_mrr_at_10": 0.4661469851098334,
+      "exact_accuracy": 0.0,
+      "punctuation_accuracy": 0.0,
+      "answer_substring_accuracy": 0.12074303405572756,
+      "rouge_l_f1_mean": 0.07467787461911089,
+      "llm_judge_count": 0,
+      "llm_judge_accuracy": null
+    }
+  },
+  "mapping_boundary": {
+    "source_rows": 500,
+    "punctuation_full_answer_coverage": 323,
+    "punctuation_full_answer_coverage_ratio": 0.646,
+    "rejected_by_punctuation": 177,
+    "token_containment_rejected_by_punctuation": 122,
+    "no_diagnostic_match": 3
+  },
+  "largest_local_view": {
+    "label": "DMR 500 request / 323 scored",
+    "scored_samples": 323,
+    "retrieved_top10_count": 209,
+    "not_retrieved_top10_count": 114,
+    "top1_count": 128,
+    "baseline_top1_without_answer_substring_count": 118,
+    "baseline_top10_without_answer_substring_count": 196,
+    "baseline_top1_selected_non_first_context_count": 99,
+    "candidate_top1_without_answer_substring_count": 90,
+    "candidate_top10_without_answer_substring_count": 170,
+    "candidate_substring_accuracy_delta": 0.074303,
+    "candidate_rouge_l_f1_delta": 0.035191
+  },
+  "checks": [
+    {
+      "id": "answer_generation_scoring_surface_present",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json",
+        "crates\\eval\\reports\\official-dmr-500.json"
+      ],
+      "conclusion": "Pinned extractive DMR reports include exact, punctuation-normalized, substring, ROUGE-L, and LLM judge surfaces.",
+      "remaining": []
+    },
+    {
+      "id": "baseline_extractive_judge_backed",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json",
+        "crates\\eval\\reports\\official-dmr-500.json"
+      ],
+      "conclusion": "Pinned extractive DMR reports are fully judge-backed for their scored rows.",
+      "remaining": []
+    },
+    {
+      "id": "cuda_device_0_for_pinned_runs",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json",
+        "crates\\eval\\reports\\official-dmr-500.json",
+        "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json"
+      ],
+      "conclusion": "Pinned official-style DMR and top-context ablation reports record CUDA device 0.",
+      "remaining": []
+    },
+    {
+      "id": "dmr_50_200_fully_scored",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json"
+      ],
+      "conclusion": "DMR 50 and DMR 200 are fully scored under the pinned punctuation mapping policy.",
+      "remaining": []
+    },
+    {
+      "id": "dmr_500_request_honestly_partial",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-500.json",
+        "crates\\eval\\reports\\dmr-mapping-policy-review.json"
+      ],
+      "conclusion": "The DMR 500-request view is honestly recorded as 323 scored rows and 177 punctuation-mapping rejections.",
+      "remaining": []
+    },
+    {
+      "id": "bottlenecks_separated",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json"
+      ],
+      "conclusion": "Mapping coverage, retrieval/ranking, and answer synthesis are separated in the committed taxonomy.",
+      "remaining": []
+    },
+    {
+      "id": "top_context_direction_repeats",
+      "status": "partial",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json"
+      ],
+      "conclusion": "Top-context extraction improves substring and ROUGE-L on every current scale view, but remains evaluation-only.",
+      "remaining": [
+        "Judge-score top-context before making stronger answer-quality claims."
+      ]
+    },
+    {
+      "id": "top_context_candidate_judge_scoring",
+      "status": "blocked_external",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
+      ],
+      "conclusion": "Top-context candidate judge scoring is not complete; latest preflight status is authorization_error.",
+      "remaining": [
+        "Provide valid judge authorization and rerun top-context DMR judge scoring."
+      ]
+    },
+    {
+      "id": "raw_or_generated_data_not_committed",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-50.json",
+        "crates\\eval\\reports\\official-dmr-200.json",
+        "crates\\eval\\reports\\official-dmr-500.json",
+        "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
+        "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
+        "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
+        "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+        "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
+      ],
+      "conclusion": "Audited DMR reports do not record committed raw records, prompts, responses, answers, dialogs, memory content, or generated answers.",
+      "remaining": []
+    }
+  ],
+  "status_counts": {
+    "satisfied": 7,
+    "partial": 1,
+    "blocked_external": 1
+  },
+  "status": {
+    "local_official_style_dmr_gate_passed": true,
+    "published_comparable_official_dmr_ready": false,
+    "top_context_judge_ready": false,
+    "runtime_generator_change_allowed": false,
+    "runtime_ranking_change_allowed": false,
+    "hard_failures": [],
+    "open_gates": [
+      "top_context_candidate_not_judge_scored",
+      "published_comparable_mapping_policy_not_final",
+      "answer_synthesis_quality_not_ready_for_official_claims"
+    ]
+  },
+  "read": {
+    "current_conclusion": "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline, but it is not yet a published-comparable official DMR result.",
+    "strongest_supported_result": "The baseline path now covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view.",
+    "weak_surfaces": [
+      "DMR 500-request has 177 punctuation-mapping rejections before scoring.",
+      "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
+      "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
+      "Top-context extraction improves lexical metrics but is not judge-scored and still leaves 90 top-1 misses on the largest local view."
+    ],
+    "next_action": "Keep feature freeze. If judge authorization is fixed, run judge-scored top-context DMR 50; otherwise keep DMR work limited to validation-only diagnostics and do not change runtime defaults."
+  },
+  "limits": [
+    "This gate reads committed sanitized aggregate DMR reports only.",
+    "It does not rerun retrieval, answer generation, LLM judges, hosted adapters, or product code.",
+    "It does not inspect raw questions, answers, dialogs, memory content, generated answers, prompts, responses, or API keys.",
+    "A passing local official-style DMR gate is not a published-comparable official DMR claim."
+  ]
+}

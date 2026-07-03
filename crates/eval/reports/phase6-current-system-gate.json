@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T17:08:38.454182+00:00",
+  "generated_at": "2026-07-03T17:15:04.260033+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "18380cddd2128b616c6e623e880e945dca48e7ea",
+    "commit": "e355664575ef47cbbb08f2318a1f1b9372946d2b",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,7 +26,12 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "975663bc34bad67038739b7de11f3241ec295f034b37c4f6c4e4d0a5668187f5"
+      "sha256": "bd56f94be72f604613bccbc4b15471649f63647ae0431b812e5df8637b4cd716"
+    },
+    "official_dmr_task_gate": {
+      "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
+      "exists": true,
+      "sha256": "b7caf4e8851d45bc9d3e0de9b1fac7d127ce915fb841df10d7d8420a0daa0533"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -63,6 +68,24 @@
       "conclusion": "README public claims remain conservative enough for validation-stage presentation."
     },
     {
+      "id": "official_dmr_local_gate_passed",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-task-gate.json"
+      ],
+      "conclusion": "Local official-style DMR gate is passed for the pinned extractive baseline."
+    },
+    {
+      "id": "published_comparable_dmr_not_overstated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\official-dmr-task-gate.json"
+      ],
+      "conclusion": "Published-comparable official DMR is still explicitly not ready."
+    },
+    {
       "id": "raw_or_generated_data_not_committed",
       "status": "passed",
       "severity": "required",
@@ -71,6 +94,7 @@
         "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\readme-claims-support-audit.json",
+        "crates\\eval\\reports\\official-dmr-task-gate.json",
         "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json"
       ],
       "conclusion": "Audited aggregate reports do not record committed raw records, prompts, answers, dialogs, memory content, or generated answers."
@@ -132,6 +156,7 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "official_dmr_task_gate": {},
       "baseline_health": {
         "raw_records_committed": false,
         "generated_answers_committed": false
@@ -157,11 +182,13 @@
     "what_is_stable": [
       "Feature freeze is active.",
       "Local non-external baseline health is passed.",
+      "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],
     "what_is_not_ready": [
       "Top-context DMR candidate judge scoring.",
+      "Published-comparable official DMR performance.",
       "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
       "Safe global runtime ranking default.",
       "Production readiness or v0.1 release readiness."

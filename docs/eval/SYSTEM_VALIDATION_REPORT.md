@@ -584,6 +584,21 @@ Phase 6 objective coverage audit:
   policy not final, no safe global ranking default, and productization not
   ready.
 
+Official DMR task gate:
+
+- `crates/eval/reports/official-dmr-task-gate.json` consolidates the current
+  official-style DMR evidence into one Phase 2 gate.
+- The current local gate is passed:
+  `local_official_style_dmr_gate_passed: true`. This is limited to the pinned
+  extractive baseline, where DMR 50, DMR 200, and the DMR 500-request /
+  323-scored CUDA view have retrieval -> answer generation -> exact,
+  punctuation, ROUGE-L, and LLM judge scoring.
+- The same gate keeps `published_comparable_official_dmr_ready: false` and
+  `top_context_judge_ready: false`.
+- Its open gates are top-context candidate judge scoring, published-comparable
+  mapping policy, and answer-synthesis quality. It does not permit runtime
+  generator or ranking changes.
+
 README claims support audit:
 
 - `crates/eval/reports/readme-claims-support-audit.json` checks current README

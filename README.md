@@ -273,6 +273,7 @@ comparison adapters or optional embedding/reranking paths.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
 - The Phase 6 requirements audit keeps productization blocked until official DMR, hosted comparison, ranking, and demo-claim gaps close.
 - The current-system gate passes only for validation work: `current_system_gate_passed: true`, `heavy_next_gate_ready: false`, and `productization_allowed: false`.
+- The official DMR task gate passes only for the local extractive baseline: `local_official_style_dmr_gate_passed: true`, while `published_comparable_official_dmr_ready: false`.
 - The deterministic long-horizon cognitive benchmark passes, but broader real-world long-horizon evidence is still open.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
@@ -324,6 +325,7 @@ cargo build --release
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
 | `crates/eval/reports/phase6-current-system-gate.json` | One-file Phase 6 gate: current system can continue validation, while heavy next-gate and productization remain blocked. |
+| `crates/eval/reports/official-dmr-task-gate.json` | One-file DMR task gate: local official-style DMR evidence passes, while published-comparable DMR remains blocked. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |
