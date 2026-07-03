@@ -737,6 +737,19 @@ Current system gate:
   validation, productization decision no-go, next validation action waiting on
   external preconditions, and productization.
 
+Phase 6 evidence freshness audit:
+
+- `crates/eval/reports/phase6-evidence-freshness-audit.json` checks whether the
+  main Phase 6 reports' recorded input hashes still match current workspace
+  files.
+- The current result is `evidence_freshness_audit_passed: true`: 10 reports are
+  checked, 128 input hashes are fresh, and 4 inputs are classified as allowed
+  aggregate-report cycle lag rather than hard stale evidence.
+- This is a no-model / no-external audit. It does not rerun benchmark logic,
+  judges, hosted adapters, retrieval, or generation.
+- It is intentionally kept outside the current-system gate to avoid creating a
+  self-reference loop; use it as a freshness diagnostic for the evidence chain.
+
 Phase 6 next-gate readiness:
 
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
