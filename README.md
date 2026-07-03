@@ -178,9 +178,9 @@ questions, answers, or generated text:
 | 500 request / 323 scored CUDA samples | 0.380 | 0.000 | 0.046 | 0.039 | not requested |
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
-This is still not a published-comparable official DMR result. A later 5-sample
-judge probe still returned DeepSeek authorization errors, so the remaining
-boundary is a successful fixed LLM judge. The mapping-policy review keeps
+This is still not a published-comparable official DMR result. A later isolated
+DeepSeek judge preflight still returned HTTP 401 with an API key present, so the
+remaining boundary is a successful fixed LLM judge. The mapping-policy review keeps
 punctuation full-answer mapping as the pinned local boundary, so the honest
 large-run claim is `500 request / 323 scored`, not `500/500`. The scoring
 review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).

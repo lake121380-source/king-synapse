@@ -3,8 +3,8 @@
 Date: 2026-07-03
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
-323 mappable samples; the latest 5-sample DeepSeek judge probe still returns
-authorization errors, so fixed LLM judge scoring is unresolved.
+323 mappable samples; the latest DeepSeek judge preflight still returns HTTP
+401 with an API key present, so fixed LLM judge scoring is unresolved.
 
 Machine-readable report:
 
@@ -56,6 +56,10 @@ Judge probe:
 
 `crates/eval/reports/official-dmr-judge-probe.json`
 
+Judge preflight:
+
+`crates/eval/reports/official-dmr-judge-preflight.json`
+
 Answer-synthesis audit:
 
 `crates/eval/reports/official-dmr-answer-synthesis-audit.json`
@@ -98,6 +102,7 @@ The runner is:
 | DMR 500 request | 500 | 323 | 177 | not requested |
 | DMR 500-request top-context generator | 500 | 323 | 177 | not requested |
 | Judge probe | 5 | 5 | 1 | 5 authorization errors |
+| Judge preflight | 1 synthetic request | 0 DMR samples | 0 | HTTP 401 authorization error |
 
 The mapping-skip number is the count of source rows rejected before building
 the scored sample because the answer-to-memory mapping policy did not find the
@@ -423,6 +428,30 @@ python scripts/eval/official_dmr_eval.py `
 | HTTP status | 401 |
 | LLM judge accuracy | not available |
 
+## Judge Preflight
+
+This preflight isolates the DeepSeek judge configuration from DMR retrieval,
+answer generation, CUDA, and dataset mapping. It sends one synthetic judgement
+request and commits only sanitized status metadata.
+
+```powershell
+python scripts/eval/deepseek_judge_preflight.py `
+  --output crates/eval/reports/official-dmr-judge-preflight.json
+```
+
+| Field | Value |
+| --- | --- |
+| API key present | true |
+| API key committed | false |
+| Prompt text recorded | false |
+| Raw response committed | false |
+| Status | authorization_error |
+| HTTP status | 401 |
+| Decision | judge_configuration_still_blocked |
+
+Read: the judge path is blocked before DMR scoring starts. Do not spend GPU time
+rerunning DMR judge reports until this preflight returns `judged`.
+
 ## Answer-Synthesis Audit
 
 The answer-synthesis audit reads the existing sanitized official-style reports
@@ -547,13 +576,14 @@ not yield 500 scored official-style examples. The mapping policy review keeps
 punctuation full-answer mapping as the pinned local boundary and treats
 relaxed-token mapping as a separate diagnostic option.
 
-The LLM judge path was exercised twice and did not produce judged samples. The
-DMR 50 run returned authorization errors for all 50 requests. The later
-5-sample judge probe also returned `authorization_error` for all 5 requests,
-with HTTP status `401`. This is a judge authorization/configuration failure,
-not a retrieval or answer scoring failure. DMR 200 and the DMR 500-request run
-therefore skipped the judge intentionally and should be read as lexical /
-ROUGE-L local scoring only.
+The LLM judge path has not produced judged samples. The DMR 50 run returned
+authorization errors for all 50 requests. The later 5-sample judge probe also
+returned `authorization_error` for all 5 requests, with HTTP status `401`. The
+isolated DeepSeek preflight now confirms the same HTTP `401` with an API key
+present, before any DMR retrieval or answer generation runs. This is a judge
+authorization/configuration failure, not a retrieval or answer scoring failure.
+DMR 200 and the DMR 500-request run therefore skipped the judge intentionally
+and should be read as lexical / ROUGE-L local scoring only.
 
 ## Boundary
 
@@ -575,8 +605,8 @@ Reasons:
 ## Next Step
 
 Do not rerun the DMR 50 judge path until the authorization/configuration is
-fixed outside the repository. The next judge gate is a small probe with at
-least one successful `judged` sample. After that, rerun DMR 50 with the fixed
-judge. Ranking work should continue on the pinned punctuation-mapped dataset;
-any relaxed-token coverage run must be separately labeled and validated before
-it is used for conclusions.
+fixed outside the repository. The next judge gate is
+`official-dmr-judge-preflight.json` returning `judged`; after that, rerun the
+5-sample DMR judge probe, then DMR 50 with the fixed judge. Ranking work should
+continue on the pinned punctuation-mapped dataset; any relaxed-token coverage
+run must be separately labeled and validated before it is used for conclusions.

@@ -194,6 +194,9 @@ DMR boundary:
 - `crates/eval/reports/official-dmr-judge-probe.json` records a later
   5-sample judge probe using the same sanitized official-style path. It also
   returned `5/5` DeepSeek authorization errors with HTTP status `401`.
+- `crates/eval/reports/official-dmr-judge-preflight.json` records an isolated
+  synthetic DeepSeek judge preflight. It returned HTTP `401` with an API key
+  present, before any DMR retrieval or answer generation step ran.
 - `crates/eval/reports/official-dmr-answer-synthesis-audit.json` records a
   sanitized answer-synthesis audit over the existing official-style reports.
   It shows that answer synthesis is a separate bottleneck: in the 323-scored
@@ -243,7 +246,9 @@ top-context generator ablation shows the answer-synthesis boundary can move,
 and the DMR 200 plus 500-request cross-checks repeat the direction. The
 consolidated generator summary now records that repeated direction in one
 machine-readable file. It still needs LLM judge validation before becoming a
-default or product claim. LLM judge configuration is still unresolved.
+default or product claim. LLM judge configuration is still unresolved; the
+isolated preflight confirms the current block is external judge authorization,
+not the DMR runner.
 
 Long-horizon cognitive validation:
 
@@ -445,6 +450,7 @@ GPU validation status:
 - Details are recorded in `docs/eval/GPU_VALIDATION_2026-07-02.md`.
 
 Next required action: keep feature growth frozen, fix the LLM judge
-authorization/configuration outside the repository, run a small probe with at
-least one successful `judged` sample, and keep answer-synthesis work in
-evaluation mode until a judge-backed result confirms the local lexical trend.
+authorization/configuration outside the repository, rerun the isolated
+preflight until it returns `judged`, then run a small DMR probe with at least
+one successful `judged` sample. Keep answer-synthesis work in evaluation mode
+until a judge-backed result confirms the local lexical trend.
