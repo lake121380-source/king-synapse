@@ -297,9 +297,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "it is a separate diagnostic policy and cannot be silently promoted."
             ),
             "next_action": (
-                "Do not change runtime defaults. Top-context DMR 50 is now "
-                "judge-scored; the next DMR validation expansion is DMR 200 "
-                "top-context judge scoring, otherwise continue with hosted "
+                "Do not change runtime defaults. Top-context DMR 50 and 200 "
+                "are now judge-scored; the next DMR validation expansion is "
+                "DMR 500 top-context judge scoring, otherwise continue with hosted "
                 "external comparison when credentials/endpoints are ready."
             ),
         },

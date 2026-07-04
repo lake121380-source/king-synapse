@@ -149,6 +149,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
         "official_dmr_50_top_context_judge": root
         / "crates/eval/reports/official-dmr-50-top-context-judge.json",
+        "official_dmr_200_top_context_judge": root
+        / "crates/eval/reports/official-dmr-200-top-context-judge.json",
         "phase6_next_gate_readiness": root
         / "crates/eval/reports/phase6-next-gate-readiness.json",
         "official_dmr_task_gate": root
@@ -258,24 +260,25 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_bottleneck_taxonomy"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
                 report_path(paths["official_dmr_50_top_context_judge"]),
+                report_path(paths["official_dmr_200_top_context_judge"]),
                 report_path(paths["phase6_next_gate_readiness"]),
                 report_path(paths["official_dmr_task_gate"]),
             ],
             conclusion=(
                 "Retrieval -> answer generation -> local scoring exists for 50, "
                 "200, and 500-request DMR views. Baseline extractive runs are "
-                "judge-backed, DMR 50 top-context is judge-backed, but absolute "
-                "answer quality remains low and larger top-context candidate "
-                "views are not judge-scored."
+                "judge-backed, DMR 50 and 200 top-context are judge-backed, but "
+                "absolute answer quality remains low and the largest "
+                "top-context candidate view is not judge-scored."
             ),
             remaining=[
                 "Published-comparable DMR mapping/scoring policy is not finalized.",
                 "500-request run honestly scores 323 mappable samples, not 500/500.",
-                "Top-context DMR 200/500 candidate views are not judge-scored yet.",
+                "Top-context DMR 500-request candidate view is not judge-scored yet.",
                 "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
                 "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits.",
             ],
-            next_action="Judge-score top-context DMR 200 if continuing this DMR branch, before any broader claim.",
+            next_action="Judge-score top-context DMR 500 if continuing this DMR branch, before any broader claim.",
         ),
         build_phase(
             phase="3_ranking_without_architecture_change",
@@ -366,7 +369,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     open_phases = [phase["phase"] for phase in phases if phase["status"] not in {"active_policy"}]
     blocking_gaps = [
         "published_comparable_dmr_not_finished",
-        "top_context_200_500_not_judge_scored",
+        "top_context_500_not_judge_scored",
         "no_global_ranking_default_supported",
         "hosted_external_comparison_not_configured",
         "future_evidence_labeling_boundary",
@@ -504,9 +507,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "blocking_gaps": blocking_gaps,
             "recommended_next_action": (
                 "Keep feature freeze. The next-validation action gate says no "
-                "heavy validation branch is currently selected: DMR 50 "
-                "top-context judge scoring is complete, and the next choice is "
-                "either DMR 200 top-context expansion or hosted external "
+                "heavy validation branch is currently selected: DMR 50 and 200 "
+                "top-context judge scoring are complete, and the next choice is "
+                "either DMR 500 top-context expansion or hosted external "
                 "comparison once credentials/endpoints are ready."
             ),
         },

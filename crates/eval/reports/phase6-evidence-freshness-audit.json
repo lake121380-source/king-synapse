@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-evidence-freshness-audit.v1",
-  "generated_at": "2026-07-04T01:53:12.450308+00:00",
+  "generated_at": "2026-07-04T02:25:30.764853+00:00",
   "runner": "scripts\\eval\\phase6_evidence_freshness_audit.py",
   "git": {
     "branch": "main",
-    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
     "origin_main_delta": "0\t0"
   },
   "raw_records_committed": false,
@@ -18,9 +18,24 @@
       "report": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
       "schema_version": "king-synapse.phase6-requirements-audit.v1",
-      "generated_at": "2026-07-04T01:53:08.328319+00:00",
+      "generated_at": "2026-07-04T02:24:04.132973+00:00",
       "runner": "scripts\\eval\\phase6_requirements_audit.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
+      "input_count": 31,
+      "status_counts": {
+        "cycle_lag": 2,
+        "fresh": 29
+      },
+      "fresh": true,
+      "stale_inputs": []
+    },
+    {
+      "report": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
+      "exists": true,
+      "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
+      "generated_at": "2026-07-04T02:24:04.769711+00:00",
+      "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 30,
       "status_counts": {
         "cycle_lag": 2,
@@ -30,27 +45,12 @@
       "stale_inputs": []
     },
     {
-      "report": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
-      "exists": true,
-      "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
-      "generated_at": "2026-07-04T01:53:08.981809+00:00",
-      "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
-      "input_count": 29,
-      "status_counts": {
-        "cycle_lag": 2,
-        "fresh": 27
-      },
-      "fresh": true,
-      "stale_inputs": []
-    },
-    {
       "report": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
       "schema_version": "king-synapse.official-dmr-task-gate.v1",
-      "generated_at": "2026-07-04T01:52:25.338650+00:00",
+      "generated_at": "2026-07-04T02:22:50.081210+00:00",
       "runner": "scripts\\eval\\official_dmr_task_gate.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 11,
       "status_counts": {
         "fresh": 11
@@ -76,9 +76,9 @@
       "report": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
       "schema_version": "king-synapse.external-comparison-task-gate.v1",
-      "generated_at": "2026-07-04T01:53:07.630721+00:00",
+      "generated_at": "2026-07-04T02:23:39.903179+00:00",
       "runner": "scripts\\eval\\external_comparison_task_gate.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 4,
       "status_counts": {
         "fresh": 4
@@ -104,9 +104,9 @@
       "report": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
       "schema_version": "king-synapse.productization-decision-gate.v1",
-      "generated_at": "2026-07-04T01:53:09.331517+00:00",
+      "generated_at": "2026-07-04T02:24:05.077418+00:00",
       "runner": "scripts\\eval\\productization_decision_gate.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 11,
       "status_counts": {
         "fresh": 11
@@ -118,9 +118,9 @@
       "report": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
       "schema_version": "king-synapse.next-validation-action-gate.v1",
-      "generated_at": "2026-07-04T01:53:09.769328+00:00",
+      "generated_at": "2026-07-04T02:24:05.503336+00:00",
       "runner": "scripts\\eval\\next_validation_action_gate.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 6,
       "status_counts": {
         "fresh": 6
@@ -132,9 +132,9 @@
       "report": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
       "schema_version": "king-synapse.readme-claims-support-audit.v1",
-      "generated_at": "2026-07-04T01:53:10.450596+00:00",
+      "generated_at": "2026-07-04T02:24:06.192540+00:00",
       "runner": "scripts\\eval\\readme_claims_support_audit.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 20,
       "status_counts": {
         "fresh": 20
@@ -146,9 +146,9 @@
       "report": "crates\\eval\\reports\\phase6-current-system-gate.json",
       "exists": true,
       "schema_version": "king-synapse.phase6-current-system-gate.v1",
-      "generated_at": "2026-07-04T01:53:11.571141+00:00",
+      "generated_at": "2026-07-04T02:25:29.843873+00:00",
       "runner": "scripts\\eval\\phase6_current_system_gate.py",
-      "git_commit_recorded": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+      "git_commit_recorded": "f1d639098cebef09b544b75a09d5563b9c481d4e",
       "input_count": 12,
       "status_counts": {
         "fresh": 12
@@ -170,7 +170,7 @@
     ],
     "input_status_counts": {
       "cycle_lag": 4,
-      "fresh": 131
+      "fresh": 133
     }
   },
   "read": {

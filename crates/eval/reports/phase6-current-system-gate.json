@@ -1,37 +1,37 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T01:53:11.571141+00:00",
+  "generated_at": "2026-07-04T02:25:29.843873+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "46ad1f8dfe0890d1b5a1599c08795328e3b078479f07732c09547ac0cd7e1e0d"
+      "sha256": "69c742785a59f91c0dbfd705ac55a1d377153527d66dad9bb2d5c24ccec3dc83"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "37fefa25fdd0a21286fedb4869d7edb6eb609330b385b4a9abbdde393b2388c7"
+      "sha256": "fa4f30c44810f12c93f4cd494db6b25cfc54236711da4c612f1533410d6b309c"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "ff6f9ef4d226a779b39ea6af0cef825109cc669e9d2176e5d9ce7be955a74f55"
+      "sha256": "e1cf9b5382e41e9b58632708487ad4f82209d9986ca52f7e668819386aadd643"
     },
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "15009d4523b822fa45ca778c02cd50d612385a3d386cdaa3726d7b9c3b1f530d"
+      "sha256": "7a447ff2f1542ce62c733a5d8874b3d56f516c8e69fc9a18411e1507e9be57ed"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "8b03c8451ddd63197500e100c52da392f59310e6ab9280c7f6e9f381fc7d41da"
+      "sha256": "1eb20ddb36c6f54902b74b544db27dcfb484024f91f37ee4d0c585e468d181f3"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -41,7 +41,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "001747a6f2a718c56eff42607789a35e4481dee0c8e7d5c5499174aa57ca474d"
+      "sha256": "c79936d24a6abf85e6c1d4c72814ce6ea5f1d68e9b50c824edd57915ccaa433c"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -51,12 +51,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "919d8584e911eeb2643f08f9935a4d114a814e7f73952e7ddcccbb8087183305"
+      "sha256": "ea02e756e6c65a214a623cb28ae3f1997b0a821f39da99f8a35c0ed244857bed"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "66695be2bfd471d346b76e6cd6557b320608229970c28fcc688254118fdaecfd"
+      "sha256": "95333d194810d75f94d7e052b1b50bc1f5cd6f75cb7196d8e3702b08dfda0613"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -66,7 +66,7 @@
     "feature_freeze_audit": {
       "path": "crates\\eval\\reports\\phase6-feature-freeze-audit.json",
       "exists": true,
-      "sha256": "4e0dca5bb96106ddde6f5586b68bb6a9f401964121318f635440cca79b39ed75"
+      "sha256": "643929a0e33335562d471c23599b56e792c47fe674978b4633e61829c62b7cc0"
     }
   },
   "checks": [
@@ -388,7 +388,7 @@
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
-      "top_context_200_500_not_judge_scored",
+      "top_context_500_not_judge_scored",
       "hosted_external_comparison_not_configured",
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
@@ -407,7 +407,7 @@
       "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
       "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
       "Productization decision is gate-backed as no-go / validation-only.",
-      "Next validation action is gate-backed: wait for external preconditions before heavy reruns.",
+      "Next validation action is gate-backed: select DMR 500 expansion scope or wait for hosted configuration before heavy reruns.",
       "README claims are conservative enough against committed evidence.",
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],

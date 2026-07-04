@@ -184,6 +184,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "official_dmr_500": root / "crates/eval/reports/official-dmr-500.json",
         "official_dmr_50_top_context_judge": root
         / "crates/eval/reports/official-dmr-50-top-context-judge.json",
+        "official_dmr_200_top_context_judge": root
+        / "crates/eval/reports/official-dmr-200-top-context-judge.json",
         "official_dmr_generator_summary": root
         / "crates/eval/reports/official-dmr-generator-ablation-summary.json",
         "official_dmr_bottleneck_taxonomy": root
@@ -391,25 +393,26 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     status="partial",
                     evidence=[
                         report_path(paths["official_dmr_50_top_context_judge"]),
+                        report_path(paths["official_dmr_200_top_context_judge"]),
                         report_path(paths["official_dmr_task_gate"]),
                     ],
                     conclusion=(
-                        "DMR 50 top-context candidate is now judge-scored; "
-                        "DMR 200 and 500-request top-context views remain "
+                        "DMR 50 and 200 top-context candidates are now judge-scored; "
+                        "the 500-request top-context view remains "
                         "lexical/ROUGE-only."
                     ),
                     remaining=[
-                        "Judge-score DMR 200/500 top-context before broader answer-quality claims."
+                        "Judge-score DMR 500 top-context before broader answer-quality claims."
                     ],
                 ),
             ],
             conclusion=(
                 "Official-style DMR is executable and judge-backed for the pinned "
-                "extractive baseline plus the DMR 50 top-context candidate, but it "
-                "is not published-comparable and larger candidate views are still "
+                "extractive baseline plus the DMR 50 and 200 top-context candidates, but it "
+                "is not published-comparable and the largest candidate view is still "
                 "not judge-scored."
             ),
-            next_action="If continuing the DMR branch, judge-score DMR 200 top-context next.",
+            next_action="If continuing the DMR branch, judge-score DMR 500 top-context next.",
         ),
         phase(
             phase_id="3_ranking_without_architecture_change",
@@ -622,7 +625,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     ],
                     conclusion=(
                         "Pinned official-style DMR exists, but answer quality is low, "
-                        "mapping coverage is partial, and top-context DMR 200/500 are not judge-scored."
+                        "mapping coverage is partial, and top-context DMR 500 is not judge-scored."
                     ),
                 ),
                 requirement(
@@ -736,7 +739,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "published-comparable and hosted-comparison gates are still open."
             ),
             "most_important_open_gates": [
-                "top_context_200_500_not_judge_scored",
+                "top_context_500_not_judge_scored",
                 "hosted_external_comparison_not_configured",
                 "published_comparable_dmr_mapping_policy_not_final",
                 "no_safe_global_ranking_default",
@@ -746,8 +749,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "productization_not_ready",
             ],
             "next_action": (
-                "Keep feature freeze. DMR 50 top-context judge scoring is complete; "
-                "the next validation action is to select DMR 200 top-context "
+                "Keep feature freeze. DMR 50 and 200 top-context judge scoring are complete; "
+                "the next validation action is to select DMR 500 top-context "
                 "expansion or wait for hosted competitor credentials/endpoints."
             ),
         },

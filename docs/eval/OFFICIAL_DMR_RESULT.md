@@ -5,7 +5,7 @@ Date: 2026-07-04
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
 323 mappable samples; DeepSeek judge preflight and judge probe now return
 `judged` on `deepseek-v4-flash`, and the pinned 5 / 50 / 200 / 500-request
-runs plus the DMR 50 top-context candidate are now judged locally. A sanitized
+runs plus the DMR 50 / 200 top-context candidates are now judged locally. A sanitized
 bottleneck taxonomy now separates mapping coverage, retrieval/ranking, and
 answer-synthesis limits.
 
@@ -34,6 +34,10 @@ DMR 200 generator ablation report:
 DMR 200 generator ablation audit:
 
 `crates/eval/reports/official-dmr-generator-ablation-dmr-200.json`
+
+DMR 200 top-context judge report:
+
+`crates/eval/reports/official-dmr-200-top-context-judge.json`
 
 Pinned DMR 50 report:
 
@@ -113,7 +117,7 @@ The runner is:
 | DMR 50 | 50 | 50 | 31 | 50 judged / 0 error |
 | DMR 50 top-context generator | 50 | 50 | 31 | 50 judged / 0 error |
 | DMR 200 | 200 | 200 | 111 | 200 judged / 0 error |
-| DMR 200 top-context generator | 200 | 200 | 111 | not requested |
+| DMR 200 top-context generator | 200 | 200 | 111 | 200 judged / 0 error |
 | DMR 500 request | 500 | 323 | 177 | 323 judged / 0 error |
 | DMR 500-request top-context generator | 500 | 323 | 177 | not requested |
 | Judge probe | 5 | 5 | 1 | 5 judged / 0 error |
@@ -255,7 +259,8 @@ python scripts/eval/official_dmr_eval.py `
 
 This repeats the `top-context-extractive` generator ablation on the 200-sample
 DMR run. It is still evaluation-only: same sample size, mapping policy,
-retrieval mode, top-k, CUDA settings, and no LLM judge.
+retrieval mode, top-k, and CUDA settings. It is now also judge-scored on
+`deepseek-v4-flash`.
 
 ```powershell
 python scripts/eval/official_dmr_eval.py `
@@ -265,27 +270,29 @@ python scripts/eval/official_dmr_eval.py `
   --mode vectors-rerank `
   --k 10 `
   --generator top-context-extractive `
-  --llm-judge none `
+  --llm-judge deepseek `
+  --judge-model deepseek-v4-flash `
   --accelerator cuda `
   --cuda-device-id 0 `
   --embed-batch-size 32 `
   --embed-max-length 256 `
   --rerank-batch-size 32 `
   --rerank-max-length 256 `
-  --output crates/eval/reports/official-dmr-200-top-context-extractive.json `
+  --output crates/eval/reports/official-dmr-200-top-context-judge.json `
   --cleanup-cache
 ```
 
-| Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Top-1 without substring |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| extractive | 0.411 | 0.000 | 0.000 | 0.040 | 0.037 | 68/74 |
-| top-context-extractive | 0.411 | 0.000 | 0.000 | 0.120 | 0.067 | 52/74 |
+| Generator | Retrieval Recall@10 | Exact | Punctuation | Gold substring | ROUGE-L F1 | Judge |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| extractive | 0.411 | 0.000 | 0.000 | 0.040 | 0.037 | 200 judged / acc 0.06 |
+| top-context-extractive | 0.411 | 0.000 | 0.000 | 0.120 | 0.066 | 200 judged / acc 0.15 |
 
 The retrieval numbers are from separate CUDA runs with the same configuration,
 so they are aligned but not bit-identical. The answer-generation direction
 repeats: restricting extraction to the top returned context improves substring
 accuracy and ROUGE-L on the 200-sample run, but the absolute answer score is
-still low.
+still low. The judged result repeats the DMR 50 direction with a smaller
+absolute judge gain: DMR 200 judge accuracy rises from `0.06` to `0.15`.
 
 
 ## DMR 50 Run
@@ -546,9 +553,9 @@ python scripts/eval/deepseek_judge_preflight.py `
 | HTTP status | 200 |
 | Decision | ready_for_official_dmr_judge_rerun |
 
-Read: the pinned extractive reports remain judge-backed evidence, and DMR 50
-top-context is now judge-backed evidence too. DMR 200 and the DMR 500-request
-top-context candidate remain lexical/ROUGE-only until their judge runs are
+Read: the pinned extractive reports remain judge-backed evidence, and DMR 50 /
+200 top-context are now judge-backed evidence too. The DMR 500-request
+top-context candidate remains lexical/ROUGE-only until its judge run is
 explicitly selected.
 
 ## Answer-Synthesis Audit
@@ -580,7 +587,7 @@ And the DMR 200 generator ablation:
 ```powershell
 python scripts/eval/official_dmr_answer_audit.py `
   --reports crates/eval/reports/official-dmr-200.json `
-            crates/eval/reports/official-dmr-200-top-context-extractive.json `
+            crates/eval/reports/official-dmr-200-top-context-judge.json `
   --output crates/eval/reports/official-dmr-generator-ablation-dmr-200.json
 ```
 
@@ -689,7 +696,7 @@ machine-readable summary is
 `crates/eval/reports/official-dmr-generator-ablation-summary.json`; it also
 records that the extractive baseline reports are judge-backed on all pinned
 runs while the top-context generator ablation is judge-backed on DMR 50 and
-lexical/ROUGE-only on DMR 200 and the 500-request view.
+DMR 200, and lexical/ROUGE-only on the 500-request view.
 
 Research interpretation:
 
@@ -703,14 +710,15 @@ punctuation full-answer mapping as the pinned local boundary and treats
 relaxed-token mapping as a separate diagnostic option.
 
 The LLM judge path now produces judged samples on `deepseek-v4-flash` for the
-pinned official runs and the DMR 50 top-context candidate. The DMR 50 run
-returned `50` judged samples; the DMR 200 run returned `200` judged samples;
-the 500-request run returned `323` judged samples on the mappable subset; and
-the DMR 50 top-context candidate returned `50` judged samples. The 5-sample
+pinned official runs and the DMR 50 / 200 top-context candidates. The DMR 50
+run returned `50` judged samples; the DMR 200 run returned `200` judged
+samples; the 500-request run returned `323` judged samples on the mappable
+subset; the DMR 50 top-context candidate returned `50` judged samples; and the
+DMR 200 top-context candidate returned `200` judged samples. The 5-sample
 probe also returned `5/5` judged samples, and the isolated DeepSeek preflight
 confirms HTTP `200` with an API key present before any DMR retrieval or answer
-generation runs. Judge output is now stable on the pinned runs and the first
-candidate judge run, so the remaining evidence boundaries are retrieval/ranking
+generation runs. Judge output is now stable on the pinned runs and two
+candidate judge runs, so the remaining evidence boundaries are retrieval/ranking
 quality, answer synthesis, candidate scaling, and answer-to-memory mapping
 coverage.
 
@@ -723,7 +731,7 @@ Reasons:
 - the generator is a deterministic extractive baseline, not a fixed agent
   answer policy;
 - the better DMR 50/200/500-request generator ablation is eval-only evidence;
-  DMR 50 is judge-scored, but DMR 200 and the 500-request view have not been
+  DMR 50 and 200 are judge-scored, but the 500-request view has not been
   judge-scored, validated by LongMemEval, or evaluated under a
   published-comparable official DMR protocol;
 - the LLM judge path is now stable on the pinned extractive runs; the remaining
@@ -738,7 +746,7 @@ Reasons:
 ## Next Step
 
 Keep feature growth frozen, keep the judge path on `deepseek-v4-flash`, and do
-not rerun DMR 50 top-context unless the gate asks for a reproducibility check.
-The next heavy DMR branch should be DMR 200 top-context judge scoring only if
-that expansion scope is explicitly selected. Any relaxed-token coverage run
-must be separately labeled and validated before it is used for conclusions.
+not rerun DMR 50/200 top-context unless the gate asks for a reproducibility
+check. The next heavy DMR branch should be DMR 500 top-context judge scoring
+only if that expansion scope is explicitly selected. Any relaxed-token coverage
+run must be separately labeled and validated before it is used for conclusions.

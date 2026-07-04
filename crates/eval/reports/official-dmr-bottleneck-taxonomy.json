@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-bottleneck-taxonomy.v1",
-  "generated_at": "2026-07-04T01:52:25.043281+00:00",
+  "generated_at": "2026-07-04T02:22:49.681194+00:00",
   "runner": "scripts\\eval\\official_dmr_bottleneck_taxonomy.py",
   "inputs": {
     "answer_audit": {
@@ -9,7 +9,7 @@
     },
     "generator_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
-      "sha256": "0ed9c5150072fb887b3ab7da020e20bb64305091d98c18e704c74145cfcefbba"
+      "sha256": "eac46f0ff1bcfbd19637ca6b6e6221d568e7b21316c09a33275bc12bb2199b29"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -119,9 +119,9 @@
       },
       "candidate_generator_effect": {
         "answer_substring_accuracy": 0.12,
-        "rouge_l_f1_mean": 0.066766,
+        "rouge_l_f1_mean": 0.06621,
         "answer_substring_accuracy_delta": 0.08,
-        "rouge_l_f1_mean_delta": 0.030257,
+        "rouge_l_f1_mean_delta": 0.029701,
         "top1_without_answer_substring_count_delta": -16,
         "candidate_top1_without_answer_substring_count": 52,
         "candidate_top10_without_answer_substring_count": 117,
@@ -203,7 +203,7 @@
     "generator_read": "Top-context extraction is the clearest current answer-synthesis direction: it improves substring and ROUGE-L on every scale view and reduces top-1 opportunity loss. But on the largest local view it still leaves 90 top-1 hits without the gold substring, so it is not enough for an official DMR claim.",
     "ranking_read": "Ranking remains necessary because a large top10-not-top1 bucket and true top10 retrieval-miss bucket remain after answer scoring. Generator work cannot recover samples that never receive a relevant top-10 context.",
     "mapping_read": "The 500-request run is 323-scored under punctuation full-answer mapping. Relaxed token containment would increase coverage, but it is a separate diagnostic policy and cannot be silently promoted.",
-    "next_action": "Do not change runtime defaults. Top-context DMR 50 is now judge-scored; the next DMR validation expansion is DMR 200 top-context judge scoring, otherwise continue with hosted external comparison when credentials/endpoints are ready."
+    "next_action": "Do not change runtime defaults. Top-context DMR 50 and 200 are now judge-scored; the next DMR validation expansion is DMR 500 top-context judge scoring, otherwise continue with hosted external comparison when credentials/endpoints are ready."
   },
   "limits": [
     "Reads existing sanitized reports only.",

@@ -1,32 +1,32 @@
 {
   "schema_version": "king-synapse.next-validation-action-gate.v1",
-  "generated_at": "2026-07-04T01:53:09.769328+00:00",
+  "generated_at": "2026-07-04T02:24:05.503336+00:00",
   "runner": "scripts\\eval\\next_validation_action_gate.py",
   "git": {
     "branch": "main",
-    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "ff6f9ef4d226a779b39ea6af0cef825109cc669e9d2176e5d9ce7be955a74f55"
+      "sha256": "e1cf9b5382e41e9b58632708487ad4f82209d9986ca52f7e668819386aadd643"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "8b03c8451ddd63197500e100c52da392f59310e6ab9280c7f6e9f381fc7d41da"
+      "sha256": "1eb20ddb36c6f54902b74b544db27dcfb484024f91f37ee4d0c585e468d181f3"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "001747a6f2a718c56eff42607789a35e4481dee0c8e7d5c5499174aa57ca474d"
+      "sha256": "c79936d24a6abf85e6c1d4c72814ce6ea5f1d68e9b50c824edd57915ccaa433c"
     },
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "919d8584e911eeb2643f08f9935a4d114a814e7f73952e7ddcccbb8087183305"
+      "sha256": "ea02e756e6c65a214a623cb28ae3f1997b0a821f39da99f8a35c0ed244857bed"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -89,7 +89,7 @@
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
-      "conclusion": "Top-context DMR 50 judge scoring is complete.",
+      "conclusion": "Top-context DMR 50/200 judge scoring is complete.",
       "remaining": []
     },
     {
@@ -114,8 +114,8 @@
       ],
       "conclusion": "No heavy validation branch is currently selected by this gate.",
       "remaining": [
-        "Do not rerun DMR 50 after it is complete.",
-        "Select the next DMR expansion scope or configure hosted external comparison before another heavy run."
+        "Do not rerun DMR 50/200 after they are complete.",
+        "Select DMR 500 expansion scope or configure hosted external comparison before another heavy run."
       ]
     },
     {
@@ -161,7 +161,7 @@
   "commands": {
     "top_context_dmr_50_judge_scoring": {
       "allowed_now": false,
-      "reason": "DMR 50 top-context judge scoring is already complete.",
+      "reason": "DMR 50/200 top-context judge scoring is already complete.",
       "command": [
         "python",
         "scripts/eval/official_dmr_eval.py",
@@ -236,7 +236,7 @@
     ]
   },
   "read": {
-    "current_conclusion": "DMR 50 top-context judge scoring is complete; no further heavy branch is currently selected by this gate.",
+    "current_conclusion": "DMR 50/200 top-context judge scoring is complete; no further heavy branch is currently selected by this gate.",
     "allowed_now": [
       "No-model/no-external evidence maintenance.",
       "Documentation/report synchronization that does not change runtime behavior."

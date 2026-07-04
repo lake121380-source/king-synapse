@@ -155,24 +155,24 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     preflight_result = preflight.get("result", {})
     judge_ready = preflight_result.get("status") == "judged"
-    top_context_dmr_50_complete = bool(
+    top_context_dmr_50_200_complete = bool(
         safe_get(official_dmr, ["status", "top_context_judge_ready"])
     )
     hosted_report_summary = hosted.get("summary", {})
 
-    if top_context_dmr_50_complete and hosted_ready["all_hosted_ready"]:
+    if top_context_dmr_50_200_complete and hosted_ready["all_hosted_ready"]:
         next_action = "Run hosted/official external comparison on the shared cognitive fixture."
         next_gate_ready = True
         blocking_reason = None
-    elif top_context_dmr_50_complete:
+    elif top_context_dmr_50_200_complete:
         next_action = (
-            "No heavy next-gate run is currently selected. Do not rerun DMR 50; "
-            "select a DMR 200/500 top-context judge expansion or configure hosted "
+            "No heavy next-gate run is currently selected. Do not rerun DMR 50/200; "
+            "select a DMR 500 top-context judge expansion or configure hosted "
             "external credentials/endpoints."
         )
         next_gate_ready = False
         blocking_reason = (
-            "DMR 50 top-context judge scoring is complete; hosted external "
+            "DMR 50 and 200 top-context judge scoring are complete; hosted external "
             "comparison credentials/endpoints are not configured, and no DMR "
             "expansion scope is selected."
         )
@@ -228,7 +228,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "status": preflight_result.get("status"),
             "http_status": preflight_result.get("http_status"),
             "decision": preflight.get("decision"),
-            "dmr_50_complete": top_context_dmr_50_complete,
+            "dmr_50_200_complete": top_context_dmr_50_200_complete,
             "api_key_present": preflight.get("llm_judge", {}).get("api_key_present"),
             "api_key_recorded": preflight.get("llm_judge", {}).get("api_key_recorded"),
         },

@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.official-dmr-task-gate.v1",
-  "generated_at": "2026-07-04T01:52:25.338650+00:00",
+  "generated_at": "2026-07-04T02:22:50.081210+00:00",
   "runner": "scripts\\eval\\official_dmr_task_gate.py",
   "git": {
     "branch": "main",
-    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
+    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -29,9 +29,9 @@
       "sha256": "10b5e8a126751a02b5d4c481342f687858fa28bf1a1728eaad4f41169b54c010"
     },
     "top_context_200": {
-      "path": "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+      "path": "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
       "exists": true,
-      "sha256": "c598e47b6435788b01621bdd4e66eadb167431a9c13d27e709355f963bde2c8d"
+      "sha256": "4ce9c9694ce0bee14a63532d4fd8fb3a810c5ccc6091dc0b0803dac25f9c52aa"
     },
     "top_context_500": {
       "path": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
@@ -46,12 +46,12 @@
     "generator_ablation_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
       "exists": true,
-      "sha256": "0ed9c5150072fb887b3ab7da020e20bb64305091d98c18e704c74145cfcefbba"
+      "sha256": "eac46f0ff1bcfbd19637ca6b6e6221d568e7b21316c09a33275bc12bb2199b29"
     },
     "bottleneck_taxonomy": {
       "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
       "exists": true,
-      "sha256": "6cae1ef8bde89a4b54ed1d831775f80fa2eb84561c1632cf13124c600d0b51e6"
+      "sha256": "9b4326a3812ab9e4c233a58f46f71afa32a500a301726e1a246d1fdd02d068dd"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -61,7 +61,7 @@
     "top_context_judge_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
       "exists": true,
-      "sha256": "79d65d2977937e092ec16c3968a602e39507ef642a0078cc22bdd206abe2d969"
+      "sha256": "6c0dfb9bde98987c34fa8cf740ae97a8d5cdcbbc91da4c82c858e65f836e9cbb"
     }
   },
   "raw_policy": {
@@ -211,13 +211,13 @@
       "accelerator_requested": "cuda",
       "cuda_device_id": "0",
       "retrieval_recall_at_10": 0.41074999999999995,
-      "retrieval_mrr_at_10": 0.4719543650793651,
+      "retrieval_mrr_at_10": 0.4718988095238095,
       "exact_accuracy": 0.0,
       "punctuation_accuracy": 0.0,
       "answer_substring_accuracy": 0.12,
-      "rouge_l_f1_mean": 0.06676574478740842,
-      "llm_judge_count": 0,
-      "llm_judge_accuracy": null
+      "rouge_l_f1_mean": 0.06621018923185287,
+      "llm_judge_count": 200,
+      "llm_judge_accuracy": 0.15
     },
     "dmr_500_request": {
       "requested": 500,
@@ -291,7 +291,7 @@
         "crates\\eval\\reports\\official-dmr-200.json",
         "crates\\eval\\reports\\official-dmr-500.json",
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json"
       ],
       "conclusion": "Pinned official-style DMR and top-context ablation reports record CUDA device 0.",
@@ -332,9 +332,9 @@
       "evidence": [
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json"
       ],
-      "conclusion": "Top-context extraction improves substring and ROUGE-L on every current scale view; DMR 50 is judge-scored, while larger candidate views remain evaluation-only.",
+      "conclusion": "Top-context extraction improves substring and ROUGE-L on every current scale view; DMR 50 and 200 are judge-scored, while the 500-request candidate view remains evaluation-only.",
       "remaining": [
-        "Judge-score top-context DMR 200/500 before making broader answer-quality claims."
+        "Judge-score top-context DMR 500 before making broader answer-quality claims."
       ]
     },
     {
@@ -342,13 +342,13 @@
       "status": "satisfied",
       "evidence": [
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
       ],
-      "conclusion": "DMR 50 top-context candidate is judge-scored; DMR 200 and 500-request candidate views are still lexical/ROUGE-only.",
+      "conclusion": "DMR 50 and 200 top-context candidates are judge-scored; the 500-request candidate view is still lexical/ROUGE-only.",
       "remaining": [
-        "Judge-score top-context DMR 200/500 before broader claims."
+        "Judge-score top-context DMR 500 before broader claims."
       ]
     },
     {
@@ -359,7 +359,7 @@
         "crates\\eval\\reports\\official-dmr-200.json",
         "crates\\eval\\reports\\official-dmr-500.json",
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-200-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
         "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
@@ -383,21 +383,21 @@
     "runtime_ranking_change_allowed": false,
     "hard_failures": [],
     "open_gates": [
-      "top_context_200_500_not_judge_scored",
+      "top_context_500_not_judge_scored",
       "published_comparable_mapping_policy_not_final",
       "answer_synthesis_quality_not_ready_for_official_claims"
     ]
   },
   "read": {
-    "current_conclusion": "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline and the DMR 50 top-context candidate, but it is not yet a published-comparable official DMR result.",
-    "strongest_supported_result": "The baseline path covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view; DMR 50 top-context judge accuracy is now recorded.",
+    "current_conclusion": "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline and the DMR 50/200 top-context candidates, but it is not yet a published-comparable official DMR result.",
+    "strongest_supported_result": "The baseline path covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view; DMR 50 and 200 top-context judge accuracy are now recorded.",
     "weak_surfaces": [
       "DMR 500-request has 177 punctuation-mapping rejections before scoring.",
       "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
       "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
-      "Top-context extraction improves DMR 50 judged accuracy and larger lexical metrics, but DMR 200/500 top-context views are not judge-scored and the largest local view still leaves 90 top-1 misses."
+      "Top-context extraction improves DMR 50 and 200 judged accuracy plus larger lexical metrics, but the DMR 500-request top-context view is not judge-scored and the largest local view still leaves 90 top-1 misses."
     ],
-    "next_action": "Keep feature freeze. If expanding this DMR branch, judge-score top-context DMR 200 next; otherwise continue hosted external comparison when credentials/endpoints are ready. Do not change runtime defaults."
+    "next_action": "Keep feature freeze. If expanding this DMR branch, judge-score top-context DMR 500 next; otherwise continue hosted external comparison when credentials/endpoints are ready. Do not change runtime defaults."
   },
   "limits": [
     "This gate reads committed sanitized aggregate DMR reports only.",

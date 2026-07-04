@@ -289,7 +289,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             else "failed",
             evidence=[paths["next_gate_readiness"], paths["official_dmr_task_gate"]],
             conclusion=(
-                "Top-context DMR 50 judge scoring is complete."
+                "Top-context DMR 50/200 judge scoring is complete."
                 if official_top_context_ready
                 else "Top-context DMR judge scoring is ready."
                 if top_context_ready
@@ -334,8 +334,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 else f"Next heavy validation branch is {recommended_action}."
             ),
             remaining=[] if not no_heavy_run_ready else [
-                "Do not rerun DMR 50 after it is complete.",
-                "Select the next DMR expansion scope or configure hosted external comparison before another heavy run.",
+                "Do not rerun DMR 50/200 after they are complete.",
+                "Select DMR 500 expansion scope or configure hosted external comparison before another heavy run.",
             ],
         ),
         item(
@@ -412,9 +412,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 TOP_CONTEXT_DMR_50_COMMAND,
                 allowed=top_context_dmr_50_allowed,
                 reason=(
-                    "Judge precondition is ready and DMR 50 top-context is not yet complete."
+                    "Judge precondition is ready and DMR 50/200 top-context is not yet complete."
                     if top_context_dmr_50_allowed
-                    else "DMR 50 top-context judge scoring is already complete."
+                    else "DMR 50/200 top-context judge scoring is already complete."
                     if official_top_context_ready
                     else "Blocked until valid judge authorization is available."
                 ),
@@ -449,7 +449,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         },
         "read": {
             "current_conclusion": (
-                "DMR 50 top-context judge scoring is complete; no further heavy branch is currently selected by this gate."
+                "DMR 50/200 top-context judge scoring is complete; no further heavy branch is currently selected by this gate."
                 if official_top_context_ready and not heavy_validation_allowed
                 else "No heavy next validation run is ready; the correct next action is to keep feature freeze and wait for either valid top-context judge authorization or hosted external comparison credentials/endpoints."
                 if not heavy_validation_allowed

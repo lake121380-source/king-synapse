@@ -481,10 +481,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     blocked_next_gates = []
     if not top_context_ready:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
-    if "top_context_200_500_not_judge_scored" in safe_get(
+    if "top_context_500_not_judge_scored" in safe_get(
         official_dmr, ["status", "open_gates"], []
     ):
-        blocked_next_gates.append("top_context_200_500_not_judge_scored")
+        blocked_next_gates.append("top_context_500_not_judge_scored")
     if not hosted_ready:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
     if future_evidence_boundary_not_overstated:
@@ -567,7 +567,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
-                "Next validation action is gate-backed: wait for external preconditions before heavy reruns.",
+                "Next validation action is gate-backed: select DMR 500 expansion scope or wait for hosted configuration before heavy reruns.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],

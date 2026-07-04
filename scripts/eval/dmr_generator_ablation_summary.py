@@ -170,7 +170,7 @@ def judge_status_read(runs: list[dict[str, Any]]) -> str:
         return (
             "The extractive baseline reports are judge-backed on the pinned "
             "runs; the top-context generator is judge-backed on DMR 50 and "
-            "lexical/ROUGE-only on DMR 200 and the 500-request view."
+            "DMR 200, and lexical/ROUGE-only on the 500-request view."
         )
     if baseline_judged and baseline_errors == 0 and candidate_not_requested:
         return (

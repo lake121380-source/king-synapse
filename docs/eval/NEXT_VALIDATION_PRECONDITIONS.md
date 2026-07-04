@@ -27,17 +27,19 @@ Purpose:
 
 - prove whether the top-context DMR answer generator improves judged answer
   quality, not only lexical or ROUGE-L scores;
-- DMR 50 is now complete; keep any next expansion explicitly scoped before
-  moving to 200 / 500;
+- DMR 50 and DMR 200 are now complete; keep any next expansion explicitly
+  scoped before moving to the 500-request view;
 - preserve the Phase 6 GPU rule.
 
 Current read:
 
 - DMR 50 top-context judge scoring is complete in
   `crates/eval/reports/official-dmr-50-top-context-judge.json`;
+- DMR 200 top-context judge scoring is complete in
+  `crates/eval/reports/official-dmr-200-top-context-judge.json`;
 - the latest sanitized DeepSeek preflight returns `judged` / HTTP `200`;
-- do not rerun DMR 50 by default;
-- the next DMR heavy branch is DMR 200 top-context judge scoring only if that
+- do not rerun DMR 50/200 by default;
+- the next DMR heavy branch is DMR 500 top-context judge scoring only if that
   expansion scope is explicitly selected.
 
 Required external condition:
@@ -95,6 +97,7 @@ python scripts/eval/official_dmr_answer_audit.py `
     crates/eval/reports/official-dmr-50.json `
     crates/eval/reports/official-dmr-50-top-context-judge.json `
     crates/eval/reports/official-dmr-200.json `
+    crates/eval/reports/official-dmr-200-top-context-judge.json `
     crates/eval/reports/official-dmr-500.json
 python scripts/eval/dmr_generator_ablation_summary.py
 python scripts/eval/official_dmr_bottleneck_taxonomy.py
@@ -112,8 +115,8 @@ Acceptance read:
 - judge preflight status is `judged`;
 - no API key, prompt text, raw response, raw DMR record, gold answer, generated
   answer, dialog, session, or temporary cache file is committed;
-- DMR 50 top-context is recorded as completed evidence first;
-- DMR 200 / 500 top-context judge scoring is not implied by the DMR 50 result;
+- DMR 50 and DMR 200 top-context are recorded as completed evidence;
+- DMR 500 top-context judge scoring is not implied by the DMR 50/200 result;
 - any README or report claim stays scoped until the task gates support it.
 
 ## Branch B: Hosted / Official External Comparison
