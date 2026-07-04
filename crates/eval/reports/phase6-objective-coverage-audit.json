@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
-  "generated_at": "2026-07-04T04:26:36.800403+00:00",
+  "generated_at": "2026-07-04T04:52:11.877202+00:00",
   "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
   "git": {
     "branch": "main",
-    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
+    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "5315bde0d2c31992137c1beab8a64d68f4bc4a280c95a86144e7a0f614c42ad1"
+      "sha256": "95359de710fdb19974005a3fff1e09584505721c8c22949fc14847cee7276910"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "88388563eb9c08c7416958b284902d78b552b2181860f19f3bf5299673346e4c"
+      "sha256": "db5754f921165f209ff63b82614013151bef138f6bfd0b133b36dd865e9858ec"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -46,7 +46,7 @@
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "a703be166b27777db80d873d1747a855efcbf250a223a726b7a2589f49ace284"
+      "sha256": "040fb327719e3595b78da1f0839e2aaff6c610c85c7ab3ca33d129eda058f4c4"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -68,6 +68,11 @@
       "exists": true,
       "sha256": "ab275a6331757e51081a1736ae00d13aa44b8da35862dd41c16ac78d3dbcb2f3"
     },
+    "deepseek_external_protocol_gate": {
+      "path": "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
+      "exists": true,
+      "sha256": "7fc4f42c41386243b4405376f180bb39e88f500722092523c52b59ad2be3cee7"
+    },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
@@ -76,12 +81,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "7abcfd1f0014a1221d969ff216479b334f7bea85fb324df827fd468fd269a930"
+      "sha256": "b933f9b534c6bf0a0548cadeacfb27a6f51fdfd18ea807fec056b7e265a7aaba"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "c5b1fcc9964141c6d6d81a0be0bb94250ff8dbf71f3c5021f72fcc4e6d1b9190"
+      "sha256": "47ae4e00fca641f58a2908f3ec6dc740cb3b2d8189d622b331923fffe6a02bea"
     },
     "phase6_baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -432,7 +437,7 @@
     {
       "phase": "4_external_fair_comparison",
       "title": "External Fair Comparison",
-      "status": "blocked_external",
+      "status": "partial",
       "requirements": [
         {
           "item": "Use the same cognitive fixture and mark unsupported separately from errors.",
@@ -445,36 +450,36 @@
         },
         {
           "item": "Check Synapse trace capabilities against measured adapters.",
-          "status": "partial",
+          "status": "satisfied",
           "evidence": [
             "crates\\eval\\reports\\external-comparison-latest.json",
+            "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
             "docs\\eval\\EXTERNAL_VALIDATION.md"
           ],
-          "conclusion": "King Synapse records 8/8 local hits for dominant trace, suppressed alternatives, evidence paths, future continuation, and reinforcement isolation in the shared fixture.",
+          "conclusion": "The DeepSeek-first protocol gate backs this lane: King Synapse records 8/8 local hits for dominant trace, suppressed alternatives, evidence paths, future continuation, and reinforcement isolation against local Graphiti/Zep and Mem0 DeepSeek evidence.",
           "remaining": [
-            "Local adapter evidence is not the same as hosted Graphiti/Zep, official Mem0, or live Letta."
+            "OpenAI/Neo4j hosted parity remains a separate reference lane."
           ]
         },
         {
           "item": "Run Letta endpoint, hosted/standard Graphiti/Zep, and official Mem0.",
-          "status": "blocked_external",
+          "status": "partial",
           "evidence": [
+            "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
             "crates\\eval\\reports\\external-comparison-hosted.json",
             "crates\\eval\\reports\\hosted-external-preconditions.json",
             "crates\\eval\\reports\\phase6-next-gate-readiness.json",
             "crates\\eval\\reports\\external-comparison-task-gate.json"
           ],
-          "conclusion": "Hosted report has measured_systems=1 and not_configured_systems=3.",
+          "conclusion": "DeepSeek/local protocol evidence is complete for the project's own design validation, while OpenAI hosted parity remains an unmeasured reference lane.",
           "remaining": [
-            "Configure Graphiti/Zep Neo4j/OpenAI credentials.",
-            "Configure official Mem0 embedding/config.",
-            "Configure Letta API/base URL or LETTA_ENVIRONMENT=local.",
-            "Do not count DeepSeek-only local fallback as hosted/official evidence."
+            "Do not claim hosted official superiority from the DeepSeek protocol.",
+            "Keep OpenAI/Neo4j hosted comparison as optional reference evidence."
           ]
         }
       ],
-      "conclusion": "The local cognitive-trace comparison is useful but hosted/official fairness is still blocked.",
-      "next_action": "Provide hosted competitor credentials/endpoints, then rerun the shared fixture."
+      "conclusion": "The DeepSeek-first external design-validation lane is complete enough for Phase 6 evidence; hosted/official OpenAI parity remains a separate reference lane.",
+      "next_action": "Continue failure-mode analysis or optionally replay the DeepSeek protocol."
     },
     {
       "phase": "5_long_horizon_stability",
@@ -533,8 +538,9 @@
         },
         {
           "item": "Know where it is weaker than Mem0 / Graphiti / Zep.",
-          "status": "blocked_external",
+          "status": "partial",
           "evidence": [
+            "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
             "crates\\eval\\reports\\external-comparison-hosted.json"
           ],
           "conclusion": "Local external comparison supports Synapse's inspectable cognitive-trace advantage on the shared fixture, but hosted/official competitor comparison is still not configured.",
@@ -778,6 +784,17 @@
       "not_configured_systems": 3,
       "failed_systems": 0
     },
+    "deepseek_external_protocol": {
+      "deepseek_external_protocol_gate_passed": true,
+      "deepseek_protocol_external_validation_complete": true,
+      "phase6_external_validation_blocked_by_openai": false,
+      "openai_official_reference_required_for_this_protocol": false,
+      "hosted_official_reference_still_open": true,
+      "hosted_official_superiority_claim_allowed": false,
+      "productization_allowed": false,
+      "runtime_default_change_allowed": false,
+      "hard_failures": []
+    },
     "hosted_external_preconditions": {
       "hosted_external_preconditions_audit_passed": true,
       "hosted_external_ready": false,
@@ -814,25 +831,23 @@
   },
   "status_counts": {
     "policy_active": 1,
-    "satisfied": 16,
-    "partial": 10,
+    "satisfied": 17,
+    "partial": 12,
     "validated_no_default": 1,
     "not_ready": 5,
-    "blocked_external": 4
+    "blocked_external": 1
   },
   "read": {
     "overall": "phase6_validation_in_progress_productization_blocked",
-    "strongest_current_result": "Synapse has strong local evidence for inspectable cognitive traces and executable official-style DMR scoring, but the decisive published-comparable and hosted-comparison gates are still open.",
+    "strongest_current_result": "Synapse has strong local evidence for inspectable cognitive traces and executable official-style DMR scoring. The DeepSeek-first external protocol is gate-backed as the domestic design-validation lane, while published-comparable DMR and productization gates remain open.",
     "most_important_open_gates": [
-      "hosted_external_comparison_not_configured",
       "published_comparable_dmr_mapping_policy_not_final",
       "no_safe_global_ranking_default",
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
-      "next_validation_action_waiting_on_hosted_or_failure_analysis",
       "productization_not_ready"
     ],
-    "next_action": "Keep feature freeze. DMR 50/200/500 top-context judge scoring is complete; the next heavy validation action waits for hosted competitor credentials/endpoints."
+    "next_action": "Keep feature freeze. DMR 50/200/500 top-context judge scoring is complete and the DeepSeek external protocol is gate-backed. Continue failure-mode analysis, or optionally replay the DeepSeek protocol without turning it into an OpenAI hosted claim."
   },
   "limits": [
     "This report is a coverage audit over existing evidence only.",

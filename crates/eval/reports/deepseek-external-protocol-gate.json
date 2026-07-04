@@ -1,0 +1,190 @@
+{
+  "schema_version": "king-synapse.deepseek-external-protocol-gate.v1",
+  "generated_at": "2026-07-04T04:52:10.496307+00:00",
+  "runner": "scripts\\eval\\deepseek_external_protocol_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "external_comparison": {
+      "path": "crates\\eval\\reports\\external-comparison-latest.json",
+      "exists": true,
+      "sha256": "6dd03d25dfb78cee86f56c3c752366dae37a5151a75ebe28c168bd05dfb36747"
+    },
+    "external_manifest": {
+      "path": "crates\\eval\\reports\\external-comparison-manifest.json",
+      "exists": true,
+      "sha256": "ac7bf0b264e4906fe6fe09eb06d74f6191a9886de9e2b6e5ec75fb16cb2ef0ad"
+    },
+    "external_task_gate": {
+      "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
+      "exists": true,
+      "sha256": "ab275a6331757e51081a1736ae00d13aa44b8da35862dd41c16ac78d3dbcb2f3"
+    },
+    "hosted_preconditions": {
+      "path": "crates\\eval\\reports\\hosted-external-preconditions.json",
+      "exists": true,
+      "sha256": "c1373c9db540d945be7d3eaecf20781553054be3fcda741e40a3d48ac9d70bf3"
+    }
+  },
+  "env_presence": {
+    "DEEPSEEK_API_KEY": true,
+    "OPENAI_API_KEY": false,
+    "NEO4J_URI": false,
+    "LETTA_API_KEY": false,
+    "LETTA_BASE_URL": false,
+    "LETTA_ENVIRONMENT": false
+  },
+  "api_keys_recorded": false,
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "protocol": {
+    "name": "deepseek_first_external_design_validation",
+    "purpose": "Validate Synapse's own cognitive-memory design surfaces under a domestic/DeepSeek-compatible reproducible setup.",
+    "model_boundary": {
+      "mem0_llm_model": "deepseek-v4-flash",
+      "mem0_embedder": "king-synapse-deterministic",
+      "mem0_vector_store": "local qdrant",
+      "deepseek_key_value_recorded": false
+    },
+    "systems": {
+      "synapse": {
+        "status": "measured",
+        "mode": "local in-memory Store with exported cognitive session fixture"
+      },
+      "graphiti_zep": {
+        "status": "measured",
+        "mode": "local Kuzu graph driver with deterministic local embeddings and explicit fixture triplets"
+      },
+      "mem0": {
+        "status": "measured",
+        "mode": "Mem0 OSS SDK with DeepSeek, deterministic local embedder, and local Qdrant",
+        "llm_model": "deepseek-v4-flash"
+      },
+      "letta": {
+        "status": "not_configured",
+        "mode": "official Python SDK adapter",
+        "missing": [
+          "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+        ]
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "shared_fixture_shape",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "DeepSeek protocol evidence uses the shared 8-chain cognitive fixture."
+    },
+    {
+      "id": "deepseek_protocol_systems_measured",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "Synapse, Graphiti/Zep local, and Mem0 DeepSeek are measured; Letta is separated as not_configured; failed systems are zero."
+    },
+    {
+      "id": "mem0_deepseek_manifest_boundary",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-manifest.json"
+      ],
+      "conclusion": "Mem0 evidence is explicitly DeepSeek v4 flash with deterministic local embedder and local Qdrant; key value is not recorded."
+    },
+    {
+      "id": "graphiti_local_manifest_boundary",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-manifest.json"
+      ],
+      "conclusion": "Graphiti/Zep evidence is explicit local Kuzu deterministic graph evidence, not an OpenAI/Neo4j hosted claim."
+    },
+    {
+      "id": "synapse_design_surface_complete",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json",
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "Synapse hits visible recall, hidden influence, dominant trace, suppressed alternatives, evidence path, future continuation, and reinforcement isolation 8/8."
+    },
+    {
+      "id": "competitor_retrieval_surfaces_measured",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "Graphiti local and Mem0 DeepSeek retrieve the shared fixture well enough to compare exposed surfaces instead of treating competitors as absent."
+    },
+    {
+      "id": "unsupported_surfaces_separated",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\external-comparison-latest.json"
+      ],
+      "conclusion": "Unsupported trace surfaces and not_configured Letta are separated from failures."
+    },
+    {
+      "id": "openai_reference_not_required_for_deepseek_protocol",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\hosted-external-preconditions.json",
+        "crates\\eval\\reports\\external-comparison-task-gate.json"
+      ],
+      "conclusion": "OpenAI/Neo4j hosted reference remains open, but it is not required for the DeepSeek-first design validation protocol."
+    },
+    {
+      "id": "secrets_not_recorded",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\external-comparison-manifest.json"
+      ],
+      "conclusion": "External comparison manifest records credential names only, not secret values."
+    }
+  ],
+  "status_counts": {
+    "passed": 9
+  },
+  "status": {
+    "deepseek_external_protocol_gate_passed": true,
+    "deepseek_protocol_external_validation_complete": true,
+    "phase6_external_validation_blocked_by_openai": false,
+    "openai_official_reference_required_for_this_protocol": false,
+    "hosted_official_reference_still_open": true,
+    "hosted_official_superiority_claim_allowed": false,
+    "productization_allowed": false,
+    "runtime_default_change_allowed": false,
+    "hard_failures": []
+  },
+  "read": {
+    "current_conclusion": "The DeepSeek-first external protocol passes: Synapse's unique cognitive trace surfaces are validated on the shared fixture against local Graphiti/Zep and Mem0 DeepSeek evidence. This does not claim OpenAI/Neo4j hosted official competitor completion.",
+    "design_position": "For this project, OpenAI-hosted parity is a reference lane, not the only proof lane. The primary Phase 6 proof can be the reproducible DeepSeek/local protocol as long as the README names the boundary clearly.",
+    "next_action": "Keep feature freeze. Continue DMR failure-mode analysis and optional DeepSeek replay; do not start productization or claim hosted official superiority."
+  },
+  "limits": [
+    "This gate reads committed aggregate external-comparison evidence only.",
+    "It does not call DeepSeek, OpenAI, Neo4j, Qdrant, Letta, hosted adapters, benchmarks, LLM judges, or product code.",
+    "It validates a DeepSeek/local reproducible protocol, not an OpenAI/Neo4j hosted official comparison.",
+    "A passing protocol gate is not product readiness and does not authorize runtime default changes."
+  ]
+}

@@ -90,6 +90,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/external-comparison-task-gate.json",
     )
     parser.add_argument(
+        "--deepseek-external-protocol-gate",
+        type=Path,
+        default=root / "crates/eval/reports/deepseek-external-protocol-gate.json",
+    )
+    parser.add_argument(
         "--hosted-external-preconditions",
         type=Path,
         default=root / "crates/eval/reports/hosted-external-preconditions.json",
@@ -230,6 +235,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "external_comparison_task_gate": normalize_path_arg(
             args.external_comparison_task_gate
         ),
+        "deepseek_external_protocol_gate": normalize_path_arg(
+            args.deepseek_external_protocol_gate
+        ),
         "hosted_external_preconditions": normalize_path_arg(
             args.hosted_external_preconditions
         ),
@@ -255,6 +263,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     trend_alignment = reports["longmem_dmr_trend_alignment"]
     split_decision = reports["ranking_objective_split_decision"]
     external = reports["external_comparison_task_gate"]
+    deepseek_external = reports["deepseek_external_protocol_gate"]
     hosted_preconditions = reports["hosted_external_preconditions"]
     long_horizon = reports["long_horizon_task_gate"]
     productization = reports["productization_decision_gate"]
@@ -309,6 +318,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     local_external_gate_passed = bool(
         safe_get(external, ["status", "local_external_comparison_gate_passed"])
     )
+    deepseek_external_protocol_passed = bool(
+        safe_get(
+            deepseek_external,
+            ["status", "deepseek_external_protocol_gate_passed"],
+        )
+    )
+    phase6_external_blocked_by_openai = bool(
+        safe_get(
+            deepseek_external,
+            ["status", "phase6_external_validation_blocked_by_openai"],
+        )
+    )
     hosted_official_external_not_ready = not bool(
         safe_get(external, ["status", "hosted_official_external_ready"])
     )
@@ -352,6 +373,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     next_action_waiting_on_valid_scope = recommended_next_action in {
         "wait_for_external_preconditions",
         "wait_for_hosted_external_configuration_or_no_model_failure_analysis",
+        "continue_failure_mode_analysis_or_optional_deepseek_replay",
     }
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -427,6 +449,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["external_comparison_task_gate"]],
             conclusion="Local external comparison gate is passed on the shared cognitive fixture.",
             failure="Local external comparison gate is not passed.",
+        ),
+        check(
+            "deepseek_external_protocol_gate_passed",
+            deepseek_external_protocol_passed and not phase6_external_blocked_by_openai,
+            evidence=[paths["deepseek_external_protocol_gate"]],
+            conclusion="DeepSeek-first domestic external protocol is passed and Phase 6 external validation is not blocked by OpenAI availability.",
+            failure="DeepSeek-first external protocol is missing, failed, or still blocked by OpenAI availability.",
         ),
         check(
             "hosted_official_external_not_overstated",
@@ -550,7 +579,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     blocked_next_gates = []
     if not top_context_ready:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
-    if not hosted_ready:
+    if not hosted_ready and not deepseek_external_protocol_passed:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
     if trend_alignment_exit_condition_not_ready:
         blocked_next_gates.append("longmem_dmr_trend_alignment_not_complete")
@@ -560,7 +589,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("public_real_world_long_memory_not_validated")
     if productization_ready_not_overstated:
         blocked_next_gates.append("productization_decision_no_go")
-    if heavy_validation_not_allowed_by_action_gate:
+    if (
+        heavy_validation_not_allowed_by_action_gate
+        and recommended_next_action
+        != "continue_failure_mode_analysis_or_optional_deepseek_replay"
+    ):
         blocked_next_gates.append(
             "next_validation_action_waiting_on_hosted_or_failure_analysis"
         )
@@ -602,6 +635,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "readiness_next_gate_ready": next_gate_ready,
             "top_context_judge_ready": top_context_ready,
             "hosted_external_ready": hosted_ready,
+            "deepseek_external_protocol_gate_passed": deepseek_external_protocol_passed,
+            "phase6_external_validation_blocked_by_openai": phase6_external_blocked_by_openai,
             "hosted_external_preconditions_passed": hosted_preconditions_passed,
             "hosted_external_run_allowed": hosted_run_allowed,
             "trend_alignment_exit_condition_complete": not trend_alignment_exit_condition_not_ready,
@@ -636,6 +671,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
                 "Ranking is a validated bottleneck; DMR / LongMemEval objective split is decided as validation-only, and current evidence supports no runtime default change.",
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
+                "DeepSeek-first external validation is now gate-backed as a separate domestic protocol; OpenAI hosted parity remains only a reference lane.",
                 "Hosted external preconditions are audited without recording secret values; DeepSeek-only fallback is not counted as official hosted comparison.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
@@ -645,7 +681,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ],
             "what_is_not_ready": [
                 "Published-comparable official DMR performance.",
-                "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
+                "Hosted Graphiti/Zep, official Mem0, and live Letta comparison as an OpenAI/Neo4j reference lane.",
                 "LongMemEval / DMR ranking trend alignment for a global runtime default.",
                 "Objective-specific ranking policies for runtime use.",
                 "Complete future evidence labeling for long-horizon prediction.",

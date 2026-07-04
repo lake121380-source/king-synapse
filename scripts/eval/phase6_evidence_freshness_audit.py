@@ -25,6 +25,7 @@ DEFAULT_REPORTS = [
     "crates/eval/reports/longmem-dmr-trend-alignment.json",
     "crates/eval/reports/ranking-objective-split-decision.json",
     "crates/eval/reports/ranking-task-gate.json",
+    "crates/eval/reports/deepseek-external-protocol-gate.json",
     "crates/eval/reports/hosted-external-preconditions.json",
     "crates/eval/reports/external-comparison-task-gate.json",
     "crates/eval/reports/long-horizon-task-gate.json",

@@ -146,6 +146,13 @@ DeepSeek-only configuration is not accepted as hosted/official external
 comparison evidence. It remains valid for DMR judging and local Mem0 OSS
 fallback evidence only.
 
+`crates/eval/reports/deepseek-external-protocol-gate.json` records the separate
+DeepSeek-first domestic protocol. That protocol passes for Synapse's own design
+validation lane: King Synapse, local Graphiti/Zep, and Mem0 OSS + DeepSeek are
+measured on the shared fixture, unsupported surfaces are separated from
+failures, and OpenAI/Neo4j hosted parity remains an optional reference lane
+rather than the only proof path.
+
 | System | Visible | Hidden | Dominant trace | Suppressed alternatives | Evidence paths | Future continuation | Reinforcement isolation |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | King Synapse | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 | 8/8 |

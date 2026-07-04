@@ -199,6 +199,21 @@ of the competitor systems. The DeepSeek key currently present in the
 environment is valid for DMR judging and local Mem0 fallback only; it does not
 close the hosted Graphiti/Zep, official Mem0, or Letta endpoint gates.
 
+Separate from that hosted reference lane, Phase 6 now accepts a
+DeepSeek-first domestic design-validation protocol:
+
+- `crates/eval/reports/deepseek-external-protocol-gate.json`
+- `docs/eval/DEEPSEEK_EXTERNAL_PROTOCOL.md`
+- King Synapse: measured on the shared cognitive fixture.
+- Graphiti/Zep: measured through local Kuzu deterministic graph evidence.
+- Mem0: measured through Mem0 OSS + DeepSeek v4 flash + deterministic local
+  embedder + local Qdrant.
+- Letta: still `not_configured`.
+
+This protocol can support Synapse's own cognitive-trace design claim without
+requiring OpenAI hosted parity. It must not be used to claim hosted official
+competitor superiority.
+
 The exact next-run preconditions and command templates are recorded in
 `docs/eval/NEXT_VALIDATION_PRECONDITIONS.md`. Do not run a heavy DMR judge pass
 or hosted external comparison until that runbook's corresponding branch is

@@ -83,6 +83,30 @@ HOSTED_EXTERNAL_COMMAND = [
     "crates/eval/reports/external-comparison-hosted.json",
 ]
 
+DEEPSEEK_EXTERNAL_REPLAY_COMMAND = [
+    "cargo",
+    "run",
+    "-p",
+    "synapse-eval",
+    "--bin",
+    "kr-external-eval",
+    "--",
+    "--graphiti-command",
+    "python",
+    "--graphiti-arg",
+    "scripts/eval/graphiti_adapter.py",
+    "--mem0-command",
+    "python",
+    "--mem0-arg",
+    "scripts/eval/mem0_adapter.py",
+    "--letta-command",
+    "python",
+    "--letta-arg",
+    "scripts/eval/letta_adapter.py",
+    "--json",
+    "crates/eval/reports/external-comparison-deepseek-replay.json",
+]
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
@@ -159,6 +183,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/official-dmr-task-gate.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
+        "deepseek_external_protocol_gate": root
+        / "crates/eval/reports/deepseek-external-protocol-gate.json",
         "productization_decision_gate": root
         / "crates/eval/reports/productization-decision-gate.json",
         "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
@@ -216,6 +242,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readiness = reports["next_gate_readiness"]
     official = reports["official_dmr_task_gate"]
     external = reports["external_comparison_task_gate"]
+    deepseek_external = reports["deepseek_external_protocol_gate"]
     productization = reports["productization_decision_gate"]
     ranking = reports["ranking_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
@@ -229,6 +256,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     top_context_dmr_allowed = top_context_ready and not official_top_context_ready
     hosted_official_ready = bool(
         safe_get(external, ["status", "hosted_official_external_ready"])
+    )
+    deepseek_external_protocol_passed = bool(
+        safe_get(
+            deepseek_external,
+            ["status", "deepseek_external_protocol_gate_passed"],
+        )
+    )
+    phase6_external_blocked_by_openai = bool(
+        safe_get(
+            deepseek_external,
+            ["status", "phase6_external_validation_blocked_by_openai"],
+        )
     )
     productization_allowed = bool(
         safe_get(productization, ["status", "productization_allowed"])
@@ -271,6 +310,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     elif hosted_ready:
         recommended_action = "run_hosted_external_comparison"
         heavy_validation_allowed = True
+    elif official_top_context_ready and deepseek_external_protocol_passed:
+        recommended_action = "continue_failure_mode_analysis_or_optional_deepseek_replay"
+        heavy_validation_allowed = False
     else:
         recommended_action = (
             "wait_for_hosted_external_configuration_or_no_model_failure_analysis"
@@ -319,9 +361,25 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 else "Hosted external readiness is inconsistent."
             ),
             remaining=[] if hosted_ready else [
-                "Configure Graphiti/Zep Neo4j/OpenAI credentials.",
-                "Configure official Mem0 OpenAI/custom config.",
-                "Configure a Letta endpoint or local environment.",
+                "Optional reference only: configure Graphiti/Zep Neo4j/OpenAI credentials.",
+                "Optional reference only: configure official Mem0 OpenAI/custom config.",
+                "Optional reference only: configure a Letta endpoint or local environment.",
+            ],
+        ),
+        item(
+            "deepseek_external_protocol_precondition",
+            "satisfied"
+            if deepseek_external_protocol_passed and not phase6_external_blocked_by_openai
+            else "failed",
+            evidence=[paths["deepseek_external_protocol_gate"]],
+            conclusion=(
+                "DeepSeek-first external protocol is already gate-backed; OpenAI hosted parity is not required for this design-validation lane."
+                if deepseek_external_protocol_passed
+                else "DeepSeek-first external protocol is not yet gate-backed."
+            ),
+            remaining=[] if deepseek_external_protocol_passed else [
+                "Regenerate the DeepSeek external protocol gate.",
+                "Keep OpenAI hosted reference claims separate.",
             ],
         ),
         item(
@@ -335,7 +393,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             remaining=[] if not no_heavy_run_ready else [
                 "Do not rerun DMR 50/200/500 after they are complete.",
-                "Configure hosted external comparison before another hosted heavy run.",
+                "Continue failure-mode analysis, or optionally replay the DeepSeek external protocol.",
             ],
         ),
         item(
@@ -428,6 +486,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     else "Blocked until hosted competitor credentials/endpoints are configured."
                 ),
             ),
+            "deepseek_external_replay": command_record(
+                DEEPSEEK_EXTERNAL_REPLAY_COMMAND,
+                allowed=deepseek_external_protocol_passed,
+                reason=(
+                    "Allowed as an optional validation replay for the DeepSeek-first protocol; keep it separate from OpenAI hosted claims."
+                    if deepseek_external_protocol_passed
+                    else "Blocked until the DeepSeek external protocol gate passes."
+                ),
+            ),
         },
         "status": {
             "next_validation_action_gate_passed": action_gate_passed,
@@ -435,6 +502,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "heavy_validation_allowed": heavy_validation_allowed,
             "top_context_dmr_judge_scoring_allowed": top_context_dmr_allowed,
             "hosted_external_comparison_allowed": hosted_ready,
+            "deepseek_external_protocol_passed": deepseek_external_protocol_passed,
+            "deepseek_external_replay_allowed": deepseek_external_protocol_passed,
+            "phase6_external_validation_blocked_by_openai": phase6_external_blocked_by_openai,
             "productization_allowed": False,
             "runtime_default_change_allowed": False,
             "hard_failures": hard_failures,
@@ -445,11 +515,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             + [
                 "hosted_graphiti_zep_official_mem0_letta_configuration"
             ]
-            * (0 if hosted_ready else 1),
+            * (0 if hosted_ready or deepseek_external_protocol_passed else 1),
         },
         "read": {
             "current_conclusion": (
-                "DMR 50/200/500 top-context judge scoring is complete; no further DMR heavy branch is currently selected by this gate."
+                "DMR 50/200/500 top-context judge scoring is complete and the DeepSeek-first external protocol is gate-backed; the next useful work is failure-mode analysis or an optional DeepSeek replay, not waiting on OpenAI."
+                if official_top_context_ready
+                and deepseek_external_protocol_passed
+                and not heavy_validation_allowed
+                else "DMR 50/200/500 top-context judge scoring is complete; no further DMR heavy branch is currently selected by this gate."
                 if official_top_context_ready and not heavy_validation_allowed
                 else "No heavy next validation run is ready; the correct next action is to keep feature freeze and wait for either valid top-context judge authorization or hosted external comparison credentials/endpoints."
                 if not heavy_validation_allowed
@@ -457,17 +531,19 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "allowed_now": [
                 "No-model/no-external evidence maintenance.",
+                "Failure-mode analysis.",
+                "Optional DeepSeek external protocol replay with secrets kept in environment variables.",
                 "Documentation/report synchronization that does not change runtime behavior.",
             ]
             if not heavy_validation_allowed
             else [recommended_action],
             "not_allowed_now": [
                 "Heavy DMR judge scoring without valid judge authorization.",
-                "Hosted external comparison without competitor credentials/endpoints.",
+                "OpenAI/Neo4j hosted reference comparison claims without competitor credentials/endpoints.",
                 "Productization, runtime default changes, Web demo, API server, Docker, or v0.1 packaging.",
             ],
             "next_action": (
-                "Wait for valid judge authorization or hosted competitor configuration; then run the corresponding validation command with recorded CUDA policy."
+                "Continue failure-mode analysis under feature freeze. Optional DeepSeek external replay is allowed, but OpenAI hosted parity remains a separate reference lane."
                 if not heavy_validation_allowed
                 else f"Run {recommended_action} and update official/external reports before any new claim."
             ),

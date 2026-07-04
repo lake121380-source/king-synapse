@@ -2,7 +2,7 @@
 
 Date: 2026-07-04
 
-Status: waiting for hosted external configuration; DMR judge scaling complete
+Status: failure-mode analysis or optional DeepSeek protocol replay; DMR judge scaling complete
 
 This runbook records what must change before the next heavy Phase 6 validation
 run. It is not a product plan and does not permit new memory schema, cognitive
@@ -13,13 +13,14 @@ Current gate read:
 
 - `current_system_gate_passed: true`
 - `current_work_mode: validation_only`
-- `recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis`
+- `recommended_action: continue_failure_mode_analysis_or_optional_deepseek_replay`
 - `heavy_validation_allowed: false`
 - `productization_allowed: false`
 
-The only allowed work while this page is current is no-model / no-external
-evidence maintenance, report synchronization, and configuration checks that do
-not change runtime behavior.
+The allowed work while this page is current is failure-mode analysis,
+documentation/report synchronization, configuration checks that do not change
+runtime behavior, and optional DeepSeek protocol replay with secrets kept in
+environment variables.
 
 ## Branch A: Top-Context DMR Judge Scoring
 
@@ -179,17 +180,70 @@ Acceptance read:
 - no secret values, raw hosted responses, raw memory content, prompts, or
   adapter temporary files are committed;
 - hosted superiority is not claimed unless the hosted/official task gate
-  explicitly supports it.
+explicitly supports it.
+
+## Branch C: DeepSeek External Protocol Replay
+
+Purpose:
+
+- reproduce the domestic/local external validation lane;
+- keep the OpenAI/Neo4j hosted reference lane separate;
+- prove Synapse's own cognitive-trace design surface without changing runtime
+  behavior.
+
+Required external conditions:
+
+| System | Required configuration |
+| --- | --- |
+| Mem0 DeepSeek | `DEEPSEEK_API_KEY`; `MEM0_DEEPSEEK_MODEL=deepseek-v4-flash` is the current target. |
+| Graphiti local | `graphiti-core` and `kuzu`; no OpenAI/Neo4j credentials are required for this protocol. |
+| Letta | Optional; without `LETTA_API_KEY`, `LETTA_BASE_URL`, or `LETTA_ENVIRONMENT=local`, it remains `not_configured`. |
+
+Optional replay command:
+
+```powershell
+$env:MEM0_DEEPSEEK_MODEL = "deepseek-v4-flash"
+cargo run -p synapse-eval --bin kr-external-eval -- `
+  --graphiti-command python `
+  --graphiti-arg scripts/eval/graphiti_adapter.py `
+  --mem0-command python `
+  --mem0-arg scripts/eval/mem0_adapter.py `
+  --letta-command python `
+  --letta-arg scripts/eval/letta_adapter.py `
+  --json crates/eval/reports/external-comparison-deepseek-replay.json
+```
+
+After a replay, update the DeepSeek protocol gate. Do not overwrite the pinned
+external report unless the replay is intentionally promoted:
+
+```powershell
+python scripts/eval/deepseek_external_protocol_gate.py
+python scripts/eval/next_validation_action_gate.py
+python scripts/eval/phase6_requirements_audit.py
+python scripts/eval/phase6_objective_coverage_audit.py
+python scripts/eval/productization_decision_gate.py
+python scripts/eval/readme_claims_support_audit.py
+python scripts/eval/phase6_current_system_gate.py
+```
+
+Acceptance read:
+
+- `deepseek_external_protocol_gate_passed: true`;
+- `phase6_external_validation_blocked_by_openai: false`;
+- no API key, raw external response, prompt text, raw memory content, or
+  adapter temporary files are committed;
+- hosted official superiority is not claimed.
 
 ## If No Branch Is Selected
 
-Do not run heavy DMR or hosted external validation. The correct work remains:
+Do not run heavy DMR or hosted official external validation. The correct work
+remains:
 
 - maintain documentation/report consistency;
 - keep README claims conservative;
 - keep Phase 6 gates green;
-- wait for hosted configuration or explicitly select the next DMR expansion
-  scope.
+- continue DMR failure-mode analysis;
+- optionally replay the DeepSeek protocol without changing runtime defaults.
 
 Useful no-model / no-external checks:
 

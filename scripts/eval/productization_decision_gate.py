@@ -114,6 +114,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
+        "deepseek_external_protocol_gate": root
+        / "crates/eval/reports/deepseek-external-protocol-gate.json",
         "hosted_external_preconditions": root
         / "crates/eval/reports/hosted-external-preconditions.json",
         "long_horizon_task_gate": root
@@ -212,6 +214,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     trend_alignment = reports["longmem_dmr_trend_alignment"]
     split_decision = reports["ranking_objective_split_decision"]
     external = reports["external_comparison_task_gate"]
+    deepseek_external = reports["deepseek_external_protocol_gate"]
     hosted_preconditions = reports["hosted_external_preconditions"]
     long_horizon = reports["long_horizon_task_gate"]
     performance = reports["performance_profile"]
@@ -243,6 +246,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     hosted_external_ready = bool(
         safe_get(external, ["status", "hosted_official_external_ready"])
+    )
+    deepseek_external_ready = bool(
+        safe_get(
+            deepseek_external,
+            ["status", "deepseek_external_protocol_gate_passed"],
+        )
     )
     long_horizon_ready = bool(
         safe_get(long_horizon, ["status", "long_horizon_gate_passed"])
@@ -280,22 +289,28 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         ),
         criterion(
             "weaknesses_vs_competitors_known",
-            "blocked_external" if not hosted_external_ready else "satisfied",
+            "partial"
+            if deepseek_external_ready and not hosted_external_ready
+            else "blocked_external"
+            if not hosted_external_ready
+            else "satisfied",
             question="在什么任务上不如 Mem0 / Graphiti / Zep？",
             evidence=[
                 paths["external_comparison_task_gate"],
+                paths["deepseek_external_protocol_gate"],
                 paths["hosted_external_preconditions"],
             ],
             conclusion=(
-                "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet. DeepSeek-only local fallback is not counted as hosted/official evidence."
+                "DeepSeek-first external protocol gives a fair domestic/local comparison boundary, but hosted/official OpenAI parity is still not measured and must remain a separate reference caveat."
+                if deepseek_external_ready and not hosted_external_ready
+                else "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet. DeepSeek-only local fallback is not counted as hosted/official evidence."
                 if not hosted_external_ready
                 else "Hosted/official competitor comparison is complete enough to state relative weaknesses."
             ),
             remaining=[] if hosted_external_ready else [
-                "Configure hosted Graphiti/Zep Neo4j/OpenAI.",
-                "Configure official Mem0 embedding/recommended config.",
-                "Configure a live or local Letta endpoint.",
-                safe_get(hosted_preconditions, ["deepseek_boundary", "decision"], ""),
+                "Keep OpenAI/Neo4j hosted parity as a reference caveat.",
+                "Do not claim hosted official superiority from the DeepSeek protocol.",
+                safe_get(deepseek_external, ["read", "design_position"], ""),
             ],
         ),
         criterion(
@@ -430,7 +445,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         not hard_failures
         and not blocking_criteria
         and next_gate_ready
-        and hosted_external_ready
+        and (hosted_external_ready or deepseek_external_ready)
         and official_published_ready
         and ranking_default_ready
         and public_long_memory_ready
@@ -487,7 +502,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "blocking_criteria": blocking_criteria,
             "open_gates": [
                 "published_comparable_official_dmr_not_ready",
-                "hosted_external_comparison_not_configured",
+                *([] if deepseek_external_ready else ["hosted_external_comparison_not_configured"]),
                 "safe_runtime_ranking_default_not_ready",
                 "future_evidence_labeling_boundary",
                 "public_real_world_long_memory_not_validated",
@@ -498,10 +513,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "read": {
             "current_conclusion": (
                 "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, "
-                "but official DMR, hosted external comparison, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed."
+                "and the DeepSeek-first external protocol is gate-backed, but official DMR, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed."
             ),
             "what_is_ready": [
                 "Local cognitive-trace advantage is supported on the shared fixture.",
+                "DeepSeek-first external protocol is gate-backed as a domestic/local validation lane.",
                 "Pinned extractive official-style DMR is locally executable and judge-backed.",
                 "DMR 50/200/500-request top-context judge scaling is complete.",
                 "Ranking bottlenecks are validated and the DMR / LongMemEval objective split is decided without adopting a runtime default.",
@@ -511,7 +527,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "what_blocks_productization": [
                 "Published-comparable official DMR is not ready.",
                 "DMR answer quality and mapping coverage are not ready for product claims.",
-                "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
+                "Hosted OpenAI/Neo4j competitor comparison remains only an optional reference lane.",
                 "No safe global runtime ranking default exists.",
                 "Objective-specific ranking policies are not validated for runtime use.",
                 "Public real-world long-memory stability is not validated.",
@@ -519,7 +535,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Web demo, API server, Docker, and v0.1 packaging should not start yet.",
             ],
             "next_action": (
-                "Keep feature freeze and validation-only mode. The next true hosted gate requires competitor credentials/endpoints; no-model failure analysis may continue."
+                "Keep feature freeze and validation-only mode. Continue failure-mode analysis or optionally replay the DeepSeek protocol; do not start productization."
             ),
         },
         "limits": [

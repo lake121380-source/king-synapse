@@ -131,6 +131,10 @@ configuration, and Letta are `not_configured` in this environment.
 records the current hosted fairness gate: DeepSeek is present for DMR judging
 and local Mem0 fallback, but it does not satisfy hosted Graphiti/Zep,
 official/recommended Mem0, or live Letta preconditions.
+[DEEPSEEK_EXTERNAL_PROTOCOL.md](docs/eval/DEEPSEEK_EXTERNAL_PROTOCOL.md)
+records the separate domestic validation lane: the DeepSeek-first protocol
+passes for Synapse's own cognitive-trace design surface, while OpenAI/Neo4j
+hosted parity remains a reference comparison rather than the only proof path.
 
 | System | Local result on the cognitive fixture |
 | --- | --- |
@@ -149,7 +153,8 @@ The Phase 6 replay baseline is fixed in
 A current six-stage requirements audit is recorded in
 [phase6-requirements-audit.json](crates/eval/reports/phase6-requirements-audit.json):
 official-style DMR is local but not published-comparable, no global ranking
-default is supported yet, hosted external comparisons are still open, and
+default is supported yet, DeepSeek-first external validation is gate-backed,
+hosted/OpenAI parity remains a reference lane, and
 productization is not ready.
 That audit is now backed by the task gates, the productization decision gate,
 and the next-action gate, so the current project state is validation-only:
@@ -325,17 +330,17 @@ comparison adapters or optional embedding/reranking paths.
 - Core architecture is stable.
 - Cognitive memory behavior is validated by local benchmarks and manual traces.
 - Current phase is system validation: feature growth is frozen by default while internal benchmarks, external comparison, and long-horizon tests are checked.
-- The Phase 6 requirements audit keeps productization blocked until official DMR, hosted comparison, ranking, and demo-claim gaps close.
+- The Phase 6 requirements audit keeps productization blocked until official DMR, ranking, failure-mode, public-boundary, and demo-claim gaps close.
 - The current-system gate passes only for validation work: `current_system_gate_passed: true`, `heavy_next_gate_ready: false`, and `productization_allowed: false`.
 - The official DMR task gate passes only for the local extractive baseline: `local_official_style_dmr_gate_passed: true`, while `published_comparable_official_dmr_ready: false`.
 - The ranking task gate passes as a no-default decision: `ranking_evidence_gate_passed: true`, while `safe_global_ranking_default_ready: false`.
-- The external comparison task gate passes only for the local fixture: `local_external_comparison_gate_passed: true`, while `hosted_official_external_ready: false`.
+- The external comparison task gate passes for the local fixture, and the DeepSeek-first external protocol passes as a domestic design-validation lane: `deepseek_external_protocol_gate_passed: true`, while `hosted_official_external_ready: false` remains a reference caveat.
 - The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
 - The productization decision gate is a no-go gate: `productization_decision_gate_passed: true`, `productization_ready: false`, `productization_allowed: false`, and `release_v0_1_allowed: false`.
-- The next validation action gate currently says `recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis` and `heavy_validation_allowed: false`.
-- External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
+- The next validation action gate currently says `recommended_action: continue_failure_mode_analysis_or_optional_deepseek_replay` and `heavy_validation_allowed: false`.
+- External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS + DeepSeek are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta remain optional reference gaps.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`, including the DMR 50, 200, and 500-request top-context candidates.
-- The next-gate readiness audit currently blocks heavy hosted follow-up runs: DMR 50/200/500 top-context judge scoring is complete, and hosted competitor comparison still lacks credentials or endpoints.
+- The next-gate readiness audit now keeps heavy follow-up runs closed: DMR 50/200/500 top-context judge scoring is complete, and the useful next work is failure-mode analysis or optional DeepSeek protocol replay.
 - Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
@@ -385,10 +390,11 @@ cargo build --release
 | `crates/eval/reports/phase6-current-system-gate.json` | One-file Phase 6 gate: current system can continue validation, while heavy next-gate and productization remain blocked. |
 | `crates/eval/reports/official-dmr-task-gate.json` | One-file DMR task gate: local official-style DMR evidence passes, while published-comparable DMR remains blocked. |
 | `crates/eval/reports/ranking-task-gate.json` | One-file ranking task gate: ranking evidence is consolidated, while global runtime defaults remain blocked. |
-| `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains blocked. |
+| `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains a separate reference lane. |
+| `crates/eval/reports/deepseek-external-protocol-gate.json` | DeepSeek-first domestic external protocol gate: Synapse design validation passes without treating OpenAI hosted parity as the only proof path. |
 | `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
 | `crates/eval/reports/productization-decision-gate.json` | One-file productization decision gate: current decision is no-go / validation-only. |
-| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50/200/500 top-context judge scoring is complete; no heavy hosted rerun is allowed until hosted competitor configuration is ready. |
+| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50/200/500 top-context judge scoring is complete; continue failure-mode analysis or optional DeepSeek protocol replay. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |
@@ -399,6 +405,7 @@ cargo build --release
 | `crates/eval/reports/phase6-baseline-health-check-2026-07-04.json` | Latest local non-external Phase 6 health replay generated by `scripts/eval/phase6_baseline_health_check.py`. |
 | `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result, stability audit, and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
+| `docs/eval/DEEPSEEK_EXTERNAL_PROTOCOL.md` | DeepSeek-first external protocol boundary and decision. |
 | `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |
 | `docs/eval/HOSTED_EXTERNAL_PRECONDITIONS.md` | Hosted external comparison precondition and fairness gate. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |

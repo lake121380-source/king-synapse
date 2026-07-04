@@ -166,6 +166,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
+        "deepseek_external_protocol_gate": root
+        / "crates/eval/reports/deepseek-external-protocol-gate.json",
         "long_horizon_task_gate": root
         / "crates/eval/reports/long-horizon-task-gate.json",
         "productization_decision_gate": root
@@ -212,6 +214,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     official_dmr_task_gate = load_json(paths["official_dmr_task_gate"])
     ranking_task_gate = load_json(paths["ranking_task_gate"])
     external_comparison_task_gate = load_json(paths["external_comparison_task_gate"])
+    deepseek_external_protocol_gate = load_json(paths["deepseek_external_protocol_gate"])
     long_horizon_task_gate = load_json(paths["long_horizon_task_gate"])
     productization_decision_gate = load_json(paths["productization_decision_gate"])
     next_validation_action_gate = load_json(paths["next_validation_action_gate"])
@@ -235,6 +238,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     generator_findings = generator_summary["aggregate_findings"]
     ranking_read = ranking_conflict["read"]
     hosted_summary = external_hosted["summary"]
+    deepseek_external_passed = bool(
+        safe_get(
+            deepseek_external_protocol_gate,
+            ["status", "deepseek_external_protocol_gate_passed"],
+        )
+    )
     next_gate_read = next_gate_readiness["read"]
     long_horizon_metrics = long_horizon["metrics"]
     long_horizon_evidence_aggregate = long_horizon_evidence["aggregate"]
@@ -335,27 +344,42 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         ),
         build_phase(
             phase="4_external_fair_comparison",
-            status="partial_local_complete_hosted_open",
+            status=(
+                "deepseek_protocol_complete_official_reference_open"
+                if deepseek_external_passed
+                else "partial_local_complete_hosted_open"
+            ),
             evidence=[
                 report_path(paths["external_validation"]),
+                report_path(paths["deepseek_external_protocol_gate"]),
                 report_path(paths["external_comparison_hosted"]),
                 report_path(paths["hosted_external_preconditions"]),
                 report_path(paths["phase6_next_gate_readiness"]),
                 report_path(paths["external_comparison_task_gate"]),
             ],
             conclusion=(
-                "The cognitive fixture shows Synapse's local trace surface, but "
+                "The DeepSeek-first domestic external protocol is gate-backed: "
+                "Synapse's cognitive trace surface is validated against local "
+                "Graphiti/Zep and Mem0 DeepSeek evidence on the shared fixture. "
+                "Hosted OpenAI/Neo4j parity remains an optional reference lane, "
+                "not the only Phase 6 proof path."
+                if deepseek_external_passed
+                else "The cognitive fixture shows Synapse's local trace surface, but "
                 "hosted Graphiti/Zep, official Mem0, and live Letta are not "
                 "configured in the current environment. The precondition audit "
                 "also keeps DeepSeek-only fallback out of hosted/official claims."
             ),
             remaining=[
-                "Graphiti/Zep hosted or standard Neo4j/OpenAI run is not measured.",
-                "Mem0 official/recommended embedding configuration is not measured.",
-                "Letta live endpoint is not measured.",
-                "Hosted preconditions are not satisfied, so hosted external run remains disallowed.",
+                "OpenAI/Neo4j hosted Graphiti/Zep remains unmeasured as a reference lane.",
+                "Official OpenAI-style Mem0 remains unmeasured as a reference lane.",
+                "Letta live endpoint remains unmeasured.",
+                "Do not claim hosted official superiority from the DeepSeek protocol.",
             ],
-            next_action="Provide or configure hosted competitor credentials/endpoints, then rerun the shared cognitive fixture.",
+            next_action=(
+                "Continue failure-mode analysis or optionally replay the DeepSeek external protocol; keep hosted official claims separate."
+                if deepseek_external_passed
+                else "Provide or configure hosted competitor credentials/endpoints, then rerun the shared cognitive fixture."
+            ),
         ),
         build_phase(
             phase="5_long_horizon_stability",
@@ -396,12 +420,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             remaining=[
                 "Need clear supported task boundaries.",
-                "Need measured hosted competitor comparisons.",
+                "Need clear DeepSeek-protocol boundaries in public claims; hosted OpenAI competitor comparisons are optional reference evidence.",
                 "Need stronger DMR answer-generation quality and finalized scoring policy.",
                 "Need explicit GPU cost acceptance and stable public demo criteria.",
-                "Need hosted competitor configuration before the next hosted heavy run.",
+                "Need failure-mode analysis and clear public boundaries before productization.",
             ],
-            next_action="Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: wait for hosted external configuration or continue no-model failure analysis.",
+            next_action="Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: continue failure-mode analysis or optional DeepSeek protocol replay.",
         ),
     ]
 
@@ -409,10 +433,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     blocking_gaps = [
         "published_comparable_dmr_not_finished",
         "no_global_ranking_default_supported",
-        "hosted_external_comparison_not_configured",
+        *([] if deepseek_external_passed else ["hosted_external_comparison_not_configured"]),
         "future_evidence_labeling_boundary",
         "public_real_world_long_memory_not_validated",
-        "next_validation_action_waiting_on_hosted_or_failure_analysis",
         "productization_not_ready",
     ]
 
@@ -578,24 +601,25 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "strongest_supported_claims": [
                 "Cognitive trace introspection is richer than the measured local adapters in the shared fixture.",
+                "DeepSeek-first external validation is gate-backed as a domestic/local protocol.",
                 "Official-style DMR local scoring is executable on CUDA without committing raw records.",
                 "Ranking and answer synthesis are the active bottlenecks, not a disproven core architecture.",
                 "Long-horizon candidate recall and hidden trace behavior are stable in the deterministic fixture.",
             ],
             "claims_not_yet_supported": [
                 "Published-comparable official DMR performance.",
-                "Hosted Graphiti/Zep, official Mem0, or live Letta superiority.",
+                "Hosted Graphiti/Zep, official OpenAI-style Mem0, or live Letta superiority.",
                 "A safe global ranking-default change.",
                 "Production readiness or v0.1 release readiness.",
-                "Any heavy next validation rerun while external preconditions are blocked.",
+                "Any productization claim while failure-mode and public-boundary gates are open.",
             ],
             "blocking_gaps": blocking_gaps,
             "recommended_next_action": (
-                "Keep feature freeze. The next-validation action gate says no "
-                "heavy validation branch is currently selected: DMR 50 and 200 "
-                "and 500-request top-context judge scoring are complete, and the "
-                "next heavy branch is hosted external comparison once "
-                "credentials/endpoints are ready."
+                "Keep feature freeze. The next-validation action gate says DMR "
+                "50/200/500 top-context judge scoring is complete and the "
+                "DeepSeek external protocol is gate-backed. Continue failure-mode "
+                "analysis, or optionally replay the DeepSeek protocol without "
+                "turning it into a hosted OpenAI claim."
             ),
         },
         "limits": [

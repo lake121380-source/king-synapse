@@ -1,37 +1,37 @@
 {
   "schema_version": "king-synapse.readme-claims-support-audit.v1",
-  "generated_at": "2026-07-04T04:27:20.976573+00:00",
+  "generated_at": "2026-07-04T05:04:13.246236+00:00",
   "runner": "scripts\\eval\\readme_claims_support_audit.py",
   "git": {
     "branch": "main",
-    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
+    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "readme": {
       "path": "README.md",
       "exists": true,
-      "sha256": "f208f65cc6a64decddd4765d06568bf8f7f0e78ddee6715aa6ae5fdae1d76cbc"
+      "sha256": "2fbe8024ed752f7dcdda7c3034cf222cf5be974dd14162db94ded789286d4952"
     },
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "5315bde0d2c31992137c1beab8a64d68f4bc4a280c95a86144e7a0f614c42ad1"
+      "sha256": "95359de710fdb19974005a3fff1e09584505721c8c22949fc14847cee7276910"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "88388563eb9c08c7416958b284902d78b552b2181860f19f3bf5299673346e4c"
+      "sha256": "db5754f921165f209ff63b82614013151bef138f6bfd0b133b36dd865e9858ec"
     },
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "a703be166b27777db80d873d1747a855efcbf250a223a726b7a2589f49ace284"
+      "sha256": "040fb327719e3595b78da1f0839e2aaff6c610c85c7ab3ca33d129eda058f4c4"
     },
     "phase6_objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "b60f390fe07cce8557e26f8e0a19df051d0d28db27fab61b8a96e3c64794251e"
+      "sha256": "9a0b5703eec5decf6ba3e0386ae7c35f00fc0036df1481d2d5f382177e60cfe7"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -47,6 +47,11 @@
       "path": "crates\\eval\\reports\\external-comparison-hosted.json",
       "exists": true,
       "sha256": "606ecb6ff5834ab47af8a5ae8b38c0bc2834a8a153132188e1350ca2d9e36888"
+    },
+    "deepseek_external_protocol_gate": {
+      "path": "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
+      "exists": true,
+      "sha256": "7fc4f42c41386243b4405376f180bb39e88f500722092523c52b59ad2be3cee7"
     },
     "hosted_external_preconditions": {
       "path": "crates\\eval\\reports\\hosted-external-preconditions.json",
@@ -121,12 +126,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "b933f9b534c6bf0a0548cadeacfb27a6f51fdfd18ea807fec056b7e265a7aaba"
+      "sha256": "05ed3bfca7bb19059649a4b111fa9e498e19b71f7bb75e262d4c75a4f38f5ec5"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "47ae4e00fca641f58a2908f3ec6dc740cb3b2d8189d622b331923fffe6a02bea"
+      "sha256": "b9b5b7f8f47652080145f7bc792df529a671fea756fdf900952a55cb7e870496"
     }
   },
   "raw_records_committed": false,
@@ -219,6 +224,17 @@
       "present_in_readme": true
     },
     {
+      "id": "deepseek_external_protocol",
+      "readme_snippet": "DeepSeek-first external protocol passes",
+      "status": "supported",
+      "evidence": [
+        "crates\\eval\\reports\\deepseek-external-protocol-gate.json"
+      ],
+      "conclusion": "The DeepSeek-first external protocol passes: Synapse's unique cognitive trace surfaces are validated on the shared fixture against local Graphiti/Zep and Mem0 DeepSeek evidence. This does not claim OpenAI/Neo4j hosted official competitor completion.",
+      "required_scope_note": null,
+      "present_in_readme": true
+    },
+    {
       "id": "official_dmr_table",
       "readme_snippet": "This is still not a published-comparable official DMR result.",
       "status": "supported",
@@ -306,18 +322,18 @@
       "evidence": [
         "crates\\eval\\reports\\productization-decision-gate.json"
       ],
-      "conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, but official DMR, hosted external comparison, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
+      "conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, and the DeepSeek-first external protocol is gate-backed, but official DMR, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
       "required_scope_note": null,
       "present_in_readme": true
     },
     {
       "id": "next_validation_action_gate",
-      "readme_snippet": "recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis",
+      "readme_snippet": "recommended_action: continue_failure_mode_analysis_or_optional_deepseek_replay",
       "status": "supported",
       "evidence": [
         "crates\\eval\\reports\\next-validation-action-gate.json"
       ],
-      "conclusion": "DMR 50/200/500 top-context judge scoring is complete; no further DMR heavy branch is currently selected by this gate.",
+      "conclusion": "DMR 50/200/500 top-context judge scoring is complete and the DeepSeek-first external protocol is gate-backed; the next useful work is failure-mode analysis or an optional DeepSeek replay, not waiting on OpenAI.",
       "required_scope_note": null,
       "present_in_readme": true
     },
@@ -336,7 +352,7 @@
   ],
   "status_counts": {
     "supported_with_scope": 4,
-    "supported": 13
+    "supported": 14
   },
   "unsupported_claims": [],
   "supported_with_scope_claims": [
@@ -378,6 +394,7 @@
     },
     "top_context_judge_ready": true,
     "hosted_external_ready": false,
+    "deepseek_external_protocol_gate_passed": true,
     "phase6_overall": "phase6_validation_in_progress_productization_blocked",
     "productization_status": "not_ready",
     "long_horizon_fixed_metrics": {
@@ -392,7 +409,7 @@
     "productization_ready": false,
     "release_v0_1_allowed": false,
     "next_validation_action_gate_passed": true,
-    "recommended_next_validation_action": "wait_for_hosted_external_configuration_or_no_model_failure_analysis",
+    "recommended_next_validation_action": "continue_failure_mode_analysis_or_optional_deepseek_replay",
     "heavy_validation_allowed": false
   },
   "read": {
@@ -400,12 +417,12 @@
     "public_claim_posture": "README claims are currently conservative enough for a validation-stage project, provided scoped/local caveats remain visible.",
     "must_not_claim_yet": [
       "published-comparable official DMR performance",
-      "hosted Graphiti/Zep or official Mem0 superiority",
+      "hosted Graphiti/Zep or official OpenAI-style Mem0 superiority",
       "safe global ranking default",
       "production readiness",
       "v0.1 release readiness"
     ],
-    "next_action": "Keep README in validation posture until top-context judge scoring, hosted external comparison, and productization gates are closed."
+    "next_action": "Keep README in validation posture until failure-mode, public-boundary, and productization gates are closed."
   },
   "limits": [
     "This audit checks README claims against committed evidence only.",

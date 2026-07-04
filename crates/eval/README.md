@@ -87,6 +87,13 @@ a real endpoint. In the current environment it records King Synapse as
 measured and Graphiti/Zep, Mem0, and Letta as `not_configured`, with zero
 adapter failures.
 
+The separate DeepSeek-first protocol gate is
+`crates/eval/reports/deepseek-external-protocol-gate.json`. It treats Mem0 OSS
+with DeepSeek, local Graphiti/Zep Kuzu, and King Synapse as the domestic/local
+design-validation lane. It is valid Phase 6 evidence for Synapse's own
+cognitive-trace design claim, but it is not an OpenAI/Neo4j hosted official
+competitor claim.
+
 ## LongMemEval / DMR Harness
 
 ```bash

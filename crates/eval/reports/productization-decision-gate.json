@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.productization-decision-gate.v1",
-  "generated_at": "2026-07-04T04:26:37.143574+00:00",
+  "generated_at": "2026-07-04T04:52:12.202958+00:00",
   "runner": "scripts\\eval\\productization_decision_gate.py",
   "git": {
     "branch": "main",
-    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
+    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "a703be166b27777db80d873d1747a855efcbf250a223a726b7a2589f49ace284"
+      "sha256": "040fb327719e3595b78da1f0839e2aaff6c610c85c7ab3ca33d129eda058f4c4"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "b60f390fe07cce8557e26f8e0a19df051d0d28db27fab61b8a96e3c64794251e"
+      "sha256": "9a0b5703eec5decf6ba3e0386ae7c35f00fc0036df1481d2d5f382177e60cfe7"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -48,6 +48,11 @@
       "exists": true,
       "sha256": "ab275a6331757e51081a1736ae00d13aa44b8da35862dd41c16ac78d3dbcb2f3"
     },
+    "deepseek_external_protocol_gate": {
+      "path": "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
+      "exists": true,
+      "sha256": "7fc4f42c41386243b4405376f180bb39e88f500722092523c52b59ad2be3cee7"
+    },
     "hosted_external_preconditions": {
       "path": "crates\\eval\\reports\\hosted-external-preconditions.json",
       "exists": true,
@@ -66,12 +71,12 @@
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "5315bde0d2c31992137c1beab8a64d68f4bc4a280c95a86144e7a0f614c42ad1"
+      "sha256": "95359de710fdb19974005a3fff1e09584505721c8c22949fc14847cee7276910"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "88388563eb9c08c7416958b284902d78b552b2181860f19f3bf5299673346e4c"
+      "sha256": "db5754f921165f209ff63b82614013151bef138f6bfd0b133b36dd865e9858ec"
     },
     "demo_doc": {
       "path": "docs\\DEMO.md",
@@ -145,6 +150,14 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "deepseek_external_protocol_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
       "hosted_external_preconditions": {
         "raw_records_committed": false,
         "raw_questions_committed": false,
@@ -178,17 +191,17 @@
     {
       "id": "weaknesses_vs_competitors_known",
       "question": "在什么任务上不如 Mem0 / Graphiti / Zep？",
-      "status": "blocked_external",
+      "status": "partial",
       "evidence": [
         "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
         "crates\\eval\\reports\\hosted-external-preconditions.json"
       ],
-      "conclusion": "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet. DeepSeek-only local fallback is not counted as hosted/official evidence.",
+      "conclusion": "DeepSeek-first external protocol gives a fair domestic/local comparison boundary, but hosted/official OpenAI parity is still not measured and must remain a separate reference caveat.",
       "remaining": [
-        "Configure hosted Graphiti/Zep Neo4j/OpenAI.",
-        "Configure official Mem0 embedding/recommended config.",
-        "Configure a live or local Letta endpoint.",
-        "DeepSeek is present, but DeepSeek-only configuration is not accepted as hosted/official external comparison evidence. It remains valid for DMR judging and local Mem0 OSS fallback evidence only."
+        "Keep OpenAI/Neo4j hosted parity as a reference caveat.",
+        "Do not claim hosted official superiority from the DeepSeek protocol.",
+        "For this project, OpenAI-hosted parity is a reference lane, not the only proof lane. The primary Phase 6 proof can be the reproducible DeepSeek/local protocol as long as the README names the boundary clearly."
       ]
     },
     {
@@ -296,6 +309,7 @@
         "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
         "crates\\eval\\reports\\ranking-objective-split-decision.json",
         "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
         "crates\\eval\\reports\\hosted-external-preconditions.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\phase6-performance-profile.json"
@@ -305,8 +319,7 @@
     }
   ],
   "status_counts": {
-    "partial": 2,
-    "blocked_external": 1,
+    "partial": 3,
     "satisfied": 3,
     "not_ready": 4
   },
@@ -368,7 +381,6 @@
     ],
     "open_gates": [
       "published_comparable_official_dmr_not_ready",
-      "hosted_external_comparison_not_configured",
       "safe_runtime_ranking_default_not_ready",
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
@@ -377,9 +389,10 @@
     ]
   },
   "read": {
-    "current_conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, but official DMR, hosted external comparison, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
+    "current_conclusion": "Productization is a no-go. Synapse has validated local cognitive-trace and deterministic long-horizon strengths, and the DeepSeek-first external protocol is gate-backed, but official DMR, safe runtime defaults, public long-memory evidence, GPU cost acceptance, and public demo readiness are not closed.",
     "what_is_ready": [
       "Local cognitive-trace advantage is supported on the shared fixture.",
+      "DeepSeek-first external protocol is gate-backed as a domestic/local validation lane.",
       "Pinned extractive official-style DMR is locally executable and judge-backed.",
       "DMR 50/200/500-request top-context judge scaling is complete.",
       "Ranking bottlenecks are validated and the DMR / LongMemEval objective split is decided without adopting a runtime default.",
@@ -389,14 +402,14 @@
     "what_blocks_productization": [
       "Published-comparable official DMR is not ready.",
       "DMR answer quality and mapping coverage are not ready for product claims.",
-      "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
+      "Hosted OpenAI/Neo4j competitor comparison remains only an optional reference lane.",
       "No safe global runtime ranking default exists.",
       "Objective-specific ranking policies are not validated for runtime use.",
       "Public real-world long-memory stability is not validated.",
       "GPU/latency acceptance threshold is not adopted.",
       "Web demo, API server, Docker, and v0.1 packaging should not start yet."
     ],
-    "next_action": "Keep feature freeze and validation-only mode. The next true hosted gate requires competitor credentials/endpoints; no-model failure analysis may continue."
+    "next_action": "Keep feature freeze and validation-only mode. Continue failure-mode analysis or optionally replay the DeepSeek protocol; do not start productization."
   },
   "limits": [
     "This gate reads committed aggregate evidence and docs only.",

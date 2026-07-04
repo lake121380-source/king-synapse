@@ -133,6 +133,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/external-comparison-latest.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
+        "deepseek_external_protocol_gate": root
+        / "crates/eval/reports/deepseek-external-protocol-gate.json",
         "hosted_external_preconditions": root
         / "crates/eval/reports/hosted-external-preconditions.json",
         "official_dmr_result": root / "docs/eval/OFFICIAL_DMR_RESULT.md",
@@ -169,6 +171,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readiness = load_json(paths["phase6_next_gate_readiness"])
     external_latest = load_json(paths["external_comparison_latest"])
     external_hosted = load_json(paths["external_comparison_hosted"])
+    deepseek_external = load_json(paths["deepseek_external_protocol_gate"])
     hosted_preconditions = load_json(paths["hosted_external_preconditions"])
     dmr_50 = load_json(paths["official_dmr_50"])
     dmr_200 = load_json(paths["official_dmr_200"])
@@ -324,6 +327,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
         ),
         claim(
+            claim_id="deepseek_external_protocol",
+            readme_snippet="DeepSeek-first external protocol passes",
+            status="supported",
+            evidence=[report_path(paths["deepseek_external_protocol_gate"])],
+            conclusion=safe_get(deepseek_external, ["read", "current_conclusion"], ""),
+        ),
+        claim(
             claim_id="official_dmr_table",
             readme_snippet="This is still not a published-comparable official DMR result.",
             status="supported",
@@ -397,7 +407,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             claim_id="next_validation_action_gate",
             readme_snippet=(
                 "recommended_action: "
-                "wait_for_hosted_external_configuration_or_no_model_failure_analysis"
+                "continue_failure_mode_analysis_or_optional_deepseek_replay"
             ),
             status="supported",
             evidence=[report_path(paths["next_validation_action_gate"])],
@@ -457,6 +467,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "dmr_runs": dmr_runs,
             "top_context_judge_ready": safe_get(readiness, ["top_context_judge", "ready"]),
             "hosted_external_ready": safe_get(readiness, ["hosted_external", "ready"]),
+            "deepseek_external_protocol_gate_passed": safe_get(
+                deepseek_external,
+                ["status", "deepseek_external_protocol_gate_passed"],
+            ),
             "phase6_overall": safe_get(coverage, ["read", "overall"]),
             "productization_status": safe_get(phase6, ["phase_status", 5, "status"]),
             "long_horizon_fixed_metrics": long_horizon.get("metrics", {}),
@@ -499,14 +513,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             else "README has unsupported or missing audited snippets.",
             "must_not_claim_yet": [
                 "published-comparable official DMR performance",
-                "hosted Graphiti/Zep or official Mem0 superiority",
+                "hosted Graphiti/Zep or official OpenAI-style Mem0 superiority",
                 "safe global ranking default",
                 "production readiness",
                 "v0.1 release readiness",
             ],
             "next_action": (
-                "Keep README in validation posture until top-context judge scoring, "
-                "hosted external comparison, and productization gates are closed."
+                "Keep README in validation posture until failure-mode, public-boundary, "
+                "and productization gates are closed."
             ),
         },
         "limits": [
