@@ -343,6 +343,7 @@ comparison adapters or optional embedding/reranking paths.
 - The next-gate readiness audit now keeps heavy follow-up runs closed: DMR 50/200/500 top-context judge scoring is complete, and the useful next work is failure-mode analysis or optional DeepSeek protocol replay.
 - Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
 - DMR 500 failure modes are now classified: mapping 177/500 (35.4%), retrieval 109 (21.8%), answer synthesis 83 (16.6%), ranking 80 (16.0%), success 51 (10.2%). Primary bottleneck is mapping policy, not architecture. See [DMR_500_FAILURE_MODE.md](docs/eval/DMR_500_FAILURE_MODE.md).
+- DMR mapping policy decision is gate-backed: keep punctuation full-answer as runtime default. 174/177 rejected rows have diagnostic token matches; relaxed policy could recover +119 rows but needs judge validation. See [DMR_MAPPING_POLICY_GATE.md](docs/eval/DMR_MAPPING_POLICY_GATE.md).
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 
@@ -394,6 +395,7 @@ cargo build --release
 | `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains a separate reference lane. |
 | `crates/eval/reports/deepseek-external-protocol-gate.json` | DeepSeek-first domestic external protocol gate: Synapse design validation passes without treating OpenAI hosted parity as the only proof path. |
 | `crates/eval/reports/dmr-500-failure-mode-gate.json` | DMR 500 failure mode gate: all 500 requested rows classified into mutually exclusive categories; primary bottleneck is mapping policy. |
+| `crates/eval/reports/dmr-mapping-policy-gate.json` | DMR mapping policy gate: keep punctuation full-answer as runtime default; relaxed policy candidate recorded as validation-only. |
 | `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
 | `crates/eval/reports/productization-decision-gate.json` | One-file productization decision gate: current decision is no-go / validation-only. |
 | `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50/200/500 top-context judge scoring is complete; continue failure-mode analysis or optional DeepSeek protocol replay. |
@@ -409,6 +411,7 @@ cargo build --release
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `docs/eval/DEEPSEEK_EXTERNAL_PROTOCOL.md` | DeepSeek-first external protocol boundary and decision. |
 | `docs/eval/DMR_500_FAILURE_MODE.md` | DMR 500 failure mode classification, counts, and bottleneck analysis. |
+| `docs/eval/DMR_MAPPING_POLICY_GATE.md` | DMR mapping policy decision, coverage comparison, and validation-only relaxed path. |
 | `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |
 | `docs/eval/HOSTED_EXTERNAL_PRECONDITIONS.md` | Hosted external comparison precondition and fairness gate. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |

@@ -1,0 +1,135 @@
+{
+  "schema_version": "king-synapse.dmr-mapping-policy-gate.v1",
+  "generated_at": "2026-07-04T05:39:00.360567+00:00",
+  "runner": "scripts/eval/dmr_mapping_policy_gate.py",
+  "question": "Should the DMR mapping policy be changed from punctuation-normalized full-answer matching to a relaxed policy?",
+  "inputs": {
+    "mapping_policy_review": {
+      "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+      "sha256": "0e7da9317d0605e0f6825b0b2dbc3dda0cc3f772c3578a8b322bd7ee983bb0b2",
+      "schema_version": "king-synapse.dmr-mapping-policy-review.v1"
+    },
+    "mapping_boundary_impact": {
+      "path": "crates\\eval\\reports\\dmr-mapping-boundary-impact.json",
+      "sha256": "c580aedb447acafc8abff3480f05a2be53644201721c7c5c3c0a46a64d972274",
+      "schema_version": "king-synapse.dmr-mapping-boundary-impact.v1"
+    },
+    "failure_mode_gate": {
+      "path": "crates\\eval\\reports\\dmr-500-failure-mode-gate.json",
+      "sha256": "03d0cf173a9d5ddd362816fbb3cf55377308911ee1466b48d9474cf08e78a0f8",
+      "schema_version": "king-synapse.dmr-500-failure-mode-gate.v1"
+    },
+    "failure_mode_taxonomy": {
+      "path": "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+      "sha256": "3147377c464dc79dd1611e10d0d54e179834585b904251aa199078a4c241d6ca",
+      "schema_version": "king-synapse.dmr-failure-mode-taxonomy.v1"
+    }
+  },
+  "git": {
+    "commit": "97474c8ebb958383bfe73dafd0d4d2bca63b82a6",
+    "branch": "main",
+    "dirty": true
+  },
+  "cache_policy": {
+    "cache_root_recorded": false,
+    "raw_cache_retained": false,
+    "raw_records_committed": false
+  },
+  "raw_flags": {
+    "raw_records_committed": false,
+    "raw_questions_committed": false,
+    "raw_answers_committed": false,
+    "raw_dialogs_committed": false,
+    "raw_memory_content_committed": false,
+    "generated_answers_committed": false,
+    "raw_response_committed": false,
+    "prompt_text_recorded": false
+  },
+  "coverage_comparison": [
+    {
+      "policy": "punctuation_full_answer (current)",
+      "coverage": 323,
+      "share": 64.6,
+      "additional_over_current": 0
+    },
+    {
+      "policy": "significant_token_containment",
+      "coverage": 442,
+      "share": 88.4,
+      "additional_over_current": 119
+    },
+    {
+      "policy": "significant_token_overlap_75",
+      "coverage": 469,
+      "share": 93.8,
+      "additional_over_current": 146
+    },
+    {
+      "policy": "significant_token_overlap_50",
+      "coverage": 487,
+      "share": 97.4,
+      "additional_over_current": 164
+    },
+    {
+      "policy": "any_significant_token",
+      "coverage": 494,
+      "share": 98.8,
+      "additional_over_current": 171
+    }
+  ],
+  "policy_decision": {
+    "decision": "keep_punctuation_full_answer_as_runtime_default",
+    "rationale": "122/177 rejected rows have full significant-token containment in a single chunk, suggesting the answer IS in memory but the strict punctuation policy misses it. However, promoting relaxed mapping without judge validation would inflate scores. Keep the strict policy as runtime default; validate relaxed mapping as a separate labeled experiment.",
+    "validation_only_relaxed_path": "Run DMR 500 with significant_token_containment mapping + DeepSeek judge scoring, then compare judge accuracy against the pinned punctuation baseline. Only promote if judge accuracy improves and no false positives are introduced.",
+    "next_action": "Keep feature freeze. Do not change runtime mapping default. Optionally run a labeled relaxed-mapping judge experiment to measure the tradeoff."
+  },
+  "status": {
+    "dmr_mapping_policy_gate_passed": true,
+    "runtime_mapping_policy_change_allowed": false,
+    "current_policy": "punctuation_full_answer",
+    "relaxed_policy_validated": false,
+    "relaxed_policy_candidate": "significant_token_containment",
+    "relaxed_policy_candidate_coverage": 442,
+    "relaxed_policy_candidate_share": 88.4,
+    "current_policy_coverage": 323,
+    "current_policy_share": 64.6,
+    "relaxed_policy_additional_coverage": 119,
+    "relaxed_policy_risk": "Relaxed mapping may inflate scores without judge validation; cannot be silently promoted to official.",
+    "mapping_rejected_count": 177,
+    "mapping_rejected_with_token_match": 174,
+    "mapping_rejected_no_match": 3,
+    "mapping_rejected_token_match_breakdown": {
+      "significant_token_containment_only": 122,
+      "overlap_75_without_full_token_containment": 27,
+      "overlap_50_without_overlap_75": 18,
+      "any_significant_token_only": 7
+    },
+    "productization_allowed": false,
+    "evidence_consistent": true
+  },
+  "cross_reference": {
+    "policy_review_punctuation_coverage": 323,
+    "policy_review_rejected_by_punctuation": 177,
+    "policy_review_no_diagnostic_match": 3,
+    "failure_mode_gate_mapping_rejected": 177,
+    "failure_mode_gate_mapping_boundary_consistent": true,
+    "taxonomy_mapping_diagnostics": {
+      "punctuation_full_answer_coverage": 323,
+      "punctuation_full_answer_coverage_ratio": 0.646,
+      "significant_token_containment_coverage": 442,
+      "diagnostic_only_relaxed_token_note": "Relaxed token containment increases coverage but is not the pinned local scoring policy."
+    }
+  },
+  "read": {
+    "current_conclusion": "DMR mapping policy decision is gate-backed: keep punctuation full-answer as the runtime default. 174/177 rejected rows have diagnostic token matches, so the answer is likely in memory but missed by strict matching. A relaxed policy could recover up to 119 rows, but it must be judge-validated before promotion. This is a mapping-policy boundary, not an architecture failure.",
+    "next_action": "Keep feature freeze. Do not change runtime mapping default. The next useful step is a labeled relaxed-mapping judge experiment, or continue to LongMemEval/DMR trend alignment."
+  },
+  "limits": [
+    "This gate reads committed sanitized aggregate/per-query DMR reports only.",
+    "It does not run retrieval, answer generation, LLM judges, hosted adapters, or product code.",
+    "It does not inspect raw questions, answers, dialogs, memory content, generated answers, prompts, responses, or API keys.",
+    "The gate passes because the policy decision is evidence-backed, not because DMR mapping is good.",
+    "Relaxed mapping policies are diagnostic unless separately labeled and judge-validated.",
+    "This report does not change memory schema, cognitive layers, CLI/MCP, retrieval, ranking, generator, or runtime mapping defaults."
+  ]
+}
