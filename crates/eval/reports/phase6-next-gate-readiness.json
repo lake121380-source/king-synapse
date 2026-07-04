@@ -1,12 +1,12 @@
 {
   "schema_version": "king-synapse.phase6-next-gate-readiness.v1",
-  "generated_at": "2026-07-03T18:45:28.642107+00:00",
+  "generated_at": "2026-07-04T01:52:25.734172+00:00",
   "runner": "scripts\\eval\\phase6_next_gate_readiness.py",
   "inputs": {
     "top_context_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
-      "sha256": "0ac85f4319699257091cc145be2420aa9c7f0dec02e00b776391182e6f9509be",
-      "decision": "judge_configuration_still_blocked"
+      "sha256": "79d65d2977937e092ec16c3968a602e39507ef642a0078cc22bdd206abe2d969",
+      "decision": "ready_for_official_dmr_judge_rerun"
     },
     "hosted_external_report": {
       "path": "crates\\eval\\reports\\external-comparison-hosted.json",
@@ -17,6 +17,10 @@
         "not_configured_systems": 3,
         "failed_systems": 0
       }
+    },
+    "official_dmr_task_gate": {
+      "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
+      "sha256": "8b03c8451ddd63197500e100c52da392f59310e6ab9280c7f6e9f381fc7d41da"
     }
   },
   "env_presence": {
@@ -41,10 +45,11 @@
   "raw_response_committed": false,
   "raw_records_committed": false,
   "top_context_judge": {
-    "ready": false,
-    "status": "authorization_error",
-    "http_status": 401,
-    "decision": "judge_configuration_still_blocked",
+    "ready": true,
+    "status": "judged",
+    "http_status": 200,
+    "decision": "ready_for_official_dmr_judge_rerun",
+    "dmr_50_complete": true,
     "api_key_present": true,
     "api_key_recorded": false
   },
@@ -75,8 +80,8 @@
   },
   "read": {
     "next_gate_ready": false,
-    "blocking_reason": "Top-context judge still returns authorization_error, and hosted external comparison credentials/endpoints are not configured.",
-    "next_action": "No heavy next-gate run is currently ready. Keep feature freeze and wait for a valid judge key or hosted external credentials/endpoints."
+    "blocking_reason": "DMR 50 top-context judge scoring is complete; hosted external comparison credentials/endpoints are not configured, and no DMR expansion scope is selected.",
+    "next_action": "No heavy next-gate run is currently selected. Do not rerun DMR 50; select a DMR 200/500 top-context judge expansion or configure hosted external credentials/endpoints."
   },
   "limits": [
     "Records environment variable presence only, not values.",

@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-bottleneck-taxonomy.v1",
-  "generated_at": "2026-07-03T16:30:24.148043+00:00",
+  "generated_at": "2026-07-04T01:52:25.043281+00:00",
   "runner": "scripts\\eval\\official_dmr_bottleneck_taxonomy.py",
   "inputs": {
     "answer_audit": {
@@ -9,7 +9,7 @@
     },
     "generator_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
-      "sha256": "752ca7ec7a11aaa492d9f90f2de4c03705d1ff0362cfb4bb78389520d9e3ddc5"
+      "sha256": "0ed9c5150072fb887b3ab7da020e20bb64305091d98c18e704c74145cfcefbba"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -203,7 +203,7 @@
     "generator_read": "Top-context extraction is the clearest current answer-synthesis direction: it improves substring and ROUGE-L on every scale view and reduces top-1 opportunity loss. But on the largest local view it still leaves 90 top-1 hits without the gold substring, so it is not enough for an official DMR claim.",
     "ranking_read": "Ranking remains necessary because a large top10-not-top1 bucket and true top10 retrieval-miss bucket remain after answer scoring. Generator work cannot recover samples that never receive a relevant top-10 context.",
     "mapping_read": "The 500-request run is 323-scored under punctuation full-answer mapping. Relaxed token containment would increase coverage, but it is a separate diagnostic policy and cannot be silently promoted.",
-    "next_action": "Do not change runtime defaults. If judge authorization is fixed, judge-score the top-context candidate; otherwise continue with validation-only generator diagnostics or hosted external comparison."
+    "next_action": "Do not change runtime defaults. Top-context DMR 50 is now judge-scored; the next DMR validation expansion is DMR 200 top-context judge scoring, otherwise continue with hosted external comparison when credentials/endpoints are ready."
   },
   "limits": [
     "Reads existing sanitized reports only.",

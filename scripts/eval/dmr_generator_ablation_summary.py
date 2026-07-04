@@ -164,7 +164,14 @@ def judge_status_read(runs: list[dict[str, Any]]) -> str:
     candidate_counts = merge_status_counts(runs, "candidate")
     baseline_judged = baseline_counts.get("judged", 0)
     baseline_errors = baseline_counts.get("error", 0)
+    candidate_judged = candidate_counts.get("judged", 0)
     candidate_not_requested = candidate_counts.get("not_requested", 0)
+    if baseline_judged and baseline_errors == 0 and candidate_judged and candidate_not_requested:
+        return (
+            "The extractive baseline reports are judge-backed on the pinned "
+            "runs; the top-context generator is judge-backed on DMR 50 and "
+            "lexical/ROUGE-only on DMR 200 and the 500-request view."
+        )
     if baseline_judged and baseline_errors == 0 and candidate_not_requested:
         return (
             "The extractive baseline reports are judge-backed on the pinned "
@@ -287,7 +294,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "The top-context-extractive generator direction repeats across "
                 "DMR 50, 200, and 500-request/323-scored local views, but "
                 "remains evaluation-only evidence until the candidate generator "
-                "is judge-scored and absolute answer quality improves."
+                "is judge-scored beyond DMR 50 and absolute answer quality improves."
             ),
         },
         "runs": runs,

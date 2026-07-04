@@ -267,7 +267,7 @@ finds a blocking bug.
 | 7 | Repeat the strongest retrieval/ranking setting on LongMemEval. | Done for reranker-pool cross-check: LongMemEval prefers pool `25` among reranker variants and vector-only for Recall@10, so no global default change is justified. |
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
 | 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
-| 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, but remains eval-only. A later candidate judge preflight is blocked by DeepSeek HTTP `401`. |
+| 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, and DMR 50 top-context is now judge-scored. DMR 200/500 top-context judge scoring remains open. |
 | 11 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
 | 12 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
@@ -331,12 +331,15 @@ finds a blocking bug.
   isolated judge preflight is recorded at
   `crates/eval/reports/official-dmr-judge-preflight.json`. The pinned
   extractive runs now return fully judged outputs on `deepseek-v4-flash`; the
-  top-context generator ablation reports were run with `--llm-judge none`. A
-  later top-context candidate judge preflight is recorded at
-  `crates/eval/reports/official-dmr-top-context-judge-preflight.json` and is
-  currently blocked by DeepSeek HTTP `401`. The DMR 500-request pass scored
-  `323/500` requested samples because the pinned punctuation mapping skipped
-  177 source rows before selection.
+  DMR 50 top-context candidate is also judge-scored in
+  `crates/eval/reports/official-dmr-50-top-context-judge.json`. The latest
+  top-context candidate judge preflight is recorded at
+  `crates/eval/reports/official-dmr-top-context-judge-preflight.json` and
+  returns `judged` / HTTP `200` without committing the API key, prompt text, or
+  raw response. DMR 200 and the 500-request top-context candidate remain
+  lexical/ROUGE-only until their judge runs are explicitly selected. The DMR
+  500-request pass scored `323/500` requested samples because the pinned
+  punctuation mapping skipped 177 source rows before selection.
 - Official-style DMR answer-synthesis audit is recorded at
   `crates/eval/reports/official-dmr-answer-synthesis-audit.json`; it separates
   retrieval misses from generator opportunity loss. In the 323-scored DMR

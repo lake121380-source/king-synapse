@@ -1,37 +1,37 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-03T18:48:46.657574+00:00",
+  "generated_at": "2026-07-04T01:53:11.571141+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
+    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "f98e79dd9608051bb659b3813b242e5d9452c496aca533d679e28601368c3125"
+      "sha256": "46ad1f8dfe0890d1b5a1599c08795328e3b078479f07732c09547ac0cd7e1e0d"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "b9cdefe33744d8b81c2d6ef6da88fceff1830f568cd0e289d7df91e424f374e5"
+      "sha256": "37fefa25fdd0a21286fedb4869d7edb6eb609330b385b4a9abbdde393b2388c7"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "1778c54f74e92802096155e454019f743b92c171eafa6da60c84f9254263d064"
+      "sha256": "ff6f9ef4d226a779b39ea6af0cef825109cc669e9d2176e5d9ce7be955a74f55"
     },
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "253d000c0b76583637983ea09a467d788ee6e736e53f5f568669064ab271b94b"
+      "sha256": "15009d4523b822fa45ca778c02cd50d612385a3d386cdaa3726d7b9c3b1f530d"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "35eb19f1211b474ea6e4189d90de791b9be7ca3b2cfec898bb53675115c2d43d"
+      "sha256": "8b03c8451ddd63197500e100c52da392f59310e6ab9280c7f6e9f381fc7d41da"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -41,7 +41,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "ecd1a1657ddfa1fc0bc99a5b03d7ee17c549992cc2ce397cb5982734b1d4ef84"
+      "sha256": "001747a6f2a718c56eff42607789a35e4481dee0c8e7d5c5499174aa57ca474d"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -51,12 +51,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "19a9731c9da5ae78b8eb188a0ae92796cef0d9aea53587555064c03fd0f6f9d6"
+      "sha256": "919d8584e911eeb2643f08f9935a4d114a814e7f73952e7ddcccbb8087183305"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "d8a1508e77de35945622fa8cdc4e4126317a6d3afd0ee261a5b732e0ee16396d"
+      "sha256": "66695be2bfd471d346b76e6cd6557b320608229970c28fcc688254118fdaecfd"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -66,7 +66,7 @@
     "feature_freeze_audit": {
       "path": "crates\\eval\\reports\\phase6-feature-freeze-audit.json",
       "exists": true,
-      "sha256": "a3b4062a83bddfa3efcf2026f4029bde72041946d43d5581cec1ddb3646631f3"
+      "sha256": "4e0dca5bb96106ddde6f5586b68bb6a9f401964121318f635440cca79b39ed75"
     }
   },
   "checks": [
@@ -234,13 +234,13 @@
       "conclusion": "No heavy validation run is currently allowed by the action gate."
     },
     {
-      "id": "next_action_waits_on_external_preconditions",
+      "id": "next_action_waits_on_valid_scope",
       "status": "passed",
       "severity": "required",
       "evidence": [
         "crates\\eval\\reports\\next-validation-action-gate.json"
       ],
-      "conclusion": "The current next action is to wait for valid judge authorization or hosted competitor configuration."
+      "conclusion": "The current next action is a valid hold state for hosted external comparison or the next DMR expansion scope."
     },
     {
       "id": "raw_or_generated_data_not_committed",
@@ -371,7 +371,8 @@
     "current_system_gate_passed": true,
     "current_work_mode": "validation_only",
     "heavy_next_gate_ready": false,
-    "top_context_judge_ready": false,
+    "readiness_next_gate_ready": false,
+    "top_context_judge_ready": true,
     "hosted_external_ready": false,
     "long_horizon_gate_passed": true,
     "future_evidence_labeling_complete": false,
@@ -382,17 +383,17 @@
     "next_validation_action_gate_passed": true,
     "feature_freeze_audit_passed": true,
     "protected_feature_freeze_change_count": 0,
-    "recommended_next_validation_action": "wait_for_external_preconditions",
+    "recommended_next_validation_action": "wait_for_hosted_external_or_next_dmr_expansion_scope",
     "heavy_validation_allowed_by_action_gate": false,
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
-      "top_context_candidate_not_judge_scored",
+      "top_context_200_500_not_judge_scored",
       "hosted_external_comparison_not_configured",
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
       "productization_decision_no_go",
-      "next_validation_action_waiting_on_external_preconditions",
+      "next_validation_action_waiting_on_hosted_or_dmr_expansion_scope",
       "productization_not_ready"
     ]
   },

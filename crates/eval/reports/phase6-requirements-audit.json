@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-03T18:47:28.649849+00:00",
+  "generated_at": "2026-07-04T01:53:08.328319+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
+    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "d780fe8557cdded642a8861df10233bff67111a28e99a7f2f2aa612df67c14af"
+      "sha256": "cce442fdb2a95da5f2cc534da44e3b9321dfea45e7cb68eb9432f9a0086223ef"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "44f1891b25196508d43dc3fcff58c773238f823ec06ffe9c6e60a7fb3af75a87"
+      "sha256": "73d92b6712545ef5bfce4b575ff23cfb5695afa6cde6c00f1c578db212340853"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
       "exists": true,
-      "sha256": "5bc87bd55800ed6f74f95078176c2dcc08fc5abca568a32e2eec3656fc174c9f"
+      "sha256": "8fc744ce05c2cb1a2ff225a1e5cc8b227fb2b42b75c74e845636034463943fb7"
     },
     "ranking_ablation": {
       "path": "docs\\eval\\RANKING_ABLATION.md",
@@ -61,27 +61,32 @@
     "official_dmr_generator_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
       "exists": true,
-      "sha256": "752ca7ec7a11aaa492d9f90f2de4c03705d1ff0362cfb4bb78389520d9e3ddc5"
+      "sha256": "0ed9c5150072fb887b3ab7da020e20bb64305091d98c18e704c74145cfcefbba"
     },
     "official_dmr_bottleneck_taxonomy": {
       "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
       "exists": true,
-      "sha256": "f9ab2e3fd19c6da26a44eaf6cf5f903f4a4f34308549badea8faf591dd970714"
+      "sha256": "6cae1ef8bde89a4b54ed1d831775f80fa2eb84561c1632cf13124c600d0b51e6"
     },
     "official_dmr_top_context_judge_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
       "exists": true,
-      "sha256": "0ac85f4319699257091cc145be2420aa9c7f0dec02e00b776391182e6f9509be"
+      "sha256": "79d65d2977937e092ec16c3968a602e39507ef642a0078cc22bdd206abe2d969"
+    },
+    "official_dmr_50_top_context_judge": {
+      "path": "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
+      "exists": true,
+      "sha256": "10b5e8a126751a02b5d4c481342f687858fa28bf1a1728eaad4f41169b54c010"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "1778c54f74e92802096155e454019f743b92c171eafa6da60c84f9254263d064"
+      "sha256": "ff6f9ef4d226a779b39ea6af0cef825109cc669e9d2176e5d9ce7be955a74f55"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "35eb19f1211b474ea6e4189d90de791b9be7ca3b2cfec898bb53675115c2d43d"
+      "sha256": "8b03c8451ddd63197500e100c52da392f59310e6ab9280c7f6e9f381fc7d41da"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -91,7 +96,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "ecd1a1657ddfa1fc0bc99a5b03d7ee17c549992cc2ce397cb5982734b1d4ef84"
+      "sha256": "001747a6f2a718c56eff42607789a35e4481dee0c8e7d5c5499174aa57ca474d"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -101,12 +106,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "5f94a242b5782811d2e4e53bac8860a49981162d42703f64eb7efab7ac2d3eef"
+      "sha256": "38275ae060d1de0dd608d3e33200a4608edee1fb9edfb18eced7b8e794309d99"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "132369a1aff5b034291e6aa2df7e13758295783b677fd1219428db1730f36345"
+      "sha256": "8a3172310d1fbc2f0ad2603d7226f3d4096653e4dd8f35ccd5dd7c4c587a6095"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -190,18 +195,19 @@
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
+        "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
-      "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, but absolute answer quality remains low and the top-context candidate is not judge-scored.",
+      "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, DMR 50 top-context is judge-backed, but absolute answer quality remains low and larger top-context candidate views are not judge-scored.",
       "remaining": [
         "Published-comparable DMR mapping/scoring policy is not finalized.",
         "500-request run honestly scores 323 mappable samples, not 500/500.",
-        "Top-context candidate judge scoring is blocked by the latest DeepSeek authorization preflight.",
+        "Top-context DMR 200/500 candidate views are not judge-scored yet.",
         "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
         "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits."
       ],
-      "next_action": "Restore valid judge configuration for top-context scoring, then judge-score the candidate generator before any claim."
+      "next_action": "Judge-score top-context DMR 200 if continuing this DMR branch, before any broader claim."
     },
     {
       "phase": "3_ranking_without_architecture_change",
@@ -270,9 +276,9 @@
         "Need measured hosted competitor comparisons.",
         "Need stronger DMR answer-generation quality and finalized scoring policy.",
         "Need explicit GPU cost acceptance and stable public demo criteria.",
-        "Need valid top-context judge authorization or hosted competitor configuration before the next heavy run."
+        "Need a selected next DMR expansion scope or hosted competitor configuration before the next heavy run."
       ],
-      "next_action": "Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: wait for external preconditions."
+      "next_action": "Do not start web demo, API server, Docker, release packaging, or product README claims. Follow next-validation-action gate: select the next DMR expansion scope or wait for hosted external configuration."
     }
   ],
   "key_metrics": {
@@ -423,48 +429,55 @@
       "generator_ablation": {
         "improves_substring_all_scale_views": true,
         "improves_rouge_l_all_scale_views": true,
-        "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator ablation was not judge-scored.",
+        "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator is judge-backed on DMR 50 and lexical/ROUGE-only on DMR 200 and the 500-request view.",
         "judge_status_counts_by_generator": {
           "baseline_extractive": {
             "judged": 573
           },
           "candidate_top_context_extractive": {
-            "not_requested": 573
+            "judged": 50,
+            "not_requested": 523
           }
         }
       },
       "top_context_judge_preflight": {
         "result": {
           "models_probe": {
-            "status": "http_error",
-            "http_status": 401,
-            "wall_ms": 150.09690000442788,
-            "reason": "Authorization Required",
-            "response_body_hash": "568320815b206ffd"
+            "status": "ok",
+            "http_status": 200,
+            "models_count": 2,
+            "response_body_hash": "4639cce8329d73d6",
+            "wall_ms": 187.81339999986812
           },
-          "status": "authorization_error",
-          "http_status": 401,
-          "reason": "Authorization Required",
-          "response_body_hash": "568320815b206ffd",
-          "wall_ms": 171.4302000036696
+          "status": "judged",
+          "http_status": 200,
+          "correct": true,
+          "reason_hash": "6a3a4d547d09eafb",
+          "response_body_hash": "7a8eb8654607b9e3",
+          "wall_ms": 629.0768000180833
         },
-        "decision": "judge_configuration_still_blocked"
+        "decision": "ready_for_official_dmr_judge_rerun"
+      },
+      "top_context_dmr_50_judge_report": {
+        "path": "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
+        "exists": true,
+        "sha256": "10b5e8a126751a02b5d4c481342f687858fa28bf1a1728eaad4f41169b54c010"
       },
       "next_gate_readiness": {
         "next_gate_ready": false,
-        "top_context_judge_ready": false,
+        "top_context_judge_ready": true,
         "hosted_external_ready": false,
-        "blocking_reason": "Top-context judge still returns authorization_error, and hosted external comparison credentials/endpoints are not configured."
+        "blocking_reason": "DMR 50 top-context judge scoring is complete; hosted external comparison credentials/endpoints are not configured, and no DMR expansion scope is selected."
       },
       "task_gate": {
         "local_official_style_dmr_gate_passed": true,
         "published_comparable_official_dmr_ready": false,
-        "top_context_judge_ready": false,
+        "top_context_judge_ready": true,
         "runtime_generator_change_allowed": false,
         "runtime_ranking_change_allowed": false,
         "hard_failures": [],
         "open_gates": [
-          "top_context_candidate_not_judge_scored",
+          "top_context_200_500_not_judge_scored",
           "published_comparable_mapping_policy_not_final",
           "answer_synthesis_quality_not_ready_for_official_claims"
         ]
@@ -608,7 +621,7 @@
     },
     "next_validation_action": {
       "next_validation_action_gate_passed": true,
-      "recommended_action": "wait_for_external_preconditions",
+      "recommended_action": "wait_for_hosted_external_or_next_dmr_expansion_scope",
       "heavy_validation_allowed": false,
       "top_context_dmr_50_judge_scoring_allowed": false,
       "hosted_external_comparison_allowed": false,
@@ -616,7 +629,6 @@
       "runtime_default_change_allowed": false,
       "hard_failures": [],
       "open_preconditions": [
-        "valid_top_context_judge_authorization",
         "hosted_graphiti_zep_official_mem0_letta_configuration"
       ]
     },
@@ -652,15 +664,15 @@
     ],
     "blocking_gaps": [
       "published_comparable_dmr_not_finished",
-      "top_context_candidate_not_judge_scored",
+      "top_context_200_500_not_judge_scored",
       "no_global_ranking_default_supported",
       "hosted_external_comparison_not_configured",
       "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
-      "next_validation_action_waiting_on_external_preconditions",
+      "next_validation_action_waiting_on_hosted_or_dmr_expansion_scope",
       "productization_not_ready"
     ],
-    "recommended_next_action": "Keep feature freeze. The next-validation action gate says no heavy validation branch is currently ready: top-context DMR judge scoring still needs valid authorization, and hosted external comparison still needs competitor credentials/endpoints."
+    "recommended_next_action": "Keep feature freeze. The next-validation action gate says no heavy validation branch is currently selected: DMR 50 top-context judge scoring is complete, and the next choice is either DMR 200 top-context expansion or hosted external comparison once credentials/endpoints are ready."
   },
   "limits": [
     "This is an evidence consolidation pass only.",

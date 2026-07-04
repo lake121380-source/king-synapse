@@ -5,16 +5,16 @@ Date: 2026-07-04
 Status: scoped validation passed; official-style DMR 200 local scoring is now
 recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
 samples, pinned extractive DMR judge runs have returned `0` errors on
-`deepseek-v4-flash`, the top-context candidate judge preflight currently
-returns HTTP `401`, and the deterministic long-horizon cognitive gate plus
-detailed stability / prediction-evidence audits are recorded. A consolidated
-long-horizon task gate now records the deterministic fixture as passed while
-keeping public real-world long-memory claims blocked. A productization
-decision gate now records the current decision as no-go / validation-only. A
-next-validation action gate now records that no heavy rerun is allowed until
-external preconditions change. The requirements and objective coverage audits
-now fold those task, decision, and next-action gates back into the top-level
-Phase 6 evidence chain.
+`deepseek-v4-flash`, and the DMR 50 top-context candidate is now judge-scored
+locally. The deterministic long-horizon cognitive gate plus detailed stability
+/ prediction-evidence audits are recorded. A consolidated long-horizon task
+gate now records the deterministic fixture as passed while keeping public
+real-world long-memory claims blocked. A productization decision gate now
+records the current decision as no-go / validation-only. A next-validation
+action gate now records that no heavy rerun is allowed until hosted external
+configuration or an explicit DMR expansion scope is selected. The requirements
+and objective coverage audits now fold those task, decision, and next-action
+gates back into the top-level Phase 6 evidence chain.
 
 This report answers only the three system-validation questions. It includes a
 small LongMemEval / DMR smoke run and a deterministic long-horizon cognitive
@@ -259,14 +259,16 @@ DMR boundary:
   `+0.062`, `+0.030`, and `+0.035`, and lower top-1 opportunity loss at every
   scale view. It also records that the extractive baseline reports are
   judge-backed on all pinned runs, while the `top-context-extractive`
-  candidate reports were not judge-scored.
+  candidate is judge-backed on DMR 50 and lexical/ROUGE-only on DMR 200 and
+  the 500-request view.
 - `crates/eval/reports/official-dmr-top-context-judge-preflight.json` records
-  the current top-context candidate judge boundary. A DMR 50 candidate judge
-  attempt was blocked by DeepSeek HTTP `401`, and the isolated preflight on
-  `deepseek-v4-flash` also returns `authorization_error`. This does not change
-  the pinned extractive judge-backed reports; it keeps the top-context
-  generator as lexical/ROUGE-only evidence until a valid judge configuration is
-  available again.
+  the current top-context candidate judge boundary. The isolated preflight on
+  `deepseek-v4-flash` returns `judged` with HTTP `200`, records no prompt text
+  or raw response, and records that the API key was present but not committed.
+- `crates/eval/reports/official-dmr-50-top-context-judge.json` records the DMR
+  50 candidate judge run. Retrieval Recall@10 remains `0.468`; gold-answer
+  substring accuracy is `0.220`; ROUGE-L F1 is `0.103`; and the LLM judge
+  returns `50` judged samples with accuracy `0.26`.
 - DMR 200 and the DMR 500-request run now carry judge-backed samples on
   `deepseek-v4-flash`, so the judge signal is now part of the usable local
   evidence rather than a partial signal.
@@ -290,8 +292,9 @@ and the DMR 200 plus 500-request cross-checks repeat the direction. The
 consolidated generator summary now records that repeated direction in one
 machine-readable file, while the bottleneck taxonomy records that mapping,
 retrieval/ranking, and generator quality all remain material. The judge path is
-now stable on the pinned runs, so the remaining block is mapping coverage and
-generator quality, not judge serialization.
+now stable on the pinned runs and the DMR 50 top-context candidate, so the
+remaining block is mapping coverage, candidate scaling, and generator quality,
+not judge serialization.
 
 Long-horizon cognitive validation:
 
@@ -575,18 +578,18 @@ Phase 6 requirements audit status:
 | Phase | Status | Current read |
 | --- | --- | --- |
 | Lock current version | `active_policy` | Feature growth remains frozen; Phase 6 baselines and CUDA validation are recorded. |
-| Official-style DMR | `local_official_style_complete_not_published_comparable` | 50/200/500-request local answer scoring exists, but published-comparable DMR and top-context judge scoring remain open. |
+| Official-style DMR | `local_official_style_complete_not_published_comparable` | 50/200/500-request local answer scoring exists and DMR 50 top-context is judge-scored, but published-comparable DMR and DMR 200/500 top-context judge scaling remain open. |
 | Ranking without architecture change | `validated_no_global_default` | Current ranking evidence supports no new global default. |
 | External fair comparison | `partial_local_complete_hosted_open` | Local fixture evidence exists; hosted Graphiti/Zep, official Mem0, and live Letta remain unmeasured. |
 | Long-horizon stability | `deterministic_fixture_complete_public_long_memory_open` | Deterministic long-session behavior is stable; public real-world long-memory evidence is still open. |
 | Productization decision | `not_ready` | Do not start productization until DMR, hosted comparison, ranking, and demo-claim gaps close. |
 
 The audit's blocking gaps are: published-comparable DMR is not finished,
-top-context candidate output is not judge-scored, no global ranking default is
-supported, hosted external comparison is not configured, future evidence
-labeling and public real-world long-memory validation remain open, the next
-validation action is waiting on external preconditions, and productization is
-not ready.
+DMR 200/500 top-context candidate output is not judge-scored, no global
+ranking default is supported, hosted external comparison is not configured,
+future evidence labeling and public real-world long-memory validation remain
+open, the next validation action is waiting on hosted configuration or an
+explicit DMR expansion scope, and productization is not ready.
 
 Phase 6 objective coverage audit:
 
@@ -601,11 +604,12 @@ Phase 6 objective coverage audit:
   entries remain for published-comparable DMR, hosted external comparison,
   safe ranking defaults, public long-memory evidence, GPU cost acceptance, and
   productization.
-- Its most important open gates are: top-context candidate not judge-scored,
-  hosted external comparison not configured, published-comparable DMR mapping
-  policy not final, no safe global ranking default, future evidence labeling,
-  public real-world long-memory validation, next validation action waiting on
-  external preconditions, and productization not ready.
+- Its most important open gates are: DMR 200/500 top-context candidate not
+  judge-scored, hosted external comparison not configured,
+  published-comparable DMR mapping policy not final, no safe global ranking
+  default, future evidence labeling, public real-world long-memory validation,
+  next validation action waiting on hosted configuration or an explicit DMR
+  expansion scope, and productization not ready.
 
 Official DMR task gate:
 
@@ -617,10 +621,10 @@ Official DMR task gate:
   323-scored CUDA view have retrieval -> answer generation -> exact,
   punctuation, ROUGE-L, and LLM judge scoring.
 - The same gate keeps `published_comparable_official_dmr_ready: false` and
-  `top_context_judge_ready: false`.
-- Its open gates are top-context candidate judge scoring, published-comparable
-  mapping policy, and answer-synthesis quality. It does not permit runtime
-  generator or ranking changes.
+  records `top_context_judge_ready: true` for DMR 50 only.
+- Its open gates are DMR 200/500 top-context candidate judge scoring,
+  published-comparable mapping policy, and answer-synthesis quality. It does
+  not permit runtime generator or ranking changes.
 
 Ranking task gate:
 
@@ -674,12 +678,13 @@ Productization decision gate:
   `current_decision: no_go_validation_only`, `productization_ready: false`,
   `productization_allowed: false`, and `release_v0_1_allowed: false`.
 - The gate records what is ready: local cognitive-trace advantage, pinned
-  extractive official-style DMR execution, ranking bottleneck diagnosis, and
-  deterministic long-horizon fixture stability.
+  extractive official-style DMR execution, DMR 50 top-context judge evidence,
+  ranking bottleneck diagnosis, and deterministic long-horizon fixture
+  stability.
 - The same gate records what blocks productization: published-comparable DMR,
-  top-context judge scoring, hosted/official external comparison, safe runtime
-  ranking defaults, public real-world long-memory evidence, GPU/latency
-  acceptance, and public demo/release packaging.
+  DMR 200/500 top-context judge scaling, hosted/official external comparison,
+  safe runtime ranking defaults, public real-world long-memory evidence,
+  GPU/latency acceptance, and public demo/release packaging.
 - This is not a failure of the current architecture. It is the current release
   decision: keep validating before starting Web demo, API server, Docker, or
   v0.1 packaging work.
@@ -689,12 +694,12 @@ Next validation action gate:
 - `crates/eval/reports/next-validation-action-gate.json` consolidates the
   current action choice after the task gates and productization decision.
 - The current result is `next_validation_action_gate_passed: true`, with
-  `recommended_action: wait_for_external_preconditions` and
+  `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope` and
   `heavy_validation_allowed: false`.
-- The gate keeps both heavy branches closed: top-context DMR 50 judge scoring
-  is blocked until valid judge authorization is available, and hosted external
-  comparison is blocked until Graphiti/Zep, official Mem0, and Letta are
-  configured.
+- The gate keeps heavy branches closed because DMR 50 top-context judge
+  scoring is already complete, no DMR 200/500 expansion scope is currently
+  selected, and hosted external comparison is blocked until Graphiti/Zep,
+  official Mem0, and Letta are configured.
 - The recorded DMR command template preserves the Phase 6 GPU rule:
   `--accelerator cuda --cuda-device-id 0`.
 - The operational runbook for both blocked branches is
@@ -732,10 +737,11 @@ Current system gate:
 - This means the evidence chain is coherent enough to keep validating the
   system, but the same gate keeps `heavy_next_gate_ready: false`,
   `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
-- The blocked next gates remain top-context candidate judge scoring, hosted
-  external comparison, future evidence labeling, public real-world long-memory
-  validation, productization decision no-go, next validation action waiting on
-  external preconditions, and productization.
+- The blocked next gates remain DMR 200/500 top-context candidate judge
+  scaling, hosted external comparison, future evidence labeling, public
+  real-world long-memory validation, productization decision no-go, next
+  validation action waiting on hosted configuration or an explicit DMR
+  expansion scope, and productization.
 
 Phase 6 feature-freeze audit:
 
@@ -765,13 +771,15 @@ Phase 6 next-gate readiness:
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
   external preconditions without storing secret values, prompt text, raw
   responses, raw benchmark records, or generated answers.
-- Top-context DMR judge readiness is `false`: the latest sanitized preflight
-  returns `authorization_error` with HTTP `401`.
+- Top-context DMR 50 judge readiness is now satisfied: the latest sanitized
+  preflight returns `judged` with HTTP `200`, and the DMR 50 top-context report
+  records `50` judged samples with judge accuracy `0.26`.
 - Hosted external readiness is `false`: Graphiti/Zep, official Mem0, and Letta
   still need configured credentials or endpoints before the fair hosted
   comparison can run.
-- Current next-gate readiness is `false`, so no heavy next validation branch is
-  ready at this exact checkpoint.
+- Current heavy next-gate readiness is `false` because DMR 50 should not be
+  repeated by default and no DMR 200/500 top-context expansion scope is
+  selected at this exact checkpoint.
 
 GPU validation status:
 
@@ -792,9 +800,10 @@ GPU validation status:
 Next required action: keep feature growth frozen and do not start product work.
 The current productization decision is no-go / validation-only. No heavy
 next-gate run is currently ready: the next-action gate records
-`recommended_action: wait_for_external_preconditions`. Top-context DMR judge
-scoring needs valid authorization, and hosted external comparison needs
-competitor credentials/endpoints. Once one of those gates is ready, continue in
-validation mode only: judge-score the top-context DMR candidate, or run the
-hosted external comparison. Do not adopt `vector_weight = 1.5`, reranker pool
-`100`, or any pool-signal guard as a runtime default from the current evidence.
+`recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope`.
+DMR 50 top-context judge scoring is complete, so the next heavy DMR branch
+should be DMR 200 top-context judge scoring only if that expansion scope is
+selected. Hosted external comparison still needs competitor
+credentials/endpoints. Continue in validation mode only, and do not adopt
+`vector_weight = 1.5`, reranker pool `100`, or any pool-signal guard as a
+runtime default from the current evidence.

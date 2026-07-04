@@ -304,10 +304,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     heavy_validation_not_allowed_by_action_gate = not bool(
         safe_get(next_action, ["status", "heavy_validation_allowed"])
     )
-    next_action_waiting_on_external = (
-        safe_get(next_action, ["status", "recommended_action"])
-        == "wait_for_external_preconditions"
-    )
+    recommended_next_action = safe_get(next_action, ["status", "recommended_action"])
+    next_action_waiting_on_valid_scope = recommended_next_action in {
+        "wait_for_external_preconditions",
+        "wait_for_hosted_external_or_next_dmr_expansion_scope",
+    }
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
     hosted_ready = bool(safe_get(readiness, ["hosted_external", "ready"]))
@@ -440,11 +441,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             failure="A heavy validation run appears allowed and needs separate execution control.",
         ),
         check(
-            "next_action_waits_on_external_preconditions",
-            next_action_waiting_on_external,
+            "next_action_waits_on_valid_scope",
+            next_action_waiting_on_valid_scope,
             evidence=[paths["next_validation_action_gate"]],
-            conclusion="The current next action is to wait for valid judge authorization or hosted competitor configuration.",
-            failure="The next action is not the expected external-precondition wait state.",
+            conclusion="The current next action is a valid hold state for hosted external comparison or the next DMR expansion scope.",
+            failure="The next action is not an expected validation-stage hold state.",
         ),
         check(
             "raw_or_generated_data_not_committed",
@@ -480,6 +481,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     blocked_next_gates = []
     if not top_context_ready:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
+    if "top_context_200_500_not_judge_scored" in safe_get(
+        official_dmr, ["status", "open_gates"], []
+    ):
+        blocked_next_gates.append("top_context_200_500_not_judge_scored")
     if not hosted_ready:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
     if future_evidence_boundary_not_overstated:
@@ -489,7 +494,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     if productization_ready_not_overstated:
         blocked_next_gates.append("productization_decision_no_go")
     if heavy_validation_not_allowed_by_action_gate:
-        blocked_next_gates.append("next_validation_action_waiting_on_external_preconditions")
+        blocked_next_gates.append(
+            "next_validation_action_waiting_on_hosted_or_dmr_expansion_scope"
+        )
     if productization_blocked:
         blocked_next_gates.append("productization_not_ready")
 
@@ -524,7 +531,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "current_work_mode": (
                 "validation_only" if current_system_gate_passed else "repair_required"
             ),
-            "heavy_next_gate_ready": next_gate_ready,
+            "heavy_next_gate_ready": not heavy_validation_not_allowed_by_action_gate,
+            "readiness_next_gate_ready": next_gate_ready,
             "top_context_judge_ready": top_context_ready,
             "hosted_external_ready": hosted_ready,
             "long_horizon_gate_passed": long_horizon_gate_passed,

@@ -1,12 +1,12 @@
 {
   "schema_version": "king-synapse.official-dmr-generator-ablation-summary.v1",
-  "generated_at": "2026-07-03T15:44:59.997290+00:00",
-  "git_commit": "af63a3fd96261f1241d2f2972b6f78d9259b1ae0",
+  "generated_at": "2026-07-04T01:52:24.795025+00:00",
+  "git_commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
   "runner": "scripts\\eval\\dmr_generator_ablation_summary.py",
   "inputs": [
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-50.json",
-      "sha256": "b709ffac7eedf3c090ce64f050439365bb9843969278f26a35d79aff75594692"
+      "sha256": "90c83dcabfc0c6695d2be57732c0e00ac69f81001665164402f0f45c8dc115af"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-200.json",
@@ -34,16 +34,17 @@
     "candidate_improves_substring_on_all_scale_views": true,
     "candidate_improves_rouge_l_f1_on_all_scale_views": true,
     "candidate_reduces_top1_without_substring_count_on_all_scale_views": true,
-    "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator ablation was not judge-scored.",
+    "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator is judge-backed on DMR 50 and lexical/ROUGE-only on DMR 200 and the 500-request view.",
     "judge_status_counts_by_generator": {
       "baseline_extractive": {
         "judged": 573
       },
       "candidate_top_context_extractive": {
-        "not_requested": 573
+        "judged": 50,
+        "not_requested": 523
       }
     },
-    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until the candidate generator is judge-scored and absolute answer quality improves."
+    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until the candidate generator is judge-scored beyond DMR 50 and absolute answer quality improves."
   },
   "runs": [
     {
@@ -76,7 +77,7 @@
       },
       "candidate": {
         "retrieval_recall_at_10": 0.468333,
-        "retrieval_mrr_at_10": 0.618556,
+        "retrieval_mrr_at_10": 0.618333,
         "top1_count": 28,
         "top10_not_top1_count": 10,
         "not_retrieved_top10_count": 12,
@@ -90,7 +91,7 @@
         "top10_without_answer_substring_count": 27,
         "top1_selected_non_first_context_count": 0,
         "llm_judge_status_counts": {
-          "not_requested": 50
+          "judged": 50
         }
       },
       "delta_candidate_minus_baseline": {

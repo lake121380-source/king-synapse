@@ -2,7 +2,7 @@
 
 Date: 2026-07-04
 
-Status: waiting for external preconditions
+Status: waiting for hosted external configuration or next DMR expansion scope
 
 This runbook records what must change before the next heavy Phase 6 validation
 run. It is not a product plan and does not permit new memory schema, cognitive
@@ -13,7 +13,7 @@ Current gate read:
 
 - `current_system_gate_passed: true`
 - `current_work_mode: validation_only`
-- `recommended_action: wait_for_external_preconditions`
+- `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope`
 - `heavy_validation_allowed: false`
 - `productization_allowed: false`
 
@@ -27,8 +27,18 @@ Purpose:
 
 - prove whether the top-context DMR answer generator improves judged answer
   quality, not only lexical or ROUGE-L scores;
-- keep the run pinned to DMR 50 before expanding to 200 / 500;
+- DMR 50 is now complete; keep any next expansion explicitly scoped before
+  moving to 200 / 500;
 - preserve the Phase 6 GPU rule.
+
+Current read:
+
+- DMR 50 top-context judge scoring is complete in
+  `crates/eval/reports/official-dmr-50-top-context-judge.json`;
+- the latest sanitized DeepSeek preflight returns `judged` / HTTP `200`;
+- do not rerun DMR 50 by default;
+- the next DMR heavy branch is DMR 200 top-context judge scoring only if that
+  expansion scope is explicitly selected.
 
 Required external condition:
 
@@ -37,7 +47,8 @@ Required external condition:
 - `DEEPSEEK_JUDGE_MODEL` may be set, but the validation target is
   `deepseek-v4-flash`.
 
-First prove the judge endpoint without reading DMR data:
+Before any new DMR expansion, prove the judge endpoint without reading DMR
+data:
 
 ```powershell
 python scripts/eval/deepseek_judge_preflight.py `
@@ -53,7 +64,7 @@ python scripts/eval/next_validation_action_gate.py
 python scripts/eval/phase6_current_system_gate.py
 ```
 
-Only if the gates allow top-context judge scoring, run DMR 50 with CUDA:
+The completed DMR 50 reproduction command is:
 
 ```powershell
 python scripts/eval/official_dmr_eval.py `
@@ -101,7 +112,8 @@ Acceptance read:
 - judge preflight status is `judged`;
 - no API key, prompt text, raw response, raw DMR record, gold answer, generated
   answer, dialog, session, or temporary cache file is committed;
-- the result is recorded as DMR 50 evidence first;
+- DMR 50 top-context is recorded as completed evidence first;
+- DMR 200 / 500 top-context judge scoring is not implied by the DMR 50 result;
 - any README or report claim stays scoped until the task gates support it.
 
 ## Branch B: Hosted / Official External Comparison
@@ -164,14 +176,15 @@ Acceptance read:
 - hosted superiority is not claimed unless the hosted/official task gate
   explicitly supports it.
 
-## If Both Branches Remain Blocked
+## If No Branch Is Selected
 
 Do not run heavy DMR or hosted external validation. The correct work remains:
 
 - maintain documentation/report consistency;
 - keep README claims conservative;
 - keep Phase 6 gates green;
-- wait for one external precondition to become true.
+- wait for hosted configuration or explicitly select the next DMR expansion
+  scope.
 
 Useful no-model / no-external checks:
 

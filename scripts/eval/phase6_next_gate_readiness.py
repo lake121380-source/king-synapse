@@ -50,6 +50,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/external-comparison-hosted.json",
     )
     parser.add_argument(
+        "--official-dmr-task-gate",
+        type=Path,
+        default=root / "crates/eval/reports/official-dmr-task-gate.json",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=root / "crates/eval/reports/phase6-next-gate-readiness.json",
@@ -78,6 +83,18 @@ def sha256_file(path: Path) -> str:
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def safe_get(data: dict[str, Any], path: list[Any], default: Any = None) -> Any:
+    current: Any = data
+    for key in path:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        elif isinstance(current, list) and isinstance(key, int) and key < len(current):
+            current = current[key]
+        else:
+            return default
+    return current
 
 
 def env_presence(names: list[str]) -> dict[str, bool]:
@@ -124,8 +141,10 @@ def hosted_requirements(
 def build_report(args: argparse.Namespace) -> dict[str, Any]:
     preflight_path = normalize_path_arg(args.top_context_preflight)
     hosted_path = normalize_path_arg(args.hosted_external_report)
+    official_dmr_path = normalize_path_arg(args.official_dmr_task_gate)
     preflight = load_json(preflight_path)
     hosted = load_json(hosted_path)
+    official_dmr = load_json(official_dmr_path)
 
     env = env_presence(JUDGE_ENV_VARS + HOSTED_ENV_VARS)
     letta_environment_local = (
@@ -136,16 +155,44 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     preflight_result = preflight.get("result", {})
     judge_ready = preflight_result.get("status") == "judged"
+    top_context_dmr_50_complete = bool(
+        safe_get(official_dmr, ["status", "top_context_judge_ready"])
+    )
     hosted_report_summary = hosted.get("summary", {})
 
-    if judge_ready:
+    if top_context_dmr_50_complete and hosted_ready["all_hosted_ready"]:
+        next_action = "Run hosted/official external comparison on the shared cognitive fixture."
+        next_gate_ready = True
+        blocking_reason = None
+    elif top_context_dmr_50_complete:
+        next_action = (
+            "No heavy next-gate run is currently selected. Do not rerun DMR 50; "
+            "select a DMR 200/500 top-context judge expansion or configure hosted "
+            "external credentials/endpoints."
+        )
+        next_gate_ready = False
+        blocking_reason = (
+            "DMR 50 top-context judge scoring is complete; hosted external "
+            "comparison credentials/endpoints are not configured, and no DMR "
+            "expansion scope is selected."
+        )
+    elif judge_ready:
         next_action = "Run judge-scored top-context DMR 50 before broader changes."
+        next_gate_ready = True
+        blocking_reason = None
     elif hosted_ready["all_hosted_ready"]:
         next_action = "Run hosted/official external comparison on the shared cognitive fixture."
+        next_gate_ready = True
+        blocking_reason = None
     else:
         next_action = (
             "No heavy next-gate run is currently ready. Keep feature freeze and "
             "wait for a valid judge key or hosted external credentials/endpoints."
+        )
+        next_gate_ready = False
+        blocking_reason = (
+            "Top-context judge is not ready, and hosted external comparison "
+            "credentials/endpoints are not configured."
         )
 
     return {
@@ -163,6 +210,10 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "sha256": sha256_file(hosted_path),
                 "summary": hosted_report_summary,
             },
+            "official_dmr_task_gate": {
+                "path": report_path(official_dmr_path),
+                "sha256": sha256_file(official_dmr_path),
+            },
         },
         "env_presence": env,
         "env_checks": {
@@ -177,6 +228,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "status": preflight_result.get("status"),
             "http_status": preflight_result.get("http_status"),
             "decision": preflight.get("decision"),
+            "dmr_50_complete": top_context_dmr_50_complete,
             "api_key_present": preflight.get("llm_judge", {}).get("api_key_present"),
             "api_key_recorded": preflight.get("llm_judge", {}).get("api_key_recorded"),
         },
@@ -190,13 +242,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "last_report_failed_systems": hosted_report_summary.get("failed_systems"),
         },
         "read": {
-            "next_gate_ready": judge_ready or hosted_ready["all_hosted_ready"],
-            "blocking_reason": None
-            if judge_ready or hosted_ready["all_hosted_ready"]
-            else (
-                "Top-context judge still returns authorization_error, and hosted "
-                "external comparison credentials/endpoints are not configured."
-            ),
+            "next_gate_ready": next_gate_ready,
+            "blocking_reason": blocking_reason,
             "next_action": next_action,
         },
         "limits": [

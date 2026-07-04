@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T15:44:51.998367+00:00",
+  "generated_at": "2026-07-04T01:52:24.602368+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
@@ -8,8 +8,8 @@
       "sha256": "5eb227a2c8c596a9fd45a76fd8797475468d2df611dcfd2067811e304e95c16f"
     },
     {
-      "path": "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
-      "sha256": "b4769947933cdae3d42ab8def31efe0b92714fd034e11ae8137ab40809ee1b48"
+      "path": "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
+      "sha256": "10b5e8a126751a02b5d4c481342f687858fa28bf1a1728eaad4f41169b54c010"
     }
   ],
   "raw_records_committed": false,
@@ -848,18 +848,18 @@
       }
     },
     {
-      "report": "crates\\eval\\reports\\official-dmr-50-top-context-extractive.json",
+      "report": "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
       "schema_version": "king-synapse.official-dmr-answer-eval.v1",
       "sample_size_requested": 50,
       "sample_size_used": 50,
       "retrieval_mode": "vectors-rerank",
       "generator_policy": "top-context-extractive",
       "llm_judge_status_counts": {
-        "not_requested": 50
+        "judged": 50
       },
       "retrieval": {
         "recall_at_10": 0.46833333333333327,
-        "mrr_at_10": 0.6185555555555555,
+        "mrr_at_10": 0.6183333333333333,
         "top1_count": 28,
         "top10_not_top1_count": 10,
         "not_retrieved_top10_count": 12
@@ -1438,7 +1438,7 @@
           {
             "sample_id": "57b6b989521797c9",
             "rank_bucket": "top10_not_top1",
-            "first_relevant_rank": 9,
+            "first_relevant_rank": 10,
             "selected_context_rank": 1,
             "selected_sentence_rank": 12,
             "retrieved_context_count": 10,

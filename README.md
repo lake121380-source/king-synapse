@@ -187,7 +187,7 @@ questions, answers, or generated text:
 | Official-style DMR run | Retrieval Recall@10 | Exact | Substring | ROUGE-L F1 | Judge |
 | --- | ---: | ---: | ---: | ---: | --- |
 | 50 CUDA samples | 0.468 | 0.000 | 0.060 | 0.041 | 50 judged / 0 error |
-| 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | not requested |
+| 50 CUDA top-context generator | 0.468 | 0.000 | 0.220 | 0.103 | 50 judged / 0 error, judge acc 0.26 |
 | 5-sample judge probe | 0.667 | 0.000 | 0.200 | 0.082 | 5 judged / 0 error |
 | 200 CUDA samples | 0.411 | 0.000 | 0.040 | 0.037 | 200 judged / 0 error |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.067 | not requested |
@@ -195,12 +195,12 @@ questions, answers, or generated text:
 | 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
 
 This is still not a published-comparable official DMR result. The pinned
-extractive 5 / 50 / 200 / 500-request runs are fully judged locally on
-`deepseek-v4-flash`, but a later top-context candidate judge preflight now
-returns HTTP `401` in the current environment. The remaining boundary is
-published-comparable scoring policy, answer-generation quality, candidate
-judge scoring, and the honest large-run claim of `500 request / 323 scored`,
-not `500/500`.
+extractive 5 / 50 / 200 / 500-request runs and the DMR 50 top-context
+candidate are fully judged locally on `deepseek-v4-flash`. The latest
+top-context candidate preflight returns HTTP `200` with no key recorded in the
+repo. The remaining boundary is published-comparable scoring policy,
+answer-generation quality, DMR 200 / 500 top-context judge scoring, and the
+honest large-run claim of `500 request / 323 scored`, not `500/500`.
 The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
@@ -218,10 +218,10 @@ The bottleneck taxonomy is recorded in
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
 
 So answer synthesis is now a real optimization target, but it is still
-eval-only evidence. The top-context generator ablation has not been
-judge-scored yet; the current DeepSeek configuration blocks that next judge
-pass with HTTP `401`. Official DMR or product claims still need a finalized
-published-comparable protocol and better answer-generation quality.
+eval-only evidence. The DMR 50 top-context generator is now judge-scored, but
+the DMR 200 and 500-request top-context candidates remain lexical/ROUGE-only.
+Official DMR or product claims still need a finalized published-comparable
+protocol and better answer-generation quality.
 
 So the project is not in "add more features" mode. The current validation read
 is: the architecture still holds, and the next work is narrower. DMR mapping
@@ -289,10 +289,10 @@ comparison adapters or optional embedding/reranking paths.
 - The external comparison task gate passes only for the local fixture: `local_external_comparison_gate_passed: true`, while `hosted_official_external_ready: false`.
 - The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
 - The productization decision gate is a no-go gate: `productization_decision_gate_passed: true`, `productization_ready: false`, `productization_allowed: false`, and `release_v0_1_allowed: false`.
-- The next validation action gate currently says `recommended_action: wait_for_external_preconditions` and `heavy_validation_allowed: false`.
+- The next validation action gate currently says `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope` and `heavy_validation_allowed: false`.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
-- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`.
-- The next-gate readiness audit currently blocks heavy follow-up runs: top-context DMR judge preflight returns HTTP `401`, and hosted competitor comparison still lacks credentials or endpoints.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`, including the DMR 50 top-context candidate.
+- The next-gate readiness audit currently blocks heavy follow-up runs: DMR 50 top-context judge scoring is complete, no DMR expansion scope is selected, and hosted competitor comparison still lacks credentials or endpoints.
 - Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
@@ -345,7 +345,7 @@ cargo build --release
 | `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains blocked. |
 | `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
 | `crates/eval/reports/productization-decision-gate.json` | One-file productization decision gate: current decision is no-go / validation-only. |
-| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: no heavy rerun is allowed until judge authorization or hosted competitor configuration is ready. |
+| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50 top-context judge scoring is complete; no heavy rerun is allowed until a DMR expansion scope is selected or hosted competitor configuration is ready. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |

@@ -103,7 +103,7 @@ def input_paths(root: Path) -> dict[str, Path]:
         "official_dmr_200": root / "crates/eval/reports/official-dmr-200.json",
         "official_dmr_500": root / "crates/eval/reports/official-dmr-500.json",
         "top_context_50": root
-        / "crates/eval/reports/official-dmr-50-top-context-extractive.json",
+        / "crates/eval/reports/official-dmr-50-top-context-judge.json",
         "top_context_200": root
         / "crates/eval/reports/official-dmr-200-top-context-extractive.json",
         "top_context_500": root
@@ -221,7 +221,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         for report in baseline_reports
     )
     top_context_judge_count = sum(judge_count(report) for report in top_context_reports)
-    top_context_not_judged = top_context_judge_count == 0
+    top_context_50_judge_backed = judge_count(reports["top_context_50"]) == int(
+        reports["top_context_50"].get("sample_size_used") or 0
+    )
+    top_context_200_500_judge_count = sum(
+        judge_count(reports[name]) for name in ["top_context_200", "top_context_500"]
+    )
     cuda_device_0 = all(
         safe_get(report, ["accelerator", "requested"]) == "cuda"
         and str(safe_get(report, ["accelerator", "cuda_device_id"])) == "0"
@@ -325,15 +330,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "partial" if generator_direction_repeats else "failed",
             evidence=[paths["generator_ablation_summary"]],
             conclusion=(
-                "Top-context extraction improves substring and ROUGE-L on every current scale view, but remains evaluation-only."
+                "Top-context extraction improves substring and ROUGE-L on every current scale view; DMR 50 is judge-scored, while larger candidate views remain evaluation-only."
                 if generator_direction_repeats
                 else "The top-context generator direction does not consistently improve current scale views."
             ),
-            remaining=["Judge-score top-context before making stronger answer-quality claims."],
+            remaining=["Judge-score top-context DMR 200/500 before making broader answer-quality claims."],
         ),
         item(
             "top_context_candidate_judge_scoring",
-            "blocked_external" if top_context_not_judged else "satisfied",
+            "satisfied" if top_context_50_judge_backed else "blocked_external",
             evidence=[
                 paths["top_context_50"],
                 paths["top_context_200"],
@@ -341,11 +346,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 paths["top_context_judge_preflight"],
             ],
             conclusion=(
-                f"Top-context candidate judge scoring is not complete; latest preflight status is {preflight_status}."
-                if top_context_not_judged
-                else "Top-context candidate reports contain judge-scored rows."
+                "DMR 50 top-context candidate is judge-scored; DMR 200 and 500-request candidate views are still lexical/ROUGE-only."
+                if top_context_50_judge_backed
+                else f"Top-context candidate judge scoring is not complete; latest preflight status is {preflight_status}."
             ),
-            remaining=[] if not top_context_not_judged else ["Provide valid judge authorization and rerun top-context DMR judge scoring."],
+            remaining=[
+                "Judge-score top-context DMR 200/500 before broader claims."
+            ]
+            if top_context_50_judge_backed and top_context_200_500_judge_count == 0
+            else []
+            if top_context_50_judge_backed
+            else ["Provide valid judge authorization and rerun top-context DMR judge scoring."],
         ),
         item(
             "raw_or_generated_data_not_committed",
@@ -401,33 +412,38 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "status": {
             "local_official_style_dmr_gate_passed": local_official_style_gate_passed,
             "published_comparable_official_dmr_ready": published_comparable_ready,
-            "top_context_judge_ready": not top_context_not_judged,
+            "top_context_judge_ready": top_context_50_judge_backed,
             "runtime_generator_change_allowed": False,
             "runtime_ranking_change_allowed": False,
             "hard_failures": hard_failures,
-            "open_gates": [
-                "top_context_candidate_not_judge_scored",
+            "open_gates": (
+                []
+                if top_context_50_judge_backed
+                else ["top_context_candidate_not_judge_scored"]
+            )
+            + [
+                "top_context_200_500_not_judge_scored",
                 "published_comparable_mapping_policy_not_final",
                 "answer_synthesis_quality_not_ready_for_official_claims",
             ],
         },
         "read": {
             "current_conclusion": (
-                "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline, "
+                "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline and the DMR 50 top-context candidate, "
                 "but it is not yet a published-comparable official DMR result."
             ),
             "strongest_supported_result": (
-                "The baseline path now covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view."
+                "The baseline path covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view; DMR 50 top-context judge accuracy is now recorded."
             ),
             "weak_surfaces": [
                 "DMR 500-request has 177 punctuation-mapping rejections before scoring.",
                 "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
                 "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
-                "Top-context extraction improves lexical metrics but is not judge-scored and still leaves 90 top-1 misses on the largest local view.",
+                "Top-context extraction improves DMR 50 judged accuracy and larger lexical metrics, but DMR 200/500 top-context views are not judge-scored and the largest local view still leaves 90 top-1 misses.",
             ],
             "next_action": (
-                "Keep feature freeze. If judge authorization is fixed, run judge-scored top-context DMR 50; "
-                "otherwise keep DMR work limited to validation-only diagnostics and do not change runtime defaults."
+                "Keep feature freeze. If expanding this DMR branch, judge-score top-context DMR 200 next; "
+                "otherwise continue hosted external comparison when credentials/endpoints are ready. Do not change runtime defaults."
             ),
         },
         "limits": [

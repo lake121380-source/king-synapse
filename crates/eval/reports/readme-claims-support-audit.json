@@ -1,42 +1,42 @@
 {
   "schema_version": "king-synapse.readme-claims-support-audit.v1",
-  "generated_at": "2026-07-03T18:48:40.559101+00:00",
+  "generated_at": "2026-07-04T01:53:10.450596+00:00",
   "runner": "scripts\\eval\\readme_claims_support_audit.py",
   "git": {
     "branch": "main",
-    "commit": "5d5bc44f17191f7885a06552ba059bcf0334e46a",
+    "commit": "7e8d21a03438680329330585ccc1d6c01441c2b7",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "readme": {
       "path": "README.md",
       "exists": true,
-      "sha256": "adb7f8e86d1b384439fed4b5aaba32bfd689f832430295b32feb9130892b0c62"
+      "sha256": "c924a2819fe208cc6f638cabed1007f0b5d470ac794db63fa828d5fea0a0e640"
     },
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "d780fe8557cdded642a8861df10233bff67111a28e99a7f2f2aa612df67c14af"
+      "sha256": "cce442fdb2a95da5f2cc534da44e3b9321dfea45e7cb68eb9432f9a0086223ef"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "44f1891b25196508d43dc3fcff58c773238f823ec06ffe9c6e60a7fb3af75a87"
+      "sha256": "73d92b6712545ef5bfce4b575ff23cfb5695afa6cde6c00f1c578db212340853"
     },
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "f98e79dd9608051bb659b3813b242e5d9452c496aca533d679e28601368c3125"
+      "sha256": "46ad1f8dfe0890d1b5a1599c08795328e3b078479f07732c09547ac0cd7e1e0d"
     },
     "phase6_objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "b9cdefe33744d8b81c2d6ef6da88fceff1830f568cd0e289d7df91e424f374e5"
+      "sha256": "37fefa25fdd0a21286fedb4869d7edb6eb609330b385b4a9abbdde393b2388c7"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "1778c54f74e92802096155e454019f743b92c171eafa6da60c84f9254263d064"
+      "sha256": "ff6f9ef4d226a779b39ea6af0cef825109cc669e9d2176e5d9ce7be955a74f55"
     },
     "external_comparison_latest": {
       "path": "crates\\eval\\reports\\external-comparison-latest.json",
@@ -51,7 +51,7 @@
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
       "exists": true,
-      "sha256": "5bc87bd55800ed6f74f95078176c2dcc08fc5abca568a32e2eec3656fc174c9f"
+      "sha256": "8fc744ce05c2cb1a2ff225a1e5cc8b227fb2b42b75c74e845636034463943fb7"
     },
     "official_dmr_50": {
       "path": "crates\\eval\\reports\\official-dmr-50.json",
@@ -71,7 +71,7 @@
     "official_dmr_bottleneck_taxonomy": {
       "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
       "exists": true,
-      "sha256": "f9ab2e3fd19c6da26a44eaf6cf5f903f4a4f34308549badea8faf591dd970714"
+      "sha256": "6cae1ef8bde89a4b54ed1d831775f80fa2eb84561c1632cf13124c600d0b51e6"
     },
     "ranking_objective_conflict": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -101,12 +101,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "19a9731c9da5ae78b8eb188a0ae92796cef0d9aea53587555064c03fd0f6f9d6"
+      "sha256": "919d8584e911eeb2643f08f9935a4d114a814e7f73952e7ddcccbb8087183305"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "d8a1508e77de35945622fa8cdc4e4126317a6d3afd0ee261a5b732e0ee16396d"
+      "sha256": "66695be2bfd471d346b76e6cd6557b320608229970c28fcc688254118fdaecfd"
     }
   },
   "raw_records_committed": false,
@@ -248,12 +248,12 @@
     },
     {
       "id": "next_validation_action_gate",
-      "readme_snippet": "recommended_action: wait_for_external_preconditions",
+      "readme_snippet": "recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope",
       "status": "supported",
       "evidence": [
         "crates\\eval\\reports\\next-validation-action-gate.json"
       ],
-      "conclusion": "No heavy next validation run is ready; the correct next action is to keep feature freeze and wait for either valid top-context judge authorization or hosted external comparison credentials/endpoints.",
+      "conclusion": "DMR 50 top-context judge scoring is complete; no further heavy branch is currently selected by this gate.",
       "required_scope_note": null,
       "present_in_readme": true
     },
@@ -312,7 +312,7 @@
         "judge_count": 323
       }
     },
-    "top_context_judge_ready": false,
+    "top_context_judge_ready": true,
     "hosted_external_ready": false,
     "phase6_overall": "phase6_validation_in_progress_productization_blocked",
     "productization_status": "not_ready",
@@ -328,7 +328,7 @@
     "productization_ready": false,
     "release_v0_1_allowed": false,
     "next_validation_action_gate_passed": true,
-    "recommended_next_validation_action": "wait_for_external_preconditions",
+    "recommended_next_validation_action": "wait_for_hosted_external_or_next_dmr_expansion_scope",
     "heavy_validation_allowed": false
   },
   "read": {
