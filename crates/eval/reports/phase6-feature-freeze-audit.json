@@ -1,17 +1,17 @@
 {
   "schema_version": "king-synapse.phase6-feature-freeze-audit.v1",
-  "generated_at": "2026-07-04T03:28:55.642828+00:00",
+  "generated_at": "2026-07-04T03:40:20.472093+00:00",
   "runner": "scripts\\eval\\phase6_feature_freeze_audit.py",
   "git": {
     "branch": "main",
-    "commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
+    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
     "origin_main_delta": "0\t0",
     "base_ref": "origin/main",
-    "base_commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
-    "head_commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
+    "base_commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
+    "head_commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
     "base_ref_resolved": true,
     "worktree_dirty": true,
-    "worktree_status_count": 17
+    "worktree_status_count": 22
   },
   "raw_records_committed": false,
   "raw_questions_committed": false,
@@ -74,6 +74,11 @@
     {
       "source": "working_tree",
       "status": "M",
+      "path": "crates/eval/reports/official-dmr-task-gate.json"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
       "path": "crates/eval/reports/phase6-next-gate-readiness.json"
     },
     {
@@ -119,6 +124,16 @@
     {
       "source": "working_tree",
       "status": "M",
+      "path": "scripts/eval/official_dmr_task_gate.py"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "scripts/eval/phase6_current_system_gate.py"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
       "path": "scripts/eval/phase6_objective_coverage_audit.py"
     },
     {
@@ -127,28 +142,38 @@
       "path": "scripts/eval/phase6_requirements_audit.py"
     },
     {
-      "source": "untracked",
-      "status": "??",
-      "path": "crates/eval/reports/dmr-mapping-boundary-impact.json"
+      "source": "working_tree",
+      "status": "M",
+      "path": "scripts/eval/productization_decision_gate.py"
+    },
+    {
+      "source": "working_tree",
+      "status": "M",
+      "path": "scripts/eval/readme_claims_support_audit.py"
     },
     {
       "source": "untracked",
       "status": "??",
-      "path": "docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md"
+      "path": "crates/eval/reports/dmr-top-context-significance.json"
     },
     {
       "source": "untracked",
       "status": "??",
-      "path": "scripts/eval/dmr_mapping_boundary_impact.py"
+      "path": "docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md"
+    },
+    {
+      "source": "untracked",
+      "status": "??",
+      "path": "scripts/eval/dmr_top_context_significance.py"
     }
   ],
   "status": {
     "feature_freeze_audit_passed": true,
     "base_ref_resolved": true,
-    "change_count": 17,
+    "change_count": 22,
     "change_source_counts": {
       "untracked": 3,
-      "working_tree": 14
+      "working_tree": 19
     },
     "protected_change_count": 0,
     "protected_changes": [],

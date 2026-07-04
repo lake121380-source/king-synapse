@@ -568,7 +568,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],
             "what_is_not_ready": [
-                "Top-context DMR candidate judge scoring.",
                 "Published-comparable official DMR performance.",
                 "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
                 "Complete future evidence labeling for long-horizon prediction.",
@@ -578,9 +577,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Production readiness, web/API/Docker product work, or v0.1 release readiness.",
             ],
             "next_action": (
-                "Keep feature freeze. Continue only validation work until either "
-                "valid judge authorization enables top-context DMR scoring or hosted "
-                "competitor credentials/endpoints enable fair external comparison."
+                "Keep feature freeze. Continue only validation work until hosted "
+                "competitor credentials/endpoints enable fair external comparison, "
+                "or continue no-model failure analysis without changing runtime defaults."
             ),
         },
         "limits": [

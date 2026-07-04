@@ -149,6 +149,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/dmr-failure-mode-taxonomy.json",
         "dmr_mapping_boundary_impact": root
         / "crates/eval/reports/dmr-mapping-boundary-impact.json",
+        "dmr_top_context_significance": root
+        / "crates/eval/reports/dmr-top-context-significance.json",
         "official_dmr_top_context_judge_preflight": root
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
         "official_dmr_50_top_context_judge": root
@@ -198,6 +200,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     bottleneck_taxonomy = load_json(paths["official_dmr_bottleneck_taxonomy"])
     failure_mode_taxonomy = load_json(paths["dmr_failure_mode_taxonomy"])
     mapping_boundary_impact = load_json(paths["dmr_mapping_boundary_impact"])
+    top_context_significance = load_json(paths["dmr_top_context_significance"])
     top_context_preflight = load_json(paths["official_dmr_top_context_judge_preflight"])
     next_gate_readiness = load_json(paths["phase6_next_gate_readiness"])
     official_dmr_task_gate = load_json(paths["official_dmr_task_gate"])
@@ -268,6 +271,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_bottleneck_taxonomy"]),
                 report_path(paths["dmr_failure_mode_taxonomy"]),
                 report_path(paths["dmr_mapping_boundary_impact"]),
+                report_path(paths["dmr_top_context_significance"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
                 report_path(paths["official_dmr_50_top_context_judge"]),
                 report_path(paths["official_dmr_200_top_context_judge"]),
@@ -281,7 +285,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "judge-backed, and DMR 50/200/500-request top-context views are "
                 "judge-backed. DMR 500 failure modes are classified, but absolute "
                 "answer quality remains low. The largest mapping boundary is "
-                "narrowed to scoring policy rather than empty memory chunks."
+                "narrowed to scoring policy rather than empty memory chunks, and "
+                "top-context judge gains are paired-significant across completed "
+                "scale views."
             ),
             remaining=[
                 "Published-comparable DMR mapping/scoring policy is not finalized.",
@@ -289,6 +295,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
                 "DMR 500 failure taxonomy keeps mapping, retrieval/ranking, and answer synthesis separate.",
                 "DMR mapping-boundary impact keeps relaxed-token rows diagnostic-only until separately validated.",
+                "Top-context significance supports the generator direction, but not a runtime default or official product claim.",
                 "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits.",
             ],
             next_action="Stop expanding the DMR judge-scaling branch; continue with hosted external comparison or no-model failure analysis.",
@@ -467,6 +474,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     "primary_result": mapping_boundary_impact["read"]["primary_result"],
                     "official_boundary": mapping_boundary_impact["read"][
                         "official_boundary"
+                    ],
+                },
+                "top_context_significance": {
+                    "cross_scale_summary": top_context_significance[
+                        "cross_scale_summary"
+                    ],
+                    "primary_result": top_context_significance["read"][
+                        "primary_result"
+                    ],
+                    "statistical_read": top_context_significance["read"][
+                        "statistical_read"
                     ],
                 },
             },

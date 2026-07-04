@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-04T03:28:52.646751+00:00",
+  "generated_at": "2026-07-04T03:40:17.460977+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
+    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "e3e378714b32298832ac54060a817ff8e866236bef2854e19618b97814ae34c9"
+      "sha256": "fad1e03ebdc81b7b4bf99355e5b6773f936fa803b2c94954721dab02a091318f"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "0ba6a841335810370ca52f22c8c703cca6cd2ae7aba2fccb08cbf118740dadb3"
+      "sha256": "49fbfac900f44f8ced9740d95bd09e4cdef7d95eac7d439f2f7495427d8c3de6"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
       "exists": true,
-      "sha256": "54b38399183a940dace9e018ec44d1257b5a0a967b4ada54fb4603d6dc70b0ff"
+      "sha256": "780518df62d422e9890f287f3d37f7da1847d93ec3595cf5e9ac793109622a31"
     },
     "ranking_ablation": {
       "path": "docs\\eval\\RANKING_ABLATION.md",
@@ -78,6 +78,11 @@
       "exists": true,
       "sha256": "c580aedb447acafc8abff3480f05a2be53644201721c7c5c3c0a46a64d972274"
     },
+    "dmr_top_context_significance": {
+      "path": "crates\\eval\\reports\\dmr-top-context-significance.json",
+      "exists": true,
+      "sha256": "e1d84f0796408954639e8d808840d6ec5d3658112c1f798f07632c2be52de4de"
+    },
     "official_dmr_top_context_judge_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
       "exists": true,
@@ -101,12 +106,12 @@
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "2478201cdd82648216618e3a9634280a2852bbd7154291f00878cdcc496e7c97"
+      "sha256": "7cd661f2af6831f1d23873f491cce2734b00942659f3a86c723a51c64767a90b"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "6857a8f32f82c7d7a58071bf3ff4fc85d817da9b5a570b30deebd79c50890807"
+      "sha256": "c1d7dba0aa33978f576f8de68b258dc5ae27385e8e44cc42f76898f6a810b912"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -116,7 +121,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "2a0dd9c7e382bf7e3e8c398719af23be3a1a07fdea1559a5994338c3ac5b8e14"
+      "sha256": "ef2466bbab22577284574c62e49909a7188af1444d1bcddcf20262acee746219"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -126,12 +131,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "10d7e3ecb1d85e725e81c9ee42670104303f23275d169c03c5db6a0b43dc8f55"
+      "sha256": "d9bde5ec60bd1c4673353f4d7867ce436a76cfeed5365a63a074e95a6d069416"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "df1c74b2db9c826ded1e644590dc6c8fa7a4c07f8f674dcc9487fdece975f85f"
+      "sha256": "ae623cf926f869a41e1f1d93c10eb5c3b7a4782353a47687e645c02daf09ae31"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -216,6 +221,7 @@
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
         "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
         "crates\\eval\\reports\\dmr-mapping-boundary-impact.json",
+        "crates\\eval\\reports\\dmr-top-context-significance.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
@@ -223,13 +229,14 @@
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
-      "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, and DMR 50/200/500-request top-context views are judge-backed. DMR 500 failure modes are classified, but absolute answer quality remains low. The largest mapping boundary is narrowed to scoring policy rather than empty memory chunks.",
+      "conclusion": "Retrieval -> answer generation -> local scoring exists for 50, 200, and 500-request DMR views. Baseline extractive runs are judge-backed, and DMR 50/200/500-request top-context views are judge-backed. DMR 500 failure modes are classified, but absolute answer quality remains low. The largest mapping boundary is narrowed to scoring policy rather than empty memory chunks, and top-context judge gains are paired-significant across completed scale views.",
       "remaining": [
         "Published-comparable DMR mapping/scoring policy is not finalized.",
         "500-request run honestly scores 323 mappable samples, not 500/500.",
         "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
         "DMR 500 failure taxonomy keeps mapping, retrieval/ranking, and answer synthesis separate.",
         "DMR mapping-boundary impact keeps relaxed-token rows diagnostic-only until separately validated.",
+        "Top-context significance supports the generator direction, but not a runtime default or official product claim.",
         "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits."
       ],
       "next_action": "Stop expanding the DMR judge-scaling branch; continue with hosted external comparison or no-model failure analysis."
@@ -665,6 +672,29 @@
         },
         "primary_result": "The 177 punctuation-rejected rows are mostly a mapping/scoring boundary, not evidence of empty memory chunks.",
         "official_boundary": "The pinned local DMR policy remains punctuation-normalized full-answer matching. Relaxed diagnostic rows must not be silently counted as official hits without a separately labeled judge/manual validation."
+      },
+      "top_context_significance": {
+        "cross_scale_summary": {
+          "all_scales_judge_accuracy_delta_positive": true,
+          "all_scales_substring_delta_positive": true,
+          "all_scales_rouge_l_delta_positive": true,
+          "all_scales_candidate_only_gt_baseline_only": true,
+          "all_scales_mcnemar_significant_at_0_05": true,
+          "available_category_sets": {
+            "dmr_50": [
+              "dmr-answer-generation"
+            ],
+            "dmr_200": [
+              "dmr-answer-generation"
+            ],
+            "dmr_500_request_323_scored": [
+              "dmr-answer-generation"
+            ]
+          },
+          "category_consistency_limit": "Sanitized reports expose one category, dmr-answer-generation, so question-subtype consistency cannot be audited from committed reports."
+        },
+        "primary_result": "Top-context improves judged answer correctness over the extractive baseline at DMR 50, DMR 200, and the 500-request / 323-scored view.",
+        "statistical_read": "Each scale has more candidate-only correct rows than baseline-only correct rows, and the exact McNemar test is significant at 0.05 on all three scale views."
       }
     },
     "ranking": {

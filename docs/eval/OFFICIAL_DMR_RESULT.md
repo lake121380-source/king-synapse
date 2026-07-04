@@ -95,6 +95,10 @@ DMR mapping-boundary impact:
 
 `crates/eval/reports/dmr-mapping-boundary-impact.json`
 
+DMR top-context significance:
+
+`crates/eval/reports/dmr-top-context-significance.json`
+
 ## What Changed
 
 Synapse now has a DMR evaluation path that goes beyond candidate retrieval:
@@ -701,6 +705,23 @@ Read: `0/500` rows have empty memory chunks. Of the `177` rows rejected by
 the pinned punctuation policy, `174` still have some diagnostic token match and
 `122` contain all significant answer tokens in one chunk. This moves the main
 mapping question to defensible scoring policy, not empty memory construction.
+
+## Top-Context Significance
+
+The DMR top-context significance audit is recorded in
+`docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md` and
+`crates/eval/reports/dmr-top-context-significance.json`.
+
+| Scale | Judge delta | Candidate-only | Baseline-only | McNemar p-value |
+| --- | ---: | ---: | ---: | ---: |
+| DMR 50 | +0.180 | 9 | 0 | 0.00390625 |
+| DMR 200 | +0.090 | 23 | 5 | 0.000912234187 |
+| DMR 500 request / 323 scored | +0.108 | 41 | 6 | 1.7717e-07 |
+
+Read: the top-context direction is positive and statistically supported across
+all completed local scale views. The result is strongest when the relevant
+context is already ranked first; `top10_not_top1` remains a ranking boundary
+because the top-context generator reads rank 1 only.
 
 ## Read
 

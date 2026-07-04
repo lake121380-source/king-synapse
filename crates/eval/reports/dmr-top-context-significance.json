@@ -1,0 +1,483 @@
+{
+  "schema_version": "king-synapse.dmr-top-context-significance.v1",
+  "generated_at": "2026-07-04T03:40:15.497851+00:00",
+  "runner": "scripts\\eval\\dmr_top_context_significance.py",
+  "git": {
+    "branch": "main",
+    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
+    "origin_main_delta": "0\t0"
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "method": {
+    "paired_unit": "sample_id shared by extractive baseline and top-context candidate at each scale",
+    "primary_test": "Exact two-sided McNemar/binomial test over judge-correct discordant pairs.",
+    "confidence_interval": "Wilson 95% interval for each unpaired accuracy; paired p-value is the primary stability signal.",
+    "pooling_policy": "Scale views are not pooled because larger DMR views may contain earlier rows."
+  },
+  "scale_results": [
+    {
+      "scale": "dmr_50",
+      "inputs": {
+        "baseline_report": {
+          "path": "crates\\eval\\reports\\official-dmr-50.json",
+          "sha256": "5eb227a2c8c596a9fd45a76fd8797475468d2df611dcfd2067811e304e95c16f"
+        },
+        "top_context_report": {
+          "path": "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
+          "sha256": "10b5e8a126751a02b5d4c481342f687858fa28bf1a1728eaad4f41169b54c010"
+        }
+      },
+      "requested_samples": 50,
+      "paired_scored_samples": 50,
+      "sample_id_sets_equal": true,
+      "generator_pair": {
+        "baseline": "extractive",
+        "candidate": "top-context-extractive"
+      },
+      "retrieval_mode": "vectors-rerank",
+      "judge_model": "deepseek-v4-flash",
+      "accelerator": {
+        "requested": "cuda",
+        "king_synapse_accelerator": "cuda",
+        "cuda_device_id": "0",
+        "cuda_runtime": {
+          "path_added": true,
+          "root_recorded": false,
+          "root_exists": true,
+          "dll_dir_count": 9
+        },
+        "embedding": {
+          "batch_size": {
+            "value": "32",
+            "source": "argument"
+          },
+          "max_length": {
+            "value": "256",
+            "source": "argument"
+          }
+        },
+        "rerank_batch": {
+          "value": "32",
+          "source": "argument"
+        },
+        "rerank_max_length": {
+          "value": "256",
+          "source": "argument"
+        },
+        "directml_device_id": null
+      },
+      "judge_accuracy": {
+        "baseline": {
+          "successes": 4,
+          "total": 50,
+          "rate": 0.08,
+          "low": 0.03155,
+          "high": 0.188382
+        },
+        "candidate": {
+          "successes": 13,
+          "total": 50,
+          "rate": 0.26,
+          "low": 0.158715,
+          "high": 0.395532
+        },
+        "delta": 0.18
+      },
+      "paired_judge_transitions": {
+        "both_correct": 4,
+        "both_incorrect": 37,
+        "candidate_only_correct": 9
+      },
+      "mcnemar_exact": {
+        "candidate_only_correct": 9,
+        "baseline_only_correct": 0,
+        "discordant_pairs": 9,
+        "two_sided_p_value": 0.00390625,
+        "significant_at_0_05": true
+      },
+      "substring_accuracy": {
+        "baseline": 0.06,
+        "candidate": 0.22,
+        "delta": 0.16
+      },
+      "rouge_l_f1_mean": {
+        "baseline": 0.041027,
+        "candidate": 0.102852,
+        "delta": 0.061825
+      },
+      "strata": {
+        "candidate_retrieval_bucket": {
+          "no_relevant_top10": {
+            "samples": 12,
+            "baseline_judge_correct": 0,
+            "candidate_judge_correct": 1,
+            "judge_accuracy_delta": 0.083333
+          },
+          "top1": {
+            "samples": 28,
+            "baseline_judge_correct": 4,
+            "candidate_judge_correct": 12,
+            "judge_accuracy_delta": 0.285714
+          },
+          "top10_not_top1": {
+            "samples": 10,
+            "baseline_judge_correct": 0,
+            "candidate_judge_correct": 0,
+            "judge_accuracy_delta": 0.0
+          }
+        },
+        "gold_answer_length_bucket": {
+          "01_16": {
+            "samples": 40,
+            "baseline_judge_correct": 3,
+            "candidate_judge_correct": 12,
+            "judge_accuracy_delta": 0.225
+          },
+          "17_32": {
+            "samples": 7,
+            "baseline_judge_correct": 0,
+            "candidate_judge_correct": 0,
+            "judge_accuracy_delta": 0.0
+          },
+          "33_64": {
+            "samples": 3,
+            "baseline_judge_correct": 1,
+            "candidate_judge_correct": 1,
+            "judge_accuracy_delta": 0.0
+          }
+        },
+        "category": {
+          "dmr-answer-generation": {
+            "samples": 50,
+            "baseline_judge_correct": 4,
+            "candidate_judge_correct": 13,
+            "judge_accuracy_delta": 0.18
+          }
+        }
+      }
+    },
+    {
+      "scale": "dmr_200",
+      "inputs": {
+        "baseline_report": {
+          "path": "crates\\eval\\reports\\official-dmr-200.json",
+          "sha256": "48385325c61761b4d26974e565377c8cca1ae12a25caad48cb04f0929de8a6db"
+        },
+        "top_context_report": {
+          "path": "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
+          "sha256": "4ce9c9694ce0bee14a63532d4fd8fb3a810c5ccc6091dc0b0803dac25f9c52aa"
+        }
+      },
+      "requested_samples": 200,
+      "paired_scored_samples": 200,
+      "sample_id_sets_equal": true,
+      "generator_pair": {
+        "baseline": "extractive",
+        "candidate": "top-context-extractive"
+      },
+      "retrieval_mode": "vectors-rerank",
+      "judge_model": "deepseek-v4-flash",
+      "accelerator": {
+        "requested": "cuda",
+        "king_synapse_accelerator": "cuda",
+        "cuda_device_id": "0",
+        "cuda_runtime": {
+          "path_added": true,
+          "root_recorded": false,
+          "root_exists": true,
+          "dll_dir_count": 9
+        },
+        "embedding": {
+          "batch_size": {
+            "value": "32",
+            "source": "argument"
+          },
+          "max_length": {
+            "value": "256",
+            "source": "argument"
+          }
+        },
+        "rerank_batch": {
+          "value": "32",
+          "source": "argument"
+        },
+        "rerank_max_length": {
+          "value": "256",
+          "source": "argument"
+        },
+        "directml_device_id": null
+      },
+      "judge_accuracy": {
+        "baseline": {
+          "successes": 12,
+          "total": 200,
+          "rate": 0.06,
+          "low": 0.034652,
+          "high": 0.101932
+        },
+        "candidate": {
+          "successes": 30,
+          "total": 200,
+          "rate": 0.15,
+          "low": 0.107136,
+          "high": 0.206056
+        },
+        "delta": 0.09
+      },
+      "paired_judge_transitions": {
+        "baseline_only_correct": 5,
+        "both_correct": 7,
+        "both_incorrect": 165,
+        "candidate_only_correct": 23
+      },
+      "mcnemar_exact": {
+        "candidate_only_correct": 23,
+        "baseline_only_correct": 5,
+        "discordant_pairs": 28,
+        "two_sided_p_value": 0.000912234187,
+        "significant_at_0_05": true
+      },
+      "substring_accuracy": {
+        "baseline": 0.04,
+        "candidate": 0.12,
+        "delta": 0.08
+      },
+      "rouge_l_f1_mean": {
+        "baseline": 0.036509,
+        "candidate": 0.06621,
+        "delta": 0.029701
+      },
+      "strata": {
+        "candidate_retrieval_bucket": {
+          "no_relevant_top10": {
+            "samples": 61,
+            "baseline_judge_correct": 0,
+            "candidate_judge_correct": 4,
+            "judge_accuracy_delta": 0.065574
+          },
+          "top1": {
+            "samples": 74,
+            "baseline_judge_correct": 8,
+            "candidate_judge_correct": 26,
+            "judge_accuracy_delta": 0.243243
+          },
+          "top10_not_top1": {
+            "samples": 65,
+            "baseline_judge_correct": 4,
+            "candidate_judge_correct": 0,
+            "judge_accuracy_delta": -0.061538
+          }
+        },
+        "gold_answer_length_bucket": {
+          "01_16": {
+            "samples": 135,
+            "baseline_judge_correct": 8,
+            "candidate_judge_correct": 21,
+            "judge_accuracy_delta": 0.096296
+          },
+          "17_32": {
+            "samples": 52,
+            "baseline_judge_correct": 4,
+            "candidate_judge_correct": 7,
+            "judge_accuracy_delta": 0.057692
+          },
+          "33_64": {
+            "samples": 13,
+            "baseline_judge_correct": 0,
+            "candidate_judge_correct": 2,
+            "judge_accuracy_delta": 0.153846
+          }
+        },
+        "category": {
+          "dmr-answer-generation": {
+            "samples": 200,
+            "baseline_judge_correct": 12,
+            "candidate_judge_correct": 30,
+            "judge_accuracy_delta": 0.09
+          }
+        }
+      }
+    },
+    {
+      "scale": "dmr_500_request_323_scored",
+      "inputs": {
+        "baseline_report": {
+          "path": "crates\\eval\\reports\\official-dmr-500.json",
+          "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
+        },
+        "top_context_report": {
+          "path": "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
+          "sha256": "9341242cdfed25409762578c01d9102571ec715fd8c85a2e35fef0dc93c5a844"
+        }
+      },
+      "requested_samples": 500,
+      "paired_scored_samples": 323,
+      "sample_id_sets_equal": true,
+      "generator_pair": {
+        "baseline": "extractive",
+        "candidate": "top-context-extractive"
+      },
+      "retrieval_mode": "vectors-rerank",
+      "judge_model": "deepseek-v4-flash",
+      "accelerator": {
+        "requested": "cuda",
+        "king_synapse_accelerator": "cuda",
+        "cuda_device_id": "0",
+        "cuda_runtime": {
+          "path_added": true,
+          "root_recorded": false,
+          "root_exists": true,
+          "dll_dir_count": 9
+        },
+        "embedding": {
+          "batch_size": {
+            "value": "32",
+            "source": "argument"
+          },
+          "max_length": {
+            "value": "256",
+            "source": "argument"
+          }
+        },
+        "rerank_batch": {
+          "value": "32",
+          "source": "argument"
+        },
+        "rerank_max_length": {
+          "value": "256",
+          "source": "argument"
+        },
+        "directml_device_id": null
+      },
+      "judge_accuracy": {
+        "baseline": {
+          "successes": 16,
+          "total": 323,
+          "rate": 0.049536,
+          "low": 0.030718,
+          "high": 0.078942
+        },
+        "candidate": {
+          "successes": 51,
+          "total": 323,
+          "rate": 0.157895,
+          "low": 0.12218,
+          "high": 0.201651
+        },
+        "delta": 0.108359
+      },
+      "paired_judge_transitions": {
+        "baseline_only_correct": 6,
+        "both_correct": 10,
+        "both_incorrect": 266,
+        "candidate_only_correct": 41
+      },
+      "mcnemar_exact": {
+        "candidate_only_correct": 41,
+        "baseline_only_correct": 6,
+        "discordant_pairs": 47,
+        "two_sided_p_value": 1.7717e-07,
+        "significant_at_0_05": true
+      },
+      "substring_accuracy": {
+        "baseline": 0.04644,
+        "candidate": 0.120743,
+        "delta": 0.074303
+      },
+      "rouge_l_f1_mean": {
+        "baseline": 0.039487,
+        "candidate": 0.074678,
+        "delta": 0.035191
+      },
+      "strata": {
+        "candidate_retrieval_bucket": {
+          "no_relevant_top10": {
+            "samples": 114,
+            "baseline_judge_correct": 1,
+            "candidate_judge_correct": 5,
+            "judge_accuracy_delta": 0.035088
+          },
+          "top1": {
+            "samples": 128,
+            "baseline_judge_correct": 10,
+            "candidate_judge_correct": 45,
+            "judge_accuracy_delta": 0.273438
+          },
+          "top10_not_top1": {
+            "samples": 81,
+            "baseline_judge_correct": 5,
+            "candidate_judge_correct": 1,
+            "judge_accuracy_delta": -0.049383
+          }
+        },
+        "gold_answer_length_bucket": {
+          "01_16": {
+            "samples": 212,
+            "baseline_judge_correct": 12,
+            "candidate_judge_correct": 33,
+            "judge_accuracy_delta": 0.099057
+          },
+          "17_32": {
+            "samples": 89,
+            "baseline_judge_correct": 2,
+            "candidate_judge_correct": 15,
+            "judge_accuracy_delta": 0.146067
+          },
+          "33_64": {
+            "samples": 22,
+            "baseline_judge_correct": 2,
+            "candidate_judge_correct": 3,
+            "judge_accuracy_delta": 0.045455
+          }
+        },
+        "category": {
+          "dmr-answer-generation": {
+            "samples": 323,
+            "baseline_judge_correct": 16,
+            "candidate_judge_correct": 51,
+            "judge_accuracy_delta": 0.108359
+          }
+        }
+      }
+    }
+  ],
+  "cross_scale_summary": {
+    "all_scales_judge_accuracy_delta_positive": true,
+    "all_scales_substring_delta_positive": true,
+    "all_scales_rouge_l_delta_positive": true,
+    "all_scales_candidate_only_gt_baseline_only": true,
+    "all_scales_mcnemar_significant_at_0_05": true,
+    "available_category_sets": {
+      "dmr_50": [
+        "dmr-answer-generation"
+      ],
+      "dmr_200": [
+        "dmr-answer-generation"
+      ],
+      "dmr_500_request_323_scored": [
+        "dmr-answer-generation"
+      ]
+    },
+    "category_consistency_limit": "Sanitized reports expose one category, dmr-answer-generation, so question-subtype consistency cannot be audited from committed reports."
+  },
+  "read": {
+    "primary_result": "Top-context improves judged answer correctness over the extractive baseline at DMR 50, DMR 200, and the 500-request / 323-scored view.",
+    "statistical_read": "Each scale has more candidate-only correct rows than baseline-only correct rows, and the exact McNemar test is significant at 0.05 on all three scale views.",
+    "limits": "This supports the generator direction as validation evidence. It does not make the task published-comparable, does not solve low absolute answer quality, and does not justify a runtime default change.",
+    "next_action": "Keep feature freeze. Treat top-context as the strongest evaluated generator direction, while keeping published-comparable mapping, hosted external comparison, and answer quality open."
+  },
+  "limits": [
+    "Uses committed sanitized per-query reports only.",
+    "Does not inspect raw questions, answers, dialogs, sessions, memory content, generated answers, prompts, raw responses, or API keys.",
+    "Scale views are reported separately and not pooled.",
+    "Question-subtype consistency is unavailable because committed sanitized reports expose a single DMR category.",
+    "This report does not change memory schema, cognitive layers, CLI/MCP, retrieval, ranking, generator, or scoring defaults."
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.official-dmr-task-gate.v1",
-  "generated_at": "2026-07-04T03:06:09.593791+00:00",
+  "generated_at": "2026-07-04T03:40:16.070978+00:00",
   "runner": "scripts\\eval\\official_dmr_task_gate.py",
   "git": {
     "branch": "main",
-    "commit": "1546b90c60e31bb8364ca7bd5b5c5da76812fda8",
+    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -52,6 +52,11 @@
       "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
       "exists": true,
       "sha256": "6749341616c81c2494edb6f4923d0d295df5c36bed870234cc9dceeaa3b0b20c"
+    },
+    "top_context_significance": {
+      "path": "crates\\eval\\reports\\dmr-top-context-significance.json",
+      "exists": true,
+      "sha256": "e1d84f0796408954639e8d808840d6ec5d3658112c1f798f07632c2be52de4de"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -117,6 +122,16 @@
         "raw_answers_committed": false,
         "raw_dialogs_committed": false,
         "generated_answers_committed": false
+      },
+      "top_context_significance": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "raw_response_committed": false,
+        "prompt_text_recorded": false
       },
       "mapping_policy_review": {},
       "top_context_judge_preflight": {
@@ -260,6 +275,33 @@
     "candidate_substring_accuracy_delta": 0.074303,
     "candidate_rouge_l_f1_delta": 0.035191
   },
+  "top_context_significance": {
+    "cross_scale_summary": {
+      "all_scales_judge_accuracy_delta_positive": true,
+      "all_scales_substring_delta_positive": true,
+      "all_scales_rouge_l_delta_positive": true,
+      "all_scales_candidate_only_gt_baseline_only": true,
+      "all_scales_mcnemar_significant_at_0_05": true,
+      "available_category_sets": {
+        "dmr_50": [
+          "dmr-answer-generation"
+        ],
+        "dmr_200": [
+          "dmr-answer-generation"
+        ],
+        "dmr_500_request_323_scored": [
+          "dmr-answer-generation"
+        ]
+      },
+      "category_consistency_limit": "Sanitized reports expose one category, dmr-answer-generation, so question-subtype consistency cannot be audited from committed reports."
+    },
+    "read": {
+      "primary_result": "Top-context improves judged answer correctness over the extractive baseline at DMR 50, DMR 200, and the 500-request / 323-scored view.",
+      "statistical_read": "Each scale has more candidate-only correct rows than baseline-only correct rows, and the exact McNemar test is significant at 0.05 on all three scale views.",
+      "limits": "This supports the generator direction as validation evidence. It does not make the task published-comparable, does not solve low absolute answer quality, and does not justify a runtime default change.",
+      "next_action": "Keep feature freeze. Treat top-context as the strongest evaluated generator direction, while keeping published-comparable mapping, hosted external comparison, and answer quality open."
+    }
+  },
   "checks": [
     {
       "id": "answer_generation_scoring_surface_present",
@@ -338,6 +380,17 @@
       ]
     },
     {
+      "id": "top_context_paired_significance",
+      "status": "satisfied",
+      "evidence": [
+        "crates\\eval\\reports\\dmr-top-context-significance.json"
+      ],
+      "conclusion": "Top-context judge improvements are paired-significant at p < 0.05 on DMR 50, DMR 200, and the 500-request / 323-scored view.",
+      "remaining": [
+        "Keep the result validation-only until answer quality and published-comparable mapping are ready."
+      ]
+    },
+    {
       "id": "top_context_candidate_judge_scoring",
       "status": "satisfied",
       "evidence": [
@@ -362,6 +415,7 @@
         "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
+        "crates\\eval\\reports\\dmr-top-context-significance.json",
         "crates\\eval\\reports\\dmr-mapping-policy-review.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
       ],
@@ -370,7 +424,7 @@
     }
   ],
   "status_counts": {
-    "satisfied": 8,
+    "satisfied": 9,
     "partial": 1
   },
   "status": {
@@ -392,7 +446,8 @@
       "DMR 500-request has 177 punctuation-mapping rejections before scoring.",
       "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
       "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
-      "Top-context extraction improves judged accuracy across DMR 50, DMR 200, and the 500-request / 323-scored view, but absolute answer quality remains low and the largest local view still leaves 91 top-1 misses."
+      "Top-context extraction improves judged accuracy across DMR 50, DMR 200, and the 500-request / 323-scored view, but absolute answer quality remains low and the largest local view still leaves 91 top-1 misses.",
+      "Top-context paired McNemar tests are significant on all completed local scale views, but this does not close published-comparable DMR policy."
     ],
     "next_action": "Keep feature freeze. The DMR top-context judge-scaling branch is complete; continue hosted external comparison when credentials/endpoints are ready, and use failure analysis rather than runtime default changes."
   },

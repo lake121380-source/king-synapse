@@ -322,7 +322,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 else "Official DMR evidence does not match the expected local-ready / published-not-ready boundary."
             ),
             remaining=[
-                "Judge-score the top-context candidate after authorization is fixed.",
                 "Finalize published-comparable mapping and scoring policy.",
                 "Improve answer synthesis quality before stronger public claims.",
             ],

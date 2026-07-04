@@ -139,6 +139,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "official_dmr_500": root / "crates/eval/reports/official-dmr-500.json",
         "official_dmr_bottleneck_taxonomy": root
         / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
+        "dmr_top_context_significance": root
+        / "crates/eval/reports/dmr-top-context-significance.json",
         "ranking_objective_conflict": root
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard": root
@@ -165,6 +167,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     dmr_200 = load_json(paths["official_dmr_200"])
     dmr_500 = load_json(paths["official_dmr_500"])
     bottleneck = load_json(paths["official_dmr_bottleneck_taxonomy"])
+    top_context_significance = load_json(paths["dmr_top_context_significance"])
     ranking_conflict = load_json(paths["ranking_objective_conflict"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
@@ -314,7 +317,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ],
             conclusion=(
                 "The README's DMR caveat is supported: pinned local runs are judged, "
-                "but mapping coverage and top-context judge scoring remain open."
+                "top-context judge scaling is complete, and published-comparable "
+                "mapping plus answer quality remain open."
+            ),
+        ),
+        claim(
+            claim_id="dmr_top_context_significance",
+            readme_snippet="McNemar p-value",
+            status="supported",
+            evidence=[report_path(paths["dmr_top_context_significance"])],
+            conclusion=safe_get(
+                top_context_significance, ["read", "statistical_read"], ""
             ),
         ),
         claim(

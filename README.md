@@ -218,6 +218,11 @@ of the `177` punctuation-rejected rows, `122` contain all significant answer
 tokens in one memory chunk, `174` have at least one diagnostic token match, and
 only `3` have no diagnostic token match. This keeps the boundary on scoring
 policy, not empty memory chunks.
+The top-context significance audit is recorded in
+[DMR_TOP_CONTEXT_SIGNIFICANCE.md](docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md):
+paired judge deltas are positive on DMR 50, 200, and the 500-request /
+323-scored view, and exact McNemar tests are significant at `p < 0.05` on all
+three views.
 
 | DMR 500 requested-row outcome | Count | Share |
 | --- | ---: | ---: |
@@ -232,6 +237,12 @@ policy, not empty memory chunks.
 | 50 | 0.060 | 0.220 | 0.041 | 0.103 |
 | 200 | 0.040 | 0.120 | 0.037 | 0.067 |
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
+
+| DMR scale | Judge delta | Candidate-only | Baseline-only | McNemar p-value |
+| --- | ---: | ---: | ---: | ---: |
+| 50 | +0.180 | 9 | 0 | 0.00390625 |
+| 200 | +0.090 | 23 | 5 | 0.000912234187 |
+| 500 request / 323 scored | +0.108 | 41 | 6 | 1.7717e-07 |
 
 So answer synthesis is now a real optimization target, but it is still
 eval-only evidence. The DMR 50, 200, and 500-request top-context generators
@@ -382,6 +393,7 @@ cargo build --release
 | `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation, judge probe, and answer-synthesis audit results. |
 | `docs/eval/DMR_FAILURE_MODE_TAXONOMY.md` | DMR 500 failure-mode taxonomy over mapping, retrieval/ranking, and answer synthesis. |
 | `docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md` | DMR mapping-boundary impact audit for punctuation-rejected rows. |
+| `docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md` | Paired significance audit for top-context vs extractive DMR results. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

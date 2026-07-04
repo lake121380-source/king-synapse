@@ -247,6 +247,10 @@ DMR boundary:
   punctuation-rejected rows contain all significant answer tokens in one chunk,
   `174/177` have at least one diagnostic significant-token match, and only
   `3/177` have no diagnostic token match.
+- `crates/eval/reports/dmr-top-context-significance.json` checks the paired
+  top-context direction across DMR 50, DMR 200, and the 500-request /
+  323-scored view. Judge deltas are `+0.180`, `+0.090`, and `+0.108`; exact
+  McNemar p-values are `0.00390625`, `0.000912234187`, and `1.7717e-07`.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -321,6 +325,10 @@ answer synthesis remain comparable scored-row engineering surfaces.
 The DMR mapping-boundary impact audit further narrows that largest bucket:
 the unresolved mapping branch is mostly a scoring-policy question, not evidence
 of empty generated memory chunks.
+The top-context significance audit answers the DMR scale question directly:
+the generator direction is stable and paired-significant across the completed
+local scale views, while the retrieval bucket split keeps ranking as an open
+boundary.
 
 Long-horizon cognitive validation:
 

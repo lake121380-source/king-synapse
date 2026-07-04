@@ -114,6 +114,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/official-dmr-generator-ablation-summary.json",
         "bottleneck_taxonomy": root
         / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
+        "top_context_significance": root
+        / "crates/eval/reports/dmr-top-context-significance.json",
         "mapping_policy_review": root
         / "crates/eval/reports/dmr-mapping-policy-review.json",
         "top_context_judge_preflight": root
@@ -263,6 +265,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ["aggregate_findings", "candidate_improves_rouge_l_f1_on_all_scale_views"],
         )
     )
+    top_context_significant = bool(
+        safe_get(
+            reports["top_context_significance"],
+            ["cross_scale_summary", "all_scales_mcnemar_significant_at_0_05"],
+        )
+    )
     preflight_status = safe_get(
         reports["top_context_judge_preflight"], ["result", "status"]
     )
@@ -340,6 +348,21 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             remaining=[
                 "Do not change runtime defaults until answer quality improves and the published-comparable DMR policy is finalized."
             ],
+        ),
+        item(
+            "top_context_paired_significance",
+            "satisfied" if top_context_significant else "failed",
+            evidence=[paths["top_context_significance"]],
+            conclusion=(
+                "Top-context judge improvements are paired-significant at p < 0.05 on DMR 50, DMR 200, and the 500-request / 323-scored view."
+                if top_context_significant
+                else "Top-context paired significance is not supported on every completed scale view."
+            ),
+            remaining=[
+                "Keep the result validation-only until answer quality and published-comparable mapping are ready."
+            ]
+            if top_context_significant
+            else [],
         ),
         item(
             "top_context_candidate_judge_scoring",
@@ -420,6 +443,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "top_context_runs": top_context_runs,
         "mapping_boundary": reports["bottleneck_taxonomy"]["mapping_boundary"],
         "largest_local_view": reports["bottleneck_taxonomy"]["largest_local_view"],
+        "top_context_significance": {
+            "cross_scale_summary": reports["top_context_significance"][
+                "cross_scale_summary"
+            ],
+            "read": reports["top_context_significance"]["read"],
+        },
         "checks": checks,
         "status_counts": status_counts,
         "status": {
@@ -456,6 +485,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
                 "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
                 "Top-context extraction improves judged accuracy across DMR 50, DMR 200, and the 500-request / 323-scored view, but absolute answer quality remains low and the largest local view still leaves 91 top-1 misses.",
+                "Top-context paired McNemar tests are significant on all completed local scale views, but this does not close published-comparable DMR policy.",
             ],
             "next_action": (
                 "Keep feature freeze. The DMR top-context judge-scaling branch is complete; continue hosted external comparison when credentials/endpoints are ready, and use failure analysis rather than runtime default changes."

@@ -270,8 +270,9 @@ finds a blocking bug.
 | 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, and DMR 50/200/500-request top-context are now judge-scored. |
 | 11 | Classify DMR 500 failure modes. | Done as `dmr-failure-mode-taxonomy.json`: mapping, retrieval top-10 miss, top-context ranking boundary, top-1 answer synthesis, and judge-correct success are mutually separated over 500 requested rows. |
 | 12 | Explain the DMR mapping boundary. | Done as `dmr-mapping-boundary-impact.json`: punctuation-rejected rows are mostly diagnostic-token mapping/scoring boundaries, not empty memory chunks. |
-| 13 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
-| 14 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 13 | Check DMR top-context scale stability and paired significance. | Done as `dmr-top-context-significance.json`: judge deltas are positive and exact paired tests are significant on DMR 50, 200, and the 500-request / 323-scored view. |
+| 14 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
+| 15 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -363,6 +364,11 @@ finds a blocking bug.
   empty memory chunks, `122/177` punctuation-rejected rows with all significant
   answer tokens in one chunk, `174/177` with at least one diagnostic token
   match, and `3/177` with no diagnostic token match.
+- DMR top-context significance is recorded at
+  `docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md` and
+  `crates/eval/reports/dmr-top-context-significance.json`. It shows positive
+  paired judge deltas at DMR 50, 200, and the 500-request / 323-scored view,
+  with exact McNemar p-values `0.00390625`, `0.000912234187`, and `1.7717e-07`.
 - Official-style DMR 50 generator ablation is recorded at
   `crates/eval/reports/official-dmr-50-top-context-extractive.json` and
   `crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`. With

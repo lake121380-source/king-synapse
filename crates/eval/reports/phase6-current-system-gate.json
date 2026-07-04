@@ -1,37 +1,37 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T03:28:56.058377+00:00",
+  "generated_at": "2026-07-04T03:40:20.898483+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
+    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "9aef0324b05d3478a985f1c048810bb34c42b2aeafb3e1e533c78b8a17b9a0a9"
+      "sha256": "cac088e1e89d40d8786bfed39e6764fc81812f9d2ccb1fe590314f5d7e418540"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "eb686d476690e2053718c6717d4b525bb7555edf2a5bfa248780051a51ad64ab"
+      "sha256": "df268136f7ee5a37608271a1be195a6e78c50cd499386ca2fa687f56a4a123bc"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "2478201cdd82648216618e3a9634280a2852bbd7154291f00878cdcc496e7c97"
+      "sha256": "7cd661f2af6831f1d23873f491cce2734b00942659f3a86c723a51c64767a90b"
     },
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "24dc10318a5f6c27e8108160a259747c8847a17acd49f1052cb02711c2aa2a23"
+      "sha256": "aff567a8fe2d4232254640dc0e50e255f1c7b869af90a2fbbae69b75bdba8cfb"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "6857a8f32f82c7d7a58071bf3ff4fc85d817da9b5a570b30deebd79c50890807"
+      "sha256": "c1d7dba0aa33978f576f8de68b258dc5ae27385e8e44cc42f76898f6a810b912"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -41,7 +41,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "2a0dd9c7e382bf7e3e8c398719af23be3a1a07fdea1559a5994338c3ac5b8e14"
+      "sha256": "ef2466bbab22577284574c62e49909a7188af1444d1bcddcf20262acee746219"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -51,12 +51,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "d9bde5ec60bd1c4673353f4d7867ce436a76cfeed5365a63a074e95a6d069416"
+      "sha256": "bdd7e299e925a23f3e10ff47642917c6d9cc44424f76f9691d36eda233808d64"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "ae623cf926f869a41e1f1d93c10eb5c3b7a4782353a47687e645c02daf09ae31"
+      "sha256": "49f9887d29e1ceab34bcd173777e840fc7bd1f9856da9e7293dc6a7701fb2512"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -66,7 +66,7 @@
     "feature_freeze_audit": {
       "path": "crates\\eval\\reports\\phase6-feature-freeze-audit.json",
       "exists": true,
-      "sha256": "f739e016ff01ced28863754471a7a09d2a913421519ea8d72417cbb52d00e7c4"
+      "sha256": "2bc7e692d23c92cb49912465d1af7dd9c9a739fe22295840b24c49abb7f5d7bb"
     }
   },
   "checks": [
@@ -411,7 +411,6 @@
       "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain."
     ],
     "what_is_not_ready": [
-      "Top-context DMR candidate judge scoring.",
       "Published-comparable official DMR performance.",
       "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
       "Complete future evidence labeling for long-horizon prediction.",
@@ -420,7 +419,7 @@
       "Any heavy next validation rerun at this checkpoint.",
       "Production readiness, web/API/Docker product work, or v0.1 release readiness."
     ],
-    "next_action": "Keep feature freeze. Continue only validation work until either valid judge authorization enables top-context DMR scoring or hosted competitor credentials/endpoints enable fair external comparison."
+    "next_action": "Keep feature freeze. Continue only validation work until hosted competitor credentials/endpoints enable fair external comparison, or continue no-model failure analysis without changing runtime defaults."
   },
   "limits": [
     "This gate consolidates already-committed aggregate evidence only.",
