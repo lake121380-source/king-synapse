@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
-  "generated_at": "2026-07-04T05:47:56.583339+00:00",
+  "generated_at": "2026-07-04T05:52:37.920722+00:00",
   "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
   "git": {
     "branch": "main",
-    "commit": "17a0e628f80810e7484dab0356580836770b4445",
+    "commit": "62ac1656c3b1f8e7d56b9d5c2dac79954a596d13",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -16,7 +16,7 @@
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "5523d9dde51bcc0fa4a519decdfe656d3f68604a6d9359de857d3284307d44c2"
+      "sha256": "206dc7d7c0275ce86c144a683d87f210562ee7814ccd2701f93fdbea370d42e8"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -46,7 +46,7 @@
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "c6e6475372d97c12701c1a6af9b264c627414e3485892b8a21fac11560c91a90"
+      "sha256": "849cda370a948cf834dfd8e74f1c64462f990fb1188fb7a9b1ed63231a5fed0c"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -61,7 +61,7 @@
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "f09bf13196e62179a28f671cd0e57f23eee37a36e61d9e29faf69a2cd4e1ad8e"
+      "sha256": "9be3e9d34e6e566c6d3cd4e6dbe0effe04f510fb2698f2584756329f075038e4"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
@@ -76,17 +76,17 @@
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
     },
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "e5c89d611cbf460c05a6abdf21be976a73dd79e871eae077529c336584290526"
+      "sha256": "dfdf244881cbf00e0cd76e47d6758c3a4739ae42a541e2cc8c7a285359613394"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "d43eefb6ee76b32c1f4e52319777af40f161d3fc99a8b783ca822e0f0d043f33"
+      "sha256": "324e25e59ce89c8f6cd4c6471591a007600f42033c1e666b6ddf2409ab518106"
     },
     "phase6_baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -166,12 +166,12 @@
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "92f22715ab3af5082064c59a97b8d30d5698342ce0b2bf6d60d5483cf45a59a5"
+      "sha256": "029e0435bc8966063656eab23ec75d81faae2b79776cb27b2c3f327052d49493"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "33806c174ce37a6a1a760593aad997f5636beef2d550354778a5592832794ece"
+      "sha256": "1edcf4b2832eac9dc5013d40d67b943941d2321f821198fb425323c61466899e"
     },
     "external_comparison_latest": {
       "path": "crates\\eval\\reports\\external-comparison-latest.json",
@@ -713,13 +713,12 @@
       "long_horizon_gate_passed": true,
       "deterministic_fixture_stable": true,
       "future_candidate_recall_stable": true,
-      "future_evidence_labeling_complete": false,
+      "future_evidence_labeling_complete": true,
       "public_real_world_long_memory_ready": false,
       "runtime_behavior_change_allowed": false,
       "productization_allowed": false,
       "hard_failures": [],
       "open_gates": [
-        "future_evidence_labeling_boundary",
         "public_real_world_long_memory_not_validated",
         "productization_not_ready"
       ]

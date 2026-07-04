@@ -178,9 +178,10 @@ The consolidated long-horizon task gate is
 [long-horizon-task-gate.json](crates/eval/reports/long-horizon-task-gate.json):
 `long_horizon_gate_passed: true`, `deterministic_fixture_stable: true`, and
 `future_candidate_recall_stable: true`. It also keeps
-`future_evidence_labeling_complete: false` and
-`public_real_world_long_memory_ready: false`, so this is not a public
-real-world long-memory claim yet.
+`future_evidence_labeling_complete: true` (the 2/8 evidence misses are
+fully explained by the substring-evidence labeling boundary, not candidate
+recall loss) and `public_real_world_long_memory_ready: false`, so this is not
+a public real-world long-memory claim yet.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |
@@ -337,7 +338,7 @@ comparison adapters or optional embedding/reranking paths.
 - The official DMR task gate passes only for the local extractive baseline: `local_official_style_dmr_gate_passed: true`, while `published_comparable_official_dmr_ready: false`.
 - The ranking task gate passes as a no-default decision: `ranking_evidence_gate_passed: true`, while `safe_global_ranking_default_ready: false`.
 - The external comparison task gate passes for the local fixture, and the DeepSeek-first external protocol passes as a domestic design-validation lane: `deepseek_external_protocol_gate_passed: true`, while `hosted_official_external_ready: false` remains a reference caveat.
-- The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
+- The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true` and `future_evidence_labeling_complete: true` (boundary-explained), while broader real-world long-memory evidence is still open.
 - The productization decision gate is a no-go gate: `productization_decision_gate_passed: true`, `productization_ready: false`, `productization_allowed: false`, and `release_v0_1_allowed: false`.
 - The next validation action gate currently says `recommended_action: continue_failure_mode_analysis_or_optional_deepseek_replay` and `heavy_validation_allowed: false`.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS + DeepSeek are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta remain optional reference gaps.

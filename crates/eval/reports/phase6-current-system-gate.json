@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T05:48:08.691363+00:00",
+  "generated_at": "2026-07-04T05:52:45.074467+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "17a0e628f80810e7484dab0356580836770b4445",
+    "commit": "62ac1656c3b1f8e7d56b9d5c2dac79954a596d13",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "c6e6475372d97c12701c1a6af9b264c627414e3485892b8a21fac11560c91a90"
+      "sha256": "849cda370a948cf834dfd8e74f1c64462f990fb1188fb7a9b1ed63231a5fed0c"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "f3e84bf3f4d5dba869c6efefaf46f35c4cf09a739cb54854acaf8130684be658"
+      "sha256": "bf740ef5e6d543954f751768f8954bf873b95157a824b447e48fe21b1ee8b40d"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "91ccf324f9dd91c090aec9d2f445ea90ea747156dd9802522ece6eeb900b8646"
+      "sha256": "fbab8246056db10a64b7428416149120d6c0ad0a3ab1c6c971eefb157517635d"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -36,17 +36,17 @@
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "f09bf13196e62179a28f671cd0e57f23eee37a36e61d9e29faf69a2cd4e1ad8e"
+      "sha256": "9be3e9d34e6e566c6d3cd4e6dbe0effe04f510fb2698f2584756329f075038e4"
     },
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "92f22715ab3af5082064c59a97b8d30d5698342ce0b2bf6d60d5483cf45a59a5"
+      "sha256": "029e0435bc8966063656eab23ec75d81faae2b79776cb27b2c3f327052d49493"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "33806c174ce37a6a1a760593aad997f5636beef2d550354778a5592832794ece"
+      "sha256": "1edcf4b2832eac9dc5013d40d67b943941d2321f821198fb425323c61466899e"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
@@ -71,17 +71,17 @@
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
     },
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "e9c2391516d4a72c561000021b97572633ae496fe21d3ac05c241b9825039278"
+      "sha256": "0cc15ec7dada835d156dc2b3b15ca37a9567568da43fda059c820ddc9985850c"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "61b6c697ff5b52a3886aad784b57d5ab866673fdad07a72309d7bbd62af78963"
+      "sha256": "6d01fcfc260db919e1fe0fa2a8758b100b13a1ac107d5da4d1d5a4a3cd90b9b4"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -233,13 +233,13 @@
       "conclusion": "Long-horizon task gate is passed for deterministic fixture stability."
     },
     {
-      "id": "future_evidence_boundary_not_overstated",
+      "id": "future_evidence_labeling_consistent",
       "status": "passed",
       "severity": "required",
       "evidence": [
         "crates\\eval\\reports\\long-horizon-task-gate.json"
       ],
-      "conclusion": "Future evidence labeling is still explicitly incomplete and not overstated."
+      "conclusion": "Future evidence labeling is complete via the boundary-explained path: all 8 candidates are present, the 2 misses are exactly the known boundary labels, and context overlap explains every reported miss."
     },
     {
       "id": "public_real_world_long_memory_not_overstated",
@@ -501,7 +501,7 @@
     "trend_alignment_exit_condition_complete": true,
     "dmr_longmem_objective_split_decided": true,
     "long_horizon_gate_passed": true,
-    "future_evidence_labeling_complete": false,
+    "future_evidence_labeling_complete": true,
     "public_real_world_long_memory_ready": false,
     "productization_decision_gate_passed": true,
     "productization_ready": false,
@@ -514,7 +514,6 @@
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
-      "future_evidence_labeling_boundary",
       "public_real_world_long_memory_not_validated",
       "productization_decision_no_go",
       "productization_not_ready"

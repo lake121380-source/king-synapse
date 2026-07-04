@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.longmem-dmr-trend-alignment.v1",
-  "generated_at": "2026-07-04T05:47:03.037934+00:00",
+  "generated_at": "2026-07-04T05:52:30.392817+00:00",
   "runner": "scripts\\eval\\longmem_dmr_trend_alignment.py",
   "git": {
     "branch": "main",
-    "commit": "17a0e628f80810e7484dab0356580836770b4445",
+    "commit": "62ac1656c3b1f8e7d56b9d5c2dac79954a596d13",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -26,12 +26,12 @@
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "35070aa364e8d438aaceaec120af8f31c8632abdccc51ec77ed88f1bfb4dd5f6"
+      "sha256": "33806c174ce37a6a1a760593aad997f5636beef2d550354778a5592832794ece"
     }
   },
   "raw_records_committed": false,
@@ -338,13 +338,12 @@
       "long_horizon_gate_passed": true,
       "deterministic_fixture_stable": true,
       "future_candidate_recall_stable": true,
-      "future_evidence_labeling_complete": false,
+      "future_evidence_labeling_complete": true,
       "public_real_world_long_memory_ready": false,
       "runtime_behavior_change_allowed": false,
       "productization_allowed": false,
       "hard_failures": [],
       "open_gates": [
-        "future_evidence_labeling_boundary",
         "public_real_world_long_memory_not_validated",
         "productization_not_ready"
       ]
