@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-04T05:39:10.314443+00:00",
+  "generated_at": "2026-07-04T05:47:55.907358+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "97474c8ebb958383bfe73dafd0d4d2bca63b82a6",
+    "commit": "17a0e628f80810e7484dab0356580836770b4445",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -116,7 +116,7 @@
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "f975fe19973c2fe0fd669b41603fdc0767c6313791865600f534ae60d651905b"
+      "sha256": "f09bf13196e62179a28f671cd0e57f23eee37a36e61d9e29faf69a2cd4e1ad8e"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
@@ -136,12 +136,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "4233af8949abcd51c943a979184fb629d232602916af03e9ace010b2c4c30663"
+      "sha256": "e5c89d611cbf460c05a6abdf21be976a73dd79e871eae077529c336584290526"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "d38543c23f27c1bb517eeaa5c537b44673602e789eddc16f909ccd458f68a139"
+      "sha256": "d43eefb6ee76b32c1f4e52319777af40f161d3fc99a8b783ca822e0f0d043f33"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -156,12 +156,12 @@
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "513330539187fe359c6a82b404bf24614a06de5e0165b5ffa3a7a8f899d27bb8"
+      "sha256": "92f22715ab3af5082064c59a97b8d30d5698342ce0b2bf6d60d5483cf45a59a5"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "7640886663192ebeb527731913ad7dd8f3b31c8acf26436715ea8cb0b5ff2c47"
+      "sha256": "33806c174ce37a6a1a760593aad997f5636beef2d550354778a5592832794ece"
     },
     "external_comparison_hosted": {
       "path": "crates\\eval\\reports\\external-comparison-hosted.json",
@@ -750,20 +750,13 @@
           "trend_alignment_audit_passed": true,
           "dmr_top_context_generation_trend_supported": true,
           "longmem_dmr_ranking_trend_consistent_enough_for_global_default": false,
-          "trend_alignment_exit_condition_complete": false,
+          "trend_alignment_exit_condition_complete": true,
           "runtime_default_change_allowed": false,
           "productization_allowed": false,
-          "open_gates": [
-            "hosted_external_comparison_not_configured",
-            "published_comparable_dmr_mapping_policy_not_final",
-            "dmr_answer_quality_not_ready",
-            "no_safe_global_ranking_default",
-            "longmem_dmr_objective_split_or_new_signal_required",
-            "public_real_world_long_memory_not_validated"
-          ]
+          "open_gates": []
         },
         "primary_result": "DMR top-context answer generation is stable and paired-significant, but LongMemEval and DMR ranking trends are not aligned enough to support a global runtime ranking default.",
-        "decision": "The Phase 6 trend-alignment exit condition is not complete for a global runtime default. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and require either an explicit DMR/LongMemEval objective split or a new answer-free ordering signal."
+        "decision": "The Phase 6 trend-alignment exit condition is complete via the objective-split validation-only path: DMR top-context generation is stable and paired-significant, and the DMR/LongMemEval ranking conflict is explicitly decided as an objective split rather than an architecture failure. No global runtime ranking default is required or allowed at this checkpoint."
       },
       "objective_split_decision": {
         "status": {

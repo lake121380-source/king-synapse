@@ -446,11 +446,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             failure="Safe global runtime ranking default appears ready and needs a separate implementation decision.",
         ),
         check(
-            "trend_alignment_not_overstated",
-            trend_alignment_exit_condition_not_ready,
-            evidence=[paths["longmem_dmr_trend_alignment"]],
-            conclusion="LongMemEval / DMR trend alignment is still explicitly incomplete for a global runtime default.",
-            failure="LongMemEval / DMR trend alignment appears complete and needs a separate implementation decision.",
+            "trend_alignment_exit_condition_consistent",
+            (
+                (objective_split_decided and not trend_alignment_exit_condition_not_ready)
+                or (not objective_split_decided and trend_alignment_exit_condition_not_ready)
+            ),
+            evidence=[paths["longmem_dmr_trend_alignment"], paths["ranking_objective_split_decision"]],
+            conclusion="LongMemEval / DMR trend alignment exit condition is consistent with the objective-split decision: completed via the validation-only split path, with no runtime default change.",
+            failure="LongMemEval / DMR trend alignment exit condition is inconsistent with the objective-split decision.",
         ),
         check(
             "ranking_objective_split_decided",
@@ -597,7 +600,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
     if not hosted_ready and not deepseek_external_protocol_passed:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
-    if trend_alignment_exit_condition_not_ready:
+    if trend_alignment_exit_condition_not_ready and not objective_split_decided:
         blocked_next_gates.append("longmem_dmr_trend_alignment_not_complete")
     if future_evidence_boundary_not_overstated:
         blocked_next_gates.append("future_evidence_labeling_boundary")

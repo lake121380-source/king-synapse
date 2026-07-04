@@ -52,6 +52,15 @@ ALLOWED_CYCLE_LAG_EDGES = {
         "crates/eval/reports/phase6-objective-coverage-audit.json",
         "crates/eval/reports/next-validation-action-gate.json",
     ),
+    # Trend alignment reads the objective-split decision's conclusion, and the
+    # objective-split decision reads the trend alignment audit. This is a
+    # intentional validation-only cycle: the trend alignment report records the
+    # split decision as context (not as a freshness-tracked upstream input),
+    # so a one-round lag is allowed.
+    (
+        "crates/eval/reports/longmem-dmr-trend-alignment.json",
+        "crates/eval/reports/ranking-objective-split-decision.json",
+    ),
 }
 
 

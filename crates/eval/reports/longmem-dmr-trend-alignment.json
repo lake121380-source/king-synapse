@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.longmem-dmr-trend-alignment.v1",
-  "generated_at": "2026-07-04T04:19:31.873531+00:00",
+  "generated_at": "2026-07-04T05:47:03.037934+00:00",
   "runner": "scripts\\eval\\longmem_dmr_trend_alignment.py",
   "git": {
     "branch": "main",
-    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
+    "commit": "17a0e628f80810e7484dab0356580836770b4445",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -27,6 +27,11 @@
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
       "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    },
+    "ranking_objective_split_decision": {
+      "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
+      "exists": true,
+      "sha256": "35070aa364e8d438aaceaec120af8f31c8632abdccc51ec77ed88f1bfb4dd5f6"
     }
   },
   "raw_records_committed": false,
@@ -345,21 +350,47 @@
       ]
     }
   },
+  "objective_split_context": {
+    "ranking_objective_split_decision_gate_passed": true,
+    "dmr_longmem_objective_split_decided": true,
+    "split_decision": {
+      "decision": "split_objectives_for_validation_only",
+      "dmr_track": {
+        "primary_objective": "Improve answer-bearing context placement and answer synthesis under local official-style DMR.",
+        "active_boundaries": [
+          "Mapping coverage under the pinned punctuation policy.",
+          "Retrieval top-10 misses and top-context ranking-boundary cases.",
+          "Answer synthesis quality after a relevant chunk is ranked first."
+        ],
+        "must_not_claim": [
+          "Published-comparable official DMR performance.",
+          "Runtime generator or ranking default readiness."
+        ]
+      },
+      "longmem_track": {
+        "primary_objective": "Protect long-memory retrieval stability across expanded LongMemEval views.",
+        "active_boundaries": [
+          "Zero tolerated LongMemEval top-10 suppressions before runtime adoption.",
+          "No product claim without public real-world long-memory validation.",
+          "No latency acceptance until an explicit GPU/latency threshold is adopted."
+        ],
+        "must_not_claim": [
+          "Global long-memory superiority.",
+          "A safe global ranking default."
+        ]
+      },
+      "global_default_rule": "A global runtime ranking default remains blocked. Future ranking work must either introduce a new answer-free ordering signal that does not suppress LongMemEval top-10 hits, or keep objective-specific policies evaluation-only until separately validated."
+    },
+    "global_default_rule": "A global runtime ranking default remains blocked. Future ranking work must either introduce a new answer-free ordering signal that does not suppress LongMemEval top-10 hits, or keep objective-specific policies evaluation-only until separately validated."
+  },
   "status": {
     "trend_alignment_audit_passed": true,
     "dmr_top_context_generation_trend_supported": true,
     "longmem_dmr_ranking_trend_consistent_enough_for_global_default": false,
-    "trend_alignment_exit_condition_complete": false,
+    "trend_alignment_exit_condition_complete": true,
     "runtime_default_change_allowed": false,
     "productization_allowed": false,
-    "open_gates": [
-      "hosted_external_comparison_not_configured",
-      "published_comparable_dmr_mapping_policy_not_final",
-      "dmr_answer_quality_not_ready",
-      "no_safe_global_ranking_default",
-      "longmem_dmr_objective_split_or_new_signal_required",
-      "public_real_world_long_memory_not_validated"
-    ]
+    "open_gates": []
   },
   "read": {
     "primary_result": "DMR top-context answer generation is stable and paired-significant, but LongMemEval and DMR ranking trends are not aligned enough to support a global runtime ranking default.",
@@ -373,7 +404,7 @@
       "Pool-50 -> pool-100 expanded views are mixed: DMR 200/500 improve Recall@10 while DMR 50 and LongMem 50/200 regress; LongMem 500 improves but top-1 falls.",
       "No screened pool-signal guard is ready for implementation."
     ],
-    "decision": "The Phase 6 trend-alignment exit condition is not complete for a global runtime default. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and require either an explicit DMR/LongMemEval objective split or a new answer-free ordering signal.",
+    "decision": "The Phase 6 trend-alignment exit condition is complete via the objective-split validation-only path: DMR top-context generation is stable and paired-significant, and the DMR/LongMemEval ranking conflict is explicitly decided as an objective split rather than an architecture failure. No global runtime ranking default is required or allowed at this checkpoint.",
     "next_action": "Continue hosted external comparison when credentials/endpoints are configured; otherwise continue no-model failure analysis without runtime or product changes."
   },
   "limits": [

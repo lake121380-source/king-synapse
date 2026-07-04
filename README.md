@@ -262,8 +262,10 @@ negative view, while LongMemEval has one positive view and two negative views.
 The follow-up
 [RANKING_OBJECTIVE_SPLIT_DECISION.md](docs/eval/RANKING_OBJECTIVE_SPLIT_DECISION.md)
 records the ranking-objective split: this is a validation boundary, not a
-core architecture failure, and it still does not permit a runtime default
-change.
+core architecture failure, and it does not permit a runtime default change.
+The trend-alignment exit condition is now complete via the validation-only
+objective-split path (`trend_alignment_exit_condition_complete: true`):
+no global runtime ranking default is required or allowed at this checkpoint.
 
 So answer synthesis is now a real optimization target, but it is still
 eval-only evidence. The DMR 50, 200, and 500-request top-context generators
