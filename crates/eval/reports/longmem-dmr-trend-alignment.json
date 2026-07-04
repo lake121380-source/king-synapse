@@ -1,0 +1,404 @@
+{
+  "schema_version": "king-synapse.longmem-dmr-trend-alignment.v1",
+  "generated_at": "2026-07-04T03:54:53.699616+00:00",
+  "runner": "scripts\\eval\\longmem_dmr_trend_alignment.py",
+  "git": {
+    "branch": "main",
+    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "dmr_top_context_significance": {
+      "path": "crates\\eval\\reports\\dmr-top-context-significance.json",
+      "exists": true,
+      "sha256": "e1d84f0796408954639e8d808840d6ec5d3658112c1f798f07632c2be52de4de"
+    },
+    "ranking_objective_conflict": {
+      "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+      "exists": true,
+      "sha256": "d13faef56a19309fc0b6c67aa6f958f2ff7582be985434e6823abd23c629a20b"
+    },
+    "ranking_pool_signal_guard": {
+      "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+      "exists": true,
+      "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
+    },
+    "ranking_task_gate": {
+      "path": "crates\\eval\\reports\\ranking-task-gate.json",
+      "exists": true,
+      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "dmr_answer_generation_trend": {
+    "top_context_stable_and_significant": true,
+    "cross_scale_summary": {
+      "all_scales_judge_accuracy_delta_positive": true,
+      "all_scales_substring_delta_positive": true,
+      "all_scales_rouge_l_delta_positive": true,
+      "all_scales_candidate_only_gt_baseline_only": true,
+      "all_scales_mcnemar_significant_at_0_05": true,
+      "available_category_sets": {
+        "dmr_50": [
+          "dmr-answer-generation"
+        ],
+        "dmr_200": [
+          "dmr-answer-generation"
+        ],
+        "dmr_500_request_323_scored": [
+          "dmr-answer-generation"
+        ]
+      },
+      "category_consistency_limit": "Sanitized reports expose one category, dmr-answer-generation, so question-subtype consistency cannot be audited from committed reports."
+    },
+    "read": {
+      "primary_result": "Top-context improves judged answer correctness over the extractive baseline at DMR 50, DMR 200, and the 500-request / 323-scored view.",
+      "statistical_read": "Each scale has more candidate-only correct rows than baseline-only correct rows, and the exact McNemar test is significant at 0.05 on all three scale views.",
+      "limits": "This supports the generator direction as validation evidence. It does not make the task published-comparable, does not solve low absolute answer quality, and does not justify a runtime default change.",
+      "next_action": "Keep feature freeze. Treat top-context as the strongest evaluated generator direction, while keeping published-comparable mapping, hosted external comparison, and answer quality open."
+    },
+    "longmem_comparable_answer_generation_view_available": false,
+    "longmem_comparison_limit": "Committed reports do not contain a LongMemEval answer-generation candidate equivalent to DMR top-context extraction."
+  },
+  "ranking_trend_alignment": {
+    "objective_views": [
+      {
+        "id": "rrf_k_50",
+        "parameter": "rrf_k",
+        "source_reports": [
+          "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-rrf-k.json"
+        ],
+        "alignment": "flat",
+        "reason": "The checked RRF k range has no material DMR Recall@10 movement.",
+        "dmr_best_recall_value": 60.0,
+        "longmem_best_recall_value": 40.0,
+        "dmr_best_mrr_value": 60.0,
+        "longmem_best_mrr_value": 80.0
+      },
+      {
+        "id": "vector_weight_50",
+        "parameter": "vector_weight",
+        "source_reports": [
+          "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-vector-weight.json"
+        ],
+        "alignment": "tradeoff",
+        "reason": "Both datasets prefer vector weight 1.5 for Recall@10, but MRR and top-1 move negatively on at least one dataset.",
+        "dmr_best_recall_value": 1.5,
+        "longmem_best_recall_value": 1.5,
+        "dmr_best_mrr_value": 1.0,
+        "longmem_best_mrr_value": 0.5
+      },
+      {
+        "id": "reranker_pool_50",
+        "parameter": "reranker_pool",
+        "source_reports": [
+          "crates\\eval\\reports\\ranking-ablation-dmr-50-reranker-pool.json",
+          "crates\\eval\\reports\\ranking-ablation-longmem-50-reranker-pool.json"
+        ],
+        "alignment": "conflict",
+        "reason": "DMR and LongMemEval choose different best Recall@10 settings.",
+        "dmr_best_recall_value": 50,
+        "longmem_best_recall_value": 25,
+        "dmr_best_mrr_value": 100,
+        "longmem_best_mrr_value": 25
+      },
+      {
+        "id": "reranker_pool_50_vs_100_signal",
+        "parameter": "reranker_pool",
+        "source_reports": [
+          "crates\\eval\\reports\\ranking-ablation-dmr-longmem-50-reranker-pool-signal.json"
+        ],
+        "alignment": "tradeoff",
+        "reason": "Datasets agree with each other, but Recall@10 and MRR choose different settings.",
+        "dmr_best_recall_value": 50,
+        "longmem_best_recall_value": 50,
+        "dmr_best_mrr_value": 100,
+        "longmem_best_mrr_value": 100
+      }
+    ],
+    "objective_alignment_counts": {
+      "conflict": 1,
+      "flat": 1,
+      "tradeoff": 2
+    },
+    "guard_dataset_summary": {
+      "dmr": {
+        "views": [
+          {
+            "dataset_key": "dmr_200",
+            "dataset_id": "dmr",
+            "sample_size": 200,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.005167,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.011369,
+            "mrr_direction": "positive",
+            "top1_delta": 3,
+            "top1_direction": "positive",
+            "retrieval_miss_delta": -5,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 558.9934,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 2,
+              "miss_unchanged": 49,
+              "promoted_to_top1": 5,
+              "recovered_to_top10": 7,
+              "stable_top1": 72,
+              "suppressed_from_top10": 7,
+              "top10_preserved": 58
+            }
+          },
+          {
+            "dataset_key": "dmr_500_request_323_scored",
+            "dataset_id": "dmr",
+            "sample_size": 323,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.001961,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.00418,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": -6,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 511.1856,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 6,
+              "miss_unchanged": 100,
+              "promoted_to_top1": 6,
+              "recovered_to_top10": 9,
+              "stable_top1": 122,
+              "suppressed_from_top10": 8,
+              "top10_preserved": 72
+            }
+          },
+          {
+            "dataset_key": "dmr_50",
+            "dataset_id": "dmr",
+            "sample_size": 50,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.02,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.004833,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": 0,
+            "retrieval_miss_direction": "flat",
+            "p50_latency_ms_delta": 543.4223,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 10,
+              "promoted_to_top1": 1,
+              "recovered_to_top10": 1,
+              "stable_top1": 27,
+              "suppressed_from_top10": 2,
+              "top10_preserved": 8
+            }
+          }
+        ],
+        "recall_direction_counts": {
+          "negative": 1,
+          "positive": 2
+        },
+        "mrr_direction_counts": {
+          "positive": 3
+        },
+        "top1_direction_counts": {
+          "flat": 2,
+          "positive": 1
+        },
+        "sample_sizes": [
+          200,
+          323,
+          50
+        ],
+        "all_recall_positive": false,
+        "all_recall_non_negative": false
+      },
+      "longmem": {
+        "views": [
+          {
+            "dataset_key": "longmem_50",
+            "dataset_id": "longmem",
+            "sample_size": 50,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.036667,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.001278,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": 1,
+            "retrieval_miss_direction": "negative",
+            "p50_latency_ms_delta": 789.526,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 12,
+              "promoted_to_top1": 1,
+              "recovered_to_top10": 2,
+              "stable_top1": 18,
+              "suppressed_from_top10": 3,
+              "top10_preserved": 13
+            }
+          },
+          {
+            "dataset_key": "longmem_200",
+            "dataset_id": "longmem",
+            "sample_size": 200,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.006583,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.001621,
+            "mrr_direction": "positive",
+            "top1_delta": 1,
+            "top1_direction": "positive",
+            "retrieval_miss_delta": 3,
+            "retrieval_miss_direction": "negative",
+            "p50_latency_ms_delta": 565.8769,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 73,
+              "promoted_to_top1": 2,
+              "recovered_to_top10": 5,
+              "stable_top1": 64,
+              "suppressed_from_top10": 8,
+              "top10_preserved": 47
+            }
+          },
+          {
+            "dataset_key": "longmem_500",
+            "dataset_id": "longmem",
+            "sample_size": 500,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.0088,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.002024,
+            "mrr_direction": "positive",
+            "top1_delta": -3,
+            "top1_direction": "negative",
+            "retrieval_miss_delta": -6,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 547.9877,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 7,
+              "miss_unchanged": 231,
+              "promoted_to_top1": 4,
+              "recovered_to_top10": 15,
+              "stable_top1": 111,
+              "suppressed_from_top10": 13,
+              "top10_preserved": 119
+            }
+          }
+        ],
+        "recall_direction_counts": {
+          "negative": 2,
+          "positive": 1
+        },
+        "mrr_direction_counts": {
+          "positive": 3
+        },
+        "top1_direction_counts": {
+          "flat": 1,
+          "negative": 1,
+          "positive": 1
+        },
+        "sample_sizes": [
+          50,
+          200,
+          500
+        ],
+        "all_recall_positive": false,
+        "all_recall_non_negative": false
+      }
+    },
+    "safe_global_ranking_default_ready": false,
+    "safe_guard_ids": [],
+    "ranking_task_gate": {
+      "ranking_evidence_gate_passed": true,
+      "ranking_validated_bottleneck": true,
+      "safe_global_ranking_default_ready": false,
+      "runtime_ranking_change_allowed": false,
+      "hard_failures": [],
+      "open_gates": [
+        "no_safe_global_ranking_default",
+        "new_answer_free_ordering_signal_needed",
+        "dmr_longmem_objective_split_not_decided",
+        "latency_acceptance_threshold_not_adopted"
+      ]
+    }
+  },
+  "long_horizon_context": {
+    "long_horizon_gate": {
+      "long_horizon_gate_passed": true,
+      "deterministic_fixture_stable": true,
+      "future_candidate_recall_stable": true,
+      "future_evidence_labeling_complete": false,
+      "public_real_world_long_memory_ready": false,
+      "runtime_behavior_change_allowed": false,
+      "productization_allowed": false,
+      "hard_failures": [],
+      "open_gates": [
+        "future_evidence_labeling_boundary",
+        "public_real_world_long_memory_not_validated",
+        "productization_not_ready"
+      ]
+    }
+  },
+  "status": {
+    "trend_alignment_audit_passed": true,
+    "dmr_top_context_generation_trend_supported": true,
+    "longmem_dmr_ranking_trend_consistent_enough_for_global_default": false,
+    "trend_alignment_exit_condition_complete": false,
+    "runtime_default_change_allowed": false,
+    "productization_allowed": false,
+    "open_gates": [
+      "hosted_external_comparison_not_configured",
+      "published_comparable_dmr_mapping_policy_not_final",
+      "dmr_answer_quality_not_ready",
+      "no_safe_global_ranking_default",
+      "longmem_dmr_ranking_objective_split_not_decided",
+      "public_real_world_long_memory_not_validated"
+    ]
+  },
+  "read": {
+    "primary_result": "DMR top-context answer generation is stable and paired-significant, but LongMemEval and DMR ranking trends are not aligned enough to support a global runtime ranking default.",
+    "aligned_surfaces": [
+      "DMR top-context improves judged answer quality at DMR 50, 200, and 500-request / 323-scored scale views.",
+      "Vector weight 1.5 improves Recall@10 on both DMR 50 and LongMemEval 50, but with MRR/top-1 tradeoffs.",
+      "RRF k is effectively flat in the checked range."
+    ],
+    "conflict_surfaces": [
+      "Reranker-pool exhaustive 50-sample views choose different best Recall@10 values for DMR and LongMemEval.",
+      "Pool-50 -> pool-100 expanded views are mixed: DMR 200/500 improve Recall@10 while DMR 50 and LongMem 50/200 regress; LongMem 500 improves but top-1 falls.",
+      "No screened pool-signal guard is ready for implementation."
+    ],
+    "decision": "The Phase 6 trend-alignment exit condition is not complete. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and either decide an explicit DMR/LongMemEval objective split or find a new answer-free ordering signal.",
+    "next_action": "Continue hosted external comparison when credentials/endpoints are configured; otherwise continue no-model failure analysis without runtime or product changes."
+  },
+  "limits": [
+    "Uses committed sanitized aggregate/per-query reports only.",
+    "Does not inspect raw questions, answers, dialogs, sessions, memory content, generated answers, prompts, raw responses, or API keys.",
+    "Does not rerun retrieval, ranking, answer generation, judges, hosted adapters, or product code.",
+    "DMR answer-generation evidence and LongMemEval ranking/long-horizon evidence are not the same task and are not pooled.",
+    "This report does not change memory schema, cognitive layers, CLI/MCP, retrieval, ranking, generator, scoring defaults, or product surfaces."
+  ]
+}

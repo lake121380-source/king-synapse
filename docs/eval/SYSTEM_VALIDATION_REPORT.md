@@ -251,6 +251,10 @@ DMR boundary:
   top-context direction across DMR 50, DMR 200, and the 500-request /
   323-scored view. Judge deltas are `+0.180`, `+0.090`, and `+0.108`; exact
   McNemar p-values are `0.00390625`, `0.000912234187`, and `1.7717e-07`.
+- `crates/eval/reports/longmem-dmr-trend-alignment.json` checks the Phase 6
+  expanded-trend exit condition. It supports the DMR top-context generator
+  direction, but says LongMemEval and DMR ranking trends are not aligned enough
+  for a global runtime default.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -329,6 +333,10 @@ The top-context significance audit answers the DMR scale question directly:
 the generator direction is stable and paired-significant across the completed
 local scale views, while the retrieval bucket split keeps ranking as an open
 boundary.
+The LongMemEval / DMR trend-alignment audit keeps that boundary honest: DMR
+answer generation and cross-dataset ranking are different claims. The former is
+supported locally; the latter still requires an explicit objective split or a
+new answer-free ordering signal before any runtime default change.
 
 Long-horizon cognitive validation:
 

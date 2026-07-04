@@ -202,6 +202,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard": root
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "longmem_dmr_trend_alignment": root
+        / "crates/eval/reports/longmem-dmr-trend-alignment.json",
         "external_comparison_latest": root
         / "crates/eval/reports/external-comparison-latest.json",
         "external_comparison_hosted": root
@@ -233,6 +235,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     top_context_significance = load_json(paths["dmr_top_context_significance"])
     ranking_conflict = load_json(paths["ranking_objective_conflict"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
+    trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
     external_latest = load_json(paths["external_comparison_latest"])
     external_hosted = load_json(paths["external_comparison_hosted"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
@@ -473,6 +476,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["ranking_objective_conflict"]),
                         report_path(paths["ranking_pool_signal_guard"]),
+                        report_path(paths["longmem_dmr_trend_alignment"]),
                     ],
                     conclusion=(
                         "Current reports cover the named one-variable ranking families "
@@ -486,11 +490,21 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     conclusion=safe_get(ranking_conflict, ["read", "conclusion"], ""),
                 ),
                 requirement(
+                    item="Check whether LongMemEval and DMR trends stay consistent as samples expand.",
+                    status="not_ready",
+                    evidence=[report_path(paths["longmem_dmr_trend_alignment"])],
+                    conclusion=safe_get(trend_alignment, ["read", "primary_result"], ""),
+                    remaining=[
+                        safe_get(trend_alignment, ["read", "decision"], "")
+                    ],
+                ),
+                requirement(
                     item="Find a safe global ranking default.",
                     status="not_ready",
                     evidence=[
                         report_path(paths["ranking_objective_conflict"]),
                         report_path(paths["ranking_pool_signal_guard"]),
+                        report_path(paths["longmem_dmr_trend_alignment"]),
                         report_path(paths["ranking_task_gate"]),
                     ],
                     conclusion=safe_get(

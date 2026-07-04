@@ -145,6 +145,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard": root
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "longmem_dmr_trend_alignment": root
+        / "crates/eval/reports/longmem-dmr-trend-alignment.json",
         "long_horizon_cognitive_memory": root
         / "crates/eval/reports/long-horizon-cognitive-memory.json",
         "long_horizon_prediction_evidence": root
@@ -170,6 +172,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     top_context_significance = load_json(paths["dmr_top_context_significance"])
     ranking_conflict = load_json(paths["ranking_objective_conflict"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
+    trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence"])
     long_horizon_gate = load_json(paths["long_horizon_task_gate"])
@@ -346,6 +349,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["ranking_pool_signal_guard"]),
             ],
             conclusion=safe_get(ranking_conflict, ["read", "conclusion"], ""),
+        ),
+        claim(
+            claim_id="longmem_dmr_trend_alignment",
+            readme_snippet="LongMemEval / DMR trend alignment",
+            status="supported",
+            evidence=[report_path(paths["longmem_dmr_trend_alignment"])],
+            conclusion=safe_get(trend_alignment, ["read", "primary_result"], ""),
         ),
         claim(
             claim_id="long_horizon_task_gate",

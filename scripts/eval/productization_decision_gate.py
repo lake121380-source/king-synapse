@@ -108,6 +108,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         "official_dmr_task_gate": root
         / "crates/eval/reports/official-dmr-task-gate.json",
         "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
+        "longmem_dmr_trend_alignment": root
+        / "crates/eval/reports/longmem-dmr-trend-alignment.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
         "long_horizon_task_gate": root
@@ -203,6 +205,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readiness = reports["next_gate_readiness"]
     official = reports["official_dmr_task_gate"]
     ranking = reports["ranking_task_gate"]
+    trend_alignment = reports["longmem_dmr_trend_alignment"]
     external = reports["external_comparison_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
     performance = reports["performance_profile"]
@@ -345,13 +348,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "runtime_defaults_ready",
             "not_ready" if ranking_gate_ready and not ranking_default_ready else "failed",
             question="是否可以改变运行时默认策略？",
-            evidence=[paths["ranking_task_gate"]],
+            evidence=[
+                paths["ranking_task_gate"],
+                paths["longmem_dmr_trend_alignment"],
+            ],
             conclusion=(
-                "Ranking is a validated bottleneck, but no safe global runtime ranking default is ready."
+                "Ranking is a validated bottleneck, but LongMemEval / DMR trend alignment is not complete and no safe global runtime ranking default is ready."
                 if ranking_gate_ready and not ranking_default_ready
                 else "Ranking gate does not match the expected no-default state."
             ),
             remaining=[
+                safe_get(trend_alignment, ["read", "decision"], ""),
                 "Find a cross-dataset safe ordering signal or explicitly split DMR and LongMemEval objectives.",
                 "Keep memory schema, cognitive layers, CLI, and runtime ranking defaults frozen.",
             ],

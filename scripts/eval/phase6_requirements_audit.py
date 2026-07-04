@@ -176,6 +176,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard_audit": root
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "longmem_dmr_trend_alignment": root
+        / "crates/eval/reports/longmem-dmr-trend-alignment.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
         "long_horizon_cognitive_memory": root
@@ -211,6 +213,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     next_validation_action_gate = load_json(paths["next_validation_action_gate"])
     ranking_conflict = load_json(paths["ranking_objective_conflict_audit"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard_audit"])
+    trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
     external_hosted = load_json(paths["external_comparison_hosted"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence_audit"])
@@ -307,12 +310,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["ranking_ablation"]),
                 report_path(paths["ranking_objective_conflict_audit"]),
                 report_path(paths["ranking_pool_signal_guard_audit"]),
+                report_path(paths["longmem_dmr_trend_alignment"]),
                 report_path(paths["ranking_task_gate"]),
             ],
-            conclusion=ranking_read["conclusion"],
+            conclusion=(
+                f"{ranking_read['conclusion']} "
+                f"{trend_alignment['read']['primary_result']}"
+            ),
             remaining=[
                 "No screened pool-signal guard is ready for implementation.",
                 "DMR and LongMemEval ranking objectives still conflict.",
+                "The LongMemEval / DMR trend-alignment exit condition is not complete.",
                 "Any runtime ranking policy still needs zero LongMemEval top-10 suppressions and an explicit latency budget.",
             ],
             next_action=ranking_read["next_ranking_gate"],
@@ -496,6 +504,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 ],
                 "best_safe_guard_id": safe_get(ranking_guard, ["read", "best_safe_guard_id"]),
                 "safe_guard_ids": safe_get(ranking_guard, ["read", "safe_guard_ids"], []),
+                "trend_alignment": {
+                    "status": trend_alignment["status"],
+                    "primary_result": trend_alignment["read"]["primary_result"],
+                    "decision": trend_alignment["read"]["decision"],
+                },
             },
             "external_hosted": {
                 "task_gate": external_comparison_task_gate["status"],

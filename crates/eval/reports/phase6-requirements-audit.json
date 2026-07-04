@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-04T03:40:17.460977+00:00",
+  "generated_at": "2026-07-04T03:54:55.576005+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "b7369bc29ca66dd4a914d8043e19bfee786d8a46",
+    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "fad1e03ebdc81b7b4bf99355e5b6773f936fa803b2c94954721dab02a091318f"
+      "sha256": "263834b404b20e76f65b167aeea9394f4fbcdee396343843fb8d44a89b082e1a"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "49fbfac900f44f8ced9740d95bd09e4cdef7d95eac7d439f2f7495427d8c3de6"
+      "sha256": "01b1f41e27302554377276047ad0bb2b3641c14482ef2d58ac791bbf619aca87"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -106,12 +106,12 @@
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "7cd661f2af6831f1d23873f491cce2734b00942659f3a86c723a51c64767a90b"
+      "sha256": "42398a5373f1b6b48b65c7e7852cb21fe9b46d50769f3f6300840cbf6f68001b"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "c1d7dba0aa33978f576f8de68b258dc5ae27385e8e44cc42f76898f6a810b912"
+      "sha256": "b1ddb29b301e83194bf5cc4bedc505d2e087e7bc00266a28874e0532a2b80327"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -121,7 +121,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "ef2466bbab22577284574c62e49909a7188af1444d1bcddcf20262acee746219"
+      "sha256": "cbea75331d27d2cdffaba5a28f26e97a1e61fcbd2e08cae31f91e33fddc6b631"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -131,12 +131,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "d9bde5ec60bd1c4673353f4d7867ce436a76cfeed5365a63a074e95a6d069416"
+      "sha256": "bdd7e299e925a23f3e10ff47642917c6d9cc44424f76f9691d36eda233808d64"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "ae623cf926f869a41e1f1d93c10eb5c3b7a4782353a47687e645c02daf09ae31"
+      "sha256": "49f9887d29e1ceab34bcd173777e840fc7bd1f9856da9e7293dc6a7701fb2512"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -147,6 +147,11 @@
       "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
       "exists": true,
       "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
+    },
+    "longmem_dmr_trend_alignment": {
+      "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+      "exists": true,
+      "sha256": "89492b9ce1234b5b6a1815b270949ed29f8e4bccf9645c10d5a8d082d4f3641b"
     },
     "external_comparison_hosted": {
       "path": "crates\\eval\\reports\\external-comparison-hosted.json",
@@ -248,12 +253,14 @@
         "docs\\eval\\RANKING_ABLATION.md",
         "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
         "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
         "crates\\eval\\reports\\ranking-task-gate.json"
       ],
-      "conclusion": "Existing one-variable ranking evidence does not support a new global default. RRF k is mostly flat, vector weight improves coverage with MRR/top-1 tradeoffs, reranker-pool preferences diverge between DMR and LongMemEval, and pool-signal guards have no screened safe default.",
+      "conclusion": "Existing one-variable ranking evidence does not support a new global default. RRF k is mostly flat, vector weight improves coverage with MRR/top-1 tradeoffs, reranker-pool preferences diverge between DMR and LongMemEval, and pool-signal guards have no screened safe default. DMR top-context answer generation is stable and paired-significant, but LongMemEval and DMR ranking trends are not aligned enough to support a global runtime ranking default.",
       "remaining": [
         "No screened pool-signal guard is ready for implementation.",
         "DMR and LongMemEval ranking objectives still conflict.",
+        "The LongMemEval / DMR trend-alignment exit condition is not complete.",
         "Any runtime ranking policy still needs zero LongMemEval top-10 suppressions and an explicit latency budget."
       ],
       "next_action": "Future ranking work should use a new answer-free ordering signal or an explicit DMR/LongMemEval objective split, with zero LongMemEval top-10 suppressions before runtime adoption."
@@ -718,7 +725,27 @@
         "reranker_pool_50_vs_100_signal"
       ],
       "best_safe_guard_id": null,
-      "safe_guard_ids": []
+      "safe_guard_ids": [],
+      "trend_alignment": {
+        "status": {
+          "trend_alignment_audit_passed": true,
+          "dmr_top_context_generation_trend_supported": true,
+          "longmem_dmr_ranking_trend_consistent_enough_for_global_default": false,
+          "trend_alignment_exit_condition_complete": false,
+          "runtime_default_change_allowed": false,
+          "productization_allowed": false,
+          "open_gates": [
+            "hosted_external_comparison_not_configured",
+            "published_comparable_dmr_mapping_policy_not_final",
+            "dmr_answer_quality_not_ready",
+            "no_safe_global_ranking_default",
+            "longmem_dmr_ranking_objective_split_not_decided",
+            "public_real_world_long_memory_not_validated"
+          ]
+        },
+        "primary_result": "DMR top-context answer generation is stable and paired-significant, but LongMemEval and DMR ranking trends are not aligned enough to support a global runtime ranking default.",
+        "decision": "The Phase 6 trend-alignment exit condition is not complete. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and either decide an explicit DMR/LongMemEval objective split or find a new answer-free ordering signal."
+      }
     },
     "external_hosted": {
       "task_gate": {

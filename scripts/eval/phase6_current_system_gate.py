@@ -75,6 +75,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/ranking-task-gate.json",
     )
     parser.add_argument(
+        "--longmem-dmr-trend-alignment",
+        type=Path,
+        default=root / "crates/eval/reports/longmem-dmr-trend-alignment.json",
+    )
+    parser.add_argument(
         "--external-comparison-task-gate",
         type=Path,
         default=root / "crates/eval/reports/external-comparison-task-gate.json",
@@ -206,6 +211,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "readme_claims_audit": normalize_path_arg(args.readme_claims_audit),
         "official_dmr_task_gate": normalize_path_arg(args.official_dmr_task_gate),
         "ranking_task_gate": normalize_path_arg(args.ranking_task_gate),
+        "longmem_dmr_trend_alignment": normalize_path_arg(
+            args.longmem_dmr_trend_alignment
+        ),
         "external_comparison_task_gate": normalize_path_arg(
             args.external_comparison_task_gate
         ),
@@ -228,6 +236,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readme = reports["readme_claims_audit"]
     official_dmr = reports["official_dmr_task_gate"]
     ranking = reports["ranking_task_gate"]
+    trend_alignment = reports["longmem_dmr_trend_alignment"]
     external = reports["external_comparison_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
     productization = reports["productization_decision_gate"]
@@ -270,6 +279,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     safe_ranking_default_not_ready = not bool(
         safe_get(ranking, ["status", "safe_global_ranking_default_ready"])
+    )
+    trend_alignment_exit_condition_not_ready = not bool(
+        safe_get(
+            trend_alignment, ["status", "trend_alignment_exit_condition_complete"]
+        )
     )
     local_external_gate_passed = bool(
         safe_get(external, ["status", "local_external_comparison_gate_passed"])
@@ -362,6 +376,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["ranking_task_gate"]],
             conclusion="Safe global runtime ranking default is still explicitly not ready.",
             failure="Safe global runtime ranking default appears ready and needs a separate implementation decision.",
+        ),
+        check(
+            "trend_alignment_not_overstated",
+            trend_alignment_exit_condition_not_ready,
+            evidence=[paths["longmem_dmr_trend_alignment"]],
+            conclusion="LongMemEval / DMR trend alignment is still explicitly incomplete for a global runtime default.",
+            failure="LongMemEval / DMR trend alignment appears complete and needs a separate implementation decision.",
         ),
         check(
             "local_external_comparison_gate_passed",
@@ -471,8 +492,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         check(
             "no_runtime_ranking_default_supported",
             no_ranking_default,
-            evidence=[paths["objective_coverage"]],
-            conclusion="No global runtime ranking default is supported by current evidence.",
+            evidence=[
+                paths["objective_coverage"],
+                paths["longmem_dmr_trend_alignment"],
+            ],
+            conclusion="No global runtime ranking default is supported by current evidence or trend-alignment audit.",
             failure="A runtime ranking default appears to be supported and needs a separate implementation decision.",
         ),
     ]
@@ -483,6 +507,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
     if not hosted_ready:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
+    if trend_alignment_exit_condition_not_ready:
+        blocked_next_gates.append("longmem_dmr_trend_alignment_not_complete")
     if future_evidence_boundary_not_overstated:
         blocked_next_gates.append("future_evidence_labeling_boundary")
     if public_real_world_long_memory_not_ready:
@@ -531,6 +557,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "readiness_next_gate_ready": next_gate_ready,
             "top_context_judge_ready": top_context_ready,
             "hosted_external_ready": hosted_ready,
+            "trend_alignment_exit_condition_complete": not trend_alignment_exit_condition_not_ready,
             "long_horizon_gate_passed": long_horizon_gate_passed,
             "future_evidence_labeling_complete": not future_evidence_boundary_not_overstated,
             "public_real_world_long_memory_ready": not public_real_world_long_memory_not_ready,
@@ -559,7 +586,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Feature freeze is active and protected path changes are absent.",
                 "Local non-external baseline health is passed.",
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
-                "Ranking is a validated bottleneck, but current evidence supports no runtime default change.",
+                "Ranking is a validated bottleneck, but LongMemEval / DMR trend alignment is incomplete and current evidence supports no runtime default change.",
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
@@ -570,6 +597,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "what_is_not_ready": [
                 "Published-comparable official DMR performance.",
                 "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
+                "LongMemEval / DMR ranking trend alignment for a global runtime default.",
                 "Complete future evidence labeling for long-horizon prediction.",
                 "Public real-world long-memory stability.",
                 "Safe global runtime ranking default.",
