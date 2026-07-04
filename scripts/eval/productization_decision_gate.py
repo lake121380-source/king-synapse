@@ -256,6 +256,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     long_horizon_ready = bool(
         safe_get(long_horizon, ["status", "long_horizon_gate_passed"])
     )
+    future_evidence_labeling_complete = bool(
+        safe_get(long_horizon, ["status", "future_evidence_labeling_complete"])
+    )
     public_long_memory_ready = bool(
         safe_get(long_horizon, ["status", "public_real_world_long_memory_ready"])
     )
@@ -504,7 +507,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "published_comparable_official_dmr_not_ready",
                 *([] if deepseek_external_ready else ["hosted_external_comparison_not_configured"]),
                 "safe_runtime_ranking_default_not_ready",
-                "future_evidence_labeling_boundary",
+                *([] if future_evidence_labeling_complete else ["future_evidence_labeling_boundary"]),
                 "public_real_world_long_memory_not_validated",
                 "gpu_latency_acceptance_threshold_not_adopted",
                 "stable_public_demo_not_productized",
