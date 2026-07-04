@@ -114,6 +114,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
+        "hosted_external_preconditions": root
+        / "crates/eval/reports/hosted-external-preconditions.json",
         "long_horizon_task_gate": root
         / "crates/eval/reports/long-horizon-task-gate.json",
         "performance_profile": root
@@ -210,6 +212,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     trend_alignment = reports["longmem_dmr_trend_alignment"]
     split_decision = reports["ranking_objective_split_decision"]
     external = reports["external_comparison_task_gate"]
+    hosted_preconditions = reports["hosted_external_preconditions"]
     long_horizon = reports["long_horizon_task_gate"]
     performance = reports["performance_profile"]
 
@@ -279,9 +282,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "weaknesses_vs_competitors_known",
             "blocked_external" if not hosted_external_ready else "satisfied",
             question="在什么任务上不如 Mem0 / Graphiti / Zep？",
-            evidence=[paths["external_comparison_task_gate"]],
+            evidence=[
+                paths["external_comparison_task_gate"],
+                paths["hosted_external_preconditions"],
+            ],
             conclusion=(
-                "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet."
+                "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet. DeepSeek-only local fallback is not counted as hosted/official evidence."
                 if not hosted_external_ready
                 else "Hosted/official competitor comparison is complete enough to state relative weaknesses."
             ),
@@ -289,6 +295,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Configure hosted Graphiti/Zep Neo4j/OpenAI.",
                 "Configure official Mem0 embedding/recommended config.",
                 "Configure a live or local Letta endpoint.",
+                safe_get(hosted_preconditions, ["deepseek_boundary", "decision"], ""),
             ],
         ),
         criterion(

@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.external-comparison-task-gate.v1",
-  "generated_at": "2026-07-04T04:07:34.309139+00:00",
+  "generated_at": "2026-07-04T04:26:35.375738+00:00",
   "runner": "scripts\\eval\\external_comparison_task_gate.py",
   "git": {
     "branch": "main",
-    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
+    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -23,10 +23,15 @@
       "exists": true,
       "sha256": "ac7bf0b264e4906fe6fe09eb06d74f6191a9886de9e2b6e5ec75fb16cb2ef0ad"
     },
+    "hosted_external_preconditions": {
+      "path": "crates\\eval\\reports\\hosted-external-preconditions.json",
+      "exists": true,
+      "sha256": "c1373c9db540d945be7d3eaecf20781553054be3fcda741e40a3d48ac9d70bf3"
+    },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "e1589d6a3c26723b3d4dbb9efe408b5de44f253ef2fac5f17e30d9e20c672599"
+      "sha256": "f631c3b77c8bc62fd185bf7237356be0ede92c70780be421ca8e2601d6220b66"
     }
   },
   "raw_records_committed": false,
@@ -600,6 +605,94 @@
       "missing_for_letta": [
         "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
       ]
+    },
+    "preconditions": {
+      "status": {
+        "hosted_external_preconditions_audit_passed": true,
+        "hosted_external_ready": false,
+        "hosted_external_run_allowed": false,
+        "hosted_comparison_complete": false,
+        "productization_allowed": false,
+        "runtime_default_change_allowed": false,
+        "hard_failures": [],
+        "blocking_reasons": [
+          "hosted_graphiti_zep_not_configured",
+          "official_mem0_not_configured",
+          "letta_endpoint_not_configured"
+        ]
+      },
+      "preconditions": {
+        "graphiti_zep": {
+          "id": "hosted_graphiti_zep",
+          "ready": false,
+          "required_all": [
+            "OPENAI_API_KEY",
+            "NEO4J_URI",
+            "NEO4J_USER",
+            "NEO4J_PASSWORD"
+          ],
+          "required_any": [],
+          "present_all": [],
+          "missing_all": [
+            "OPENAI_API_KEY",
+            "NEO4J_URI",
+            "NEO4J_USER",
+            "NEO4J_PASSWORD"
+          ],
+          "present_any": [],
+          "missing_any": [],
+          "note": "Required for hosted/standard Graphiti/Zep Neo4j/OpenAI comparison."
+        },
+        "mem0_official": {
+          "id": "official_mem0",
+          "ready": false,
+          "required_all": [],
+          "required_any": [
+            "OPENAI_API_KEY",
+            "MEM0_CONFIG_JSON",
+            "MEM0_CONFIG_PATH"
+          ],
+          "present_all": [],
+          "missing_all": [],
+          "present_any": [],
+          "missing_any": [
+            "OPENAI_API_KEY",
+            "MEM0_CONFIG_JSON",
+            "MEM0_CONFIG_PATH"
+          ],
+          "note": "Official/recommended Mem0 comparison needs OpenAI defaults or an explicit Mem0 config. The automatic DeepSeek + deterministic local embedder fallback is a local OSS comparison and is not counted as hosted/official."
+        },
+        "letta": {
+          "id": "live_or_local_letta",
+          "ready": false,
+          "required_all": [],
+          "required_any": [
+            "LETTA_API_KEY",
+            "LETTA_BASE_URL",
+            "LETTA_ENVIRONMENT_LOCAL_MODE"
+          ],
+          "present_all": [],
+          "missing_all": [],
+          "present_any": [],
+          "missing_any": [
+            "LETTA_API_KEY",
+            "LETTA_BASE_URL",
+            "LETTA_ENVIRONMENT_LOCAL_MODE"
+          ],
+          "note": "Required for a real hosted or local Letta endpoint measurement."
+        },
+        "all_ready": false,
+        "missing_groups": [
+          "hosted_graphiti_zep",
+          "official_mem0",
+          "live_or_local_letta"
+        ]
+      },
+      "deepseek_boundary": {
+        "deepseek_api_key_present": true,
+        "deepseek_only_for_mem0_official": true,
+        "decision": "DeepSeek is present, but DeepSeek-only configuration is not accepted as hosted/official external comparison evidence. It remains valid for DMR judging and local Mem0 OSS fallback evidence only."
+      }
     }
   },
   "manifest": {
@@ -702,9 +795,10 @@
       "status": "blocked_external",
       "evidence": [
         "crates\\eval\\reports\\external-comparison-hosted.json",
+        "crates\\eval\\reports\\hosted-external-preconditions.json",
         "crates\\eval\\reports\\phase6-next-gate-readiness.json"
       ],
-      "conclusion": "Hosted/official comparison is not ready: hosted report has 1 measured system, 3 not_configured systems, and zero failed systems.",
+      "conclusion": "Hosted/official comparison is not ready: hosted report has 1 measured system, 3 not_configured systems, zero failed systems, and the precondition audit blocks the hosted run.",
       "remaining": [
         "Configure Graphiti/Zep Neo4j/OpenAI credentials.",
         "Configure official Mem0 OpenAI/custom config.",
@@ -746,6 +840,7 @@
       "Hosted Graphiti/Zep Neo4j/OpenAI comparison is not configured.",
       "Official/recommended Mem0 configuration is not configured.",
       "Live or local Letta endpoint is not configured.",
+      "DeepSeek-only local fallback is not counted as hosted/official external comparison.",
       "Local adapter evidence is not the same as hosted/official fairness."
     ],
     "next_action": "Keep feature freeze. Configure hosted competitor credentials/endpoints before rerunning the fair external comparison; until then, do not claim hosted competitor superiority."

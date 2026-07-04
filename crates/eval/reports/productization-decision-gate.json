@@ -1,52 +1,57 @@
 {
   "schema_version": "king-synapse.productization-decision-gate.v1",
-  "generated_at": "2026-07-04T04:07:36.040725+00:00",
+  "generated_at": "2026-07-04T04:26:37.143574+00:00",
   "runner": "scripts\\eval\\productization_decision_gate.py",
   "git": {
     "branch": "main",
-    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
+    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "97ac4eb25976ea946f731038e5706a19b0844193fee1ef2ba0cb0ed36a4504d9"
+      "sha256": "a703be166b27777db80d873d1747a855efcbf250a223a726b7a2589f49ace284"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "18bd6a69925f94b6821996a9e3cc88dd3892d179d61c4262f599631f67605199"
+      "sha256": "b60f390fe07cce8557e26f8e0a19df051d0d28db27fab61b8a96e3c64794251e"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "e1589d6a3c26723b3d4dbb9efe408b5de44f253ef2fac5f17e30d9e20c672599"
+      "sha256": "f631c3b77c8bc62fd185bf7237356be0ede92c70780be421ca8e2601d6220b66"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "c1d0b060116ca2215b62c65673d663654b2abb18c1444fec157931181fa97ee0"
+      "sha256": "2d146e20caa6c38b8879c91f162625b8b1e3474a4df2f9542c8f979cff04f860"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "a0315303f6e1caba7f5a7faab965f167b4ef67350a6e6851eb346836f3f830c0"
+      "sha256": "f975fe19973c2fe0fd669b41603fdc0767c6313791865600f534ae60d651905b"
     },
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "e01acbd35e07b9a18810208fdb3fbe6b4134b7a07db559531d49b4719fd0c937"
+      "sha256": "513330539187fe359c6a82b404bf24614a06de5e0165b5ffa3a7a8f899d27bb8"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "98da1e5fee9f26cfbdbad5e80b7342b41b1bfc259577d687c1cdf45d615866c7"
+      "sha256": "7640886663192ebeb527731913ad7dd8f3b31c8acf26436715ea8cb0b5ff2c47"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "d5d3a439cb642d6c3a41ca561ae5e9c28467bb2e3a9c47c27035e6419acc5c8e"
+      "sha256": "ab275a6331757e51081a1736ae00d13aa44b8da35862dd41c16ac78d3dbcb2f3"
+    },
+    "hosted_external_preconditions": {
+      "path": "crates\\eval\\reports\\hosted-external-preconditions.json",
+      "exists": true,
+      "sha256": "c1373c9db540d945be7d3eaecf20781553054be3fcda741e40a3d48ac9d70bf3"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -61,12 +66,12 @@
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "c4c2b25f8773a42fcc7fb6177a38d635225d003309e62bebda964fe42dab5b77"
+      "sha256": "5315bde0d2c31992137c1beab8a64d68f4bc4a280c95a86144e7a0f614c42ad1"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "8acb5a0bfe50c5ad2caaa85b445574077805a1e73dccb6ee03b49ec3557a5b52"
+      "sha256": "88388563eb9c08c7416958b284902d78b552b2181860f19f3bf5299673346e4c"
     },
     "demo_doc": {
       "path": "docs\\DEMO.md",
@@ -140,6 +145,16 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "hosted_external_preconditions": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "raw_response_committed": false,
+        "prompt_text_recorded": false
+      },
       "long_horizon_task_gate": {},
       "performance_profile": {}
     }
@@ -165,13 +180,15 @@
       "question": "在什么任务上不如 Mem0 / Graphiti / Zep？",
       "status": "blocked_external",
       "evidence": [
-        "crates\\eval\\reports\\external-comparison-task-gate.json"
+        "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\hosted-external-preconditions.json"
       ],
-      "conclusion": "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet.",
+      "conclusion": "Hosted/official Graphiti/Zep, Mem0, and Letta are not configured, so competitor weaknesses and advantages cannot be fully measured yet. DeepSeek-only local fallback is not counted as hosted/official evidence.",
       "remaining": [
         "Configure hosted Graphiti/Zep Neo4j/OpenAI.",
         "Configure official Mem0 embedding/recommended config.",
-        "Configure a live or local Letta endpoint."
+        "Configure a live or local Letta endpoint.",
+        "DeepSeek is present, but DeepSeek-only configuration is not accepted as hosted/official external comparison evidence. It remains valid for DMR judging and local Mem0 OSS fallback evidence only."
       ]
     },
     {
@@ -279,6 +296,7 @@
         "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
         "crates\\eval\\reports\\ranking-objective-split-decision.json",
         "crates\\eval\\reports\\external-comparison-task-gate.json",
+        "crates\\eval\\reports\\hosted-external-preconditions.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\phase6-performance-profile.json"
       ],

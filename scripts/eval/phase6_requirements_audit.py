@@ -182,6 +182,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
+        "hosted_external_preconditions": root
+        / "crates/eval/reports/hosted-external-preconditions.json",
         "long_horizon_cognitive_memory": root
         / "crates/eval/reports/long-horizon-cognitive-memory.json",
         "long_horizon_stability_audit": root
@@ -218,6 +220,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
     split_decision = load_json(paths["ranking_objective_split_decision"])
     external_hosted = load_json(paths["external_comparison_hosted"])
+    hosted_preconditions = load_json(paths["hosted_external_preconditions"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence_audit"])
     performance = load_json(paths["phase6_performance_profile"])
@@ -336,18 +339,21 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[
                 report_path(paths["external_validation"]),
                 report_path(paths["external_comparison_hosted"]),
+                report_path(paths["hosted_external_preconditions"]),
                 report_path(paths["phase6_next_gate_readiness"]),
                 report_path(paths["external_comparison_task_gate"]),
             ],
             conclusion=(
                 "The cognitive fixture shows Synapse's local trace surface, but "
                 "hosted Graphiti/Zep, official Mem0, and live Letta are not "
-                "configured in the current environment."
+                "configured in the current environment. The precondition audit "
+                "also keeps DeepSeek-only fallback out of hosted/official claims."
             ),
             remaining=[
                 "Graphiti/Zep hosted or standard Neo4j/OpenAI run is not measured.",
                 "Mem0 official/recommended embedding configuration is not measured.",
                 "Letta live endpoint is not measured.",
+                "Hosted preconditions are not satisfied, so hosted external run remains disallowed.",
             ],
             next_action="Provide or configure hosted competitor credentials/endpoints, then rerun the shared cognitive fixture.",
         ),
@@ -525,6 +531,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "measured_systems": hosted_summary["measured_systems"],
                 "not_configured_systems": hosted_summary["not_configured_systems"],
                 "failed_systems": hosted_summary["failed_systems"],
+                "preconditions": hosted_preconditions["status"],
+                "deepseek_boundary": hosted_preconditions["deepseek_boundary"],
             },
             "long_horizon": {
                 "task_gate": long_horizon_task_gate["status"],

@@ -186,6 +186,8 @@ must be marked separately from local deterministic results.
 Current hosted/official probe:
 
 - `crates/eval/reports/external-comparison-hosted.json`
+- `crates/eval/reports/hosted-external-preconditions.json`
+- `docs/eval/HOSTED_EXTERNAL_PRECONDITIONS.md`
 - King Synapse: measured as the same local baseline on the fixture.
 - Graphiti/Zep Neo4j/OpenAI path: `not_configured`.
 - Mem0 official/custom configuration path without the DeepSeek fallback:
@@ -193,7 +195,9 @@ Current hosted/official probe:
 - Letta hosted/local endpoint path: `not_configured`.
 
 This records the current environment boundary. It is not a hosted measurement
-of the competitor systems.
+of the competitor systems. The DeepSeek key currently present in the
+environment is valid for DMR judging and local Mem0 fallback only; it does not
+close the hosted Graphiti/Zep, official Mem0, or Letta endpoint gates.
 
 The exact next-run preconditions and command templates are recorded in
 `docs/eval/NEXT_VALIDATION_PRECONDITIONS.md`. Do not run a heavy DMR judge pass

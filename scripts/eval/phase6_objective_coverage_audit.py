@@ -210,6 +210,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/external-comparison-latest.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
+        "hosted_external_preconditions": root
+        / "crates/eval/reports/hosted-external-preconditions.json",
         "long_horizon_cognitive_memory": root
         / "crates/eval/reports/long-horizon-cognitive-memory.json",
         "long_horizon_prediction_evidence": root
@@ -241,6 +243,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     split_decision = load_json(paths["ranking_objective_split_decision"])
     external_latest = load_json(paths["external_comparison_latest"])
     external_hosted = load_json(paths["external_comparison_hosted"])
+    hosted_preconditions = load_json(paths["hosted_external_preconditions"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence"])
 
@@ -574,6 +577,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     status="blocked_external",
                     evidence=[
                         report_path(paths["external_comparison_hosted"]),
+                        report_path(paths["hosted_external_preconditions"]),
                         report_path(paths["phase6_next_gate_readiness"]),
                         report_path(paths["external_comparison_task_gate"]),
                     ],
@@ -585,6 +589,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                         "Configure Graphiti/Zep Neo4j/OpenAI credentials.",
                         "Configure official Mem0 embedding/config.",
                         "Configure Letta API/base URL or LETTA_ENVIRONMENT=local.",
+                        "Do not count DeepSeek-only local fallback as hosted/official evidence.",
                     ],
                 ),
             ],
@@ -782,6 +787,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "external_local_synapse_trace_hits": king_trace_hits,
             "external_local_synapse_trace_complete": king_trace_complete,
             "external_hosted_summary": external_summary,
+            "hosted_external_preconditions": hosted_preconditions["status"],
             "long_horizon_metrics": long_horizon.get("metrics", {}),
             "long_horizon_evidence": {
                 "candidate_present_all_phases_count": safe_get(

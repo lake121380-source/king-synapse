@@ -107,6 +107,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/external-comparison-hosted.json",
         "external_comparison_manifest": root
         / "crates/eval/reports/external-comparison-manifest.json",
+        "hosted_external_preconditions": root
+        / "crates/eval/reports/hosted-external-preconditions.json",
         "phase6_next_gate_readiness": root
         / "crates/eval/reports/phase6-next-gate-readiness.json",
     }
@@ -225,6 +227,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     latest = reports["external_comparison_latest"]
     hosted = reports["external_comparison_hosted"]
     manifest = reports["external_comparison_manifest"]
+    preconditions = reports["hosted_external_preconditions"]
     readiness = reports["phase6_next_gate_readiness"]
 
     latest_summary = latest.get("summary", {})
@@ -285,6 +288,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         system.get("secrets_recorded") is not True
         for system in manifest.get("systems", [])
     )
+    hosted_preconditions_passed = bool(
+        safe_get(
+            preconditions,
+            ["status", "hosted_external_preconditions_audit_passed"],
+        )
+    )
+    hosted_run_allowed = bool(
+        safe_get(preconditions, ["status", "hosted_external_run_allowed"])
+    )
     missing_requirements = safe_get(readiness, ["hosted_external", "requirements"], {})
 
     checks = [
@@ -339,14 +351,19 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         ),
         item(
             "hosted_official_comparison_not_ready",
-            "blocked_external" if hosted_not_ready else "failed",
+            "blocked_external"
+            if hosted_not_ready and hosted_preconditions_passed and not hosted_run_allowed
+            else "failed",
             evidence=[
                 paths["external_comparison_hosted"],
+                paths["hosted_external_preconditions"],
                 paths["phase6_next_gate_readiness"],
             ],
             conclusion=(
-                "Hosted/official comparison is not ready: hosted report has 1 measured system, 3 not_configured systems, and zero failed systems."
+                "Hosted/official comparison is not ready: hosted report has 1 measured system, 3 not_configured systems, zero failed systems, and the precondition audit blocks the hosted run."
                 if hosted_not_ready
+                and hosted_preconditions_passed
+                and not hosted_run_allowed
                 else "Hosted/official comparison readiness does not match the expected blocked state."
             ),
             remaining=[
@@ -423,6 +440,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 compact_system(hosted_letta),
             ],
             "requirements": missing_requirements,
+            "preconditions": {
+                "status": preconditions.get("status", {}),
+                "preconditions": preconditions.get("preconditions", {}),
+                "deepseek_boundary": preconditions.get("deepseek_boundary", {}),
+            },
         },
         "manifest": {
             "validated_commit": manifest.get("validated_commit"),
@@ -464,6 +486,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Hosted Graphiti/Zep Neo4j/OpenAI comparison is not configured.",
                 "Official/recommended Mem0 configuration is not configured.",
                 "Live or local Letta endpoint is not configured.",
+                "DeepSeek-only local fallback is not counted as hosted/official external comparison.",
                 "Local adapter evidence is not the same as hosted/official fairness.",
             ],
             "next_action": (

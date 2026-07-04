@@ -133,6 +133,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/external-comparison-latest.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
+        "hosted_external_preconditions": root
+        / "crates/eval/reports/hosted-external-preconditions.json",
         "official_dmr_result": root / "docs/eval/OFFICIAL_DMR_RESULT.md",
         "official_dmr_50": root / "crates/eval/reports/official-dmr-50.json",
         "official_dmr_200": root / "crates/eval/reports/official-dmr-200.json",
@@ -167,6 +169,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     readiness = load_json(paths["phase6_next_gate_readiness"])
     external_latest = load_json(paths["external_comparison_latest"])
     external_hosted = load_json(paths["external_comparison_hosted"])
+    hosted_preconditions = load_json(paths["hosted_external_preconditions"])
     dmr_50 = load_json(paths["official_dmr_50"])
     dmr_200 = load_json(paths["official_dmr_200"])
     dmr_500 = load_json(paths["official_dmr_500"])
@@ -309,6 +312,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             conclusion=(
                 f"Hosted report measured {safe_get(external_hosted, ['summary', 'measured_systems'])} "
                 f"system and left {safe_get(external_hosted, ['summary', 'not_configured_systems'])} systems not configured."
+            ),
+        ),
+        claim(
+            claim_id="hosted_external_preconditions",
+            readme_snippet="DeepSeek is present for DMR judging",
+            status="supported",
+            evidence=[report_path(paths["hosted_external_preconditions"])],
+            conclusion=safe_get(
+                hosted_preconditions, ["read", "current_conclusion"], ""
             ),
         ),
         claim(

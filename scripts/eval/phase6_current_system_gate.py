@@ -90,6 +90,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/external-comparison-task-gate.json",
     )
     parser.add_argument(
+        "--hosted-external-preconditions",
+        type=Path,
+        default=root / "crates/eval/reports/hosted-external-preconditions.json",
+    )
+    parser.add_argument(
         "--long-horizon-task-gate",
         type=Path,
         default=root / "crates/eval/reports/long-horizon-task-gate.json",
@@ -225,6 +230,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "external_comparison_task_gate": normalize_path_arg(
             args.external_comparison_task_gate
         ),
+        "hosted_external_preconditions": normalize_path_arg(
+            args.hosted_external_preconditions
+        ),
         "long_horizon_task_gate": normalize_path_arg(args.long_horizon_task_gate),
         "productization_decision_gate": normalize_path_arg(
             args.productization_decision_gate
@@ -247,6 +255,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     trend_alignment = reports["longmem_dmr_trend_alignment"]
     split_decision = reports["ranking_objective_split_decision"]
     external = reports["external_comparison_task_gate"]
+    hosted_preconditions = reports["hosted_external_preconditions"]
     long_horizon = reports["long_horizon_task_gate"]
     productization = reports["productization_decision_gate"]
     next_action = reports["next_validation_action_gate"]
@@ -302,6 +311,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     )
     hosted_official_external_not_ready = not bool(
         safe_get(external, ["status", "hosted_official_external_ready"])
+    )
+    hosted_preconditions_passed = bool(
+        safe_get(
+            hosted_preconditions,
+            ["status", "hosted_external_preconditions_audit_passed"],
+        )
+    )
+    hosted_run_allowed = bool(
+        safe_get(hosted_preconditions, ["status", "hosted_external_run_allowed"])
     )
     long_horizon_gate_passed = bool(
         safe_get(long_horizon, ["status", "long_horizon_gate_passed"])
@@ -416,6 +434,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["external_comparison_task_gate"]],
             conclusion="Hosted/official external comparison is still explicitly not ready.",
             failure="Hosted/official external comparison appears ready and needs a separate claim decision.",
+        ),
+        check(
+            "hosted_external_preconditions_recorded",
+            hosted_preconditions_passed and not hosted_run_allowed,
+            evidence=[paths["hosted_external_preconditions"]],
+            conclusion="Hosted external preconditions are audited and currently block hosted runs without treating the block as adapter failure.",
+            failure="Hosted external preconditions are missing, failed, or unexpectedly allow a hosted run.",
         ),
         check(
             "long_horizon_task_gate_passed",
@@ -577,6 +602,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "readiness_next_gate_ready": next_gate_ready,
             "top_context_judge_ready": top_context_ready,
             "hosted_external_ready": hosted_ready,
+            "hosted_external_preconditions_passed": hosted_preconditions_passed,
+            "hosted_external_run_allowed": hosted_run_allowed,
             "trend_alignment_exit_condition_complete": not trend_alignment_exit_condition_not_ready,
             "dmr_longmem_objective_split_decided": objective_split_decided,
             "long_horizon_gate_passed": long_horizon_gate_passed,
@@ -609,6 +636,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
                 "Ranking is a validated bottleneck; DMR / LongMemEval objective split is decided as validation-only, and current evidence supports no runtime default change.",
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
+                "Hosted external preconditions are audited without recording secret values; DeepSeek-only fallback is not counted as official hosted comparison.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
                 "Next validation action is gate-backed: DMR top-context judge scaling is complete; wait for hosted configuration before hosted heavy reruns.",

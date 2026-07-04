@@ -140,6 +140,11 @@ onto the Neo4j/OpenAI path, disabled the Mem0 DeepSeek fallback, and checked
 Letta for a real endpoint. In this environment, King Synapse was measured and
 all three external hosted/official systems were `not_configured`; no adapter
 failed.
+`crates/eval/reports/hosted-external-preconditions.json` records the
+precondition boundary behind that result. `DEEPSEEK_API_KEY` is present, but
+DeepSeek-only configuration is not accepted as hosted/official external
+comparison evidence. It remains valid for DMR judging and local Mem0 OSS
+fallback evidence only.
 
 | System | Visible | Hidden | Dominant trace | Suppressed alternatives | Evidence paths | Future continuation | Reinforcement isolation |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |

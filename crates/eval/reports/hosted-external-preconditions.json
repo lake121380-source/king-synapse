@@ -1,0 +1,241 @@
+{
+  "schema_version": "king-synapse.hosted-external-preconditions.v1",
+  "generated_at": "2026-07-04T04:26:34.915686+00:00",
+  "runner": "scripts\\eval\\hosted_external_preconditions_audit.py",
+  "git": {
+    "branch": "main",
+    "commit": "f5839a58ae0348432df31f89d3c4833d877d23f6",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "next_gate_readiness": {
+      "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
+      "sha256": "f631c3b77c8bc62fd185bf7237356be0ede92c70780be421ca8e2601d6220b66"
+    },
+    "hosted_external_report": {
+      "path": "crates\\eval\\reports\\external-comparison-hosted.json",
+      "sha256": "606ecb6ff5834ab47af8a5ae8b38c0bc2834a8a153132188e1350ca2d9e36888",
+      "summary": {
+        "systems": 4,
+        "measured_systems": 1,
+        "not_configured_systems": 3,
+        "failed_systems": 0
+      }
+    },
+    "external_manifest": {
+      "path": "crates\\eval\\reports\\external-comparison-manifest.json",
+      "sha256": "ac7bf0b264e4906fe6fe09eb06d74f6191a9886de9e2b6e5ec75fb16cb2ef0ad"
+    }
+  },
+  "env_presence": {
+    "OPENAI_API_KEY": false,
+    "NEO4J_URI": false,
+    "NEO4J_USER": false,
+    "NEO4J_PASSWORD": false,
+    "MEM0_CONFIG_JSON": false,
+    "MEM0_CONFIG_PATH": false,
+    "LETTA_API_KEY": false,
+    "LETTA_BASE_URL": false,
+    "LETTA_ENVIRONMENT": false,
+    "DEEPSEEK_API_KEY": true,
+    "LETTA_ENVIRONMENT_LOCAL_MODE": false
+  },
+  "api_keys_recorded": false,
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "fairness_contract": {
+    "fixture": "shared 8-chain exported cognitive session fixture",
+    "systems": [
+      {
+        "system": "King Synapse",
+        "required_mode": "current standard local configuration",
+        "current_status": "measured"
+      },
+      {
+        "system": "Graphiti/Zep",
+        "required_mode": "hosted or standard Neo4j/OpenAI path",
+        "current_status": "not_configured"
+      },
+      {
+        "system": "Mem0",
+        "required_mode": "official/recommended OpenAI config or explicit Mem0 config",
+        "current_status": "not_configured"
+      },
+      {
+        "system": "Letta",
+        "required_mode": "hosted API or local endpoint",
+        "current_status": "not_configured"
+      }
+    ],
+    "disallowed_substitutes": [
+      "Counting Graphiti/Zep local Kuzu deterministic mode as hosted Graphiti/Zep.",
+      "Counting Mem0 automatic DeepSeek + deterministic local embedder fallback as official Mem0.",
+      "Counting an installed Letta SDK without LETTA_API_KEY, LETTA_BASE_URL, or LETTA_ENVIRONMENT=local as a measured Letta endpoint."
+    ]
+  },
+  "preconditions": {
+    "graphiti_zep": {
+      "id": "hosted_graphiti_zep",
+      "ready": false,
+      "required_all": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ],
+      "required_any": [],
+      "present_all": [],
+      "missing_all": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ],
+      "present_any": [],
+      "missing_any": [],
+      "note": "Required for hosted/standard Graphiti/Zep Neo4j/OpenAI comparison."
+    },
+    "mem0_official": {
+      "id": "official_mem0",
+      "ready": false,
+      "required_all": [],
+      "required_any": [
+        "OPENAI_API_KEY",
+        "MEM0_CONFIG_JSON",
+        "MEM0_CONFIG_PATH"
+      ],
+      "present_all": [],
+      "missing_all": [],
+      "present_any": [],
+      "missing_any": [
+        "OPENAI_API_KEY",
+        "MEM0_CONFIG_JSON",
+        "MEM0_CONFIG_PATH"
+      ],
+      "note": "Official/recommended Mem0 comparison needs OpenAI defaults or an explicit Mem0 config. The automatic DeepSeek + deterministic local embedder fallback is a local OSS comparison and is not counted as hosted/official."
+    },
+    "letta": {
+      "id": "live_or_local_letta",
+      "ready": false,
+      "required_all": [],
+      "required_any": [
+        "LETTA_API_KEY",
+        "LETTA_BASE_URL",
+        "LETTA_ENVIRONMENT_LOCAL_MODE"
+      ],
+      "present_all": [],
+      "missing_all": [],
+      "present_any": [],
+      "missing_any": [
+        "LETTA_API_KEY",
+        "LETTA_BASE_URL",
+        "LETTA_ENVIRONMENT_LOCAL_MODE"
+      ],
+      "note": "Required for a real hosted or local Letta endpoint measurement."
+    },
+    "all_ready": false,
+    "missing_groups": [
+      "hosted_graphiti_zep",
+      "official_mem0",
+      "live_or_local_letta"
+    ]
+  },
+  "hosted_probe": {
+    "matches_blocked_state": true,
+    "summary": {
+      "systems": 4,
+      "measured_systems": 1,
+      "not_configured_systems": 3,
+      "failed_systems": 0
+    },
+    "statuses": {
+      "King Synapse": "measured",
+      "Graphiti/Zep": "not_configured",
+      "Mem0": "not_configured",
+      "Letta": "not_configured"
+    }
+  },
+  "manifest_boundary": {
+    "secrets_clean": true,
+    "graphiti_manifest": {
+      "system": "Graphiti/Zep",
+      "status": "measured",
+      "mode": "local Kuzu graph driver with deterministic local embeddings and explicit fixture triplets",
+      "credentials": [],
+      "hosted_mode_credentials_not_used": [
+        "OPENAI_API_KEY",
+        "NEO4J_URI",
+        "NEO4J_USER",
+        "NEO4J_PASSWORD"
+      ]
+    },
+    "mem0_manifest": {
+      "system": "Mem0",
+      "status": "measured",
+      "mode": "Mem0 OSS SDK with DeepSeek, deterministic local embedder, and local Qdrant",
+      "llm_model": "deepseek-v4-flash",
+      "embedder": "king-synapse-deterministic",
+      "vector_store": "local qdrant",
+      "credentials": [
+        "DEEPSEEK_API_KEY"
+      ],
+      "secrets_recorded": false
+    },
+    "letta_manifest": {
+      "system": "Letta",
+      "status": "not_configured",
+      "mode": "official Python SDK adapter",
+      "missing": [
+        "LETTA_API_KEY or LETTA_BASE_URL or LETTA_ENVIRONMENT=local"
+      ],
+      "credentials": []
+    }
+  },
+  "deepseek_boundary": {
+    "deepseek_api_key_present": true,
+    "deepseek_only_for_mem0_official": true,
+    "decision": "DeepSeek is present, but DeepSeek-only configuration is not accepted as hosted/official external comparison evidence. It remains valid for DMR judging and local Mem0 OSS fallback evidence only."
+  },
+  "runbook": {
+    "ready_to_run_hosted_external": false,
+    "command_when_ready": "cargo run -p synapse-eval --bin kr-external-eval -- --graphiti-command python --graphiti-arg scripts/eval/graphiti_adapter.py --mem0-command python --mem0-arg scripts/eval/mem0_adapter.py --letta-command python --letta-arg scripts/eval/letta_adapter.py --json crates/eval/reports/external-comparison-hosted.json",
+    "post_run_gates": [
+      "python scripts/eval/phase6_next_gate_readiness.py",
+      "python scripts/eval/external_comparison_task_gate.py",
+      "python scripts/eval/phase6_requirements_audit.py",
+      "python scripts/eval/phase6_objective_coverage_audit.py",
+      "python scripts/eval/productization_decision_gate.py",
+      "python scripts/eval/phase6_current_system_gate.py"
+    ]
+  },
+  "status": {
+    "hosted_external_preconditions_audit_passed": true,
+    "hosted_external_ready": false,
+    "hosted_external_run_allowed": false,
+    "hosted_comparison_complete": false,
+    "productization_allowed": false,
+    "runtime_default_change_allowed": false,
+    "hard_failures": [],
+    "blocking_reasons": [
+      "hosted_graphiti_zep_not_configured",
+      "official_mem0_not_configured",
+      "letta_endpoint_not_configured"
+    ]
+  },
+  "read": {
+    "current_conclusion": "Hosted/official external comparison cannot run in the current environment. DeepSeek is present, but OpenAI/Neo4j, explicit Mem0 official config, and Letta endpoint preconditions are not satisfied.",
+    "next_action": "Keep feature freeze. Configure the missing hosted competitor credentials/endpoints, then rerun the shared cognitive fixture with the hosted command and refresh Phase 6 gates."
+  },
+  "limits": [
+    "Records environment variable presence only, not values.",
+    "Does not run hosted adapters, external services, retrieval, ranking, judges, or product code.",
+    "Does not inspect raw benchmark records, raw responses, prompts, or generated answers.",
+    "A passing precondition audit proves the blocked state is well-defined; it is not hosted-comparison completion."
+  ]
+}

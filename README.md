@@ -127,6 +127,10 @@ The hosted/official configuration probe is recorded in
 [external-comparison-hosted.json](crates/eval/reports/external-comparison-hosted.json):
 Synapse is measured on the fixture, while hosted Graphiti/Zep, official Mem0
 configuration, and Letta are `not_configured` in this environment.
+[HOSTED_EXTERNAL_PRECONDITIONS.md](docs/eval/HOSTED_EXTERNAL_PRECONDITIONS.md)
+records the current hosted fairness gate: DeepSeek is present for DMR judging
+and local Mem0 fallback, but it does not satisfy hosted Graphiti/Zep,
+official/recommended Mem0, or live Letta preconditions.
 
 | System | Local result on the cognitive fixture |
 | --- | --- |
@@ -396,6 +400,7 @@ cargo build --release
 | `docs/eval/LONG_HORIZON_VALIDATION.md` | Deterministic long-horizon cognitive-memory result, stability audit, and boundary. |
 | `docs/eval/EXTERNAL_VALIDATION.md` | Readable external comparison result for Synapse, Graphiti/Zep, Mem0, and Letta. |
 | `crates/eval/reports/external-comparison-hosted.json` | Hosted/official external configuration probe. |
+| `docs/eval/HOSTED_EXTERNAL_PRECONDITIONS.md` | Hosted external comparison precondition and fairness gate. |
 | `docs/eval/BENCHMARK_BASELINE.md` | Fixed Phase 6 benchmark baselines and replay gates. |
 | `docs/eval/GOLDEN_DATASET.md` | Golden dataset registry and replay policy. |
 | `docs/eval/PERFORMANCE_ANALYSIS.md` | Phase 6 latency and performance-boundary analysis. |
