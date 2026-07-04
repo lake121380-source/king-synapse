@@ -5,14 +5,14 @@ Date: 2026-07-04
 Status: scoped validation passed; official-style DMR 200 local scoring is now
 recorded, a DMR 500-request local scoring pass is recorded with 323 mappable
 samples, pinned extractive DMR judge runs have returned `0` errors on
-`deepseek-v4-flash`, and the DMR 50 / 200 top-context candidates are now
+`deepseek-v4-flash`, and the DMR 50 / 200 / 500-request top-context candidates are now
 judge-scored locally. The deterministic long-horizon cognitive gate plus detailed stability
 / prediction-evidence audits are recorded. A consolidated long-horizon task
 gate now records the deterministic fixture as passed while keeping public
 real-world long-memory claims blocked. A productization decision gate now
 records the current decision as no-go / validation-only. A next-validation
 action gate now records that no heavy rerun is allowed until hosted external
-configuration or an explicit DMR expansion scope is selected. The requirements
+configuration is ready or no-model failure analysis is selected. The requirements
 and objective coverage audits now fold those task, decision, and next-action
 gates back into the top-level Phase 6 evidence chain.
 
@@ -236,7 +236,7 @@ DMR boundary:
   mapping before scoring, `114/323` scored samples have no relevant top-10
   retrieval, and `118/128` top-1 retrieval hits still miss the gold substring
   under the extractive generator. Top-context extraction lowers that top-1
-  residual to `90`, but does not solve answer generation.
+  residual to `91`, but does not solve answer generation.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -249,19 +249,20 @@ DMR boundary:
   `0.040` to `0.120`, ROUGE-L F1 rises from `0.037` to `0.066`, top-1 hits
   without the gold substring fall from `68/74` to `52/74`, and judge accuracy
   rises from `0.06` to `0.15`.
-- `crates/eval/reports/official-dmr-500-top-context-extractive.json` records
-  the generator cross-check on the 500-request / 323-scored local run.
-  Gold-answer substring accuracy rises from `0.046` to `0.121`, ROUGE-L F1
-  rises from `0.039` to `0.075`, and top-1 hits without the gold substring
-  fall from `118/128` to `90/127`.
+- `crates/eval/reports/official-dmr-500-top-context-judge.json` records
+  the generator cross-check on the 500-request / 323-scored local run with
+  judge scoring. Gold-answer substring accuracy rises from `0.046` to
+  `0.121`, ROUGE-L F1 rises from `0.039` to `0.075`, top-1 hits without the
+  gold substring fall from `118/128` to `91/128`, and judge accuracy rises
+  from `0.050` to `0.158`.
 - `crates/eval/reports/official-dmr-generator-ablation-summary.json`
   consolidates the DMR 50, 200, and 500-request generator deltas. It records
   substring gains of `+0.160`, `+0.080`, and `+0.074`, ROUGE-L F1 gains of
   `+0.062`, `+0.030`, and `+0.035`, and lower top-1 opportunity loss at every
   scale view. It also records that the extractive baseline reports are
   judge-backed on all pinned runs, while the `top-context-extractive`
-  candidate is judge-backed on DMR 50 and DMR 200, and lexical/ROUGE-only on
-  the 500-request view.
+  candidate is judge-backed on DMR 50, DMR 200, and the 500-request /
+  323-scored view.
 - `crates/eval/reports/official-dmr-top-context-judge-preflight.json` records
   the current top-context candidate judge boundary. The isolated preflight on
   `deepseek-v4-flash` returns `judged` with HTTP `200`, records no prompt text
@@ -274,6 +275,10 @@ DMR boundary:
   200 candidate judge run. Retrieval Recall@10 remains `0.411`; gold-answer
   substring accuracy is `0.120`; ROUGE-L F1 is `0.066`; and the LLM judge
   returns `200` judged samples with accuracy `0.15`.
+- `crates/eval/reports/official-dmr-500-top-context-judge.json` records the DMR
+  500-request candidate judge run. Retrieval Recall@10 remains `0.381`;
+  gold-answer substring accuracy is `0.121`; ROUGE-L F1 is `0.075`; and the
+  LLM judge returns `323` judged samples with accuracy `0.158`.
 - DMR 200 and the DMR 500-request run now carry judge-backed samples on
   `deepseek-v4-flash`, so the judge signal is now part of the usable local
   evidence rather than a partial signal.
@@ -297,9 +302,9 @@ and the DMR 200 plus 500-request cross-checks repeat the direction. The
 consolidated generator summary now records that repeated direction in one
 machine-readable file, while the bottleneck taxonomy records that mapping,
 retrieval/ranking, and generator quality all remain material. The judge path is
-now stable on the pinned runs and the DMR 50 / 200 top-context candidates, so the
-remaining block is mapping coverage, candidate scaling, and generator quality,
-not judge serialization.
+now stable on the pinned runs and the DMR 50 / 200 / 500-request top-context
+candidates, so the remaining block is mapping coverage, hosted comparison, and
+generator quality, not judge serialization.
 
 Long-horizon cognitive validation:
 
@@ -583,18 +588,17 @@ Phase 6 requirements audit status:
 | Phase | Status | Current read |
 | --- | --- | --- |
 | Lock current version | `active_policy` | Feature growth remains frozen; Phase 6 baselines and CUDA validation are recorded. |
-| Official-style DMR | `local_official_style_complete_not_published_comparable` | 50/200/500-request local answer scoring exists and DMR 50/200 top-context is judge-scored, but published-comparable DMR and DMR 500 top-context judge scaling remain open. |
+| Official-style DMR | `local_official_style_complete_not_published_comparable` | 50/200/500-request local answer scoring exists and DMR 50/200/500-request top-context is judge-scored, but published-comparable DMR and answer quality remain open. |
 | Ranking without architecture change | `validated_no_global_default` | Current ranking evidence supports no new global default. |
 | External fair comparison | `partial_local_complete_hosted_open` | Local fixture evidence exists; hosted Graphiti/Zep, official Mem0, and live Letta remain unmeasured. |
 | Long-horizon stability | `deterministic_fixture_complete_public_long_memory_open` | Deterministic long-session behavior is stable; public real-world long-memory evidence is still open. |
 | Productization decision | `not_ready` | Do not start productization until DMR, hosted comparison, ranking, and demo-claim gaps close. |
 
 The audit's blocking gaps are: published-comparable DMR is not finished,
-DMR 500 top-context candidate output is not judge-scored, no global
-ranking default is supported, hosted external comparison is not configured,
+no global ranking default is supported, hosted external comparison is not configured,
 future evidence labeling and public real-world long-memory validation remain
-open, the next validation action is waiting on hosted configuration or an
-explicit DMR expansion scope, and productization is not ready.
+open, the next validation action is waiting on hosted configuration or
+failure-analysis work, and productization is not ready.
 
 Phase 6 objective coverage audit:
 
@@ -609,12 +613,11 @@ Phase 6 objective coverage audit:
   entries remain for published-comparable DMR, hosted external comparison,
   safe ranking defaults, public long-memory evidence, GPU cost acceptance, and
   productization.
-- Its most important open gates are: DMR 500 top-context candidate not
-  judge-scored, hosted external comparison not configured,
+- Its most important open gates are: hosted external comparison not configured,
   published-comparable DMR mapping policy not final, no safe global ranking
   default, future evidence labeling, public real-world long-memory validation,
-  next validation action waiting on hosted configuration or an explicit DMR
-  expansion scope, and productization not ready.
+  next validation action waiting on hosted configuration or no-model failure
+  analysis, and productization not ready.
 
 Official DMR task gate:
 
@@ -626,9 +629,9 @@ Official DMR task gate:
   323-scored CUDA view have retrieval -> answer generation -> exact,
   punctuation, ROUGE-L, and LLM judge scoring.
 - The same gate keeps `published_comparable_official_dmr_ready: false` and
-  records `top_context_judge_ready: true` for DMR 50/200.
-- Its open gates are DMR 500 top-context candidate judge scoring,
-  published-comparable mapping policy, and answer-synthesis quality. It does
+  records `top_context_judge_ready: true` for DMR 50/200/500-request.
+- Its open gates are published-comparable mapping policy and
+  answer-synthesis quality. It does
   not permit runtime generator or ranking changes.
 
 Ranking task gate:
@@ -683,11 +686,11 @@ Productization decision gate:
   `current_decision: no_go_validation_only`, `productization_ready: false`,
   `productization_allowed: false`, and `release_v0_1_allowed: false`.
 - The gate records what is ready: local cognitive-trace advantage, pinned
-  extractive official-style DMR execution, DMR 50/200 top-context judge evidence,
+  extractive official-style DMR execution, DMR 50/200/500-request top-context judge evidence,
   ranking bottleneck diagnosis, and deterministic long-horizon fixture
   stability.
 - The same gate records what blocks productization: published-comparable DMR,
-  DMR 500 top-context judge scaling, hosted/official external comparison,
+  hosted/official external comparison,
   safe runtime ranking defaults, public real-world long-memory evidence,
   GPU/latency acceptance, and public demo/release packaging.
 - This is not a failure of the current architecture. It is the current release
@@ -699,11 +702,10 @@ Next validation action gate:
 - `crates/eval/reports/next-validation-action-gate.json` consolidates the
   current action choice after the task gates and productization decision.
 - The current result is `next_validation_action_gate_passed: true`, with
-  `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope` and
+  `recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis` and
   `heavy_validation_allowed: false`.
-- The gate keeps heavy branches closed because DMR 50/200 top-context judge
-  scoring is already complete, no DMR 500 expansion scope is currently
-  selected, and hosted external comparison is blocked until Graphiti/Zep,
+- The gate keeps heavy branches closed because DMR 50/200/500 top-context judge
+  scoring is already complete, and hosted external comparison is blocked until Graphiti/Zep,
   official Mem0, and Letta are configured.
 - The recorded DMR command template preserves the Phase 6 GPU rule:
   `--accelerator cuda --cuda-device-id 0`.
@@ -742,11 +744,10 @@ Current system gate:
 - This means the evidence chain is coherent enough to keep validating the
   system, but the same gate keeps `heavy_next_gate_ready: false`,
   `productization_allowed: false`, and `runtime_ranking_change_allowed: false`.
-- The blocked next gates remain DMR 500 top-context candidate judge
-  scaling, hosted external comparison, future evidence labeling, public
+- The blocked next gates remain hosted external comparison, future evidence labeling, public
   real-world long-memory validation, productization decision no-go, next
-  validation action waiting on hosted configuration or an explicit DMR
-  expansion scope, and productization.
+  validation action waiting on hosted configuration or failure-analysis work,
+  and productization.
 
 Phase 6 feature-freeze audit:
 
@@ -776,16 +777,17 @@ Phase 6 next-gate readiness:
 - `crates/eval/reports/phase6-next-gate-readiness.json` records the current
   external preconditions without storing secret values, prompt text, raw
   responses, raw benchmark records, or generated answers.
-- Top-context DMR 50/200 judge readiness is now satisfied: the latest sanitized
+- Top-context DMR 50/200/500 judge readiness is now satisfied: the latest sanitized
   preflight returns `judged` with HTTP `200`, the DMR 50 top-context report
   records `50` judged samples with judge accuracy `0.26`, and the DMR 200
-  top-context report records `200` judged samples with judge accuracy `0.15`.
+  top-context report records `200` judged samples with judge accuracy `0.15`,
+  and the DMR 500-request top-context report records `323` judged samples with
+  judge accuracy `0.158`.
 - Hosted external readiness is `false`: Graphiti/Zep, official Mem0, and Letta
   still need configured credentials or endpoints before the fair hosted
   comparison can run.
-- Current heavy next-gate readiness is `false` because DMR 50/200 should not be
-  repeated by default and no DMR 500 top-context expansion scope is
-  selected at this exact checkpoint.
+- Current heavy next-gate readiness is `false` because DMR 50/200/500 should
+  not be repeated by default and hosted external comparison is not configured.
 
 GPU validation status:
 
@@ -806,10 +808,10 @@ GPU validation status:
 Next required action: keep feature growth frozen and do not start product work.
 The current productization decision is no-go / validation-only. No heavy
 next-gate run is currently ready: the next-action gate records
-`recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope`.
-DMR 50/200 top-context judge scoring is complete, so the next heavy DMR branch
-should be DMR 500 top-context judge scoring only if that expansion scope is
-selected. Hosted external comparison still needs competitor
-credentials/endpoints. Continue in validation mode only, and do not adopt
+`recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis`.
+DMR 50/200/500 top-context judge scoring is complete. Hosted external
+comparison still needs competitor credentials/endpoints; no-model failure
+analysis can continue without product work. Continue in validation mode only,
+and do not adopt
 `vector_weight = 1.5`, reranker pool `100`, or any pool-signal guard as a
 runtime default from the current evidence.

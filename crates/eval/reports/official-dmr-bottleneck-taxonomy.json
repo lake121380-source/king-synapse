@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-bottleneck-taxonomy.v1",
-  "generated_at": "2026-07-04T02:22:49.681194+00:00",
+  "generated_at": "2026-07-04T03:06:09.281115+00:00",
   "runner": "scripts\\eval\\official_dmr_bottleneck_taxonomy.py",
   "inputs": {
     "answer_audit": {
@@ -9,7 +9,7 @@
     },
     "generator_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
-      "sha256": "eac46f0ff1bcfbd19637ca6b6e6221d568e7b21316c09a33275bc12bb2199b29"
+      "sha256": "0e68ee564d690a06014f11b489f490e2f93dab9fcfa03c5bb3a283b84b75f0a5"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -173,10 +173,10 @@
         "rouge_l_f1_mean": 0.074678,
         "answer_substring_accuracy_delta": 0.074303,
         "rouge_l_f1_mean_delta": 0.035191,
-        "top1_without_answer_substring_count_delta": -28,
-        "candidate_top1_without_answer_substring_count": 90,
-        "candidate_top10_without_answer_substring_count": 170,
-        "candidate_not_retrieved_top10_count": 115
+        "top1_without_answer_substring_count_delta": -27,
+        "candidate_top1_without_answer_substring_count": 91,
+        "candidate_top10_without_answer_substring_count": 171,
+        "candidate_not_retrieved_top10_count": 114
       },
       "read": {
         "primary_boundary": "mixed",
@@ -193,17 +193,17 @@
     "baseline_top1_without_answer_substring_count": 118,
     "baseline_top10_without_answer_substring_count": 196,
     "baseline_top1_selected_non_first_context_count": 99,
-    "candidate_top1_without_answer_substring_count": 90,
-    "candidate_top10_without_answer_substring_count": 170,
+    "candidate_top1_without_answer_substring_count": 91,
+    "candidate_top10_without_answer_substring_count": 171,
     "candidate_substring_accuracy_delta": 0.074303,
     "candidate_rouge_l_f1_delta": 0.035191
   },
   "read": {
     "conclusion": "Official-style DMR is blocked by three separate bottlenecks: mapping coverage, retrieval/ranking, and answer synthesis. The largest pinned local view has 177 punctuation-mapping rejections before scoring, 114 scored samples without a relevant top-10 retrieval, and 118 top-1 retrieval hits whose extractive answer still lacks the gold substring.",
-    "generator_read": "Top-context extraction is the clearest current answer-synthesis direction: it improves substring and ROUGE-L on every scale view and reduces top-1 opportunity loss. But on the largest local view it still leaves 90 top-1 hits without the gold substring, so it is not enough for an official DMR claim.",
+    "generator_read": "Top-context extraction is the clearest current answer-synthesis direction: it improves substring and ROUGE-L on every scale view and reduces top-1 opportunity loss. But on the largest local view it still leaves 91 top-1 hits without the gold substring, so it is not enough for an official DMR claim.",
     "ranking_read": "Ranking remains necessary because a large top10-not-top1 bucket and true top10 retrieval-miss bucket remain after answer scoring. Generator work cannot recover samples that never receive a relevant top-10 context.",
     "mapping_read": "The 500-request run is 323-scored under punctuation full-answer mapping. Relaxed token containment would increase coverage, but it is a separate diagnostic policy and cannot be silently promoted.",
-    "next_action": "Do not change runtime defaults. Top-context DMR 50 and 200 are now judge-scored; the next DMR validation expansion is DMR 500 top-context judge scoring, otherwise continue with hosted external comparison when credentials/endpoints are ready."
+    "next_action": "Do not change runtime defaults. Top-context DMR 50 and 200 and the 500-request view are now judge-scored; continue with hosted external comparison or no-model failure analysis before any runtime default change."
   },
   "limits": [
     "Reads existing sanitized reports only.",

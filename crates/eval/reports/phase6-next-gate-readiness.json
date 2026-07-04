@@ -1,11 +1,11 @@
 {
   "schema_version": "king-synapse.phase6-next-gate-readiness.v1",
-  "generated_at": "2026-07-04T02:22:50.704251+00:00",
+  "generated_at": "2026-07-04T03:06:09.983277+00:00",
   "runner": "scripts\\eval\\phase6_next_gate_readiness.py",
   "inputs": {
     "top_context_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
-      "sha256": "6c0dfb9bde98987c34fa8cf740ae97a8d5cdcbbc91da4c82c858e65f836e9cbb",
+      "sha256": "15001443e98499dc88ac58e2bfd2bda52b7fd5bd13aa28cb5995d0a11118e71a",
       "decision": "ready_for_official_dmr_judge_rerun"
     },
     "hosted_external_report": {
@@ -20,7 +20,7 @@
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
-      "sha256": "1eb20ddb36c6f54902b74b544db27dcfb484024f91f37ee4d0c585e468d181f3"
+      "sha256": "6857a8f32f82c7d7a58071bf3ff4fc85d817da9b5a570b30deebd79c50890807"
     }
   },
   "env_presence": {
@@ -49,7 +49,7 @@
     "status": "judged",
     "http_status": 200,
     "decision": "ready_for_official_dmr_judge_rerun",
-    "dmr_50_200_complete": true,
+    "dmr_50_200_500_complete": true,
     "api_key_present": true,
     "api_key_recorded": false
   },
@@ -80,8 +80,8 @@
   },
   "read": {
     "next_gate_ready": false,
-    "blocking_reason": "DMR 50 and 200 top-context judge scoring are complete; hosted external comparison credentials/endpoints are not configured, and no DMR expansion scope is selected.",
-    "next_action": "No heavy next-gate run is currently selected. Do not rerun DMR 50/200; select a DMR 500 top-context judge expansion or configure hosted external credentials/endpoints."
+    "blocking_reason": "DMR 50, 200, and 500-request top-context judge scoring are complete; hosted external comparison credentials/endpoints are not configured.",
+    "next_action": "No heavy next-gate run is currently selected. Do not rerun DMR 50/200/500 top-context; configure hosted external credentials/endpoints or continue no-model failure analysis."
   },
   "limits": [
     "Records environment variable presence only, not values.",

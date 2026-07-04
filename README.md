@@ -192,15 +192,15 @@ questions, answers, or generated text:
 | 200 CUDA samples | 0.411 | 0.000 | 0.040 | 0.037 | 200 judged / 0 error |
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.066 | 200 judged / 0 error, judge acc 0.15 |
 | 500 request / 323 scored CUDA samples | 0.381 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
-| 500 request / 323 scored top-context generator | 0.380 | 0.000 | 0.121 | 0.075 | not requested |
+| 500 request / 323 scored top-context generator | 0.381 | 0.000 | 0.121 | 0.075 | 323 judged / 0 error, judge acc 0.16 |
 
 This is still not a published-comparable official DMR result. The pinned
-extractive 5 / 50 / 200 / 500-request runs and the DMR 50 / 200 top-context
-candidates are fully judged locally on `deepseek-v4-flash`. The latest
+extractive 5 / 50 / 200 / 500-request runs and the DMR 50 / 200 / 500-request
+top-context candidates are fully judged locally on `deepseek-v4-flash`. The latest
 top-context candidate preflight returns HTTP `200` with no key recorded in the
 repo. The remaining boundary is published-comparable scoring policy,
-answer-generation quality, DMR 500 top-context judge scoring, and the
-honest large-run claim of `500 request / 323 scored`, not `500/500`.
+answer-generation quality, and the honest large-run claim of
+`500 request / 323 scored`, not `500/500`.
 The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
@@ -218,9 +218,8 @@ The bottleneck taxonomy is recorded in
 | 500 request / 323 scored | 0.046 | 0.121 | 0.039 | 0.075 |
 
 So answer synthesis is now a real optimization target, but it is still
-eval-only evidence. The DMR 50 and 200 top-context generators are now
-judge-scored, but the DMR 500-request top-context candidate remains
-lexical/ROUGE-only.
+eval-only evidence. The DMR 50, 200, and 500-request top-context generators
+are now judge-scored, but the absolute DMR answer quality is still low.
 Official DMR or product claims still need a finalized published-comparable
 protocol and better answer-generation quality.
 
@@ -290,10 +289,10 @@ comparison adapters or optional embedding/reranking paths.
 - The external comparison task gate passes only for the local fixture: `local_external_comparison_gate_passed: true`, while `hosted_official_external_ready: false`.
 - The long-horizon task gate passes for the deterministic fixture: `long_horizon_gate_passed: true`, while future evidence labeling and broader real-world long-memory evidence are still open.
 - The productization decision gate is a no-go gate: `productization_decision_gate_passed: true`, `productization_ready: false`, `productization_allowed: false`, and `release_v0_1_allowed: false`.
-- The next validation action gate currently says `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope` and `heavy_validation_allowed: false`.
+- The next validation action gate currently says `recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis` and `heavy_validation_allowed: false`.
 - External comparison is active: King Synapse, Graphiti/Zep local, and Mem0 OSS are measured; hosted Graphiti/Zep, official Mem0 configuration, and Letta still need credentials or endpoints.
-- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`, including the DMR 50 and 200 top-context candidates.
-- The next-gate readiness audit currently blocks heavy follow-up runs: DMR 50/200 top-context judge scoring is complete, no DMR 500 expansion scope is selected, and hosted competitor comparison still lacks credentials or endpoints.
+- LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`, including the DMR 50, 200, and 500-request top-context candidates.
+- The next-gate readiness audit currently blocks heavy hosted follow-up runs: DMR 50/200/500 top-context judge scoring is complete, and hosted competitor comparison still lacks credentials or endpoints.
 - Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
@@ -346,7 +345,7 @@ cargo build --release
 | `crates/eval/reports/external-comparison-task-gate.json` | One-file external comparison gate: local fixture comparison passes, while hosted/official comparison remains blocked. |
 | `crates/eval/reports/long-horizon-task-gate.json` | One-file long-horizon gate: deterministic fixture stability passes, while public real-world long-memory claims remain blocked. |
 | `crates/eval/reports/productization-decision-gate.json` | One-file productization decision gate: current decision is no-go / validation-only. |
-| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50/200 top-context judge scoring is complete; no heavy rerun is allowed until DMR 500 expansion scope is selected or hosted competitor configuration is ready. |
+| `crates/eval/reports/next-validation-action-gate.json` | One-file next-action gate: DMR 50/200/500 top-context judge scoring is complete; no heavy hosted rerun is allowed until hosted competitor configuration is ready. |
 | `crates/eval/reports/readme-claims-support-audit.json` | README claim support check against committed Phase 6 evidence. |
 | `crates/eval/reports/phase6-requirements-audit.json` | Current six-stage evidence matrix and productization gate status. |
 | `crates/eval/reports/phase6-objective-coverage-audit.json` | Checklist mapping the six-stage objective to committed evidence and open gates. |

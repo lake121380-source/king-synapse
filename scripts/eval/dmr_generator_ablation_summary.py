@@ -117,6 +117,7 @@ def compact_audit(audit: dict[str, Any]) -> dict[str, Any]:
             audit, "top1_selected_non_first_context_count"
         ),
         "llm_judge_status_counts": audit.get("llm_judge_status_counts", {}),
+        "llm_judge_accuracy": rounded(audit.get("llm_judge_accuracy")),
     }
 
 
@@ -166,16 +167,22 @@ def judge_status_read(runs: list[dict[str, Any]]) -> str:
     baseline_errors = baseline_counts.get("error", 0)
     candidate_judged = candidate_counts.get("judged", 0)
     candidate_not_requested = candidate_counts.get("not_requested", 0)
+    if baseline_judged and baseline_errors == 0 and candidate_judged and not candidate_not_requested:
+        return (
+            "The extractive baseline reports and the top-context generator "
+            "candidate are judge-backed on DMR 50, DMR 200, and the "
+            "500-request / 323-scored view."
+        )
     if baseline_judged and baseline_errors == 0 and candidate_judged and candidate_not_requested:
         return (
             "The extractive baseline reports are judge-backed on the pinned "
-            "runs; the top-context generator is judge-backed on DMR 50 and "
-            "DMR 200, and lexical/ROUGE-only on the 500-request view."
+            "runs; some top-context generator scale views are judge-backed, "
+            "while at least one scale view remains unjudged metric-only evidence."
         )
     if baseline_judged and baseline_errors == 0 and candidate_not_requested:
         return (
             "The extractive baseline reports are judge-backed on the pinned "
-            "runs; the top-context generator ablation was not judge-scored."
+            "runs; the top-context generator ablation has unjudged scale views."
         )
     return (
         "Judge status is mixed across generator views; inspect "
@@ -293,8 +300,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "decision": (
                 "The top-context-extractive generator direction repeats across "
                 "DMR 50, 200, and 500-request/323-scored local views, but "
-                "remains evaluation-only evidence until the candidate generator "
-                "is judge-scored beyond DMR 50 and absolute answer quality improves."
+                "remains evaluation-only evidence until absolute answer quality "
+                "improves and the published-comparable DMR policy is finalized."
             ),
         },
         "runs": runs,

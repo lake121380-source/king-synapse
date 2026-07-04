@@ -186,6 +186,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-50-top-context-judge.json",
         "official_dmr_200_top_context_judge": root
         / "crates/eval/reports/official-dmr-200-top-context-judge.json",
+        "official_dmr_500_top_context_judge": root
+        / "crates/eval/reports/official-dmr-500-top-context-judge.json",
         "official_dmr_generator_summary": root
         / "crates/eval/reports/official-dmr-generator-ablation-summary.json",
         "official_dmr_bottleneck_taxonomy": root
@@ -394,25 +396,25 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     evidence=[
                         report_path(paths["official_dmr_50_top_context_judge"]),
                         report_path(paths["official_dmr_200_top_context_judge"]),
+                        report_path(paths["official_dmr_500_top_context_judge"]),
                         report_path(paths["official_dmr_task_gate"]),
                     ],
                     conclusion=(
-                        "DMR 50 and 200 top-context candidates are now judge-scored; "
-                        "the 500-request top-context view remains "
-                        "lexical/ROUGE-only."
+                        "DMR 50, DMR 200, and the 500-request / 323-scored "
+                        "top-context candidates are now judge-scored."
                     ),
                     remaining=[
-                        "Judge-score DMR 500 top-context before broader answer-quality claims."
+                        "Improve answer quality and finalize published-comparable DMR policy before broader answer-quality claims."
                     ],
                 ),
             ],
             conclusion=(
                 "Official-style DMR is executable and judge-backed for the pinned "
-                "extractive baseline plus the DMR 50 and 200 top-context candidates, but it "
-                "is not published-comparable and the largest candidate view is still "
-                "not judge-scored."
+                "extractive baseline plus the DMR 50/200/500-request top-context "
+                "candidates, but it is not published-comparable and absolute "
+                "answer quality is still low."
             ),
-            next_action="If continuing the DMR branch, judge-score DMR 500 top-context next.",
+            next_action="Stop expanding DMR judge scaling; move to hosted external comparison or no-model failure analysis.",
         ),
         phase(
             phase_id="3_ranking_without_architecture_change",
@@ -625,7 +627,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     ],
                     conclusion=(
                         "Pinned official-style DMR exists, but answer quality is low, "
-                        "mapping coverage is partial, and top-context DMR 500 is not judge-scored."
+                        "mapping coverage is partial, and top-context judge scaling is complete."
                     ),
                 ),
                 requirement(
@@ -650,7 +652,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     ],
                     conclusion=safe_get(next_validation_action_gate, ["read", "current_conclusion"], ""),
                     remaining=[
-                        "Select the next DMR expansion scope or configure hosted competitor comparison."
+                        "Configure hosted competitor comparison or continue no-model failure analysis."
                     ],
                 ),
             ],
@@ -739,19 +741,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "published-comparable and hosted-comparison gates are still open."
             ),
             "most_important_open_gates": [
-                "top_context_500_not_judge_scored",
                 "hosted_external_comparison_not_configured",
                 "published_comparable_dmr_mapping_policy_not_final",
                 "no_safe_global_ranking_default",
                 "future_evidence_labeling_boundary",
                 "public_real_world_long_memory_not_validated",
-                "next_validation_action_waiting_on_hosted_or_dmr_expansion_scope",
+                "next_validation_action_waiting_on_hosted_or_failure_analysis",
                 "productization_not_ready",
             ],
             "next_action": (
-                "Keep feature freeze. DMR 50 and 200 top-context judge scoring are complete; "
-                "the next validation action is to select DMR 500 top-context "
-                "expansion or wait for hosted competitor credentials/endpoints."
+                "Keep feature freeze. DMR 50/200/500 top-context judge scoring "
+                "is complete; the next heavy "
+                "validation action waits for hosted competitor credentials/endpoints."
             ),
         },
         "limits": [

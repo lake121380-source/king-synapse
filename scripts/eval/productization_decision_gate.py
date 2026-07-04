@@ -469,7 +469,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "blocking_criteria": blocking_criteria,
             "open_gates": [
                 "published_comparable_official_dmr_not_ready",
-                "top_context_candidate_not_judge_scored",
                 "hosted_external_comparison_not_configured",
                 "safe_runtime_ranking_default_not_ready",
                 "future_evidence_labeling_boundary",
@@ -486,13 +485,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "what_is_ready": [
                 "Local cognitive-trace advantage is supported on the shared fixture.",
                 "Pinned extractive official-style DMR is locally executable and judge-backed.",
+                "DMR 50/200/500-request top-context judge scaling is complete.",
                 "Ranking bottlenecks are validated without adopting a runtime default.",
                 "Deterministic long-horizon fixture stability is gate-backed.",
                 "A disposable CLI demo exists for local explanation.",
             ],
             "what_blocks_productization": [
                 "Published-comparable official DMR is not ready.",
-                "Top-context DMR candidate is not judge-scored.",
+                "DMR answer quality and mapping coverage are not ready for product claims.",
                 "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
                 "No safe global runtime ranking default exists.",
                 "Public real-world long-memory stability is not validated.",
@@ -500,7 +500,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Web demo, API server, Docker, and v0.1 packaging should not start yet.",
             ],
             "next_action": (
-                "Keep feature freeze and validation-only mode. The next true gate requires either valid judge authorization for top-context DMR scoring or hosted competitor credentials/endpoints."
+                "Keep feature freeze and validation-only mode. The next true hosted gate requires competitor credentials/endpoints; no-model failure analysis may continue."
             ),
         },
         "limits": [

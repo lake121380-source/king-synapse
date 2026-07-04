@@ -282,7 +282,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Top-context extraction is the clearest current answer-synthesis "
                 "direction: it improves substring and ROUGE-L on every scale view "
                 "and reduces top-1 opportunity loss. But on the largest local view "
-                "it still leaves 90 top-1 hits without the gold substring, so it "
+                "it still leaves 91 top-1 hits without the gold substring, so it "
                 "is not enough for an official DMR claim."
             ),
             "ranking_read": (
@@ -298,9 +298,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "next_action": (
                 "Do not change runtime defaults. Top-context DMR 50 and 200 "
-                "are now judge-scored; the next DMR validation expansion is "
-                "DMR 500 top-context judge scoring, otherwise continue with hosted "
-                "external comparison when credentials/endpoints are ready."
+                "and the 500-request view are now judge-scored; continue with "
+                "hosted external comparison or no-model failure analysis before "
+                "any runtime default change."
             ),
         },
         "limits": [

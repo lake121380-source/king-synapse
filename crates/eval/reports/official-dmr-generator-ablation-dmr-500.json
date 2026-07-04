@@ -1,6 +1,6 @@
 {
   "schema_version": "king-synapse.official-dmr-answer-synthesis-audit.v1",
-  "generated_at": "2026-07-03T15:44:52.056619+00:00",
+  "generated_at": "2026-07-04T03:06:08.851648+00:00",
   "runner": "scripts/eval/official_dmr_answer_audit.py",
   "inputs": [
     {
@@ -8,8 +8,8 @@
       "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
     },
     {
-      "path": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
-      "sha256": "f429d5d757711f74e865a910f769b0eac17b9e588b8c314e24628c71eb28c2a5"
+      "path": "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
+      "sha256": "9341242cdfed25409762578c01d9102571ec715fd8c85a2e35fef0dc93c5a844"
     }
   ],
   "raw_records_committed": false,
@@ -22,9 +22,9 @@
     "sample_sets_overlap": true,
     "overlap_note": "Input reports may be deterministic expansions or generator variants; do not sum report rows as independent unique examples unless the inputs are known disjoint.",
     "total_report_rows": 646,
-    "top1_without_answer_substring_report_rows": 208,
-    "top10_without_answer_substring_report_rows": 366,
-    "not_retrieved_top10_report_rows": 229
+    "top1_without_answer_substring_report_rows": 209,
+    "top10_without_answer_substring_report_rows": 367,
+    "not_retrieved_top10_report_rows": 228
   },
   "audits": [
     {
@@ -37,6 +37,7 @@
       "llm_judge_status_counts": {
         "judged": 323
       },
+      "llm_judge_accuracy": 0.04953560371517028,
       "retrieval": {
         "recall_at_10": 0.38054695562435503,
         "mrr_at_10": 0.4692429603420315,
@@ -961,21 +962,22 @@
       }
     },
     {
-      "report": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+      "report": "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
       "schema_version": "king-synapse.official-dmr-answer-eval.v1",
       "sample_size_requested": 500,
       "sample_size_used": 323,
       "retrieval_mode": "vectors-rerank",
       "generator_policy": "top-context-extractive",
       "llm_judge_status_counts": {
-        "not_requested": 323
+        "judged": 323
       },
+      "llm_judge_accuracy": 0.15789473684210525,
       "retrieval": {
-        "recall_at_10": 0.3797729618163055,
-        "mrr_at_10": 0.4661469851098334,
-        "top1_count": 127,
+        "recall_at_10": 0.38054695562435503,
+        "mrr_at_10": 0.4692429603420315,
+        "top1_count": 128,
         "top10_not_top1_count": 81,
-        "not_retrieved_top10_count": 115
+        "not_retrieved_top10_count": 114
       },
       "answer_generation": {
         "overall": {
@@ -985,26 +987,26 @@
           "answer_substring_accuracy": 0.12074303405572756,
           "rouge_l_f1_mean": 0.07467787461911089,
           "rouge_l_recall_mean": 0.18390104047998784,
-          "generated_length_mean": 49.47987616099071,
+          "generated_length_mean": 49.8266253869969,
           "gold_length_mean": 15.445820433436532,
           "alignment_counts": {
-            "no_relevant_context_in_top10": 115,
+            "no_relevant_context_in_top10": 114,
             "selected_before_first_relevant_context": 81,
-            "selected_first_relevant_context": 127
+            "selected_first_relevant_context": 128
           }
         },
         "by_retrieval_bucket": {
           "top1": {
-            "count": 127,
+            "count": 128,
             "exact_accuracy": 0.0,
             "punctuation_accuracy": 0.0,
-            "answer_substring_accuracy": 0.29133858267716534,
-            "rouge_l_f1_mean": 0.1397197509490471,
-            "rouge_l_recall_mean": 0.35417760279965005,
-            "generated_length_mean": 48.1496062992126,
-            "gold_length_mean": 15.141732283464567,
+            "answer_substring_accuracy": 0.2890625,
+            "rouge_l_f1_mean": 0.13862819039475766,
+            "rouge_l_recall_mean": 0.35141059027777777,
+            "generated_length_mean": 48.078125,
+            "gold_length_mean": 15.09375,
             "alignment_counts": {
-              "selected_first_relevant_context": 127
+              "selected_first_relevant_context": 128
             }
           },
           "top10_not_top1": {
@@ -1021,22 +1023,22 @@
             }
           },
           "not_retrieved_top10": {
-            "count": 115,
+            "count": 114,
             "exact_accuracy": 0.0,
             "punctuation_accuracy": 0.0,
-            "answer_substring_accuracy": 0.008695652173913044,
-            "rouge_l_f1_mean": 0.030854589570702102,
-            "rouge_l_recall_mean": 0.06829914047305352,
-            "generated_length_mean": 51.17391304347826,
-            "gold_length_mean": 16.208695652173912,
+            "answer_substring_accuracy": 0.008771929824561403,
+            "rouge_l_f1_mean": 0.031125243865181947,
+            "rouge_l_recall_mean": 0.068898255740361,
+            "generated_length_mean": 52.26315789473684,
+            "gold_length_mean": 16.271929824561404,
             "alignment_counts": {
-              "no_relevant_context_in_top10": 115
+              "no_relevant_context_in_top10": 114
             }
           }
         },
         "opportunity_loss": {
-          "top1_without_answer_substring_count": 90,
-          "top10_without_answer_substring_count": 170,
+          "top1_without_answer_substring_count": 91,
+          "top10_without_answer_substring_count": 171,
           "top1_selected_non_first_context_count": 0
         }
       },

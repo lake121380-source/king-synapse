@@ -1,20 +1,20 @@
 {
   "schema_version": "king-synapse.official-dmr-generator-ablation-summary.v1",
-  "generated_at": "2026-07-04T02:22:49.264719+00:00",
-  "git_commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
+  "generated_at": "2026-07-04T03:06:09.038984+00:00",
+  "git_commit": "1546b90c60e31bb8364ca7bd5b5c5da76812fda8",
   "runner": "scripts\\eval\\dmr_generator_ablation_summary.py",
   "inputs": [
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-50.json",
-      "sha256": "90c83dcabfc0c6695d2be57732c0e00ac69f81001665164402f0f45c8dc115af"
+      "sha256": "306aa4bd36bbc2f37a5231e96fb4131166f5d5ef4db179569644f4189f9c5472"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-200.json",
-      "sha256": "c36ed2489252af239878c21c0cd1bd5690b5a42a1771ddb07b08d6a74d3cf4ab"
+      "sha256": "4827914d68ccb60ede7ca5041733217f155a7dcc4494665c488a7b0976dece79"
     },
     {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-dmr-500.json",
-      "sha256": "e3c1af09e6c40c4486c952da3a3b5489f4a9cb87f8d60ee8d4b247dc81c53633"
+      "sha256": "1cc02f40aaf5734189b9756750d7b86c3a69ac4727ee73ebb328f7f614a61050"
     }
   ],
   "raw_records_committed": false,
@@ -34,17 +34,16 @@
     "candidate_improves_substring_on_all_scale_views": true,
     "candidate_improves_rouge_l_f1_on_all_scale_views": true,
     "candidate_reduces_top1_without_substring_count_on_all_scale_views": true,
-    "judge_status": "The extractive baseline reports are judge-backed on the pinned runs; the top-context generator is judge-backed on DMR 50 and DMR 200, and lexical/ROUGE-only on the 500-request view.",
+    "judge_status": "The extractive baseline reports and the top-context generator candidate are judge-backed on DMR 50, DMR 200, and the 500-request / 323-scored view.",
     "judge_status_counts_by_generator": {
       "baseline_extractive": {
         "judged": 573
       },
       "candidate_top_context_extractive": {
-        "judged": 250,
-        "not_requested": 323
+        "judged": 573
       }
     },
-    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until the candidate generator is judge-scored beyond DMR 50 and absolute answer quality improves."
+    "decision": "The top-context-extractive generator direction repeats across DMR 50, 200, and 500-request/323-scored local views, but remains evaluation-only evidence until absolute answer quality improves and the published-comparable DMR policy is finalized."
   },
   "runs": [
     {
@@ -73,7 +72,8 @@
         "top1_selected_non_first_context_count": 23,
         "llm_judge_status_counts": {
           "judged": 50
-        }
+        },
+        "llm_judge_accuracy": 0.08
       },
       "candidate": {
         "retrieval_recall_at_10": 0.468333,
@@ -92,7 +92,8 @@
         "top1_selected_non_first_context_count": 0,
         "llm_judge_status_counts": {
           "judged": 50
-        }
+        },
+        "llm_judge_accuracy": 0.26
       },
       "delta_candidate_minus_baseline": {
         "retrieval_recall_at_10_delta": 0.0,
@@ -129,7 +130,8 @@
         "top1_selected_non_first_context_count": 57,
         "llm_judge_status_counts": {
           "judged": 200
-        }
+        },
+        "llm_judge_accuracy": 0.06
       },
       "candidate": {
         "retrieval_recall_at_10": 0.41075,
@@ -148,7 +150,8 @@
         "top1_selected_non_first_context_count": 0,
         "llm_judge_status_counts": {
           "judged": 200
-        }
+        },
+        "llm_judge_accuracy": 0.15
       },
       "delta_candidate_minus_baseline": {
         "retrieval_recall_at_10_delta": 0.0,
@@ -185,34 +188,36 @@
         "top1_selected_non_first_context_count": 99,
         "llm_judge_status_counts": {
           "judged": 323
-        }
+        },
+        "llm_judge_accuracy": 0.049536
       },
       "candidate": {
-        "retrieval_recall_at_10": 0.379773,
-        "retrieval_mrr_at_10": 0.466147,
-        "top1_count": 127,
+        "retrieval_recall_at_10": 0.380547,
+        "retrieval_mrr_at_10": 0.469243,
+        "top1_count": 128,
         "top10_not_top1_count": 81,
-        "not_retrieved_top10_count": 115,
+        "not_retrieved_top10_count": 114,
         "exact_accuracy": 0.0,
         "punctuation_accuracy": 0.0,
         "answer_substring_accuracy": 0.120743,
         "rouge_l_f1_mean": 0.074678,
         "rouge_l_recall_mean": 0.183901,
-        "top1_without_answer_substring_count": 90,
-        "top1_without_answer_substring_rate": 0.708661,
-        "top10_without_answer_substring_count": 170,
+        "top1_without_answer_substring_count": 91,
+        "top1_without_answer_substring_rate": 0.710938,
+        "top10_without_answer_substring_count": 171,
         "top1_selected_non_first_context_count": 0,
         "llm_judge_status_counts": {
-          "not_requested": 323
-        }
+          "judged": 323
+        },
+        "llm_judge_accuracy": 0.157895
       },
       "delta_candidate_minus_baseline": {
-        "retrieval_recall_at_10_delta": -0.000774,
+        "retrieval_recall_at_10_delta": 0.0,
         "answer_substring_accuracy_delta": 0.074303,
         "answer_substring_accuracy_multiplier": 2.599978,
         "rouge_l_f1_mean_delta": 0.035191,
-        "top1_without_answer_substring_count_delta": -28,
-        "top1_without_answer_substring_rate_delta": -0.213214
+        "top1_without_answer_substring_count_delta": -27,
+        "top1_without_answer_substring_rate_delta": -0.210937
       }
     }
   ]

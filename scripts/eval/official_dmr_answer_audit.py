@@ -177,6 +177,9 @@ def audit_report(path: Path, report: dict[str, Any]) -> dict[str, Any]:
         "llm_judge_status_counts": report["answer_generation"]["aggregate"].get(
             "llm_judge_status_counts", {}
         ),
+        "llm_judge_accuracy": report["answer_generation"]["aggregate"].get(
+            "llm_judge_accuracy"
+        ),
         "retrieval": {
             "recall_at_10": report["retrieval"].get("recall_at_10"),
             "mrr_at_10": report["retrieval"].get("mrr_at_10"),

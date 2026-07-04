@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.official-dmr-task-gate.v1",
-  "generated_at": "2026-07-04T02:22:50.081210+00:00",
+  "generated_at": "2026-07-04T03:06:09.593791+00:00",
   "runner": "scripts\\eval\\official_dmr_task_gate.py",
   "git": {
     "branch": "main",
-    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
+    "commit": "1546b90c60e31bb8364ca7bd5b5c5da76812fda8",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -34,9 +34,9 @@
       "sha256": "4ce9c9694ce0bee14a63532d4fd8fb3a810c5ccc6091dc0b0803dac25f9c52aa"
     },
     "top_context_500": {
-      "path": "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+      "path": "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
       "exists": true,
-      "sha256": "f429d5d757711f74e865a910f769b0eac17b9e588b8c314e24628c71eb28c2a5"
+      "sha256": "9341242cdfed25409762578c01d9102571ec715fd8c85a2e35fef0dc93c5a844"
     },
     "answer_synthesis_audit": {
       "path": "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
@@ -46,12 +46,12 @@
     "generator_ablation_summary": {
       "path": "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
       "exists": true,
-      "sha256": "eac46f0ff1bcfbd19637ca6b6e6221d568e7b21316c09a33275bc12bb2199b29"
+      "sha256": "0e68ee564d690a06014f11b489f490e2f93dab9fcfa03c5bb3a283b84b75f0a5"
     },
     "bottleneck_taxonomy": {
       "path": "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
       "exists": true,
-      "sha256": "9b4326a3812ab9e4c233a58f46f71afa32a500a301726e1a246d1fdd02d068dd"
+      "sha256": "6749341616c81c2494edb6f4923d0d295df5c36bed870234cc9dceeaa3b0b20c"
     },
     "mapping_policy_review": {
       "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
@@ -61,7 +61,7 @@
     "top_context_judge_preflight": {
       "path": "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json",
       "exists": true,
-      "sha256": "6c0dfb9bde98987c34fa8cf740ae97a8d5cdcbbc91da4c82c858e65f836e9cbb"
+      "sha256": "15001443e98499dc88ac58e2bfd2bda52b7fd5bd13aa28cb5995d0a11118e71a"
     }
   },
   "raw_policy": {
@@ -228,14 +228,14 @@
       "generator_policy": "top-context-extractive",
       "accelerator_requested": "cuda",
       "cuda_device_id": "0",
-      "retrieval_recall_at_10": 0.3797729618163055,
-      "retrieval_mrr_at_10": 0.4661469851098334,
+      "retrieval_recall_at_10": 0.38054695562435503,
+      "retrieval_mrr_at_10": 0.4692429603420315,
       "exact_accuracy": 0.0,
       "punctuation_accuracy": 0.0,
       "answer_substring_accuracy": 0.12074303405572756,
       "rouge_l_f1_mean": 0.07467787461911089,
-      "llm_judge_count": 0,
-      "llm_judge_accuracy": null
+      "llm_judge_count": 323,
+      "llm_judge_accuracy": 0.15789473684210525
     }
   },
   "mapping_boundary": {
@@ -255,8 +255,8 @@
     "baseline_top1_without_answer_substring_count": 118,
     "baseline_top10_without_answer_substring_count": 196,
     "baseline_top1_selected_non_first_context_count": 99,
-    "candidate_top1_without_answer_substring_count": 90,
-    "candidate_top10_without_answer_substring_count": 170,
+    "candidate_top1_without_answer_substring_count": 91,
+    "candidate_top10_without_answer_substring_count": 171,
     "candidate_substring_accuracy_delta": 0.074303,
     "candidate_rouge_l_f1_delta": 0.035191
   },
@@ -292,7 +292,7 @@
         "crates\\eval\\reports\\official-dmr-500.json",
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json"
+        "crates\\eval\\reports\\official-dmr-500-top-context-judge.json"
       ],
       "conclusion": "Pinned official-style DMR and top-context ablation reports record CUDA device 0.",
       "remaining": []
@@ -332,9 +332,9 @@
       "evidence": [
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json"
       ],
-      "conclusion": "Top-context extraction improves substring and ROUGE-L on every current scale view; DMR 50 and 200 are judge-scored, while the 500-request candidate view remains evaluation-only.",
+      "conclusion": "Top-context extraction improves substring and ROUGE-L on every current scale view; DMR 50, 200, and the 500-request candidate view are judge-scored.",
       "remaining": [
-        "Judge-score top-context DMR 500 before making broader answer-quality claims."
+        "Do not change runtime defaults until answer quality improves and the published-comparable DMR policy is finalized."
       ]
     },
     {
@@ -343,13 +343,11 @@
       "evidence": [
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-top-context-judge-preflight.json"
       ],
-      "conclusion": "DMR 50 and 200 top-context candidates are judge-scored; the 500-request candidate view is still lexical/ROUGE-only.",
-      "remaining": [
-        "Judge-score top-context DMR 500 before broader claims."
-      ]
+      "conclusion": "DMR 50, DMR 200, and the 500-request / 323-scored top-context candidates are judge-scored.",
+      "remaining": []
     },
     {
       "id": "raw_or_generated_data_not_committed",
@@ -360,7 +358,7 @@
         "crates\\eval\\reports\\official-dmr-500.json",
         "crates\\eval\\reports\\official-dmr-50-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-200-top-context-judge.json",
-        "crates\\eval\\reports\\official-dmr-500-top-context-extractive.json",
+        "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
         "crates\\eval\\reports\\official-dmr-answer-synthesis-audit.json",
         "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
         "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
@@ -383,21 +381,20 @@
     "runtime_ranking_change_allowed": false,
     "hard_failures": [],
     "open_gates": [
-      "top_context_500_not_judge_scored",
       "published_comparable_mapping_policy_not_final",
       "answer_synthesis_quality_not_ready_for_official_claims"
     ]
   },
   "read": {
-    "current_conclusion": "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline and the DMR 50/200 top-context candidates, but it is not yet a published-comparable official DMR result.",
-    "strongest_supported_result": "The baseline path covers retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view; DMR 50 and 200 top-context judge accuracy are now recorded.",
+    "current_conclusion": "Official-style DMR is locally executable and judge-backed for the pinned extractive baseline and the DMR 50/200/500-request top-context candidates, but it is not yet a published-comparable official DMR result.",
+    "strongest_supported_result": "The baseline and top-context paths cover retrieval -> answer generation -> exact/punctuation/ROUGE-L/LLM judge scoring on DMR 50, 200, and a 500-request/323-scored CUDA view.",
     "weak_surfaces": [
       "DMR 500-request has 177 punctuation-mapping rejections before scoring.",
       "The largest local view still has 114 scored samples without a relevant top-10 retrieval.",
       "The largest local view has 118 top-1 retrieval hits whose extractive answer misses the gold substring.",
-      "Top-context extraction improves DMR 50 and 200 judged accuracy plus larger lexical metrics, but the DMR 500-request top-context view is not judge-scored and the largest local view still leaves 90 top-1 misses."
+      "Top-context extraction improves judged accuracy across DMR 50, DMR 200, and the 500-request / 323-scored view, but absolute answer quality remains low and the largest local view still leaves 91 top-1 misses."
     ],
-    "next_action": "Keep feature freeze. If expanding this DMR branch, judge-score top-context DMR 500 next; otherwise continue hosted external comparison when credentials/endpoints are ready. Do not change runtime defaults."
+    "next_action": "Keep feature freeze. The DMR top-context judge-scaling branch is complete; continue hosted external comparison when credentials/endpoints are ready, and use failure analysis rather than runtime default changes."
   },
   "limits": [
     "This gate reads committed sanitized aggregate DMR reports only.",

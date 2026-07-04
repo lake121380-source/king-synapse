@@ -307,7 +307,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     recommended_next_action = safe_get(next_action, ["status", "recommended_action"])
     next_action_waiting_on_valid_scope = recommended_next_action in {
         "wait_for_external_preconditions",
-        "wait_for_hosted_external_or_next_dmr_expansion_scope",
+        "wait_for_hosted_external_configuration_or_no_model_failure_analysis",
     }
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     top_context_ready = bool(safe_get(readiness, ["top_context_judge", "ready"]))
@@ -444,7 +444,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "next_action_waits_on_valid_scope",
             next_action_waiting_on_valid_scope,
             evidence=[paths["next_validation_action_gate"]],
-            conclusion="The current next action is a valid hold state for hosted external comparison or the next DMR expansion scope.",
+            conclusion="The current next action is a valid hold state for hosted external comparison or no-model failure analysis.",
             failure="The next action is not an expected validation-stage hold state.",
         ),
         check(
@@ -481,10 +481,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     blocked_next_gates = []
     if not top_context_ready:
         blocked_next_gates.append("top_context_candidate_not_judge_scored")
-    if "top_context_500_not_judge_scored" in safe_get(
-        official_dmr, ["status", "open_gates"], []
-    ):
-        blocked_next_gates.append("top_context_500_not_judge_scored")
     if not hosted_ready:
         blocked_next_gates.append("hosted_external_comparison_not_configured")
     if future_evidence_boundary_not_overstated:
@@ -495,7 +491,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         blocked_next_gates.append("productization_decision_no_go")
     if heavy_validation_not_allowed_by_action_gate:
         blocked_next_gates.append(
-            "next_validation_action_waiting_on_hosted_or_dmr_expansion_scope"
+            "next_validation_action_waiting_on_hosted_or_failure_analysis"
         )
     if productization_blocked:
         blocked_next_gates.append("productization_not_ready")
@@ -567,7 +563,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
                 "Productization decision is gate-backed as no-go / validation-only.",
-                "Next validation action is gate-backed: select DMR 500 expansion scope or wait for hosted configuration before heavy reruns.",
+                "Next validation action is gate-backed: DMR top-context judge scaling is complete; wait for hosted configuration before hosted heavy reruns.",
                 "README claims are conservative enough against committed evidence.",
                 "Raw benchmark data, prompts, answers, memory content, and generated answers remain out of the committed evidence chain.",
             ],

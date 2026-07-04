@@ -29,11 +29,11 @@ RAW_FLAGS = [
     "external_dataset_content_committed",
 ]
 
-TOP_CONTEXT_DMR_50_COMMAND = [
+TOP_CONTEXT_DMR_500_COMMAND = [
     "python",
     "scripts/eval/official_dmr_eval.py",
     "--sample-size",
-    "50",
+    "500",
     "--mode",
     "vectors-rerank",
     "--generator",
@@ -55,7 +55,7 @@ TOP_CONTEXT_DMR_50_COMMAND = [
     "--rerank-max-length",
     "256",
     "--output",
-    "crates/eval/reports/official-dmr-50-top-context-judge.json",
+    "crates/eval/reports/official-dmr-500-top-context-judge.json",
     "--cleanup-cache",
 ]
 
@@ -226,7 +226,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     official_top_context_ready = bool(
         safe_get(official, ["status", "top_context_judge_ready"])
     )
-    top_context_dmr_50_allowed = top_context_ready and not official_top_context_ready
+    top_context_dmr_allowed = top_context_ready and not official_top_context_ready
     hosted_official_ready = bool(
         safe_get(external, ["status", "hosted_official_external_ready"])
     )
@@ -263,17 +263,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         and not runtime_ranking_change_allowed
         and not public_long_memory_ready
     )
-    no_heavy_run_ready = not top_context_dmr_50_allowed and not hosted_ready
+    no_heavy_run_ready = not top_context_dmr_allowed and not hosted_ready
 
-    if top_context_dmr_50_allowed:
-        recommended_action = "run_top_context_dmr_50_judge_scoring"
+    if top_context_dmr_allowed:
+        recommended_action = "run_top_context_dmr_judge_scoring"
         heavy_validation_allowed = True
     elif hosted_ready:
         recommended_action = "run_hosted_external_comparison"
         heavy_validation_allowed = True
     else:
         recommended_action = (
-            "wait_for_hosted_external_or_next_dmr_expansion_scope"
+            "wait_for_hosted_external_configuration_or_no_model_failure_analysis"
             if official_top_context_ready
             else "wait_for_external_preconditions"
         )
@@ -289,7 +289,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             else "failed",
             evidence=[paths["next_gate_readiness"], paths["official_dmr_task_gate"]],
             conclusion=(
-                "Top-context DMR 50/200 judge scoring is complete."
+                "Top-context DMR 50/200/500 judge scoring is complete."
                 if official_top_context_ready
                 else "Top-context DMR judge scoring is ready."
                 if top_context_ready
@@ -302,7 +302,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             if official_top_context_ready or top_context_ready
             else [
                 "Provide valid judge authorization for deepseek-v4-flash.",
-                "Then rerun top-context DMR 50 with CUDA device 0.",
+                "Then rerun the selected top-context DMR scope with CUDA device 0.",
             ],
         ),
         item(
@@ -334,8 +334,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 else f"Next heavy validation branch is {recommended_action}."
             ),
             remaining=[] if not no_heavy_run_ready else [
-                "Do not rerun DMR 50/200 after they are complete.",
-                "Select DMR 500 expansion scope or configure hosted external comparison before another heavy run.",
+                "Do not rerun DMR 50/200/500 after they are complete.",
+                "Configure hosted external comparison before another hosted heavy run.",
             ],
         ),
         item(
@@ -409,12 +409,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "status_counts": status_counts,
         "commands": {
             "top_context_dmr_50_judge_scoring": command_record(
-                TOP_CONTEXT_DMR_50_COMMAND,
-                allowed=top_context_dmr_50_allowed,
+                TOP_CONTEXT_DMR_500_COMMAND,
+                allowed=top_context_dmr_allowed,
                 reason=(
-                    "Judge precondition is ready and DMR 50/200 top-context is not yet complete."
-                    if top_context_dmr_50_allowed
-                    else "DMR 50/200 top-context judge scoring is already complete."
+                    "Judge precondition is ready and the selected DMR top-context scope is not yet complete."
+                    if top_context_dmr_allowed
+                    else "DMR 50/200/500 top-context judge scoring is already complete."
                     if official_top_context_ready
                     else "Blocked until valid judge authorization is available."
                 ),
@@ -433,7 +433,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "next_validation_action_gate_passed": action_gate_passed,
             "recommended_action": recommended_action,
             "heavy_validation_allowed": heavy_validation_allowed,
-            "top_context_dmr_50_judge_scoring_allowed": top_context_dmr_50_allowed,
+            "top_context_dmr_judge_scoring_allowed": top_context_dmr_allowed,
             "hosted_external_comparison_allowed": hosted_ready,
             "productization_allowed": False,
             "runtime_default_change_allowed": False,
@@ -449,7 +449,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         },
         "read": {
             "current_conclusion": (
-                "DMR 50/200 top-context judge scoring is complete; no further heavy branch is currently selected by this gate."
+                "DMR 50/200/500 top-context judge scoring is complete; no further DMR heavy branch is currently selected by this gate."
                 if official_top_context_ready and not heavy_validation_allowed
                 else "No heavy next validation run is ready; the correct next action is to keep feature freeze and wait for either valid top-context judge authorization or hosted external comparison credentials/endpoints."
                 if not heavy_validation_allowed

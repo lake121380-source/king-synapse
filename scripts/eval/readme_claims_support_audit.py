@@ -352,7 +352,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             claim_id="next_validation_action_gate",
             readme_snippet=(
                 "recommended_action: "
-                "wait_for_hosted_external_or_next_dmr_expansion_scope"
+                "wait_for_hosted_external_configuration_or_no_model_failure_analysis"
             ),
             status="supported",
             evidence=[report_path(paths["next_validation_action_gate"])],

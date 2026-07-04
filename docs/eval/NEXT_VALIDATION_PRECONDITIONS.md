@@ -2,7 +2,7 @@
 
 Date: 2026-07-04
 
-Status: waiting for hosted external configuration or next DMR expansion scope
+Status: waiting for hosted external configuration; DMR judge scaling complete
 
 This runbook records what must change before the next heavy Phase 6 validation
 run. It is not a product plan and does not permit new memory schema, cognitive
@@ -13,7 +13,7 @@ Current gate read:
 
 - `current_system_gate_passed: true`
 - `current_work_mode: validation_only`
-- `recommended_action: wait_for_hosted_external_or_next_dmr_expansion_scope`
+- `recommended_action: wait_for_hosted_external_configuration_or_no_model_failure_analysis`
 - `heavy_validation_allowed: false`
 - `productization_allowed: false`
 
@@ -27,8 +27,7 @@ Purpose:
 
 - prove whether the top-context DMR answer generator improves judged answer
   quality, not only lexical or ROUGE-L scores;
-- DMR 50 and DMR 200 are now complete; keep any next expansion explicitly
-  scoped before moving to the 500-request view;
+- DMR 50, DMR 200, and the 500-request / 323-scored view are now complete;
 - preserve the Phase 6 GPU rule.
 
 Current read:
@@ -37,10 +36,11 @@ Current read:
   `crates/eval/reports/official-dmr-50-top-context-judge.json`;
 - DMR 200 top-context judge scoring is complete in
   `crates/eval/reports/official-dmr-200-top-context-judge.json`;
+- DMR 500-request top-context judge scoring is complete in
+  `crates/eval/reports/official-dmr-500-top-context-judge.json`;
 - the latest sanitized DeepSeek preflight returns `judged` / HTTP `200`;
-- do not rerun DMR 50/200 by default;
-- the next DMR heavy branch is DMR 500 top-context judge scoring only if that
-  expansion scope is explicitly selected.
+- do not rerun DMR 50/200/500 by default;
+- there is no remaining DMR judge-scaling branch selected by this runbook.
 
 Required external condition:
 
@@ -49,7 +49,7 @@ Required external condition:
 - `DEEPSEEK_JUDGE_MODEL` may be set, but the validation target is
   `deepseek-v4-flash`.
 
-Before any new DMR expansion, prove the judge endpoint without reading DMR
+Before any reproducibility rerun, prove the judge endpoint without reading DMR
 data:
 
 ```powershell
@@ -66,11 +66,12 @@ python scripts/eval/next_validation_action_gate.py
 python scripts/eval/phase6_current_system_gate.py
 ```
 
-The completed DMR 50 reproduction command is:
+The completed DMR 500 reproduction command is:
 
 ```powershell
 python scripts/eval/official_dmr_eval.py `
-  --sample-size 50 `
+  --endpoint https://hf-mirror.com `
+  --sample-size 500 `
   --mode vectors-rerank `
   --generator top-context-extractive `
   --llm-judge deepseek `
@@ -81,12 +82,12 @@ python scripts/eval/official_dmr_eval.py `
   --embed-max-length 256 `
   --rerank-batch-size 32 `
   --rerank-max-length 256 `
-  --output crates/eval/reports/official-dmr-50-top-context-judge.json `
+  --output crates/eval/reports/official-dmr-500-top-context-judge.json `
   --cleanup-cache
 ```
 
 After a successful run, keep
-`crates/eval/reports/official-dmr-50-top-context-judge.json` separate from the
+`crates/eval/reports/official-dmr-500-top-context-judge.json` separate from the
 pinned baseline files. Before changing any conclusion, explicitly add that new
 report to the DMR answer-synthesis / task-gate evidence path or pass it to the
 audit command:
@@ -98,7 +99,8 @@ python scripts/eval/official_dmr_answer_audit.py `
     crates/eval/reports/official-dmr-50-top-context-judge.json `
     crates/eval/reports/official-dmr-200.json `
     crates/eval/reports/official-dmr-200-top-context-judge.json `
-    crates/eval/reports/official-dmr-500.json
+    crates/eval/reports/official-dmr-500.json `
+    crates/eval/reports/official-dmr-500-top-context-judge.json
 python scripts/eval/dmr_generator_ablation_summary.py
 python scripts/eval/official_dmr_bottleneck_taxonomy.py
 python scripts/eval/official_dmr_task_gate.py
@@ -115,8 +117,8 @@ Acceptance read:
 - judge preflight status is `judged`;
 - no API key, prompt text, raw response, raw DMR record, gold answer, generated
   answer, dialog, session, or temporary cache file is committed;
-- DMR 50 and DMR 200 top-context are recorded as completed evidence;
-- DMR 500 top-context judge scoring is not implied by the DMR 50/200 result;
+- DMR 50, DMR 200, and DMR 500-request top-context are recorded as completed
+  evidence;
 - any README or report claim stays scoped until the task gates support it.
 
 ## Branch B: Hosted / Official External Comparison

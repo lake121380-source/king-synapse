@@ -1,32 +1,32 @@
 {
   "schema_version": "king-synapse.productization-decision-gate.v1",
-  "generated_at": "2026-07-04T02:24:05.077418+00:00",
+  "generated_at": "2026-07-04T03:06:44.824525+00:00",
   "runner": "scripts\\eval\\productization_decision_gate.py",
   "git": {
     "branch": "main",
-    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
+    "commit": "1546b90c60e31bb8364ca7bd5b5c5da76812fda8",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "69c742785a59f91c0dbfd705ac55a1d377153527d66dad9bb2d5c24ccec3dc83"
+      "sha256": "f1454e657b96adaed284bde129e9128cbc0c513c8959252233d283f5c88d6fdf"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "fa4f30c44810f12c93f4cd494db6b25cfc54236711da4c612f1533410d6b309c"
+      "sha256": "13a13864a1ed0695d4a61f58a79817171574dcc043e7dfdaff2de40a07a512e7"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "e1cf9b5382e41e9b58632708487ad4f82209d9986ca52f7e668819386aadd643"
+      "sha256": "4b0d73a7b2ac3ab767a6bfd791a1319eac262709b5fd220f245947e39fe465ef"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "1eb20ddb36c6f54902b74b544db27dcfb484024f91f37ee4d0c585e468d181f3"
+      "sha256": "6857a8f32f82c7d7a58071bf3ff4fc85d817da9b5a570b30deebd79c50890807"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -36,7 +36,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "c79936d24a6abf85e6c1d4c72814ce6ea5f1d68e9b50c824edd57915ccaa433c"
+      "sha256": "4e0c6c976bdda81297f4769d2f381d9e7bd8928a55d466629aadf27fb4342245"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -51,12 +51,12 @@
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "aa6a197397d322b9d336b8afb5fdd059422ad5d46fa1bb3ac3b85fe2fad35a62"
+      "sha256": "cf30b10e1cd0247c2f0de63007ac9be520e34e80f8585dfbaefc94177afcb39c"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "5af93caa2e692872d4c8352e76455d927a0ed3c5770ef670b0c517c27574a5d2"
+      "sha256": "c8d6d9af10ba239e4d68d1a4b421371009be910ac30a0588e32159a079e06ad3"
     },
     "demo_doc": {
       "path": "docs\\DEMO.md",
@@ -315,7 +315,6 @@
     ],
     "open_gates": [
       "published_comparable_official_dmr_not_ready",
-      "top_context_candidate_not_judge_scored",
       "hosted_external_comparison_not_configured",
       "safe_runtime_ranking_default_not_ready",
       "future_evidence_labeling_boundary",
@@ -329,20 +328,21 @@
     "what_is_ready": [
       "Local cognitive-trace advantage is supported on the shared fixture.",
       "Pinned extractive official-style DMR is locally executable and judge-backed.",
+      "DMR 50/200/500-request top-context judge scaling is complete.",
       "Ranking bottlenecks are validated without adopting a runtime default.",
       "Deterministic long-horizon fixture stability is gate-backed.",
       "A disposable CLI demo exists for local explanation."
     ],
     "what_blocks_productization": [
       "Published-comparable official DMR is not ready.",
-      "Top-context DMR candidate is not judge-scored.",
+      "DMR answer quality and mapping coverage are not ready for product claims.",
       "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
       "No safe global runtime ranking default exists.",
       "Public real-world long-memory stability is not validated.",
       "GPU/latency acceptance threshold is not adopted.",
       "Web demo, API server, Docker, and v0.1 packaging should not start yet."
     ],
-    "next_action": "Keep feature freeze and validation-only mode. The next true gate requires either valid judge authorization for top-context DMR scoring or hosted competitor credentials/endpoints."
+    "next_action": "Keep feature freeze and validation-only mode. The next true hosted gate requires competitor credentials/endpoints; no-model failure analysis may continue."
   },
   "limits": [
     "This gate reads committed aggregate evidence and docs only.",

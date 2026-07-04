@@ -1,32 +1,32 @@
 {
   "schema_version": "king-synapse.next-validation-action-gate.v1",
-  "generated_at": "2026-07-04T02:24:05.503336+00:00",
+  "generated_at": "2026-07-04T03:06:45.259148+00:00",
   "runner": "scripts\\eval\\next_validation_action_gate.py",
   "git": {
     "branch": "main",
-    "commit": "f1d639098cebef09b544b75a09d5563b9c481d4e",
+    "commit": "1546b90c60e31bb8364ca7bd5b5c5da76812fda8",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "e1cf9b5382e41e9b58632708487ad4f82209d9986ca52f7e668819386aadd643"
+      "sha256": "4b0d73a7b2ac3ab767a6bfd791a1319eac262709b5fd220f245947e39fe465ef"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "1eb20ddb36c6f54902b74b544db27dcfb484024f91f37ee4d0c585e468d181f3"
+      "sha256": "6857a8f32f82c7d7a58071bf3ff4fc85d817da9b5a570b30deebd79c50890807"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "c79936d24a6abf85e6c1d4c72814ce6ea5f1d68e9b50c824edd57915ccaa433c"
+      "sha256": "4e0c6c976bdda81297f4769d2f381d9e7bd8928a55d466629aadf27fb4342245"
     },
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "ea02e756e6c65a214a623cb28ae3f1997b0a821f39da99f8a35c0ed244857bed"
+      "sha256": "720f494f0846013eb315a89c7a22ac6a4500d04c1d1509b79db19c70f7c01a77"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
@@ -89,7 +89,7 @@
         "crates\\eval\\reports\\phase6-next-gate-readiness.json",
         "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
-      "conclusion": "Top-context DMR 50/200 judge scoring is complete.",
+      "conclusion": "Top-context DMR 50/200/500 judge scoring is complete.",
       "remaining": []
     },
     {
@@ -114,8 +114,8 @@
       ],
       "conclusion": "No heavy validation branch is currently selected by this gate.",
       "remaining": [
-        "Do not rerun DMR 50/200 after they are complete.",
-        "Select DMR 500 expansion scope or configure hosted external comparison before another heavy run."
+        "Do not rerun DMR 50/200/500 after they are complete.",
+        "Configure hosted external comparison before another hosted heavy run."
       ]
     },
     {
@@ -161,12 +161,12 @@
   "commands": {
     "top_context_dmr_50_judge_scoring": {
       "allowed_now": false,
-      "reason": "DMR 50/200 top-context judge scoring is already complete.",
+      "reason": "DMR 50/200/500 top-context judge scoring is already complete.",
       "command": [
         "python",
         "scripts/eval/official_dmr_eval.py",
         "--sample-size",
-        "50",
+        "500",
         "--mode",
         "vectors-rerank",
         "--generator",
@@ -188,7 +188,7 @@
         "--rerank-max-length",
         "256",
         "--output",
-        "crates/eval/reports/official-dmr-50-top-context-judge.json",
+        "crates/eval/reports/official-dmr-500-top-context-judge.json",
         "--cleanup-cache"
       ],
       "uses_cuda_device_0": true
@@ -224,9 +224,9 @@
   },
   "status": {
     "next_validation_action_gate_passed": true,
-    "recommended_action": "wait_for_hosted_external_or_next_dmr_expansion_scope",
+    "recommended_action": "wait_for_hosted_external_configuration_or_no_model_failure_analysis",
     "heavy_validation_allowed": false,
-    "top_context_dmr_50_judge_scoring_allowed": false,
+    "top_context_dmr_judge_scoring_allowed": false,
     "hosted_external_comparison_allowed": false,
     "productization_allowed": false,
     "runtime_default_change_allowed": false,
@@ -236,7 +236,7 @@
     ]
   },
   "read": {
-    "current_conclusion": "DMR 50/200 top-context judge scoring is complete; no further heavy branch is currently selected by this gate.",
+    "current_conclusion": "DMR 50/200/500 top-context judge scoring is complete; no further DMR heavy branch is currently selected by this gate.",
     "allowed_now": [
       "No-model/no-external evidence maintenance.",
       "Documentation/report synchronization that does not change runtime behavior."
