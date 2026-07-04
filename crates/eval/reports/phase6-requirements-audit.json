@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-requirements-audit.v1",
-  "generated_at": "2026-07-04T04:52:11.192335+00:00",
+  "generated_at": "2026-07-04T05:28:38.019146+00:00",
   "runner": "scripts\\eval\\phase6_requirements_audit.py",
   "git": {
     "branch": "main",
-    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
+    "commit": "b303d8359a6d8a69f21929c9c4dba3e1a2e3da87",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -16,7 +16,7 @@
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "db5754f921165f209ff63b82614013151bef138f6bfd0b133b36dd865e9858ec"
+      "sha256": "783f0da77b3bd0ca626560b5429484178b8935e34dee04e057079838ed0f5523"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
@@ -136,12 +136,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "b933f9b534c6bf0a0548cadeacfb27a6f51fdfd18ea807fec056b7e265a7aaba"
+      "sha256": "05ed3bfca7bb19059649a4b111fa9e498e19b71f7bb75e262d4c75a4f38f5ec5"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "47ae4e00fca641f58a2908f3ec6dc740cb3b2d8189d622b331923fffe6a02bea"
+      "sha256": "b9b5b7f8f47652080145f7bc792df529a671fea756fdf900952a55cb7e870496"
     },
     "ranking_objective_conflict_audit": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -886,7 +886,6 @@
       ],
       "open_gates": [
         "published_comparable_official_dmr_not_ready",
-        "hosted_external_comparison_not_configured",
         "safe_runtime_ranking_default_not_ready",
         "future_evidence_labeling_boundary",
         "public_real_world_long_memory_not_validated",
@@ -896,16 +895,17 @@
     },
     "next_validation_action": {
       "next_validation_action_gate_passed": true,
-      "recommended_action": "wait_for_hosted_external_configuration_or_no_model_failure_analysis",
+      "recommended_action": "continue_failure_mode_analysis_or_optional_deepseek_replay",
       "heavy_validation_allowed": false,
       "top_context_dmr_judge_scoring_allowed": false,
       "hosted_external_comparison_allowed": false,
+      "deepseek_external_protocol_passed": true,
+      "deepseek_external_replay_allowed": true,
+      "phase6_external_validation_blocked_by_openai": false,
       "productization_allowed": false,
       "runtime_default_change_allowed": false,
       "hard_failures": [],
-      "open_preconditions": [
-        "hosted_graphiti_zep_official_mem0_letta_configuration"
-      ]
+      "open_preconditions": []
     },
     "baseline_health": {
       "validated_commit": "f90c032070bd0d2b2bfc8fd84928b37c46173980",

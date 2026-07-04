@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T05:04:13.564628+00:00",
+  "generated_at": "2026-07-04T05:28:40.427352+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "abd70ae870d31fff44f4fc6c8599f0bebbe0ecc3",
+    "commit": "b303d8359a6d8a69f21929c9c4dba3e1a2e3da87",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "040fb327719e3595b78da1f0839e2aaff6c610c85c7ab3ca33d129eda058f4c4"
+      "sha256": "d3459302218992dc0be247b49960b864fc14208871d611ea2feee68372a4e752"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "9a0b5703eec5decf6ba3e0386ae7c35f00fc0036df1481d2d5f382177e60cfe7"
+      "sha256": "3e07166c09de3e883c084ab0eb12945acbc6edd3acae32e02d7b61b924da6937"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "c5a7aa398cd2e268771f9a9e1443b6eb4f9bf41f9254a9a036c11797fc09f647"
+      "sha256": "e1a12d540cba58f24fa959f8929765fafab944c54dc59a180aae002d537ddda2"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -63,6 +63,11 @@
       "exists": true,
       "sha256": "c1373c9db540d945be7d3eaecf20781553054be3fcda741e40a3d48ac9d70bf3"
     },
+    "dmr_500_failure_mode_gate": {
+      "path": "crates\\eval\\reports\\dmr-500-failure-mode-gate.json",
+      "exists": true,
+      "sha256": "03d0cf173a9d5ddd362816fbb3cf55377308911ee1466b48d9474cf08e78a0f8"
+    },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
@@ -71,12 +76,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "05ed3bfca7bb19059649a4b111fa9e498e19b71f7bb75e262d4c75a4f38f5ec5"
+      "sha256": "4233af8949abcd51c943a979184fb629d232602916af03e9ace010b2c4c30663"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "b9b5b7f8f47652080145f7bc792df529a671fea756fdf900952a55cb7e870496"
+      "sha256": "d38543c23f27c1bb517eeaa5c537b44673602e789eddc16f909ccd458f68a139"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -135,6 +140,15 @@
         "crates\\eval\\reports\\official-dmr-task-gate.json"
       ],
       "conclusion": "Published-comparable official DMR is still explicitly not ready."
+    },
+    {
+      "id": "dmr_500_failure_mode_classified",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\dmr-500-failure-mode-gate.json"
+      ],
+      "conclusion": "DMR 500 failure modes are classified into mutually exclusive categories; primary bottleneck is mapping policy."
     },
     {
       "id": "ranking_evidence_gate_passed",
@@ -314,6 +328,7 @@
         "crates\\eval\\reports\\external-comparison-task-gate.json",
         "crates\\eval\\reports\\deepseek-external-protocol-gate.json",
         "crates\\eval\\reports\\hosted-external-preconditions.json",
+        "crates\\eval\\reports\\dmr-500-failure-mode-gate.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\productization-decision-gate.json",
         "crates\\eval\\reports\\next-validation-action-gate.json",
@@ -430,6 +445,14 @@
         "raw_memory_content_committed": false,
         "generated_answers_committed": false
       },
+      "dmr_500_failure_mode_gate": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
       "long_horizon_task_gate": {},
       "productization_decision_gate": {
         "raw_records_committed": false,
@@ -470,6 +493,8 @@
     "hosted_external_ready": false,
     "deepseek_external_protocol_gate_passed": true,
     "phase6_external_validation_blocked_by_openai": false,
+    "dmr_500_failure_mode_gate_passed": true,
+    "dmr_500_primary_bottleneck": "mapping_rejected",
     "hosted_external_preconditions_passed": true,
     "hosted_external_run_allowed": false,
     "trend_alignment_exit_condition_complete": false,
@@ -502,6 +527,7 @@
       "Local non-external baseline health is passed.",
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
       "Ranking is a validated bottleneck; DMR / LongMemEval objective split is decided as validation-only, and current evidence supports no runtime default change.",
+      "DMR 500 failure modes are now classified: primary bottleneck is mapping (177/500), then retrieval (109), answer synthesis (83), and ranking (80); this is not an architecture failure.",
       "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
       "DeepSeek-first external validation is now gate-backed as a separate domestic protocol; OpenAI hosted parity remains only a reference lane.",
       "Hosted external preconditions are audited without recording secret values; DeepSeek-only fallback is not counted as official hosted comparison.",

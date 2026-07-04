@@ -1,0 +1,165 @@
+{
+  "schema_version": "king-synapse.dmr-500-failure-mode-gate.v1",
+  "generated_at": "2026-07-04T05:27:16.955751+00:00",
+  "runner": "scripts\\eval\\dmr_500_failure_mode_gate.py",
+  "git": {
+    "branch": "main",
+    "commit": "b303d8359a6d8a69f21929c9c4dba3e1a2e3da87",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "baseline_report": {
+      "path": "crates\\eval\\reports\\official-dmr-500.json",
+      "sha256": "edff5e36ce1450f68afb0074bf9c59dc6d87ba1ba01694817414b70122d68969"
+    },
+    "top_context_report": {
+      "path": "crates\\eval\\reports\\official-dmr-500-top-context-judge.json",
+      "sha256": "9341242cdfed25409762578c01d9102571ec715fd8c85a2e35fef0dc93c5a844"
+    },
+    "mapping_policy_review": {
+      "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+      "sha256": "0e7da9317d0605e0f6825b0b2dbc3dda0cc3f772c3578a8b322bd7ee983bb0b2"
+    },
+    "failure_mode_taxonomy": {
+      "path": "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+      "sha256": "3147377c464dc79dd1611e10d0d54e179834585b904251aa199078a4c241d6ca"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "scope": {
+    "dataset": "MemGPT/MSC-Self-Instruct DMR local official-style view",
+    "requested_samples": 500,
+    "scored_samples": 323,
+    "mapping_rejected_before_scoring": 177,
+    "scored_items_accounted": true,
+    "primary_categories_total": 500,
+    "retrieval_mode": "vectors-rerank",
+    "generator": "top-context-extractive",
+    "judge_model": "deepseek-v4-flash",
+    "accelerator": {
+      "requested": "cuda",
+      "king_synapse_accelerator": "cuda",
+      "cuda_device_id": "0",
+      "cuda_runtime": {
+        "path_added": true,
+        "root_recorded": false,
+        "root_exists": true,
+        "dll_dir_count": 9
+      },
+      "embedding": {
+        "batch_size": {
+          "value": "32",
+          "source": "argument"
+        },
+        "max_length": {
+          "value": "256",
+          "source": "argument"
+        }
+      },
+      "rerank_batch": {
+        "value": "32",
+        "source": "argument"
+      },
+      "rerank_max_length": {
+        "value": "256",
+        "source": "argument"
+      },
+      "directml_device_id": null
+    }
+  },
+  "primary_failure_mode_taxonomy": {
+    "mapping_rejected": {
+      "count": 177,
+      "share_of_requested": 35.4,
+      "share_of_scored": 54.8,
+      "class": "engineering_optimizable",
+      "description": "Answer not found in memory chunks under the pinned punctuation policy. Source: baseline skipped.answer_not_found_in_memory_chunks and mapping policy review rejected_by_punctuation."
+    },
+    "retrieval_top10_miss": {
+      "count": 109,
+      "share_of_requested": 21.8,
+      "share_of_scored": 33.75,
+      "class": "engineering_optimizable",
+      "description": "Judge incorrect and first_relevant_rank is None: no relevant context reached the top 10. Engineering surface is retrieval."
+    },
+    "ranking_not_top1": {
+      "count": 80,
+      "share_of_requested": 16.0,
+      "share_of_scored": 24.77,
+      "class": "engineering_optimizable",
+      "description": "Judge incorrect and first_relevant_rank >= 2: a relevant context reached the top 10 but was not ranked first. Engineering surface is ranking."
+    },
+    "answer_synthesis_failure": {
+      "count": 83,
+      "share_of_requested": 16.6,
+      "share_of_scored": 25.7,
+      "class": "engineering_optimizable",
+      "description": "Judge incorrect and first_relevant_rank == 1: the relevant context was already rank 1. Engineering surface is answer generation."
+    },
+    "judge_correct_success": {
+      "count": 51,
+      "share_of_requested": 10.2,
+      "share_of_scored": 15.79,
+      "class": "success",
+      "description": "llm_judge.correct is True regardless of rank or substring."
+    }
+  },
+  "secondary_diagnostics": {
+    "judge_lexical_mismatch": {
+      "count": 14,
+      "share_of_scored": 4.33,
+      "class": "design_boundary_scoring_policy",
+      "description": "Non-exclusive diagnostic: cases where the lexical substring policy and the LLM judge disagree. Not a primary category.",
+      "breakdown": {
+        "substring_false_judge_true": 13,
+        "substring_true_judge_false": 1,
+        "substring_true_judge_true": 38,
+        "substring_false_judge_false": 271
+      }
+    }
+  },
+  "cross_reference": {
+    "baseline_skipped_answer_not_found": 177,
+    "mapping_rejected_by_punctuation": 177,
+    "mapping_boundary_consistent": true,
+    "existing_taxonomy_schema": "king-synapse.dmr-failure-mode-taxonomy.v1",
+    "existing_lexical_vs_judge_matrix": {
+      "substring_false__judge_false": 271,
+      "substring_false__judge_true": 13,
+      "substring_true__judge_false": 1,
+      "substring_true__judge_true": 38
+    }
+  },
+  "status": {
+    "dmr_500_failure_mode_gate_passed": true,
+    "architecture_failure_supported": false,
+    "primary_bottleneck": "mapping_rejected",
+    "engineering_optimizable_count": 449,
+    "design_boundary_count": 14,
+    "success_count": 51,
+    "productization_allowed": false,
+    "runtime_default_change_allowed": false,
+    "classification_complete": true,
+    "scored_items_accounted": true,
+    "mapping_boundary_consistent": true
+  },
+  "read": {
+    "current_conclusion": "DMR 500 failure modes are now classified. The primary bottleneck is mapping policy (177/500), followed by retrieval (109), answer synthesis (83), and ranking (80). This is not an architecture failure; it is a set of engineering-optimizable bottlenecks concentrated in mapping, retrieval, and generation.",
+    "next_action": "Keep feature freeze. Use this classification to guide DMR mapping policy review and ranking optimization. Do not change runtime defaults from this report alone."
+  },
+  "limits": [
+    "This gate reads committed sanitized aggregate/per-query DMR reports only.",
+    "It does not rerun retrieval, answer generation, LLM judges, hosted adapters, or product code.",
+    "It does not inspect raw questions, answers, dialogs, memory content, generated answers, prompts, responses, or API keys.",
+    "The gate passing means the failure-mode classification is complete, not that DMR performance is good.",
+    "The judge_lexical_mismatch diagnostic is non-exclusive and overlaps the primary categories.",
+    "This report does not change memory schema, cognitive layers, CLI/MCP, retrieval, ranking, or generator defaults."
+  ]
+}

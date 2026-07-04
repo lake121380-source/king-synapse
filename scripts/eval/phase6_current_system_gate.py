@@ -100,6 +100,11 @@ def parse_args() -> argparse.Namespace:
         default=root / "crates/eval/reports/hosted-external-preconditions.json",
     )
     parser.add_argument(
+        "--dmr-500-failure-mode-gate",
+        type=Path,
+        default=root / "crates/eval/reports/dmr-500-failure-mode-gate.json",
+    )
+    parser.add_argument(
         "--long-horizon-task-gate",
         type=Path,
         default=root / "crates/eval/reports/long-horizon-task-gate.json",
@@ -241,6 +246,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "hosted_external_preconditions": normalize_path_arg(
             args.hosted_external_preconditions
         ),
+        "dmr_500_failure_mode_gate": normalize_path_arg(
+            args.dmr_500_failure_mode_gate
+        ),
         "long_horizon_task_gate": normalize_path_arg(args.long_horizon_task_gate),
         "productization_decision_gate": normalize_path_arg(
             args.productization_decision_gate
@@ -265,6 +273,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     external = reports["external_comparison_task_gate"]
     deepseek_external = reports["deepseek_external_protocol_gate"]
     hosted_preconditions = reports["hosted_external_preconditions"]
+    dmr_500_failure_mode = reports["dmr_500_failure_mode_gate"]
     long_horizon = reports["long_horizon_task_gate"]
     productization = reports["productization_decision_gate"]
     next_action = reports["next_validation_action_gate"]
@@ -414,6 +423,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[paths["official_dmr_task_gate"]],
             conclusion="Published-comparable official DMR is still explicitly not ready.",
             failure="Published-comparable official DMR appears ready and needs a separate release decision.",
+        ),
+        check(
+            "dmr_500_failure_mode_classified",
+            bool(safe_get(dmr_500_failure_mode, ["status", "dmr_500_failure_mode_gate_passed"])),
+            evidence=[paths["dmr_500_failure_mode_gate"]],
+            conclusion="DMR 500 failure modes are classified into mutually exclusive categories; primary bottleneck is mapping policy.",
+            failure="DMR 500 failure mode classification is missing or incomplete.",
         ),
         check(
             "ranking_evidence_gate_passed",
@@ -637,6 +653,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "hosted_external_ready": hosted_ready,
             "deepseek_external_protocol_gate_passed": deepseek_external_protocol_passed,
             "phase6_external_validation_blocked_by_openai": phase6_external_blocked_by_openai,
+            "dmr_500_failure_mode_gate_passed": bool(safe_get(dmr_500_failure_mode, ["status", "dmr_500_failure_mode_gate_passed"])),
+            "dmr_500_primary_bottleneck": safe_get(dmr_500_failure_mode, ["status", "primary_bottleneck"]),
             "hosted_external_preconditions_passed": hosted_preconditions_passed,
             "hosted_external_run_allowed": hosted_run_allowed,
             "trend_alignment_exit_condition_complete": not trend_alignment_exit_condition_not_ready,
@@ -670,6 +688,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local non-external baseline health is passed.",
                 "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
                 "Ranking is a validated bottleneck; DMR / LongMemEval objective split is decided as validation-only, and current evidence supports no runtime default change.",
+                "DMR 500 failure modes are now classified: primary bottleneck is mapping (177/500), then retrieval (109), answer synthesis (83), and ranking (80); this is not an architecture failure.",
                 "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
                 "DeepSeek-first external validation is now gate-backed as a separate domestic protocol; OpenAI hosted parity remains only a reference lane.",
                 "Hosted external preconditions are audited without recording secret values; DeepSeek-only fallback is not counted as official hosted comparison.",
