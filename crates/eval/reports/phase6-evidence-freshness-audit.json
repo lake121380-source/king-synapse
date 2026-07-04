@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.phase6-evidence-freshness-audit.v1",
-  "generated_at": "2026-07-04T03:54:59.784511+00:00",
+  "generated_at": "2026-07-04T04:07:39.371239+00:00",
   "runner": "scripts\\eval\\phase6_evidence_freshness_audit.py",
   "git": {
     "branch": "main",
-    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
     "origin_main_delta": "0\t0"
   },
   "raw_records_committed": false,
@@ -18,9 +18,24 @@
       "report": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
       "schema_version": "king-synapse.phase6-requirements-audit.v1",
-      "generated_at": "2026-07-04T03:54:55.576005+00:00",
+      "generated_at": "2026-07-04T04:07:35.022254+00:00",
       "runner": "scripts\\eval\\phase6_requirements_audit.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 37,
+      "status_counts": {
+        "cycle_lag": 2,
+        "fresh": 35
+      },
+      "fresh": true,
+      "stale_inputs": []
+    },
+    {
+      "report": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
+      "exists": true,
+      "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
+      "generated_at": "2026-07-04T04:07:35.714534+00:00",
+      "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
       "input_count": 36,
       "status_counts": {
         "cycle_lag": 2,
@@ -30,27 +45,12 @@
       "stale_inputs": []
     },
     {
-      "report": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
-      "exists": true,
-      "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
-      "generated_at": "2026-07-04T03:54:56.254648+00:00",
-      "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
-      "input_count": 35,
-      "status_counts": {
-        "cycle_lag": 2,
-        "fresh": 33
-      },
-      "fresh": true,
-      "stale_inputs": []
-    },
-    {
       "report": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
       "schema_version": "king-synapse.official-dmr-task-gate.v1",
-      "generated_at": "2026-07-04T03:54:54.244804+00:00",
+      "generated_at": "2026-07-04T04:07:33.690399+00:00",
       "runner": "scripts\\eval\\official_dmr_task_gate.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
       "input_count": 12,
       "status_counts": {
         "fresh": 12
@@ -59,15 +59,43 @@
       "stale_inputs": []
     },
     {
+      "report": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+      "exists": true,
+      "schema_version": "king-synapse.longmem-dmr-trend-alignment.v1",
+      "generated_at": "2026-07-04T04:07:32.234331+00:00",
+      "runner": "scripts\\eval\\longmem_dmr_trend_alignment.py",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 4,
+      "status_counts": {
+        "fresh": 4
+      },
+      "fresh": true,
+      "stale_inputs": []
+    },
+    {
+      "report": "crates\\eval\\reports\\ranking-objective-split-decision.json",
+      "exists": true,
+      "schema_version": "king-synapse.ranking-objective-split-decision.v1",
+      "generated_at": "2026-07-04T04:07:32.668115+00:00",
+      "runner": "scripts\\eval\\ranking_objective_split_decision.py",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 6,
+      "status_counts": {
+        "fresh": 6
+      },
+      "fresh": true,
+      "stale_inputs": []
+    },
+    {
       "report": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
       "schema_version": "king-synapse.ranking-task-gate.v1",
-      "generated_at": "2026-07-03T17:22:17.630675+00:00",
+      "generated_at": "2026-07-04T04:07:33.143062+00:00",
       "runner": "scripts\\eval\\ranking_task_gate.py",
-      "git_commit_recorded": "cc9e871b180b3bb3996d129a3d868d83d46da69e",
-      "input_count": 9,
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 10,
       "status_counts": {
-        "fresh": 9
+        "fresh": 10
       },
       "fresh": true,
       "stale_inputs": []
@@ -76,9 +104,9 @@
       "report": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
       "schema_version": "king-synapse.external-comparison-task-gate.v1",
-      "generated_at": "2026-07-04T03:54:54.863342+00:00",
+      "generated_at": "2026-07-04T04:07:34.309139+00:00",
       "runner": "scripts\\eval\\external_comparison_task_gate.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
       "input_count": 4,
       "status_counts": {
         "fresh": 4
@@ -104,12 +132,12 @@
       "report": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
       "schema_version": "king-synapse.productization-decision-gate.v1",
-      "generated_at": "2026-07-04T03:54:56.578288+00:00",
+      "generated_at": "2026-07-04T04:07:36.040725+00:00",
       "runner": "scripts\\eval\\productization_decision_gate.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
-      "input_count": 12,
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 13,
       "status_counts": {
-        "fresh": 12
+        "fresh": 13
       },
       "fresh": true,
       "stale_inputs": []
@@ -118,9 +146,9 @@
       "report": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
       "schema_version": "king-synapse.next-validation-action-gate.v1",
-      "generated_at": "2026-07-04T03:54:57.010822+00:00",
+      "generated_at": "2026-07-04T04:07:36.478592+00:00",
       "runner": "scripts\\eval\\next_validation_action_gate.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
       "input_count": 6,
       "status_counts": {
         "fresh": 6
@@ -132,12 +160,12 @@
       "report": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
       "schema_version": "king-synapse.readme-claims-support-audit.v1",
-      "generated_at": "2026-07-04T03:54:57.697132+00:00",
+      "generated_at": "2026-07-04T04:07:37.160194+00:00",
       "runner": "scripts\\eval\\readme_claims_support_audit.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
-      "input_count": 22,
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 23,
       "status_counts": {
-        "fresh": 22
+        "fresh": 23
       },
       "fresh": true,
       "stale_inputs": []
@@ -146,12 +174,12 @@
       "report": "crates\\eval\\reports\\phase6-current-system-gate.json",
       "exists": true,
       "schema_version": "king-synapse.phase6-current-system-gate.v1",
-      "generated_at": "2026-07-04T03:54:58.814312+00:00",
+      "generated_at": "2026-07-04T04:07:38.321169+00:00",
       "runner": "scripts\\eval\\phase6_current_system_gate.py",
-      "git_commit_recorded": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
-      "input_count": 13,
+      "git_commit_recorded": "374ec317328ad9429d465845fd9f96f9576c0d21",
+      "input_count": 14,
       "status_counts": {
-        "fresh": 13
+        "fresh": 14
       },
       "fresh": true,
       "stale_inputs": []
@@ -159,7 +187,7 @@
   ],
   "status": {
     "evidence_freshness_audit_passed": true,
-    "reports_checked": 10,
+    "reports_checked": 12,
     "reports_with_no_inputs": [],
     "stale_report_count": 0,
     "stale_reports": [],
@@ -170,7 +198,7 @@
     ],
     "input_status_counts": {
       "cycle_lag": 4,
-      "fresh": 148
+      "fresh": 164
     }
   },
   "read": {

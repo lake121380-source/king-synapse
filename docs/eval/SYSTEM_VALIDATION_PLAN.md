@@ -272,8 +272,9 @@ finds a blocking bug.
 | 12 | Explain the DMR mapping boundary. | Done as `dmr-mapping-boundary-impact.json`: punctuation-rejected rows are mostly diagnostic-token mapping/scoring boundaries, not empty memory chunks. |
 | 13 | Check DMR top-context scale stability and paired significance. | Done as `dmr-top-context-significance.json`: judge deltas are positive and exact paired tests are significant on DMR 50, 200, and the 500-request / 323-scored view. |
 | 14 | Audit LongMemEval / DMR trend alignment. | Done as `longmem-dmr-trend-alignment.json`: DMR top-context generation is stable, but cross-dataset ranking trends are not aligned enough for a global default. |
-| 15 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
-| 16 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 15 | Decide whether the LongMemEval / DMR ranking conflict is an architecture failure or objective split. | Done as `ranking-objective-split-decision.json`: the conflict is classified as a validation-only ranking-objective split, not a core architecture failure or runtime-default permission. |
+| 16 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
+| 17 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -376,6 +377,11 @@ finds a blocking bug.
   top-context generation direction but marks the cross-dataset ranking exit
   condition incomplete: pool-50 -> pool-100 has mixed Recall@10 directions and
   no screened guard is ready.
+- Ranking-objective split is recorded at
+  `docs/eval/RANKING_OBJECTIVE_SPLIT_DECISION.md` and
+  `crates/eval/reports/ranking-objective-split-decision.json`. It classifies
+  the DMR / LongMemEval ranking conflict as a validation-only objective split,
+  not as a core architecture failure and not as a runtime-default permission.
 - Official-style DMR 50 generator ablation is recorded at
   `crates/eval/reports/official-dmr-50-top-context-extractive.json` and
   `crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`. With

@@ -250,6 +250,11 @@ It separates two conclusions: DMR top-context answer generation is stable, but
 ranking trends are not aligned enough for a global default. In the expanded
 pool-50 -> pool-100 check, DMR has two positive Recall@10 views and one
 negative view, while LongMemEval has one positive view and two negative views.
+The follow-up
+[RANKING_OBJECTIVE_SPLIT_DECISION.md](docs/eval/RANKING_OBJECTIVE_SPLIT_DECISION.md)
+records the ranking-objective split: this is a validation boundary, not a
+core architecture failure, and it still does not permit a runtime default
+change.
 
 So answer synthesis is now a real optimization target, but it is still
 eval-only evidence. The DMR 50, 200, and 500-request top-context generators
@@ -402,6 +407,7 @@ cargo build --release
 | `docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md` | DMR mapping-boundary impact audit for punctuation-rejected rows. |
 | `docs/eval/DMR_TOP_CONTEXT_SIGNIFICANCE.md` | Paired significance audit for top-context vs extractive DMR results. |
 | `docs/eval/LONGMEM_DMR_TREND_ALIGNMENT.md` | LongMemEval / DMR trend-alignment audit for generator and ranking conclusions. |
+| `docs/eval/RANKING_OBJECTIVE_SPLIT_DECISION.md` | DMR / LongMemEval ranking-objective split decision, with runtime defaults still blocked. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

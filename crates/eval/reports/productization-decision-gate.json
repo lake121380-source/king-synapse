@@ -1,47 +1,52 @@
 {
   "schema_version": "king-synapse.productization-decision-gate.v1",
-  "generated_at": "2026-07-04T03:54:56.578288+00:00",
+  "generated_at": "2026-07-04T04:07:36.040725+00:00",
   "runner": "scripts\\eval\\productization_decision_gate.py",
   "git": {
     "branch": "main",
-    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "4132f21b8c8fa28c3ab3fdba74e2fab94b010df582af47947cf7088ef07c2019"
+      "sha256": "97ac4eb25976ea946f731038e5706a19b0844193fee1ef2ba0cb0ed36a4504d9"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "1e1d40f478cd0b8f2fe3eed4b6fb57bcbf84bdd34312f5a9a47f33896de5d4eb"
+      "sha256": "18bd6a69925f94b6821996a9e3cc88dd3892d179d61c4262f599631f67605199"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "42398a5373f1b6b48b65c7e7852cb21fe9b46d50769f3f6300840cbf6f68001b"
+      "sha256": "e1589d6a3c26723b3d4dbb9efe408b5de44f253ef2fac5f17e30d9e20c672599"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "b1ddb29b301e83194bf5cc4bedc505d2e087e7bc00266a28874e0532a2b80327"
+      "sha256": "c1d0b060116ca2215b62c65673d663654b2abb18c1444fec157931181fa97ee0"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+      "sha256": "a0315303f6e1caba7f5a7faab965f167b4ef67350a6e6851eb346836f3f830c0"
     },
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "89492b9ce1234b5b6a1815b270949ed29f8e4bccf9645c10d5a8d082d4f3641b"
+      "sha256": "e01acbd35e07b9a18810208fdb3fbe6b4134b7a07db559531d49b4719fd0c937"
+    },
+    "ranking_objective_split_decision": {
+      "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
+      "exists": true,
+      "sha256": "98da1e5fee9f26cfbdbad5e80b7342b41b1bfc259577d687c1cdf45d615866c7"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "cbea75331d27d2cdffaba5a28f26e97a1e61fcbd2e08cae31f91e33fddc6b631"
+      "sha256": "d5d3a439cb642d6c3a41ca561ae5e9c28467bb2e3a9c47c27035e6419acc5c8e"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -56,12 +61,12 @@
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "263834b404b20e76f65b167aeea9394f4fbcdee396343843fb8d44a89b082e1a"
+      "sha256": "c4c2b25f8773a42fcc7fb6177a38d635225d003309e62bebda964fe42dab5b77"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "01b1f41e27302554377276047ad0bb2b3641c14482ef2d58ac791bbf619aca87"
+      "sha256": "8acb5a0bfe50c5ad2caaa85b445574077805a1e73dccb6ee03b49ec3557a5b52"
     },
     "demo_doc": {
       "path": "docs\\DEMO.md",
@@ -108,6 +113,16 @@
         "generated_answers_committed": false
       },
       "longmem_dmr_trend_alignment": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "raw_response_committed": false,
+        "prompt_text_recorded": false
+      },
+      "ranking_objective_split_decision": {
         "raw_records_committed": false,
         "raw_questions_committed": false,
         "raw_answers_committed": false,
@@ -216,12 +231,14 @@
       "status": "not_ready",
       "evidence": [
         "crates\\eval\\reports\\ranking-task-gate.json",
-        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json"
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-split-decision.json"
       ],
-      "conclusion": "Ranking is a validated bottleneck, but LongMemEval / DMR trend alignment is not complete and no safe global runtime ranking default is ready.",
+      "conclusion": "Ranking is a validated bottleneck and the DMR / LongMemEval objective split is decided as validation-only, but no safe global runtime ranking default is ready.",
       "remaining": [
-        "The Phase 6 trend-alignment exit condition is not complete. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and either decide an explicit DMR/LongMemEval objective split or find a new answer-free ordering signal.",
-        "Find a cross-dataset safe ordering signal or explicitly split DMR and LongMemEval objectives.",
+        "The Phase 6 trend-alignment exit condition is not complete for a global runtime default. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and require either an explicit DMR/LongMemEval objective split or a new answer-free ordering signal.",
+        "The LongMemEval / DMR ranking conflict is best treated as an objective split, not as a core architecture failure. DMR top-context answer generation is stable, but cross-dataset ranking evidence does not support a global runtime default.",
+        "Find a cross-dataset safe ordering signal or separately validate objective-specific ranking policies.",
         "Keep memory schema, cognitive layers, CLI, and runtime ranking defaults frozen."
       ]
     },
@@ -260,6 +277,7 @@
         "crates\\eval\\reports\\official-dmr-task-gate.json",
         "crates\\eval\\reports\\ranking-task-gate.json",
         "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-split-decision.json",
         "crates\\eval\\reports\\external-comparison-task-gate.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\phase6-performance-profile.json"
@@ -346,7 +364,7 @@
       "Local cognitive-trace advantage is supported on the shared fixture.",
       "Pinned extractive official-style DMR is locally executable and judge-backed.",
       "DMR 50/200/500-request top-context judge scaling is complete.",
-      "Ranking bottlenecks are validated without adopting a runtime default.",
+      "Ranking bottlenecks are validated and the DMR / LongMemEval objective split is decided without adopting a runtime default.",
       "Deterministic long-horizon fixture stability is gate-backed.",
       "A disposable CLI demo exists for local explanation."
     ],
@@ -355,6 +373,7 @@
       "DMR answer quality and mapping coverage are not ready for product claims.",
       "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
       "No safe global runtime ranking default exists.",
+      "Objective-specific ranking policies are not validated for runtime use.",
       "Public real-world long-memory stability is not validated.",
       "GPU/latency acceptance threshold is not adopted.",
       "Web demo, API server, Docker, and v0.1 packaging should not start yet."

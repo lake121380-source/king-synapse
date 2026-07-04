@@ -196,7 +196,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard": root
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
-        "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
         "long_horizon_task_gate": root
         / "crates/eval/reports/long-horizon-task-gate.json",
     }
@@ -204,7 +203,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     significance = load_json(paths["dmr_top_context_significance"])
     objective_conflict = load_json(paths["ranking_objective_conflict"])
     guard = load_json(paths["ranking_pool_signal_guard"])
-    ranking_gate = load_json(paths["ranking_task_gate"])
     long_horizon_gate = load_json(paths["long_horizon_task_gate"])
 
     objective_views = [
@@ -225,10 +223,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         top_context_summary.get("all_scales_judge_accuracy_delta_positive")
         and top_context_summary.get("all_scales_mcnemar_significant_at_0_05")
     )
-    ranking_global_default_ready = bool(
-        ranking_gate.get("status", {}).get("safe_global_ranking_default_ready")
-    )
     guard_has_safe_default = bool(guard.get("read", {}).get("safe_guard_ids"))
+    ranking_global_default_ready = bool(
+        objective_conflict.get("read", {}).get("global_default_candidate") is not None
+        and guard_has_safe_default
+    )
 
     trend_alignment_complete = (
         top_context_stable
@@ -274,7 +273,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "guard_dataset_summary": guard_dataset_summary,
             "safe_global_ranking_default_ready": ranking_global_default_ready,
             "safe_guard_ids": guard.get("read", {}).get("safe_guard_ids", []),
-            "ranking_task_gate": ranking_gate.get("status", {}),
         },
         "long_horizon_context": {
             "long_horizon_gate": long_horizon_gate.get("status", {}),
@@ -291,7 +289,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "published_comparable_dmr_mapping_policy_not_final",
                 "dmr_answer_quality_not_ready",
                 "no_safe_global_ranking_default",
-                "longmem_dmr_ranking_objective_split_not_decided",
+                "longmem_dmr_objective_split_or_new_signal_required",
                 "public_real_world_long_memory_not_validated",
             ],
         },
@@ -312,11 +310,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "No screened pool-signal guard is ready for implementation.",
             ],
             "decision": (
-                "The Phase 6 trend-alignment exit condition is not complete. "
-                "The correct evidence-backed decision is validation-only: keep "
-                "feature freeze, do not change runtime defaults, and either "
-                "decide an explicit DMR/LongMemEval objective split or find a "
-                "new answer-free ordering signal."
+                "The Phase 6 trend-alignment exit condition is not complete "
+                "for a global runtime default. The correct evidence-backed "
+                "decision is validation-only: keep feature freeze, do not "
+                "change runtime defaults, and require either an explicit "
+                "DMR/LongMemEval objective split or a new answer-free ordering "
+                "signal."
             ),
             "next_action": (
                 "Continue hosted external comparison when credentials/endpoints are "

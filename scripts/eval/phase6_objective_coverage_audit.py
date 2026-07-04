@@ -204,6 +204,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
         "longmem_dmr_trend_alignment": root
         / "crates/eval/reports/longmem-dmr-trend-alignment.json",
+        "ranking_objective_split_decision": root
+        / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_latest": root
         / "crates/eval/reports/external-comparison-latest.json",
         "external_comparison_hosted": root
@@ -236,6 +238,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     ranking_conflict = load_json(paths["ranking_objective_conflict"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
     trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
+    split_decision = load_json(paths["ranking_objective_split_decision"])
     external_latest = load_json(paths["external_comparison_latest"])
     external_hosted = load_json(paths["external_comparison_hosted"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
@@ -477,6 +480,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                         report_path(paths["ranking_objective_conflict"]),
                         report_path(paths["ranking_pool_signal_guard"]),
                         report_path(paths["longmem_dmr_trend_alignment"]),
+                        report_path(paths["ranking_objective_split_decision"]),
                     ],
                     conclusion=(
                         "Current reports cover the named one-variable ranking families "
@@ -492,11 +496,23 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 requirement(
                     item="Check whether LongMemEval and DMR trends stay consistent as samples expand.",
                     status="not_ready",
-                    evidence=[report_path(paths["longmem_dmr_trend_alignment"])],
+                    evidence=[
+                        report_path(paths["longmem_dmr_trend_alignment"]),
+                        report_path(paths["ranking_objective_split_decision"]),
+                    ],
                     conclusion=safe_get(trend_alignment, ["read", "primary_result"], ""),
                     remaining=[
-                        safe_get(trend_alignment, ["read", "decision"], "")
+                        safe_get(trend_alignment, ["read", "decision"], ""),
+                        safe_get(split_decision, ["read", "current_conclusion"], ""),
                     ],
+                ),
+                requirement(
+                    item="Decide whether DMR / LongMemEval ranking conflict is an architecture failure or objective split.",
+                    status="satisfied",
+                    evidence=[report_path(paths["ranking_objective_split_decision"])],
+                    conclusion=safe_get(
+                        split_decision, ["read", "current_conclusion"], ""
+                    ),
                 ),
                 requirement(
                     item="Find a safe global ranking default.",
@@ -505,6 +521,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                         report_path(paths["ranking_objective_conflict"]),
                         report_path(paths["ranking_pool_signal_guard"]),
                         report_path(paths["longmem_dmr_trend_alignment"]),
+                        report_path(paths["ranking_objective_split_decision"]),
                         report_path(paths["ranking_task_gate"]),
                     ],
                     conclusion=safe_get(
@@ -513,14 +530,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                         "No safe global runtime ranking default is ready.",
                     ),
                     remaining=[
-                        "Need a new answer-free ordering signal or an explicit DMR/LongMemEval objective split."
+                        "Need a new answer-free ordering signal or separately validated objective-specific policies."
                     ],
                 ),
             ],
             conclusion=(
                 "Ranking is a validated bottleneck, but no runtime default change is supported."
             ),
-            next_action=safe_get(ranking_conflict, ["read", "next_ranking_gate"], ""),
+            next_action=safe_get(split_decision, ["read", "next_action"], ""),
         ),
         phase(
             phase_id="4_external_fair_comparison",

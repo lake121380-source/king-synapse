@@ -107,6 +107,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "pool_signal_guard": root
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "objective_split_decision": root
+        / "crates/eval/reports/ranking-objective-split-decision.json",
         "failure_dmr_50": root / "crates/eval/reports/ranking-failure-audit-dmr-50.json",
         "failure_dmr_200": root
         / "crates/eval/reports/ranking-failure-audit-dmr-200.json",
@@ -208,6 +210,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
 
     conflict = reports["objective_conflict"]
     guard = reports["pool_signal_guard"]
+    split_decision = reports["objective_split_decision"]
     failure_50 = reports["failure_dmr_50"]
     failure_200 = reports["failure_dmr_200"]
     transition_50 = reports["transition_dmr_50"]
@@ -219,6 +222,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     guard_read = guard.get("read", {})
     guard_summaries = guard.get("guard_summaries", [])
     safe_guard_ids = guard_read.get("safe_guard_ids", [])
+    objective_split_decided = bool(
+        safe_get(split_decision, ["status", "dmr_longmem_objective_split_decided"])
+    )
     guard_passes = [
         guard_item.get("id")
         for guard_item in guard_summaries
@@ -326,6 +332,16 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
         ),
         item(
+            "dmr_longmem_objective_split_decided",
+            "satisfied" if objective_split_decided else "failed",
+            evidence=[paths["objective_split_decision"]],
+            conclusion=(
+                "DMR / LongMemEval objective split is explicitly decided as validation-only."
+                if objective_split_decided
+                else "DMR / LongMemEval objective split is not decided."
+            ),
+        ),
+        item(
             "latency_threshold_not_adopted",
             "satisfied" if latency_not_adopted else "failed",
             evidence=[paths["pool_signal_guard"]],
@@ -426,8 +442,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "hard_failures": hard_failures,
             "open_gates": [
                 "no_safe_global_ranking_default",
-                "new_answer_free_ordering_signal_needed",
-                "dmr_longmem_objective_split_not_decided",
+                "objective_specific_ranking_policy_not_validated",
+                "new_answer_free_ordering_signal_needed_for_global_default",
                 "latency_acceptance_threshold_not_adopted",
             ],
         },
@@ -446,10 +462,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Vector weight improves coverage only with MRR/top-1 tradeoffs.",
                 "Reranker-pool preferences diverge between DMR and LongMemEval.",
                 "Pool-signal guards have no screened safe default.",
+                "DMR / LongMemEval objective split is decided as validation-only, not as a runtime default.",
             ],
-            "next_action": conflict_read.get(
-                "next_ranking_gate",
-                "Use a new answer-free ordering signal or an explicit DMR/LongMemEval objective split before any runtime adoption.",
+            "next_action": safe_get(
+                split_decision,
+                ["read", "next_action"],
+                conflict_read.get(
+                    "next_ranking_gate",
+                    "Use a new answer-free ordering signal or keep objective-specific policies evaluation-only before any runtime adoption.",
+                ),
             ),
         },
         "limits": [

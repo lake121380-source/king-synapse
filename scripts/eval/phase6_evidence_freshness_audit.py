@@ -22,6 +22,8 @@ DEFAULT_REPORTS = [
     "crates/eval/reports/phase6-requirements-audit.json",
     "crates/eval/reports/phase6-objective-coverage-audit.json",
     "crates/eval/reports/official-dmr-task-gate.json",
+    "crates/eval/reports/longmem-dmr-trend-alignment.json",
+    "crates/eval/reports/ranking-objective-split-decision.json",
     "crates/eval/reports/ranking-task-gate.json",
     "crates/eval/reports/external-comparison-task-gate.json",
     "crates/eval/reports/long-horizon-task-gate.json",

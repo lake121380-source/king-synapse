@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.longmem-dmr-trend-alignment.v1",
-  "generated_at": "2026-07-04T03:54:53.699616+00:00",
+  "generated_at": "2026-07-04T04:07:32.234331+00:00",
   "runner": "scripts\\eval\\longmem_dmr_trend_alignment.py",
   "git": {
     "branch": "main",
-    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -22,11 +22,6 @@
       "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
       "exists": true,
       "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
-    },
-    "ranking_task_gate": {
-      "path": "crates\\eval\\reports\\ranking-task-gate.json",
-      "exists": true,
-      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -331,20 +326,7 @@
       }
     },
     "safe_global_ranking_default_ready": false,
-    "safe_guard_ids": [],
-    "ranking_task_gate": {
-      "ranking_evidence_gate_passed": true,
-      "ranking_validated_bottleneck": true,
-      "safe_global_ranking_default_ready": false,
-      "runtime_ranking_change_allowed": false,
-      "hard_failures": [],
-      "open_gates": [
-        "no_safe_global_ranking_default",
-        "new_answer_free_ordering_signal_needed",
-        "dmr_longmem_objective_split_not_decided",
-        "latency_acceptance_threshold_not_adopted"
-      ]
-    }
+    "safe_guard_ids": []
   },
   "long_horizon_context": {
     "long_horizon_gate": {
@@ -375,7 +357,7 @@
       "published_comparable_dmr_mapping_policy_not_final",
       "dmr_answer_quality_not_ready",
       "no_safe_global_ranking_default",
-      "longmem_dmr_ranking_objective_split_not_decided",
+      "longmem_dmr_objective_split_or_new_signal_required",
       "public_real_world_long_memory_not_validated"
     ]
   },
@@ -391,7 +373,7 @@
       "Pool-50 -> pool-100 expanded views are mixed: DMR 200/500 improve Recall@10 while DMR 50 and LongMem 50/200 regress; LongMem 500 improves but top-1 falls.",
       "No screened pool-signal guard is ready for implementation."
     ],
-    "decision": "The Phase 6 trend-alignment exit condition is not complete. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and either decide an explicit DMR/LongMemEval objective split or find a new answer-free ordering signal.",
+    "decision": "The Phase 6 trend-alignment exit condition is not complete for a global runtime default. The correct evidence-backed decision is validation-only: keep feature freeze, do not change runtime defaults, and require either an explicit DMR/LongMemEval objective split or a new answer-free ordering signal.",
     "next_action": "Continue hosted external comparison when credentials/endpoints are configured; otherwise continue no-model failure analysis without runtime or product changes."
   },
   "limits": [

@@ -255,6 +255,10 @@ DMR boundary:
   expanded-trend exit condition. It supports the DMR top-context generator
   direction, but says LongMemEval and DMR ranking trends are not aligned enough
   for a global runtime default.
+- `crates/eval/reports/ranking-objective-split-decision.json` records the
+  follow-up decision. The DMR / LongMemEval ranking-objective split is now
+  explicitly decided as validation-only: it is not a core architecture failure,
+  and it does not allow a runtime ranking default.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -337,6 +341,12 @@ The LongMemEval / DMR trend-alignment audit keeps that boundary honest: DMR
 answer generation and cross-dataset ranking are different claims. The former is
 supported locally; the latter still requires an explicit objective split or a
 new answer-free ordering signal before any runtime default change.
+The ranking-objective split decision closes the ambiguous part of that read:
+the conflict is now classified as an objective split, not as a Synapse design
+failure. DMR ranking work should optimize answer-bearing context placement and
+answer synthesis under local official-style DMR, while LongMemEval ranking work
+should protect long-memory retrieval stability. Both remain validation-only;
+neither becomes a runtime default.
 
 Long-horizon cognitive validation:
 

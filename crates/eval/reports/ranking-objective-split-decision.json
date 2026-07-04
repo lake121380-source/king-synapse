@@ -1,0 +1,483 @@
+{
+  "schema_version": "king-synapse.ranking-objective-split-decision.v1",
+  "generated_at": "2026-07-04T04:07:32.668115+00:00",
+  "runner": "scripts\\eval\\ranking_objective_split_decision.py",
+  "git": {
+    "branch": "main",
+    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "trend_alignment": {
+      "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+      "exists": true,
+      "sha256": "e01acbd35e07b9a18810208fdb3fbe6b4134b7a07db559531d49b4719fd0c937"
+    },
+    "objective_conflict": {
+      "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+      "exists": true,
+      "sha256": "d13faef56a19309fc0b6c67aa6f958f2ff7582be985434e6823abd23c629a20b"
+    },
+    "pool_signal_guard": {
+      "path": "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+      "exists": true,
+      "sha256": "929f18a10b3df66047c648fec2356c1bbdbd8716c570e448a43015bb38165bb0"
+    },
+    "dmr_failure_taxonomy": {
+      "path": "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+      "exists": true,
+      "sha256": "3147377c464dc79dd1611e10d0d54e179834585b904251aa199078a4c241d6ca"
+    },
+    "dmr_top_context_significance": {
+      "path": "crates\\eval\\reports\\dmr-top-context-significance.json",
+      "exists": true,
+      "sha256": "e1d84f0796408954639e8d808840d6ec5d3658112c1f798f07632c2be52de4de"
+    },
+    "long_horizon_task_gate": {
+      "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
+      "exists": true,
+      "sha256": "7e719e2bf0d5597812ed445344a333ba727207ea4ae0985412e7ef5fb93fad16"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "raw_policy": {
+    "clean": true,
+    "details": {
+      "trend_alignment": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "prompt_text_recorded": false,
+        "raw_response_committed": false
+      },
+      "objective_conflict": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "pool_signal_guard": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false
+      },
+      "dmr_failure_taxonomy": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "prompt_text_recorded": false,
+        "raw_response_committed": false
+      },
+      "dmr_top_context_significance": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false,
+        "prompt_text_recorded": false,
+        "raw_response_committed": false
+      },
+      "long_horizon_task_gate": {}
+    }
+  },
+  "checks": [
+    {
+      "id": "trend_alignment_audit_available",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json"
+      ],
+      "conclusion": "LongMemEval / DMR trend-alignment audit is available."
+    },
+    {
+      "id": "cross_dataset_ranking_conflict_present",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json"
+      ],
+      "conclusion": "Cross-dataset ranking evidence contains conflicts/tradeoffs and is not consistent enough for a global default."
+    },
+    {
+      "id": "dmr_answer_generation_separate_from_ranking",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\dmr-top-context-significance.json"
+      ],
+      "conclusion": "DMR top-context answer generation is supported separately from cross-dataset ranking."
+    },
+    {
+      "id": "no_global_default_candidate",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json"
+      ],
+      "conclusion": "Objective-conflict audit reports no global default candidate."
+    },
+    {
+      "id": "no_safe_pool_signal_guard",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json"
+      ],
+      "conclusion": "Pool-signal guard audit reports no safe screened guard."
+    },
+    {
+      "id": "public_longmem_still_not_ready",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Public real-world long-memory evidence remains not ready, so LongMemEval protections cannot be weakened for product claims."
+    },
+    {
+      "id": "raw_or_generated_data_not_committed",
+      "status": "passed",
+      "evidence": [
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
+        "crates\\eval\\reports\\ranking-pool-signal-guard-audit-dmr-longmem.json",
+        "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+        "crates\\eval\\reports\\dmr-top-context-significance.json",
+        "crates\\eval\\reports\\long-horizon-task-gate.json"
+      ],
+      "conclusion": "Audited inputs do not record committed raw records, prompts, answers, dialogs, memory content, generated answers, or raw responses."
+    }
+  ],
+  "evidence_summary": {
+    "objective_alignment_counts": {
+      "conflict": 1,
+      "flat": 1,
+      "tradeoff": 2
+    },
+    "ranking_consistent_enough_for_global_default": false,
+    "global_default_candidate": null,
+    "safe_guard_ids": [],
+    "guard_dataset_summary": {
+      "dmr": {
+        "views": [
+          {
+            "dataset_key": "dmr_200",
+            "dataset_id": "dmr",
+            "sample_size": 200,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.005167,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.011369,
+            "mrr_direction": "positive",
+            "top1_delta": 3,
+            "top1_direction": "positive",
+            "retrieval_miss_delta": -5,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 558.9934,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 2,
+              "miss_unchanged": 49,
+              "promoted_to_top1": 5,
+              "recovered_to_top10": 7,
+              "stable_top1": 72,
+              "suppressed_from_top10": 7,
+              "top10_preserved": 58
+            }
+          },
+          {
+            "dataset_key": "dmr_500_request_323_scored",
+            "dataset_id": "dmr",
+            "sample_size": 323,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.001961,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.00418,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": -6,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 511.1856,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 6,
+              "miss_unchanged": 100,
+              "promoted_to_top1": 6,
+              "recovered_to_top10": 9,
+              "stable_top1": 122,
+              "suppressed_from_top10": 8,
+              "top10_preserved": 72
+            }
+          },
+          {
+            "dataset_key": "dmr_50",
+            "dataset_id": "dmr",
+            "sample_size": 50,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.02,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.004833,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": 0,
+            "retrieval_miss_direction": "flat",
+            "p50_latency_ms_delta": 543.4223,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 10,
+              "promoted_to_top1": 1,
+              "recovered_to_top10": 1,
+              "stable_top1": 27,
+              "suppressed_from_top10": 2,
+              "top10_preserved": 8
+            }
+          }
+        ],
+        "recall_direction_counts": {
+          "negative": 1,
+          "positive": 2
+        },
+        "mrr_direction_counts": {
+          "positive": 3
+        },
+        "top1_direction_counts": {
+          "flat": 2,
+          "positive": 1
+        },
+        "sample_sizes": [
+          200,
+          323,
+          50
+        ],
+        "all_recall_positive": false,
+        "all_recall_non_negative": false
+      },
+      "longmem": {
+        "views": [
+          {
+            "dataset_key": "longmem_50",
+            "dataset_id": "longmem",
+            "sample_size": 50,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.036667,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.001278,
+            "mrr_direction": "positive",
+            "top1_delta": 0,
+            "top1_direction": "flat",
+            "retrieval_miss_delta": 1,
+            "retrieval_miss_direction": "negative",
+            "p50_latency_ms_delta": 789.526,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 12,
+              "promoted_to_top1": 1,
+              "recovered_to_top10": 2,
+              "stable_top1": 18,
+              "suppressed_from_top10": 3,
+              "top10_preserved": 13
+            }
+          },
+          {
+            "dataset_key": "longmem_200",
+            "dataset_id": "longmem",
+            "sample_size": 200,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": -0.006583,
+            "recall_direction": "negative",
+            "mrr_at_10_delta": 0.001621,
+            "mrr_direction": "positive",
+            "top1_delta": 1,
+            "top1_direction": "positive",
+            "retrieval_miss_delta": 3,
+            "retrieval_miss_direction": "negative",
+            "p50_latency_ms_delta": 565.8769,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 1,
+              "miss_unchanged": 73,
+              "promoted_to_top1": 2,
+              "recovered_to_top10": 5,
+              "stable_top1": 64,
+              "suppressed_from_top10": 8,
+              "top10_preserved": 47
+            }
+          },
+          {
+            "dataset_key": "longmem_500",
+            "dataset_id": "longmem",
+            "sample_size": 500,
+            "control_variant": "reranker-pool-50",
+            "candidate_variant": "reranker-pool-100",
+            "recall_at_10_delta": 0.0088,
+            "recall_direction": "positive",
+            "mrr_at_10_delta": 0.002024,
+            "mrr_direction": "positive",
+            "top1_delta": -3,
+            "top1_direction": "negative",
+            "retrieval_miss_delta": -6,
+            "retrieval_miss_direction": "positive",
+            "p50_latency_ms_delta": 547.9877,
+            "candidate_transition_counts": {
+              "demoted_from_top1": 7,
+              "miss_unchanged": 231,
+              "promoted_to_top1": 4,
+              "recovered_to_top10": 15,
+              "stable_top1": 111,
+              "suppressed_from_top10": 13,
+              "top10_preserved": 119
+            }
+          }
+        ],
+        "recall_direction_counts": {
+          "negative": 2,
+          "positive": 1
+        },
+        "mrr_direction_counts": {
+          "positive": 3
+        },
+        "top1_direction_counts": {
+          "flat": 1,
+          "negative": 1,
+          "positive": 1
+        },
+        "sample_sizes": [
+          50,
+          200,
+          500
+        ],
+        "all_recall_positive": false,
+        "all_recall_non_negative": false
+      }
+    },
+    "dmr_failure_taxonomy": {
+      "mapping_rejected_before_scoring": {
+        "count": 177,
+        "share_of_requested": 35.4,
+        "share_of_scored": null,
+        "share_of_unresolved_requested": 39.42
+      },
+      "retrieval_top10_miss": {
+        "count": 109,
+        "share_of_requested": 21.8,
+        "share_of_scored": 33.75,
+        "share_of_unresolved_requested": 24.28
+      },
+      "top_context_ranking_boundary": {
+        "count": 80,
+        "share_of_requested": 16.0,
+        "share_of_scored": 24.77,
+        "share_of_unresolved_requested": 17.82
+      },
+      "top1_answer_synthesis_failure": {
+        "count": 83,
+        "share_of_requested": 16.6,
+        "share_of_scored": 25.7,
+        "share_of_unresolved_requested": 18.49
+      },
+      "judge_correct_success": {
+        "count": 51,
+        "share_of_requested": 10.2,
+        "share_of_scored": 15.79
+      }
+    },
+    "top_context_significance": {
+      "all_scales_judge_accuracy_delta_positive": true,
+      "all_scales_substring_delta_positive": true,
+      "all_scales_rouge_l_delta_positive": true,
+      "all_scales_candidate_only_gt_baseline_only": true,
+      "all_scales_mcnemar_significant_at_0_05": true,
+      "available_category_sets": {
+        "dmr_50": [
+          "dmr-answer-generation"
+        ],
+        "dmr_200": [
+          "dmr-answer-generation"
+        ],
+        "dmr_500_request_323_scored": [
+          "dmr-answer-generation"
+        ]
+      },
+      "category_consistency_limit": "Sanitized reports expose one category, dmr-answer-generation, so question-subtype consistency cannot be audited from committed reports."
+    }
+  },
+  "objective_split": {
+    "decision": "split_objectives_for_validation_only",
+    "dmr_track": {
+      "primary_objective": "Improve answer-bearing context placement and answer synthesis under local official-style DMR.",
+      "active_boundaries": [
+        "Mapping coverage under the pinned punctuation policy.",
+        "Retrieval top-10 misses and top-context ranking-boundary cases.",
+        "Answer synthesis quality after a relevant chunk is ranked first."
+      ],
+      "must_not_claim": [
+        "Published-comparable official DMR performance.",
+        "Runtime generator or ranking default readiness."
+      ]
+    },
+    "longmem_track": {
+      "primary_objective": "Protect long-memory retrieval stability across expanded LongMemEval views.",
+      "active_boundaries": [
+        "Zero tolerated LongMemEval top-10 suppressions before runtime adoption.",
+        "No product claim without public real-world long-memory validation.",
+        "No latency acceptance until an explicit GPU/latency threshold is adopted."
+      ],
+      "must_not_claim": [
+        "Global long-memory superiority.",
+        "A safe global ranking default."
+      ]
+    },
+    "global_default_rule": "A global runtime ranking default remains blocked. Future ranking work must either introduce a new answer-free ordering signal that does not suppress LongMemEval top-10 hits, or keep objective-specific policies evaluation-only until separately validated."
+  },
+  "status": {
+    "ranking_objective_split_decision_gate_passed": true,
+    "dmr_longmem_objective_split_decided": true,
+    "architecture_failure_supported": false,
+    "global_runtime_default_still_blocked": true,
+    "runtime_ranking_change_allowed": false,
+    "productization_allowed": false,
+    "hard_failures": [],
+    "open_gates": [
+      "no_safe_global_ranking_default",
+      "objective_specific_ranking_policy_not_validated",
+      "new_answer_free_ordering_signal_needed_for_global_default",
+      "latency_acceptance_threshold_not_adopted",
+      "published_comparable_dmr_mapping_policy_not_final",
+      "public_real_world_long_memory_not_validated",
+      "hosted_external_comparison_not_configured"
+    ]
+  },
+  "read": {
+    "current_conclusion": "The LongMemEval / DMR ranking conflict is best treated as an objective split, not as a core architecture failure. DMR top-context answer generation is stable, but cross-dataset ranking evidence does not support a global runtime default.",
+    "why_this_is_not_a_design_bug": [
+      "The system has stable DMR generator gains across 50, 200, and 500-request / 323-scored views.",
+      "The same ranking changes create coverage, MRR, top-1, suppression, and latency tradeoffs across datasets.",
+      "The guard audit finds no safe screened policy, so the correct decision is to preserve the feature freeze."
+    ],
+    "next_action": "Keep the split as validation-only evidence. Continue hosted external comparison when credentials/endpoints are configured; otherwise continue no-model failure analysis or design a new answer-free ordering signal without changing runtime defaults."
+  },
+  "limits": [
+    "Reads committed sanitized aggregate reports only.",
+    "Does not inspect raw questions, answers, dialogs, sessions, memory content, generated answers, prompts, raw responses, or API keys.",
+    "Does not rerun retrieval, ranking, judges, hosted adapters, or product code.",
+    "Does not change runtime defaults, memory schema, cognitive layers, CLI/MCP, or product surfaces."
+  ]
+}

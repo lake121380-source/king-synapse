@@ -110,6 +110,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         "ranking_task_gate": root / "crates/eval/reports/ranking-task-gate.json",
         "longmem_dmr_trend_alignment": root
         / "crates/eval/reports/longmem-dmr-trend-alignment.json",
+        "ranking_objective_split_decision": root
+        / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_task_gate": root
         / "crates/eval/reports/external-comparison-task-gate.json",
         "long_horizon_task_gate": root
@@ -206,6 +208,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     official = reports["official_dmr_task_gate"]
     ranking = reports["ranking_task_gate"]
     trend_alignment = reports["longmem_dmr_trend_alignment"]
+    split_decision = reports["ranking_objective_split_decision"]
     external = reports["external_comparison_task_gate"]
     long_horizon = reports["long_horizon_task_gate"]
     performance = reports["performance_profile"]
@@ -351,15 +354,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             evidence=[
                 paths["ranking_task_gate"],
                 paths["longmem_dmr_trend_alignment"],
+                paths["ranking_objective_split_decision"],
             ],
             conclusion=(
-                "Ranking is a validated bottleneck, but LongMemEval / DMR trend alignment is not complete and no safe global runtime ranking default is ready."
+                "Ranking is a validated bottleneck and the DMR / LongMemEval objective split is decided as validation-only, but no safe global runtime ranking default is ready."
                 if ranking_gate_ready and not ranking_default_ready
                 else "Ranking gate does not match the expected no-default state."
             ),
             remaining=[
                 safe_get(trend_alignment, ["read", "decision"], ""),
-                "Find a cross-dataset safe ordering signal or explicitly split DMR and LongMemEval objectives.",
+                safe_get(split_decision, ["read", "current_conclusion"], ""),
+                "Find a cross-dataset safe ordering signal or separately validate objective-specific ranking policies.",
                 "Keep memory schema, cognitive layers, CLI, and runtime ranking defaults frozen.",
             ],
         ),
@@ -492,7 +497,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Local cognitive-trace advantage is supported on the shared fixture.",
                 "Pinned extractive official-style DMR is locally executable and judge-backed.",
                 "DMR 50/200/500-request top-context judge scaling is complete.",
-                "Ranking bottlenecks are validated without adopting a runtime default.",
+                "Ranking bottlenecks are validated and the DMR / LongMemEval objective split is decided without adopting a runtime default.",
                 "Deterministic long-horizon fixture stability is gate-backed.",
                 "A disposable CLI demo exists for local explanation.",
             ],
@@ -501,6 +506,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "DMR answer quality and mapping coverage are not ready for product claims.",
                 "Hosted Graphiti/Zep, official Mem0, and Letta comparison are not configured.",
                 "No safe global runtime ranking default exists.",
+                "Objective-specific ranking policies are not validated for runtime use.",
                 "Public real-world long-memory stability is not validated.",
                 "GPU/latency acceptance threshold is not adopted.",
                 "Web demo, API server, Docker, and v0.1 packaging should not start yet.",

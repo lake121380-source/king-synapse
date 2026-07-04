@@ -178,6 +178,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/ranking-pool-signal-guard-audit-dmr-longmem.json",
         "longmem_dmr_trend_alignment": root
         / "crates/eval/reports/longmem-dmr-trend-alignment.json",
+        "ranking_objective_split_decision": root
+        / "crates/eval/reports/ranking-objective-split-decision.json",
         "external_comparison_hosted": root
         / "crates/eval/reports/external-comparison-hosted.json",
         "long_horizon_cognitive_memory": root
@@ -214,6 +216,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     ranking_conflict = load_json(paths["ranking_objective_conflict_audit"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard_audit"])
     trend_alignment = load_json(paths["longmem_dmr_trend_alignment"])
+    split_decision = load_json(paths["ranking_objective_split_decision"])
     external_hosted = load_json(paths["external_comparison_hosted"])
     long_horizon = load_json(paths["long_horizon_cognitive_memory"])
     long_horizon_evidence = load_json(paths["long_horizon_prediction_evidence_audit"])
@@ -311,19 +314,21 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["ranking_objective_conflict_audit"]),
                 report_path(paths["ranking_pool_signal_guard_audit"]),
                 report_path(paths["longmem_dmr_trend_alignment"]),
+                report_path(paths["ranking_objective_split_decision"]),
                 report_path(paths["ranking_task_gate"]),
             ],
             conclusion=(
                 f"{ranking_read['conclusion']} "
-                f"{trend_alignment['read']['primary_result']}"
+                f"{trend_alignment['read']['primary_result']} "
+                f"{split_decision['read']['current_conclusion']}"
             ),
             remaining=[
                 "No screened pool-signal guard is ready for implementation.",
-                "DMR and LongMemEval ranking objectives still conflict.",
+                "DMR and LongMemEval ranking objectives are now split as validation-only.",
                 "The LongMemEval / DMR trend-alignment exit condition is not complete.",
                 "Any runtime ranking policy still needs zero LongMemEval top-10 suppressions and an explicit latency budget.",
             ],
-            next_action=ranking_read["next_ranking_gate"],
+            next_action=split_decision["read"]["next_action"],
         ),
         build_phase(
             phase="4_external_fair_comparison",
@@ -508,6 +513,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     "status": trend_alignment["status"],
                     "primary_result": trend_alignment["read"]["primary_result"],
                     "decision": trend_alignment["read"]["decision"],
+                },
+                "objective_split_decision": {
+                    "status": split_decision["status"],
+                    "decision": split_decision["objective_split"]["decision"],
+                    "current_conclusion": split_decision["read"]["current_conclusion"],
                 },
             },
             "external_hosted": {

@@ -1,52 +1,57 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T03:54:58.814312+00:00",
+  "generated_at": "2026-07-04T04:07:38.321169+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "b6a224a59913a03ae8fe709ece6bae3a4ae0215b",
+    "commit": "374ec317328ad9429d465845fd9f96f9576c0d21",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "4132f21b8c8fa28c3ab3fdba74e2fab94b010df582af47947cf7088ef07c2019"
+      "sha256": "97ac4eb25976ea946f731038e5706a19b0844193fee1ef2ba0cb0ed36a4504d9"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "1e1d40f478cd0b8f2fe3eed4b6fb57bcbf84bdd34312f5a9a47f33896de5d4eb"
+      "sha256": "18bd6a69925f94b6821996a9e3cc88dd3892d179d61c4262f599631f67605199"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "42398a5373f1b6b48b65c7e7852cb21fe9b46d50769f3f6300840cbf6f68001b"
+      "sha256": "e1589d6a3c26723b3d4dbb9efe408b5de44f253ef2fac5f17e30d9e20c672599"
     },
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "b14ed3f4b22c266f62b77056c780a0383d052e2a36ff7efd1b545424751bc688"
+      "sha256": "ca7697c6d9ebca2cce0ccbcca2331947208f2fb14ad44d20a60296c3335304c1"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
       "exists": true,
-      "sha256": "b1ddb29b301e83194bf5cc4bedc505d2e087e7bc00266a28874e0532a2b80327"
+      "sha256": "c1d0b060116ca2215b62c65673d663654b2abb18c1444fec157931181fa97ee0"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "aaf4014a97c9facf3da4ba3ae6e2a682c55edac5f4cde02575e78c1c650f0861"
+      "sha256": "a0315303f6e1caba7f5a7faab965f167b4ef67350a6e6851eb346836f3f830c0"
     },
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "89492b9ce1234b5b6a1815b270949ed29f8e4bccf9645c10d5a8d082d4f3641b"
+      "sha256": "e01acbd35e07b9a18810208fdb3fbe6b4134b7a07db559531d49b4719fd0c937"
+    },
+    "ranking_objective_split_decision": {
+      "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
+      "exists": true,
+      "sha256": "98da1e5fee9f26cfbdbad5e80b7342b41b1bfc259577d687c1cdf45d615866c7"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "cbea75331d27d2cdffaba5a28f26e97a1e61fcbd2e08cae31f91e33fddc6b631"
+      "sha256": "d5d3a439cb642d6c3a41ca561ae5e9c28467bb2e3a9c47c27035e6419acc5c8e"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -56,12 +61,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "56a7779c4dc74a43d0300115b1b6edef07f9e5de459e4b7ba54bed1a3874d39d"
+      "sha256": "b9e56355c2d840a921e8cad12e8f16dd2698fa4b4eda79bb7bb494ea219eda09"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "dd24adca912db6229573646473cd481d197a643f28dabf394c6b875d31056ba2"
+      "sha256": "1e4b8bcd0398407ec80eec8b9b7f6456fcf4c0a5c53b693835c4e8bce073940b"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -71,7 +76,7 @@
     "feature_freeze_audit": {
       "path": "crates\\eval\\reports\\phase6-feature-freeze-audit.json",
       "exists": true,
-      "sha256": "8c6b0a37a6b3998c675c55a34baaf4779e90a5a995accc242a8c1c43ed1c2bcc"
+      "sha256": "e1646b2d66b77247ea6cedd15d8ef7b1779bd9c24e1e782b2c9b6676e561a417"
     }
   },
   "checks": [
@@ -147,6 +152,15 @@
         "crates\\eval\\reports\\longmem-dmr-trend-alignment.json"
       ],
       "conclusion": "LongMemEval / DMR trend alignment is still explicitly incomplete for a global runtime default."
+    },
+    {
+      "id": "ranking_objective_split_decided",
+      "status": "passed",
+      "severity": "required",
+      "evidence": [
+        "crates\\eval\\reports\\ranking-objective-split-decision.json"
+      ],
+      "conclusion": "DMR / LongMemEval ranking-objective split is explicitly decided as validation-only."
     },
     {
       "id": "local_external_comparison_gate_passed",
@@ -268,6 +282,7 @@
         "crates\\eval\\reports\\official-dmr-task-gate.json",
         "crates\\eval\\reports\\ranking-task-gate.json",
         "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-split-decision.json",
         "crates\\eval\\reports\\external-comparison-task-gate.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json",
         "crates\\eval\\reports\\productization-decision-gate.json",
@@ -301,7 +316,8 @@
       "severity": "required",
       "evidence": [
         "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
-        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json"
+        "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
+        "crates\\eval\\reports\\ranking-objective-split-decision.json"
       ],
       "conclusion": "No global runtime ranking default is supported by current evidence or trend-alignment audit."
     }
@@ -345,6 +361,14 @@
         "generated_answers_committed": false
       },
       "longmem_dmr_trend_alignment": {
+        "raw_records_committed": false,
+        "raw_questions_committed": false,
+        "raw_answers_committed": false,
+        "raw_dialogs_committed": false,
+        "raw_memory_content_committed": false,
+        "generated_answers_committed": false
+      },
+      "ranking_objective_split_decision": {
         "raw_records_committed": false,
         "raw_questions_committed": false,
         "raw_answers_committed": false,
@@ -399,6 +423,7 @@
     "top_context_judge_ready": true,
     "hosted_external_ready": false,
     "trend_alignment_exit_condition_complete": false,
+    "dmr_longmem_objective_split_decided": true,
     "long_horizon_gate_passed": true,
     "future_evidence_labeling_complete": false,
     "public_real_world_long_memory_ready": false,
@@ -428,7 +453,7 @@
       "Feature freeze is active and protected path changes are absent.",
       "Local non-external baseline health is passed.",
       "Local official-style DMR is executable and judge-backed for the pinned extractive baseline.",
-      "Ranking is a validated bottleneck, but LongMemEval / DMR trend alignment is incomplete and current evidence supports no runtime default change.",
+      "Ranking is a validated bottleneck; DMR / LongMemEval objective split is decided as validation-only, and current evidence supports no runtime default change.",
       "Local external comparison supports Synapse's trace-surface advantage on the shared cognitive fixture.",
       "Deterministic long-horizon fixture stability is gate-backed: core metrics are 1.000 and all 8 expected future candidates are present.",
       "Productization decision is gate-backed as no-go / validation-only.",
@@ -440,6 +465,7 @@
       "Published-comparable official DMR performance.",
       "Hosted Graphiti/Zep, official Mem0, and live Letta comparison.",
       "LongMemEval / DMR ranking trend alignment for a global runtime default.",
+      "Objective-specific ranking policies for runtime use.",
       "Complete future evidence labeling for long-horizon prediction.",
       "Public real-world long-memory stability.",
       "Safe global runtime ranking default.",

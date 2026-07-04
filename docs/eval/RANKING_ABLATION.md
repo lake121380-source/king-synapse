@@ -1464,11 +1464,13 @@ python scripts/eval/ranking_objective_conflict_audit.py
 Read: the current ranking evidence does not support a new global default. The
 active problem is not a broad architecture failure; it is an objective
 conflict. DMR wants better late-rank ordering and answer synthesis, while
-LongMemEval is more sensitive to top-10 coverage and top-10 suppressions. A
-future ranking policy needs either a new answer-free ordering signal that
-preserves LongMemEval, or an explicit DMR/LongMemEval objective split. In both
-cases, runtime adoption still requires zero LongMemEval top-10 suppressions and
-an explicit latency budget.
+LongMemEval is more sensitive to top-10 coverage and top-10 suppressions.
+`docs/eval/RANKING_OBJECTIVE_SPLIT_DECISION.md` records the follow-up decision:
+the DMR / LongMemEval split is now explicit and validation-only. A future
+ranking policy still needs either a new answer-free ordering signal that
+preserves LongMemEval, or separately validated objective-specific policies. In
+both cases, runtime adoption still requires zero LongMemEval top-10
+suppressions and an explicit latency budget.
 
 ## Decision
 
