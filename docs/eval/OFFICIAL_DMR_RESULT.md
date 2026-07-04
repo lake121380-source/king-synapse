@@ -91,6 +91,10 @@ DMR failure-mode taxonomy:
 
 `crates/eval/reports/dmr-failure-mode-taxonomy.json`
 
+DMR mapping-boundary impact:
+
+`crates/eval/reports/dmr-mapping-boundary-impact.json`
+
 ## What Changed
 
 Synapse now has a DMR evaluation path that goes beyond candidate retrieval:
@@ -678,6 +682,25 @@ Read: the largest unresolved bucket is mapping coverage under the pinned
 punctuation policy. Among scored rows, retrieval/ranking and answer synthesis
 are both material. This supports failure-directed validation work, not a
 runtime default change.
+
+## Mapping Boundary Impact
+
+The DMR mapping-boundary impact audit is recorded in
+`docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md` and
+`crates/eval/reports/dmr-mapping-boundary-impact.json`.
+
+| Punctuation-rejected boundary class | Count | Share of rejected |
+| --- | ---: | ---: |
+| All significant answer tokens present in one chunk | 122 | 68.93% |
+| 75-99% significant-token overlap | 27 | 15.25% |
+| 50-74% significant-token overlap | 18 | 10.17% |
+| Any significant token only | 7 | 3.95% |
+| No diagnostic significant-token match | 3 | 1.69% |
+
+Read: `0/500` rows have empty memory chunks. Of the `177` rows rejected by
+the pinned punctuation policy, `174` still have some diagnostic token match and
+`122` contain all significant answer tokens in one chunk. This moves the main
+mapping question to defensible scoring policy, not empty memory construction.
 
 ## Read
 

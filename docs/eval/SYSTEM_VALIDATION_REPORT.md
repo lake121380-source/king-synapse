@@ -242,6 +242,11 @@ DMR boundary:
   outcomes: `177` mapping rejections, `109` retrieval top-10 misses, `80`
   top-context ranking-boundary cases, `83` top-1 answer-synthesis failures,
   and `51` judge-correct successes.
+- `crates/eval/reports/dmr-mapping-boundary-impact.json` narrows the mapping
+  boundary: `0/500` rows have empty memory chunks, `122/177`
+  punctuation-rejected rows contain all significant answer tokens in one chunk,
+  `174/177` have at least one diagnostic significant-token match, and only
+  `3/177` have no diagnostic token match.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -313,6 +318,9 @@ generator quality, not judge serialization.
 The DMR failure-mode taxonomy turns that into a mutually exclusive requested-row
 read: mapping is the largest unresolved bucket, while retrieval/ranking and
 answer synthesis remain comparable scored-row engineering surfaces.
+The DMR mapping-boundary impact audit further narrows that largest bucket:
+the unresolved mapping branch is mostly a scoring-policy question, not evidence
+of empty generated memory chunks.
 
 Long-horizon cognitive validation:
 

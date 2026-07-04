@@ -212,6 +212,12 @@ The bottleneck taxonomy is recorded in
 [official-dmr-bottleneck-taxonomy.json](crates/eval/reports/official-dmr-bottleneck-taxonomy.json).
 The DMR 500 failure-mode taxonomy is recorded in
 [DMR_FAILURE_MODE_TAXONOMY.md](docs/eval/DMR_FAILURE_MODE_TAXONOMY.md).
+The mapping-boundary impact audit is recorded in
+[DMR_MAPPING_BOUNDARY_IMPACT.md](docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md):
+of the `177` punctuation-rejected rows, `122` contain all significant answer
+tokens in one memory chunk, `174` have at least one diagnostic token match, and
+only `3` have no diagnostic token match. This keeps the boundary on scoring
+policy, not empty memory chunks.
 
 | DMR 500 requested-row outcome | Count | Share |
 | --- | ---: | ---: |
@@ -375,6 +381,7 @@ cargo build --release
 | `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
 | `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation, judge probe, and answer-synthesis audit results. |
 | `docs/eval/DMR_FAILURE_MODE_TAXONOMY.md` | DMR 500 failure-mode taxonomy over mapping, retrieval/ranking, and answer synthesis. |
+| `docs/eval/DMR_MAPPING_BOUNDARY_IMPACT.md` | DMR mapping-boundary impact audit for punctuation-rejected rows. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

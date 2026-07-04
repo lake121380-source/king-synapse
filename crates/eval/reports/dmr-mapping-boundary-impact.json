@@ -1,0 +1,147 @@
+{
+  "schema_version": "king-synapse.dmr-mapping-boundary-impact.v1",
+  "generated_at": "2026-07-04T03:28:51.257545+00:00",
+  "runner": "scripts\\eval\\dmr_mapping_boundary_impact.py",
+  "git": {
+    "branch": "main",
+    "commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
+    "origin_main_delta": "0\t0"
+  },
+  "inputs": {
+    "mapping_policy_review": {
+      "path": "crates\\eval\\reports\\dmr-mapping-policy-review.json",
+      "sha256": "0e7da9317d0605e0f6825b0b2dbc3dda0cc3f772c3578a8b322bd7ee983bb0b2"
+    },
+    "failure_taxonomy": {
+      "path": "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+      "sha256": "3147377c464dc79dd1611e10d0d54e179834585b904251aa199078a4c241d6ca"
+    }
+  },
+  "raw_records_committed": false,
+  "raw_questions_committed": false,
+  "raw_answers_committed": false,
+  "raw_dialogs_committed": false,
+  "raw_memory_content_committed": false,
+  "generated_answers_committed": false,
+  "prompt_text_recorded": false,
+  "raw_response_committed": false,
+  "scope": {
+    "dataset": "MemGPT/MSC-Self-Instruct DMR local official-style view",
+    "requested_rows": 500,
+    "rows_with_question_answer_and_chunks": 500,
+    "empty_memory_chunks": 0,
+    "punctuation_full_answer_accepted": 323,
+    "punctuation_full_answer_rejected": 177,
+    "failure_taxonomy_mapping_rejected": 177
+  },
+  "policy_coverage": {
+    "strict_whitespace_full_answer": {
+      "count": 82,
+      "share_of_requested": 16.4
+    },
+    "punctuation_full_answer": {
+      "count": 323,
+      "share_of_requested": 64.6
+    },
+    "significant_token_containment": {
+      "count": 442,
+      "share_of_requested": 88.4
+    },
+    "significant_token_overlap_75": {
+      "count": 469,
+      "share_of_requested": 93.8
+    },
+    "significant_token_overlap_50": {
+      "count": 487,
+      "share_of_requested": 97.4
+    },
+    "any_significant_token": {
+      "count": 494,
+      "share_of_requested": 98.8
+    }
+  },
+  "policy_coverage_ratio_from_source": {
+    "strict_whitespace_full_answer": 0.164,
+    "punctuation_full_answer": 0.646,
+    "significant_token_containment": 0.884,
+    "significant_token_overlap_75": 0.938,
+    "significant_token_overlap_50": 0.974,
+    "any_significant_token": 0.988
+  },
+  "incremental_first_match": {
+    "any_significant_token": 7,
+    "none": 3,
+    "overlap_50": 18,
+    "overlap_75": 27,
+    "punctuation_full_answer": 241,
+    "significant_token_containment": 122,
+    "strict_whitespace_full_answer": 82
+  },
+  "punctuation_rejected_breakdown": {
+    "significant_token_containment_only": {
+      "count": 122,
+      "share_of_requested": 24.4,
+      "share_of_punctuation_rejected": 68.93
+    },
+    "overlap_75_without_full_token_containment": {
+      "count": 27,
+      "share_of_requested": 5.4,
+      "share_of_punctuation_rejected": 15.25
+    },
+    "overlap_50_without_overlap_75": {
+      "count": 18,
+      "share_of_requested": 3.6,
+      "share_of_punctuation_rejected": 10.17
+    },
+    "any_significant_token_only": {
+      "count": 7,
+      "share_of_requested": 1.4,
+      "share_of_punctuation_rejected": 3.95
+    },
+    "no_diagnostic_match": {
+      "count": 3,
+      "share_of_requested": 0.6,
+      "share_of_punctuation_rejected": 1.69
+    }
+  },
+  "diagnostic_union_if_separately_labeled": {
+    "pinned_punctuation": {
+      "count": 323,
+      "share_of_requested": 64.6
+    },
+    "punctuation_or_significant_token_containment": {
+      "count": 445,
+      "share_of_requested": 89.0
+    },
+    "punctuation_or_overlap_75": {
+      "count": 472,
+      "share_of_requested": 94.4
+    },
+    "punctuation_or_overlap_50": {
+      "count": 490,
+      "share_of_requested": 98.0
+    },
+    "punctuation_or_any_significant_token": {
+      "count": 497,
+      "share_of_requested": 99.4
+    }
+  },
+  "read": {
+    "primary_result": "The 177 punctuation-rejected rows are mostly a mapping/scoring boundary, not evidence of empty memory chunks.",
+    "key_numbers": [
+      "0/500 rows have empty memory chunks.",
+      "122/177 punctuation-rejected rows contain all significant answer tokens in one memory chunk.",
+      "174/177 punctuation-rejected rows have at least one diagnostic significant-token match.",
+      "3/177 punctuation-rejected rows have no diagnostic significant-token match."
+    ],
+    "official_boundary": "The pinned local DMR policy remains punctuation-normalized full-answer matching. Relaxed diagnostic rows must not be silently counted as official hits without a separately labeled judge/manual validation.",
+    "architecture_read": "This does not disprove Synapse's memory architecture. It narrows a major unresolved branch to mapping-policy validation before stronger published-comparable DMR claims.",
+    "next_action": "Keep feature freeze. If DMR proof continues without hosted competitors, validate a separately labeled relaxed mapping policy with judge/manual checks rather than changing runtime defaults."
+  },
+  "limits": [
+    "Uses committed sanitized mapping and failure-taxonomy reports only.",
+    "Does not inspect raw questions, answers, dialogs, sessions, memory content, generated answers, prompts, raw responses, or API keys.",
+    "Diagnostic union coverage is not an official DMR score.",
+    "This report does not change memory schema, cognitive layers, CLI/MCP, retrieval, ranking, generator, or scoring defaults."
+  ]
+}

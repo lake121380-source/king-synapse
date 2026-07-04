@@ -194,6 +194,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
         "dmr_failure_mode_taxonomy": root
         / "crates/eval/reports/dmr-failure-mode-taxonomy.json",
+        "dmr_mapping_boundary_impact": root
+        / "crates/eval/reports/dmr-mapping-boundary-impact.json",
         "ranking_objective_conflict": root
         / "crates/eval/reports/ranking-objective-conflict-audit.json",
         "ranking_pool_signal_guard": root
@@ -225,6 +227,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     generator_summary = load_json(paths["official_dmr_generator_summary"])
     bottleneck = load_json(paths["official_dmr_bottleneck_taxonomy"])
     failure_taxonomy = load_json(paths["dmr_failure_mode_taxonomy"])
+    mapping_boundary_impact = load_json(paths["dmr_mapping_boundary_impact"])
     ranking_conflict = load_json(paths["ranking_objective_conflict"])
     ranking_guard = load_json(paths["ranking_pool_signal_guard"])
     external_latest = load_json(paths["external_comparison_latest"])
@@ -391,6 +394,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                         report_path(paths["official_dmr_generator_summary"]),
                         report_path(paths["official_dmr_task_gate"]),
                         report_path(paths["dmr_failure_mode_taxonomy"]),
+                        report_path(paths["dmr_mapping_boundary_impact"]),
                     ],
                     conclusion=safe_get(bottleneck, ["read", "conclusion"], ""),
                 ),
@@ -399,6 +403,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     status="satisfied",
                     evidence=[report_path(paths["dmr_failure_mode_taxonomy"])],
                     conclusion=safe_get(failure_taxonomy, ["read", "primary_result"], ""),
+                ),
+                requirement(
+                    item="Explain whether mapping rejects imply empty memory chunks or scoring-policy boundary.",
+                    status="satisfied",
+                    evidence=[report_path(paths["dmr_mapping_boundary_impact"])],
+                    conclusion=safe_get(
+                        mapping_boundary_impact, ["read", "primary_result"], ""
+                    ),
                 ),
                 requirement(
                     item="Judge-score top-context candidate before making stronger answer-quality claims.",

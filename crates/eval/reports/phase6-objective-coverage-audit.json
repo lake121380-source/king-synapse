@@ -1,27 +1,27 @@
 {
   "schema_version": "king-synapse.phase6-objective-coverage-audit.v1",
-  "generated_at": "2026-07-04T03:22:03.029850+00:00",
+  "generated_at": "2026-07-04T03:28:53.359760+00:00",
   "runner": "scripts\\eval\\phase6_objective_coverage_audit.py",
   "git": {
     "branch": "main",
-    "commit": "d47a68c70101ac7340231d876502929e431c779a",
+    "commit": "304168b3a73c230e656ef2b7c80592f5c7ea3126",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "system_validation_report": {
       "path": "docs\\eval\\SYSTEM_VALIDATION_REPORT.md",
       "exists": true,
-      "sha256": "eaccdcf03f9b2dcc4eacbae15b19f032a186ee98bd331fec091af2a9dd3e83af"
+      "sha256": "e3e378714b32298832ac54060a817ff8e866236bef2854e19618b97814ae34c9"
     },
     "experiment_log": {
       "path": "docs\\eval\\EXPERIMENT_LOG.md",
       "exists": true,
-      "sha256": "11124e9429de74755cebf29ec44decceb2961ee7c516ea83379309bcfccd0fb4"
+      "sha256": "0ba6a841335810370ca52f22c8c703cca6cd2ae7aba2fccb08cbf118740dadb3"
     },
     "official_dmr_result": {
       "path": "docs\\eval\\OFFICIAL_DMR_RESULT.md",
       "exists": true,
-      "sha256": "d12dd0a462396cf31b3879a34699554150f29fb7271d48fd88266c7b159fdd5e"
+      "sha256": "54b38399183a940dace9e018ec44d1257b5a0a967b4ada54fb4603d6dc70b0ff"
     },
     "ranking_ablation": {
       "path": "docs\\eval\\RANKING_ABLATION.md",
@@ -46,12 +46,12 @@
     "phase6_requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "18b4a8bbda0611ebea1c5d6dd7441e14a1727ac86a1f7c43e5e7a8f628cf1789"
+      "sha256": "9aef0324b05d3478a985f1c048810bb34c42b2aeafb3e1e533c78b8a17b9a0a9"
     },
     "phase6_next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
       "exists": true,
-      "sha256": "d08ebeed53e97c76eac3ba3dd797ab36a737d4dc8eeb4721d9927a046243eea9"
+      "sha256": "2478201cdd82648216618e3a9634280a2852bbd7154291f00878cdcc496e7c97"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -66,7 +66,7 @@
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
       "exists": true,
-      "sha256": "ebc68dd11a42a4af379827b668ff1aee9f0b8598a864a63437d3e4537cd6dd95"
+      "sha256": "2a0dd9c7e382bf7e3e8c398719af23be3a1a07fdea1559a5994338c3ac5b8e14"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
@@ -76,12 +76,12 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "4d3b87c1ba146a70aea25e71c28ec1ae34ea30572327cc1cec2f62a9b964b97d"
+      "sha256": "10d7e3ecb1d85e725e81c9ee42670104303f23275d169c03c5db6a0b43dc8f55"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "4389bc79f925d98bab95245cc058308978455d9462191e1e6bbed648cbd1a787"
+      "sha256": "df1c74b2db9c826ded1e644590dc6c8fa7a4c07f8f674dcc9487fdece975f85f"
     },
     "phase6_baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -137,6 +137,11 @@
       "path": "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
       "exists": true,
       "sha256": "3147377c464dc79dd1611e10d0d54e179834585b904251aa199078a4c241d6ca"
+    },
+    "dmr_mapping_boundary_impact": {
+      "path": "crates\\eval\\reports\\dmr-mapping-boundary-impact.json",
+      "exists": true,
+      "sha256": "c580aedb447acafc8abff3480f05a2be53644201721c7c5c3c0a46a64d972274"
     },
     "ranking_objective_conflict": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -275,7 +280,8 @@
             "crates\\eval\\reports\\official-dmr-bottleneck-taxonomy.json",
             "crates\\eval\\reports\\official-dmr-generator-ablation-summary.json",
             "crates\\eval\\reports\\official-dmr-task-gate.json",
-            "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json"
+            "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json",
+            "crates\\eval\\reports\\dmr-mapping-boundary-impact.json"
           ],
           "conclusion": "Official-style DMR is blocked by three separate bottlenecks: mapping coverage, retrieval/ranking, and answer synthesis. The largest pinned local view has 177 punctuation-mapping rejections before scoring, 114 scored samples without a relevant top-10 retrieval, and 118 top-1 retrieval hits whose extractive answer still lacks the gold substring.",
           "remaining": []
@@ -287,6 +293,15 @@
             "crates\\eval\\reports\\dmr-failure-mode-taxonomy.json"
           ],
           "conclusion": "DMR 500 top-context repeats the positive answer-synthesis direction, but most requested rows remain unresolved under the current local official-style policy.",
+          "remaining": []
+        },
+        {
+          "item": "Explain whether mapping rejects imply empty memory chunks or scoring-policy boundary.",
+          "status": "satisfied",
+          "evidence": [
+            "crates\\eval\\reports\\dmr-mapping-boundary-impact.json"
+          ],
+          "conclusion": "The 177 punctuation-rejected rows are mostly a mapping/scoring boundary, not evidence of empty memory chunks.",
           "remaining": []
         },
         {
@@ -727,7 +742,7 @@
   },
   "status_counts": {
     "policy_active": 1,
-    "satisfied": 13,
+    "satisfied": 14,
     "partial": 10,
     "validated_no_default": 1,
     "not_ready": 4,
