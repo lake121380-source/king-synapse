@@ -145,6 +145,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         / "crates/eval/reports/official-dmr-generator-ablation-summary.json",
         "official_dmr_bottleneck_taxonomy": root
         / "crates/eval/reports/official-dmr-bottleneck-taxonomy.json",
+        "dmr_failure_mode_taxonomy": root
+        / "crates/eval/reports/dmr-failure-mode-taxonomy.json",
         "official_dmr_top_context_judge_preflight": root
         / "crates/eval/reports/official-dmr-top-context-judge-preflight.json",
         "official_dmr_50_top_context_judge": root
@@ -192,6 +194,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     dmr_500 = load_json(paths["official_dmr_500"])
     generator_summary = load_json(paths["official_dmr_generator_summary"])
     bottleneck_taxonomy = load_json(paths["official_dmr_bottleneck_taxonomy"])
+    failure_mode_taxonomy = load_json(paths["dmr_failure_mode_taxonomy"])
     top_context_preflight = load_json(paths["official_dmr_top_context_judge_preflight"])
     next_gate_readiness = load_json(paths["phase6_next_gate_readiness"])
     official_dmr_task_gate = load_json(paths["official_dmr_task_gate"])
@@ -260,6 +263,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 report_path(paths["official_dmr_500"]),
                 report_path(paths["official_dmr_generator_summary"]),
                 report_path(paths["official_dmr_bottleneck_taxonomy"]),
+                report_path(paths["dmr_failure_mode_taxonomy"]),
                 report_path(paths["official_dmr_top_context_judge_preflight"]),
                 report_path(paths["official_dmr_50_top_context_judge"]),
                 report_path(paths["official_dmr_200_top_context_judge"]),
@@ -271,12 +275,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "Retrieval -> answer generation -> local scoring exists for 50, "
                 "200, and 500-request DMR views. Baseline extractive runs are "
                 "judge-backed, and DMR 50/200/500-request top-context views are "
-                "judge-backed, but absolute answer quality remains low."
+                "judge-backed. DMR 500 failure modes are classified, but absolute "
+                "answer quality remains low."
             ),
             remaining=[
                 "Published-comparable DMR mapping/scoring policy is not finalized.",
                 "500-request run honestly scores 323 mappable samples, not 500/500.",
                 "Answer synthesis remains weak even when retrieval finds a relevant chunk.",
+                "DMR 500 failure taxonomy keeps mapping, retrieval/ranking, and answer synthesis separate.",
                 "Bottleneck taxonomy keeps mapping coverage, retrieval/ranking, and generator quality as separate active limits.",
             ],
             next_action="Stop expanding the DMR judge-scaling branch; continue with hosted external comparison or no-model failure analysis.",
@@ -438,6 +444,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                     "mapping_boundary": bottleneck_taxonomy["mapping_boundary"],
                     "largest_local_view": bottleneck_taxonomy["largest_local_view"],
                     "conclusion": bottleneck_taxonomy["read"]["conclusion"],
+                },
+                "failure_mode_taxonomy": {
+                    "scope": failure_mode_taxonomy["scope"],
+                    "mutually_exclusive_outcome_taxonomy": failure_mode_taxonomy[
+                        "mutually_exclusive_outcome_taxonomy"
+                    ],
+                    "generator_delta": failure_mode_taxonomy["generator_delta"],
+                    "primary_result": failure_mode_taxonomy["read"]["primary_result"],
                 },
             },
             "ranking": {

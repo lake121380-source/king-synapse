@@ -210,6 +210,16 @@ ablation summary is recorded in
 [official-dmr-generator-ablation-summary.json](crates/eval/reports/official-dmr-generator-ablation-summary.json).
 The bottleneck taxonomy is recorded in
 [official-dmr-bottleneck-taxonomy.json](crates/eval/reports/official-dmr-bottleneck-taxonomy.json).
+The DMR 500 failure-mode taxonomy is recorded in
+[DMR_FAILURE_MODE_TAXONOMY.md](docs/eval/DMR_FAILURE_MODE_TAXONOMY.md).
+
+| DMR 500 requested-row outcome | Count | Share |
+| --- | ---: | ---: |
+| Mapping rejected before scoring | 177 | 35.40% |
+| Retrieval top-10 miss | 109 | 21.80% |
+| Top-context ranking boundary | 80 | 16.00% |
+| Top-1 answer-synthesis failure | 83 | 16.60% |
+| Judge-correct success | 51 | 10.20% |
 
 | DMR scale | Extractive substring | Top-context substring | Extractive ROUGE-L F1 | Top-context ROUGE-L F1 |
 | --- | ---: | ---: | ---: | ---: |
@@ -364,6 +374,7 @@ cargo build --release
 | `docs/eval/EXPERIMENT_LOG.md` | Phase 6 validation attempts and decisions. |
 | `docs/eval/OFFICIAL_DMR_REVIEW.md` | Why current DMR reports are candidate retrieval baselines, not official DMR benchmark results. |
 | `docs/eval/OFFICIAL_DMR_RESULT.md` | Sanitized official-style DMR answer-generation, judge probe, and answer-synthesis audit results. |
+| `docs/eval/DMR_FAILURE_MODE_TAXONOMY.md` | DMR 500 failure-mode taxonomy over mapping, retrieval/ranking, and answer synthesis. |
 | `docs/eval/VALIDATION_LONGMEM_50.md` | LongMemEval 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50.md` | DMR 50-sample validation result. |
 | `docs/eval/VALIDATION_DMR_50_PUNCTUATION.md` | DMR 50 rerun with punctuation-normalized answer mapping. |

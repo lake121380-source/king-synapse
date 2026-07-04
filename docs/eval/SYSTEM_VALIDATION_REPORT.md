@@ -237,6 +237,11 @@ DMR boundary:
   retrieval, and `118/128` top-1 retrieval hits still miss the gold substring
   under the extractive generator. Top-context extraction lowers that top-1
   residual to `91`, but does not solve answer generation.
+- `crates/eval/reports/dmr-failure-mode-taxonomy.json` classifies the DMR
+  500-request / 323-scored top-context run into mutually exclusive requested-row
+  outcomes: `177` mapping rejections, `109` retrieval top-10 misses, `80`
+  top-context ranking-boundary cases, `83` top-1 answer-synthesis failures,
+  and `51` judge-correct successes.
 - `crates/eval/reports/official-dmr-50-top-context-extractive.json` records an
   eval-only DMR 50 generator ablation. With retrieval unchanged, restricting
   sentence selection to the top returned context raises gold-answer substring
@@ -305,6 +310,9 @@ retrieval/ranking, and generator quality all remain material. The judge path is
 now stable on the pinned runs and the DMR 50 / 200 / 500-request top-context
 candidates, so the remaining block is mapping coverage, hosted comparison, and
 generator quality, not judge serialization.
+The DMR failure-mode taxonomy turns that into a mutually exclusive requested-row
+read: mapping is the largest unresolved bucket, while retrieval/ranking and
+answer synthesis remain comparable scored-row engineering surfaces.
 
 Long-horizon cognitive validation:
 

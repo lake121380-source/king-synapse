@@ -268,8 +268,9 @@ finds a blocking bug.
 | 8 | Record deterministic long-horizon cognitive validation. | Done in `LONG_HORIZON_VALIDATION.md`: Recall@10, HebbianConsistency, and CognitiveTraceDominance are all `1.000` on the fixed fixture. |
 | 9 | Complete fair external comparison gaps. | Current environment probe is done: Letta endpoint, hosted Graphiti, and official-embedding Mem0 are explicitly marked `not_configured`; real hosted measurement still waits on credentials/endpoints. |
 | 10 | Consolidate DMR generator-ablation deltas. | Done as `official-dmr-generator-ablation-summary.json`: the top-context generator direction repeats across DMR 50, 200, and the 500-request / 323-scored view, and DMR 50/200/500-request top-context are now judge-scored. |
-| 11 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
-| 12 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
+| 11 | Classify DMR 500 failure modes. | Done as `dmr-failure-mode-taxonomy.json`: mapping, retrieval top-10 miss, top-context ranking boundary, top-1 answer synthesis, and judge-correct success are mutually separated over 500 requested rows. |
+| 12 | Record detailed long-horizon stability audit. | Done as `long-horizon-stability-audit.json`: visible/trace stability and future candidate presence remain `1.000`; matched-evidence future prediction is `0.750`, and v3 records the two miss cases with empty candidate matched-term arrays. |
+| 13 | Make the productization decision. | README claims, validation reports, external comparison, and long-horizon evidence agree. |
 
 ## Current Open Items
 
@@ -349,6 +350,12 @@ finds a blocking bug.
   those top-1 hits still do not include the gold answer substring in the
   generated answer. This keeps answer synthesis as a separate Phase 6
   bottleneck from retrieval/ranking.
+- DMR 500 failure-mode taxonomy is recorded at
+  `docs/eval/DMR_FAILURE_MODE_TAXONOMY.md` and
+  `crates/eval/reports/dmr-failure-mode-taxonomy.json`. It classifies the 500
+  requested rows into `177` mapping rejections, `109` retrieval top-10 misses,
+  `80` top-context ranking-boundary cases, `83` top-1 answer-synthesis
+  failures, and `51` judge-correct successes.
 - Official-style DMR 50 generator ablation is recorded at
   `crates/eval/reports/official-dmr-50-top-context-extractive.json` and
   `crates/eval/reports/official-dmr-generator-ablation-dmr-50.json`. With

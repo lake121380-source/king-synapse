@@ -87,6 +87,10 @@ Bottleneck taxonomy:
 
 `crates/eval/reports/official-dmr-bottleneck-taxonomy.json`
 
+DMR failure-mode taxonomy:
+
+`crates/eval/reports/dmr-failure-mode-taxonomy.json`
+
 ## What Changed
 
 Synapse now has a DMR evaluation path that goes beyond candidate retrieval:
@@ -655,6 +659,25 @@ Read: DMR is not blocked by one single defect. The current evidence separates
 three bottlenecks: mapping coverage, retrieval/ranking, and answer synthesis.
 Top-context extraction is the clearest generator direction, but it remains
 eval-only and still leaves substantial residual loss.
+
+## Failure Mode Taxonomy
+
+The DMR 500 failure-mode taxonomy is recorded in
+`docs/eval/DMR_FAILURE_MODE_TAXONOMY.md` and
+`crates/eval/reports/dmr-failure-mode-taxonomy.json`.
+
+| Outcome | Count | Share of requested | Share of unresolved |
+| --- | ---: | ---: | ---: |
+| Mapping rejected before scoring | 177 | 35.40% | 39.42% |
+| Retrieval top-10 miss | 109 | 21.80% | 24.28% |
+| Top-context ranking boundary | 80 | 16.00% | 17.82% |
+| Top-1 answer-synthesis failure | 83 | 16.60% | 18.49% |
+| Judge-correct success | 51 | 10.20% | n/a |
+
+Read: the largest unresolved bucket is mapping coverage under the pinned
+punctuation policy. Among scored rows, retrieval/ranking and answer synthesis
+are both material. This supports failure-directed validation work, not a
+runtime default change.
 
 ## Read
 
