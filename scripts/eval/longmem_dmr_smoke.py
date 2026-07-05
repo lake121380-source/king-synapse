@@ -152,6 +152,24 @@ def parse_args() -> argparse.Namespace:
         help="Override the RRF vector weight. Default keeps 1.0.",
     )
     parser.add_argument(
+        "--fts-weight-override",
+        type=float,
+        default=None,
+        help="Override the RRF FTS weight. Default keeps 1.0.",
+    )
+    parser.add_argument(
+        "--entity-weight-override",
+        type=float,
+        default=None,
+        help="Override the RRF entity weight. Default keeps 1.0.",
+    )
+    parser.add_argument(
+        "--rrf-k-override",
+        type=float,
+        default=None,
+        help="Override the RRF k parameter. Default keeps 60.0.",
+    )
+    parser.add_argument(
         "--accelerator",
         choices=("env", "cpu", "cuda", "directml"),
         default="env",
@@ -1178,6 +1196,9 @@ def run_smoke_configs(
     configs: list[dict[str, Any]],
     rerank_pool_override: int | None = None,
     vector_weight_override: float | None = None,
+    fts_weight_override: float | None = None,
+    entity_weight_override: float | None = None,
+    rrf_k_override: float | None = None,
 ) -> list[dict[str, Any]]:
     runs: list[dict[str, Any]] = []
     for config in configs:
@@ -1192,9 +1213,9 @@ def run_smoke_configs(
             vectors=config["vectors"],
             rerank=config["rerank"],
             rerank_pool=rerank_pool_override if rerank_pool_override is not None else config["rerank_pool"],
-            rrf_k=60.0,
-            fts_weight=1.0,
-            entity_weight=1.0,
+            rrf_k=rrf_k_override if rrf_k_override is not None else 60.0,
+            fts_weight=fts_weight_override if fts_weight_override is not None else 1.0,
+            entity_weight=entity_weight_override if entity_weight_override is not None else 1.0,
             vector_weight=vector_weight_override if vector_weight_override is not None else 1.0,
         )
         run = sanitize_eval_report(raw, examples)
@@ -1483,6 +1504,9 @@ def main() -> int:
                 configs=selected_configs,
                 rerank_pool_override=args.rerank_pool_override,
                 vector_weight_override=args.vector_weight_override,
+                fts_weight_override=args.fts_weight_override,
+                entity_weight_override=args.entity_weight_override,
+                rrf_k_override=args.rrf_k_override,
             )
 
     report = {
