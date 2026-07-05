@@ -204,7 +204,8 @@ questions, answers, or generated text:
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.066 | 200 judged / 0 error, judge acc 0.15 |
 | 500 request / 323 scored CUDA samples | 0.381 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
 | 500 request / 323 scored top-context generator | 0.381 | 0.000 | 0.121 | 0.075 | 323 judged / 0 error, judge acc 0.16 |
-| 500 request / 433 scored semantic mapping | 0.334 | 0.000 | 0.081 | 0.078 | 433 judged / 0 error, judge acc 0.13 |
+| 500 request / 433 scored semantic mapping (extractive) | 0.334 | 0.000 | 0.081 | 0.078 | 433 judged / 0 error, judge acc 0.13 |
+| 500 request / 433 scored LLM synthesis (top-3 chunks) | 0.334 | 0.002 | 0.113 | 0.126 | 433 judged / 0 error, judge acc 0.21 |
 
 This is still not a published-comparable official DMR result. The pinned
 extractive 5 / 50 / 200 / 500-request runs and the DMR 50 / 200 / 500-request

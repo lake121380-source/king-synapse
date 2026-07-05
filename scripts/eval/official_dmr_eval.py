@@ -50,6 +50,7 @@ from longmem_dmr_smoke import (
 GENERATOR_POLICIES = {
     "extractive": "deterministic sentence/window selection from returned chunks; no gold-answer access",
     "top-context-extractive": "deterministic sentence/window selection restricted to the top returned chunk; no gold-answer access",
+    "deepseek-synthesize": "LLM synthesis over top-K returned chunks via DeepSeek; preserves source-chunk references in trace",
 }
 
 JUDGE_POLICIES = {
@@ -82,6 +83,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--generator", choices=tuple(GENERATOR_POLICIES), default="extractive")
+    parser.add_argument("--generator-model", default=os.environ.get("DEEPSEEK_GENERATOR_MODEL", "deepseek-v4-flash"))
+    parser.add_argument(
+        "--generator-base-url",
+        default=os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+    )
+    parser.add_argument("--generator-top-k", type=int, default=3, help="Number of top chunks to feed to LLM synthesizer")
+    parser.add_argument("--generator-max-tokens", type=int, default=256)
     parser.add_argument("--llm-judge", choices=tuple(JUDGE_POLICIES), default="none")
     parser.add_argument("--judge-model", default="deepseek-chat")
     parser.add_argument("--judge-base-url", default=os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"))
@@ -281,6 +289,101 @@ def generate_top_context_extractive_answer(
     return answer, trace
 
 
+def generate_deepseek_synthesize_answer(
+    question: str,
+    contexts: list[str],
+    *,
+    base_url: str,
+    model: str,
+    top_k: int = 3,
+    max_tokens: int = 256,
+    max_context_chars: int = 1200,
+) -> tuple[str, dict[str, Any]]:
+    """LLM synthesis over top-K retrieved chunks via DeepSeek.
+
+    Feeds the top-K chunks (truncated to fit max_context_chars total) to the LLM
+    and asks it to answer the question using only the provided context.
+    Source-chunk references are preserved in the generation trace.
+    """
+    api_key = os.environ.get("DEEPSEEK_API_KEY")
+    if not api_key:
+        return "", {
+            "policy": "deepseek-synthesize",
+            "context_count": len(contexts),
+            "candidate_context_count": 0,
+            "search_scope": "top_k",
+            "top_k": top_k,
+            "model": model,
+            "error": "DEEPSEEK_API_KEY not set",
+        }
+
+    selected = contexts[:top_k]
+    per_chunk_budget = max_context_chars // max(len(selected), 1)
+    truncated = []
+    for chunk in selected:
+        if len(chunk) > per_chunk_budget:
+            truncated.append(chunk[:per_chunk_budget].rsplit(" ", 1)[0] + "...")
+        else:
+            truncated.append(chunk)
+
+    context_block = "\n\n".join(
+        f"[Chunk {i+1}] {text}" for i, text in enumerate(truncated)
+    )
+
+    prompt = (
+        "Answer the question using only the information in the provided context.\n"
+        "If the context does not contain the answer, say you don't know.\n"
+        "Be concise and factual. Answer in one or two sentences.\n\n"
+        f"Context:\n{context_block}\n\n"
+        f"Question: {question}\n"
+    )
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "You are a factual answer generator. Use only the provided context."},
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0,
+        "max_tokens": max_tokens,
+        "thinking": {"type": "disabled"},
+    }
+    data = json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(
+        base_url.rstrip("/") + "/chat/completions",
+        data=data,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+
+    trace = {
+        "policy": "deepseek-synthesize",
+        "context_count": len(contexts),
+        "candidate_context_count": len(selected),
+        "search_scope": "top_k",
+        "top_k": top_k,
+        "model": model,
+        "max_context_chars": max_context_chars,
+        "context_char_total": sum(len(c) for c in truncated),
+    }
+
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            body = json.loads(response.read().decode("utf-8", errors="replace"))
+        content = body["choices"][0]["message"].get("content", "").strip()
+        if not content:
+            content = body["choices"][0]["message"].get("reasoning_content", "").strip()
+        trace["finish_reason"] = body["choices"][0].get("finish_reason")
+        trace["usage"] = body.get("usage", {})
+        return content, trace
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError) as exc:
+        trace["error"] = str(exc)[:300]
+        return "", trace
+
+
 def lcs_length(left: list[str], right: list[str]) -> int:
     if not left or not right:
         return 0
@@ -429,6 +532,10 @@ def score_answers(
     llm_judge: str,
     judge_model: str,
     judge_base_url: str,
+    generator_model: str = "deepseek-v4-flash",
+    generator_base_url: str = "https://api.deepseek.com",
+    generator_top_k: int = 3,
+    generator_max_tokens: int = 256,
 ) -> dict[str, Any]:
     memory_by_key = {memory["key"]: memory["content"] for memory in memories}
     per_query: list[dict[str, Any]] = []
@@ -444,6 +551,15 @@ def score_answers(
         elif generator == "top-context-extractive":
             prediction, generation_trace = generate_top_context_extractive_answer(
                 query_result.get("query", ""), contexts
+            )
+        elif generator == "deepseek-synthesize":
+            prediction, generation_trace = generate_deepseek_synthesize_answer(
+                query_result.get("query", ""),
+                contexts,
+                base_url=generator_base_url,
+                model=generator_model,
+                top_k=generator_top_k,
+                max_tokens=generator_max_tokens,
             )
         else:
             raise ValueError(f"unknown generator: {generator}")
@@ -530,6 +646,10 @@ def main() -> int:
 
     accelerator = configure_accelerator_environment(args)
     mode_config = config_for_mode(args.mode)
+    generator_model = args.generator_model
+    generator_base_url = args.generator_base_url
+    generator_top_k = args.generator_top_k
+    generator_max_tokens = args.generator_max_tokens
     api = HfApi(endpoint=args.endpoint)
 
     try:
@@ -589,6 +709,10 @@ def main() -> int:
             llm_judge=args.llm_judge,
             judge_model=args.judge_model,
             judge_base_url=args.judge_base_url,
+            generator_model=args.generator_model,
+            generator_base_url=args.generator_base_url,
+            generator_top_k=args.generator_top_k,
+            generator_max_tokens=args.generator_max_tokens,
         )
 
     report = {
@@ -614,6 +738,9 @@ def main() -> int:
         "generator": {
             "policy": args.generator,
             "description": GENERATOR_POLICIES[args.generator],
+            "model": args.generator_model if args.generator == "deepseek-synthesize" else None,
+            "top_k": args.generator_top_k,
+            "max_tokens": args.generator_max_tokens,
         },
         "llm_judge": {
             "policy": args.llm_judge,
