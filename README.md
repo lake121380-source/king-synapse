@@ -1,4 +1,4 @@
-# King Synapse
+﻿# King Synapse
 
 <p align="center">
   <strong>Readable memory for coding agents.</strong><br />
@@ -204,14 +204,15 @@ questions, answers, or generated text:
 | 200 CUDA top-context generator | 0.411 | 0.000 | 0.120 | 0.066 | 200 judged / 0 error, judge acc 0.15 |
 | 500 request / 323 scored CUDA samples | 0.381 | 0.000 | 0.046 | 0.039 | 323 judged / 0 error |
 | 500 request / 323 scored top-context generator | 0.381 | 0.000 | 0.121 | 0.075 | 323 judged / 0 error, judge acc 0.16 |
+| 500 request / 433 scored semantic mapping | 0.334 | 0.000 | 0.081 | 0.078 | 433 judged / 0 error, judge acc 0.13 |
 
 This is still not a published-comparable official DMR result. The pinned
 extractive 5 / 50 / 200 / 500-request runs and the DMR 50 / 200 / 500-request
 top-context candidates are fully judged locally on `deepseek-v4-flash`. The latest
 top-context candidate preflight returns HTTP `200` with no key recorded in the
 repo. The remaining boundary is published-comparable scoring policy,
-answer-generation quality, and the honest large-run claim of
-`500 request / 323 scored`, not `500/500`.
+answer-generation quality, and the mapping-policy correction from
+`punctuation` to `significant_token_containment` which raised scored samples from 323 to 433.
 The scoring review lives in [OFFICIAL_DMR_REVIEW.md](docs/eval/OFFICIAL_DMR_REVIEW.md).
 The answer-synthesis audit adds another boundary: in the 323-scored
 DMR 500-request run, `118/128` top-1 retrieval hits still did not include the
@@ -237,7 +238,9 @@ three views.
 
 | DMR 500 requested-row outcome | Count | Share |
 | --- | ---: | ---: |
-| Mapping rejected before scoring | 177 | 35.40% |
+| Mapping rejected before scoring (old punctuation policy) | 177 | 35.40% |
+| True recall failure (corrected semantic audit) | 3 | 0.60% |
+| Recovered by significant_token_containment | 110 | 22.00% |
 | Retrieval top-10 miss | 109 | 21.80% |
 | Top-context ranking boundary | 80 | 16.00% |
 | Top-1 answer-synthesis failure | 83 | 16.60% |
@@ -346,8 +349,8 @@ comparison adapters or optional embedding/reranking paths.
 - LongMemEval and DMR candidate retrieval now have 50-sample validation reports; official-style DMR answer-generation has local 5/50/200 and 500-request reports, and pinned DeepSeek judge runs now return `0` errors on `deepseek-v4-flash`, including the DMR 50, 200, and 500-request top-context candidates.
 - The next-gate readiness audit now keeps heavy follow-up runs closed: DMR 50/200/500 top-context judge scoring is complete, and the useful next work is failure-mode analysis or optional DeepSeek protocol replay.
 - Ranking guard work has expanded through LongMemEval 500. No tested pool-signal guard is safe enough for a runtime default.
-- DMR 500 failure modes are now classified: mapping 177/500 (35.4%), retrieval 109 (21.8%), answer synthesis 83 (16.6%), ranking 80 (16.0%), success 51 (10.2%). Primary bottleneck is mapping policy, not architecture. See [DMR_500_FAILURE_MODE.md](docs/eval/DMR_500_FAILURE_MODE.md).
-- DMR mapping policy decision is gate-backed: keep punctuation full-answer as runtime default. 174/177 rejected rows have diagnostic token matches; relaxed policy could recover +119 rows but needs judge validation. See [DMR_MAPPING_POLICY_GATE.md](docs/eval/DMR_MAPPING_POLICY_GATE.md).
+- DMR 500 failure mode classification has been corrected: a 30-sample human audit proved that mapping rejection is a scoring-rule artifact, not a memory recall failure. True recall failure is 0.6% (3/500). Under the corrected `significant_token_containment` mapping, 433/500 samples are scored with DeepSeek judge accuracy 0.132. The generation bottleneck is confirmed: judge accuracy at retrieval rank 1 is 0.301, dropping to 0.055 at rank 2-5. See [DMR_MAPPING_POLICY_CORRECTION.md](docs/eval/DMR_MAPPING_POLICY_CORRECTION.md).
+- DMR mapping policy correction is complete: the `significant_token_containment` policy replaces punctuation substring matching, scoring 433/500 (vs 323). The old `punctuation` policy overstates recall failure by ~60x. See [DMR_MAPPING_POLICY_CORRECTION.md](docs/eval/DMR_MAPPING_POLICY_CORRECTION.md) and [DMR_MAPPING_REJECTED_INSPECTION.md](docs/eval/DMR_MAPPING_REJECTED_INSPECTION.md).
 - Phase 6 benchmark and golden replay baselines are fixed for the current validation scope.
 - Public API stability notes live in `docs/API_SURFACE.md` and `docs/COMPATIBILITY.md`.
 

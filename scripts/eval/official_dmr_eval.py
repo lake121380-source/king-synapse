@@ -532,7 +532,10 @@ def main() -> int:
     mode_config = config_for_mode(args.mode)
     api = HfApi(endpoint=args.endpoint)
 
-    dmr_info = api.dataset_info(DMR_REPO)
+    try:
+        dmr_info = api.dataset_info(DMR_REPO)
+    except Exception:
+        dmr_info = None
     info = {
         "repo_id": DMR_REPO,
         "revision": getattr(dmr_info, "sha", None),

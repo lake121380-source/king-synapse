@@ -1,6 +1,13 @@
-# Official DMR Answer-Generation Result
+﻿# Official DMR Answer-Generation Result
 
 Date: 2026-07-04
+
+> **NOTE (2026-07-05):** The 323-sample scored set referenced in this document
+> used the `punctuation` mapping policy, which was later proven to reject
+> 174 samples that actually contain the gold answer in memory (see
+> `DMR_MAPPING_POLICY_CORRECTION.md`). The corrected `significant_token_containment`
+> policy scores 433/500 samples with judge accuracy 0.132. Numbers in this
+> document overstate recall failure by ~60x. Read with that correction in mind.
 
 Status: DMR 500-request answer-generation scoring passed locally on CUDA with
 323 mappable samples; DeepSeek judge preflight and judge probe now return

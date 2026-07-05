@@ -2,6 +2,13 @@
 
 Date: 2026-07-04
 
+> **NOTE (2026-07-05):** This gate was written under the `punctuation` mapping
+> policy. A 30-sample human audit proved that policy rejects samples that
+> contain the gold answer in memory. The corrected `significant_token_containment`
+> policy scores 433/500 (vs 323). See `DMR_MAPPING_POLICY_CORRECTION.md` for
+> the corrected results. Gate conclusions referencing the 323-sample set should
+> be re-evaluated under the new mapping.
+
 Status: validation evidence, not a runtime change
 
 Machine-readable report:

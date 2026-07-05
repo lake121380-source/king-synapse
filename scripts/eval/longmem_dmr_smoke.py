@@ -34,6 +34,7 @@ DMR_FILE = "msc_self_instruct.jsonl"
 DMR_ANSWER_MATCH_POLICIES = {
     "strict": "casefold + whitespace-normalized full answer substring",
     "punctuation": "casefold + punctuation-normalized full answer substring",
+    "significant_token_containment": "all significant answer tokens (>2 chars) must appear in memory content",
 }
 SMOKE_CONFIGS = (
     {
@@ -616,6 +617,15 @@ def dmr_answer_matches(answer: Any, content: str, policy: str) -> bool:
     if policy == "punctuation":
         answer_text = normalize_punctuation(answer)
         return bool(answer_text and answer_text in normalize_punctuation(content))
+    if policy == "significant_token_containment":
+        answer_tokens = set(re.findall(r"[\w]+", str(answer).casefold()))
+        if not answer_tokens:
+            return False
+        significant = {t for t in answer_tokens if len(t) > 2}
+        if not significant:
+            return False
+        content_tokens = set(re.findall(r"[\w]+", str(content).casefold()))
+        return significant.issubset(content_tokens)
     raise ValueError(f"unknown DMR answer match policy: {policy}")
 
 
