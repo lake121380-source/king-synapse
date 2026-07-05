@@ -33,6 +33,11 @@ DEFAULT_REPORTS = [
     "crates/eval/reports/next-validation-action-gate.json",
     "crates/eval/reports/readme-claims-support-audit.json",
     "crates/eval/reports/phase6-current-system-gate.json",
+    "crates/eval/reports/longmem-500-public-rerank-pool-100.json",
+    "crates/eval/reports/longmem-500-public-baseline-rrf.json",
+    "crates/eval/reports/longmem-500-public-vectors.json",
+    "crates/eval/reports/longmem-500-public-vectors-rerank.json",
+    "crates/eval/reports/longmem-500-public-pool100-vw1.5.json",
 ]
 
 ALLOWED_CYCLE_LAG_EDGES = {

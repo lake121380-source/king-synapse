@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.next-validation-action-gate.v1",
-  "generated_at": "2026-07-04T05:55:10.698779+00:00",
+  "generated_at": "2026-07-05T01:51:57.017867+00:00",
   "runner": "scripts\\eval\\next_validation_action_gate.py",
   "git": {
     "branch": "main",
-    "commit": "70eb251a38c5206670f6b6d5d04af3886eb4c428",
+    "commit": "d13588f9df35605a73134b4148080b737d5e7065",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -31,17 +31,17 @@
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "bfb59961cf789073cb159ae357461c02b99e38aba4312895ce55643b8974e30f"
+      "sha256": "a5432d5dd4c0b208dc0e5e8a16586f57c00af5491bbd661044102be14b443ed1"
     },
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "9be3e9d34e6e566c6d3cd4e6dbe0effe04f510fb2698f2584756329f075038e4"
+      "sha256": "4a3528fafb6a56a6f22a81be11acb2ffdba9f0bdb98317db66b249da2c4ee6bf"
     },
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
+      "sha256": "5160471fee43f944ec423aacd48c0b02be4985504e15575beb70618e699381dd"
     }
   },
   "raw_records_committed": false,
@@ -158,7 +158,7 @@
         "crates\\eval\\reports\\ranking-task-gate.json",
         "crates\\eval\\reports\\long-horizon-task-gate.json"
       ],
-      "conclusion": "Productization, runtime ranking changes, and public long-memory claims remain frozen.",
+      "conclusion": "Productization and runtime ranking changes remain frozen.",
       "remaining": []
     },
     {

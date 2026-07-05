@@ -1,22 +1,22 @@
 {
   "schema_version": "king-synapse.phase6-current-system-gate.v1",
-  "generated_at": "2026-07-04T05:55:11.752840+00:00",
+  "generated_at": "2026-07-05T01:52:07.563443+00:00",
   "runner": "scripts\\eval\\phase6_current_system_gate.py",
   "git": {
     "branch": "main",
-    "commit": "70eb251a38c5206670f6b6d5d04af3886eb4c428",
+    "commit": "d13588f9df35605a73134b4148080b737d5e7065",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "requirements_audit": {
       "path": "crates\\eval\\reports\\phase6-requirements-audit.json",
       "exists": true,
-      "sha256": "7312884ad81583957dae1e2b456985e16387411d7e8e884128911ace6ef86804"
+      "sha256": "b2abf98691ef10d5788ccf31124a15d60114872f4853295a94fdecbbf2585f2d"
     },
     "objective_coverage": {
       "path": "crates\\eval\\reports\\phase6-objective-coverage-audit.json",
       "exists": true,
-      "sha256": "f0e003d5616a2c4da5801a0acaab91a94e4c72e3d4edb74c79a5cd07ba6400cd"
+      "sha256": "d9b6733d1d18bb38036fb334e71ccac9dff8406f0ba4cce700e7f012de6ae93f"
     },
     "next_gate_readiness": {
       "path": "crates\\eval\\reports\\phase6-next-gate-readiness.json",
@@ -26,7 +26,7 @@
     "readme_claims_audit": {
       "path": "crates\\eval\\reports\\readme-claims-support-audit.json",
       "exists": true,
-      "sha256": "d98d73e4524a9307ebcb22c478fb71e76f4f907a9760ee374c034aa29b0bf2a9"
+      "sha256": "96fdddd204dccfe0b73c1712215b1e5eb95791bfbbd09624b094783ff0fed142"
     },
     "official_dmr_task_gate": {
       "path": "crates\\eval\\reports\\official-dmr-task-gate.json",
@@ -36,17 +36,17 @@
     "ranking_task_gate": {
       "path": "crates\\eval\\reports\\ranking-task-gate.json",
       "exists": true,
-      "sha256": "9be3e9d34e6e566c6d3cd4e6dbe0effe04f510fb2698f2584756329f075038e4"
+      "sha256": "4a3528fafb6a56a6f22a81be11acb2ffdba9f0bdb98317db66b249da2c4ee6bf"
     },
     "longmem_dmr_trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "029e0435bc8966063656eab23ec75d81faae2b79776cb27b2c3f327052d49493"
+      "sha256": "43af96dbdf050269402992751f69342b43149120d2fa34e96e057475226db7f8"
     },
     "ranking_objective_split_decision": {
       "path": "crates\\eval\\reports\\ranking-objective-split-decision.json",
       "exists": true,
-      "sha256": "1edcf4b2832eac9dc5013d40d67b943941d2321f821198fb425323c61466899e"
+      "sha256": "33588615434969f85316b2527ebcf78950245edb985355472747ee6986005a84"
     },
     "external_comparison_task_gate": {
       "path": "crates\\eval\\reports\\external-comparison-task-gate.json",
@@ -71,17 +71,17 @@
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
+      "sha256": "5160471fee43f944ec423aacd48c0b02be4985504e15575beb70618e699381dd"
     },
     "productization_decision_gate": {
       "path": "crates\\eval\\reports\\productization-decision-gate.json",
       "exists": true,
-      "sha256": "bfb59961cf789073cb159ae357461c02b99e38aba4312895ce55643b8974e30f"
+      "sha256": "a5432d5dd4c0b208dc0e5e8a16586f57c00af5491bbd661044102be14b443ed1"
     },
     "next_validation_action_gate": {
       "path": "crates\\eval\\reports\\next-validation-action-gate.json",
       "exists": true,
-      "sha256": "033975ba810f41a026de9bd980abe1d311aff5d4defef1411338315af6399257"
+      "sha256": "e0c8e2cceaac79b5b8f45c2ed9c4e0878a3e21ced495bd6d526ed44fd0a4791d"
     },
     "baseline_health": {
       "path": "crates\\eval\\reports\\phase6-baseline-health-check-2026-07-04.json",
@@ -242,13 +242,13 @@
       "conclusion": "Future evidence labeling is complete via the boundary-explained path: all 8 candidates are present, the 2 misses are exactly the known boundary labels, and context overlap explains every reported miss."
     },
     {
-      "id": "public_real_world_long_memory_not_overstated",
+      "id": "public_real_world_long_memory_state_consistent",
       "status": "passed",
       "severity": "required",
       "evidence": [
         "crates\\eval\\reports\\long-horizon-task-gate.json"
       ],
-      "conclusion": "Public real-world long-memory stability is still explicitly not ready."
+      "conclusion": "Public real-world long-memory validation is complete on the full 500-sample LongMemEval dataset."
     },
     {
       "id": "productization_decision_gate_passed",
@@ -502,7 +502,7 @@
     "dmr_longmem_objective_split_decided": true,
     "long_horizon_gate_passed": true,
     "future_evidence_labeling_complete": true,
-    "public_real_world_long_memory_ready": false,
+    "public_real_world_long_memory_ready": true,
     "productization_decision_gate_passed": true,
     "productization_ready": false,
     "release_v0_1_allowed": false,
@@ -514,7 +514,6 @@
     "productization_allowed": false,
     "runtime_ranking_change_allowed": false,
     "blocked_next_gates": [
-      "public_real_world_long_memory_not_validated",
       "productization_decision_no_go",
       "productization_not_ready"
     ]

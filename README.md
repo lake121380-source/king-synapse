@@ -180,8 +180,9 @@ The consolidated long-horizon task gate is
 `future_candidate_recall_stable: true`. It also keeps
 `future_evidence_labeling_complete: true` (the 2/8 evidence misses are
 fully explained by the substring-evidence labeling boundary, not candidate
-recall loss) and `public_real_world_long_memory_ready: false`, so this is not
-a public real-world long-memory claim yet.
+recall loss) and `public_real_world_long_memory_ready: true` (full 500-sample
+public LongMemEval validation completed, Recall@10 = 0.380), so public
+real-world long-memory validation is complete but productization remains blocked.
 
 | Validation | Baseline FTS/entity | + vector | + vector + reranker | Current read |
 | --- | ---: | ---: | ---: | --- |

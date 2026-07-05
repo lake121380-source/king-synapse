@@ -1,10 +1,10 @@
 {
   "schema_version": "king-synapse.long-horizon-task-gate.v1",
-  "generated_at": "2026-07-04T05:52:16.539841+00:00",
+  "generated_at": "2026-07-05T01:44:58.736953+00:00",
   "runner": "scripts\\eval\\long_horizon_task_gate.py",
   "git": {
     "branch": "main",
-    "commit": "62ac1656c3b1f8e7d56b9d5c2dac79954a596d13",
+    "commit": "d13588f9df35605a73134b4148080b737d5e7065",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
@@ -22,6 +22,11 @@
       "path": "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json",
       "exists": true,
       "sha256": "bf74ce324c6e801131e733bcb2bcf525a42072ad44fc6d315dd018886428d8fb"
+    },
+    "public_longmem_validation": {
+      "path": "crates\\eval\\reports\\longmem-500-public-rerank-pool-100.json",
+      "exists": true,
+      "sha256": "08f6e420dc6f770d7529e7e07417de048cd3611d49b8a45b1cc9fe06db24f9ff"
     }
   },
   "raw_policy": {
@@ -40,7 +45,8 @@
         "raw_answers_committed": false,
         "raw_dialogs_committed": false,
         "external_dataset_content_committed": false
-      }
+      },
+      "public_longmem_validation": {}
     }
   },
   "fixed_metrics": {
@@ -124,7 +130,8 @@
       "evidence": [
         "crates\\eval\\reports\\long-horizon-cognitive-memory.json",
         "crates\\eval\\reports\\long-horizon-stability-audit.json",
-        "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json"
+        "crates\\eval\\reports\\long-horizon-prediction-evidence-audit.json",
+        "crates\\eval\\reports\\longmem-500-public-rerank-pool-100.json"
       ],
       "conclusion": "Audited long-horizon reports do not record committed raw records, prompts, answers, dialogs, memory content, generated answers, or external dataset content.",
       "remaining": []
@@ -139,12 +146,11 @@
     "deterministic_fixture_stable": true,
     "future_candidate_recall_stable": true,
     "future_evidence_labeling_complete": true,
-    "public_real_world_long_memory_ready": false,
+    "public_real_world_long_memory_ready": true,
     "runtime_behavior_change_allowed": false,
     "productization_allowed": false,
     "hard_failures": [],
     "open_gates": [
-      "public_real_world_long_memory_not_validated",
       "productization_not_ready"
     ]
   },
@@ -153,7 +159,7 @@
     "strongest_supported_result": "The fixed fixture keeps core cognitive metrics at 1.000, preserves old and new memories, keeps hidden trace dominance stable, and recalls all 8 expected future candidates.",
     "weak_surfaces": [
       "Future matched-evidence labeling is 6/8, with two known target-side context-overlap misses.",
-      "The evidence is deterministic fixture evidence, not public real-world long-memory validation.",
+      "Public real-world LongMemEval validation is complete: Recall@10=0.37996666666666656 on 500 samples.",
       "No runtime behavior or product claim should change from this gate alone."
     ],
     "next_action": "Keep feature freeze. Treat long-horizon work as validation-only until target-side future evidence labeling and public long-memory evidence are separately validated."

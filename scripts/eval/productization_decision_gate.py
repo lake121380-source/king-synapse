@@ -262,6 +262,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     public_long_memory_ready = bool(
         safe_get(long_horizon, ["status", "public_real_world_long_memory_ready"])
     )
+    public_real_world_long_memory_ready = public_long_memory_ready
     next_gate_ready = bool(safe_get(readiness, ["read", "next_gate_ready"]))
     demo_doc_exists = paths["demo_doc"].exists()
     performance_measured = bool(performance.get("measurement_coverage"))
@@ -395,13 +396,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         ),
         criterion(
             "public_long_memory_ready",
-            "not_ready" if long_horizon_ready and not public_long_memory_ready else "failed",
+            "validated" if long_horizon_ready and public_long_memory_ready else ("not_ready" if long_horizon_ready and not public_long_memory_ready else "failed"),
             question="长期记忆是否能作为公开产品主张？",
             evidence=[paths["long_horizon_task_gate"]],
             conclusion=(
-                "Deterministic long-horizon fixture is stable, but public real-world long-memory evidence is not ready."
-                if long_horizon_ready and not public_long_memory_ready
-                else "Long-horizon gate does not match the expected deterministic-ready / public-not-ready state."
+                "Public real-world long-memory validation is complete on the full 500-sample LongMemEval dataset, but productization is still blocked by other criteria."
+                if long_horizon_ready and public_long_memory_ready
+                else (
+                    "Deterministic long-horizon fixture is stable, but public real-world long-memory evidence is not ready."
+                    if long_horizon_ready and not public_long_memory_ready
+                    else "Long-horizon gate does not match the expected deterministic-ready state."
+                )
             ),
             remaining=[
                 "Close future evidence labeling boundary.",
@@ -508,7 +513,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 *([] if deepseek_external_ready else ["hosted_external_comparison_not_configured"]),
                 "safe_runtime_ranking_default_not_ready",
                 *([] if future_evidence_labeling_complete else ["future_evidence_labeling_boundary"]),
-                "public_real_world_long_memory_not_validated",
+                *([] if public_real_world_long_memory_ready else ["public_real_world_long_memory_not_validated"]),
                 "gpu_latency_acceptance_threshold_not_adopted",
                 "stable_public_demo_not_productized",
             ],

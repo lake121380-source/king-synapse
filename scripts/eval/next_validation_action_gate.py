@@ -300,7 +300,6 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         not productization_allowed
         and not productization_ready
         and not runtime_ranking_change_allowed
-        and not public_long_memory_ready
     )
     no_heavy_run_ready = not top_context_dmr_allowed and not hosted_ready
 
@@ -411,9 +410,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 paths["long_horizon_task_gate"],
             ],
             conclusion=(
-                "Productization, runtime ranking changes, and public long-memory claims remain frozen."
+                "Productization and runtime ranking changes remain frozen."
                 if no_product_or_runtime_change
-                else "At least one product/runtime/public-long-memory gate appears open."
+                else "At least one product/runtime gate appears open."
             ),
         ),
         item(

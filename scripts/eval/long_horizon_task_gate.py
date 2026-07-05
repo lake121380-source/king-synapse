@@ -125,6 +125,8 @@ def input_paths(root: Path) -> dict[str, Path]:
         / "crates/eval/reports/long-horizon-stability-audit.json",
         "long_horizon_prediction_evidence": root
         / "crates/eval/reports/long-horizon-prediction-evidence-audit.json",
+        "public_longmem_validation": root
+        / "crates/eval/reports/longmem-500-public-rerank-pool-100.json",
     }
 
 
@@ -169,6 +171,21 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     fixed_metrics = cognitive.get("metrics", {})
     aggregate = stability.get("aggregate", {})
     evidence_aggregate = evidence.get("aggregate", {})
+    public_longmem_report = reports.get("public_longmem_validation", {})
+    public_longmem_datasets = public_longmem_report.get("datasets", [])
+    public_longmem_ready = False
+    public_longmem_recall_at_10 = None
+    public_longmem_sample_size = None
+    if public_longmem_datasets:
+        runs = public_longmem_datasets[0].get("kr_eval_runs", [])
+        if runs:
+            public_longmem_recall_at_10 = runs[0].get("recall_at_10")
+            public_longmem_sample_size = runs[0].get("n_queries")
+            public_longmem_ready = (
+                public_longmem_recall_at_10 is not None
+                and public_longmem_sample_size is not None
+                and public_longmem_sample_size >= 500
+            )
     case_count = int(evidence_aggregate.get("case_count") or 0)
     candidate_count = int(
         evidence_aggregate.get("candidate_present_all_phases_count") or 0
@@ -349,7 +366,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             and deterministic_stability_passed,
             "future_candidate_recall_stable": future_candidate_recall_stable,
             "future_evidence_labeling_complete": future_evidence_complete,
-            "public_real_world_long_memory_ready": False,
+            "public_real_world_long_memory_ready": public_longmem_ready,
             "runtime_behavior_change_allowed": False,
             "productization_allowed": False,
             "hard_failures": hard_failures,
@@ -357,8 +374,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 []
                 if future_evidence_complete
                 else ["future_evidence_labeling_boundary"]
+            ) + (
+                []
+                if public_longmem_ready
+                else ["public_real_world_long_memory_not_validated"]
             ) + [
-                "public_real_world_long_memory_not_validated",
                 "productization_not_ready",
             ],
         },
@@ -372,7 +392,15 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             ),
             "weak_surfaces": [
                 "Future matched-evidence labeling is 6/8, with two known target-side context-overlap misses.",
-                "The evidence is deterministic fixture evidence, not public real-world long-memory validation.",
+                (
+                    "Public real-world LongMemEval validation is complete: Recall@10="
+                    + str(public_longmem_recall_at_10)
+                    + " on "
+                    + str(public_longmem_sample_size)
+                    + " samples."
+                    if public_longmem_ready
+                    else "The evidence is deterministic fixture evidence, not public real-world long-memory validation."
+                ),
                 "No runtime behavior or product claim should change from this gate alone.",
             ],
             "next_action": (

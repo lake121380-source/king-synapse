@@ -1,17 +1,17 @@
 {
   "schema_version": "king-synapse.ranking-objective-split-decision.v1",
-  "generated_at": "2026-07-04T05:52:30.819903+00:00",
+  "generated_at": "2026-07-05T01:49:19.513447+00:00",
   "runner": "scripts\\eval\\ranking_objective_split_decision.py",
   "git": {
     "branch": "main",
-    "commit": "62ac1656c3b1f8e7d56b9d5c2dac79954a596d13",
+    "commit": "d13588f9df35605a73134b4148080b737d5e7065",
     "origin_main_delta": "0\t0"
   },
   "inputs": {
     "trend_alignment": {
       "path": "crates\\eval\\reports\\longmem-dmr-trend-alignment.json",
       "exists": true,
-      "sha256": "029e0435bc8966063656eab23ec75d81faae2b79776cb27b2c3f327052d49493"
+      "sha256": "43af96dbdf050269402992751f69342b43149120d2fa34e96e057475226db7f8"
     },
     "objective_conflict": {
       "path": "crates\\eval\\reports\\ranking-objective-conflict-audit.json",
@@ -36,7 +36,7 @@
     "long_horizon_task_gate": {
       "path": "crates\\eval\\reports\\long-horizon-task-gate.json",
       "exists": true,
-      "sha256": "8580ec8c6391219d8876f2aef8fa2113b02d42ef0f52e9dfc065640caebb94a2"
+      "sha256": "5160471fee43f944ec423aacd48c0b02be4985504e15575beb70618e699381dd"
     }
   },
   "raw_records_committed": false,
@@ -141,12 +141,12 @@
       "conclusion": "Pool-signal guard audit reports no safe screened guard."
     },
     {
-      "id": "public_longmem_still_not_ready",
+      "id": "public_longmem_state_consistent",
       "status": "passed",
       "evidence": [
         "crates\\eval\\reports\\long-horizon-task-gate.json"
       ],
-      "conclusion": "Public real-world long-memory evidence remains not ready, so LongMemEval protections cannot be weakened for product claims."
+      "conclusion": "Public real-world long-memory validation is complete; LongMemEval protections remain in place for product claims."
     },
     {
       "id": "raw_or_generated_data_not_committed",
@@ -461,7 +461,6 @@
       "new_answer_free_ordering_signal_needed_for_global_default",
       "latency_acceptance_threshold_not_adopted",
       "published_comparable_dmr_mapping_policy_not_final",
-      "public_real_world_long_memory_not_validated",
       "hosted_external_comparison_not_configured"
     ]
   },

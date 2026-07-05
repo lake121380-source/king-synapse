@@ -140,6 +140,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rerank-batch-size", type=int, default=None)
     parser.add_argument("--rerank-max-length", type=int, default=None)
     parser.add_argument(
+        "--rerank-pool-override",
+        type=int,
+        default=None,
+        help="Override the reranker pool size for all rerank configs. Default keeps the config value (50).",
+    )
+    parser.add_argument(
+        "--vector-weight-override",
+        type=float,
+        default=None,
+        help="Override the RRF vector weight. Default keeps 1.0.",
+    )
+    parser.add_argument(
         "--accelerator",
         choices=("env", "cpu", "cuda", "directml"),
         default="env",
@@ -1164,6 +1176,8 @@ def run_smoke_configs(
     examples: list[dict[str, Any]],
     k: int,
     configs: list[dict[str, Any]],
+    rerank_pool_override: int | None = None,
+    vector_weight_override: float | None = None,
 ) -> list[dict[str, Any]]:
     runs: list[dict[str, Any]] = []
     for config in configs:
@@ -1177,11 +1191,11 @@ def run_smoke_configs(
             k,
             vectors=config["vectors"],
             rerank=config["rerank"],
-            rerank_pool=config["rerank_pool"],
+            rerank_pool=rerank_pool_override if rerank_pool_override is not None else config["rerank_pool"],
             rrf_k=60.0,
             fts_weight=1.0,
             entity_weight=1.0,
-            vector_weight=1.0,
+            vector_weight=vector_weight_override if vector_weight_override is not None else 1.0,
         )
         run = sanitize_eval_report(raw, examples)
         run.update(
@@ -1467,6 +1481,8 @@ def main() -> int:
                 examples=dataset["examples"],
                 k=args.k,
                 configs=selected_configs,
+                rerank_pool_override=args.rerank_pool_override,
+                vector_weight_override=args.vector_weight_override,
             )
 
     report = {
