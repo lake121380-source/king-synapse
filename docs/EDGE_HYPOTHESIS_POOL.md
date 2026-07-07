@@ -1,4 +1,4 @@
-﻿# Edge Hypothesis Pool — Design Document (v0.2)
+# Edge Hypothesis Pool — Design Document (v0.3 — FROZEN)
 
 ## First Principle
 
@@ -8,25 +8,20 @@
 
 Edge is not a static property of the graph. Edge is a first-class citizen of
 the memory ecology, with its own lifecycle: candidate -> observed -> confirmed
--> strengthened -> forgotten.
+-> strengthened -> disputed -> resolved/forgotten.
 
 ## What This Is
 
-An "immune system for edges." Its job is not to generate more connections,
+An immune system for edges. Its job is not to generate more connections,
 but to ensure only trustworthy connections survive into long-term memory.
 
-The core question has shifted from "how do we connect more memories?" to
-"how do we keep only the connections worth believing?"
+The core question: "how do we keep only the connections worth believing?"
 
 ## Problem This Solves
 
 Phase 1 proved that entity-shared edges produce a 96.7% dense graph with zero
-discrimination. The root cause is not "entity extraction is too coarse" — it is
-that edges created from surface-level feature matching have no semantic
-meaning and no validation mechanism.
-
-The fix is not better entity extraction. The fix is a fundamentally different
-edge creation mechanism: **reasoning proposes, experience disposes.**
+discrimination. The fix is not better entity extraction — it is a fundamentally
+different edge creation mechanism: **reasoning proposes, experience disposes.**
 
 ## Core Mechanism
 
@@ -34,132 +29,129 @@ edge creation mechanism: **reasoning proposes, experience disposes.**
 Retrieval returns top-K memories
         |
         v
-Proposer examines (query, top-K) and proposes hypotheses:
-  "Memory A explains Memory B in the context of this query"
-  "Memory C conflicts_with Memory D"
+EdgeHypothesisGenerator::generate(context) -> Vec<EdgeHypothesis>
         |
         v
-Hypotheses enter Edge Hypothesis Pool with initial confidence
+Hypotheses enter Pool with initial confidence + evidence
         |
         v
-... time passes, more queries arrive ...
+... more queries arrive, same hypothesis re-proposed in DIFFERENT contexts ...
         |
-        v
-Same hypothesis re-proposed in DIFFERENT context (diversity check)
-        |
-        v  confidence += f(frequency, diversity, utility)
+        v  confidence = f(frequency, diversity, observed_utility)
 ... repeated across N independent interactions ...
         |
         v
-confidence crosses threshold AND diversity >= minimum AND utility validated
+confidence >= threshold AND diversity >= min AND observations >= min
         |
         v
 Hypothesis graduates to Confirmed Edge in memory_edges
         |
         v
 GraphActivationBooster propagates along meaningful edges
+        |
+        v
+Utility observed: did the edge improve retrieval rank? (before vs after)
+        |
+        v
+Confirmed -> Strengthened (if utility positive) or -> Disputed (if conflict found)
 ```
 
-## Confidence Model (Revised — Not Just Frequency)
+## Confidence Model
 
-A hypothesis's confidence is NOT a counter. It is a composite of three signals:
+Confidence is NOT a counter. It is a composite of three observed signals:
 
-### 1. Frequency
+### 1. Frequency (w=0.2)
 
-How many times has this hypothesis been (re-)proposed across independent
-retrieval events?
+How many times has this hypothesis been re-proposed across independent
+retrieval events? Necessary but not sufficient. Alone, frequency produces
+spurious correlations.
 
-- Necessary but not sufficient.
-- Alone, frequency produces spurious correlations (e.g., "likes Rust" and
-  "bought keyboard" co-activate every day just because the user opens the
-  app every day).
+### 2. Context Diversity (w=0.3)
 
-### 2. Context Diversity
+Are re-proposals from genuinely different query contexts?
 
-Are the re-proposals coming from genuinely different query contexts?
+- 3 different query contexts producing same hypothesis = strong signal
+- Same query repeated 3 times = weak signal (artifact)
 
+Implementation: hash query context. Hypothesis needs observations from at
+least MIN_DIVERSITY_CONTEXTS (default 3) distinct hashes to graduate.
+
+### 3. Predictive Utility (w=0.5) — OBSERVED, NOT PREDICTED
+
+Does the edge improve future retrieval? We do not predict this — we observe it.
+
+When a hypothesis exists (A-B connected), track for subsequent queries:
+
+```rust
+struct EdgeUtilityObservation {
+    query_id: String,
+    before_rank: usize,    // rank of B when edge absent
+    after_rank: usize,     // rank of B when edge present
+    before_recall: bool,   // was B in top-K without edge?
+    after_recall: bool,    // is B in top-K with edge?
+    rank_delta: i32,       // after_rank - before_rank (negative = improvement)
+}
 ```
-query1: "learning path"      -> proposes A predicts B
-query2: "tool recommendation" -> proposes A predicts B
-query3: "career planning"     -> proposes A predicts B
-```
 
-Three different contexts all producing the same hypothesis = strong signal.
+Utility score = normalized rank improvement + recall improvement.
 
-```
-query1: "Rust"  -> proposes A co_activates B
-query2: "Rust"  -> proposes A co_activates B
-query3: "Rust"  -> proposes A co_activates B
-```
-
-Same query repeated 3 times = weak signal (could be artifact).
-
-Implementation: hash the query context (query text + retrieved context hash).
-A hypothesis needs observations from at least MIN_DIVERSITY_CONTEXTS (default 3)
-distinct context hashes to graduate.
-
-### 3. Predictive Utility (Future-Looking)
-
-Does the presence of this edge improve future retrieval?
-
-When a hypothesis is present (A-B connected in the pool), track whether
-queries that should benefit from A-B connection actually retrieve both A and
-B in top-K more often than baseline.
-
-If edge (A, B) exists as hypothesis, and subsequent queries that retrieve A
-also retrieve B at a rate higher than random chance, the edge has predictive
-utility.
+A relation that appears often but never helps retrieval is noise.
+A relation that appears rarely but consistently improves retrieval is gold.
 
 ### Composite Formula
 
 ```
-confidence = w_f * normalized_frequency
-           + w_d * context_diversity_score
-           + w_u * predictive_utility_score
+confidence = 0.2 * normalized_frequency
+           + 0.3 * context_diversity_score
+           + 0.5 * predictive_utility_score
 ```
 
-Default weights: w_f=0.2, w_d=0.3, w_u=0.5
-
-Utility weighted highest because: a relation that appears often but never
-helps retrieval is noise; a relation that appears rarely but consistently
-improves retrieval is gold.
-
-## Graduation Criteria
-
-A hypothesis graduates to confirmed edge when ALL of:
-
-- confidence >= CONFIRM_THRESHOLD (default 0.70)
-- observations >= MIN_OBSERVATIONS (default 3)
-- distinct_contexts >= MIN_DIVERSITY_CONTEXTS (default 3)
-
-## Edge Lifecycle States
+## Edge Lifecycle States (Revised — Added `disputed`)
 
 ```
-candidate     — proposed, not yet observed in different context
-observed      — re-proposed in at least one different context
-confirmed     — graduated to memory_edges, affects retrieval
-strengthened  — confirmed and consistently showing predictive utility
-forgotten     — not re-proposed for N turns, confidence decayed below floor
+candidate
+    |  (first proposal)
+    v
+observed
+    |  (re-proposed in different context, confidence rising)
+    v
+confirmed
+    |  (confidence >= 0.70, diversity >= 3, observations >= 3)
+    v
+strengthened
+    |  (consistently positive utility)
+    |
+    |  (conflict found — new evidence contradicts)
+    v
+disputed
+    |  (re-evaluation)
+    +-------> resolved (conflict resolved, edge updated or type changed)
+    |
+    +-------> forgotten (conflict unresolved, confidence decays below floor)
 ```
 
-## Relation Types (Three Categories, v0.1)
+Why `disputed` exists: real memory is not "believe -> forget." It is
+"believe -> discover conflict -> re-evaluate." When new evidence contradicts
+a confirmed edge (e.g., "likes Python" -> "switched to Rust"), the edge
+enters `disputed`, is re-evaluated, and either resolves (edge type changes
+to `replaces` or `conflicts_with`) or is forgotten.
 
-Do not over-specify the cognitive language yet. Start with three categories:
+## Relation Types (Three Categories)
 
 ### A. Association (weak, statistical)
 
 | Relation | Meaning | Source |
 |----------|---------|--------|
-| co_activates | A and B frequently retrieved together | Hebbian / co-retrieval |
-| related | A and B share topical similarity but no deeper relation | temporal proximity, shared context |
+| co_activates | A and B frequently retrieved together | co-retrieval |
+| related | A and B share topical proximity | temporal / session |
 
 ### B. Reasoning (inferred, semantic)
 
 | Relation | Meaning | Source |
 |----------|---------|--------|
-| explains | A provides context that makes B understandable | LLM hypothesis |
-| supports | A and B independently support the same conclusion | LLM hypothesis |
-| predicts | A occurring makes B more likely to be relevant | LLM hypothesis |
+| explains | A provides context making B understandable | LLM hypothesis |
+| supports | A and B independently support same conclusion | LLM hypothesis |
+| predicts | A occurring makes B more likely relevant | LLM hypothesis |
 
 ### C. Evolution (change over time)
 
@@ -169,10 +161,16 @@ Do not over-specify the cognitive language yet. Start with three categories:
 | resolves | A resolves a conflict involving B | memory update |
 | replaces | A supersedes B (B is outdated) | memory supersession |
 
-## Edge Evidence Layer (New)
+## Edge Evidence — Not a Log, But Edge's Own Memory
 
-Every hypothesis stores not just a confidence number, but the evidence behind
-it. This preserves MindMesh's explainability advantage.
+Evidence is not just an audit trail. It is the edge's memory — the history of
+why we believe this relation, and what has happened to it over time.
+
+A confirmed edge can be overturned later (A supports B -> later A conflicts_with B).
+If we only keep the final edge, we lose the cognitive evolution.
+
+- `memory_edges` = what we currently believe
+- `edge_evidence` = why we believe it, and what happened before
 
 ### Schema: `edge_evidence`
 
@@ -180,105 +178,101 @@ it. This preserves MindMesh's explainability advantage.
 CREATE TABLE IF NOT EXISTS edge_evidence (
     id              TEXT PRIMARY KEY,
     hypothesis_id   TEXT NOT NULL REFERENCES edge_hypotheses(id),
-    query_hash      TEXT NOT NULL,         -- hash of query that produced this evidence
-    query_context   TEXT NOT NULL,         -- category/tag of query context (not raw query)
-    supporting_memory_ids TEXT NOT NULL,   -- comma-separated memory IDs that supported the hypothesis
-    reason_summary  TEXT NOT NULL,         -- LLM or rule-generated reason (no raw content)
+    query_context_hash TEXT NOT NULL,
+    query_context_tag   TEXT NOT NULL,     -- category, not raw query
+    supporting_memory_ids TEXT NOT NULL,   -- comma-separated IDs
+    reason_summary  TEXT NOT NULL,         -- rule or LLM reason (no raw content)
+    utility_before_rank INTEGER,           -- rank before edge effect (NULL if N/A)
+    utility_after_rank  INTEGER,           -- rank after edge effect
     observed_at     INTEGER NOT NULL
 );
 ```
-
-When someone asks "why does the system think A and B are related?", the system
-can answer: "Because across 3 different query contexts (tool recommendation,
-career planning, learning path), A and B were consistently co-retrieved and
-the reasoning engine identified that A explains B."
 
 ## Schema: `edge_hypotheses` (Revised)
 
 ```sql
 CREATE TABLE IF NOT EXISTS edge_hypotheses (
-    id              TEXT PRIMARY KEY,
-    source          TEXT NOT NULL REFERENCES memories(id),
-    target          TEXT NOT NULL REFERENCES memories(id),
-    relation        TEXT NOT NULL,          -- co_activates, explains, predicts, ...
-    confidence      REAL NOT NULL DEFAULT 0.0,
-    observations    INTEGER NOT NULL DEFAULT 0,
-    distinct_contexts INTEGER NOT NULL DEFAULT 0,
-    predictive_utility REAL NOT NULL DEFAULT 0.0,
-    first_seen      INTEGER NOT NULL,
-    last_seen       INTEGER NOT NULL,
-    status          TEXT NOT NULL DEFAULT 'candidate',
-    -- candidate | observed | confirmed | strengthened | forgotten
-    confirmed_at    INTEGER,                -- NULL until confirmed
-    decayed_turns   INTEGER NOT NULL DEFAULT 0  -- turns since last re-proposal
+    id                  TEXT PRIMARY KEY,
+    source              TEXT NOT NULL REFERENCES memories(id),
+    target              TEXT NOT NULL REFERENCES memories(id),
+    relation            TEXT NOT NULL,
+    confidence          REAL NOT NULL DEFAULT 0.0,
+    observations        INTEGER NOT NULL DEFAULT 0,
+    distinct_contexts   INTEGER NOT NULL DEFAULT 0,
+    predictive_utility  REAL NOT NULL DEFAULT 0.0,
+    first_seen          INTEGER NOT NULL,
+    last_seen           INTEGER NOT NULL,
+    status              TEXT NOT NULL DEFAULT 'candidate',
+    -- candidate | observed | confirmed | strengthened | disputed | forgotten
+    confirmed_at        INTEGER,
+    disputed_at         INTEGER,
+    decayed_turns       INTEGER NOT NULL DEFAULT 0
 );
 ```
 
-## Implementation Phases (Revised — Rule-Based First)
+## Proposer Abstraction
 
-### Phase 1a: Schema + Rule-Based Proposer (No LLM)
+```rust
+trait EdgeHypothesisGenerator {
+    fn generate(&self, context: &RetrievalContext) -> Vec<EdgeHypothesis>;
+}
+```
 
-Goal: validate the lifecycle mechanism without LLM noise.
+Implementations (in order):
+1. `RuleBasedEdgeGenerator` — co-retrieval, temporal proximity, session shared
+2. `LLMEdgeGenerator` — DeepSeek-backed cognitive relation detection
+3. `HybridEdgeGenerator` — combines rule + LLM, weighted by source reliability
 
-- Add `edge_hypotheses` and `edge_evidence` tables to schema
-- Add Store methods: `upsert_hypothesis`, `get_hypotheses`, `confirm_hypothesis`,
-  `add_evidence`, `decay_hypotheses`
-- Implement `RuleBasedHypothesisProposer`:
-  - Co-retrieval: if A and B both appear in top-K, propose `co_activates`
-  - Temporal proximity: if A and B were written within T seconds, propose `related`
-  - Same session: if A and B share a session tag, propose `related`
-- Confidence starts low (0.2), boosted by re-observation in diverse contexts
-- Unit tests for lifecycle transitions: candidate -> observed -> confirmed -> forgotten
+## Implementation Phases
 
-Why no LLM first: if the lifecycle mechanism is broken, we need to know it's
-the mechanism, not the LLM. Rule-based proposers are deterministic and
-debuggable.
+### Phase 1a: Minimum Closed Loop (Rule-Based, No LLM)
 
-### Phase 1b: LLM Hypothesis Proposer
+Goal: prove that edges can be learned like memories. NOT to prove Recall improvement.
 
-- Implement `LlmHypothesisProposer` trait
-- DeepSeek-backed: given (query, top-K memories), identify cognitive relations
-  (explains, supports, predicts, conflicts_with)
-- Output: `Vec<EdgeHypothesis>` with initial confidence and evidence
-- A/B compare: rule-based proposer vs LLM proposer — which produces more
-  useful graduated edges?
+Complete the full loop:
+```
+Memory -> Retrieval -> Generate hypothesis -> Store -> Update confidence
+-> Graduate -> Activation uses edge -> Observe utility
+```
 
-### Phase 1c: Hebbian Reinforcement + Predictive Utility
+RuleBasedEdgeGenerator rules:
+- Co-retrieval: A and B both in top-K for same query -> propose `co_activates`
+- Temporal proximity: A and B written within T seconds -> propose `related`
 
-- Wire hypothesis reinforcement into existing Hebbian engine
-- Re-proposal in diverse context -> confidence boost (diversity-weighted)
-- Co-activation without re-proposal -> small nudge
-- Implement predictive utility tracking: does edge presence improve future
-  retrieval of the connected memories?
-- Decay: hypotheses not re-proposed for N turns lose confidence
+Run 1000 queries on DMR. Observe lifecycle transitions.
 
-### Phase 1d: Graduation + End-to-End Evaluation
+### Phase 1a Success Metrics (Graph Quality, NOT Recall)
 
-- Graduation logic: hypothesis -> memory_edges (with cognitive relation type)
-- End-to-end test: run N queries on DMR, observe:
-  - How many hypotheses are proposed?
-  - How many graduate?
-  - Do graduated edges produce non-uniform activation bonuses?
-  - Does Recall@10 change vs baseline?
-  - Can the system explain why each confirmed edge exists (evidence query)?
+1. **Edge density** — target < 5% (vs Phase 1's 96.7%)
+2. **Edge diversity** — multiple relation types present, not all `co_activates`
+3. **Survival curve** — what % of candidates reach confirmed?
+4. **Activation differentiation** — non-uniform bonuses (A=0.8, B=0.2, C=0)
+   vs Phase 1's all-saturated-to-cap
 
-## What Success Looks Like
+Only after these succeed do we look at Recall.
 
-1. `edge_hypotheses` has entries with varying confidence (not all saturated)
-2. Context diversity filtering prevents spurious edges from graduating
-3. Some hypotheses graduate with evidence-backed reasoning
-4. Graduated edges produce non-uniform activation in GraphActivationBooster
-5. System can answer "why does A connect to B?" with specific evidence
-6. Recall impact measurable (positive or negative — both are findings)
+### Phase 1b: LLM Hypothesis Generator
+
+- LLMEdgeGenerator with DeepSeek
+- A/B: rule-based vs LLM — which produces more useful graduated edges?
+
+### Phase 1c: Hebbian Reinforcement + Utility Tracking
+
+- Re-proposal in diverse context -> confidence boost
+- Utility observation: before_rank vs after_rank
+- Decay: unobserved hypotheses lose confidence
+
+### Phase 1d: Dispute Resolution + End-to-End
+
+- Conflict detection: new evidence contradicting confirmed edge
+- Dispute -> resolve or forget
+- Full evaluation with all lifecycle states active
 
 ## Design Principles
 
-1. **Reasoning proposes, experience disposes.** LLM does not decide the graph.
-   LLM proposes. Experience decides.
-2. **Frequency alone is not trust.** A relation seen 10 times in the same
-   context is weaker than one seen 3 times in different contexts.
-3. **Every edge must be explainable.** No black-box confidence. Every
-   confirmed edge has traceable evidence.
-4. **The pool is an immune system, not a generator.** Its primary function is
-   to prevent bad edges from entering long-term memory, not to create as many
-   edges as possible.
+1. **Reasoning proposes, experience disposes.**
+2. **Frequency alone is not trust.**
+3. **Utility is observed, not predicted.**
+4. **Every edge must be explainable.** Evidence stream, not black-box score.
+5. **The pool is an immune system, not a generator.**
+6. **Edges learn like memories.** They have lifecycles, evidence, and can be overturned.
