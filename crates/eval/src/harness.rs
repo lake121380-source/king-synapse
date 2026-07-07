@@ -11,6 +11,10 @@ use synapse_core::{
     GraphActivationBooster, MemoryKind, RecallEngine, RecallHit, RecallProfile, RecallQuery, Scope, Source, Store,
     WriteInput,
 };
+use synapse_core::{
+    EdgeHypothesisGenerator, HypothesisStore, RetrievalContext, RuleBasedEdgeGenerator,
+};
+use crate::types::HypothesisMetrics;
 
 pub fn default_dataset_path() -> PathBuf {
     let here = Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -110,7 +114,13 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
     let bench_start = Instant::now();
     let mut profile_totals = RecallProfile::default();
 
-    for q in &dataset.queries {
+    let hyp_generator = if opts.hypothesis_generation {
+        Some(RuleBasedEdgeGenerator::new())
+    } else {
+        None
+    };
+
+    for (qi, q) in dataset.queries.iter().enumerate() {
         let rq = RecallQuery {
             query: q.query.clone(),
             k: Some(opts.k),
@@ -158,6 +168,32 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
                 sources: h.sources.iter().map(|source| source.to_string()).collect(),
             })
             .collect();
+        // Edge Hypothesis Pool: generate and upsert hypotheses after retrieval
+        if let Some(ref gen) = hyp_generator {
+            let hit_ids: Vec<String> = hits.iter().map(|h| h.memory.id.clone()).collect();
+            let hit_scores: Vec<f32> = hits.iter().map(|h| h.rerank_score.unwrap_or(h.rrf_score)).collect();
+            let context_hash = format!("q{:04}", qi);
+            let context_tag = format!("query_{}", qi % 10);
+            let now = chrono::Utc::now().timestamp();
+            let ctx = RetrievalContext {
+                query: &q.query,
+                query_context_hash: &context_hash,
+                query_context_tag: &context_tag,
+                hit_memory_ids: &hit_ids,
+                hit_scores: &hit_scores,
+                timestamp: now,
+            };
+            let hyps = gen.generate(&ctx);
+            for hyp in &hyps {
+                let _ = store.upsert_hypothesis(hyp, &context_hash, &context_tag, &hit_ids, "co-retrieval");
+            }
+
+            // Periodic graduation: every 10 queries
+            if opts.hypothesis_graduation && qi > 0 && qi % 10 == 0 {
+                let _ = store.graduate_confirmed();
+            }
+        }
+
         let relevant: Vec<String> = q.relevant.clone();
         let recall_5 = recall_at_k(&returned, &relevant, 5);
         let recall_10 = recall_at_k(&returned, &relevant, 10);
@@ -176,6 +212,43 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
             profile: profiled.profile,
         });
     }
+
+    // Final graduation and hypothesis metrics
+    let hypothesis_metrics = if opts.hypothesis_generation {
+        if opts.hypothesis_graduation {
+            let _ = store.graduate_confirmed();
+        }
+        let status_counts = store.count_hypotheses_by_status().unwrap_or_default();
+        let total: usize = status_counts.iter().map(|(_, c)| c).sum();
+        let get = |s: &str| -> usize {
+            status_counts.iter().find(|(st, _)| st == s).map(|(_, c)| *c).unwrap_or(0)
+        };
+        let edge_count = store.count_memory_edges().unwrap_or(0);
+        let max_edges = dataset.memories.len() * (dataset.memories.len().saturating_sub(1));
+        let density = if max_edges > 0 {
+            edge_count as f64 / max_edges as f64 * 100.0
+        } else {
+            0.0
+        };
+        let edge_types = store.count_edges_by_type().unwrap_or_default();
+        Some(HypothesisMetrics {
+            total_hypotheses: total,
+            candidates: get("candidate"),
+            observed: get("observed"),
+            confirmed: get("confirmed"),
+            strengthened: get("strengthened"),
+            disputed: get("disputed"),
+            forgotten: get("forgotten"),
+            graduated_edges: edge_count,
+            edge_density_pct: density,
+            edge_types,
+            mean_confidence: 0.0,
+            mean_observations: 0.0,
+            mean_distinct_contexts: 0.0,
+        })
+    } else {
+        None
+    };
 
     let total_ms = bench_start.elapsed().as_secs_f64() * 1000.0;
     let n = per_query.len() as f64;
@@ -196,6 +269,9 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         rrf_weights,
         graph_activation: opts.graph_activation,
         edge_count,
+        hypothesis_generation: opts.hypothesis_generation,
+        hypothesis_graduation: opts.hypothesis_graduation,
+        hypothesis_metrics,
         k: opts.k,
         n_memories: dataset.memories.len(),
         n_queries: dataset.queries.len(),

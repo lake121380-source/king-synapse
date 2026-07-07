@@ -43,6 +43,10 @@ struct Cli {
     /// Enable graph activation booster (requires entity-based edges).
     #[arg(long)]
     graph_activation: bool,
+    #[arg(long)]
+    hypothesis_generation: bool,
+    #[arg(long)]
+    hypothesis_graduation: bool,
 }
 
 fn main() -> Result<()> {
@@ -57,6 +61,8 @@ fn main() -> Result<()> {
         rrf_weights: RrfBranchWeights::new(cli.fts_weight, cli.entity_weight, cli.vector_weight),
         tag: cli.tag,
         graph_activation: cli.graph_activation,
+        hypothesis_generation: cli.hypothesis_generation,
+        hypothesis_graduation: cli.hypothesis_graduation,
     };
     let report = run(opts)?;
     print_table(&report);

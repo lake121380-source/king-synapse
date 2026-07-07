@@ -1148,6 +1148,8 @@ def run_kr_eval(
     entity_weight: float | None = None,
     vector_weight: float | None = None,
     graph_activation: bool = False,
+    hypothesis_generation: bool = False,
+    hypothesis_graduation: bool = False,
 ) -> dict[str, Any]:
     cargo_profile = eval_cargo_profile()
     cmd = [
@@ -1187,6 +1189,10 @@ def run_kr_eval(
         cmd.extend(["--vector-weight", str(vector_weight)])
     if graph_activation:
         cmd.append("--graph-activation")
+    if hypothesis_generation:
+        cmd.append("--hypothesis-generation")
+    if hypothesis_graduation:
+        cmd.append("--hypothesis-graduation")
     result, process_metrics = profiled_subprocess_run(cmd, repo_root())
     if result.returncode != 0:
         raise RuntimeError(

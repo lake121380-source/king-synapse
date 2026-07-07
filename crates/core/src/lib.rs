@@ -13,7 +13,7 @@ pub(crate) mod entity;
 pub(crate) mod error;
 pub(crate) mod extract;
 pub(crate) mod model;
-pub(crate) mod recall;
+pub mod recall;
 pub(crate) mod rerank;
 pub(crate) mod store;
 pub mod working_memory;
@@ -41,6 +41,11 @@ pub use recall::{
     NoOpBooster, ProfiledRecall, QueryEmbedder, QueryLatentActivationProbe,
     QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallProfile,
     RecallSource, RrfBranchWeights, DEFAULT_RERANK_POOL, DEFAULT_RRF_K,
+};
+pub use recall::hypothesis::{
+    EdgeHypothesisGenerator, EdgeHypothesis, EdgeHypothesisStatus, EdgeEvidence,
+    EdgeRelation, EdgeUtilityObservation, HypothesisStore, RetrievalContext,
+    RuleBasedEdgeGenerator,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::{MemoryEdge, Store};

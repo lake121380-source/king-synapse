@@ -67,6 +67,9 @@ pub struct Report {
     pub rrf_weights: RrfBranchWeights,
     pub graph_activation: bool,
     pub edge_count: usize,
+    pub hypothesis_generation: bool,
+    pub hypothesis_graduation: bool,
+    pub hypothesis_metrics: Option<HypothesisMetrics>,
     pub k: usize,
     pub n_memories: usize,
     pub n_queries: usize,
@@ -120,4 +123,26 @@ pub struct BenchOptions {
     pub rrf_weights: RrfBranchWeights,
     pub tag: String,
     pub graph_activation: bool,
+    /// Enable edge hypothesis generation after each retrieval.
+    pub hypothesis_generation: bool,
+    /// Graduate confirmed hypotheses to memory_edges periodically.
+    pub hypothesis_graduation: bool,
+}
+
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+pub struct HypothesisMetrics {
+    pub total_hypotheses: usize,
+    pub candidates: usize,
+    pub observed: usize,
+    pub confirmed: usize,
+    pub strengthened: usize,
+    pub disputed: usize,
+    pub forgotten: usize,
+    pub graduated_edges: usize,
+    pub edge_density_pct: f64,
+    pub edge_types: Vec<(String, usize)>,
+    pub mean_confidence: f64,
+    pub mean_observations: f64,
+    pub mean_distinct_contexts: f64,
 }

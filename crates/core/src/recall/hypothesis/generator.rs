@@ -28,7 +28,7 @@ pub struct RuleBasedEdgeGenerator {
 
 impl RuleBasedEdgeGenerator {
     pub fn new() -> Self {
-        Self { min_hit_score: 0.0 }
+        Self { min_hit_score: f32::NEG_INFINITY }
     }
 
     pub fn with_min_hit_score(mut self, score: f32) -> Self {

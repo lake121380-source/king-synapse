@@ -17,7 +17,7 @@ mod graph_activation;
 mod hit;
 mod latent_activation;
 mod latent_booster;
-mod hypothesis;
+pub mod hypothesis;
 mod query_latent;
 mod rrf;
 
