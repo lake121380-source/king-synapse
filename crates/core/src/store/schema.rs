@@ -83,6 +83,40 @@ CREATE TABLE IF NOT EXISTS memory_edges (
 CREATE INDEX IF NOT EXISTS idx_memory_edges_source ON memory_edges(source);
 CREATE INDEX IF NOT EXISTS idx_memory_edges_target ON memory_edges(target);
 
+CREATE TABLE IF NOT EXISTS edge_hypotheses (
+    id                  TEXT PRIMARY KEY,
+    source              TEXT NOT NULL REFERENCES memories(id),
+    target              TEXT NOT NULL REFERENCES memories(id),
+    relation            TEXT NOT NULL,
+    confidence          REAL NOT NULL DEFAULT 0.0,
+    observations        INTEGER NOT NULL DEFAULT 0,
+    distinct_contexts   INTEGER NOT NULL DEFAULT 0,
+    predictive_utility  REAL NOT NULL DEFAULT 0.0,
+    first_seen          INTEGER NOT NULL,
+    last_seen           INTEGER NOT NULL,
+    status              TEXT NOT NULL DEFAULT 'candidate',
+    confirmed_at        INTEGER,
+    disputed_at         INTEGER,
+    decayed_turns       INTEGER NOT NULL DEFAULT 0,
+    UNIQUE(source, target, relation)
+);
+CREATE INDEX IF NOT EXISTS idx_edge_hyp_source ON edge_hypotheses(source);
+CREATE INDEX IF NOT EXISTS idx_edge_hyp_target ON edge_hypotheses(target);
+CREATE INDEX IF NOT EXISTS idx_edge_hyp_status ON edge_hypotheses(status);
+
+CREATE TABLE IF NOT EXISTS edge_evidence (
+    id                      TEXT PRIMARY KEY,
+    hypothesis_id           TEXT NOT NULL REFERENCES edge_hypotheses(id),
+    query_context_hash      TEXT NOT NULL,
+    query_context_tag       TEXT NOT NULL,
+    supporting_memory_ids   TEXT NOT NULL,
+    reason_summary          TEXT NOT NULL,
+    utility_before_rank     INTEGER,
+    utility_after_rank      INTEGER,
+    observed_at             INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_edge_ev_hyp ON edge_evidence(hypothesis_id);
+
 CREATE TABLE IF NOT EXISTS embedding_state (
     memory_id   TEXT PRIMARY KEY REFERENCES memories(id),
     model       TEXT NOT NULL,

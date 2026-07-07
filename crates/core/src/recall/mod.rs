@@ -17,6 +17,7 @@ mod graph_activation;
 mod hit;
 mod latent_activation;
 mod latent_booster;
+mod hypothesis;
 mod query_latent;
 mod rrf;
 
@@ -35,6 +36,16 @@ pub use latent_activation::{LatentActivationContext, LatentActivationHit, Latent
 pub use latent_booster::LatentActivationBooster;
 pub use query_latent::{QueryLatentActivationProbe, QueryLatentActivationReport};
 pub use rrf::{RrfBranchWeights, DEFAULT_RRF_K};
+
+pub use hypothesis::generator::{EdgeHypothesisGenerator, RuleBasedEdgeGenerator};
+pub use hypothesis::model::{
+    EdgeEvidence, EdgeHypothesis, EdgeHypothesisStatus, EdgeRelation,
+    EdgeUtilityObservation, RetrievalContext,
+    CONFIRM_THRESHOLD, MIN_OBSERVATIONS, MIN_DIVERSITY_CONTEXTS,
+    W_FREQUENCY, W_DIVERSITY, W_UTILITY,
+    INITIAL_CONFIDENCE, REOBSERVATION_BOOST, DECAY_PER_TURN, CONFIDENCE_FLOOR,
+};
+pub use hypothesis::store_ext::HypothesisStore;
 
 /// Default candidate pool size handed to the reranker before top-k truncation.
 pub const DEFAULT_RERANK_POOL: usize = 50;
