@@ -2,8 +2,8 @@ use crate::error::Result;
 use crate::recall::{BoosterContext, RecallBooster, RecallHit};
 use std::collections::HashMap;
 
-const DEFAULT_SCALE: f32 = 0.15;  // Raised from 0.05 for stronger activation signal
-const DEFAULT_CAP: f32 = 0.50;  // Raised from 0.15 to allow wider bonus spread
+const DEFAULT_SCALE: f32 = 0.02;  // Small: activation is a tie-breaker, not ranking override
+const DEFAULT_CAP: f32 = 0.05;  // Max bonus ~5% of score range, preserves reranker dominance
 const DEFAULT_DECAY: f32 = 0.5;
 const DEFAULT_STEPS: usize = 1;
 
