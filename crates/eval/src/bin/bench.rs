@@ -40,6 +40,9 @@ struct Cli {
     /// Tag to embed in the JSON report (e.g. "baseline-rrf", "with-reranker").
     #[arg(long, default_value = "unnamed")]
     tag: String,
+    /// Enable graph activation booster (requires entity-based edges).
+    #[arg(long)]
+    graph_activation: bool,
 }
 
 fn main() -> Result<()> {
@@ -53,6 +56,7 @@ fn main() -> Result<()> {
         rrf_k: cli.rrf_k,
         rrf_weights: RrfBranchWeights::new(cli.fts_weight, cli.entity_weight, cli.vector_weight),
         tag: cli.tag,
+        graph_activation: cli.graph_activation,
     };
     let report = run(opts)?;
     print_table(&report);

@@ -407,24 +407,95 @@ impl Store {
             return Ok(Vec::new());
         }
 
+        // Batched lookup: build a single query with IN clauses instead of N*M
+        // individual queries. SQLite has a default limit of 999 bound parameters,
+        // so we chunk when the combined parameter count would exceed it.
         let mut edges = Vec::new();
-        let mut stmt = self.conn.prepare(
-            "SELECT weight FROM memory_edges WHERE source = ?1 AND target = ?2 AND edge = 'associates'",
-        )?;
-        for source in source_ids {
-            for target in target_ids {
-                if source == target {
-                    continue;
-                }
-                let weight = stmt
-                    .query_row(params![source, target], |row| row.get::<_, f64>(0))
-                    .optional()?;
-                if let Some(weight) = weight {
-                    edges.push(((*source).to_string(), (*target).to_string(), weight as f32));
+        let max_params = 900usize;
+        let chunk_src = (max_params / 2).max(1);
+        for src_chunk in source_ids.chunks(chunk_src) {
+            for tgt_chunk in target_ids.chunks(chunk_src) {
+                let src_placeholders = vec!["?"; src_chunk.len()].join(",");
+                let tgt_placeholders = vec!["?"; tgt_chunk.len()].join(",");
+                let sql = format!(
+                    "SELECT source, target, weight FROM memory_edges                      WHERE edge = 'associates'                      AND source IN ({src_ph})                      AND target IN ({tgt_ph})",
+                    src_ph = src_placeholders,
+                    tgt_ph = tgt_placeholders,
+                );
+                let mut stmt = self.conn.prepare(&sql)?;
+                let params_iter: Vec<&dyn rusqlite::ToSql> = src_chunk
+                    .iter()
+                    .map(|s| s as &dyn rusqlite::ToSql)
+                    .chain(tgt_chunk.iter().map(|s| s as &dyn rusqlite::ToSql))
+                    .collect();
+                let rows = stmt
+                    .query_map(params_iter.as_slice(), |row| {
+                        Ok((
+                            row.get::<_, String>(0)?,
+                            row.get::<_, String>(1)?,
+                            row.get::<_, f64>(2)?,
+                        ))
+                    })?
+                    .collect::<std::result::Result<Vec<_>, _>>()?;
+                for (source, target, weight) in rows {
+                    if source == target {
+                        continue;
+                    }
+                    edges.push((source, target, weight as f32));
                 }
             }
         }
         Ok(edges)
+    }
+
+    /// Create bidirectional edges between all memory pairs that share at least
+    /// one entity. Edge weight is set to the number of shared entities.
+    /// This is idempotent: running twice doubles the weights (additive).
+    /// Returns the number of edges created.
+    pub fn link_shared_entity_edges(&mut self) -> Result<usize> {
+        let now = Utc::now().timestamp();
+        let pairs: Vec<(String, String, f64)> = {
+            let mut stmt = self.conn.prepare(
+                "SELECT me1.memory_id, me2.memory_id, COUNT(*) AS shared \
+                 FROM memory_entities me1 \
+                 JOIN memory_entities me2 ON me1.entity_id = me2.entity_id \
+                   AND me2.memory_id > me1.memory_id \
+                 JOIN memories m1 ON m1.id = me1.memory_id AND m1.valid_to IS NULL \
+                 JOIN memories m2 ON m2.id = me2.memory_id AND m2.valid_to IS NULL \
+                 GROUP BY me1.memory_id, me2.memory_id",
+            )?;
+            let rows = stmt
+                .query_map([], |row| {
+                    Ok((
+                        row.get::<_, String>(0)?,
+                        row.get::<_, String>(1)?,
+                        row.get::<_, f64>(2)?,
+                    ))
+                })?
+                .collect::<std::result::Result<Vec<_>, _>>()?;
+            rows
+        };
+
+        let tx = self.conn.transaction()?;
+        let mut count = 0usize;
+        for (source, target, shared) in &pairs {
+            let w = *shared as f32;
+            tx.execute(
+                "INSERT INTO memory_edges (source, target, edge, weight, updated_at) \
+                 VALUES (?1, ?2, 'associates', ?3, ?4) \
+                 ON CONFLICT(source, target, edge) DO UPDATE SET weight = excluded.weight, updated_at = excluded.updated_at",
+                params![source, target, w, now],
+            )?;
+            tx.execute(
+                "INSERT INTO memory_edges (source, target, edge, weight, updated_at) \
+                 VALUES (?1, ?2, 'associates', ?3, ?4) \
+                 ON CONFLICT(source, target, edge) DO UPDATE SET weight = excluded.weight, updated_at = excluded.updated_at",
+                params![target, source, w, now],
+            )?;
+            count += 2;
+        }
+        tx.commit()?;
+        Ok(count)
     }
 
     pub fn outgoing_edges(&self, memory_id: &str, limit: usize) -> Result<Vec<MemoryEdge>> {

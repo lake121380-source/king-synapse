@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 use synapse_core::{
-    MemoryKind, RecallEngine, RecallHit, RecallProfile, RecallQuery, Scope, Source, Store,
+    GraphActivationBooster, MemoryKind, RecallEngine, RecallHit, RecallProfile, RecallQuery, Scope, Source, Store,
     WriteInput,
 };
 
@@ -42,6 +42,16 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
     }
     let store_write_ms = elapsed_ms(store_write_start);
 
+    let edge_count = if opts.graph_activation {
+        let edge_start = Instant::now();
+        let count = store.link_shared_entity_edges()
+            .context("linking shared-entity edges")?;
+        eprintln!("graph_activation: created {} edges in {:.1}ms", count, elapsed_ms(edge_start));
+        count
+    } else {
+        0
+    };
+
     let mut embedder_load_ms = None;
     let mut corpus_embedding_ms = None;
     let mut embedding_write_ms = None;
@@ -73,6 +83,12 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         let reranker = synapse_core::FastEmbedReranker::new().context("loading reranker")?;
         reranker_load_ms = Some(elapsed_ms(reranker_load_start));
         Some(reranker)
+    } else {
+        None
+    };
+
+    let graph_booster = if opts.graph_activation {
+        Some(GraphActivationBooster::default())
     } else {
         None
     };
@@ -111,6 +127,9 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
                 engine = engine.with_reranker(rr, opts.rerank_pool);
             }
             engine = engine.with_rrf_k(rrf_k).with_rrf_weights(rrf_weights);
+            if let Some(ref booster) = graph_booster {
+                engine = engine.with_booster(booster);
+            }
             engine.recall_profiled(&rq)?
         };
         let hits = profiled.hits;
@@ -175,6 +194,8 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         rerank_pool: opts.rerank_pool,
         rrf_k,
         rrf_weights,
+        graph_activation: opts.graph_activation,
+        edge_count,
         k: opts.k,
         n_memories: dataset.memories.len(),
         n_queries: dataset.queries.len(),

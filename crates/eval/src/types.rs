@@ -65,6 +65,8 @@ pub struct Report {
     pub rerank_pool: usize,
     pub rrf_k: f64,
     pub rrf_weights: RrfBranchWeights,
+    pub graph_activation: bool,
+    pub edge_count: usize,
     pub k: usize,
     pub n_memories: usize,
     pub n_queries: usize,
@@ -117,4 +119,5 @@ pub struct BenchOptions {
     pub rrf_k: f64,
     pub rrf_weights: RrfBranchWeights,
     pub tag: String,
+    pub graph_activation: bool,
 }
