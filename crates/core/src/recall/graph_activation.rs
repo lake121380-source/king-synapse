@@ -2,8 +2,8 @@ use crate::error::Result;
 use crate::recall::{BoosterContext, RecallBooster, RecallHit};
 use std::collections::HashMap;
 
-const DEFAULT_SCALE: f32 = 0.05;
-const DEFAULT_CAP: f32 = 0.15;
+const DEFAULT_SCALE: f32 = 0.15;  // Raised from 0.05 for stronger activation signal
+const DEFAULT_CAP: f32 = 0.50;  // Raised from 0.15 to allow wider bonus spread
 const DEFAULT_DECAY: f32 = 0.5;
 const DEFAULT_STEPS: usize = 1;
 
@@ -97,7 +97,11 @@ impl RecallBooster for GraphActivationBooster {
 
         for hit in hits {
             if let Some(bonus) = bonuses.get(&hit.memory.id) {
-                hit.activation_bonus = (hit.activation_bonus + bonus).min(self.cap);
+                // Soft clamping via sigmoid: allows wider spread than hard cap.
+            // bonus maps to [0, cap) asymptotically, preserving ordering.
+            let raw = hit.activation_bonus + bonus;
+            let sigmoid_factor = 1.0 / (1.0 + (-raw * 4.0 / self.cap).exp());
+            hit.activation_bonus = self.cap * sigmoid_factor;
             }
         }
         Ok(())

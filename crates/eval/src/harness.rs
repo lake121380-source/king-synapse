@@ -174,8 +174,13 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
         if let Some(ref gen) = hyp_generator {
             let hit_ids: Vec<String> = hits.iter().map(|h| h.memory.id.clone()).collect();
             let hit_scores: Vec<f32> = hits.iter().map(|h| h.rerank_score.unwrap_or(h.rrf_score)).collect();
-            let context_hash = format!("q{:04}", qi);
-            let context_tag = format!("query_{}", qi % 10);
+            // Semantic context hash: extract topic keywords from query.
+            // Queries about the same topic (e.g., "pets", "music", "jobs")
+            // share the same context hash, so diversity filtering works
+            // on semantic diversity, not just query index diversity.
+            let topic = extract_query_topic(&q.query);
+            let context_hash = format!("topic_{}", topic);
+            let context_tag = topic.clone();
             let now = chrono::Utc::now().timestamp();
             let ctx = RetrievalContext {
                 query: &q.query,
@@ -351,4 +356,36 @@ fn mean_profile_ms(total: &RecallProfile, count: usize) -> RecallProfileMeanMs {
         final_score_ms: total.final_score_ms / n,
         record_access_ms: total.record_access_ms / n,
     }
+}
+
+
+/// Extract a topic keyword from a DMR-style query for semantic context hashing.
+fn extract_query_topic(query: &str) -> String {
+    let lower = query.to_lowercase();
+    let prefixes = [
+        "we talked about ",
+        "we discussed ",
+        "we chatted about ",
+        "about your ",
+        "about my ",
+        "about the ",
+    ];
+    for prefix in &prefixes {
+        if let Some(pos) = lower.find(prefix) {
+            let after = &query[pos + prefix.len()..];
+            let end = after.find(|c: char| c == '?' || c == '.' || c == '!')
+                .unwrap_or(after.len());
+            let topic = after[..end].trim();
+            let words: Vec<&str> = topic.split_whitespace().take(2).collect();
+            if !words.is_empty() {
+                return words.join("_");
+            }
+        }
+    }
+    // Fallback: first 3 words
+    query
+        .split_whitespace()
+        .take(3)
+        .collect::<Vec<_>>()
+        .join("_")
 }

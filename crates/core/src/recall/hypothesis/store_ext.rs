@@ -118,7 +118,19 @@ impl HypothesisStore for Store {
             };
 
             // Recompute composite confidence
-            let freq_score = (new_observations as f32 / 10.0).min(1.0);
+            // IDF-weighted frequency: discount edges that appear in too many contexts
+            // (like conversation-opening memories that co-retrieve with everything).
+            // Formula: freq_score = raw_freq * log(total_contexts / edge_contexts)
+            let total_contexts = {
+                let count: i64 = self.conn.query_row(
+                    "SELECT COUNT(DISTINCT query_context_hash) FROM edge_evidence",
+                    [], |row| row.get::<_, i64>(0),
+                ).unwrap_or(1);
+                count.max(1) as f32
+            };
+            let idf = (total_contexts / new_distinct_contexts as f32).ln().max(0.1);
+            let raw_freq = (new_observations as f32 / 10.0).min(1.0);
+            let freq_score = (raw_freq * idf).min(1.0);
             let div_score = (new_distinct_contexts as f32 / MIN_DIVERSITY_CONTEXTS as f32).min(1.0);
             let util_score = existing_util;
             // When utility is not yet tracked (0.0), redistribute its weight
