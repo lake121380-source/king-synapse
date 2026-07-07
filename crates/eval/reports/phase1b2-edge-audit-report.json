@@ -1,0 +1,47 @@
+{
+  "phase": "1b-2",
+  "title": "Edge Precision Audit",
+  "date": "2026-07-07",
+  "dataset": "DMR 50 (significant_token_containment)",
+  "config": "pool=10, CPU, RuleBasedEdgeGenerator (co-retrieval only)",
+  "findings": {
+    "total_activation_events": 187,
+    "sampled_for_audit": 30,
+    "finding_1_bias": {
+      "title": "Co-retrieval learns retrieval frequency, not semantic relatedness",
+      "description": "The top co-retrieved pair (46x) consists of two conversation-opening memories ('Hey how are you doing' + 'Hey! How are you doing'). These appear in nearly every query because all 50 DMR queries start with 'Hey, remember that time...'. The co-retrieval rule correctly identifies that these memories are frequently retrieved together, but this reflects query structure bias, not cognitive relatedness.",
+      "impact": "High-frequency 'hub' memories dominate activation, similar to Phase 1's entity-edge problem but at a smaller scale",
+      "evidence": "Top 3 co-retrieval pairs all involve the same 2-3 opening memories, appearing 34-46 times"
+    },
+    "finding_2_signal_in_low_bonus": {
+      "title": "Lower bonus values show more semantic specificity",
+      "description": "Activation events with bonus 0.04-0.10 tend to involve content-specific memories (cafe+bands for music queries, bike riding for outdoor queries). These represent genuine co-retrieval patterns within specific topic clusters.",
+      "impact": "The cap (0.15) saturates high-frequency pairs, while lower bonuses preserve differentiation for meaningful relationships",
+      "evidence": "Sample #23 (bonus=0.045): music query -> cafe with local bands memory. Sample #34 (bonus=0.094): music instrument query -> bike ride memory (weaker but topical)"
+    },
+    "finding_3_cap_problem": {
+      "title": "Activation cap (0.15) creates artificial ceiling",
+      "description": "Many memories receive bonus=0.1500 (the cap). This means the booster cannot distinguish between 'very relevant' and 'moderately relevant' among high-co-retrieval pairs.",
+      "impact": "The 22 distinct bonus values are mostly in the 0.09-0.15 range. True differentiation would show a wider spread.",
+      "recommendation": "Either raise the cap, or use a logarithmic/sigmoid mapping instead of linear clamping"
+    },
+    "finding_4_diversity_filter_works": {
+      "title": "Context diversity filter prevents graduation of single-context pairs",
+      "description": "Of 1372 hypotheses, only 144 (10.5%) graduated. The diversity requirement (3 distinct contexts) filters out pairs that only co-occur in one query type.",
+      "impact": "The immune system is working - 89.5% of hypotheses are rejected. However, the DMR query structure ('Hey, remember...') creates artificial diversity (different query suffixes count as different contexts even when they retrieve the same opening memories).",
+      "recommendation": "Context hash should be based on query semantic content, not just query index"
+    }
+  },
+  "precision_estimate": {
+    "method": "Manual inspection of 30 sampled activation events",
+    "meaningful": "Approximately 30-40% of sampled events show clear semantic relatedness between query and activated memory",
+    "weak": "Approximately 40-50% show topical overlap but no strong cognitive relation",
+    "noise": "Approximately 15-20% appear to be pure retrieval frequency artifacts (opening memories activated for unrelated queries)",
+    "note": "This is a rule-based generator using only co-retrieval. LLM proposer (Phase 1c) should improve precision by adding semantic relation detection."
+  },
+  "conclusion": {
+    "summary": "The edge ecology mechanism is structurally sound (0.5% density, 22 distinct bonuses, 10.5% survival rate) but the co-retrieval rule alone produces edges with moderate precision (~30-40% clearly meaningful). The main precision killer is retrieval frequency bias: memories that appear in many queries (like conversation openings) form edges with everything.",
+    "next_step": "Phase 1c: Add LLM proposer to generate semantic hypotheses (explains, supports, predicts). These should have higher precision than co-retrieval because they require the LLM to identify a cognitive relation, not just statistical co-occurrence.",
+    "fix_before_1c": "1) Fix context hash to use semantic similarity, not query index. 2) Adjust cap to allow wider bonus spread. 3) Add frequency penalty: memories that appear in >50% of queries should have their co-activation edges discounted."
+  }
+}
