@@ -46,11 +46,13 @@ pub fn run(opts: BenchOptions) -> Result<Report> {
     }
     let store_write_ms = elapsed_ms(store_write_start);
 
-    let edge_count = if opts.graph_activation {
+    let edge_count = if opts.graph_activation && !opts.hypothesis_generation {
+        // Only use entity-shared edges when hypothesis pool is NOT active.
+        // When hypothesis generation is on, edges come solely from graduation.
         let edge_start = Instant::now();
         let count = store.link_shared_entity_edges()
             .context("linking shared-entity edges")?;
-        eprintln!("graph_activation: created {} edges in {:.1}ms", count, elapsed_ms(edge_start));
+        eprintln!("graph_activation: created {} entity edges in {:.1}ms", count, elapsed_ms(edge_start));
         count
     } else {
         0

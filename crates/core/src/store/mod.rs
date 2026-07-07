@@ -418,7 +418,7 @@ impl Store {
                 let src_placeholders = vec!["?"; src_chunk.len()].join(",");
                 let tgt_placeholders = vec!["?"; tgt_chunk.len()].join(",");
                 let sql = format!(
-                    "SELECT source, target, weight FROM memory_edges                      WHERE edge = 'associates'                      AND source IN ({src_ph})                      AND target IN ({tgt_ph})",
+                    "SELECT source, target, weight FROM memory_edges                      WHERE edge IN ('associates', 'co_activates', 'related',                      'explains', 'supports', 'predicts', 'conflicts_with',                      'resolves', 'replaces')                      AND source IN ({src_ph})                      AND target IN ({tgt_ph})",
                     src_ph = src_placeholders,
                     tgt_ph = tgt_placeholders,
                 );
