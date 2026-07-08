@@ -9,6 +9,7 @@
 //! `AlgorithmContext<'a>`. Per RFC-011 Part C rule 3, no further service
 //! dependencies may be added to `AlgorithmContext` after v0.5.2.
 
+pub mod competition;
 pub mod context;
 pub mod event;
 pub mod event_stream;
@@ -18,6 +19,10 @@ pub mod importance;
 pub mod merge;
 pub mod reflection;
 
+pub use competition::{
+    MemoryCandidate, MemoryCompetition, MemoryCompetitionReport, MemoryCompetitionState,
+    MemoryCompetitionTraceStep, RuleBasedMemoryCompetition,
+};
 pub use context::AlgorithmContext;
 pub use event::{MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload};
 pub use event_stream::{InMemoryMemoryEventStream, MemoryEventStream, NoOpMemoryEventStream};

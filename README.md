@@ -52,10 +52,11 @@ Current research track:
 - Phase 1.2 benchmark scaling: 200 cognitive-memory cases, `full_synapse_score = 0.9400`, `hybrid_rag = 0.5550`, gain `+0.3850`.
 - [RFC-013 Adaptive Memory Dynamics](docs/rfc/RFC-013-adaptive-memory-dynamics.md): Phase 2 design entry point.
 - [Phase 2 Experiment Plan](docs/eval/PHASE2_EXPERIMENT_PLAN.md): design validation for conflict resolution, temporal influence, memory suppression, and uncertainty boundaries.
+- Phase 2.2 memory competition prototype: minimal adaptive competition layer for dominant, suppressed, and rejected memory candidates.
 
-Phase 2 implementation has not started. The current focus is to validate a
-falsifiable design for adaptive memory influence regulation before adding new
-core mechanisms.
+Phase 2 implementation has started with an isolated memory competition
+prototype. Retrieval, benchmark scoring, memory schema, and governance remain
+unchanged.
 
 ## A Small Example
 
