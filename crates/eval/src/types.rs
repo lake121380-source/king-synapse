@@ -1225,6 +1225,203 @@ pub struct GovernanceSelfConsistencyPathReport {
     pub score: f64,
 }
 
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryBenchmarkReport {
+    pub tag: String,
+    pub validation_stage: String,
+    pub claim_boundary: String,
+    pub dataset_dir: String,
+    pub suite_count: usize,
+    pub case_count: usize,
+    pub challenge_count: usize,
+    pub full_synapse_score: f64,
+    pub best_rag_method: String,
+    pub best_rag_score: f64,
+    pub full_over_best_rag_gain: f64,
+    pub retrieval_beyond_similarity_score: f64,
+    pub longitudinal_influence_score: f64,
+    pub multi_hop_reasoning_score: f64,
+    pub auditable_trace_score: f64,
+    pub pass: bool,
+    pub thresholds: CognitiveMemoryThresholds,
+    pub completion_criteria: Vec<CognitiveMemoryCriteriaReport>,
+    pub trace_quality: CognitiveMemoryTraceQualityReport,
+    pub error_analysis: CognitiveMemoryErrorAnalysisReport,
+    pub memory_influence_attribution: CognitiveMemoryInfluenceAttributionReport,
+    pub failed_cases: Vec<CognitiveMemoryFailedCaseReport>,
+    pub ablation: CognitiveMemoryAblationReport,
+    pub rollback: GovernanceRollbackReport,
+    pub method_summaries: Vec<CognitiveMemoryMethodSummary>,
+    pub datasets: Vec<CognitiveMemoryDatasetReport>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryThresholds {
+    pub case_count_min: usize,
+    pub challenge_count_min: usize,
+    pub full_synapse_score_min: f64,
+    pub full_over_best_rag_gain_min: f64,
+    pub retrieval_beyond_similarity_min: f64,
+    pub longitudinal_influence_min: f64,
+    pub multi_hop_reasoning_min: f64,
+    pub auditable_trace_min: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryCriteriaReport {
+    pub criterion: String,
+    pub score: f64,
+    pub threshold: f64,
+    pub pass: bool,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryTraceQualityReport {
+    pub case_count: usize,
+    pub contradiction_case_count: usize,
+    pub evidence_coverage: f64,
+    pub trace_completeness: f64,
+    pub causal_order: f64,
+    pub contradiction_handling: f64,
+    pub decision_explainability: f64,
+    pub score: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryFailedCaseReport {
+    pub id: String,
+    pub suite: String,
+    pub task_type: String,
+    pub failure_type: String,
+    pub expected: String,
+    pub produced: String,
+    pub full_synapse_score: f64,
+    pub evidence_coverage: f64,
+    pub causal_path_score: f64,
+    pub trace_order_score: f64,
+    pub decision_correct: bool,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryErrorAnalysisReport {
+    pub success_cases: usize,
+    pub failed_cases: usize,
+    pub retrieval_failure_count: usize,
+    pub reasoning_failure_count: usize,
+    pub decision_mismatch_count: usize,
+    pub causal_order_error_count: usize,
+    pub governance_boundary_miss_count: usize,
+    pub failure_distribution: Vec<(String, usize)>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryInfluenceAttributionReport {
+    pub case_count: usize,
+    pub mean_full_influence_score: f64,
+    pub mean_best_rag_influence_score: f64,
+    pub full_over_best_rag_influence_gain: f64,
+    pub high_influence_case_rate: f64,
+    pub top_influential_challenges: Vec<(String, f64)>,
+    pub cases: Vec<CognitiveMemoryInfluenceCaseReport>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryInfluenceCaseReport {
+    pub id: String,
+    pub suite: String,
+    pub task_type: String,
+    pub expected_decision: String,
+    pub full_synapse_decision: String,
+    pub influence_score: f64,
+    pub best_rag_influence_score: f64,
+    pub influence_gain: f64,
+    pub primary_challenges: Vec<String>,
+    pub influential_memories: Vec<CognitiveMemoryInfluentialMemoryReport>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryInfluentialMemoryReport {
+    pub id: String,
+    pub activation_delta: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryAblationReport {
+    pub rag_only_score: f64,
+    pub rag_plus_edge_score: f64,
+    pub rag_plus_activation_score: f64,
+    pub rag_plus_governance_score: f64,
+    pub full_synapse_score: f64,
+    pub edge_gain: f64,
+    pub activation_gain: f64,
+    pub governance_gain: f64,
+    pub full_loop_gain: f64,
+    pub full_over_best_rag_gain: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryMethodSummary {
+    pub method: String,
+    pub case_count: usize,
+    pub mean_score: f64,
+    pub evidence_coverage: f64,
+    pub reasoning_trace_score: f64,
+    pub causal_path_score: f64,
+    pub memory_influence_score: f64,
+    pub governance_trace_score: f64,
+    pub explainability_score: f64,
+    pub decision_accuracy: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryDatasetReport {
+    pub suite: String,
+    pub path: String,
+    pub case_count: usize,
+    pub full_synapse_score: f64,
+    pub best_rag_score: f64,
+    pub full_over_best_rag_gain: f64,
+    pub cases: Vec<CognitiveMemoryCaseReport>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryCaseReport {
+    pub id: String,
+    pub suite: String,
+    pub task_type: String,
+    pub challenges: Vec<String>,
+    pub question: String,
+    pub expected_decision: String,
+    pub expected_trace: Vec<String>,
+    pub relevant_memory_count: usize,
+    pub expected_trace_len: usize,
+    pub full_synapse_score: f64,
+    pub best_rag_score: f64,
+    pub full_over_best_rag_gain: f64,
+    pub methods: Vec<CognitiveMemoryCaseMethodReport>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CognitiveMemoryCaseMethodReport {
+    pub method: String,
+    pub evidence_coverage: f64,
+    pub trace_completeness: f64,
+    pub trace_order_score: f64,
+    pub reasoning_trace_score: f64,
+    pub causal_path_score: f64,
+    pub decision_correct: bool,
+    pub memory_influence_score: f64,
+    pub governance_trace_score: f64,
+    pub explainability_score: f64,
+    pub overall_score: f64,
+    pub decision: String,
+    pub confidence: f64,
+    pub retrieved: Vec<String>,
+    pub trace: Vec<String>,
+    pub governance_action: Option<String>,
+    pub influence_delta: Option<f64>,
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
 pub struct HypothesisMetrics {
     pub total_hypotheses: usize,

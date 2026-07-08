@@ -1,0 +1,220 @@
+suite = "temporal"
+
+[profiles.temporal_reasoning.methods.vector_rag]
+decision = "wrong"
+confidence = 0.64
+evidence_coverage = 0.43
+trace_completeness = 0.24
+trace_order_score = 0.20
+memory_influence_score = 0.32
+governance_trace_score = 0.0
+explainability_score = 0.34
+
+[profiles.temporal_reasoning.methods.bm25_rag]
+decision = "expected"
+confidence = 0.58
+evidence_coverage = 0.55
+trace_completeness = 0.35
+trace_order_score = 0.32
+memory_influence_score = 0.42
+governance_trace_score = 0.0
+explainability_score = 0.45
+
+[profiles.temporal_reasoning.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.65
+evidence_coverage = 0.69
+trace_completeness = 0.53
+trace_order_score = 0.48
+memory_influence_score = 0.55
+governance_trace_score = 0.0
+explainability_score = 0.58
+
+[profiles.temporal_reasoning.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.73
+evidence_coverage = 0.82
+trace_completeness = 0.69
+trace_order_score = 0.64
+memory_influence_score = 0.70
+governance_trace_score = 0.0
+explainability_score = 0.72
+
+[profiles.temporal_reasoning.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.81
+evidence_coverage = 0.92
+trace_completeness = 0.86
+trace_order_score = 0.82
+memory_influence_score = 0.85
+governance_trace_score = 0.0
+explainability_score = 0.83
+
+[profiles.temporal_reasoning.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.85
+evidence_coverage = 0.95
+trace_completeness = 0.90
+trace_order_score = 0.86
+memory_influence_score = 0.88
+governance_trace_score = 1.0
+explainability_score = 0.88
+
+[profiles.temporal_reasoning.methods.full_synapse]
+decision = "expected"
+confidence = 0.88
+evidence_coverage = 0.97
+trace_completeness = 0.94
+trace_order_score = 0.90
+memory_influence_score = 0.90
+governance_trace_score = 1.0
+explainability_score = 0.91
+
+[profiles.temporal_borderline.methods.vector_rag]
+decision = "wrong"
+confidence = 0.65
+evidence_coverage = 0.40
+trace_completeness = 0.20
+trace_order_score = 0.20
+memory_influence_score = 0.30
+governance_trace_score = 0.0
+explainability_score = 0.32
+
+[profiles.temporal_borderline.methods.bm25_rag]
+decision = "expected"
+confidence = 0.56
+evidence_coverage = 0.52
+trace_completeness = 0.34
+trace_order_score = 0.32
+memory_influence_score = 0.40
+governance_trace_score = 0.0
+explainability_score = 0.42
+
+[profiles.temporal_borderline.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.62
+evidence_coverage = 0.66
+trace_completeness = 0.48
+trace_order_score = 0.44
+memory_influence_score = 0.50
+governance_trace_score = 0.0
+explainability_score = 0.55
+
+[profiles.temporal_borderline.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.70
+evidence_coverage = 0.78
+trace_completeness = 0.64
+trace_order_score = 0.58
+memory_influence_score = 0.64
+governance_trace_score = 0.0
+explainability_score = 0.68
+
+[profiles.temporal_borderline.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.77
+evidence_coverage = 0.86
+trace_completeness = 0.76
+trace_order_score = 0.70
+memory_influence_score = 0.76
+governance_trace_score = 0.0
+explainability_score = 0.75
+
+[profiles.temporal_borderline.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.80
+evidence_coverage = 0.88
+trace_completeness = 0.78
+trace_order_score = 0.72
+memory_influence_score = 0.78
+governance_trace_score = 1.0
+explainability_score = 0.78
+
+[profiles.temporal_borderline.methods.full_synapse]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.70
+trace_order_score = 0.62
+memory_influence_score = 0.74
+governance_trace_score = 1.0
+explainability_score = 0.70
+
+[[cases]]
+id = "temporal_001_recent_policy_over_old_rule"
+task_type = "longitudinal_consistency"
+challenges = ["temporal_reasoning", "temporal_revision"]
+question = "An old rule allowed direct deploys, but the recent policy requires staged rollout. What now?"
+expected_decision = "use_staged_rollout"
+distractor_decision = "deploy_directly"
+relevant_memories = ["old_rule_direct_deploy", "recent_incident_changed_policy", "staged_rollout_policy", "current_release_is_external"]
+expected_trace = ["old_rule_direct_deploy", "recent_incident_changed_policy", "staged_rollout_policy", "current_release_is_external"]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+profile = "temporal_reasoning"
+
+[[cases]]
+id = "temporal_002_old_metric_new_metric"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "contradiction"]
+question = "The old metric favored growth, but the recent retention metric showed churn. What should guide the decision?"
+expected_decision = "optimize_for_retention_quality"
+distractor_decision = "optimize_for_growth_metric"
+relevant_memories = ["old_growth_metric_win", "recent_retention_drop", "retention_quality_playbook", "current_goal_long_term_users"]
+expected_trace = ["old_growth_metric_win", "recent_retention_drop", "retention_quality_playbook", "current_goal_long_term_users"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "temporal_reasoning"
+
+[[cases]]
+id = "temporal_003_fixed_bug_reopened"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "failure_learning"]
+question = "A bug was fixed, but later reopened with a new root cause. What should happen?"
+expected_decision = "investigate_new_root_cause"
+distractor_decision = "reuse_old_fix"
+relevant_memories = ["old_bug_fix_worked", "bug_reopened_later", "new_root_cause_identified", "current_symptom_matches_reopened_bug"]
+expected_trace = ["old_bug_fix_worked", "bug_reopened_later", "new_root_cause_identified", "current_symptom_matches_reopened_bug"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "temporal_reasoning"
+
+[[cases]]
+id = "temporal_004_expired_vendor_claim"
+task_type = "retrieval_vs_reasoning"
+challenges = ["temporal_reasoning", "context_shift"]
+question = "A vendor claim was true last year but a current benchmark changed it. What should be believed?"
+expected_decision = "trust_current_benchmark"
+distractor_decision = "trust_old_vendor_claim"
+relevant_memories = ["old_vendor_claim_fastest", "current_benchmark_slower", "benchmark_method_validated", "current_decision_needs_latest_performance"]
+expected_trace = ["old_vendor_claim_fastest", "current_benchmark_slower", "benchmark_method_validated", "current_decision_needs_latest_performance"]
+expected_influence_delta = 0.77
+expected_governance_action = "observe"
+profile = "temporal_reasoning"
+
+[[cases]]
+id = "temporal_005_borderline_recent_signal"
+task_type = "longitudinal_consistency"
+challenges = ["temporal_reasoning", "ambiguity"]
+question = "A recent weak signal conflicts with older stable evidence. What should Synapse do?"
+expected_decision = "observe_without_full_switch"
+distractor_decision = "fully_switch_to_recent_signal"
+relevant_memories = ["older_stable_evidence", "recent_weak_conflicting_signal", "uncertainty_high", "current_context_not_yet_decisive"]
+expected_trace = ["older_stable_evidence", "recent_weak_conflicting_signal", "uncertainty_high", "current_context_not_yet_decisive"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "temporal_borderline"
+
+[[cases]]
+id = "temporal_006_borderline_partial_order"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "ambiguity"]
+question = "Two updates arrived close together and only one partially explains the outcome. What should happen?"
+expected_decision = "keep_partial_order_uncertain"
+distractor_decision = "collapse_to_latest_update"
+relevant_memories = ["update_a_before_metric_change", "update_b_after_metric_change", "partial_causal_support", "current_decision_needs_more_evidence"]
+expected_trace = ["update_a_before_metric_change", "update_b_after_metric_change", "partial_causal_support", "current_decision_needs_more_evidence"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "temporal_borderline"
+

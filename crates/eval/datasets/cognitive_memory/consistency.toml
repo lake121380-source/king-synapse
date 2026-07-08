@@ -1,0 +1,259 @@
+suite = "consistency"
+
+[[cases]]
+id = "simple_design_preference_survives_time"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_preference", "failure_learning"]
+question = "Design the next internal tool after the user previously rejected complex architecture."
+expected_decision = "choose_simple_incremental_design"
+relevant_memories = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+expected_trace = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["complex_architecture_failed", "retrospective_overengineering"]
+trace = ["complex_architecture_failed"]
+decision = "choose_simple_incremental_design"
+confidence = 0.58
+influence_delta = 0.24
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["user_prefers_simple_solutions", "complex_architecture_failed"]
+trace = ["user_prefers_simple_solutions"]
+decision = "choose_simple_incremental_design"
+confidence = 0.62
+influence_delta = 0.28
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+]
+trace = ["user_prefers_simple_solutions", "complex_architecture_failed"]
+decision = "choose_simple_incremental_design"
+confidence = 0.67
+influence_delta = 0.43
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+]
+trace = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+]
+decision = "choose_simple_incremental_design"
+confidence = 0.74
+influence_delta = 0.58
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+trace = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+decision = "choose_simple_incremental_design"
+confidence = 0.82
+influence_delta = 0.72
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+trace = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+  "governance_observe_valid_preference",
+]
+decision = "choose_simple_incremental_design"
+confidence = 0.85
+influence_delta = 0.76
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+]
+trace = [
+  "user_prefers_simple_solutions",
+  "complex_architecture_failed",
+  "retrospective_overengineering",
+  "strategy_update_incremental_design",
+  "dominant_candidate_incremental_design",
+  "governance_observe_valid_preference",
+]
+decision = "choose_simple_incremental_design"
+confidence = 0.90
+influence_delta = 0.83
+governance_action = "observe"
+
+[[cases]]
+id = "preference_revision_beats_old_speed_bias"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "temporal_revision", "longitudinal_preference"]
+question = "The user once liked fast delivery but later had an audit failure. What workflow should be selected now?"
+expected_decision = "choose_auditable_workflow"
+relevant_memories = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+expected_trace = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+expected_influence_delta = 0.74
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["old_preference_fast_delivery", "current_task_requires_trust"]
+trace = ["old_preference_fast_delivery"]
+decision = "choose_fast_workflow"
+confidence = 0.66
+influence_delta = 0.18
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["audit_gap_caused_rework", "current_task_requires_trust"]
+trace = ["audit_gap_caused_rework"]
+decision = "choose_auditable_workflow"
+confidence = 0.57
+influence_delta = 0.26
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "current_task_requires_trust",
+]
+trace = ["old_preference_fast_delivery", "audit_gap_caused_rework"]
+decision = "choose_fast_workflow"
+confidence = 0.58
+influence_delta = 0.30
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+]
+trace = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+]
+decision = "choose_auditable_workflow"
+confidence = 0.72
+influence_delta = 0.54
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+trace = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+decision = "choose_auditable_workflow"
+confidence = 0.80
+influence_delta = 0.67
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+trace = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+  "governance_observe_preference_revision",
+]
+decision = "choose_auditable_workflow"
+confidence = 0.84
+influence_delta = 0.72
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+]
+trace = [
+  "old_preference_fast_delivery",
+  "audit_gap_caused_rework",
+  "user_revised_preference_auditability",
+  "current_task_requires_trust",
+  "dominant_candidate_auditable_workflow",
+  "governance_observe_preference_revision",
+]
+decision = "choose_auditable_workflow"
+confidence = 0.88
+influence_delta = 0.75
+governance_action = "observe"

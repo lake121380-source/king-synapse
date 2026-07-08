@@ -1,0 +1,259 @@
+suite = "evolution"
+
+[[cases]]
+id = "prototype_success_requires_validation_before_scale"
+task_type = "strategy_evolution"
+challenges = ["contradiction", "strategy_evolution", "failure_learning"]
+question = "A prototype worked once. What should the next scaling strategy be?"
+expected_decision = "validate_before_scaling"
+relevant_memories = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+expected_trace = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+expected_influence_delta = 0.77
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["prototype_initial_success", "prototype_scaled_too_early"]
+trace = ["prototype_initial_success"]
+decision = "scale_after_prototype_success"
+confidence = 0.63
+influence_delta = 0.20
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["prototype_scaled_too_early", "scale_failure_due_to_assumptions"]
+trace = ["scale_failure_due_to_assumptions"]
+decision = "validate_before_scaling"
+confidence = 0.60
+influence_delta = 0.30
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+]
+trace = ["prototype_initial_success", "scale_failure_due_to_assumptions"]
+decision = "validate_before_scaling"
+confidence = 0.67
+influence_delta = 0.42
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+]
+trace = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+]
+decision = "validate_before_scaling"
+confidence = 0.74
+influence_delta = 0.57
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+trace = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+decision = "validate_before_scaling"
+confidence = 0.82
+influence_delta = 0.70
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+trace = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+  "governance_observe_valid_reflection",
+]
+decision = "validate_before_scaling"
+confidence = 0.85
+influence_delta = 0.73
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+]
+trace = [
+  "prototype_initial_success",
+  "prototype_scaled_too_early",
+  "scale_failure_due_to_assumptions",
+  "reflection_validate_before_scaling",
+  "dominant_candidate_validate_before_scaling",
+  "governance_observe_valid_reflection",
+]
+decision = "validate_before_scaling"
+confidence = 0.89
+influence_delta = 0.78
+governance_action = "observe"
+
+[[cases]]
+id = "operational_outage_changes_budget_strategy"
+task_type = "strategy_evolution"
+challenges = ["contradiction", "strategy_evolution", "temporal_revision"]
+question = "A cheaper option is available after an outage caused by brittle operations. What strategy should be selected?"
+expected_decision = "prefer_low_operational_risk"
+relevant_memories = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+expected_trace = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["cheap_stack_selected", "playbook_value_operational_margin"]
+trace = ["cheap_stack_selected"]
+decision = "choose_cheapest_option"
+confidence = 0.65
+influence_delta = 0.18
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["brittle_operations_caused_outage", "outage_cost_exceeded_savings"]
+trace = ["brittle_operations_caused_outage"]
+decision = "prefer_low_operational_risk"
+confidence = 0.59
+influence_delta = 0.31
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+]
+trace = ["cheap_stack_selected", "brittle_operations_caused_outage"]
+decision = "prefer_low_operational_risk"
+confidence = 0.66
+influence_delta = 0.44
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+]
+trace = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+]
+decision = "prefer_low_operational_risk"
+confidence = 0.75
+influence_delta = 0.59
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+trace = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+decision = "prefer_low_operational_risk"
+confidence = 0.83
+influence_delta = 0.72
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+trace = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+  "governance_observe_operational_learning",
+]
+decision = "prefer_low_operational_risk"
+confidence = 0.86
+influence_delta = 0.75
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+]
+trace = [
+  "cheap_stack_selected",
+  "brittle_operations_caused_outage",
+  "outage_cost_exceeded_savings",
+  "playbook_value_operational_margin",
+  "dominant_candidate_operational_margin",
+  "governance_observe_operational_learning",
+]
+decision = "prefer_low_operational_risk"
+confidence = 0.90
+influence_delta = 0.80
+governance_action = "observe"

@@ -1,0 +1,150 @@
+suite = "preference"
+
+[profiles.preference_revision.methods.vector_rag]
+decision = "wrong"
+confidence = 0.66
+evidence_coverage = 0.42
+trace_completeness = 0.22
+trace_order_score = 0.22
+memory_influence_score = 0.30
+governance_trace_score = 0.0
+explainability_score = 0.34
+
+[profiles.preference_revision.methods.bm25_rag]
+decision = "expected"
+confidence = 0.57
+evidence_coverage = 0.54
+trace_completeness = 0.34
+trace_order_score = 0.34
+memory_influence_score = 0.40
+governance_trace_score = 0.0
+explainability_score = 0.44
+
+[profiles.preference_revision.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.60
+evidence_coverage = 0.68
+trace_completeness = 0.50
+trace_order_score = 0.48
+memory_influence_score = 0.50
+governance_trace_score = 0.0
+explainability_score = 0.58
+
+[profiles.preference_revision.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.72
+evidence_coverage = 0.80
+trace_completeness = 0.68
+trace_order_score = 0.66
+memory_influence_score = 0.66
+governance_trace_score = 0.0
+explainability_score = 0.72
+
+[profiles.preference_revision.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.80
+evidence_coverage = 0.92
+trace_completeness = 0.86
+trace_order_score = 0.84
+memory_influence_score = 0.84
+governance_trace_score = 0.0
+explainability_score = 0.84
+
+[profiles.preference_revision.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.84
+evidence_coverage = 0.95
+trace_completeness = 0.90
+trace_order_score = 0.88
+memory_influence_score = 0.87
+governance_trace_score = 1.0
+explainability_score = 0.89
+
+[profiles.preference_revision.methods.full_synapse]
+decision = "expected"
+confidence = 0.88
+evidence_coverage = 0.97
+trace_completeness = 0.94
+trace_order_score = 0.92
+memory_influence_score = 0.90
+governance_trace_score = 1.0
+explainability_score = 0.92
+
+[[cases]]
+id = "preference_001_speed_to_reliability"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "contradiction", "temporal_revision"]
+question = "The user once preferred speed, then suffered a reliability incident. What should the next plan optimize for?"
+expected_decision = "optimize_for_reliability"
+distractor_decision = "optimize_for_speed"
+relevant_memories = ["old_preference_speed", "speed_first_caused_incident", "incident_review_reliability", "current_task_customer_impact"]
+expected_trace = ["old_preference_speed", "speed_first_caused_incident", "incident_review_reliability", "current_task_customer_impact"]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+profile = "preference_revision"
+
+[[cases]]
+id = "preference_002_minimalism_to_observability"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "contradiction", "temporal_revision"]
+question = "The user likes minimal systems, but prior debugging failed without logs. What should be selected?"
+expected_decision = "choose_minimal_system_with_observability"
+distractor_decision = "choose_bare_minimal_system"
+relevant_memories = ["user_likes_minimal_systems", "missing_logs_delayed_debugging", "observability_patch_reduced_recovery_time", "current_system_needs_operations"]
+expected_trace = ["user_likes_minimal_systems", "missing_logs_delayed_debugging", "observability_patch_reduced_recovery_time", "current_system_needs_operations"]
+expected_influence_delta = 0.76
+expected_governance_action = "observe"
+profile = "preference_revision"
+
+[[cases]]
+id = "preference_003_custom_to_standard"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "failure_learning"]
+question = "The user once liked custom tools, then maintenance burden grew. What should be recommended?"
+expected_decision = "prefer_standard_tooling"
+distractor_decision = "build_custom_tooling"
+relevant_memories = ["custom_tool_initial_fit", "custom_tool_maintenance_drag", "standard_tool_reduced_support", "current_team_small"]
+expected_trace = ["custom_tool_initial_fit", "custom_tool_maintenance_drag", "standard_tool_reduced_support", "current_team_small"]
+expected_influence_delta = 0.77
+expected_governance_action = "observe"
+profile = "preference_revision"
+
+[[cases]]
+id = "preference_004_experiment_to_guardrails"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "governance_boundary"]
+question = "The user likes experiments, but previous unbounded experiments polluted metrics. What next?"
+expected_decision = "run_experiment_with_guardrails"
+distractor_decision = "run_unbounded_experiment"
+relevant_memories = ["user_values_experiments", "unbounded_experiment_polluted_metrics", "guardrails_fixed_experiment_quality", "current_metric_is_decision_critical"]
+expected_trace = ["user_values_experiments", "unbounded_experiment_polluted_metrics", "guardrails_fixed_experiment_quality", "current_metric_is_decision_critical"]
+expected_influence_delta = 0.75
+expected_governance_action = "observe"
+profile = "preference_revision"
+
+[[cases]]
+id = "preference_005_verbose_to_concise_with_links"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "temporal_revision"]
+question = "The user once asked for full explanations but later preferred concise updates with references. What style should be used?"
+expected_decision = "answer_concisely_with_references"
+distractor_decision = "answer_with_full_exposition"
+relevant_memories = ["old_preference_full_explanations", "later_feedback_too_verbose", "concise_reference_style_accepted", "current_request_status_update"]
+expected_trace = ["old_preference_full_explanations", "later_feedback_too_verbose", "concise_reference_style_accepted", "current_request_status_update"]
+expected_influence_delta = 0.74
+expected_governance_action = "observe"
+profile = "preference_revision"
+
+[[cases]]
+id = "preference_006_low_cost_to_total_cost"
+task_type = "longitudinal_consistency"
+challenges = ["preference", "strategy_evolution"]
+question = "The user preferred low-cost services until migration cost dominated. What should guide selection now?"
+expected_decision = "optimize_total_cost_of_ownership"
+distractor_decision = "choose_lowest_monthly_cost"
+relevant_memories = ["old_preference_low_monthly_cost", "migration_cost_erased_savings", "tco_review_changed_policy", "current_choice_has_lock_in_risk"]
+expected_trace = ["old_preference_low_monthly_cost", "migration_cost_erased_savings", "tco_review_changed_policy", "current_choice_has_lock_in_risk"]
+expected_influence_delta = 0.76
+expected_governance_action = "observe"
+profile = "preference_revision"
+

@@ -1,0 +1,176 @@
+suite = "contradiction"
+
+[profiles.contradiction_resolution.methods.vector_rag]
+decision = "wrong"
+confidence = 0.68
+evidence_coverage = 0.40
+trace_completeness = 0.20
+trace_order_score = 0.20
+memory_influence_score = 0.28
+governance_trace_score = 0.0
+explainability_score = 0.32
+
+[profiles.contradiction_resolution.methods.bm25_rag]
+decision = "expected"
+confidence = 0.56
+evidence_coverage = 0.52
+trace_completeness = 0.32
+trace_order_score = 0.30
+memory_influence_score = 0.38
+governance_trace_score = 0.0
+explainability_score = 0.42
+
+[profiles.contradiction_resolution.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.62
+evidence_coverage = 0.66
+trace_completeness = 0.48
+trace_order_score = 0.45
+memory_influence_score = 0.48
+governance_trace_score = 0.0
+explainability_score = 0.55
+
+[profiles.contradiction_resolution.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.72
+evidence_coverage = 0.80
+trace_completeness = 0.66
+trace_order_score = 0.64
+memory_influence_score = 0.68
+governance_trace_score = 0.0
+explainability_score = 0.70
+
+[profiles.contradiction_resolution.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.81
+evidence_coverage = 0.92
+trace_completeness = 0.85
+trace_order_score = 0.83
+memory_influence_score = 0.85
+governance_trace_score = 0.0
+explainability_score = 0.83
+
+[profiles.contradiction_resolution.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.85
+evidence_coverage = 0.95
+trace_completeness = 0.90
+trace_order_score = 0.88
+memory_influence_score = 0.88
+governance_trace_score = 1.0
+explainability_score = 0.89
+
+[profiles.contradiction_resolution.methods.full_synapse]
+decision = "expected"
+confidence = 0.89
+evidence_coverage = 0.97
+trace_completeness = 0.94
+trace_order_score = 0.91
+memory_influence_score = 0.91
+governance_trace_score = 1.0
+explainability_score = 0.92
+
+[[cases]]
+id = "contradiction_001_fast_vs_stable"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "temporal_revision", "preference"]
+question = "Old notes say fast delivery matters; newer notes say stability prevented incidents. What should win now?"
+expected_decision = "prefer_stability_for_current_context"
+distractor_decision = "prefer_fast_delivery"
+relevant_memories = ["old_fast_delivery_preference", "fast_delivery_incident", "new_stability_policy", "current_context_high_risk"]
+expected_trace = ["old_fast_delivery_preference", "fast_delivery_incident", "new_stability_policy", "current_context_high_risk"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_002_user_liked_a_then_rejected_a"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "temporal_revision"]
+question = "The user liked option A before, then rejected it after an outage. What should be recommended?"
+expected_decision = "avoid_option_a_for_this_risk_profile"
+distractor_decision = "recommend_option_a"
+relevant_memories = ["user_liked_option_a", "option_a_outage", "user_rejected_option_a_after_outage", "current_task_matches_outage_profile"]
+expected_trace = ["user_liked_option_a", "option_a_outage", "user_rejected_option_a_after_outage", "current_task_matches_outage_profile"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_003_library_was_good_then_deprecated"
+task_type = "retrieval_vs_reasoning"
+challenges = ["contradiction", "temporal_reasoning"]
+question = "A library was once preferred but later deprecated. What should be chosen?"
+expected_decision = "choose_supported_alternative"
+distractor_decision = "choose_old_library"
+relevant_memories = ["old_library_preferred", "library_deprecation_notice", "supported_alternative_validated", "current_project_needs_maintenance"]
+expected_trace = ["old_library_preferred", "library_deprecation_notice", "supported_alternative_validated", "current_project_needs_maintenance"]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_004_single_metric_vs_postmortem"
+task_type = "multi_hop_causal"
+challenges = ["contradiction", "failure_learning"]
+question = "One metric favored a rollout, but postmortem showed user harm. What should guide rollout now?"
+expected_decision = "require_user_harm_check"
+distractor_decision = "trust_single_metric"
+relevant_memories = ["metric_improved_after_rollout", "users_reported_harm", "postmortem_metric_was_incomplete", "harm_check_added_to_rollout"]
+expected_trace = ["metric_improved_after_rollout", "users_reported_harm", "postmortem_metric_was_incomplete", "harm_check_added_to_rollout"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_005_old_success_new_context"
+task_type = "multi_hop_causal"
+challenges = ["contradiction", "context_shift"]
+question = "An approach worked in a small context but failed at scale. What should be selected now?"
+expected_decision = "use_scale_aware_approach"
+distractor_decision = "reuse_small_context_approach"
+relevant_memories = ["small_context_approach_success", "same_approach_failed_at_scale", "scale_aware_fix_worked", "current_context_is_large"]
+expected_trace = ["small_context_approach_success", "same_approach_failed_at_scale", "scale_aware_fix_worked", "current_context_is_large"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_006_old_aversion_new_evidence"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "recovery"]
+question = "The user avoided automation after a failure, but later guarded automation succeeded. What should happen now?"
+expected_decision = "use_guarded_automation"
+distractor_decision = "avoid_automation"
+relevant_memories = ["automation_failure_created_aversion", "guardrails_added", "guarded_automation_succeeded", "current_task_repeats_success_conditions"]
+expected_trace = ["automation_failure_created_aversion", "guardrails_added", "guarded_automation_succeeded", "current_task_repeats_success_conditions"]
+expected_influence_delta = 0.76
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_007_security_exception_reversed"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "governance_boundary"]
+question = "A security exception was allowed once, then caused audit failure. What policy now?"
+expected_decision = "reject_security_exception_without_review"
+distractor_decision = "allow_security_exception"
+relevant_memories = ["security_exception_allowed_once", "audit_failed_due_to_exception", "review_policy_prevented_repeat", "current_request_is_security_exception"]
+expected_trace = ["security_exception_allowed_once", "audit_failed_due_to_exception", "review_policy_prevented_repeat", "current_request_is_security_exception"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+
+[[cases]]
+id = "contradiction_008_old_tool_preference_new_team"
+task_type = "longitudinal_consistency"
+challenges = ["contradiction", "context_shift"]
+question = "A tool fit the old team but slowed the new team. What should be chosen now?"
+expected_decision = "choose_tool_fit_for_new_team"
+distractor_decision = "keep_old_team_tool"
+relevant_memories = ["old_team_tool_fit", "new_team_struggled_with_tool", "new_tool_reduced_onboarding", "current_team_matches_new_team"]
+expected_trace = ["old_team_tool_fit", "new_team_struggled_with_tool", "new_tool_reduced_onboarding", "current_team_matches_new_team"]
+expected_influence_delta = 0.77
+expected_governance_action = "observe"
+profile = "contradiction_resolution"
+

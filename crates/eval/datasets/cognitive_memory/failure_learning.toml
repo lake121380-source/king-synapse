@@ -1,0 +1,176 @@
+suite = "failure_learning"
+
+[profiles.failure_learning.methods.vector_rag]
+decision = "wrong"
+confidence = 0.64
+evidence_coverage = 0.44
+trace_completeness = 0.24
+trace_order_score = 0.24
+memory_influence_score = 0.32
+governance_trace_score = 0.0
+explainability_score = 0.34
+
+[profiles.failure_learning.methods.bm25_rag]
+decision = "expected"
+confidence = 0.58
+evidence_coverage = 0.56
+trace_completeness = 0.36
+trace_order_score = 0.35
+memory_influence_score = 0.44
+governance_trace_score = 0.0
+explainability_score = 0.46
+
+[profiles.failure_learning.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.66
+evidence_coverage = 0.70
+trace_completeness = 0.54
+trace_order_score = 0.52
+memory_influence_score = 0.56
+governance_trace_score = 0.0
+explainability_score = 0.60
+
+[profiles.failure_learning.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.70
+trace_order_score = 0.68
+memory_influence_score = 0.72
+governance_trace_score = 0.0
+explainability_score = 0.74
+
+[profiles.failure_learning.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.93
+trace_completeness = 0.87
+trace_order_score = 0.85
+memory_influence_score = 0.86
+governance_trace_score = 0.0
+explainability_score = 0.84
+
+[profiles.failure_learning.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.85
+evidence_coverage = 0.95
+trace_completeness = 0.91
+trace_order_score = 0.89
+memory_influence_score = 0.88
+governance_trace_score = 1.0
+explainability_score = 0.89
+
+[profiles.failure_learning.methods.full_synapse]
+decision = "expected"
+confidence = 0.89
+evidence_coverage = 0.98
+trace_completeness = 0.95
+trace_order_score = 0.93
+memory_influence_score = 0.91
+governance_trace_score = 1.0
+explainability_score = 0.92
+
+[[cases]]
+id = "failure_001_plan_a_to_plan_b"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "strategy_evolution"]
+question = "Plan A caused performance issues and Plan B fixed them. What should similar work use?"
+expected_decision = "use_plan_b_pattern"
+distractor_decision = "reuse_plan_a"
+relevant_memories = ["plan_a_selected", "plan_a_caused_performance_issue", "plan_b_fixed_performance", "similar_work_has_same_load_pattern"]
+expected_trace = ["plan_a_selected", "plan_a_caused_performance_issue", "plan_b_fixed_performance", "similar_work_has_same_load_pattern"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_002_sync_to_async"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "causal_chain"]
+question = "A synchronous integration blocked releases; asynchronous retries later worked. What now?"
+expected_decision = "use_async_retry_pattern"
+distractor_decision = "use_sync_integration"
+relevant_memories = ["sync_integration_chosen", "sync_integration_blocked_release", "async_retry_resolved_blocker", "current_dependency_is_unreliable"]
+expected_trace = ["sync_integration_chosen", "sync_integration_blocked_release", "async_retry_resolved_blocker", "current_dependency_is_unreliable"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_003_single_owner_to_review"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "governance_boundary"]
+question = "A single-owner change caused a hidden regression; review caught later issues. What process now?"
+expected_decision = "require_targeted_review"
+distractor_decision = "allow_single_owner_change"
+relevant_memories = ["single_owner_change_fast", "hidden_regression_escaped", "targeted_review_caught_regression", "current_change_crosses_boundary"]
+expected_trace = ["single_owner_change_fast", "hidden_regression_escaped", "targeted_review_caught_regression", "current_change_crosses_boundary"]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_004_feature_flag_missing"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "temporal_revision"]
+question = "A launch without feature flags failed; later flagging reduced risk. What should be done?"
+expected_decision = "launch_behind_feature_flag"
+distractor_decision = "launch_directly"
+relevant_memories = ["direct_launch_skipped_flag", "rollback_was_slow", "flagged_launch_recovered_fast", "current_launch_has_uncertain_usage"]
+expected_trace = ["direct_launch_skipped_flag", "rollback_was_slow", "flagged_launch_recovered_fast", "current_launch_has_uncertain_usage"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_005_index_change"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "causal_chain"]
+question = "An index change improved reads but hurt writes. What should guide the next database change?"
+expected_decision = "benchmark_read_write_tradeoff"
+distractor_decision = "apply_index_change_directly"
+relevant_memories = ["index_change_improved_reads", "write_latency_regressed", "benchmark_balanced_tradeoff", "current_table_has_write_load"]
+expected_trace = ["index_change_improved_reads", "write_latency_regressed", "benchmark_balanced_tradeoff", "current_table_has_write_load"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_006_vendor_lockin"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "contradiction"]
+question = "A vendor integration was fast but later blocked migration. What should be selected?"
+expected_decision = "prefer_portable_integration"
+distractor_decision = "prefer_fast_vendor_integration"
+relevant_memories = ["vendor_integration_fast", "migration_blocked_by_lockin", "portable_adapter_unblocked_next_project", "current_choice_has_exit_risk"]
+expected_trace = ["vendor_integration_fast", "migration_blocked_by_lockin", "portable_adapter_unblocked_next_project", "current_choice_has_exit_risk"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_007_unbounded_cache"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "causal_chain"]
+question = "An unbounded cache helped a demo but caused memory pressure. What pattern now?"
+expected_decision = "use_bounded_cache_with_eviction"
+distractor_decision = "use_unbounded_cache"
+relevant_memories = ["unbounded_cache_demo_win", "memory_pressure_in_production", "bounded_cache_fixed_pressure", "current_service_has_memory_limit"]
+expected_trace = ["unbounded_cache_demo_win", "memory_pressure_in_production", "bounded_cache_fixed_pressure", "current_service_has_memory_limit"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "failure_learning"
+
+[[cases]]
+id = "failure_008_manual_patch_to_test"
+task_type = "strategy_evolution"
+challenges = ["failure_learning", "temporal_revision"]
+question = "A manual hotfix worked once but recurred. What should the next response be?"
+expected_decision = "add_regression_test_and_fix_root_cause"
+distractor_decision = "apply_manual_hotfix"
+relevant_memories = ["manual_hotfix_restored_service", "same_bug_recurred", "regression_test_prevented_recurrence", "current_bug_matches_prior_pattern"]
+expected_trace = ["manual_hotfix_restored_service", "same_bug_recurred", "regression_test_prevented_recurrence", "current_bug_matches_prior_pattern"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "failure_learning"
+

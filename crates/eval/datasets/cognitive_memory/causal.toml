@@ -1,0 +1,415 @@
+suite = "causal"
+
+[profiles.causal_standard.methods.vector_rag]
+decision = "wrong"
+confidence = 0.62
+evidence_coverage = 0.45
+trace_completeness = 0.25
+trace_order_score = 0.25
+memory_influence_score = 0.35
+governance_trace_score = 0.0
+explainability_score = 0.35
+
+[profiles.causal_standard.methods.bm25_rag]
+decision = "expected"
+confidence = 0.58
+evidence_coverage = 0.55
+trace_completeness = 0.35
+trace_order_score = 0.35
+memory_influence_score = 0.42
+governance_trace_score = 0.0
+explainability_score = 0.45
+
+[profiles.causal_standard.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.66
+evidence_coverage = 0.70
+trace_completeness = 0.55
+trace_order_score = 0.52
+memory_influence_score = 0.55
+governance_trace_score = 0.0
+explainability_score = 0.62
+
+[profiles.causal_standard.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.70
+trace_order_score = 0.68
+memory_influence_score = 0.70
+governance_trace_score = 0.0
+explainability_score = 0.74
+
+[profiles.causal_standard.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.94
+trace_completeness = 0.88
+trace_order_score = 0.86
+memory_influence_score = 0.86
+governance_trace_score = 0.0
+explainability_score = 0.84
+
+[profiles.causal_standard.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.86
+evidence_coverage = 0.96
+trace_completeness = 0.92
+trace_order_score = 0.90
+memory_influence_score = 0.88
+governance_trace_score = 1.0
+explainability_score = 0.90
+
+[profiles.causal_standard.methods.full_synapse]
+decision = "expected"
+confidence = 0.90
+evidence_coverage = 0.98
+trace_completeness = 0.96
+trace_order_score = 0.94
+memory_influence_score = 0.90
+governance_trace_score = 1.0
+explainability_score = 0.93
+
+[[cases]]
+id = "proposal_a_rejection_reasoning"
+task_type = "retrieval_vs_reasoning"
+challenges = ["failure_learning", "causal_chain"]
+question = "Why should the system avoid proposal A now?"
+expected_decision = "avoid_proposal_a"
+relevant_memories = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+expected_trace = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["proposal_a_failed_scale", "proposal_a_introduced"]
+trace = ["proposal_a_failed_scale"]
+decision = "avoid_proposal_a"
+confidence = 0.62
+influence_delta = 0.22
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["postmortem_scalability_root_cause", "proposal_a_failed_scale"]
+trace = ["postmortem_scalability_root_cause"]
+decision = "avoid_proposal_a"
+confidence = 0.58
+influence_delta = 0.24
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "proposal_a_introduced",
+]
+trace = ["proposal_a_failed_scale", "postmortem_scalability_root_cause"]
+decision = "avoid_proposal_a"
+confidence = 0.68
+influence_delta = 0.38
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+]
+trace = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+]
+decision = "avoid_proposal_a"
+confidence = 0.75
+influence_delta = 0.54
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+trace = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+decision = "avoid_proposal_a"
+confidence = 0.82
+influence_delta = 0.68
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+trace = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+  "governance_observe_valid_failure_memory",
+]
+decision = "avoid_proposal_a"
+confidence = 0.85
+influence_delta = 0.72
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+]
+trace = [
+  "proposal_a_introduced",
+  "proposal_a_failed_scale",
+  "postmortem_scalability_root_cause",
+  "strategy_prefers_stable_path",
+  "dominant_candidate_stable_path",
+  "governance_observe_valid_failure_memory",
+]
+decision = "avoid_proposal_a"
+confidence = 0.88
+influence_delta = 0.79
+governance_action = "observe"
+
+[[cases]]
+id = "causal_expanded_001"
+task_type = "multi_hop_causal"
+challenges = ["causal_chain", "failure_learning"]
+question = "A cache optimization improved latency but later caused stale reads. What should guide the next optimization?"
+expected_decision = "optimize_with_consistency_guard"
+distractor_decision = "reuse_cache_optimization"
+relevant_memories = ["cache_latency_win", "stale_reads_reported", "consistency_postmortem", "guarded_cache_playbook"]
+expected_trace = ["cache_latency_win", "stale_reads_reported", "consistency_postmortem", "guarded_cache_playbook"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "causal_expanded_002"
+task_type = "multi_hop_causal"
+challenges = ["causal_chain", "strategy_evolution"]
+question = "An onboarding shortcut worked once but support tickets rose later. What should be recommended?"
+expected_decision = "prefer_guided_onboarding"
+distractor_decision = "keep_shortcut_flow"
+relevant_memories = ["shortcut_onboarding_success", "tickets_increased_after_shortcut", "support_analysis_confusion", "guided_onboarding_rule"]
+expected_trace = ["shortcut_onboarding_success", "tickets_increased_after_shortcut", "support_analysis_confusion", "guided_onboarding_rule"]
+expected_influence_delta = 0.78
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "causal_expanded_003"
+task_type = "retrieval_vs_reasoning"
+challenges = ["causal_chain", "temporal_revision"]
+question = "Why should the old import pipeline not be reused without checks?"
+expected_decision = "reuse_import_pipeline_with_validation"
+distractor_decision = "reuse_import_pipeline_directly"
+relevant_memories = ["import_pipeline_initial_success", "schema_drift_broke_import", "validation_patch_fixed_import", "current_import_has_new_schema"]
+expected_trace = ["import_pipeline_initial_success", "schema_drift_broke_import", "validation_patch_fixed_import", "current_import_has_new_schema"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "causal_expanded_004"
+task_type = "multi_hop_causal"
+challenges = ["causal_chain", "contradiction"]
+question = "A batch job was fast but caused delayed alerts. What should be selected now?"
+expected_decision = "choose_observable_batch_job"
+distractor_decision = "choose_fast_batch_job"
+relevant_memories = ["fast_batch_job_adopted", "alerts_delayed_by_batching", "incident_review_required_visibility", "observable_batch_pattern"]
+expected_trace = ["fast_batch_job_adopted", "alerts_delayed_by_batching", "incident_review_required_visibility", "observable_batch_pattern"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "causal_expanded_005"
+task_type = "retrieval_vs_reasoning"
+challenges = ["causal_chain", "failure_learning"]
+question = "Why should migration rollback planning be included this time?"
+expected_decision = "include_rollback_plan"
+distractor_decision = "skip_rollback_plan"
+relevant_memories = ["migration_without_rollback", "migration_blocked_release", "rollback_plan_unblocked_next_release", "current_migration_is_customer_visible"]
+expected_trace = ["migration_without_rollback", "migration_blocked_release", "rollback_plan_unblocked_next_release", "current_migration_is_customer_visible"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "causal_expanded_006"
+task_type = "multi_hop_causal"
+challenges = ["causal_chain", "strategy_evolution"]
+question = "A manual QA pass caught issues after automation missed them. What should be done now?"
+expected_decision = "combine_automation_with_targeted_manual_qa"
+distractor_decision = "use_automation_only"
+relevant_memories = ["automation_missed_edge_cases", "manual_qa_caught_release_bug", "qa_postmortem_targeted_checks", "current_release_has_edge_case_risk"]
+expected_trace = ["automation_missed_edge_cases", "manual_qa_caught_release_bug", "qa_postmortem_targeted_checks", "current_release_has_edge_case_risk"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "causal_standard"
+
+[[cases]]
+id = "stability_choice_from_multi_hop_history"
+task_type = "multi_hop_causal"
+challenges = ["contradiction", "temporal_revision", "causal_chain"]
+question = "Why should the next architecture choose stability first?"
+expected_decision = "choose_stability_first"
+relevant_memories = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+]
+expected_trace = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["current_system_requires_long_horizon", "fast_solution_accepted"]
+trace = ["current_system_requires_long_horizon"]
+decision = "choose_stability_first"
+confidence = 0.56
+influence_delta = 0.18
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["fast_solution_accepted", "fast_solution_created_debt"]
+trace = ["fast_solution_accepted"]
+decision = "choose_fast_solution"
+confidence = 0.64
+influence_delta = 0.16
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "current_system_requires_long_horizon",
+]
+trace = ["fast_solution_created_debt", "debt_blocked_iteration"]
+decision = "choose_stability_first"
+confidence = 0.63
+influence_delta = 0.36
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "current_system_requires_long_horizon",
+]
+trace = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+]
+decision = "choose_stability_first"
+confidence = 0.72
+influence_delta = 0.55
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+]
+trace = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+]
+decision = "choose_stability_first"
+confidence = 0.80
+influence_delta = 0.70
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+]
+trace = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+  "governance_observe_valid_strategy_update",
+]
+decision = "choose_stability_first"
+confidence = 0.84
+influence_delta = 0.75
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "fast_solution_accepted",
+  "fast_solution_created_debt",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+]
+trace = [
+  "fast_solution_created_debt",
+  "fast_solution_accepted",
+  "debt_blocked_iteration",
+  "user_revised_preference_stability",
+  "current_system_requires_long_horizon",
+  "dominant_candidate_stability_first",
+  "governance_observe_valid_strategy_update",
+]
+decision = "choose_stability_first"
+confidence = 0.89
+influence_delta = 0.81
+governance_action = "observe"

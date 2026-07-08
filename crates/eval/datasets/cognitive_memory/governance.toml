@@ -1,0 +1,263 @@
+suite = "governance"
+
+[[cases]]
+id = "failure_memory_should_not_block_exploration"
+task_type = "governance_trace"
+challenges = ["contradiction", "governance_boundary", "exploration_preservation"]
+question = "A previous launch failed, but the new launch has validation evidence. Should exploration be blocked?"
+expected_decision = "preserve_exploration_with_guardrails"
+relevant_memories = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+expected_trace = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+expected_influence_delta = 0.72
+expected_governance_action = "intervene"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["launch_failed_once", "failure_caused_by_missing_validation"]
+trace = ["launch_failed_once"]
+decision = "block_exploration"
+confidence = 0.70
+influence_delta = 0.12
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["new_launch_has_validation", "exploration_remains_high_value"]
+trace = ["new_launch_has_validation"]
+decision = "preserve_exploration_with_guardrails"
+confidence = 0.55
+influence_delta = 0.30
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+]
+trace = ["launch_failed_once", "new_launch_has_validation"]
+decision = "block_exploration"
+confidence = 0.58
+influence_delta = 0.34
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+]
+trace = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+]
+decision = "preserve_exploration_with_guardrails"
+confidence = 0.70
+influence_delta = 0.52
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+trace = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+decision = "preserve_exploration_with_guardrails"
+confidence = 0.78
+influence_delta = 0.64
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+trace = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+  "risk_failure_overgeneralization",
+  "governance_intervene_on_blocking_bias",
+]
+decision = "preserve_exploration_with_guardrails"
+confidence = 0.84
+influence_delta = 0.70
+governance_action = "intervene"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+]
+trace = [
+  "launch_failed_once",
+  "failure_caused_by_missing_validation",
+  "new_launch_has_validation",
+  "exploration_remains_high_value",
+  "dominant_candidate_guarded_exploration",
+  "risk_failure_overgeneralization",
+  "governance_intervene_on_blocking_bias",
+]
+decision = "preserve_exploration_with_guardrails"
+confidence = 0.89
+influence_delta = 0.73
+governance_action = "intervene"
+
+[[cases]]
+id = "ambiguous_new_strategy_requires_observation"
+task_type = "governance_trace"
+challenges = ["governance_boundary", "ambiguity", "exploration_preservation"]
+question = "A new strategy has mixed evidence and high novelty. Should governance suppress it now?"
+expected_decision = "observe_before_intervening"
+relevant_memories = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+expected_trace = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+
+[[cases.methods]]
+method = "vector_rag"
+retrieved = ["new_strategy_one_uncertain_failure", "market_context_changed"]
+trace = ["new_strategy_one_uncertain_failure"]
+decision = "suppress_new_strategy"
+confidence = 0.61
+influence_delta = 0.20
+governance_action = "none"
+
+[[cases.methods]]
+method = "bm25_rag"
+retrieved = ["new_strategy_first_success", "novelty_value_high"]
+trace = ["new_strategy_first_success"]
+decision = "observe_before_intervening"
+confidence = 0.55
+influence_delta = 0.28
+governance_action = "none"
+
+[[cases.methods]]
+method = "hybrid_rag"
+retrieved = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+]
+trace = ["new_strategy_first_success", "new_strategy_one_uncertain_failure"]
+decision = "observe_before_intervening"
+confidence = 0.63
+influence_delta = 0.40
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_edge"
+retrieved = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+]
+trace = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+]
+decision = "observe_before_intervening"
+confidence = 0.70
+influence_delta = 0.52
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_activation"
+retrieved = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+trace = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+decision = "observe_before_intervening"
+confidence = 0.78
+influence_delta = 0.60
+governance_action = "none"
+
+[[cases.methods]]
+method = "rag_plus_governance"
+retrieved = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+trace = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+  "risk_ambiguous_evidence",
+  "governance_observe_preserve_exploration",
+]
+decision = "observe_before_intervening"
+confidence = 0.82
+influence_delta = 0.64
+governance_action = "observe"
+
+[[cases.methods]]
+method = "full_synapse"
+retrieved = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+]
+trace = [
+  "new_strategy_first_success",
+  "new_strategy_one_uncertain_failure",
+  "market_context_changed",
+  "novelty_value_high",
+  "dominant_candidate_observe_not_suppress",
+  "risk_ambiguous_evidence",
+  "governance_observe_preserve_exploration",
+]
+decision = "observe_before_intervening"
+confidence = 0.87
+influence_delta = 0.67
+governance_action = "observe"

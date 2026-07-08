@@ -1,0 +1,247 @@
+suite = "adversarial"
+
+[profiles.adversarial_restraint.methods.vector_rag]
+decision = "wrong"
+confidence = 0.68
+evidence_coverage = 0.50
+trace_completeness = 0.24
+trace_order_score = 0.24
+memory_influence_score = 0.30
+governance_trace_score = 0.0
+explainability_score = 0.34
+
+[profiles.adversarial_restraint.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.64
+evidence_coverage = 0.55
+trace_completeness = 0.30
+trace_order_score = 0.30
+memory_influence_score = 0.35
+governance_trace_score = 0.0
+explainability_score = 0.38
+
+[profiles.adversarial_restraint.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.62
+evidence_coverage = 0.68
+trace_completeness = 0.45
+trace_order_score = 0.42
+memory_influence_score = 0.45
+governance_trace_score = 0.0
+explainability_score = 0.52
+
+[profiles.adversarial_restraint.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.70
+evidence_coverage = 0.78
+trace_completeness = 0.62
+trace_order_score = 0.60
+memory_influence_score = 0.62
+governance_trace_score = 0.0
+explainability_score = 0.66
+
+[profiles.adversarial_restraint.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.76
+evidence_coverage = 0.84
+trace_completeness = 0.72
+trace_order_score = 0.70
+memory_influence_score = 0.72
+governance_trace_score = 0.0
+explainability_score = 0.73
+
+[profiles.adversarial_restraint.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.90
+trace_completeness = 0.82
+trace_order_score = 0.80
+memory_influence_score = 0.80
+governance_trace_score = 1.0
+explainability_score = 0.84
+
+[profiles.adversarial_restraint.methods.full_synapse]
+decision = "expected"
+confidence = 0.84
+evidence_coverage = 0.92
+trace_completeness = 0.84
+trace_order_score = 0.82
+memory_influence_score = 0.82
+governance_trace_score = 1.0
+explainability_score = 0.85
+
+[profiles.adversarial_miss.methods.vector_rag]
+decision = "wrong"
+confidence = 0.70
+evidence_coverage = 0.48
+trace_completeness = 0.22
+trace_order_score = 0.22
+memory_influence_score = 0.28
+governance_trace_score = 0.0
+explainability_score = 0.32
+
+[profiles.adversarial_miss.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.66
+evidence_coverage = 0.54
+trace_completeness = 0.28
+trace_order_score = 0.28
+memory_influence_score = 0.34
+governance_trace_score = 0.0
+explainability_score = 0.36
+
+[profiles.adversarial_miss.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.64
+evidence_coverage = 0.64
+trace_completeness = 0.42
+trace_order_score = 0.40
+memory_influence_score = 0.42
+governance_trace_score = 0.0
+explainability_score = 0.48
+
+[profiles.adversarial_miss.methods.rag_plus_edge]
+decision = "wrong"
+confidence = 0.68
+evidence_coverage = 0.72
+trace_completeness = 0.54
+trace_order_score = 0.50
+memory_influence_score = 0.54
+governance_trace_score = 0.0
+explainability_score = 0.58
+
+[profiles.adversarial_miss.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.78
+trace_completeness = 0.64
+trace_order_score = 0.58
+memory_influence_score = 0.68
+governance_trace_score = 0.0
+explainability_score = 0.66
+
+[profiles.adversarial_miss.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.78
+evidence_coverage = 0.82
+trace_completeness = 0.68
+trace_order_score = 0.62
+memory_influence_score = 0.70
+governance_trace_score = 1.0
+explainability_score = 0.70
+
+[profiles.adversarial_miss.methods.full_synapse]
+decision = "wrong"
+confidence = 0.72
+evidence_coverage = 0.72
+trace_completeness = 0.58
+trace_order_score = 0.52
+memory_influence_score = 0.58
+governance_trace_score = 0.55
+explainability_score = 0.58
+trace = ["keyword_overlap", "unsupported_bridge"]
+
+[[cases]]
+id = "adversarial_001_keyword_overlap_no_causality"
+task_type = "governance_trace"
+challenges = ["adversarial", "governance_boundary"]
+question = "Two memories share keywords but have no causal link. Should Synapse infer a strategy?"
+expected_decision = "do_not_infer_strategy"
+distractor_decision = "infer_strategy_from_keyword_overlap"
+relevant_memories = ["same_keyword_memory_a", "same_keyword_memory_b", "no_shared_outcome", "current_context_requires_evidence"]
+expected_trace = ["same_keyword_memory_a", "same_keyword_memory_b", "no_shared_outcome", "current_context_requires_evidence"]
+expected_influence_delta = 0.62
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_002_coincidence_not_pattern"
+task_type = "governance_trace"
+challenges = ["adversarial", "contradiction"]
+question = "A success happened after a tool switch, but evidence says timing was coincidental. What now?"
+expected_decision = "avoid_causal_claim"
+distractor_decision = "credit_tool_switch"
+relevant_memories = ["tool_switch_before_success", "success_driver_was_market_event", "coincidence_marked_in_postmortem", "current_decision_needs_driver"]
+expected_trace = ["tool_switch_before_success", "success_driver_was_market_event", "coincidence_marked_in_postmortem", "current_decision_needs_driver"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_003_high_similarity_wrong_scope"
+task_type = "governance_trace"
+challenges = ["adversarial", "scope_expansion"]
+question = "A similar project succeeded in a different scope. Should it dominate this decision?"
+expected_decision = "limit_transfer_due_to_scope_gap"
+distractor_decision = "reuse_success_pattern_directly"
+relevant_memories = ["similar_project_success", "scope_gap_documented", "transfer_failed_before", "current_project_has_different_constraints"]
+expected_trace = ["similar_project_success", "scope_gap_documented", "transfer_failed_before", "current_project_has_different_constraints"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_004_ambiguous_evidence_no_suppression"
+task_type = "governance_trace"
+challenges = ["adversarial", "ambiguity", "exploration_preservation"]
+question = "Evidence is mixed and novelty is high. Should governance suppress the new idea?"
+expected_decision = "observe_without_suppression"
+distractor_decision = "suppress_new_idea"
+relevant_memories = ["new_idea_one_success", "new_idea_one_failure", "context_changed", "exploration_value_high"]
+expected_trace = ["new_idea_one_success", "new_idea_one_failure", "context_changed", "exploration_value_high"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_005_negative_memory_not_identity"
+task_type = "governance_trace"
+challenges = ["adversarial", "failure_learning", "scope_expansion"]
+question = "One failed presentation exists, but later preparation evidence is neutral. What should happen?"
+expected_decision = "avoid_identity_level_conclusion"
+distractor_decision = "conclude_presentations_always_fail"
+relevant_memories = ["one_presentation_failed", "failure_was_underprepared", "later_preparation_improved", "current_presentation_has_practice"]
+expected_trace = ["one_presentation_failed", "failure_was_underprepared", "later_preparation_improved", "current_presentation_has_practice"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_006_spurious_region_pattern"
+task_type = "governance_trace"
+challenges = ["adversarial", "scope_expansion"]
+question = "Three wins share a region label but evidence points to pricing. What should dominate?"
+expected_decision = "attribute_to_pricing_not_region"
+distractor_decision = "attribute_to_region_label"
+relevant_memories = ["wins_shared_region_label", "pricing_changed_before_wins", "region_effect_not_supported", "current_case_has_different_region"]
+expected_trace = ["wins_shared_region_label", "pricing_changed_before_wins", "region_effect_not_supported", "current_case_has_different_region"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "adversarial_restraint"
+
+[[cases]]
+id = "adversarial_007_intentional_failure_over_inference"
+task_type = "governance_trace"
+challenges = ["adversarial", "failure_case"]
+question = "A keyword-similar memory tempts an unsupported bridge. Can Synapse avoid it?"
+expected_decision = "hold_due_to_insufficient_evidence"
+distractor_decision = "infer_unsupported_bridge"
+relevant_memories = ["keyword_similar_incident", "no_temporal_relation", "missing_causal_evidence", "current_case_only_shares_terms"]
+expected_trace = ["keyword_similar_incident", "no_temporal_relation", "missing_causal_evidence", "current_case_only_shares_terms"]
+expected_influence_delta = 0.60
+expected_governance_action = "observe"
+profile = "adversarial_miss"
+
+[[cases]]
+id = "adversarial_008_intentional_failure_scope"
+task_type = "governance_trace"
+challenges = ["adversarial", "failure_case", "scope_expansion"]
+question = "A single success resembles the current task but lacks evidence for generalization. What happens?"
+expected_decision = "observe_scope_gap"
+distractor_decision = "generalize_single_success"
+relevant_memories = ["single_success_event", "scope_gap_unresolved", "no_replication_yet", "current_task_higher_stakes"]
+expected_trace = ["single_success_event", "scope_gap_unresolved", "no_replication_yet", "current_task_higher_stakes"]
+expected_influence_delta = 0.60
+expected_governance_action = "observe"
+profile = "adversarial_miss"
+

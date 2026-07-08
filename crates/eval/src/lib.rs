@@ -1,4 +1,5 @@
 pub mod algorithms;
+pub mod cognitive_memory_benchmark;
 pub mod contract;
 pub mod external;
 pub mod governance_aggregation;
@@ -27,6 +28,7 @@ pub use algorithms::{
     long_horizon_stability_audit_report, merge_precision_report, predictive_trace_report,
     reflection_yield_report, trace_reinforcement_report,
 };
+pub use cognitive_memory_benchmark::CognitiveMemoryBenchmarkEvaluator;
 pub use contract::{AlgorithmMetric, BenchmarkReport};
 pub use external::{
     run_external_comparison, ExternalComparisonOptions, ExternalComparisonReport,
@@ -48,7 +50,13 @@ pub use governance_stress::GovernanceStressEvaluator;
 pub use harness::{default_dataset_path, run};
 pub use reporter::print_table;
 pub use types::{
-    BenchOptions, Dataset, DetectorConfidenceObservationReport, DetectorConfidenceRecord,
+    BenchOptions, CognitiveMemoryAblationReport, CognitiveMemoryBenchmarkReport,
+    CognitiveMemoryCaseMethodReport, CognitiveMemoryCaseReport, CognitiveMemoryCriteriaReport,
+    CognitiveMemoryDatasetReport, CognitiveMemoryErrorAnalysisReport,
+    CognitiveMemoryFailedCaseReport, CognitiveMemoryInfluenceAttributionReport,
+    CognitiveMemoryInfluenceCaseReport, CognitiveMemoryInfluentialMemoryReport,
+    CognitiveMemoryMethodSummary, CognitiveMemoryThresholds, CognitiveMemoryTraceQualityReport,
+    Dataset, DetectorConfidenceObservationReport, DetectorConfidenceRecord,
     GovernanceAggregationDetectorReport, GovernanceAggregationEvaluationReport,
     GovernanceAggregationMethodReport, GovernanceAggregationThresholds, GovernanceBiasCaseReport,
     GovernanceBiasEdgeReport, GovernanceBiasEvaluationReport, GovernanceBiasThresholds,
