@@ -65,6 +65,22 @@ Algorithm: **Frozen**
 
 Current focus
 
+Phase 2: Adaptive Cognitive Architecture.
+
+Status: **Design phase**.
+
+Goals:
+
+- adaptive influence
+- temporal reasoning
+- memory competition
+- suppression
+
+Phase 2 starts from [RFC-013 Adaptive Memory Dynamics](rfc/RFC-013-adaptive-memory-dynamics.md).
+The goal is to design adaptive memory dynamics after Phase 1 and Phase 1.2
+showed that the remaining bottleneck is memory influence regulation rather than
+retrieval.
+
 Phase 6 - Full System Evaluation. Feature growth is frozen by default while the
 system is validated for stability, consistency, and comparative value. See
 `docs/eval/SYSTEM_VALIDATION_PLAN.md`.
