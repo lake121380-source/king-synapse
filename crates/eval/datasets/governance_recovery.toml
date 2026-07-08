@@ -1,0 +1,260 @@
+[[scenarios]]
+id = "startup_failure_identity_recovery"
+pattern = "emotional_identity"
+scenario_type = "belief_recovery"
+expected_recovery = true
+initial_misbelief_influence = 0.86
+initial_adaptive_influence = 0.14
+target_misbelief_influence = 0.20
+target_adaptive_influence = 0.74
+
+[[scenarios.steps]]
+event = "different project context weakens identity conclusion"
+desired_misbelief_influence = 0.54
+desired_adaptive_influence = 0.34
+counter_evidence = 0.12
+adaptive_evidence = 0.10
+relapse_pressure = 0.05
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "small win contradicts global failure belief"
+desired_misbelief_influence = 0.42
+desired_adaptive_influence = 0.46
+counter_evidence = 0.16
+adaptive_evidence = 0.12
+relapse_pressure = 0.04
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "second win makes failure contextual"
+desired_misbelief_influence = 0.32
+desired_adaptive_influence = 0.58
+counter_evidence = 0.18
+adaptive_evidence = 0.14
+relapse_pressure = 0.03
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "future attempt succeeds under revised strategy"
+desired_misbelief_influence = 0.24
+desired_adaptive_influence = 0.68
+counter_evidence = 0.18
+adaptive_evidence = 0.16
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "old failure remains a lesson not identity"
+desired_misbelief_influence = 0.20
+desired_adaptive_influence = 0.74
+counter_evidence = 0.14
+adaptive_evidence = 0.14
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios]]
+id = "investment_win_guarantee_recovery"
+pattern = "evidence_gap"
+scenario_type = "belief_recovery"
+expected_recovery = true
+initial_misbelief_influence = 0.82
+initial_adaptive_influence = 0.18
+target_misbelief_influence = 0.22
+target_adaptive_influence = 0.68
+
+[[scenarios.steps]]
+event = "market regime changes"
+desired_misbelief_influence = 0.52
+desired_adaptive_influence = 0.36
+counter_evidence = 0.10
+adaptive_evidence = 0.08
+relapse_pressure = 0.04
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "loss evidence contradicts guarantee"
+desired_misbelief_influence = 0.38
+desired_adaptive_influence = 0.48
+counter_evidence = 0.18
+adaptive_evidence = 0.12
+relapse_pressure = 0.03
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "base-rate reasoning becomes relevant"
+desired_misbelief_influence = 0.30
+desired_adaptive_influence = 0.58
+counter_evidence = 0.16
+adaptive_evidence = 0.14
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "future investment is evaluated probabilistically"
+desired_misbelief_influence = 0.22
+desired_adaptive_influence = 0.68
+counter_evidence = 0.14
+adaptive_evidence = 0.16
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios]]
+id = "interview_failure_identity_recovery"
+pattern = "emotional_identity"
+scenario_type = "belief_recovery"
+expected_recovery = true
+initial_misbelief_influence = 0.80
+initial_adaptive_influence = 0.20
+target_misbelief_influence = 0.18
+target_adaptive_influence = 0.76
+
+[[scenarios.steps]]
+event = "feedback identifies specific communication issue"
+desired_misbelief_influence = 0.50
+desired_adaptive_influence = 0.40
+counter_evidence = 0.10
+adaptive_evidence = 0.12
+relapse_pressure = 0.05
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "mock interview improves"
+desired_misbelief_influence = 0.38
+desired_adaptive_influence = 0.52
+counter_evidence = 0.14
+adaptive_evidence = 0.14
+relapse_pressure = 0.04
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "different interview format goes well"
+desired_misbelief_influence = 0.28
+desired_adaptive_influence = 0.64
+counter_evidence = 0.16
+adaptive_evidence = 0.16
+relapse_pressure = 0.03
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "failure becomes training signal"
+desired_misbelief_influence = 0.18
+desired_adaptive_influence = 0.76
+counter_evidence = 0.16
+adaptive_evidence = 0.16
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios]]
+id = "pitch_success_universal_rule_recovery"
+pattern = "scope_overreach"
+scenario_type = "belief_recovery"
+expected_recovery = true
+initial_misbelief_influence = 0.76
+initial_adaptive_influence = 0.24
+target_misbelief_influence = 0.28
+target_adaptive_influence = 0.66
+
+[[scenarios.steps]]
+event = "new buyer segment rejects direct pitch"
+desired_misbelief_influence = 0.52
+desired_adaptive_influence = 0.36
+counter_evidence = 0.12
+adaptive_evidence = 0.10
+relapse_pressure = 0.06
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "contextual adaptation performs better"
+desired_misbelief_influence = 0.40
+desired_adaptive_influence = 0.48
+counter_evidence = 0.14
+adaptive_evidence = 0.14
+relapse_pressure = 0.05
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "old direct pitch works only in narrow context"
+desired_misbelief_influence = 0.34
+desired_adaptive_influence = 0.58
+counter_evidence = 0.14
+adaptive_evidence = 0.16
+relapse_pressure = 0.04
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "adaptive selling rule replaces universal rule"
+desired_misbelief_influence = 0.28
+desired_adaptive_influence = 0.66
+counter_evidence = 0.12
+adaptive_evidence = 0.16
+relapse_pressure = 0.03
+impact_weight = 1.0
+
+[[scenarios]]
+id = "failure_lesson_preservation"
+pattern = "normal_failure_learning"
+scenario_type = "normal_preservation"
+expected_recovery = false
+initial_misbelief_influence = 0.58
+initial_adaptive_influence = 0.42
+target_misbelief_influence = 0.62
+target_adaptive_influence = 0.66
+
+[[scenarios.steps]]
+event = "specific failure lesson remains useful"
+desired_misbelief_influence = 0.58
+desired_adaptive_influence = 0.50
+adaptive_evidence = 0.08
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "strategy improves using the lesson"
+desired_misbelief_influence = 0.60
+desired_adaptive_influence = 0.58
+adaptive_evidence = 0.10
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "lesson stays specific rather than identity-level"
+desired_misbelief_influence = 0.62
+desired_adaptive_influence = 0.66
+adaptive_evidence = 0.10
+relapse_pressure = 0.01
+impact_weight = 1.0
+
+[[scenarios]]
+id = "security_caution_preservation"
+pattern = "normal_operational_caution"
+scenario_type = "normal_preservation"
+expected_recovery = false
+initial_misbelief_influence = 0.56
+initial_adaptive_influence = 0.44
+target_misbelief_influence = 0.64
+target_adaptive_influence = 0.68
+
+[[scenarios.steps]]
+event = "past incident justifies deployment checklist"
+desired_misbelief_influence = 0.58
+desired_adaptive_influence = 0.52
+adaptive_evidence = 0.08
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "checklist prevents repeated incident"
+desired_misbelief_influence = 0.62
+desired_adaptive_influence = 0.60
+adaptive_evidence = 0.10
+relapse_pressure = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "caution remains operationally useful"
+desired_misbelief_influence = 0.64
+desired_adaptive_influence = 0.68
+adaptive_evidence = 0.10
+relapse_pressure = 0.01
+impact_weight = 1.0

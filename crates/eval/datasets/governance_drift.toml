@@ -1,0 +1,274 @@
+[[scenarios]]
+id = "pitch_success_scope_drift_first"
+pattern = "scope_overreach"
+scenario_type = "weak_bias_accumulation"
+expected_harmful = true
+initial_influence = 0.36
+
+[[scenarios.steps]]
+event = "first direct pitch worked"
+desired_influence = 0.30
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "second success treated as broad proof"
+desired_influence = 0.30
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "playbook reused without segment check"
+desired_influence = 0.28
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "similar context reinforces broad rule"
+desired_influence = 0.28
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "different buyer context ignored"
+desired_influence = 0.26
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "rule becomes default selling instinct"
+desired_influence = 0.24
+evidence_delta = 0.06
+risk_signal = 0.22
+impact_weight = 1.0
+
+[[scenarios]]
+id = "pitch_success_scope_drift_second"
+pattern = "scope_overreach"
+scenario_type = "weak_bias_accumulation"
+expected_harmful = true
+initial_influence = 0.34
+
+[[scenarios.steps]]
+event = "new pitch win starts similar pattern"
+desired_influence = 0.32
+evidence_delta = 0.05
+risk_signal = 0.13
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "win generalized to new customer segment"
+desired_influence = 0.30
+evidence_delta = 0.05
+risk_signal = 0.13
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "adaptation evidence is skipped"
+desired_influence = 0.28
+evidence_delta = 0.05
+risk_signal = 0.13
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "weak bias repeats under same pattern"
+desired_influence = 0.26
+evidence_delta = 0.05
+risk_signal = 0.13
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "selling instinct becomes too general"
+desired_influence = 0.24
+evidence_delta = 0.05
+risk_signal = 0.13
+impact_weight = 1.0
+
+[[scenarios]]
+id = "startup_failure_identity_recovery"
+pattern = "emotional_identity"
+scenario_type = "recovery_under_repeated_evidence"
+expected_harmful = true
+initial_influence = 0.82
+
+[[scenarios.steps]]
+event = "failure initially dominates identity"
+desired_influence = 0.42
+evidence_delta = 0.00
+risk_signal = 0.20
+counter_evidence = 0.08
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "new project has different constraints"
+desired_influence = 0.34
+evidence_delta = 0.00
+risk_signal = 0.18
+counter_evidence = 0.10
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "small success contradicts identity claim"
+desired_influence = 0.28
+evidence_delta = 0.00
+risk_signal = 0.16
+counter_evidence = 0.12
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "second success weakens global failure belief"
+desired_influence = 0.22
+evidence_delta = 0.00
+risk_signal = 0.14
+counter_evidence = 0.14
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "failure becomes context not identity"
+desired_influence = 0.18
+evidence_delta = 0.00
+risk_signal = 0.12
+counter_evidence = 0.16
+impact_weight = 1.0
+
+[[scenarios]]
+id = "investment_win_guarantee_recovery"
+pattern = "evidence_gap"
+scenario_type = "recovery_under_repeated_evidence"
+expected_harmful = true
+initial_influence = 0.78
+
+[[scenarios.steps]]
+event = "historical win overstates future guarantee"
+desired_influence = 0.38
+evidence_delta = 0.01
+risk_signal = 0.21
+counter_evidence = 0.06
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "market context changes"
+desired_influence = 0.32
+evidence_delta = 0.00
+risk_signal = 0.20
+counter_evidence = 0.10
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "loss evidence arrives"
+desired_influence = 0.24
+evidence_delta = 0.00
+risk_signal = 0.18
+counter_evidence = 0.14
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "future prediction becomes uncertain"
+desired_influence = 0.20
+evidence_delta = 0.00
+risk_signal = 0.14
+counter_evidence = 0.16
+impact_weight = 1.0
+
+[[scenarios]]
+id = "repeated_experiment_strategy_learning"
+pattern = "evidence_backed_learning"
+scenario_type = "normal_learning"
+expected_harmful = false
+initial_influence = 0.34
+
+[[scenarios.steps]]
+event = "first repeated experiment signal"
+desired_influence = 0.54
+evidence_delta = 0.08
+risk_signal = 0.01
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "second experiment confirms pattern"
+desired_influence = 0.62
+evidence_delta = 0.08
+risk_signal = 0.01
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "strategy update becomes evidence backed"
+desired_influence = 0.70
+evidence_delta = 0.08
+risk_signal = 0.01
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "future experiment should use the learned signal"
+desired_influence = 0.76
+evidence_delta = 0.06
+risk_signal = 0.01
+impact_weight = 1.0
+
+[[scenarios]]
+id = "security_incidents_operational_caution"
+pattern = "operational_caution"
+scenario_type = "normal_learning"
+expected_harmful = false
+initial_influence = 0.46
+
+[[scenarios.steps]]
+event = "first incident creates useful caution"
+desired_influence = 0.56
+evidence_delta = 0.04
+risk_signal = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "second incident supports checklist"
+desired_influence = 0.64
+evidence_delta = 0.05
+risk_signal = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "caution prevents repeated deployment issue"
+desired_influence = 0.70
+evidence_delta = 0.05
+risk_signal = 0.02
+impact_weight = 1.0
+
+[[scenarios.steps]]
+event = "memory remains operational not identity-level"
+desired_influence = 0.66
+evidence_delta = 0.03
+risk_signal = 0.02
+impact_weight = 1.0
+
+[[scenarios]]
+id = "ai_jobs_trend_planning_context"
+pattern = "ambiguous_trend"
+scenario_type = "normal_ambiguous"
+expected_harmful = false
+initial_influence = 0.50
+
+[[scenarios.steps]]
+event = "trend enters planning as uncertain context"
+desired_influence = 0.54
+evidence_delta = 0.02
+risk_signal = 0.03
+impact_weight = 0.8
+
+[[scenarios.steps]]
+event = "new data keeps trend plausible"
+desired_influence = 0.56
+evidence_delta = 0.02
+risk_signal = 0.03
+impact_weight = 0.8
+
+[[scenarios.steps]]
+event = "uncertainty remains explicit"
+desired_influence = 0.55
+evidence_delta = 0.01
+risk_signal = 0.03
+impact_weight = 0.8

@@ -1150,6 +1150,10 @@ def run_kr_eval(
     graph_activation: bool = False,
     hypothesis_generation: bool = False,
     hypothesis_graduation: bool = False,
+    semantic_edge_mode: str = "off",
+    semantic_judge: str = "heuristic",
+    semantic_judge_cache: bool = True,
+    semantic_judge_cache_path: Path | None = None,
 ) -> dict[str, Any]:
     cargo_profile = eval_cargo_profile()
     cmd = [
@@ -1193,6 +1197,13 @@ def run_kr_eval(
         cmd.append("--hypothesis-generation")
     if hypothesis_graduation:
         cmd.append("--hypothesis-graduation")
+    if semantic_edge_mode != "off":
+        cmd.extend(["--semantic-edge-mode", semantic_edge_mode])
+        cmd.extend(["--semantic-judge", semantic_judge])
+        if not semantic_judge_cache:
+            cmd.append("--no-semantic-judge-cache")
+        if semantic_judge_cache_path is not None:
+            cmd.extend(["--semantic-judge-cache-path", str(semantic_judge_cache_path)])
     result, process_metrics = profiled_subprocess_run(cmd, repo_root())
     if result.returncode != 0:
         raise RuntimeError(

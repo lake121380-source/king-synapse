@@ -54,6 +54,7 @@ pub struct RecallEngine<'a> {
     pub(crate) rrf_k: f64,
     pub(crate) rrf_weights: RrfBranchWeights,
     pub(crate) session_id: Option<SessionId>,
+    pub(crate) record_access: bool,
 }
 
 impl<'a> RecallEngine<'a> {
@@ -67,6 +68,7 @@ impl<'a> RecallEngine<'a> {
             rrf_k: DEFAULT_RRF_K,
             rrf_weights: RrfBranchWeights::default(),
             session_id: None,
+            record_access: true,
         }
     }
 
@@ -98,6 +100,11 @@ impl<'a> RecallEngine<'a> {
 
     pub fn with_session_id(mut self, session_id: SessionId) -> Self {
         self.session_id = Some(session_id);
+        self
+    }
+
+    pub fn with_access_recording(mut self, enabled: bool) -> Self {
+        self.record_access = enabled;
         self
     }
 
@@ -308,7 +315,7 @@ impl<'a> RecallEngine<'a> {
         profile.final_score_ms = elapsed_ms(final_score_start);
         profile.returned_hits = hits.len();
 
-        if !hits.is_empty() {
+        if self.record_access && !hits.is_empty() {
             let ids: Vec<&str> = hits.iter().map(|h| h.memory.id.as_str()).collect();
             let record_start = Instant::now();
             self.store.record_access(&ids, now)?;

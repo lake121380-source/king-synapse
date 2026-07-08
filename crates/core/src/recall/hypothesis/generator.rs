@@ -1,12 +1,10 @@
-﻿//! Edge hypothesis generators.
+//! Edge hypothesis generators.
 //!
 //! Phase 1a: RuleBasedEdgeGenerator (deterministic, no LLM).
 //! Phase 1b: LLMEdgeGenerator (DeepSeek-backed).
 //! Phase 1c: HybridEdgeGenerator.
 
-use super::model::{
-    EdgeHypothesis, EdgeRelation, INITIAL_CONFIDENCE, RetrievalContext,
-};
+use super::model::{EdgeHypothesis, EdgeRelation, RetrievalContext, INITIAL_CONFIDENCE};
 use std::collections::HashSet;
 
 /// Anything that can propose edge hypotheses from a retrieval context.
@@ -28,7 +26,9 @@ pub struct RuleBasedEdgeGenerator {
 
 impl RuleBasedEdgeGenerator {
     pub fn new() -> Self {
-        Self { min_hit_score: f32::NEG_INFINITY }
+        Self {
+            min_hit_score: f32::NEG_INFINITY,
+        }
     }
 
     pub fn with_min_hit_score(mut self, score: f32) -> Self {

@@ -15,9 +15,9 @@ mod cognitive_trace;
 mod engine;
 mod graph_activation;
 mod hit;
+pub mod hypothesis;
 mod latent_activation;
 mod latent_booster;
-pub mod hypothesis;
 mod query_latent;
 mod rrf;
 
@@ -38,12 +38,18 @@ pub use query_latent::{QueryLatentActivationProbe, QueryLatentActivationReport};
 pub use rrf::{RrfBranchWeights, DEFAULT_RRF_K};
 
 pub use hypothesis::generator::{EdgeHypothesisGenerator, RuleBasedEdgeGenerator};
+pub use hypothesis::judge::{
+    default_semantic_judge_cache_path, CachedSemanticJudge, DeepSeekSemanticJudge,
+    EdgeCandidateEvidence, EdgeJudgeInput, EdgeJudgement, EdgeReasonCategory, EdgeSemanticJudge,
+    HeuristicSemanticJudge, JudgedEdgeGeneration, JudgedEdgeGenerator, JudgedEdgeHypothesis,
+    RejectedEdgeCandidate, SemanticEdgeMode, SemanticJudgeCacheStats,
+    SemanticJudgeCacheStatsHandle, SemanticJudgeExecutorConfig,
+};
 pub use hypothesis::model::{
-    EdgeEvidence, EdgeHypothesis, EdgeHypothesisStatus, EdgeRelation,
-    EdgeUtilityObservation, RetrievalContext,
-    CONFIRM_THRESHOLD, MIN_OBSERVATIONS, MIN_DIVERSITY_CONTEXTS,
-    W_FREQUENCY, W_DIVERSITY, W_UTILITY,
-    INITIAL_CONFIDENCE, REOBSERVATION_BOOST, DECAY_PER_TURN, CONFIDENCE_FLOOR,
+    EdgeEvidence, EdgeHypothesis, EdgeHypothesisStatus, EdgeRelation, EdgeUtilityObservation,
+    RetrievalContext, CONFIDENCE_FLOOR, CONFIRM_THRESHOLD, DECAY_PER_TURN, INITIAL_CONFIDENCE,
+    MIN_DIVERSITY_CONTEXTS, MIN_OBSERVATIONS, REOBSERVATION_BOOST, W_DIVERSITY, W_FREQUENCY,
+    W_SEMANTIC_COHERENCE, W_UTILITY,
 };
 pub use hypothesis::store_ext::HypothesisStore;
 

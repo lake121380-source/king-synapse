@@ -57,6 +57,10 @@ impl EdgeRelation {
             Self::ConflictsWith | Self::Resolves | Self::Replaces => "evolution",
         }
     }
+
+    pub fn is_reasoning(&self) -> bool {
+        matches!(self, Self::Explains | Self::Supports | Self::Predicts)
+    }
 }
 
 /// Lifecycle states for an edge hypothesis.
@@ -172,8 +176,9 @@ pub const MIN_DIVERSITY_CONTEXTS: usize = 3;
 
 /// Confidence weights.
 pub const W_FREQUENCY: f32 = 0.2;
-pub const W_DIVERSITY: f32 = 0.3;
-pub const W_UTILITY: f32 = 0.5;
+pub const W_DIVERSITY: f32 = 0.25;
+pub const W_SEMANTIC_COHERENCE: f32 = 0.25;
+pub const W_UTILITY: f32 = 0.3;
 
 /// Initial confidence for a new hypothesis.
 pub const INITIAL_CONFIDENCE: f32 = 0.20;

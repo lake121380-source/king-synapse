@@ -25,6 +25,62 @@ pub fn print_table(r: &Report) {
     println!("P50 latency:    {:.2} ms", r.p50_latency_ms);
     println!("P95 latency:    {:.2} ms", r.p95_latency_ms);
     println!("total wall:     {:.1} ms", r.total_ms);
+    if let Some(survival) = r.semantic_survival.as_ref() {
+        println!(
+            "semantic survival: {} -> {} -> {} -> {} -> {}",
+            survival.candidate_count,
+            survival.unique_accepted_edges,
+            survival.confirmed_count,
+            survival.graduated_count,
+            survival.activated_count
+        );
+        println!(
+            "semantic utility:  q={} affected={} edges={} useful={} harmful={} rank_delta={:.3} mrr_delta={:.4}",
+            survival.utility.evaluated_queries,
+            survival.utility.affected_queries,
+            survival.utility.affected_edges,
+            survival.utility.useful_edges,
+            survival.utility.harmful_edges,
+            survival.utility.mean_rank_delta,
+            survival.utility.mean_mrr_delta
+        );
+        println!(
+            "edge attribution:  tested={} edges={} useful={} harmful={} rank_delta={:.3} mrr_delta={:.4}",
+            survival.utility.attribution_evaluated_edges,
+            survival.utility.attribution_affected_edges,
+            survival.utility.causal_useful_edges,
+            survival.utility.causal_harmful_edges,
+            survival.utility.mean_causal_rank_delta,
+            survival.utility.mean_causal_mrr_delta
+        );
+        println!(
+            "edge governance:   trusted={} suspect={} dormant={} weight={:.3} q={} changed={} rank_delta={:.3} mrr_delta={:.4}",
+            survival.governance.trusted_edges,
+            survival.governance.suspect_edges,
+            survival.governance.dormant_edges,
+            survival.governance.mean_governance_weight,
+            survival.governance.evaluated_queries,
+            survival.governance.changed_queries,
+            survival.governance.mean_rank_delta_vs_full_graph,
+            survival.governance.mean_mrr_delta_vs_full_graph
+        );
+        let policy_summary = survival
+            .policy_search
+            .policies
+            .iter()
+            .map(|policy| format!("{}:{:.4}", policy.name, policy.mean_mrr_delta_vs_full_graph))
+            .collect::<Vec<_>>()
+            .join(", ");
+        println!(
+            "policy search:     best={} [{}]",
+            survival
+                .policy_search
+                .best_policy_by_mrr
+                .as_deref()
+                .unwrap_or("none"),
+            policy_summary
+        );
+    }
     println!();
     println!("Per-query misses (Recall@10 < 1.0, up to 12):");
     let mut shown = 0;

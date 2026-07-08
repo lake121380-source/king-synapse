@@ -1,0 +1,130 @@
+{
+  "tag": "phase1c-governance-validation-50",
+  "dataset": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\phase1c-governance-6r9zl0jx\\dmr-50.toml",
+  "n_memories": 250,
+  "n_queries": 50,
+  "semantic_judge": "heuristic",
+  "semantic_edge_mode": "classify",
+  "detection_score": 0.0,
+  "intervention_gain": 0.0,
+  "regression_rate": 0.0,
+  "stability_score": 0.8059701492537313,
+  "suspect_detection": {
+    "evaluated_edges": 67,
+    "predicted_suspect_edges": 0,
+    "ground_truth_harmful_edges": 0,
+    "true_positive": 0,
+    "false_positive": 0,
+    "true_negative": 67,
+    "false_negative": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "accuracy": 1.0,
+    "method": "predicted suspect/dormant vs negative causal attribution"
+  },
+  "intervention_safety": {
+    "evaluated_queries": 39,
+    "changed_queries": 8,
+    "improved_queries": 0,
+    "harmed_queries": 0,
+    "neutral_queries": 39,
+    "intervention_gain": 0.0,
+    "regression_rate": 0.0,
+    "safety_passed": true,
+    "method": "best policy by MRR: soft_utility"
+  },
+  "temporal_stability": {
+    "evaluated_edges": 67,
+    "stable_edges": 54,
+    "unstable_edges": 13,
+    "mean_causal_consistency": 0.0,
+    "mean_causal_mrr_delta_variance": 0.0,
+    "stability_score": 0.8059701492537313,
+    "method": "stable when attribution has enough samples and low causal MRR variance"
+  },
+  "policy_search": {
+    "evaluated_queries": 39,
+    "best_policy_by_mrr": "soft_utility",
+    "policies": [
+      {
+        "name": "current_rule",
+        "description": "Phase 1c-5 hand-written state machine weights.",
+        "evaluated_queries": 39,
+        "changed_queries": 14,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 39,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 0.75
+      },
+      {
+        "name": "conservative_consistency",
+        "description": "Only downweights stable, repeatedly harmful edges.",
+        "evaluated_queries": 39,
+        "changed_queries": 0,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 39,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 1.0
+      },
+      {
+        "name": "variance_guard",
+        "description": "Keeps high-variance edges active and downweights low-variance harm.",
+        "evaluated_queries": 39,
+        "changed_queries": 0,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 39,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 1.0
+      },
+      {
+        "name": "shadow_strong_negative",
+        "description": "Only shadows strongly negative, consistent edges; otherwise keeps full graph.",
+        "evaluated_queries": 39,
+        "changed_queries": 0,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 39,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 1.0
+      },
+      {
+        "name": "soft_utility",
+        "description": "Maps utility features continuously to activation weights.",
+        "evaluated_queries": 39,
+        "changed_queries": 8,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 39,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 0.8999999761581421
+      }
+    ]
+  },
+  "rollback": {
+    "rollback_model": "in_memory_counterfactual_only",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "source_trace": {
+    "recall_at_10": 0.04333333333333333,
+    "mrr_at_10": 0.05952380952380953,
+    "candidate_edges": 189,
+    "graduated_edges": 156,
+    "activated_edges": 141,
+    "suspect_edges": 0,
+    "trusted_edges": 0,
+    "dormant_edges": 0,
+    "attribution_evaluated_edges": 780,
+    "policy_count": 5
+  }
+}

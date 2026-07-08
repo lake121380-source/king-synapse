@@ -1,0 +1,467 @@
+[[cases]]
+id = "false_causality_investment_001"
+issue = "false_causality"
+severity = 0.91
+
+[[cases.memories]]
+id = "investment_x_success"
+role = "event"
+content = "Investment X succeeded in 2024."
+
+[[cases.memories]]
+id = "future_investment_guarantee"
+role = "overgeneralized_prediction"
+content = "Future investments like X are guaranteed to succeed."
+
+[[cases.memories]]
+id = "review_risk_model"
+role = "normal_learning"
+content = "Review the risk model before making future investments."
+
+[[cases.edges]]
+id = "investment_success_to_guarantee"
+source = "investment_x_success"
+target = "future_investment_guarantee"
+relation = "predicts"
+label = "harmful"
+weight = 0.92
+confidence = 0.95
+evidence_strength = 0.14
+event_specificity = 0.96
+prediction_scope = 1.0
+scope_shift = 0.92
+emotion_weight = 0.12
+recovery_evidence_strength = 0.82
+expected_recovered_confidence = 0.45
+expected_issue = "false_causality"
+
+[[cases.edges]]
+id = "investment_success_to_review"
+source = "investment_x_success"
+target = "review_risk_model"
+relation = "supports"
+label = "normal"
+weight = 0.72
+confidence = 0.78
+evidence_strength = 0.74
+event_specificity = 0.75
+prediction_scope = 0.32
+scope_shift = 0.16
+emotion_weight = 0.05
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "interview_identity_generalization_001"
+issue = "over_generalization"
+severity = 0.88
+
+[[cases.memories]]
+id = "interview_failed_once"
+role = "event"
+content = "One interview went badly."
+
+[[cases.memories]]
+id = "cannot_pass_interviews"
+role = "identity_conclusion"
+content = "I cannot pass interviews."
+
+[[cases.memories]]
+id = "practice_interview_answers"
+role = "normal_learning"
+content = "Practice behavioral interview answers before the next attempt."
+
+[[cases.edges]]
+id = "single_failure_to_identity_claim"
+source = "interview_failed_once"
+target = "cannot_pass_interviews"
+relation = "predicts"
+label = "harmful"
+weight = 0.90
+confidence = 0.93
+evidence_strength = 0.16
+event_specificity = 0.98
+prediction_scope = 1.0
+scope_shift = 0.94
+emotion_weight = 0.70
+recovery_evidence_strength = 0.84
+expected_recovered_confidence = 0.42
+expected_issue = "over_generalization"
+
+[[cases.edges]]
+id = "single_failure_to_practice"
+source = "interview_failed_once"
+target = "practice_interview_answers"
+relation = "supports"
+label = "normal"
+weight = 0.76
+confidence = 0.80
+evidence_strength = 0.76
+event_specificity = 0.82
+prediction_scope = 0.36
+scope_shift = 0.18
+emotion_weight = 0.20
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "startup_emotion_pollution_001"
+issue = "emotional_contamination"
+severity = 0.93
+
+[[cases.memories]]
+id = "startup_failed"
+role = "event"
+content = "The startup failed after a difficult fundraise."
+
+[[cases.memories]]
+id = "entrepreneurship_impossible"
+role = "negative_prediction"
+content = "Future entrepreneurship is impossible."
+
+[[cases.memories]]
+id = "improve_cashflow_review"
+role = "normal_learning"
+content = "Review cashflow and fundraising assumptions before the next venture."
+
+[[cases.edges]]
+id = "startup_failure_to_impossible"
+source = "startup_failed"
+target = "entrepreneurship_impossible"
+relation = "predicts"
+label = "harmful"
+weight = 0.94
+confidence = 0.94
+evidence_strength = 0.12
+event_specificity = 0.92
+prediction_scope = 1.0
+scope_shift = 0.90
+emotion_weight = 0.92
+recovery_evidence_strength = 0.86
+expected_recovered_confidence = 0.40
+expected_issue = "emotional_contamination"
+
+[[cases.edges]]
+id = "startup_failure_to_cashflow_review"
+source = "startup_failed"
+target = "improve_cashflow_review"
+relation = "supports"
+label = "normal"
+weight = 0.78
+confidence = 0.82
+evidence_strength = 0.79
+event_specificity = 0.85
+prediction_scope = 0.34
+scope_shift = 0.20
+emotion_weight = 0.28
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "tool_failure_scope_expansion_001"
+issue = "over_generalization"
+severity = 0.84
+
+[[cases.memories]]
+id = "rust_project_failed"
+role = "event"
+content = "A Rust project failed because of ownership bugs."
+
+[[cases.memories]]
+id = "all_rust_projects_fail"
+role = "global_conclusion"
+content = "All Rust projects are likely to fail."
+
+[[cases.memories]]
+id = "study_borrow_checker"
+role = "normal_learning"
+content = "Study borrow checker patterns before the next Rust project."
+
+[[cases.edges]]
+id = "rust_failure_to_global_failure"
+source = "rust_project_failed"
+target = "all_rust_projects_fail"
+relation = "predicts"
+label = "harmful"
+weight = 0.88
+confidence = 0.90
+evidence_strength = 0.18
+event_specificity = 0.91
+prediction_scope = 0.95
+scope_shift = 0.86
+emotion_weight = 0.55
+recovery_evidence_strength = 0.78
+expected_recovered_confidence = 0.43
+expected_issue = "over_generalization"
+
+[[cases.edges]]
+id = "rust_failure_to_study_patterns"
+source = "rust_project_failed"
+target = "study_borrow_checker"
+relation = "supports"
+label = "normal"
+weight = 0.74
+confidence = 0.78
+evidence_strength = 0.75
+event_specificity = 0.82
+prediction_scope = 0.30
+scope_shift = 0.14
+emotion_weight = 0.18
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "habit_failure_identity_claim_001"
+issue = "over_generalization"
+severity = 0.82
+
+[[cases.memories]]
+id = "missed_gym_week"
+role = "event"
+content = "A gym routine was missed for one week."
+
+[[cases.memories]]
+id = "cannot_keep_habits"
+role = "identity_conclusion"
+content = "I cannot keep habits."
+
+[[cases.memories]]
+id = "reduce_habit_scope"
+role = "normal_learning"
+content = "Use a smaller habit target during busy weeks."
+
+[[cases.edges]]
+id = "missed_gym_to_identity_claim"
+source = "missed_gym_week"
+target = "cannot_keep_habits"
+relation = "predicts"
+label = "harmful"
+weight = 0.86
+confidence = 0.89
+evidence_strength = 0.20
+event_specificity = 0.90
+prediction_scope = 0.96
+scope_shift = 0.85
+emotion_weight = 0.66
+recovery_evidence_strength = 0.76
+expected_recovered_confidence = 0.44
+expected_issue = "over_generalization"
+
+[[cases.edges]]
+id = "missed_gym_to_smaller_target"
+source = "missed_gym_week"
+target = "reduce_habit_scope"
+relation = "supports"
+label = "normal"
+weight = 0.70
+confidence = 0.76
+evidence_strength = 0.72
+event_specificity = 0.80
+prediction_scope = 0.31
+scope_shift = 0.16
+emotion_weight = 0.22
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "negotiation_failure_future_claim_001"
+issue = "emotional_contamination"
+severity = 0.86
+
+[[cases.memories]]
+id = "negotiation_failed"
+role = "event"
+content = "One negotiation failed."
+
+[[cases.memories]]
+id = "future_negotiations_fail"
+role = "negative_prediction"
+content = "Future negotiations will fail."
+
+[[cases.memories]]
+id = "prepare_fallback_terms"
+role = "normal_learning"
+content = "Prepare fallback terms before future negotiations."
+
+[[cases.edges]]
+id = "negotiation_failure_to_future_failure"
+source = "negotiation_failed"
+target = "future_negotiations_fail"
+relation = "predicts"
+label = "harmful"
+weight = 0.87
+confidence = 0.91
+evidence_strength = 0.17
+event_specificity = 0.89
+prediction_scope = 0.98
+scope_shift = 0.88
+emotion_weight = 0.81
+recovery_evidence_strength = 0.80
+expected_recovered_confidence = 0.41
+expected_issue = "emotional_contamination"
+
+[[cases.edges]]
+id = "negotiation_failure_to_fallback_terms"
+source = "negotiation_failed"
+target = "prepare_fallback_terms"
+relation = "supports"
+label = "normal"
+weight = 0.73
+confidence = 0.79
+evidence_strength = 0.75
+event_specificity = 0.78
+prediction_scope = 0.33
+scope_shift = 0.17
+emotion_weight = 0.25
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "model_eval_failure_global_distrust_001"
+issue = "false_causality"
+severity = 0.87
+
+[[cases.memories]]
+id = "memory_eval_failed"
+role = "event"
+content = "One memory evaluation run regressed."
+
+[[cases.memories]]
+id = "all_memory_graphs_unreliable"
+role = "global_conclusion"
+content = "All memory graph methods are unreliable."
+
+[[cases.memories]]
+id = "inspect_eval_harness"
+role = "normal_learning"
+content = "Inspect the evaluation harness before changing memory graph policy."
+
+[[cases.edges]]
+id = "eval_failure_to_global_distrust"
+source = "memory_eval_failed"
+target = "all_memory_graphs_unreliable"
+relation = "explains"
+label = "harmful"
+weight = 0.89
+confidence = 0.92
+evidence_strength = 0.18
+event_specificity = 0.94
+prediction_scope = 0.97
+scope_shift = 0.89
+emotion_weight = 0.48
+recovery_evidence_strength = 0.82
+expected_recovered_confidence = 0.46
+expected_issue = "false_causality"
+
+[[cases.edges]]
+id = "eval_failure_to_harness_inspection"
+source = "memory_eval_failed"
+target = "inspect_eval_harness"
+relation = "supports"
+label = "normal"
+weight = 0.75
+confidence = 0.81
+evidence_strength = 0.78
+event_specificity = 0.83
+prediction_scope = 0.35
+scope_shift = 0.18
+emotion_weight = 0.20
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "single_success_universal_rule_001"
+issue = "over_generalization"
+severity = 0.85
+
+[[cases.memories]]
+id = "one_sales_pitch_succeeded"
+role = "event"
+content = "One sales pitch succeeded with a very direct style."
+
+[[cases.memories]]
+id = "direct_pitch_always_wins"
+role = "universal_rule"
+content = "Direct sales pitches always win."
+
+[[cases.memories]]
+id = "adapt_pitch_to_context"
+role = "normal_learning"
+content = "Adapt the pitch style to the customer context."
+
+[[cases.edges]]
+id = "single_pitch_success_to_universal_rule"
+source = "one_sales_pitch_succeeded"
+target = "direct_pitch_always_wins"
+relation = "predicts"
+label = "harmful"
+weight = 0.88
+confidence = 0.91
+evidence_strength = 0.19
+event_specificity = 0.93
+prediction_scope = 0.98
+scope_shift = 0.90
+emotion_weight = 0.30
+recovery_evidence_strength = 0.79
+expected_recovered_confidence = 0.47
+expected_issue = "over_generalization"
+
+[[cases.edges]]
+id = "single_pitch_success_to_adaptation"
+source = "one_sales_pitch_succeeded"
+target = "adapt_pitch_to_context"
+relation = "supports"
+label = "normal"
+weight = 0.72
+confidence = 0.79
+evidence_strength = 0.76
+event_specificity = 0.78
+prediction_scope = 0.32
+scope_shift = 0.16
+emotion_weight = 0.12
+recovery_evidence_strength = 0.0
+
+[[cases]]
+id = "writing_rejection_creative_identity_001"
+issue = "emotional_contamination"
+severity = 0.83
+
+[[cases.memories]]
+id = "article_rejected"
+role = "event"
+content = "One article submission was rejected."
+
+[[cases.memories]]
+id = "cannot_write_well"
+role = "identity_conclusion"
+content = "I cannot write well."
+
+[[cases.memories]]
+id = "revise_article_outline"
+role = "normal_learning"
+content = "Revise the article outline and clarify the argument."
+
+[[cases.edges]]
+id = "article_rejection_to_identity_claim"
+source = "article_rejected"
+target = "cannot_write_well"
+relation = "predicts"
+label = "harmful"
+weight = 0.84
+confidence = 0.88
+evidence_strength = 0.18
+event_specificity = 0.88
+prediction_scope = 0.96
+scope_shift = 0.86
+emotion_weight = 0.80
+recovery_evidence_strength = 0.77
+expected_recovered_confidence = 0.43
+expected_issue = "emotional_contamination"
+
+[[cases.edges]]
+id = "article_rejection_to_revision"
+source = "article_rejected"
+target = "revise_article_outline"
+relation = "supports"
+label = "normal"
+weight = 0.70
+confidence = 0.77
+evidence_strength = 0.74
+event_specificity = 0.80
+prediction_scope = 0.30
+scope_shift = 0.14
+emotion_weight = 0.26
+recovery_evidence_strength = 0.0

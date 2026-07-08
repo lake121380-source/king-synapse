@@ -1,0 +1,175 @@
+[[cases]]
+id = "investment_success_to_future_guarantee"
+detector = "evidence_mismatch"
+raw_risk = 0.84
+expected_harmful = true
+baseline_influence = 0.92
+
+[[cases.events]]
+id = "next_investment_has_negative_return"
+desired_influence = 0.18
+impact_weight = 1.0
+
+[[cases.events]]
+id = "market_context_changes"
+desired_influence = 0.24
+impact_weight = 0.8
+
+[[cases.events]]
+id = "historical_win_is_only_supporting_context"
+desired_influence = 0.30
+impact_weight = 0.7
+
+[[cases]]
+id = "startup_failure_to_identity_belief"
+detector = "emotional_bias"
+raw_risk = 0.90
+expected_harmful = true
+baseline_influence = 0.88
+
+[[cases.events]]
+id = "new_project_is_different_domain"
+desired_influence = 0.12
+impact_weight = 1.0
+
+[[cases.events]]
+id = "failure_should_inform_risk_not_identity"
+desired_influence = 0.20
+impact_weight = 0.9
+
+[[cases.events]]
+id = "later_success_evidence_arrives"
+desired_influence = 0.16
+impact_weight = 1.0
+
+[[cases]]
+id = "single_bad_review_to_never_ship"
+detector = "scope_expansion"
+raw_risk = 0.88
+expected_harmful = true
+baseline_influence = 0.86
+
+[[cases.events]]
+id = "next_release_receives_positive_feedback"
+desired_influence = 0.26
+impact_weight = 0.9
+
+[[cases.events]]
+id = "review_should_trigger_quality_check"
+desired_influence = 0.34
+impact_weight = 0.7
+
+[[cases.events]]
+id = "identity_level_prediction_is_wrong"
+desired_influence = 0.22
+impact_weight = 1.0
+
+[[cases]]
+id = "one_pitch_success_to_direct_pitch_always_wins"
+detector = "scope_expansion"
+raw_risk = 0.62
+expected_harmful = true
+baseline_influence = 0.78
+
+[[cases.events]]
+id = "different_buyer_segment_rejects_pitch"
+desired_influence = 0.24
+impact_weight = 1.0
+
+[[cases.events]]
+id = "pitch_requires_contextual_adaptation"
+desired_influence = 0.36
+impact_weight = 0.8
+
+[[cases.events]]
+id = "single_win_should_not_be_universal_rule"
+desired_influence = 0.28
+impact_weight = 1.0
+
+[[cases]]
+id = "repeated_experiment_signal_to_strategy_update"
+detector = "evidence_mismatch"
+raw_risk = 0.18
+expected_harmful = false
+baseline_influence = 0.78
+
+[[cases.events]]
+id = "future_experiment_uses_learned_signal"
+desired_influence = 0.76
+impact_weight = 1.0
+
+[[cases.events]]
+id = "pattern_has_multiple_observations"
+desired_influence = 0.82
+impact_weight = 0.8
+
+[[cases.events]]
+id = "strategy_update_is_evidence_backed"
+desired_influence = 0.72
+impact_weight = 0.9
+
+[[cases]]
+id = "prompt_failures_to_prompt_strategy"
+detector = "emotional_bias"
+raw_risk = 0.12
+expected_harmful = false
+baseline_influence = 0.72
+
+[[cases.events]]
+id = "future_prompting_uses_failure_lessons"
+desired_influence = 0.68
+impact_weight = 1.0
+
+[[cases.events]]
+id = "lesson_remains_contextual_not_identity_based"
+desired_influence = 0.62
+impact_weight = 0.7
+
+[[cases.events]]
+id = "specific_mistake_should_be_remembered"
+desired_influence = 0.74
+impact_weight = 0.8
+
+[[cases]]
+id = "security_incidents_to_operational_caution"
+detector = "scope_expansion"
+raw_risk = 0.32
+expected_harmful = false
+baseline_influence = 0.70
+
+[[cases.events]]
+id = "future_deployment_requires_caution"
+desired_influence = 0.70
+impact_weight = 1.0
+
+[[cases.events]]
+id = "risk_memory_prevents_repeat_issue"
+desired_influence = 0.76
+impact_weight = 0.9
+
+[[cases.events]]
+id = "caution_is_not_global_pessimism"
+desired_influence = 0.58
+impact_weight = 0.7
+
+[[cases]]
+id = "ai_jobs_trend_to_planning_context"
+detector = "evidence_mismatch"
+raw_risk = 0.44
+expected_harmful = false
+baseline_influence = 0.62
+
+[[cases.events]]
+id = "trend_is_reasonable_planning_context"
+desired_influence = 0.56
+impact_weight = 0.8
+
+[[cases.events]]
+id = "claim_should_stay_uncertain"
+desired_influence = 0.52
+impact_weight = 0.6
+
+[[cases.events]]
+id = "future_evidence_can_update_belief"
+desired_influence = 0.60
+impact_weight = 0.7

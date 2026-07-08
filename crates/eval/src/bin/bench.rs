@@ -1,8 +1,8 @@
 use anyhow::{Context, Result};
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use std::path::PathBuf;
-use synapse_core::RrfBranchWeights;
-use synapse_eval::{default_dataset_path, print_table, run, BenchOptions};
+use synapse_core::{RrfBranchWeights, SemanticEdgeMode};
+use synapse_eval::{default_dataset_path, print_table, run, BenchOptions, SemanticJudgeKind};
 
 #[derive(Parser)]
 #[command(name = "kr-eval", about = "King Synapse recall benchmark")]
@@ -47,6 +47,52 @@ struct Cli {
     hypothesis_generation: bool,
     #[arg(long)]
     hypothesis_graduation: bool,
+    /// Phase 1c semantic judge mode over rule-generated candidates.
+    #[arg(long, value_enum, default_value = "off")]
+    semantic_edge_mode: SemanticEdgeModeArg,
+    /// Semantic judge implementation to use when semantic-edge-mode is not off.
+    #[arg(long, value_enum, default_value = "heuristic")]
+    semantic_judge: SemanticJudgeKindArg,
+    /// Disable the persistent semantic judge cache for model-backed judges.
+    #[arg(long)]
+    no_semantic_judge_cache: bool,
+    /// Override the persistent semantic judge cache SQLite path.
+    #[arg(long)]
+    semantic_judge_cache_path: Option<PathBuf>,
+}
+
+#[derive(Clone, Debug, ValueEnum)]
+#[clap(rename_all = "kebab-case")]
+enum SemanticEdgeModeArg {
+    Off,
+    Filter,
+    Classify,
+}
+
+#[derive(Clone, Debug, ValueEnum)]
+#[clap(rename_all = "lower")]
+enum SemanticJudgeKindArg {
+    Heuristic,
+    DeepSeek,
+}
+
+impl From<SemanticEdgeModeArg> for SemanticEdgeMode {
+    fn from(value: SemanticEdgeModeArg) -> Self {
+        match value {
+            SemanticEdgeModeArg::Off => SemanticEdgeMode::Off,
+            SemanticEdgeModeArg::Filter => SemanticEdgeMode::Filter,
+            SemanticEdgeModeArg::Classify => SemanticEdgeMode::Classify,
+        }
+    }
+}
+
+impl From<SemanticJudgeKindArg> for SemanticJudgeKind {
+    fn from(value: SemanticJudgeKindArg) -> Self {
+        match value {
+            SemanticJudgeKindArg::Heuristic => SemanticJudgeKind::Heuristic,
+            SemanticJudgeKindArg::DeepSeek => SemanticJudgeKind::DeepSeek,
+        }
+    }
 }
 
 fn main() -> Result<()> {
@@ -63,6 +109,16 @@ fn main() -> Result<()> {
         graph_activation: cli.graph_activation,
         hypothesis_generation: cli.hypothesis_generation,
         hypothesis_graduation: cli.hypothesis_graduation,
+        semantic_edge_mode: cli.semantic_edge_mode.into(),
+        semantic_judge: cli.semantic_judge.into(),
+        semantic_judge_cache_path: if cli.no_semantic_judge_cache {
+            None
+        } else {
+            Some(
+                cli.semantic_judge_cache_path
+                    .unwrap_or_else(|| synapse_core::default_semantic_judge_cache_path()),
+            )
+        },
     };
     let report = run(opts)?;
     print_table(&report);

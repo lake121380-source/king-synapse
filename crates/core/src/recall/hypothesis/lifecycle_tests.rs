@@ -1,13 +1,11 @@
-﻿//! Integration tests for edge hypothesis lifecycle.
+//! Integration tests for edge hypothesis lifecycle.
 //!
 //! Validates: candidate -> observed -> confirmed -> graduation to memory_edges.
 
 #[cfg(test)]
 mod tests {
     use crate::recall::hypothesis::generator::{EdgeHypothesisGenerator, RuleBasedEdgeGenerator};
-    use crate::recall::hypothesis::model::{
-        EdgeHypothesisStatus, RetrievalContext,
-    };
+    use crate::recall::hypothesis::model::{EdgeHypothesisStatus, RetrievalContext};
     use crate::recall::hypothesis::store_ext::HypothesisStore;
     use crate::store::Store;
     use crate::WriteInput;
@@ -63,7 +61,15 @@ mod tests {
         let hit_ids = &ids[0..3];
 
         // Turn 1: context A
-        run_with_context(&mut store, &gen, "query about rust", "ctx_a", "programming", hit_ids, 1000);
+        run_with_context(
+            &mut store,
+            &gen,
+            "query about rust",
+            "ctx_a",
+            "programming",
+            hit_ids,
+            1000,
+        );
 
         // Verify candidate status after first observation
         let candidates = store
@@ -72,10 +78,26 @@ mod tests {
         assert!(!candidates.is_empty());
 
         // Turn 2: different context B
-        run_with_context(&mut store, &gen, "query about databases", "ctx_b", "database", hit_ids, 2000);
+        run_with_context(
+            &mut store,
+            &gen,
+            "query about databases",
+            "ctx_b",
+            "database",
+            hit_ids,
+            2000,
+        );
 
         // Turn 3: different context C — should graduate to confirmed
-        run_with_context(&mut store, &gen, "query about career", "ctx_c", "career", hit_ids, 3000);
+        run_with_context(
+            &mut store,
+            &gen,
+            "query about career",
+            "ctx_c",
+            "career",
+            hit_ids,
+            3000,
+        );
 
         let confirmed = store
             .get_hypotheses_by_status(EdgeHypothesisStatus::Confirmed)
@@ -106,7 +128,15 @@ mod tests {
 
         // 5 observations but all from the SAME context
         for i in 0..5 {
-            run_with_context(&mut store, &gen, "same query", "same_ctx", "same_tag", hit_ids, 1000 + i * 100);
+            run_with_context(
+                &mut store,
+                &gen,
+                "same query",
+                "same_ctx",
+                "same_tag",
+                hit_ids,
+                1000 + i * 100,
+            );
         }
 
         let confirmed = store
@@ -162,11 +192,21 @@ mod tests {
         // 15 queries, each retrieving 3 memories from different clusters.
         // Only memories within the same cluster get co-retrieved.
         let contexts = [
-            ("ctx1", "topic1"), ("ctx2", "topic2"), ("ctx3", "topic3"),
-            ("ctx4", "topic4"), ("ctx5", "topic5"), ("ctx6", "topic6"),
-            ("ctx7", "topic7"), ("ctx8", "topic8"), ("ctx9", "topic9"),
-            ("ctx10", "topic10"), ("ctx11", "topic11"), ("ctx12", "topic12"),
-            ("ctx13", "topic13"), ("ctx14", "topic14"), ("ctx15", "topic15"),
+            ("ctx1", "topic1"),
+            ("ctx2", "topic2"),
+            ("ctx3", "topic3"),
+            ("ctx4", "topic4"),
+            ("ctx5", "topic5"),
+            ("ctx6", "topic6"),
+            ("ctx7", "topic7"),
+            ("ctx8", "topic8"),
+            ("ctx9", "topic9"),
+            ("ctx10", "topic10"),
+            ("ctx11", "topic11"),
+            ("ctx12", "topic12"),
+            ("ctx13", "topic13"),
+            ("ctx14", "topic14"),
+            ("ctx15", "topic15"),
         ];
 
         for (i, (hash, tag)) in contexts.iter().enumerate() {
@@ -192,7 +232,10 @@ mod tests {
         let max_possible = n_memories * (n_memories - 1);
         let density = edge_count as f64 / max_possible as f64 * 100.0;
 
-        println!("edge_count: {}, max_possible: {}, density: {:.1}%", edge_count, max_possible, density);
+        println!(
+            "edge_count: {}, max_possible: {}, density: {:.1}%",
+            edge_count, max_possible, density
+        );
 
         // With clustered co-retrieval, only intra-cluster pairs graduate.
         // 6 clusters x 3 choose 2 = 18 pairs x 2 (bidirectional) = 36 edges max.

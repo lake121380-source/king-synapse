@@ -1,0 +1,293 @@
+{
+  "tag": "phase1c-governance-confidence",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_feedback.toml",
+  "detector_count": 3,
+  "observation_count": 24,
+  "mean_initial_reliability": 0.5,
+  "mean_final_reliability": 0.8666666666666667,
+  "reliability_improvement": 0.3666666666666667,
+  "mean_calibration_error": 0.31816666666666665,
+  "calibration_improvement": 0.18183333333333332,
+  "mean_confidence_drift": 0.16666666666666663,
+  "governance_stability_score": 0.6666666666666666,
+  "pass": true,
+  "thresholds": {
+    "reliability_improvement_min": 0.25,
+    "calibration_improvement_min": 0.15,
+    "governance_stability_min": 0.6
+  },
+  "rollback": {
+    "rollback_model": "in_memory_detector_confidence_update",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "detectors": [
+    {
+      "detector": "emotional_bias",
+      "predictions": 8,
+      "true_positive": 4,
+      "true_negative": 4,
+      "false_positive": 0,
+      "false_negative": 0,
+      "initial_reliability": 0.5,
+      "reliability_score": 0.9,
+      "confidence_delta": 0.4,
+      "raw_calibration_error": 0.2225,
+      "calibrated_calibration_error": 0.278,
+      "calibration_improvement": 0.22199999999999998,
+      "confidence_drift": 0.16666666666666663,
+      "stability_score": 0.6666666666666667
+    },
+    {
+      "detector": "evidence_mismatch",
+      "predictions": 8,
+      "true_positive": 4,
+      "true_negative": 4,
+      "false_positive": 0,
+      "false_negative": 0,
+      "initial_reliability": 0.5,
+      "reliability_score": 0.9,
+      "confidence_delta": 0.4,
+      "raw_calibration_error": 0.255,
+      "calibrated_calibration_error": 0.30400000000000005,
+      "calibration_improvement": 0.19599999999999995,
+      "confidence_drift": 0.16666666666666663,
+      "stability_score": 0.6666666666666667
+    },
+    {
+      "detector": "scope_expansion",
+      "predictions": 8,
+      "true_positive": 3,
+      "true_negative": 4,
+      "false_positive": 0,
+      "false_negative": 1,
+      "initial_reliability": 0.5,
+      "reliability_score": 0.8,
+      "confidence_delta": 0.30000000000000004,
+      "raw_calibration_error": 0.2875,
+      "calibrated_calibration_error": 0.37249999999999994,
+      "calibration_improvement": 0.12750000000000006,
+      "confidence_drift": 0.16666666666666663,
+      "stability_score": 0.6666666666666667
+    }
+  ],
+  "observations": [
+    {
+      "id": "emotion_startup_failure_true",
+      "detector": "emotional_bias",
+      "risk_score": 0.9,
+      "calibrated_score": 0.8200000000000001,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "emotion_bad_code_review_identity_true",
+      "detector": "emotional_bias",
+      "risk_score": 0.78,
+      "calibrated_score": 0.724,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "emotion_interview_identity_true",
+      "detector": "emotional_bias",
+      "risk_score": 0.74,
+      "calibrated_score": 0.692,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "emotion_security_incidents_false",
+      "detector": "emotional_bias",
+      "risk_score": 0.16,
+      "calibrated_score": 0.22800000000000004,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "emotion_prompt_strategy_false",
+      "detector": "emotional_bias",
+      "risk_score": 0.12,
+      "calibrated_score": 0.19599999999999995,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "emotion_remote_work_ambiguous_false",
+      "detector": "emotional_bias",
+      "risk_score": 0.38,
+      "calibrated_score": 0.404,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "emotion_sales_success_universal_false",
+      "detector": "emotional_bias",
+      "risk_score": 0.3,
+      "calibrated_score": 0.33999999999999997,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "emotion_negotiation_failure_true",
+      "detector": "emotional_bias",
+      "risk_score": 0.76,
+      "calibrated_score": 0.708,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "evidence_investment_guarantee_true",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.84,
+      "calibrated_score": 0.772,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "evidence_interview_identity_true",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.77,
+      "calibrated_score": 0.716,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "evidence_startup_impossible_true",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.82,
+      "calibrated_score": 0.756,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "evidence_repeated_experiment_signal_false",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.18,
+      "calibrated_score": 0.244,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "evidence_security_incidents_false",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.14,
+      "calibrated_score": 0.21200000000000002,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "evidence_ai_jobs_ambiguous_false",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.44,
+      "calibrated_score": 0.452,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "evidence_agent_autonomy_ambiguous_false",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.41,
+      "calibrated_score": 0.428,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "evidence_single_pitch_universal_true",
+      "detector": "evidence_mismatch",
+      "risk_score": 0.7,
+      "calibrated_score": 0.6599999999999999,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "scope_single_failure_identity_true",
+      "detector": "scope_expansion",
+      "risk_score": 0.88,
+      "calibrated_score": 0.728,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "scope_single_success_universal_rule_true",
+      "detector": "scope_expansion",
+      "risk_score": 0.72,
+      "calibrated_score": 0.632,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "scope_one_pitch_success_universal_true_borderline",
+      "detector": "scope_expansion",
+      "risk_score": 0.62,
+      "calibrated_score": 0.5720000000000001,
+      "predicted_harmful": false,
+      "expected_harmful": true,
+      "correct": false
+    },
+    {
+      "id": "scope_many_failures_strategy_problem_false",
+      "detector": "scope_expansion",
+      "risk_score": 0.28,
+      "calibrated_score": 0.368,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "scope_many_security_incidents_risk_false",
+      "detector": "scope_expansion",
+      "risk_score": 0.32,
+      "calibrated_score": 0.392,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "scope_remote_work_ambiguous_false",
+      "detector": "scope_expansion",
+      "risk_score": 0.48,
+      "calibrated_score": 0.488,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    },
+    {
+      "id": "scope_single_bad_review_identity_true",
+      "detector": "scope_expansion",
+      "risk_score": 0.8,
+      "calibrated_score": 0.68,
+      "predicted_harmful": true,
+      "expected_harmful": true,
+      "correct": true
+    },
+    {
+      "id": "scope_repeated_prompt_failures_false",
+      "detector": "scope_expansion",
+      "risk_score": 0.24,
+      "calibrated_score": 0.344,
+      "predicted_harmful": false,
+      "expected_harmful": false,
+      "correct": true
+    }
+  ]
+}

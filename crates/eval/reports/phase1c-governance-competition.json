@@ -1,0 +1,1058 @@
+{
+  "tag": "phase1c-governance-competition",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_competition.toml",
+  "scenario_count": 6,
+  "step_count": 21,
+  "baseline_competition_score": 0.6666666666666666,
+  "governed_competition_score": 0.9523809523809523,
+  "competition_gain": 0.2857142857142857,
+  "dominant_transition_accuracy": 1.0,
+  "evidence_response_gain": 0.09714693877551021,
+  "influence_balance_stability": 0.9166666666666666,
+  "suppression_precision": 1.0,
+  "over_suppression_rate": 0.0,
+  "normal_preservation": 1.0,
+  "pass": true,
+  "thresholds": {
+    "governed_competition_score_min": 0.8,
+    "competition_gain_min": 0.2,
+    "dominant_transition_accuracy_min": 0.75,
+    "evidence_response_gain_min": 0.08,
+    "influence_balance_stability_min": 0.8,
+    "suppression_precision_min": 0.85,
+    "over_suppression_max": 0.1,
+    "normal_preservation_min": 0.95
+  },
+  "rollback": {
+    "rollback_model": "competing_influence_counterfactual_only",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "scenarios": [
+    {
+      "id": "failure_avoidance_vs_exploration",
+      "scenario_type": "dominant_shift",
+      "influence_count": 3,
+      "step_count": 4,
+      "baseline_correct_steps": 2,
+      "governed_correct_steps": 4,
+      "baseline_competition_score": 0.5,
+      "governed_competition_score": 1.0,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.1749999999999999,
+      "influence_balance_stability": 1.0,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "new context differs from the old failure",
+          "expected_dominant": "context_assessment",
+          "baseline_dominant": "failure_avoidance",
+          "governed_dominant": "context_assessment",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.21999999999999997,
+          "governed_expected_margin": 0.05999999999999994,
+          "evidence_response_gain": 0.2799999999999999,
+          "influences": [
+            {
+              "id": "adaptive_exploration",
+              "label": "New evidence supports trying with a revised strategy",
+              "harmful": false,
+              "baseline_strength": 0.44000000000000006,
+              "governed_strength": 0.44000000000000006
+            },
+            {
+              "id": "context_assessment",
+              "label": "Current context differs from the failure memory",
+              "harmful": false,
+              "baseline_strength": 0.5,
+              "governed_strength": 0.5
+            },
+            {
+              "id": "failure_avoidance",
+              "label": "Past failure says avoid trying",
+              "harmful": true,
+              "baseline_strength": 0.72,
+              "governed_strength": 0.4237714285714285
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "failure_avoidance",
+              "harmful": true,
+              "risk_signal": 0.78,
+              "suppression_strength": 0.4114285714285715,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "event": "small successful attempt arrives",
+          "expected_dominant": "adaptive_exploration",
+          "baseline_dominant": "failure_avoidance",
+          "governed_dominant": "adaptive_exploration",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.05999999999999994,
+          "governed_expected_margin": 0.09999999999999998,
+          "evidence_response_gain": 0.15999999999999992,
+          "influences": [
+            {
+              "id": "adaptive_exploration",
+              "label": "New evidence supports trying with a revised strategy",
+              "harmful": false,
+              "baseline_strength": 0.66,
+              "governed_strength": 0.66
+            },
+            {
+              "id": "context_assessment",
+              "label": "Current context differs from the failure memory",
+              "harmful": false,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.56
+            },
+            {
+              "id": "failure_avoidance",
+              "label": "Past failure says avoid trying",
+              "harmful": true,
+              "baseline_strength": 0.72,
+              "governed_strength": 0.2784783673469388
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "failure_avoidance",
+              "harmful": true,
+              "risk_signal": 0.7,
+              "suppression_strength": 0.3428571428571428,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "revised strategy produces another positive signal",
+          "expected_dominant": "adaptive_exploration",
+          "baseline_dominant": "adaptive_exploration",
+          "governed_dominant": "adaptive_exploration",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.08000000000000007,
+          "governed_expected_margin": 0.20999999999999996,
+          "evidence_response_gain": 0.1299999999999999,
+          "influences": [
+            {
+              "id": "adaptive_exploration",
+              "label": "New evidence supports trying with a revised strategy",
+              "harmful": false,
+              "baseline_strength": 0.8,
+              "governed_strength": 0.8
+            },
+            {
+              "id": "context_assessment",
+              "label": "Current context differs from the failure memory",
+              "harmful": false,
+              "baseline_strength": 0.5900000000000001,
+              "governed_strength": 0.5900000000000001
+            },
+            {
+              "id": "failure_avoidance",
+              "label": "Past failure says avoid trying",
+              "harmful": true,
+              "baseline_strength": 0.72,
+              "governed_strength": 0.20686964431486884
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "failure_avoidance",
+              "harmful": true,
+              "risk_signal": 0.6,
+              "suppression_strength": 0.2571428571428572,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "event": "future task should be guided by the revised strategy",
+          "expected_dominant": "adaptive_exploration",
+          "baseline_dominant": "adaptive_exploration",
+          "governed_dominant": "adaptive_exploration",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.18000000000000005,
+          "governed_expected_margin": 0.30999999999999994,
+          "evidence_response_gain": 0.1299999999999999,
+          "influences": [
+            {
+              "id": "adaptive_exploration",
+              "label": "New evidence supports trying with a revised strategy",
+              "harmful": false,
+              "baseline_strength": 0.9,
+              "governed_strength": 0.9
+            },
+            {
+              "id": "context_assessment",
+              "label": "Current context differs from the failure memory",
+              "harmful": false,
+              "baseline_strength": 0.5900000000000001,
+              "governed_strength": 0.5900000000000001
+            },
+            {
+              "id": "failure_avoidance",
+              "label": "Past failure says avoid trying",
+              "harmful": true,
+              "baseline_strength": 0.72,
+              "governed_strength": 0.17140627671803418
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "failure_avoidance",
+              "harmful": true,
+              "risk_signal": 0.5,
+              "suppression_strength": 0.17142857142857146,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "investment_overconfidence_vs_base_rate",
+      "scenario_type": "dominant_shift",
+      "influence_count": 3,
+      "step_count": 4,
+      "baseline_correct_steps": 2,
+      "governed_correct_steps": 4,
+      "baseline_competition_score": 0.5,
+      "governed_competition_score": 1.0,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.15968571428571432,
+      "influence_balance_stability": 1.0,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "market regime changes",
+          "expected_dominant": "base_rate_reasoning",
+          "baseline_dominant": "past_win_overconfidence",
+          "governed_dominant": "base_rate_reasoning",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.19999999999999996,
+          "governed_expected_margin": 0.13874285714285722,
+          "evidence_response_gain": 0.3387428571428572,
+          "influences": [
+            {
+              "id": "base_rate_reasoning",
+              "label": "Base-rate reasoning and uncertainty",
+              "harmful": false,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.56
+            },
+            {
+              "id": "past_win_overconfidence",
+              "label": "Past win implies future certainty",
+              "harmful": true,
+              "baseline_strength": 0.76,
+              "governed_strength": 0.42125714285714283
+            },
+            {
+              "id": "risk_management",
+              "label": "Risk management context",
+              "harmful": false,
+              "baseline_strength": 0.42000000000000004,
+              "governed_strength": 0.42000000000000004
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "past_win_overconfidence",
+              "harmful": true,
+              "risk_signal": 0.82,
+              "suppression_strength": 0.44571428571428573,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "event": "loss evidence contradicts certainty",
+          "expected_dominant": "risk_management",
+          "baseline_dominant": "past_win_overconfidence",
+          "governed_dominant": "risk_management",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.07999999999999996,
+          "governed_expected_margin": 0.040000000000000036,
+          "evidence_response_gain": 0.12,
+          "influences": [
+            {
+              "id": "base_rate_reasoning",
+              "label": "Base-rate reasoning and uncertainty",
+              "harmful": false,
+              "baseline_strength": 0.64,
+              "governed_strength": 0.64
+            },
+            {
+              "id": "past_win_overconfidence",
+              "label": "Past win implies future certainty",
+              "harmful": true,
+              "baseline_strength": 0.76,
+              "governed_strength": 0.24071836734693874
+            },
+            {
+              "id": "risk_management",
+              "label": "Risk management context",
+              "harmful": false,
+              "baseline_strength": 0.68,
+              "governed_strength": 0.68
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "past_win_overconfidence",
+              "harmful": true,
+              "risk_signal": 0.8,
+              "suppression_strength": 0.42857142857142855,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "future decision needs probabilistic reasoning",
+          "expected_dominant": "risk_management",
+          "baseline_dominant": "risk_management",
+          "governed_dominant": "risk_management",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.040000000000000036,
+          "governed_expected_margin": 0.16000000000000003,
+          "evidence_response_gain": 0.12,
+          "influences": [
+            {
+              "id": "base_rate_reasoning",
+              "label": "Base-rate reasoning and uncertainty",
+              "harmful": false,
+              "baseline_strength": 0.64,
+              "governed_strength": 0.64
+            },
+            {
+              "id": "past_win_overconfidence",
+              "label": "Past win implies future certainty",
+              "harmful": true,
+              "baseline_strength": 0.76,
+              "governed_strength": 0.1746927580174927
+            },
+            {
+              "id": "risk_management",
+              "label": "Risk management context",
+              "harmful": false,
+              "baseline_strength": 0.8,
+              "governed_strength": 0.8
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "past_win_overconfidence",
+              "harmful": true,
+              "risk_signal": 0.62,
+              "suppression_strength": 0.2742857142857143,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "event": "base rates remain supporting context",
+          "expected_dominant": "risk_management",
+          "baseline_dominant": "risk_management",
+          "governed_dominant": "risk_management",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.10000000000000009,
+          "governed_expected_margin": 0.16000000000000014,
+          "evidence_response_gain": 0.06000000000000005,
+          "influences": [
+            {
+              "id": "base_rate_reasoning",
+              "label": "Base-rate reasoning and uncertainty",
+              "harmful": false,
+              "baseline_strength": 0.7,
+              "governed_strength": 0.7
+            },
+            {
+              "id": "past_win_overconfidence",
+              "label": "Past win implies future certainty",
+              "harmful": true,
+              "baseline_strength": 0.76,
+              "governed_strength": 0.1447454280716368
+            },
+            {
+              "id": "risk_management",
+              "label": "Risk management context",
+              "harmful": false,
+              "baseline_strength": 0.8600000000000001,
+              "governed_strength": 0.8600000000000001
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "past_win_overconfidence",
+              "harmful": true,
+              "risk_signal": 0.5,
+              "suppression_strength": 0.17142857142857146,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pitch_universal_rule_vs_contextual_adaptation",
+      "scenario_type": "dominant_shift",
+      "influence_count": 3,
+      "step_count": 4,
+      "baseline_correct_steps": 2,
+      "governed_correct_steps": 4,
+      "baseline_competition_score": 0.5,
+      "governed_competition_score": 1.0,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.15411428571428573,
+      "influence_balance_stability": 1.0,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "new buyer segment rejects direct pitch",
+          "expected_dominant": "buyer_research",
+          "baseline_dominant": "universal_pitch_rule",
+          "governed_dominant": "buyer_research",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.17000000000000004,
+          "governed_expected_margin": 0.0864571428571429,
+          "evidence_response_gain": 0.25645714285714294,
+          "influences": [
+            {
+              "id": "buyer_research",
+              "label": "Research buyer segment first",
+              "harmful": false,
+              "baseline_strength": 0.51,
+              "governed_strength": 0.51
+            },
+            {
+              "id": "contextual_adaptation",
+              "label": "Adapt pitch to buyer context",
+              "harmful": false,
+              "baseline_strength": 0.41000000000000003,
+              "governed_strength": 0.41000000000000003
+            },
+            {
+              "id": "universal_pitch_rule",
+              "label": "One pitch style always works",
+              "harmful": true,
+              "baseline_strength": 0.68,
+              "governed_strength": 0.4235428571428571
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "universal_pitch_rule",
+              "harmful": true,
+              "risk_signal": 0.74,
+              "suppression_strength": 0.37714285714285717,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "event": "adapted pitch performs better",
+          "expected_dominant": "contextual_adaptation",
+          "baseline_dominant": "universal_pitch_rule",
+          "governed_dominant": "contextual_adaptation",
+          "baseline_correct": false,
+          "governed_correct": true,
+          "baseline_expected_margin": -0.030000000000000027,
+          "governed_expected_margin": 0.08999999999999997,
+          "evidence_response_gain": 0.12,
+          "influences": [
+            {
+              "id": "buyer_research",
+              "label": "Research buyer segment first",
+              "harmful": false,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.56
+            },
+            {
+              "id": "contextual_adaptation",
+              "label": "Adapt pitch to buyer context",
+              "harmful": false,
+              "baseline_strength": 0.65,
+              "governed_strength": 0.65
+            },
+            {
+              "id": "universal_pitch_rule",
+              "label": "One pitch style always works",
+              "harmful": true,
+              "baseline_strength": 0.68,
+              "governed_strength": 0.2783281632653061
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "universal_pitch_rule",
+              "harmful": true,
+              "risk_signal": 0.7,
+              "suppression_strength": 0.3428571428571428,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "old rule works only in a narrow context",
+          "expected_dominant": "contextual_adaptation",
+          "baseline_dominant": "contextual_adaptation",
+          "governed_dominant": "contextual_adaptation",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.08999999999999997,
+          "governed_expected_margin": 0.20999999999999996,
+          "evidence_response_gain": 0.12,
+          "influences": [
+            {
+              "id": "buyer_research",
+              "label": "Research buyer segment first",
+              "harmful": false,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.56
+            },
+            {
+              "id": "contextual_adaptation",
+              "label": "Adapt pitch to buyer context",
+              "harmful": false,
+              "baseline_strength": 0.77,
+              "governed_strength": 0.77
+            },
+            {
+              "id": "universal_pitch_rule",
+              "label": "One pitch style always works",
+              "harmful": true,
+              "baseline_strength": 0.68,
+              "governed_strength": 0.21152940408163265
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "universal_pitch_rule",
+              "harmful": true,
+              "risk_signal": 0.58,
+              "suppression_strength": 0.23999999999999996,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "event": "future sales task should start from adaptation",
+          "expected_dominant": "contextual_adaptation",
+          "baseline_dominant": "contextual_adaptation",
+          "governed_dominant": "contextual_adaptation",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.18999999999999995,
+          "governed_expected_margin": 0.30999999999999994,
+          "evidence_response_gain": 0.12,
+          "influences": [
+            {
+              "id": "buyer_research",
+              "label": "Research buyer segment first",
+              "harmful": false,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.56
+            },
+            {
+              "id": "contextual_adaptation",
+              "label": "Adapt pitch to buyer context",
+              "harmful": false,
+              "baseline_strength": 0.87,
+              "governed_strength": 0.87
+            },
+            {
+              "id": "universal_pitch_rule",
+              "label": "One pitch style always works",
+              "harmful": true,
+              "baseline_strength": 0.68,
+              "governed_strength": 0.17889343888046647
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "universal_pitch_rule",
+              "harmful": true,
+              "risk_signal": 0.48,
+              "suppression_strength": 0.1542857142857143,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security_caution_vs_shipping_speed",
+      "scenario_type": "normal_preservation",
+      "influence_count": 3,
+      "step_count": 3,
+      "baseline_correct_steps": 3,
+      "governed_correct_steps": 3,
+      "baseline_competition_score": 1.0,
+      "governed_competition_score": 1.0,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.0,
+      "influence_balance_stability": 1.0,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "deployment has security-sensitive changes",
+          "expected_dominant": "operational_caution",
+          "baseline_dominant": "operational_caution",
+          "governed_dominant": "operational_caution",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.15999999999999992,
+          "governed_expected_margin": 0.15999999999999992,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "incident_panic",
+              "label": "Incidents mean everything is unsafe",
+              "harmful": true,
+              "baseline_strength": 0.28,
+              "governed_strength": 0.24400000000000002
+            },
+            {
+              "id": "operational_caution",
+              "label": "Past incidents justify deployment caution",
+              "harmful": false,
+              "baseline_strength": 0.6399999999999999,
+              "governed_strength": 0.6399999999999999
+            },
+            {
+              "id": "shipping_speed",
+              "label": "Ship quickly",
+              "harmful": false,
+              "baseline_strength": 0.48,
+              "governed_strength": 0.48
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "incident_panic",
+              "harmful": true,
+              "risk_signal": 0.45,
+              "suppression_strength": 0.1285714285714286,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "event": "checklist prevents repeated issue",
+          "expected_dominant": "operational_caution",
+          "baseline_dominant": "operational_caution",
+          "governed_dominant": "operational_caution",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.19999999999999984,
+          "governed_expected_margin": 0.19999999999999984,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "incident_panic",
+              "label": "Incidents mean everything is unsafe",
+              "harmful": true,
+              "baseline_strength": 0.28,
+              "governed_strength": 0.21472000000000002
+            },
+            {
+              "id": "operational_caution",
+              "label": "Past incidents justify deployment caution",
+              "harmful": false,
+              "baseline_strength": 0.7199999999999999,
+              "governed_strength": 0.7199999999999999
+            },
+            {
+              "id": "shipping_speed",
+              "label": "Ship quickly",
+              "harmful": false,
+              "baseline_strength": 0.52,
+              "governed_strength": 0.52
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "incident_panic",
+              "harmful": true,
+              "risk_signal": 0.44,
+              "suppression_strength": 0.12000000000000002,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "release still moves forward after checks",
+          "expected_dominant": "operational_caution",
+          "baseline_dominant": "operational_caution",
+          "governed_dominant": "operational_caution",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.17999999999999983,
+          "governed_expected_margin": 0.17999999999999983,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "incident_panic",
+              "label": "Incidents mean everything is unsafe",
+              "harmful": true,
+              "baseline_strength": 0.28,
+              "governed_strength": 0.19631542857142859
+            },
+            {
+              "id": "operational_caution",
+              "label": "Past incidents justify deployment caution",
+              "harmful": false,
+              "baseline_strength": 0.7599999999999999,
+              "governed_strength": 0.7599999999999999
+            },
+            {
+              "id": "shipping_speed",
+              "label": "Ship quickly",
+              "harmful": false,
+              "baseline_strength": 0.5800000000000001,
+              "governed_strength": 0.5800000000000001
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "incident_panic",
+              "harmful": true,
+              "risk_signal": 0.4,
+              "suppression_strength": 0.08571428571428574,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_trend_vs_panic",
+      "scenario_type": "normal_ambiguous",
+      "influence_count": 3,
+      "step_count": 3,
+      "baseline_correct_steps": 3,
+      "governed_correct_steps": 3,
+      "baseline_competition_score": 1.0,
+      "governed_competition_score": 1.0,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.026666666666666672,
+      "influence_balance_stability": 1.0,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "trend is plausible but uncertain",
+          "expected_dominant": "trend_context",
+          "baseline_dominant": "trend_context",
+          "governed_dominant": "trend_context",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.019999999999999907,
+          "governed_expected_margin": 0.09999999999999992,
+          "evidence_response_gain": 0.08000000000000002,
+          "influences": [
+            {
+              "id": "panic_interpretation",
+              "label": "Trend implies immediate doom",
+              "harmful": true,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.3680000000000001
+            },
+            {
+              "id": "trend_context",
+              "label": "AI labor trend as planning context",
+              "harmful": false,
+              "baseline_strength": 0.58,
+              "governed_strength": 0.58
+            },
+            {
+              "id": "uncertainty_management",
+              "label": "Keep uncertainty explicit",
+              "harmful": false,
+              "baseline_strength": 0.48000000000000004,
+              "governed_strength": 0.48000000000000004
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "panic_interpretation",
+              "harmful": true,
+              "risk_signal": 0.7,
+              "suppression_strength": 0.3428571428571428,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "event": "new data keeps uncertainty high",
+          "expected_dominant": "uncertainty_management",
+          "baseline_dominant": "uncertainty_management",
+          "governed_dominant": "uncertainty_management",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.040000000000000036,
+          "governed_expected_margin": 0.040000000000000036,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "panic_interpretation",
+              "label": "Trend implies immediate doom",
+              "harmful": true,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.25444571428571433
+            },
+            {
+              "id": "trend_context",
+              "label": "AI labor trend as planning context",
+              "harmful": false,
+              "baseline_strength": 0.62,
+              "governed_strength": 0.62
+            },
+            {
+              "id": "uncertainty_management",
+              "label": "Keep uncertainty explicit",
+              "harmful": false,
+              "baseline_strength": 0.66,
+              "governed_strength": 0.66
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "panic_interpretation",
+              "harmful": true,
+              "risk_signal": 0.66,
+              "suppression_strength": 0.3085714285714286,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "planning should include trend without panic",
+          "expected_dominant": "uncertainty_management",
+          "baseline_dominant": "uncertainty_management",
+          "governed_dominant": "uncertainty_management",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.07999999999999996,
+          "governed_expected_margin": 0.07999999999999996,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "panic_interpretation",
+              "label": "Trend implies immediate doom",
+              "harmful": true,
+              "baseline_strength": 0.56,
+              "governed_strength": 0.1933787428571429
+            },
+            {
+              "id": "trend_context",
+              "label": "AI labor trend as planning context",
+              "harmful": false,
+              "baseline_strength": 0.66,
+              "governed_strength": 0.66
+            },
+            {
+              "id": "uncertainty_management",
+              "label": "Keep uncertainty explicit",
+              "harmful": false,
+              "baseline_strength": 0.74,
+              "governed_strength": 0.74
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "panic_interpretation",
+              "harmful": true,
+              "risk_signal": 0.58,
+              "suppression_strength": 0.23999999999999996,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subthreshold_habit_bias_vs_contextual_choice",
+      "scenario_type": "boundary_subthreshold_bias",
+      "influence_count": 3,
+      "step_count": 3,
+      "baseline_correct_steps": 2,
+      "governed_correct_steps": 2,
+      "baseline_competition_score": 0.6666666666666666,
+      "governed_competition_score": 0.6666666666666666,
+      "dominant_transition_accuracy": 1.0,
+      "evidence_response_gain": 0.0016285714285714237,
+      "influence_balance_stability": 0.5,
+      "suppression_precision": 1.0,
+      "over_suppression_rate": 0.0,
+      "normal_preservation": 1.0,
+      "steps": [
+        {
+          "index": 1,
+          "event": "similar but not identical context arrives",
+          "expected_dominant": "contextual_choice",
+          "baseline_dominant": "old_habit_generalization",
+          "governed_dominant": "old_habit_generalization",
+          "baseline_correct": false,
+          "governed_correct": false,
+          "baseline_expected_margin": -0.07999999999999996,
+          "governed_expected_margin": -0.07999999999999996,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "contextual_choice",
+              "label": "Current context should select the method",
+              "harmful": false,
+              "baseline_strength": 0.49,
+              "governed_strength": 0.49
+            },
+            {
+              "id": "deliberate_experiment",
+              "label": "Run a small experiment before committing",
+              "harmful": false,
+              "baseline_strength": 0.38,
+              "governed_strength": 0.38
+            },
+            {
+              "id": "old_habit_generalization",
+              "label": "A past quick win makes the old habit feel broadly applicable",
+              "harmful": true,
+              "baseline_strength": 0.57,
+              "governed_strength": 0.57
+            }
+          ],
+          "suppressions": []
+        },
+        {
+          "index": 2,
+          "event": "context-specific evidence starts accumulating",
+          "expected_dominant": "contextual_choice",
+          "baseline_dominant": "contextual_choice",
+          "governed_dominant": "contextual_choice",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.030000000000000027,
+          "governed_expected_margin": 0.0348857142857143,
+          "evidence_response_gain": 0.004885714285714271,
+          "influences": [
+            {
+              "id": "contextual_choice",
+              "label": "Current context should select the method",
+              "harmful": false,
+              "baseline_strength": 0.6,
+              "governed_strength": 0.6
+            },
+            {
+              "id": "deliberate_experiment",
+              "label": "Run a small experiment before committing",
+              "harmful": false,
+              "baseline_strength": 0.46,
+              "governed_strength": 0.46
+            },
+            {
+              "id": "old_habit_generalization",
+              "label": "A past quick win makes the old habit feel broadly applicable",
+              "harmful": true,
+              "baseline_strength": 0.57,
+              "governed_strength": 0.5651142857142857
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "old_habit_generalization",
+              "harmful": true,
+              "risk_signal": 0.31,
+              "suppression_strength": 0.008571428571428579,
+              "appropriate": true
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "event": "small experiment becomes the best guide",
+          "expected_dominant": "deliberate_experiment",
+          "baseline_dominant": "deliberate_experiment",
+          "governed_dominant": "deliberate_experiment",
+          "baseline_correct": true,
+          "governed_correct": true,
+          "baseline_expected_margin": 0.030000000000000027,
+          "governed_expected_margin": 0.030000000000000027,
+          "evidence_response_gain": 0.0,
+          "influences": [
+            {
+              "id": "contextual_choice",
+              "label": "Current context should select the method",
+              "harmful": false,
+              "baseline_strength": 0.61,
+              "governed_strength": 0.61
+            },
+            {
+              "id": "deliberate_experiment",
+              "label": "Run a small experiment before committing",
+              "harmful": false,
+              "baseline_strength": 0.64,
+              "governed_strength": 0.64
+            },
+            {
+              "id": "old_habit_generalization",
+              "label": "A past quick win makes the old habit feel broadly applicable",
+              "harmful": true,
+              "baseline_strength": 0.57,
+              "governed_strength": 0.5457389387755102
+            }
+          ],
+          "suppressions": [
+            {
+              "influence": "old_habit_generalization",
+              "harmful": true,
+              "risk_signal": 0.34,
+              "suppression_strength": 0.034285714285714315,
+              "appropriate": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

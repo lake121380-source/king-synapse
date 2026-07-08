@@ -1,4 +1,4 @@
-﻿//! Edge Hypothesis Pool — memory ecology edge lifecycle.
+//! Edge Hypothesis Pool — memory ecology edge lifecycle.
 //!
 //! Design: docs/EDGE_HYPOTHESIS_POOL.md (v0.3 FROZEN)
 //!
@@ -8,10 +8,18 @@
 //! confirmed edges when experience proves them.
 
 pub mod generator;
+pub mod judge;
 pub mod model;
 pub mod store_ext;
 
 pub use generator::{EdgeHypothesisGenerator, RuleBasedEdgeGenerator};
+pub use judge::{
+    default_semantic_judge_cache_path, CachedSemanticJudge, DeepSeekSemanticJudge,
+    EdgeCandidateEvidence, EdgeJudgeInput, EdgeJudgement, EdgeReasonCategory, EdgeSemanticJudge,
+    HeuristicSemanticJudge, JudgedEdgeGeneration, JudgedEdgeGenerator, JudgedEdgeHypothesis,
+    RejectedEdgeCandidate, SemanticEdgeMode, SemanticJudgeCacheStats,
+    SemanticJudgeCacheStatsHandle, SemanticJudgeExecutorConfig,
+};
 pub use model::{
     EdgeEvidence, EdgeHypothesis, EdgeHypothesisStatus, EdgeRelation, EdgeUtilityObservation,
     RetrievalContext,

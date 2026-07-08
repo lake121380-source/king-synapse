@@ -1,13 +1,13 @@
-﻿//! Store extension methods for edge hypothesis management.
+//! Store extension methods for edge hypothesis management.
 //!
 //! These methods implement the lifecycle:
 //!   upsert -> update confidence -> graduate -> decay
 
 use crate::error::Result;
 use crate::recall::hypothesis::model::{
-    CONFIDENCE_FLOOR, CONFIRM_THRESHOLD, DECAY_PER_TURN, EdgeEvidence, EdgeHypothesis,
-    EdgeHypothesisStatus, MIN_DIVERSITY_CONTEXTS, MIN_OBSERVATIONS, REOBSERVATION_BOOST,
-    W_DIVERSITY, W_FREQUENCY, W_UTILITY,
+    EdgeEvidence, EdgeHypothesis, EdgeHypothesisStatus, CONFIDENCE_FLOOR, CONFIRM_THRESHOLD,
+    DECAY_PER_TURN, MIN_DIVERSITY_CONTEXTS, MIN_OBSERVATIONS, REOBSERVATION_BOOST, W_DIVERSITY,
+    W_FREQUENCY, W_SEMANTIC_COHERENCE, W_UTILITY,
 };
 use crate::store::Store;
 use chrono::Utc;
@@ -30,7 +30,8 @@ pub trait HypothesisStore {
     fn get_hypotheses_for(&self, memory_id: &str) -> Result<Vec<EdgeHypothesis>>;
 
     /// Get all hypotheses by status.
-    fn get_hypotheses_by_status(&self, status: EdgeHypothesisStatus) -> Result<Vec<EdgeHypothesis>>;
+    fn get_hypotheses_by_status(&self, status: EdgeHypothesisStatus)
+        -> Result<Vec<EdgeHypothesis>>;
 
     /// Get all evidence for a hypothesis.
     fn get_evidence(&self, hypothesis_id: &str) -> Result<Vec<EdgeEvidence>>;
@@ -51,6 +52,9 @@ pub trait HypothesisStore {
 
     /// Get all distinct relation types currently in memory_edges.
     fn count_edges_by_type(&self) -> Result<Vec<(String, usize)>>;
+
+    /// Highest outgoing degree among active graph edge sources.
+    fn max_memory_edge_out_degree(&self) -> Result<usize>;
 }
 
 impl HypothesisStore for Store {
@@ -65,7 +69,8 @@ impl HypothesisStore for Store {
         let now = Utc::now().timestamp();
 
         // Try to find existing hypothesis
-        let existing: Option<(f32, usize, usize, f32, i64, i64, String)> = self.conn
+        let existing: Option<(f32, usize, usize, f32, i64, i64, String)> = self
+            .conn
             .query_row(
                 "SELECT confidence, observations, distinct_contexts, predictive_utility, \
                  first_seen, last_seen, status \
@@ -86,12 +91,12 @@ impl HypothesisStore for Store {
             .optional()?;
 
         let (confidence, observations, distinct_contexts, first_seen, status) = if let Some((
-            existing_conf,
+            _existing_conf,
             existing_obs,
             existing_div,
             existing_util,
             existing_first,
-            existing_last,
+            _existing_last,
             existing_status,
         )) = existing
         {
@@ -122,28 +127,44 @@ impl HypothesisStore for Store {
             // (like conversation-opening memories that co-retrieve with everything).
             // Formula: freq_score = raw_freq * log(total_contexts / edge_contexts)
             let total_contexts = {
-                let count: i64 = self.conn.query_row(
-                    "SELECT COUNT(DISTINCT query_context_hash) FROM edge_evidence",
-                    [], |row| row.get::<_, i64>(0),
-                ).unwrap_or(1);
+                let count: i64 = self
+                    .conn
+                    .query_row(
+                        "SELECT COUNT(DISTINCT query_context_hash) FROM edge_evidence",
+                        [],
+                        |row| row.get::<_, i64>(0),
+                    )
+                    .unwrap_or(1);
                 count.max(1) as f32
             };
-            let idf = (total_contexts / new_distinct_contexts as f32).ln().max(0.1);
+            let idf = (total_contexts / new_distinct_contexts as f32)
+                .ln()
+                .max(0.1);
             let raw_freq = (new_observations as f32 / 10.0).min(1.0);
             let freq_score = (raw_freq * idf).min(1.0);
             let div_score = (new_distinct_contexts as f32 / MIN_DIVERSITY_CONTEXTS as f32).min(1.0);
             let util_score = existing_util;
+            let semantic_score = if hyp.relation.is_reasoning() {
+                hyp.confidence.clamp(0.0, 1.0)
+            } else {
+                0.0
+            };
             // When utility is not yet tracked (0.0), redistribute its weight
-            // to frequency and diversity so the pool can graduate edges
-            // before the utility tracking loop is implemented.
-            let (wf, wd, wu) = if util_score > 0.0 {
-                (W_FREQUENCY, W_DIVERSITY, W_UTILITY)
+            // to the available quality signals so the pool can graduate edges
+            // before the utility tracking loop is implemented. Reasoning edges
+            // get semantic coherence from the judge; association edges keep the
+            // Phase 1b frequency/diversity path.
+            let (wf, wd, ws, wu) = if util_score > 0.0 {
+                (W_FREQUENCY, W_DIVERSITY, W_SEMANTIC_COHERENCE, W_UTILITY)
+            } else if semantic_score > 0.0 {
+                (0.30, 0.35, 0.35, 0.0)
             } else {
                 // Redistribute: freq gets 0.35, div gets 0.65
-                (0.35, 0.65, 0.0)
+                (0.35, 0.65, 0.0, 0.0)
             };
             let new_confidence = (wf * freq_score
                 + wd * div_score
+                + ws * semantic_score
                 + wu * util_score
                 + confidence_delta)
                 .min(1.0);
@@ -215,13 +236,7 @@ impl HypothesisStore for Store {
                     now,
                 ],
             )?;
-            (
-                hyp.confidence,
-                1,
-                1,
-                now,
-                "candidate".to_string(),
-            )
+            (hyp.confidence, 1, 1, now, "candidate".to_string())
         };
 
         // Add evidence record (use uuid-like suffix for uniqueness within same timestamp)
@@ -244,8 +259,8 @@ impl HypothesisStore for Store {
         )?;
 
         // Return updated hypothesis
-        let status_enum = EdgeHypothesisStatus::from_str(&status)
-            .unwrap_or(EdgeHypothesisStatus::Candidate);
+        let status_enum =
+            EdgeHypothesisStatus::from_str(&status).unwrap_or(EdgeHypothesisStatus::Candidate);
         Ok(EdgeHypothesis {
             id: hyp.id.clone(),
             source: hyp.source.clone(),
@@ -275,7 +290,10 @@ impl HypothesisStore for Store {
         Ok(rows.collect::<std::result::Result<Vec<_>, _>>()?)
     }
 
-    fn get_hypotheses_by_status(&self, status: EdgeHypothesisStatus) -> Result<Vec<EdgeHypothesis>> {
+    fn get_hypotheses_by_status(
+        &self,
+        status: EdgeHypothesisStatus,
+    ) -> Result<Vec<EdgeHypothesis>> {
         let mut stmt = self.conn.prepare(
             "SELECT id, source, target, relation, confidence, observations, \
              distinct_contexts, predictive_utility, first_seen, last_seen, \
@@ -353,7 +371,6 @@ impl HypothesisStore for Store {
     }
 
     fn decay_hypotheses(&mut self) -> Result<usize> {
-        let now = Utc::now().timestamp();
         let tx = self.conn.transaction()?;
 
         // Increment decayed_turns for all non-forgotten, non-confirmed
@@ -393,11 +410,11 @@ impl HypothesisStore for Store {
     }
 
     fn count_memory_edges(&self) -> Result<usize> {
-        let count: i64 = self.conn.query_row(
-            "SELECT COUNT(*) FROM memory_edges",
-            [],
-            |row| row.get::<_, i64>(0),
-        )?;
+        let count: i64 = self
+            .conn
+            .query_row("SELECT COUNT(*) FROM memory_edges", [], |row| {
+                row.get::<_, i64>(0)
+            })?;
         Ok(count as usize)
     }
 
@@ -409,6 +426,18 @@ impl HypothesisStore for Store {
             Ok((row.get::<_, String>(0)?, row.get::<_, usize>(1)?))
         })?;
         Ok(rows.collect::<std::result::Result<Vec<_>, _>>()?)
+    }
+
+    fn max_memory_edge_out_degree(&self) -> Result<usize> {
+        let degree: Option<i64> = self
+            .conn
+            .query_row(
+                "SELECT COUNT(*) AS degree FROM memory_edges GROUP BY source ORDER BY degree DESC LIMIT 1",
+                [],
+                |row| row.get::<_, i64>(0),
+            )
+            .optional()?;
+        Ok(degree.unwrap_or(0) as usize)
     }
 }
 

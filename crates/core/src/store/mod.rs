@@ -448,6 +448,52 @@ impl Store {
         Ok(edges)
     }
 
+    pub fn memory_edges_between(
+        &self,
+        source_ids: &[&str],
+        target_ids: &[&str],
+    ) -> Result<Vec<MemoryEdge>> {
+        if source_ids.is_empty() || target_ids.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        let mut edges = Vec::new();
+        let max_params = 900usize;
+        let chunk_src = (max_params / 2).max(1);
+        for src_chunk in source_ids.chunks(chunk_src) {
+            for tgt_chunk in target_ids.chunks(chunk_src) {
+                let src_placeholders = vec!["?"; src_chunk.len()].join(",");
+                let tgt_placeholders = vec!["?"; tgt_chunk.len()].join(",");
+                let sql = format!(
+                    "SELECT source, target, edge, weight, updated_at FROM memory_edges \
+                     WHERE edge IN ('associates', 'co_activates', 'related', \
+                     'explains', 'supports', 'predicts', 'conflicts_with', \
+                     'resolves', 'replaces') \
+                     AND source IN ({src_ph}) \
+                     AND target IN ({tgt_ph})",
+                    src_ph = src_placeholders,
+                    tgt_ph = tgt_placeholders,
+                );
+                let mut stmt = self.conn.prepare(&sql)?;
+                let params_iter: Vec<&dyn rusqlite::ToSql> = src_chunk
+                    .iter()
+                    .map(|s| s as &dyn rusqlite::ToSql)
+                    .chain(tgt_chunk.iter().map(|s| s as &dyn rusqlite::ToSql))
+                    .collect();
+                let rows = stmt
+                    .query_map(params_iter.as_slice(), row_to_memory_edge)?
+                    .collect::<std::result::Result<Vec<_>, _>>()?;
+                for edge in rows {
+                    if edge.source == edge.target {
+                        continue;
+                    }
+                    edges.push(edge);
+                }
+            }
+        }
+        Ok(edges)
+    }
+
     /// Create bidirectional edges between all memory pairs that share at least
     /// one entity. Edge weight is set to the number of shared entities.
     /// This is idempotent: running twice doubles the weights (additive).
@@ -789,6 +835,15 @@ mod tests {
         assert_eq!(edges.len(), 2);
         assert!(edges.contains(&(source.id.clone(), target.id.clone(), 0.6)));
         assert!(edges.contains(&(target.id.clone(), source.id.clone(), 0.2)));
+
+        let typed_edges = s
+            .memory_edges_between(&[&source.id, &target.id], &[&source.id, &target.id])
+            .unwrap();
+        assert_eq!(typed_edges.len(), 2);
+        assert!(typed_edges.iter().all(|edge| edge.edge == "associates"));
+        assert!(typed_edges
+            .iter()
+            .any(|edge| edge.source == source.id && edge.target == target.id));
         assert!(s
             .edge_weights_between(&[&unrelated.id], &[&source.id, &target.id])
             .unwrap()

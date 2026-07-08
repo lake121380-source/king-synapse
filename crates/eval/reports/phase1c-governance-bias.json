@@ -1,0 +1,397 @@
+{
+  "tag": "phase1c-governance-bias",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_bias.toml",
+  "case_count": 9,
+  "edge_count": 18,
+  "harmful_edge_count": 9,
+  "normal_edge_count": 9,
+  "harmful_edge_detection_rate": 1.0,
+  "suppression_gain": 0.5236401760844445,
+  "over_suppression_rate": 0.0,
+  "normal_recall_preservation": 1.0,
+  "recovery_score": 0.9552329792755204,
+  "pass": true,
+  "thresholds": {
+    "detection_min": 0.7,
+    "normal_recall_preservation_min": 0.95,
+    "over_suppression_max": 0.05,
+    "recovery_min": 0.5
+  },
+  "rollback": {
+    "rollback_model": "in_memory_positive_control_simulation",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "cases": [
+    {
+      "id": "false_causality_investment_001",
+      "issue": "false_causality",
+      "severity": 0.91,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.53927985,
+      "recovery_score": 0.96897745,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "investment_success_to_guarantee",
+          "source": "investment_x_success",
+          "target": "future_investment_guarantee",
+          "label": "harmful",
+          "expected_issue": "false_causality",
+          "risk_score": 0.7185,
+          "detected_harmful": true,
+          "baseline_influence": 0.874,
+          "governed_influence": 0.33472014999999994,
+          "suppression_gain": 0.53927985,
+          "recovered_confidence": 0.434488725,
+          "recovery_score": 0.96897745
+        },
+        {
+          "id": "investment_success_to_review",
+          "source": "investment_x_success",
+          "target": "review_risk_model",
+          "label": "normal",
+          "expected_issue": "false_causality",
+          "risk_score": 0.18500000000000003,
+          "detected_harmful": false,
+          "baseline_influence": 0.5616,
+          "governed_influence": 0.5616,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "interview_identity_generalization_001",
+      "issue": "over_generalization",
+      "severity": 0.88,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.570528495,
+      "recovery_score": 0.9611229647058823,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "single_failure_to_identity_claim",
+          "source": "interview_failed_once",
+          "target": "cannot_pass_interviews",
+          "label": "harmful",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.8179,
+          "detected_harmful": true,
+          "baseline_influence": 0.8370000000000001,
+          "governed_influence": 0.26647150500000005,
+          "suppression_gain": 0.570528495,
+          "recovered_confidence": 0.400172712,
+          "recovery_score": 0.9611229647058823
+        },
+        {
+          "id": "single_failure_to_practice",
+          "source": "interview_failed_once",
+          "target": "practice_interview_answers",
+          "label": "normal",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.200768,
+          "detected_harmful": false,
+          "baseline_influence": 0.6080000000000001,
+          "governed_influence": 0.6080000000000001,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "startup_emotion_pollution_001",
+      "issue": "emotional_contamination",
+      "severity": 0.93,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.6322158,
+      "recovery_score": 0.96563,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "startup_failure_to_impossible",
+          "source": "startup_failed",
+          "target": "entrepreneurship_impossible",
+          "label": "harmful",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.87,
+          "detected_harmful": true,
+          "baseline_influence": 0.8835999999999999,
+          "governed_influence": 0.25138419999999995,
+          "suppression_gain": 0.6322158,
+          "recovered_confidence": 0.3814402,
+          "recovery_score": 0.96563
+        },
+        {
+          "id": "startup_failure_to_cashflow_review",
+          "source": "startup_failed",
+          "target": "improve_cashflow_review",
+          "label": "normal",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.20056000000000002,
+          "detected_harmful": false,
+          "baseline_influence": 0.6396,
+          "governed_influence": 0.6396,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "tool_failure_scope_expansion_001",
+      "issue": "over_generalization",
+      "severity": 0.84,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.49209692400000005,
+      "recovery_score": 0.9582463170212766,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "rust_failure_to_global_failure",
+          "source": "rust_project_failed",
+          "target": "all_rust_projects_fail",
+          "label": "harmful",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.7251299999999999,
+          "detected_harmful": true,
+          "baseline_influence": 0.792,
+          "governed_influence": 0.299903076,
+          "suppression_gain": 0.49209692400000005,
+          "recovered_confidence": 0.410375769,
+          "recovery_score": 0.9582463170212766
+        },
+        {
+          "id": "rust_failure_to_study_patterns",
+          "source": "rust_project_failed",
+          "target": "study_borrow_checker",
+          "label": "normal",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.17694,
+          "detected_harmful": false,
+          "baseline_influence": 0.5772,
+          "governed_influence": 0.5772,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "habit_failure_identity_claim_001",
+      "issue": "over_generalization",
+      "severity": 0.82,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.4788181666,
+      "recovery_score": 0.9430585013333332,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "missed_gym_to_identity_claim",
+          "source": "missed_gym_week",
+          "target": "cannot_keep_habits",
+          "label": "harmful",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.73166,
+          "detected_harmful": true,
+          "baseline_influence": 0.7654,
+          "governed_influence": 0.2865818334,
+          "suppression_gain": 0.4788181666,
+          "recovered_confidence": 0.4143763256,
+          "recovery_score": 0.9430585013333332
+        },
+        {
+          "id": "missed_gym_to_smaller_target",
+          "source": "missed_gym_week",
+          "target": "reduce_habit_scope",
+          "label": "normal",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.17872000000000002,
+          "detected_harmful": false,
+          "baseline_influence": 0.5319999999999999,
+          "governed_influence": 0.5319999999999999,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "negotiation_failure_future_claim_001",
+      "issue": "emotional_contamination",
+      "severity": 0.86,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.5266309230000001,
+      "recovery_score": 0.95787084,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "negotiation_failure_to_future_failure",
+          "source": "negotiation_failed",
+          "target": "future_negotiations_fail",
+          "label": "harmful",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.7926,
+          "detected_harmful": true,
+          "baseline_influence": 0.7917000000000001,
+          "governed_influence": 0.265069077,
+          "suppression_gain": 0.5266309230000001,
+          "recovered_confidence": 0.38893542,
+          "recovery_score": 0.95787084
+        },
+        {
+          "id": "negotiation_failure_to_fallback_terms",
+          "source": "negotiation_failed",
+          "target": "prepare_fallback_terms",
+          "label": "normal",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.18591600000000003,
+          "detected_harmful": false,
+          "baseline_influence": 0.5767,
+          "governed_influence": 0.5767,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "model_eval_failure_global_distrust_001",
+      "issue": "false_causality",
+      "severity": 0.87,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.5147531946400001,
+      "recovery_score": 0.953679592,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "eval_failure_to_global_distrust",
+          "source": "memory_eval_failed",
+          "target": "all_memory_graphs_unreliable",
+          "label": "harmful",
+          "expected_issue": "false_causality",
+          "risk_score": 0.7364120000000001,
+          "detected_harmful": true,
+          "baseline_influence": 0.8188000000000001,
+          "governed_influence": 0.30404680536,
+          "suppression_gain": 0.5147531946400001,
+          "recovered_confidence": 0.43869261232,
+          "recovery_score": 0.953679592
+        },
+        {
+          "id": "eval_failure_to_harness_inspection",
+          "source": "memory_eval_failed",
+          "target": "inspect_eval_harness",
+          "label": "normal",
+          "expected_issue": "false_causality",
+          "risk_score": 0.19507000000000002,
+          "detected_harmful": false,
+          "baseline_influence": 0.6075,
+          "governed_influence": 0.6075,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "single_success_universal_rule_001",
+      "issue": "over_generalization",
+      "severity": 0.85,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.47931835952000007,
+      "recovery_score": 0.9500391128636364,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "single_pitch_success_to_universal_rule",
+          "source": "one_sales_pitch_succeeded",
+          "target": "direct_pitch_always_wins",
+          "label": "harmful",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.690076,
+          "detected_harmful": true,
+          "baseline_influence": 0.8008000000000001,
+          "governed_influence": 0.32148164048,
+          "suppression_gain": 0.47931835952000007,
+          "recovered_confidence": 0.44801720965999997,
+          "recovery_score": 0.9500391128636364
+        },
+        {
+          "id": "single_pitch_success_to_adaptation",
+          "source": "one_sales_pitch_succeeded",
+          "target": "adapt_pitch_to_context",
+          "label": "normal",
+          "expected_issue": "over_generalization",
+          "risk_score": 0.17916400000000002,
+          "detected_harmful": false,
+          "baseline_influence": 0.5688,
+          "governed_influence": 0.5688,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    },
+    {
+      "id": "writing_rejection_creative_identity_001",
+      "issue": "emotional_contamination",
+      "severity": 0.83,
+      "harmful_edges": 1,
+      "detected_harmful_edges": 1,
+      "false_suppressed_normal_edges": 0,
+      "suppression_gain": 0.47911987199999995,
+      "recovery_score": 0.9384720355555556,
+      "normal_recall_preservation": 1.0,
+      "edges": [
+        {
+          "id": "article_rejection_to_identity_claim",
+          "source": "article_rejected",
+          "target": "cannot_write_well",
+          "label": "harmful",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.7664,
+          "detected_harmful": true,
+          "baseline_influence": 0.7392,
+          "governed_influence": 0.260080128,
+          "suppression_gain": 0.47911987199999995,
+          "recovered_confidence": 0.402312416,
+          "recovery_score": 0.9384720355555556
+        },
+        {
+          "id": "article_rejection_to_revision",
+          "source": "article_rejected",
+          "target": "revise_article_outline",
+          "label": "normal",
+          "expected_issue": "emotional_contamination",
+          "risk_score": 0.1739,
+          "detected_harmful": false,
+          "baseline_influence": 0.5389999999999999,
+          "governed_influence": 0.5389999999999999,
+          "suppression_gain": 0.0,
+          "recovered_confidence": null,
+          "recovery_score": null
+        }
+      ]
+    }
+  ]
+}

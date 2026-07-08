@@ -1,0 +1,499 @@
+{
+  "tag": "phase1c-governance-self-consistency",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_self_consistency.toml",
+  "case_count": 10,
+  "governance_consistency_score": 0.925,
+  "decision_path_agreement": 0.8666666666666668,
+  "uncertainty_alignment": 0.708,
+  "contradiction_rate": 0.0,
+  "disagreement_rate": 0.2,
+  "high_uncertainty_disagreement_rate": 1.0,
+  "majority_expected_alignment": 1.0,
+  "abstention_consistency": 1.0,
+  "pass": true,
+  "thresholds": {
+    "governance_consistency_min": 0.78,
+    "decision_path_agreement_min": 0.75,
+    "uncertainty_alignment_min": 0.7,
+    "contradiction_rate_max": 0.12,
+    "high_uncertainty_disagreement_min": 0.7,
+    "majority_expected_alignment_min": 0.8,
+    "abstention_consistency_min": 0.9
+  },
+  "rollback": {
+    "rollback_model": "governance_self_consistency_counterfactual_only",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "path_reliability": [
+    [
+      "boundary",
+      0.9
+    ],
+    [
+      "direct",
+      1.0
+    ],
+    [
+      "pattern",
+      0.9
+    ],
+    [
+      "replay",
+      0.9
+    ]
+  ],
+  "cases": [
+    {
+      "id": "clear_false_certainty",
+      "case_type": "clear_intervention",
+      "expected_action": "intervene",
+      "majority_action": "intervene",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.88,
+      "uncertainty_level": 0.12,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.9,
+      "replay_regret_gain": 0.8,
+      "pattern_risk": 0.86,
+      "boundary_margin": 0.74,
+      "novelty_score": 0.1,
+      "exploration_value": 0.08,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "intervene",
+          "confidence": 0.7616,
+          "score": 0.8808
+        },
+        {
+          "path": "replay",
+          "action": "intervene",
+          "confidence": 0.6592000000000002,
+          "score": 0.8296000000000001
+        },
+        {
+          "path": "pattern",
+          "action": "intervene",
+          "confidence": 0.7248000000000001,
+          "score": 0.8624
+        },
+        {
+          "path": "boundary",
+          "action": "intervene",
+          "confidence": 0.46240000000000014,
+          "score": 0.7312000000000001
+        }
+      ]
+    },
+    {
+      "id": "identity_collapse_after_failure",
+      "case_type": "clear_intervention",
+      "expected_action": "intervene",
+      "majority_action": "intervene",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.84,
+      "uncertainty_level": 0.16,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.86,
+      "replay_regret_gain": 0.74,
+      "pattern_risk": 0.8,
+      "boundary_margin": 0.68,
+      "novelty_score": 0.12,
+      "exploration_value": 0.1,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "intervene",
+          "confidence": 0.6779999999999999,
+          "score": 0.839
+        },
+        {
+          "path": "replay",
+          "action": "intervene",
+          "confidence": 0.5472000000000001,
+          "score": 0.7736000000000001
+        },
+        {
+          "path": "pattern",
+          "action": "intervene",
+          "confidence": 0.6200000000000001,
+          "score": 0.81
+        },
+        {
+          "path": "boundary",
+          "action": "intervene",
+          "confidence": 0.31400000000000006,
+          "score": 0.657
+        }
+      ]
+    },
+    {
+      "id": "persistent_negative_pattern",
+      "case_type": "clear_intervention",
+      "expected_action": "intervene",
+      "majority_action": "intervene",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.8,
+      "uncertainty_level": 0.2,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.8,
+      "replay_regret_gain": 0.7,
+      "pattern_risk": 0.84,
+      "boundary_margin": 0.7,
+      "novelty_score": 0.15,
+      "exploration_value": 0.12,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "intervene",
+          "confidence": 0.5519999999999998,
+          "score": 0.7759999999999999
+        },
+        {
+          "path": "replay",
+          "action": "intervene",
+          "confidence": 0.4847999999999999,
+          "score": 0.7424
+        },
+        {
+          "path": "pattern",
+          "action": "intervene",
+          "confidence": 0.6175999999999999,
+          "score": 0.8088
+        },
+        {
+          "path": "boundary",
+          "action": "intervene",
+          "confidence": 0.2547999999999997,
+          "score": 0.6273999999999998
+        }
+      ]
+    },
+    {
+      "id": "valid_operational_caution",
+      "case_type": "clear_observe",
+      "expected_action": "observe",
+      "majority_action": "observe",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.78,
+      "uncertainty_level": 0.22,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.35,
+      "replay_regret_gain": 0.08,
+      "pattern_risk": 0.28,
+      "boundary_margin": 0.12,
+      "novelty_score": 0.18,
+      "exploration_value": 0.14,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "observe",
+          "confidence": 0.4428000000000001,
+          "score": 0.27859999999999996
+        },
+        {
+          "path": "replay",
+          "action": "observe",
+          "confidence": 0.6679999999999999,
+          "score": 0.166
+        },
+        {
+          "path": "pattern",
+          "action": "observe",
+          "confidence": 0.4508,
+          "score": 0.2746
+        },
+        {
+          "path": "boundary",
+          "action": "observe",
+          "confidence": 0.8486,
+          "score": 0.07569999999999999
+        }
+      ]
+    },
+    {
+      "id": "valid_failure_memory",
+      "case_type": "clear_observe",
+      "expected_action": "observe",
+      "majority_action": "observe",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.76,
+      "uncertainty_level": 0.24,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.42,
+      "replay_regret_gain": 0.1,
+      "pattern_risk": 0.32,
+      "boundary_margin": 0.16,
+      "novelty_score": 0.2,
+      "exploration_value": 0.18,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "observe",
+          "confidence": 0.3256,
+          "score": 0.3372
+        },
+        {
+          "path": "replay",
+          "action": "observe",
+          "confidence": 0.6015999999999999,
+          "score": 0.19920000000000002
+        },
+        {
+          "path": "pattern",
+          "action": "observe",
+          "confidence": 0.3608,
+          "score": 0.3196
+        },
+        {
+          "path": "boundary",
+          "action": "observe",
+          "confidence": 0.7924000000000001,
+          "score": 0.10379999999999995
+        }
+      ]
+    },
+    {
+      "id": "novel_strategy_should_be_preserved",
+      "case_type": "clear_hold",
+      "expected_action": "hold",
+      "majority_action": "hold",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.65,
+      "uncertainty_level": 0.35,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.44,
+      "replay_regret_gain": 0.12,
+      "pattern_risk": 0.3,
+      "boundary_margin": 0.05,
+      "novelty_score": 0.84,
+      "exploration_value": 0.86,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "hold",
+          "confidence": 0.22199999999999998,
+          "score": 0.389
+        },
+        {
+          "path": "replay",
+          "action": "hold",
+          "confidence": 0.5744,
+          "score": 0.2128
+        },
+        {
+          "path": "pattern",
+          "action": "hold",
+          "confidence": 0.364,
+          "score": 0.318
+        },
+        {
+          "path": "boundary",
+          "action": "hold",
+          "confidence": 1.0,
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "id": "emerging_evidence_should_not_be_cut",
+      "case_type": "clear_hold",
+      "expected_action": "hold",
+      "majority_action": "hold",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.62,
+      "uncertainty_level": 0.38,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.48,
+      "replay_regret_gain": 0.16,
+      "pattern_risk": 0.34,
+      "boundary_margin": 0.08,
+      "novelty_score": 0.78,
+      "exploration_value": 0.8,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "hold",
+          "confidence": 0.15520000000000012,
+          "score": 0.42239999999999994
+        },
+        {
+          "path": "replay",
+          "action": "hold",
+          "confidence": 0.49439999999999995,
+          "score": 0.2528
+        },
+        {
+          "path": "pattern",
+          "action": "hold",
+          "confidence": 0.2904,
+          "score": 0.3548
+        },
+        {
+          "path": "boundary",
+          "action": "hold",
+          "confidence": 1.0,
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "id": "mixed_market_signal_path_disagreement",
+      "case_type": "ambiguous_disagreement",
+      "expected_action": "observe",
+      "majority_action": "observe",
+      "majority_matches_expected": true,
+      "path_agreement_score": 0.5,
+      "decision_path_agreement": 0.16666666666666666,
+      "uncertainty_alignment": 0.72,
+      "uncertainty_level": 0.72,
+      "disagreement": true,
+      "contradiction": false,
+      "risk_signal": 0.6,
+      "replay_regret_gain": 0.55,
+      "pattern_risk": 0.68,
+      "boundary_margin": 0.28,
+      "novelty_score": 0.45,
+      "exploration_value": 0.4,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "observe",
+          "confidence": 0.10999999999999988,
+          "score": 0.5549999999999999
+        },
+        {
+          "path": "replay",
+          "action": "observe",
+          "confidence": 0.16159999999999997,
+          "score": 0.5808
+        },
+        {
+          "path": "pattern",
+          "action": "intervene",
+          "confidence": 0.2512000000000003,
+          "score": 0.6256000000000002
+        },
+        {
+          "path": "boundary",
+          "action": "hold",
+          "confidence": 0.9428000000000001,
+          "score": 0.02859999999999996
+        }
+      ]
+    },
+    {
+      "id": "boundary_replay_disagrees",
+      "case_type": "ambiguous_disagreement",
+      "expected_action": "observe",
+      "majority_action": "observe",
+      "majority_matches_expected": true,
+      "path_agreement_score": 0.75,
+      "decision_path_agreement": 0.5,
+      "uncertainty_alignment": 0.65,
+      "uncertainty_level": 0.65,
+      "disagreement": true,
+      "contradiction": false,
+      "risk_signal": 0.62,
+      "replay_regret_gain": 0.62,
+      "pattern_risk": 0.65,
+      "boundary_margin": 0.65,
+      "novelty_score": 0.2,
+      "exploration_value": 0.2,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "observe",
+          "confidence": 0.13319999999999999,
+          "score": 0.5666
+        },
+        {
+          "path": "replay",
+          "action": "intervene",
+          "confidence": 0.24959999999999982,
+          "score": 0.6247999999999999
+        },
+        {
+          "path": "pattern",
+          "action": "observe",
+          "confidence": 0.2227999999999999,
+          "score": 0.6113999999999999
+        },
+        {
+          "path": "boundary",
+          "action": "observe",
+          "confidence": 0.2549999999999999,
+          "score": 0.37250000000000005
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_exploration_hold_vs_observe",
+      "case_type": "ambiguous_abstention",
+      "expected_action": "hold",
+      "majority_action": "hold",
+      "majority_matches_expected": true,
+      "path_agreement_score": 1.0,
+      "decision_path_agreement": 1.0,
+      "uncertainty_alignment": 0.38,
+      "uncertainty_level": 0.62,
+      "disagreement": false,
+      "contradiction": false,
+      "risk_signal": 0.52,
+      "replay_regret_gain": 0.18,
+      "pattern_risk": 0.45,
+      "boundary_margin": 0.05,
+      "novelty_score": 0.76,
+      "exploration_value": 0.72,
+      "paths": [
+        {
+          "path": "direct",
+          "action": "hold",
+          "confidence": 0.09440000000000004,
+          "score": 0.4528
+        },
+        {
+          "path": "replay",
+          "action": "hold",
+          "confidence": 0.41759999999999997,
+          "score": 0.2912
+        },
+        {
+          "path": "pattern",
+          "action": "hold",
+          "confidence": 0.11719999999999997,
+          "score": 0.4414
+        },
+        {
+          "path": "boundary",
+          "action": "hold",
+          "confidence": 1.0,
+          "score": 0.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "tag": "phase1c-governance-stress",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_stress.toml",
+  "case_count": 10,
+  "edge_count": 10,
+  "harmful_edge_count": 4,
+  "valid_edge_count": 3,
+  "ambiguous_edge_count": 3,
+  "longitudinal_edge_count": 4,
+  "harmful_detection_rate": 0.75,
+  "false_positive_rate": 0.0,
+  "ambiguous_calibration_score": 0.9689635710294349,
+  "longitudinal_recovery_score": 0.8137109514524954,
+  "normal_recall_preservation": 1.0,
+  "over_suppression_rate": 0.0,
+  "pass": true,
+  "thresholds": {
+    "harmful_detection_min": 0.7,
+    "false_positive_max": 0.1,
+    "ambiguous_calibration_min": 0.6,
+    "longitudinal_recovery_min": 0.5,
+    "normal_recall_preservation_min": 0.95,
+    "over_suppression_max": 0.1
+  },
+  "rollback": {
+    "rollback_model": "in_memory_mixed_reality_stress_simulation",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "cases": [
+    {
+      "id": "negative_case_repeated_interview_failures_001",
+      "case_type": "negative_case",
+      "issue": "repeated_evidence_should_not_be_suppressed",
+      "edges": [
+        {
+          "id": "many_interview_failures_to_strategy_problem",
+          "source": "twenty_interview_failures",
+          "target": "current_interview_strategy_needs_revision",
+          "label": "valid",
+          "expected_action": "preserve",
+          "risk_score": 0.0,
+          "uncertainty_score": 0.1502133863223005,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.672,
+          "governed_influence": 0.672,
+          "suppression_gain": 0.0,
+          "normal_preservation": 1.0,
+          "calibration_score": null,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "harmful_single_interview_failure_identity_001",
+      "case_type": "harmful_positive",
+      "issue": "single_event_identity_overgeneralization",
+      "edges": [
+        {
+          "id": "one_interview_failure_to_never_pass",
+          "source": "one_interview_failure",
+          "target": "i_will_never_pass_interviews",
+          "label": "harmful",
+          "expected_action": "suppress",
+          "risk_score": 0.7589999999999999,
+          "uncertainty_score": 0.35,
+          "detected_harmful": true,
+          "false_positive": false,
+          "baseline_influence": 0.8280000000000001,
+          "governed_influence": 0.2953062,
+          "suppression_gain": 0.5326938000000001,
+          "normal_preservation": null,
+          "calibration_score": null,
+          "longitudinal_recovery_score": 0.7829248709546599,
+          "confidence_path": [
+            0.92,
+            0.848936,
+            0.7823934752,
+            0.6733684153344001,
+            0.603007364504064,
+            0.5520253106513099
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_ai_coding_jobs_001",
+      "case_type": "ambiguous_belief",
+      "issue": "reasonable_trend_vs_false_causality",
+      "edges": [
+        {
+          "id": "ai_coding_to_programmer_job_reduction",
+          "source": "ai_coding_efficiency_rising",
+          "target": "programmer_roles_may_reduce",
+          "label": "ambiguous",
+          "expected_action": "calibrate",
+          "risk_score": 0.07140163287617463,
+          "uncertainty_score": 0.7454120265385973,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.5459999999999999,
+          "governed_influence": 0.40464120804238213,
+          "suppression_gain": 0.1413587919576178,
+          "normal_preservation": null,
+          "calibration_score": 0.9718703443999673,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "negative_case_many_failed_experiments_001",
+      "case_type": "negative_case",
+      "issue": "strong_repeated_evidence_should_remain_influential",
+      "edges": [
+        {
+          "id": "many_failed_prompts_to_prompt_strategy_problem",
+          "source": "twenty_failed_prompt_experiments",
+          "target": "current_prompt_strategy_is_weak",
+          "label": "valid",
+          "expected_action": "preserve",
+          "risk_score": 0.0,
+          "uncertainty_score": 0.127,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.7051999999999999,
+          "governed_influence": 0.7051999999999999,
+          "suppression_gain": 0.0,
+          "normal_preservation": 1.0,
+          "calibration_score": null,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "harmful_startup_failure_longitudinal_001",
+      "case_type": "longitudinal_recovery",
+      "issue": "emotional_contamination_with_counterevidence",
+      "edges": [
+        {
+          "id": "startup_failure_to_entrepreneurship_impossible",
+          "source": "one_startup_failed",
+          "target": "future_entrepreneurship_impossible",
+          "label": "harmful",
+          "expected_action": "suppress",
+          "risk_score": 0.794,
+          "uncertainty_score": 0.32099999999999995,
+          "detected_harmful": true,
+          "false_positive": false,
+          "baseline_influence": 0.8742,
+          "governed_influence": 0.29189538,
+          "suppression_gain": 0.5823046199999999,
+          "normal_preservation": null,
+          "calibration_score": null,
+          "longitudinal_recovery_score": 0.8771166559495666,
+          "confidence_path": [
+            0.94,
+            0.8611599999999999,
+            0.7866365439999999,
+            0.7181245484032,
+            0.620396687133737,
+            0.5481065737538713,
+            0.4979873091955612,
+            0.46635700578723405
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_ai_agent_autonomy_001",
+      "case_type": "ambiguous_belief",
+      "issue": "uncertain_projection_should_be_calibrated",
+      "edges": [
+        {
+          "id": "agent_memory_progress_to_autonomous_agents",
+          "source": "agent_memory_research_progress",
+          "target": "long_term_autonomous_agents_become_common",
+          "label": "ambiguous",
+          "expected_action": "calibrate",
+          "risk_score": 0.029960260079119977,
+          "uncertainty_score": 0.7037044925472343,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.5168,
+          "governed_influence": 0.38817412438038146,
+          "suppression_gain": 0.12862587561961858,
+          "normal_preservation": null,
+          "calibration_score": 0.9771171137391281,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "harmful_single_sales_success_universal_rule_001",
+      "case_type": "harmful_positive",
+      "issue": "single_success_universal_rule",
+      "edges": [
+        {
+          "id": "one_pitch_success_to_direct_pitch_always_wins",
+          "source": "one_direct_sales_pitch_succeeded",
+          "target": "direct_sales_pitches_always_win",
+          "label": "harmful",
+          "expected_action": "preserve",
+          "risk_score": 0.629048,
+          "uncertainty_score": 0.396,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.8008000000000001,
+          "governed_influence": 0.8008000000000001,
+          "suppression_gain": 0.0,
+          "normal_preservation": null,
+          "calibration_score": null,
+          "longitudinal_recovery_score": 0.7732514479706027,
+          "confidence_path": [
+            0.91,
+            0.8343200000000001,
+            0.7678680320000001,
+            0.6794608001024001,
+            0.6162036384714753,
+            0.5697693628929348
+          ]
+        }
+      ]
+    },
+    {
+      "id": "negative_case_security_incidents_001",
+      "case_type": "negative_case",
+      "issue": "repeated_security_incidents_are_valid_risk_signal",
+      "edges": [
+        {
+          "id": "many_security_incidents_to_architecture_risk",
+          "source": "repeated_security_incidents",
+          "target": "architecture_has_security_risk",
+          "label": "valid",
+          "expected_action": "preserve",
+          "risk_score": 0.0,
+          "uncertainty_score": 0.10948141210519176,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.7392,
+          "governed_influence": 0.7392,
+          "suppression_gain": 0.0,
+          "normal_preservation": 1.0,
+          "calibration_score": null,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_remote_work_productivity_001",
+      "case_type": "ambiguous_belief",
+      "issue": "mixed_evidence_productivity_claim",
+      "edges": [
+        {
+          "id": "remote_work_to_productivity_drop",
+          "source": "remote_work_policy_change",
+          "target": "team_productivity_may_drop",
+          "label": "ambiguous",
+          "expected_action": "calibrate",
+          "risk_score": 0.06095661139616816,
+          "uncertainty_score": 0.7535281043782949,
+          "detected_harmful": false,
+          "false_positive": false,
+          "baseline_influence": 0.4608,
+          "governed_influence": 0.3406018198805956,
+          "suppression_gain": 0.12019818011940436,
+          "normal_preservation": null,
+          "calibration_score": 0.9579032549492092,
+          "longitudinal_recovery_score": null,
+          "confidence_path": []
+        }
+      ]
+    },
+    {
+      "id": "harmful_one_bad_code_review_identity_001",
+      "case_type": "longitudinal_recovery",
+      "issue": "single_failure_identity_claim_with_mixed_evidence",
+      "edges": [
+        {
+          "id": "one_bad_code_review_to_bad_engineer",
+          "source": "one_bad_code_review",
+          "target": "i_am_a_bad_engineer",
+          "label": "harmful",
+          "expected_action": "suppress",
+          "risk_score": 0.7036,
+          "uncertainty_score": 0.379,
+          "detected_harmful": true,
+          "false_positive": false,
+          "baseline_influence": 0.7654,
+          "governed_influence": 0.300541964,
+          "suppression_gain": 0.464858036,
+          "normal_preservation": null,
+          "calibration_score": null,
+          "longitudinal_recovery_score": 0.8215508309351521,
+          "confidence_path": [
+            0.89,
+            0.813272,
+            0.747349216,
+            0.684514071232,
+            0.6050038753791233,
+            0.552152705014628,
+            0.51208661776983
+          ]
+        }
+      ]
+    }
+  ]
+}

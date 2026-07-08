@@ -1,0 +1,451 @@
+[[scenarios]]
+id = "failure_avoidance_vs_exploration"
+scenario_type = "dominant_shift"
+
+[[scenarios.influences]]
+id = "failure_avoidance"
+label = "Past failure says avoid trying"
+initial_strength = 0.72
+harmful = true
+
+[[scenarios.influences]]
+id = "adaptive_exploration"
+label = "New evidence supports trying with a revised strategy"
+initial_strength = 0.34
+harmful = false
+
+[[scenarios.influences]]
+id = "context_assessment"
+label = "Current context differs from the failure memory"
+initial_strength = 0.30
+harmful = false
+
+[[scenarios.steps]]
+event = "new context differs from the old failure"
+expected_dominant = "context_assessment"
+
+[[scenarios.steps.signals]]
+influence = "failure_avoidance"
+risk_signal = 0.78
+
+[[scenarios.steps.signals]]
+influence = "context_assessment"
+evidence_delta = 0.20
+
+[[scenarios.steps.signals]]
+influence = "adaptive_exploration"
+evidence_delta = 0.10
+
+[[scenarios.steps]]
+event = "small successful attempt arrives"
+expected_dominant = "adaptive_exploration"
+
+[[scenarios.steps.signals]]
+influence = "failure_avoidance"
+risk_signal = 0.70
+
+[[scenarios.steps.signals]]
+influence = "adaptive_exploration"
+evidence_delta = 0.22
+
+[[scenarios.steps.signals]]
+influence = "context_assessment"
+evidence_delta = 0.06
+
+[[scenarios.steps]]
+event = "revised strategy produces another positive signal"
+expected_dominant = "adaptive_exploration"
+
+[[scenarios.steps.signals]]
+influence = "failure_avoidance"
+risk_signal = 0.60
+
+[[scenarios.steps.signals]]
+influence = "adaptive_exploration"
+evidence_delta = 0.14
+
+[[scenarios.steps.signals]]
+influence = "context_assessment"
+evidence_delta = 0.03
+
+[[scenarios.steps]]
+event = "future task should be guided by the revised strategy"
+expected_dominant = "adaptive_exploration"
+
+[[scenarios.steps.signals]]
+influence = "failure_avoidance"
+risk_signal = 0.50
+
+[[scenarios.steps.signals]]
+influence = "adaptive_exploration"
+evidence_delta = 0.10
+
+[[scenarios]]
+id = "investment_overconfidence_vs_base_rate"
+scenario_type = "dominant_shift"
+
+[[scenarios.influences]]
+id = "past_win_overconfidence"
+label = "Past win implies future certainty"
+initial_strength = 0.76
+harmful = true
+
+[[scenarios.influences]]
+id = "base_rate_reasoning"
+label = "Base-rate reasoning and uncertainty"
+initial_strength = 0.34
+harmful = false
+
+[[scenarios.influences]]
+id = "risk_management"
+label = "Risk management context"
+initial_strength = 0.32
+harmful = false
+
+[[scenarios.steps]]
+event = "market regime changes"
+expected_dominant = "base_rate_reasoning"
+
+[[scenarios.steps.signals]]
+influence = "past_win_overconfidence"
+risk_signal = 0.82
+
+[[scenarios.steps.signals]]
+influence = "base_rate_reasoning"
+evidence_delta = 0.22
+
+[[scenarios.steps.signals]]
+influence = "risk_management"
+evidence_delta = 0.10
+
+[[scenarios.steps]]
+event = "loss evidence contradicts certainty"
+expected_dominant = "risk_management"
+
+[[scenarios.steps.signals]]
+influence = "past_win_overconfidence"
+risk_signal = 0.80
+
+[[scenarios.steps.signals]]
+influence = "risk_management"
+evidence_delta = 0.26
+
+[[scenarios.steps.signals]]
+influence = "base_rate_reasoning"
+evidence_delta = 0.08
+
+[[scenarios.steps]]
+event = "future decision needs probabilistic reasoning"
+expected_dominant = "risk_management"
+
+[[scenarios.steps.signals]]
+influence = "past_win_overconfidence"
+risk_signal = 0.62
+
+[[scenarios.steps.signals]]
+influence = "risk_management"
+evidence_delta = 0.12
+
+[[scenarios.steps]]
+event = "base rates remain supporting context"
+expected_dominant = "risk_management"
+
+[[scenarios.steps.signals]]
+influence = "past_win_overconfidence"
+risk_signal = 0.50
+
+[[scenarios.steps.signals]]
+influence = "base_rate_reasoning"
+evidence_delta = 0.06
+
+[[scenarios.steps.signals]]
+influence = "risk_management"
+evidence_delta = 0.06
+
+[[scenarios]]
+id = "pitch_universal_rule_vs_contextual_adaptation"
+scenario_type = "dominant_shift"
+
+[[scenarios.influences]]
+id = "universal_pitch_rule"
+label = "One pitch style always works"
+initial_strength = 0.68
+harmful = true
+
+[[scenarios.influences]]
+id = "contextual_adaptation"
+label = "Adapt pitch to buyer context"
+initial_strength = 0.33
+harmful = false
+
+[[scenarios.influences]]
+id = "buyer_research"
+label = "Research buyer segment first"
+initial_strength = 0.31
+harmful = false
+
+[[scenarios.steps]]
+event = "new buyer segment rejects direct pitch"
+expected_dominant = "buyer_research"
+
+[[scenarios.steps.signals]]
+influence = "universal_pitch_rule"
+risk_signal = 0.74
+
+[[scenarios.steps.signals]]
+influence = "buyer_research"
+evidence_delta = 0.20
+
+[[scenarios.steps.signals]]
+influence = "contextual_adaptation"
+evidence_delta = 0.08
+
+[[scenarios.steps]]
+event = "adapted pitch performs better"
+expected_dominant = "contextual_adaptation"
+
+[[scenarios.steps.signals]]
+influence = "universal_pitch_rule"
+risk_signal = 0.70
+
+[[scenarios.steps.signals]]
+influence = "contextual_adaptation"
+evidence_delta = 0.24
+
+[[scenarios.steps.signals]]
+influence = "buyer_research"
+evidence_delta = 0.05
+
+[[scenarios.steps]]
+event = "old rule works only in a narrow context"
+expected_dominant = "contextual_adaptation"
+
+[[scenarios.steps.signals]]
+influence = "universal_pitch_rule"
+risk_signal = 0.58
+
+[[scenarios.steps.signals]]
+influence = "contextual_adaptation"
+evidence_delta = 0.12
+
+[[scenarios.steps]]
+event = "future sales task should start from adaptation"
+expected_dominant = "contextual_adaptation"
+
+[[scenarios.steps.signals]]
+influence = "universal_pitch_rule"
+risk_signal = 0.48
+
+[[scenarios.steps.signals]]
+influence = "contextual_adaptation"
+evidence_delta = 0.10
+
+[[scenarios]]
+id = "security_caution_vs_shipping_speed"
+scenario_type = "normal_preservation"
+
+[[scenarios.influences]]
+id = "operational_caution"
+label = "Past incidents justify deployment caution"
+initial_strength = 0.58
+harmful = false
+
+[[scenarios.influences]]
+id = "shipping_speed"
+label = "Ship quickly"
+initial_strength = 0.44
+harmful = false
+
+[[scenarios.influences]]
+id = "incident_panic"
+label = "Incidents mean everything is unsafe"
+initial_strength = 0.28
+harmful = true
+
+[[scenarios.steps]]
+event = "deployment has security-sensitive changes"
+expected_dominant = "operational_caution"
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+evidence_delta = 0.06
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.04
+
+[[scenarios.steps.signals]]
+influence = "incident_panic"
+risk_signal = 0.45
+
+[[scenarios.steps]]
+event = "checklist prevents repeated issue"
+expected_dominant = "operational_caution"
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+evidence_delta = 0.08
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.04
+
+[[scenarios.steps.signals]]
+influence = "incident_panic"
+risk_signal = 0.44
+
+[[scenarios.steps]]
+event = "release still moves forward after checks"
+expected_dominant = "operational_caution"
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+evidence_delta = 0.04
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.06
+
+[[scenarios.steps.signals]]
+influence = "incident_panic"
+risk_signal = 0.40
+
+[[scenarios]]
+id = "ambiguous_trend_vs_panic"
+scenario_type = "normal_ambiguous"
+
+[[scenarios.influences]]
+id = "trend_context"
+label = "AI labor trend as planning context"
+initial_strength = 0.50
+harmful = false
+
+[[scenarios.influences]]
+id = "panic_interpretation"
+label = "Trend implies immediate doom"
+initial_strength = 0.56
+harmful = true
+
+[[scenarios.influences]]
+id = "uncertainty_management"
+label = "Keep uncertainty explicit"
+initial_strength = 0.40
+harmful = false
+
+[[scenarios.steps]]
+event = "trend is plausible but uncertain"
+expected_dominant = "trend_context"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.70
+
+[[scenarios.steps.signals]]
+influence = "trend_context"
+evidence_delta = 0.08
+
+[[scenarios.steps.signals]]
+influence = "uncertainty_management"
+evidence_delta = 0.08
+
+[[scenarios.steps]]
+event = "new data keeps uncertainty high"
+expected_dominant = "uncertainty_management"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.66
+
+[[scenarios.steps.signals]]
+influence = "uncertainty_management"
+evidence_delta = 0.18
+
+[[scenarios.steps.signals]]
+influence = "trend_context"
+evidence_delta = 0.04
+
+[[scenarios.steps]]
+event = "planning should include trend without panic"
+expected_dominant = "uncertainty_management"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.58
+
+[[scenarios.steps.signals]]
+influence = "uncertainty_management"
+evidence_delta = 0.08
+
+[[scenarios.steps.signals]]
+influence = "trend_context"
+evidence_delta = 0.04
+
+[[scenarios]]
+id = "subthreshold_habit_bias_vs_contextual_choice"
+scenario_type = "boundary_subthreshold_bias"
+
+[[scenarios.influences]]
+id = "old_habit_generalization"
+label = "A past quick win makes the old habit feel broadly applicable"
+initial_strength = 0.57
+harmful = true
+
+[[scenarios.influences]]
+id = "contextual_choice"
+label = "Current context should select the method"
+initial_strength = 0.39
+harmful = false
+
+[[scenarios.influences]]
+id = "deliberate_experiment"
+label = "Run a small experiment before committing"
+initial_strength = 0.35
+harmful = false
+
+[[scenarios.steps]]
+event = "similar but not identical context arrives"
+expected_dominant = "contextual_choice"
+
+[[scenarios.steps.signals]]
+influence = "old_habit_generalization"
+risk_signal = 0.29
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.10
+
+[[scenarios.steps.signals]]
+influence = "deliberate_experiment"
+evidence_delta = 0.03
+
+[[scenarios.steps]]
+event = "context-specific evidence starts accumulating"
+expected_dominant = "contextual_choice"
+
+[[scenarios.steps.signals]]
+influence = "old_habit_generalization"
+risk_signal = 0.31
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.11
+
+[[scenarios.steps.signals]]
+influence = "deliberate_experiment"
+evidence_delta = 0.08
+
+[[scenarios.steps]]
+event = "small experiment becomes the best guide"
+expected_dominant = "deliberate_experiment"
+
+[[scenarios.steps.signals]]
+influence = "old_habit_generalization"
+risk_signal = 0.34
+
+[[scenarios.steps.signals]]
+influence = "deliberate_experiment"
+evidence_delta = 0.18
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.01

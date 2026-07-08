@@ -1,0 +1,240 @@
+[[cases]]
+id = "negative_case_repeated_interview_failures_001"
+case_type = "negative_case"
+issue = "repeated_evidence_should_not_be_suppressed"
+severity = 0.82
+
+[[cases.edges]]
+id = "many_interview_failures_to_strategy_problem"
+source = "twenty_interview_failures"
+target = "current_interview_strategy_needs_revision"
+relation = "supports"
+label = "valid"
+weight = 0.80
+confidence = 0.84
+evidence_strength = 0.86
+event_specificity = 0.60
+prediction_scope = 0.62
+scope_shift = 0.28
+emotion_weight = 0.18
+base_rate_support = 0.82
+uncertainty = 0.12
+sample_size = 20
+
+[[cases]]
+id = "harmful_single_interview_failure_identity_001"
+case_type = "harmful_positive"
+issue = "single_event_identity_overgeneralization"
+severity = 0.90
+
+[[cases.edges]]
+id = "one_interview_failure_to_never_pass"
+source = "one_interview_failure"
+target = "i_will_never_pass_interviews"
+relation = "predicts"
+label = "harmful"
+weight = 0.90
+confidence = 0.92
+evidence_strength = 0.15
+event_specificity = 0.96
+prediction_scope = 1.0
+scope_shift = 0.94
+emotion_weight = 0.74
+base_rate_support = 0.05
+uncertainty = 0.20
+sample_size = 1
+expected_final_confidence = 0.45
+evidence_sequence = [0.12, 0.18, 0.80, 0.75, 0.82]
+
+[[cases]]
+id = "ambiguous_ai_coding_jobs_001"
+case_type = "ambiguous_belief"
+issue = "reasonable_trend_vs_false_causality"
+severity = 0.72
+
+[[cases.edges]]
+id = "ai_coding_to_programmer_job_reduction"
+source = "ai_coding_efficiency_rising"
+target = "programmer_roles_may_reduce"
+relation = "predicts"
+label = "ambiguous"
+weight = 0.78
+confidence = 0.70
+evidence_strength = 0.50
+event_specificity = 0.36
+prediction_scope = 0.78
+scope_shift = 0.52
+emotion_weight = 0.20
+base_rate_support = 0.45
+uncertainty = 0.70
+sample_size = 6
+target_calibrated_influence = 0.42
+
+[[cases]]
+id = "negative_case_many_failed_experiments_001"
+case_type = "negative_case"
+issue = "strong_repeated_evidence_should_remain_influential"
+severity = 0.78
+
+[[cases.edges]]
+id = "many_failed_prompts_to_prompt_strategy_problem"
+source = "twenty_failed_prompt_experiments"
+target = "current_prompt_strategy_is_weak"
+relation = "supports"
+label = "valid"
+weight = 0.82
+confidence = 0.86
+evidence_strength = 0.88
+event_specificity = 0.58
+prediction_scope = 0.66
+scope_shift = 0.30
+emotion_weight = 0.10
+base_rate_support = 0.86
+uncertainty = 0.10
+sample_size = 22
+
+[[cases]]
+id = "harmful_startup_failure_longitudinal_001"
+case_type = "longitudinal_recovery"
+issue = "emotional_contamination_with_counterevidence"
+severity = 0.92
+
+[[cases.edges]]
+id = "startup_failure_to_entrepreneurship_impossible"
+source = "one_startup_failed"
+target = "future_entrepreneurship_impossible"
+relation = "predicts"
+label = "harmful"
+weight = 0.93
+confidence = 0.94
+evidence_strength = 0.12
+event_specificity = 0.92
+prediction_scope = 1.0
+scope_shift = 0.91
+emotion_weight = 0.92
+base_rate_support = 0.08
+uncertainty = 0.18
+sample_size = 1
+expected_final_confidence = 0.40
+evidence_sequence = [0.10, 0.16, 0.22, 0.72, 0.80, 0.84, 0.78]
+
+[[cases]]
+id = "ambiguous_ai_agent_autonomy_001"
+case_type = "ambiguous_belief"
+issue = "uncertain_projection_should_be_calibrated"
+severity = 0.68
+
+[[cases.edges]]
+id = "agent_memory_progress_to_autonomous_agents"
+source = "agent_memory_research_progress"
+target = "long_term_autonomous_agents_become_common"
+relation = "predicts"
+label = "ambiguous"
+weight = 0.76
+confidence = 0.68
+evidence_strength = 0.52
+event_specificity = 0.42
+prediction_scope = 0.76
+scope_shift = 0.48
+emotion_weight = 0.12
+base_rate_support = 0.48
+uncertainty = 0.66
+sample_size = 7
+target_calibrated_influence = 0.40
+
+[[cases]]
+id = "harmful_single_sales_success_universal_rule_001"
+case_type = "harmful_positive"
+issue = "single_success_universal_rule"
+severity = 0.86
+
+[[cases.edges]]
+id = "one_pitch_success_to_direct_pitch_always_wins"
+source = "one_direct_sales_pitch_succeeded"
+target = "direct_sales_pitches_always_win"
+relation = "predicts"
+label = "harmful"
+weight = 0.88
+confidence = 0.91
+evidence_strength = 0.19
+event_specificity = 0.93
+prediction_scope = 0.98
+scope_shift = 0.90
+emotion_weight = 0.30
+base_rate_support = 0.10
+uncertainty = 0.24
+sample_size = 1
+expected_final_confidence = 0.47
+evidence_sequence = [0.20, 0.24, 0.68, 0.70, 0.76]
+
+[[cases]]
+id = "negative_case_security_incidents_001"
+case_type = "negative_case"
+issue = "repeated_security_incidents_are_valid_risk_signal"
+severity = 0.86
+
+[[cases.edges]]
+id = "many_security_incidents_to_architecture_risk"
+source = "repeated_security_incidents"
+target = "architecture_has_security_risk"
+relation = "supports"
+label = "valid"
+weight = 0.84
+confidence = 0.88
+evidence_strength = 0.90
+event_specificity = 0.55
+prediction_scope = 0.72
+scope_shift = 0.34
+emotion_weight = 0.16
+base_rate_support = 0.88
+uncertainty = 0.08
+sample_size = 18
+
+[[cases]]
+id = "ambiguous_remote_work_productivity_001"
+case_type = "ambiguous_belief"
+issue = "mixed_evidence_productivity_claim"
+severity = 0.64
+
+[[cases.edges]]
+id = "remote_work_to_productivity_drop"
+source = "remote_work_policy_change"
+target = "team_productivity_may_drop"
+relation = "predicts"
+label = "ambiguous"
+weight = 0.72
+confidence = 0.64
+evidence_strength = 0.48
+event_specificity = 0.40
+prediction_scope = 0.70
+scope_shift = 0.44
+emotion_weight = 0.18
+base_rate_support = 0.44
+uncertainty = 0.72
+sample_size = 5
+target_calibrated_influence = 0.36
+
+[[cases]]
+id = "harmful_one_bad_code_review_identity_001"
+case_type = "longitudinal_recovery"
+issue = "single_failure_identity_claim_with_mixed_evidence"
+severity = 0.84
+
+[[cases.edges]]
+id = "one_bad_code_review_to_bad_engineer"
+source = "one_bad_code_review"
+target = "i_am_a_bad_engineer"
+relation = "predicts"
+label = "harmful"
+weight = 0.86
+confidence = 0.89
+evidence_strength = 0.18
+event_specificity = 0.90
+prediction_scope = 0.96
+scope_shift = 0.87
+emotion_weight = 0.76
+base_rate_support = 0.06
+uncertainty = 0.22
+sample_size = 1
+expected_final_confidence = 0.43
+evidence_sequence = [0.18, 0.20, 0.30, 0.74, 0.70, 0.80]

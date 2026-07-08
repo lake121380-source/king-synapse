@@ -1,0 +1,387 @@
+[[scenarios]]
+id = "soft_action_vs_validation"
+scenario_type = "soft_dominance"
+
+[[scenarios.influences]]
+id = "fast_action"
+label = "Move quickly when the situation is low risk"
+initial_strength = 0.54
+initial_inertia = 0.76
+initial_context_fit = 0.48
+harmful = false
+
+[[scenarios.influences]]
+id = "validation_first"
+label = "Validate before committing when uncertainty rises"
+initial_strength = 0.46
+initial_inertia = 0.30
+initial_context_fit = 0.50
+harmful = false
+
+[[scenarios.influences]]
+id = "small_experiment"
+label = "Run a small experiment before choosing a path"
+initial_strength = 0.38
+initial_inertia = 0.20
+initial_context_fit = 0.45
+harmful = false
+
+[[scenarios.steps]]
+event = "low-risk operational task favors quick action"
+expected_dominant = "fast_action"
+
+[[scenarios.steps.signals]]
+influence = "fast_action"
+evidence_delta = 0.06
+context_fit_delta = 0.08
+
+[[scenarios.steps.signals]]
+influence = "validation_first"
+context_fit_delta = 0.02
+
+[[scenarios.steps]]
+event = "uncertainty increases and validation should take over"
+expected_dominant = "validation_first"
+
+[[scenarios.steps.signals]]
+influence = "fast_action"
+context_fit_delta = -0.18
+risk_signal = 0.18
+
+[[scenarios.steps.signals]]
+influence = "validation_first"
+evidence_delta = 0.18
+context_fit_delta = 0.25
+
+[[scenarios.steps]]
+event = "experiment signal becomes strongest after early validation"
+expected_dominant = "small_experiment"
+
+[[scenarios.steps.signals]]
+influence = "small_experiment"
+evidence_delta = 0.42
+context_fit_delta = 0.38
+
+[[scenarios.steps.signals]]
+influence = "validation_first"
+evidence_delta = 0.02
+
+[[scenarios.steps.signals]]
+influence = "fast_action"
+context_fit_delta = -0.04
+
+[[scenarios.steps]]
+event = "low-risk context returns after experiment"
+expected_dominant = "fast_action"
+
+[[scenarios.steps.signals]]
+influence = "fast_action"
+evidence_delta = 0.20
+context_fit_delta = 0.32
+
+[[scenarios.steps.signals]]
+influence = "validation_first"
+context_fit_delta = -0.25
+
+[[scenarios.steps.signals]]
+influence = "small_experiment"
+context_fit_delta = -0.25
+
+[[scenarios]]
+id = "old_architecture_inertia_vs_new_findings"
+scenario_type = "influence_inertia"
+
+[[scenarios.influences]]
+id = "old_architecture"
+label = "The old architecture usually worked"
+initial_strength = 0.57
+initial_inertia = 0.95
+initial_context_fit = 0.40
+harmful = false
+
+[[scenarios.influences]]
+id = "new_findings"
+label = "New evidence favors a revised architecture"
+initial_strength = 0.42
+initial_inertia = 0.15
+initial_context_fit = 0.50
+harmful = false
+
+[[scenarios.influences]]
+id = "migration_path"
+label = "A migration path balances risk and new evidence"
+initial_strength = 0.38
+initial_inertia = 0.25
+initial_context_fit = 0.45
+harmful = false
+
+[[scenarios.steps]]
+event = "initial situation still matches the old architecture"
+expected_dominant = "old_architecture"
+
+[[scenarios.steps.signals]]
+influence = "old_architecture"
+evidence_delta = 0.02
+context_fit_delta = 0.04
+
+[[scenarios.steps]]
+event = "new measurements contradict the old assumptions"
+expected_dominant = "new_findings"
+
+[[scenarios.steps.signals]]
+influence = "old_architecture"
+context_fit_delta = -0.12
+risk_signal = 0.20
+
+[[scenarios.steps.signals]]
+influence = "new_findings"
+evidence_delta = 0.18
+context_fit_delta = 0.24
+
+[[scenarios.steps]]
+event = "second measurement confirms the revised direction"
+expected_dominant = "new_findings"
+
+[[scenarios.steps.signals]]
+influence = "old_architecture"
+context_fit_delta = -0.08
+risk_signal = 0.24
+
+[[scenarios.steps.signals]]
+influence = "new_findings"
+evidence_delta = 0.08
+context_fit_delta = 0.10
+
+[[scenarios.steps]]
+event = "implementation plan should now favor migration"
+expected_dominant = "migration_path"
+
+[[scenarios.steps.signals]]
+influence = "migration_path"
+evidence_delta = 0.38
+context_fit_delta = 0.35
+
+[[scenarios.steps.signals]]
+influence = "new_findings"
+context_fit_delta = 0.02
+
+[[scenarios]]
+id = "near_threshold_habit_bias"
+scenario_type = "near_threshold_bias"
+
+[[scenarios.influences]]
+id = "old_habit"
+label = "A familiar habit feels broadly applicable"
+initial_strength = 0.56
+initial_inertia = 0.80
+initial_context_fit = 0.42
+harmful = true
+
+[[scenarios.influences]]
+id = "contextual_choice"
+label = "The current context should select the method"
+initial_strength = 0.44
+initial_inertia = 0.20
+initial_context_fit = 0.50
+harmful = false
+
+[[scenarios.influences]]
+id = "local_experiment"
+label = "A local experiment should settle the choice"
+initial_strength = 0.34
+initial_inertia = 0.20
+initial_context_fit = 0.39
+harmful = false
+
+[[scenarios.steps]]
+event = "similar context arrives but the old habit risk is just below threshold"
+expected_dominant = "contextual_choice"
+
+[[scenarios.steps.signals]]
+influence = "old_habit"
+risk_signal = 0.29
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.08
+context_fit_delta = 0.08
+
+[[scenarios.steps]]
+event = "context evidence accumulates and risk crosses threshold"
+expected_dominant = "contextual_choice"
+
+[[scenarios.steps.signals]]
+influence = "old_habit"
+risk_signal = 0.31
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.16
+context_fit_delta = 0.16
+
+[[scenarios.steps]]
+event = "local experiment becomes the best guide"
+expected_dominant = "local_experiment"
+
+[[scenarios.steps.signals]]
+influence = "old_habit"
+risk_signal = 0.34
+
+[[scenarios.steps.signals]]
+influence = "local_experiment"
+evidence_delta = 0.42
+context_fit_delta = 0.38
+
+[[scenarios.steps.signals]]
+influence = "contextual_choice"
+evidence_delta = 0.02
+
+[[scenarios]]
+id = "operational_caution_preservation"
+scenario_type = "normal_preservation"
+
+[[scenarios.influences]]
+id = "operational_caution"
+label = "Past incidents justify deployment caution"
+initial_strength = 0.55
+initial_inertia = 0.70
+initial_context_fit = 0.65
+harmful = false
+
+[[scenarios.influences]]
+id = "shipping_speed"
+label = "Ship quickly once checks are satisfied"
+initial_strength = 0.50
+initial_inertia = 0.40
+initial_context_fit = 0.55
+harmful = false
+
+[[scenarios.influences]]
+id = "incident_panic"
+label = "Past incidents mean everything is unsafe"
+initial_strength = 0.25
+initial_inertia = 0.30
+initial_context_fit = 0.25
+harmful = true
+
+[[scenarios.steps]]
+event = "deployment includes security-sensitive changes"
+expected_dominant = "operational_caution"
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+evidence_delta = 0.05
+context_fit_delta = 0.05
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.04
+
+[[scenarios.steps.signals]]
+influence = "incident_panic"
+risk_signal = 0.44
+
+[[scenarios.steps]]
+event = "checklist reduces risk but caution remains relevant"
+expected_dominant = "operational_caution"
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+evidence_delta = 0.04
+context_fit_delta = 0.02
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.08
+
+[[scenarios.steps.signals]]
+influence = "incident_panic"
+risk_signal = 0.40
+
+[[scenarios.steps]]
+event = "checks pass and shipping speed can lead"
+expected_dominant = "shipping_speed"
+
+[[scenarios.steps.signals]]
+influence = "shipping_speed"
+evidence_delta = 0.18
+context_fit_delta = 0.20
+
+[[scenarios.steps.signals]]
+influence = "operational_caution"
+context_fit_delta = -0.08
+
+[[scenarios]]
+id = "panic_vs_planning"
+scenario_type = "harmful_dominance"
+
+[[scenarios.influences]]
+id = "panic_interpretation"
+label = "The trend means immediate failure"
+initial_strength = 0.68
+initial_inertia = 0.74
+initial_context_fit = 0.45
+harmful = true
+
+[[scenarios.influences]]
+id = "planning_context"
+label = "The trend is useful planning context"
+initial_strength = 0.42
+initial_inertia = 0.28
+initial_context_fit = 0.52
+harmful = false
+
+[[scenarios.influences]]
+id = "uncertainty_management"
+label = "Keep uncertainty explicit before acting"
+initial_strength = 0.40
+initial_inertia = 0.20
+initial_context_fit = 0.48
+harmful = false
+
+[[scenarios.steps]]
+event = "trend is plausible but not decisive"
+expected_dominant = "planning_context"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.78
+
+[[scenarios.steps.signals]]
+influence = "planning_context"
+evidence_delta = 0.18
+context_fit_delta = 0.18
+
+[[scenarios.steps.signals]]
+influence = "uncertainty_management"
+evidence_delta = 0.06
+
+[[scenarios.steps]]
+event = "new data keeps uncertainty high"
+expected_dominant = "uncertainty_management"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.70
+
+[[scenarios.steps.signals]]
+influence = "uncertainty_management"
+evidence_delta = 0.24
+context_fit_delta = 0.22
+
+[[scenarios.steps.signals]]
+influence = "planning_context"
+evidence_delta = 0.04
+
+[[scenarios.steps]]
+event = "future planning should use context without panic"
+expected_dominant = "planning_context"
+
+[[scenarios.steps.signals]]
+influence = "panic_interpretation"
+risk_signal = 0.55
+
+[[scenarios.steps.signals]]
+influence = "planning_context"
+evidence_delta = 0.18
+context_fit_delta = 0.12

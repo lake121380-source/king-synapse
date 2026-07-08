@@ -33,6 +33,15 @@ pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};
+pub use recall::hypothesis::{
+    default_semantic_judge_cache_path, CachedSemanticJudge, DeepSeekSemanticJudge,
+    EdgeCandidateEvidence, EdgeEvidence, EdgeHypothesis, EdgeHypothesisGenerator,
+    EdgeHypothesisStatus, EdgeJudgeInput, EdgeJudgement, EdgeReasonCategory, EdgeRelation,
+    EdgeSemanticJudge, EdgeUtilityObservation, HeuristicSemanticJudge, HypothesisStore,
+    JudgedEdgeGeneration, JudgedEdgeGenerator, JudgedEdgeHypothesis, RejectedEdgeCandidate,
+    RetrievalContext, RuleBasedEdgeGenerator, SemanticEdgeMode, SemanticJudgeCacheStats,
+    SemanticJudgeCacheStatsHandle, SemanticJudgeExecutorConfig,
+};
 pub use recall::{
     BoosterContext, CognitiveTraceCandidate, CognitiveTraceConfig, CognitiveTracePredictionReport,
     CognitiveTracePredictionStatistics, CognitiveTraceProbe, CognitiveTraceReport,
@@ -41,11 +50,6 @@ pub use recall::{
     NoOpBooster, ProfiledRecall, QueryEmbedder, QueryLatentActivationProbe,
     QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallProfile,
     RecallSource, RrfBranchWeights, DEFAULT_RERANK_POOL, DEFAULT_RRF_K,
-};
-pub use recall::hypothesis::{
-    EdgeHypothesisGenerator, EdgeHypothesis, EdgeHypothesisStatus, EdgeEvidence,
-    EdgeRelation, EdgeUtilityObservation, HypothesisStore, RetrievalContext,
-    RuleBasedEdgeGenerator,
 };
 pub use rerank::{FastEmbedReranker, Reranker};
 pub use store::{MemoryEdge, Store};

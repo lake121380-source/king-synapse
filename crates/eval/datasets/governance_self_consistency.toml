@@ -1,0 +1,139 @@
+[[cases]]
+id = "clear_false_certainty"
+case_type = "clear_intervention"
+expected_action = "intervene"
+risk_signal = 0.90
+contradiction_signal = 0.82
+evidence_support = 0.10
+replay_regret_gain = 0.80
+pattern_risk = 0.86
+boundary_margin = 0.74
+novelty_score = 0.10
+exploration_value = 0.08
+uncertainty_level = 0.12
+
+[[cases]]
+id = "identity_collapse_after_failure"
+case_type = "clear_intervention"
+expected_action = "intervene"
+risk_signal = 0.86
+contradiction_signal = 0.78
+evidence_support = 0.15
+replay_regret_gain = 0.74
+pattern_risk = 0.80
+boundary_margin = 0.68
+novelty_score = 0.12
+exploration_value = 0.10
+uncertainty_level = 0.16
+
+[[cases]]
+id = "persistent_negative_pattern"
+case_type = "clear_intervention"
+expected_action = "intervene"
+risk_signal = 0.80
+contradiction_signal = 0.70
+evidence_support = 0.20
+replay_regret_gain = 0.70
+pattern_risk = 0.84
+boundary_margin = 0.70
+novelty_score = 0.15
+exploration_value = 0.12
+uncertainty_level = 0.20
+
+[[cases]]
+id = "valid_operational_caution"
+case_type = "clear_observe"
+expected_action = "observe"
+risk_signal = 0.35
+contradiction_signal = 0.15
+evidence_support = 0.78
+replay_regret_gain = 0.08
+pattern_risk = 0.28
+boundary_margin = 0.12
+novelty_score = 0.18
+exploration_value = 0.14
+uncertainty_level = 0.22
+
+[[cases]]
+id = "valid_failure_memory"
+case_type = "clear_observe"
+expected_action = "observe"
+risk_signal = 0.42
+contradiction_signal = 0.18
+evidence_support = 0.72
+replay_regret_gain = 0.10
+pattern_risk = 0.32
+boundary_margin = 0.16
+novelty_score = 0.20
+exploration_value = 0.18
+uncertainty_level = 0.24
+
+[[cases]]
+id = "novel_strategy_should_be_preserved"
+case_type = "clear_hold"
+expected_action = "hold"
+risk_signal = 0.44
+contradiction_signal = 0.22
+evidence_support = 0.55
+replay_regret_gain = 0.12
+pattern_risk = 0.30
+boundary_margin = 0.05
+novelty_score = 0.84
+exploration_value = 0.86
+uncertainty_level = 0.35
+
+[[cases]]
+id = "emerging_evidence_should_not_be_cut"
+case_type = "clear_hold"
+expected_action = "hold"
+risk_signal = 0.48
+contradiction_signal = 0.24
+evidence_support = 0.52
+replay_regret_gain = 0.16
+pattern_risk = 0.34
+boundary_margin = 0.08
+novelty_score = 0.78
+exploration_value = 0.80
+uncertainty_level = 0.38
+
+[[cases]]
+id = "mixed_market_signal_path_disagreement"
+case_type = "ambiguous_disagreement"
+expected_action = "observe"
+risk_signal = 0.60
+contradiction_signal = 0.45
+evidence_support = 0.45
+replay_regret_gain = 0.55
+pattern_risk = 0.68
+boundary_margin = 0.28
+novelty_score = 0.45
+exploration_value = 0.40
+uncertainty_level = 0.72
+
+[[cases]]
+id = "boundary_replay_disagrees"
+case_type = "ambiguous_disagreement"
+expected_action = "observe"
+risk_signal = 0.62
+contradiction_signal = 0.45
+evidence_support = 0.45
+replay_regret_gain = 0.62
+pattern_risk = 0.65
+boundary_margin = 0.65
+novelty_score = 0.20
+exploration_value = 0.20
+uncertainty_level = 0.65
+
+[[cases]]
+id = "ambiguous_exploration_hold_vs_observe"
+case_type = "ambiguous_abstention"
+expected_action = "hold"
+risk_signal = 0.52
+contradiction_signal = 0.30
+evidence_support = 0.56
+replay_regret_gain = 0.18
+pattern_risk = 0.45
+boundary_margin = 0.05
+novelty_score = 0.76
+exploration_value = 0.72
+uncertainty_level = 0.62

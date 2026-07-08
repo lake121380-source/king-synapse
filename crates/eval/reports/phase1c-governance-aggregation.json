@@ -1,0 +1,69 @@
+{
+  "tag": "phase1c-governance-aggregation",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\governance_feedback.toml",
+  "detector_count": 3,
+  "observation_count": 24,
+  "best_method": "empirical_calibrated",
+  "raw": {
+    "method": "raw",
+    "calibration_error": 0.25499999999999995,
+    "calibration_error_delta_vs_raw": 0.0,
+    "ranking_auc": 1.0,
+    "stability_score": 1.0
+  },
+  "reliability_scaled": {
+    "method": "reliability_scaled",
+    "calibration_error": 0.31816666666666654,
+    "calibration_error_delta_vs_raw": -0.0631666666666666,
+    "ranking_auc": 1.0,
+    "stability_score": 0.9368333333333333
+  },
+  "empirical_calibrated": {
+    "method": "empirical_calibrated",
+    "calibration_error": 0.2331972789115646,
+    "calibration_error_delta_vs_raw": 0.02180272108843534,
+    "ranking_auc": 1.0,
+    "stability_score": 0.9194308390022676
+  },
+  "pass": true,
+  "thresholds": {
+    "calibration_error_max": 0.25,
+    "ranking_auc_min": 0.85,
+    "stability_min": 0.85
+  },
+  "rollback": {
+    "rollback_model": "in_memory_reliability_calibrated_aggregation",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "detectors": [
+    {
+      "detector": "emotional_bias",
+      "reliability": 0.9,
+      "raw_calibration_error": 0.2225,
+      "reliability_scaled_error": 0.278,
+      "empirical_calibrated_error": 0.18809523809523807,
+      "empirical_positive_rate": 0.5,
+      "observations": 8
+    },
+    {
+      "detector": "evidence_mismatch",
+      "reliability": 0.9,
+      "raw_calibration_error": 0.255,
+      "reliability_scaled_error": 0.30400000000000005,
+      "empirical_calibrated_error": 0.1933333333333333,
+      "empirical_positive_rate": 0.5,
+      "observations": 8
+    },
+    {
+      "detector": "scope_expansion",
+      "reliability": 0.8,
+      "raw_calibration_error": 0.2875,
+      "reliability_scaled_error": 0.37249999999999994,
+      "empirical_calibrated_error": 0.3181632653061224,
+      "empirical_positive_rate": 0.5,
+      "observations": 8
+    }
+  ]
+}

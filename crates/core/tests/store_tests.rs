@@ -60,6 +60,10 @@ fn assert_close(actual: f32, expected: f32) {
     );
 }
 
+fn sigmoid_activation_bonus(raw: f32, cap: f32) -> f32 {
+    cap * (1.0 / (1.0 + (-raw * 4.0 / cap).exp()))
+}
+
 #[test]
 fn roundtrip_and_recall() {
     let mut s = Store::open_in_memory().unwrap();
@@ -454,7 +458,10 @@ fn graph_activation_booster_boosts_existing_edge_targets() {
         );
     }
     let target_hit = boosted.iter().find(|h| h.memory.id == target).unwrap();
-    assert_eq!(target_hit.activation_bonus, 0.1);
+    assert_close(
+        target_hit.activation_bonus,
+        sigmoid_activation_bonus(0.1, 0.15),
+    );
     assert!(target_hit.from_activation());
     let unrelated_hit = boosted.iter().find(|h| h.memory.id == unrelated).unwrap();
     assert_eq!(unrelated_hit.activation_bonus, 0.0);
@@ -502,9 +509,18 @@ fn graph_activation_booster_spreads_with_decay_across_multiple_steps() {
     let second_hit = two_step.iter().find(|h| h.memory.id == second).unwrap();
     let third_one_step = one_step.iter().find(|h| h.memory.id == third).unwrap();
     let third_two_step = two_step.iter().find(|h| h.memory.id == third).unwrap();
-    assert_close(second_hit.activation_bonus, 0.1);
-    assert_close(third_one_step.activation_bonus, 0.1);
-    assert_close(third_two_step.activation_bonus, 0.105);
+    assert_close(
+        second_hit.activation_bonus,
+        sigmoid_activation_bonus(0.1, 0.15),
+    );
+    assert_close(
+        third_one_step.activation_bonus,
+        sigmoid_activation_bonus(0.1, 0.15),
+    );
+    assert_close(
+        third_two_step.activation_bonus,
+        sigmoid_activation_bonus(0.105, 0.15),
+    );
     assert!(third_two_step.activation_bonus > third_one_step.activation_bonus);
     assert!(third_two_step.from_activation());
 }

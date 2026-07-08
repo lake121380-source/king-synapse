@@ -1,0 +1,130 @@
+{
+  "tag": "phase1c-governance-validation-coding-smoke",
+  "dataset": "D:\\lake\\jiaoben\\king_recall\\crates\\eval\\datasets\\coding_mem.toml",
+  "n_memories": 20,
+  "n_queries": 30,
+  "semantic_judge": "heuristic",
+  "semantic_edge_mode": "classify",
+  "detection_score": 0.9411764705882353,
+  "intervention_gain": 0.0,
+  "regression_rate": 0.0,
+  "stability_score": 0.9047619047619048,
+  "suspect_detection": {
+    "evaluated_edges": 21,
+    "predicted_suspect_edges": 8,
+    "ground_truth_harmful_edges": 9,
+    "true_positive": 8,
+    "false_positive": 0,
+    "true_negative": 12,
+    "false_negative": 1,
+    "precision": 1.0,
+    "recall": 0.8888888888888888,
+    "f1": 0.9411764705882353,
+    "accuracy": 0.9523809523809523,
+    "method": "predicted suspect/dormant vs negative causal attribution"
+  },
+  "intervention_safety": {
+    "evaluated_queries": 19,
+    "changed_queries": 0,
+    "improved_queries": 0,
+    "harmed_queries": 0,
+    "neutral_queries": 19,
+    "intervention_gain": 0.0,
+    "regression_rate": 0.0,
+    "safety_passed": true,
+    "method": "best policy by MRR: shadow_strong_negative"
+  },
+  "temporal_stability": {
+    "evaluated_edges": 21,
+    "stable_edges": 19,
+    "unstable_edges": 2,
+    "mean_causal_consistency": 0.09565381708238851,
+    "mean_causal_mrr_delta_variance": 0.0023461203960322132,
+    "stability_score": 0.9047619047619048,
+    "method": "stable when attribution has enough samples and low causal MRR variance"
+  },
+  "policy_search": {
+    "evaluated_queries": 19,
+    "best_policy_by_mrr": "shadow_strong_negative",
+    "policies": [
+      {
+        "name": "current_rule",
+        "description": "Phase 1c-5 hand-written state machine weights.",
+        "evaluated_queries": 19,
+        "changed_queries": 5,
+        "improved_queries": 0,
+        "harmed_queries": 2,
+        "neutral_queries": 17,
+        "mean_rank_delta_vs_full_graph": -0.10526315789473684,
+        "mean_mrr_delta_vs_full_graph": -0.028947368421052635,
+        "mean_edge_weight": 0.671888053467001
+      },
+      {
+        "name": "conservative_consistency",
+        "description": "Only downweights stable, repeatedly harmful edges.",
+        "evaluated_queries": 19,
+        "changed_queries": 0,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 19,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 1.0
+      },
+      {
+        "name": "variance_guard",
+        "description": "Keeps high-variance edges active and downweights low-variance harm.",
+        "evaluated_queries": 19,
+        "changed_queries": 4,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 19,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 0.93571428607281
+      },
+      {
+        "name": "shadow_strong_negative",
+        "description": "Only shadows strongly negative, consistent edges; otherwise keeps full graph.",
+        "evaluated_queries": 19,
+        "changed_queries": 0,
+        "improved_queries": 0,
+        "harmed_queries": 0,
+        "neutral_queries": 19,
+        "mean_rank_delta_vs_full_graph": 0.0,
+        "mean_mrr_delta_vs_full_graph": 0.0,
+        "mean_edge_weight": 0.9974937343358397
+      },
+      {
+        "name": "soft_utility",
+        "description": "Maps utility features continuously to activation weights.",
+        "evaluated_queries": 19,
+        "changed_queries": 5,
+        "improved_queries": 0,
+        "harmed_queries": 1,
+        "neutral_queries": 18,
+        "mean_rank_delta_vs_full_graph": -0.05263157894736842,
+        "mean_mrr_delta_vs_full_graph": -0.0026315789473684206,
+        "mean_edge_weight": 0.8776146660099052
+      }
+    ]
+  },
+  "rollback": {
+    "rollback_model": "in_memory_counterfactual_only",
+    "persistent_edge_mutations": 0,
+    "default_recall_behavior_changed": false,
+    "edge_deletions": 0
+  },
+  "source_trace": {
+    "recall_at_10": 0.8833333333333333,
+    "mrr_at_10": 0.7772222222222223,
+    "candidate_edges": 78,
+    "graduated_edges": 28,
+    "activated_edges": 21,
+    "suspect_edges": 8,
+    "trusted_edges": 0,
+    "dormant_edges": 0,
+    "attribution_evaluated_edges": 139,
+    "policy_count": 5
+  }
+}
