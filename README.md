@@ -44,6 +44,19 @@ instead of hiding it inside a black box.
 - Reinforces an association only after the current report is already captured.
 - Exposes the same engine through a CLI and an MCP server for coding agents.
 
+## Research Status
+
+Current research track:
+
+- `v0.6.0-cognitive-validation`: Phase 1 validation freeze.
+- Phase 1.2 benchmark scaling: 200 cognitive-memory cases, `full_synapse_score = 0.9400`, `hybrid_rag = 0.5550`, gain `+0.3850`.
+- [RFC-013 Adaptive Memory Dynamics](docs/rfc/RFC-013-adaptive-memory-dynamics.md): Phase 2 design entry point.
+- [Phase 2 Experiment Plan](docs/eval/PHASE2_EXPERIMENT_PLAN.md): design validation for conflict resolution, temporal influence, memory suppression, and uncertainty boundaries.
+
+Phase 2 implementation has not started. The current focus is to validate a
+falsifiable design for adaptive memory influence regulation before adding new
+core mechanisms.
+
 ## A Small Example
 
 Imagine this chain:
