@@ -1,0 +1,85 @@
+{
+  "baseline_version": "v0.6.0-cognitive-validation",
+  "dataset_version": "v1.2",
+  "cases": 200,
+  "suites": 15,
+  "mechanism_changed": false,
+  "score": 0.94,
+  "baseline_score": 0.555,
+  "gain": 0.385,
+  "failure_analysis": {
+    "success_cases": 196,
+    "failed_cases": 4,
+    "retrieval_failure_count": 0,
+    "reasoning_failure_count": 4,
+    "decision_mismatch_count": 2,
+    "causal_order_error_count": 2,
+    "governance_boundary_miss_count": 0,
+    "failure_distribution": [
+      [
+        "causal_order_error",
+        2
+      ],
+      [
+        "decision_mismatch",
+        2
+      ]
+    ]
+  },
+  "failed_cases": [
+    {
+      "id": "adversarial_007_intentional_failure_over_inference",
+      "suite": "adversarial",
+      "task_type": "governance_trace",
+      "failure_type": "decision_mismatch",
+      "expected": "trace_len=4 decision=hold_due_to_insufficient_evidence",
+      "produced": "keyword_overlap -> unsupported_bridge",
+      "full_synapse_score": 0.48316000000000003,
+      "evidence_coverage": 0.72,
+      "causal_path_score": 0.553,
+      "trace_order_score": 0.52,
+      "decision_correct": false
+    },
+    {
+      "id": "adversarial_008_intentional_failure_scope",
+      "suite": "adversarial",
+      "task_type": "governance_trace",
+      "failure_type": "decision_mismatch",
+      "expected": "trace_len=4 decision=observe_scope_gap",
+      "produced": "keyword_overlap -> unsupported_bridge",
+      "full_synapse_score": 0.48316000000000003,
+      "evidence_coverage": 0.72,
+      "causal_path_score": 0.553,
+      "trace_order_score": 0.52,
+      "decision_correct": false
+    },
+    {
+      "id": "temporal_005_borderline_recent_signal",
+      "suite": "temporal",
+      "task_type": "longitudinal_consistency",
+      "failure_type": "causal_order_error",
+      "expected": "trace_len=4 decision=observe_without_full_switch",
+      "produced": "observe_without_full_switch",
+      "full_synapse_score": 0.78568,
+      "evidence_coverage": 0.82,
+      "causal_path_score": 0.664,
+      "trace_order_score": 0.62,
+      "decision_correct": true
+    },
+    {
+      "id": "temporal_006_borderline_partial_order",
+      "suite": "temporal",
+      "task_type": "multi_hop_causal",
+      "failure_type": "causal_order_error",
+      "expected": "trace_len=4 decision=keep_partial_order_uncertain",
+      "produced": "keep_partial_order_uncertain",
+      "full_synapse_score": 0.7739199999999999,
+      "evidence_coverage": 0.82,
+      "causal_path_score": 0.664,
+      "trace_order_score": 0.62,
+      "decision_correct": true
+    }
+  ],
+  "status": "benchmark_expanded",
+  "generated_at": "2026-07-08T07:41:55.512920+00:00"
+}

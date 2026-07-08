@@ -1,0 +1,331 @@
+suite = "adversarial_expanded"
+
+[profiles.adversarial_expanded_restraint.methods.vector_rag]
+decision = "wrong"
+confidence = 0.69
+evidence_coverage = 0.47
+trace_completeness = 0.23
+trace_order_score = 0.23
+memory_influence_score = 0.31
+governance_trace_score = 0.0
+explainability_score = 0.33
+
+[profiles.adversarial_expanded_restraint.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.65
+evidence_coverage = 0.55
+trace_completeness = 0.31
+trace_order_score = 0.30
+memory_influence_score = 0.38
+governance_trace_score = 0.0
+explainability_score = 0.39
+
+[profiles.adversarial_expanded_restraint.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.63
+evidence_coverage = 0.66
+trace_completeness = 0.45
+trace_order_score = 0.42
+memory_influence_score = 0.48
+governance_trace_score = 0.0
+explainability_score = 0.50
+
+[profiles.adversarial_expanded_restraint.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.72
+evidence_coverage = 0.80
+trace_completeness = 0.64
+trace_order_score = 0.62
+memory_influence_score = 0.66
+governance_trace_score = 0.0
+explainability_score = 0.68
+
+[profiles.adversarial_expanded_restraint.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.78
+evidence_coverage = 0.87
+trace_completeness = 0.76
+trace_order_score = 0.73
+memory_influence_score = 0.78
+governance_trace_score = 0.0
+explainability_score = 0.76
+
+[profiles.adversarial_expanded_restraint.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.92
+trace_completeness = 0.84
+trace_order_score = 0.82
+memory_influence_score = 0.84
+governance_trace_score = 1.0
+explainability_score = 0.85
+
+[profiles.adversarial_expanded_restraint.methods.full_synapse]
+decision = "expected"
+confidence = 0.84
+evidence_coverage = 0.94
+trace_completeness = 0.88
+trace_order_score = 0.86
+memory_influence_score = 0.86
+governance_trace_score = 1.0
+explainability_score = 0.88
+
+[[cases]]
+id = "adversarial_expanded_001_keyword_same_different_root"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "causal_trap"]
+question = "Two incidents share the keyword cache, but root causes differ. Should Synapse infer the same fix?"
+expected_decision = "avoid_same_fix_inference"
+distractor_decision = "reuse_cache_fix"
+relevant_memories = ["ae_001_cache_keyword_incident_a", "ae_001_cache_keyword_incident_b", "ae_001_root_causes_differ", "ae_001_current_fix_decision"]
+expected_trace = ["ae_001_cache_keyword_incident_a", "ae_001_cache_keyword_incident_b", "ae_001_root_causes_differ", "ae_001_current_fix_decision"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_002_irrelevant_memory_high_similarity"
+task_type = "governance_trace"
+challenges = ["adversarial", "misleading_similarity", "irrelevant_memory"]
+question = "A highly similar memory is from a sandbox with no production constraints. Should it drive the production decision?"
+expected_decision = "ignore_sandbox_similarity_for_prod"
+distractor_decision = "reuse_sandbox_decision"
+relevant_memories = ["ae_002_sandbox_similar_memory", "ae_002_prod_constraints_absent_in_sandbox", "ae_002_prod_context_requires_guard", "ae_002_current_prod_decision"]
+expected_trace = ["ae_002_sandbox_similar_memory", "ae_002_prod_constraints_absent_in_sandbox", "ae_002_prod_context_requires_guard", "ae_002_current_prod_decision"]
+expected_influence_delta = 0.67
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_003_correlation_after_press"
+task_type = "governance_trace"
+challenges = ["adversarial", "causal_trap", "false_confidence"]
+question = "Signups rose after a UI change, but press coverage happened the same day. What should Synapse conclude?"
+expected_decision = "avoid_crediting_ui_without_control"
+distractor_decision = "credit_ui_change"
+relevant_memories = ["ae_003_ui_change_before_signup_rise", "ae_003_press_coverage_same_day", "ae_003_no_control_group", "ae_003_current_growth_claim"]
+expected_trace = ["ae_003_ui_change_before_signup_rise", "ae_003_press_coverage_same_day", "ae_003_no_control_group", "ae_003_current_growth_claim"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_004_negative_identity_trap"
+task_type = "governance_trace"
+challenges = ["adversarial", "scope_expansion", "failure_learning"]
+question = "One team missed one delivery, but later evidence shows planning issues. Should Synapse infer the team is unreliable?"
+expected_decision = "attribute_to_planning_not_team_identity"
+distractor_decision = "label_team_unreliable"
+relevant_memories = ["ae_004_one_delivery_missed", "ae_004_planning_issue_identified", "ae_004_later_delivery_recovered", "ae_004_current_team_assessment"]
+expected_trace = ["ae_004_one_delivery_missed", "ae_004_planning_issue_identified", "ae_004_later_delivery_recovered", "ae_004_current_team_assessment"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_005_success_by_channel_not_message"
+task_type = "governance_trace"
+challenges = ["adversarial", "causal_trap", "business_feedback"]
+question = "A message worked once, but channel placement explains the lift. What should dominate the next campaign?"
+expected_decision = "test_channel_before_reusing_message"
+distractor_decision = "reuse_message_as_cause"
+relevant_memories = ["ae_005_message_success", "ae_005_channel_placement_driver", "ae_005_message_not_replicated", "ae_005_current_campaign"]
+expected_trace = ["ae_005_message_success", "ae_005_channel_placement_driver", "ae_005_message_not_replicated", "ae_005_current_campaign"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_006_irrelevant_failure_same_stack"
+task_type = "governance_trace"
+challenges = ["adversarial", "irrelevant_memory", "failure_learning"]
+question = "A project using the same stack failed for budget reasons. Should that memory block the stack?"
+expected_decision = "do_not_blame_stack_for_budget_failure"
+distractor_decision = "avoid_stack_due_to_failure"
+relevant_memories = ["ae_006_same_stack_project_failed", "ae_006_budget_root_cause", "ae_006_stack_not_root_cause", "ae_006_current_stack_choice"]
+expected_trace = ["ae_006_same_stack_project_failed", "ae_006_budget_root_cause", "ae_006_stack_not_root_cause", "ae_006_current_stack_choice"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_007_keyword_urgent_not_priority"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "governance_boundary"]
+question = "Memories containing 'urgent' are numerous, but none match the current risk. Should urgency dominate?"
+expected_decision = "avoid_keyword_urgency_bias"
+distractor_decision = "prioritize_due_to_urgent_keyword"
+relevant_memories = ["ae_007_many_urgent_keywords", "ae_007_current_risk_low", "ae_007_no_matching_driver", "ae_007_current_prioritization"]
+expected_trace = ["ae_007_many_urgent_keywords", "ae_007_current_risk_low", "ae_007_no_matching_driver", "ae_007_current_prioritization"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_008_single_customer_loud_feedback"
+task_type = "governance_trace"
+challenges = ["adversarial", "scope_expansion", "customer_feedback"]
+question = "One loud customer requested a feature, but broader usage is unknown. What should Synapse do?"
+expected_decision = "validate_broader_demand"
+distractor_decision = "treat_loud_customer_as_market"
+relevant_memories = ["ae_008_loud_customer_request", "ae_008_broader_usage_unknown", "ae_008_segment_unclear", "ae_008_current_feature_decision"]
+expected_trace = ["ae_008_loud_customer_request", "ae_008_broader_usage_unknown", "ae_008_segment_unclear", "ae_008_current_feature_decision"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_009_old_win_different_constraint"
+task_type = "governance_trace"
+challenges = ["adversarial", "misleading_similarity", "context_shift"]
+question = "An old approach won when latency did not matter, but current latency is strict. Should Synapse reuse it?"
+expected_decision = "avoid_reuse_due_to_latency_constraint"
+distractor_decision = "reuse_old_winning_approach"
+relevant_memories = ["ae_009_old_win_no_latency_constraint", "ae_009_current_latency_strict", "ae_009_approach_latency_unknown", "ae_009_current_architecture_choice"]
+expected_trace = ["ae_009_old_win_no_latency_constraint", "ae_009_current_latency_strict", "ae_009_approach_latency_unknown", "ae_009_current_architecture_choice"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_010_shared_owner_not_shared_cause"
+task_type = "governance_trace"
+challenges = ["adversarial", "causal_trap", "irrelevant_memory"]
+question = "Two failures share an owner, but postmortems show different causes. Should owner identity dominate?"
+expected_decision = "avoid_owner_causal_claim"
+distractor_decision = "blame_shared_owner"
+relevant_memories = ["ae_010_failure_a_owner_x", "ae_010_failure_b_owner_x", "ae_010_postmortems_different_causes", "ae_010_current_owner_assessment"]
+expected_trace = ["ae_010_failure_a_owner_x", "ae_010_failure_b_owner_x", "ae_010_postmortems_different_causes", "ae_010_current_owner_assessment"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_011_same_metric_different_definition"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "metric_feedback"]
+question = "Two memories use the same metric name but definitions changed. Should they be compared directly?"
+expected_decision = "avoid_direct_metric_comparison"
+distractor_decision = "compare_metric_values_directly"
+relevant_memories = ["ae_011_old_metric_name", "ae_011_metric_definition_changed", "ae_011_values_not_comparable", "ae_011_current_metric_review"]
+expected_trace = ["ae_011_old_metric_name", "ae_011_metric_definition_changed", "ae_011_values_not_comparable", "ae_011_current_metric_review"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_012_similar_failure_different_phase"
+task_type = "governance_trace"
+challenges = ["adversarial", "misleading_similarity", "temporal_reasoning"]
+question = "A failure happened in beta, while the current issue is post-launch. Should Synapse treat them as identical?"
+expected_decision = "separate_beta_failure_from_post_launch"
+distractor_decision = "reuse_beta_failure_response"
+relevant_memories = ["ae_012_beta_failure", "ae_012_post_launch_context", "ae_012_phase_difference_matters", "ae_012_current_issue"]
+expected_trace = ["ae_012_beta_failure", "ae_012_post_launch_context", "ae_012_phase_difference_matters", "ae_012_current_issue"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_013_price_word_not_price_driver"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "business_feedback"]
+question = "Many memories mention price, but the current churn evidence points to onboarding. What should dominate?"
+expected_decision = "focus_on_onboarding_not_price_keyword"
+distractor_decision = "change_price_due_to_keyword"
+relevant_memories = ["ae_013_price_keyword_memories", "ae_013_churn_driver_onboarding", "ae_013_price_not_supported", "ae_013_current_churn_plan"]
+expected_trace = ["ae_013_price_keyword_memories", "ae_013_churn_driver_onboarding", "ae_013_price_not_supported", "ae_013_current_churn_plan"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_014_adjacent_feature_not_dependency"
+task_type = "governance_trace"
+challenges = ["adversarial", "causal_trap", "irrelevant_memory"]
+question = "An adjacent feature launched before retention improved, but dependency analysis says it was unrelated. What should Synapse infer?"
+expected_decision = "avoid_adjacent_feature_credit"
+distractor_decision = "credit_adjacent_feature"
+relevant_memories = ["ae_014_adjacent_feature_launch", "ae_014_retention_improved_later", "ae_014_dependency_analysis_unrelated", "ae_014_current_retention_review"]
+expected_trace = ["ae_014_adjacent_feature_launch", "ae_014_retention_improved_later", "ae_014_dependency_analysis_unrelated", "ae_014_current_retention_review"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_015_negative_review_wrong_segment"
+task_type = "governance_trace"
+challenges = ["adversarial", "scope_expansion", "customer_feedback"]
+question = "A negative review came from an unsupported segment. Should it suppress the current supported-segment feature?"
+expected_decision = "do_not_suppress_supported_segment_feature"
+distractor_decision = "suppress_feature_due_to_review"
+relevant_memories = ["ae_015_negative_review_unsupported_segment", "ae_015_supported_segment_differs", "ae_015_current_segment_supported", "ae_015_current_feature_choice"]
+expected_trace = ["ae_015_negative_review_unsupported_segment", "ae_015_supported_segment_differs", "ae_015_current_segment_supported", "ae_015_current_feature_choice"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_016_same_error_code_different_service"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "platform_constraint"]
+question = "The same error code appears in another service, but service semantics differ. Should Synapse reuse that fix?"
+expected_decision = "verify_service_semantics_before_fix"
+distractor_decision = "reuse_error_code_fix"
+relevant_memories = ["ae_016_same_error_code_other_service", "ae_016_service_semantics_differ", "ae_016_fix_not_portable", "ae_016_current_service_incident"]
+expected_trace = ["ae_016_same_error_code_other_service", "ae_016_service_semantics_differ", "ae_016_fix_not_portable", "ae_016_current_service_incident"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_017_success_after_training_not_tool"
+task_type = "governance_trace"
+challenges = ["adversarial", "causal_trap", "team_constraint"]
+question = "Team speed improved after a tool change and training. Evidence credits training. What should be inferred?"
+expected_decision = "credit_training_not_tool_alone"
+distractor_decision = "credit_tool_alone"
+relevant_memories = ["ae_017_tool_change", "ae_017_training_same_period", "ae_017_evidence_credits_training", "ae_017_current_productivity_decision"]
+expected_trace = ["ae_017_tool_change", "ae_017_training_same_period", "ae_017_evidence_credits_training", "ae_017_current_productivity_decision"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_018_irrelevant_latency_memory"
+task_type = "governance_trace"
+challenges = ["adversarial", "irrelevant_memory", "performance_feedback"]
+question = "A latency memory is relevant by keyword, but the current decision is about data correctness. Should it dominate?"
+expected_decision = "prioritize_correctness_memory"
+distractor_decision = "prioritize_latency_memory"
+relevant_memories = ["ae_018_latency_memory_keyword_match", "ae_018_current_correctness_need", "ae_018_correctness_incident_memory", "ae_018_current_data_decision"]
+expected_trace = ["ae_018_latency_memory_keyword_match", "ae_018_current_correctness_need", "ae_018_correctness_incident_memory", "ae_018_current_data_decision"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_019_successful_shortcut_wrong_stakes"
+task_type = "governance_trace"
+challenges = ["adversarial", "misleading_similarity", "risk_learning"]
+question = "A shortcut worked in low-stakes work, but the current task is high-stakes. Should the shortcut transfer?"
+expected_decision = "do_not_transfer_low_stakes_shortcut"
+distractor_decision = "reuse_shortcut"
+relevant_memories = ["ae_019_low_stakes_shortcut_success", "ae_019_current_high_stakes", "ae_019_stakes_change_matters", "ae_019_current_delivery_choice"]
+expected_trace = ["ae_019_low_stakes_shortcut_success", "ae_019_current_high_stakes", "ae_019_stakes_change_matters", "ae_019_current_delivery_choice"]
+expected_influence_delta = 0.66
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"
+
+[[cases]]
+id = "adversarial_expanded_020_adversarial_summary"
+task_type = "governance_trace"
+challenges = ["adversarial", "keyword_trap", "causal_trap", "irrelevant_memory"]
+question = "The retrieved memories look related by words, but causal and contextual links are missing. What is the correct boundary?"
+expected_decision = "observe_without_over_inference"
+distractor_decision = "infer_from_retrieved_similarity"
+relevant_memories = ["ae_020_retrieved_keyword_overlap", "ae_020_causal_link_missing", "ae_020_context_link_missing", "ae_020_current_boundary_decision"]
+expected_trace = ["ae_020_retrieved_keyword_overlap", "ae_020_causal_link_missing", "ae_020_context_link_missing", "ae_020_current_boundary_decision"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "adversarial_expanded_restraint"

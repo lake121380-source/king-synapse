@@ -1,0 +1,461 @@
+suite = "memory_conflict"
+
+[profiles.memory_conflict_standard.methods.vector_rag]
+decision = "wrong"
+confidence = 0.66
+evidence_coverage = 0.45
+trace_completeness = 0.24
+trace_order_score = 0.23
+memory_influence_score = 0.33
+governance_trace_score = 0.0
+explainability_score = 0.35
+
+[profiles.memory_conflict_standard.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.62
+evidence_coverage = 0.54
+trace_completeness = 0.34
+trace_order_score = 0.32
+memory_influence_score = 0.42
+governance_trace_score = 0.0
+explainability_score = 0.43
+
+[profiles.memory_conflict_standard.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.66
+evidence_coverage = 0.69
+trace_completeness = 0.52
+trace_order_score = 0.50
+memory_influence_score = 0.57
+governance_trace_score = 0.0
+explainability_score = 0.60
+
+[profiles.memory_conflict_standard.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.70
+trace_order_score = 0.67
+memory_influence_score = 0.70
+governance_trace_score = 0.0
+explainability_score = 0.73
+
+[profiles.memory_conflict_standard.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.91
+trace_completeness = 0.86
+trace_order_score = 0.83
+memory_influence_score = 0.86
+governance_trace_score = 0.0
+explainability_score = 0.83
+
+[profiles.memory_conflict_standard.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.86
+evidence_coverage = 0.95
+trace_completeness = 0.91
+trace_order_score = 0.89
+memory_influence_score = 0.89
+governance_trace_score = 1.0
+explainability_score = 0.89
+
+[profiles.memory_conflict_standard.methods.full_synapse]
+decision = "expected"
+confidence = 0.89
+evidence_coverage = 0.97
+trace_completeness = 0.95
+trace_order_score = 0.92
+memory_influence_score = 0.91
+governance_trace_score = 1.0
+explainability_score = 0.92
+
+[[cases]]
+id = "memory_conflict_001_fast_preference_reversed"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "contradiction"]
+question = "Old memory says the user preferred fast solutions, but newer feedback rejected speed-only plans. What should current recall favor?"
+expected_decision = "favor_balanced_plan"
+distractor_decision = "favor_fast_only_plan"
+relevant_memories = ["mc_001_old_fast_preference", "mc_001_new_reject_speed_only", "mc_001_balanced_plan_success", "mc_001_current_architecture_request"]
+expected_trace = ["mc_001_old_fast_preference", "mc_001_new_reject_speed_only", "mc_001_balanced_plan_success", "mc_001_current_architecture_request"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_002_policy_old_allow_new_block"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "policy_change", "temporal_reasoning"]
+question = "A prior policy allowed direct access, but a later policy forbids it. What should guide the answer?"
+expected_decision = "follow_current_access_policy"
+distractor_decision = "follow_old_access_policy"
+relevant_memories = ["mc_002_old_direct_access_policy", "mc_002_new_access_policy_blocks", "mc_002_policy_change_reason", "mc_002_current_access_request"]
+expected_trace = ["mc_002_old_direct_access_policy", "mc_002_new_access_policy_blocks", "mc_002_policy_change_reason", "mc_002_current_access_request"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_003_outdated_vendor_claim"
+task_type = "retrieval_vs_reasoning"
+challenges = ["memory_conflict", "outdated_information", "temporal_reasoning"]
+question = "Old vendor notes claimed best performance, but recent benchmarks contradict them. What should Synapse believe?"
+expected_decision = "trust_recent_benchmark"
+distractor_decision = "trust_old_vendor_claim"
+relevant_memories = ["mc_003_old_vendor_claim", "mc_003_recent_benchmark", "mc_003_benchmark_validated", "mc_003_current_vendor_choice"]
+expected_trace = ["mc_003_old_vendor_claim", "mc_003_recent_benchmark", "mc_003_benchmark_validated", "mc_003_current_vendor_choice"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_004_old_user_like_new_dislike"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "user_feedback"]
+question = "The user once liked modal workflows, then later complained that modals broke focus. What should guide the new UI choice?"
+expected_decision = "avoid_modal_workflow"
+distractor_decision = "use_modal_workflow"
+relevant_memories = ["mc_004_old_modal_preference", "mc_004_later_modal_complaint", "mc_004_inline_flow_success", "mc_004_current_ui_request"]
+expected_trace = ["mc_004_old_modal_preference", "mc_004_later_modal_complaint", "mc_004_inline_flow_success", "mc_004_current_ui_request"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_005_security_exception_revoked"
+task_type = "governance_trace"
+challenges = ["memory_conflict", "policy_change", "security_feedback"]
+question = "An old exception allowed bypassing review, but the exception was revoked after a security incident. What should governance do?"
+expected_decision = "require_security_review"
+distractor_decision = "reuse_old_exception"
+relevant_memories = ["mc_005_old_review_exception", "mc_005_security_incident", "mc_005_exception_revoked", "mc_005_current_sensitive_change"]
+expected_trace = ["mc_005_old_review_exception", "mc_005_security_incident", "mc_005_exception_revoked", "mc_005_current_sensitive_change"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_006_deprecated_api_success"
+task_type = "retrieval_vs_reasoning"
+challenges = ["memory_conflict", "outdated_information", "platform_constraint"]
+question = "An old API integration succeeded, but the API is now deprecated. What should be recommended?"
+expected_decision = "migrate_to_current_api"
+distractor_decision = "reuse_deprecated_api"
+relevant_memories = ["mc_006_old_api_success", "mc_006_api_deprecated", "mc_006_current_api_path", "mc_006_current_integration_need"]
+expected_trace = ["mc_006_old_api_success", "mc_006_api_deprecated", "mc_006_current_api_path", "mc_006_current_integration_need"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_007_budget_preference_changed"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "cost_tradeoff"]
+question = "The user previously optimized for lowest cost, but later accepted higher cost after downtime. What should current planning use?"
+expected_decision = "optimize_for_reliability_with_cost_cap"
+distractor_decision = "optimize_for_lowest_cost"
+relevant_memories = ["mc_007_old_lowest_cost_preference", "mc_007_downtime_from_low_cost", "mc_007_reliability_with_cost_cap", "mc_007_current_planning"]
+expected_trace = ["mc_007_old_lowest_cost_preference", "mc_007_downtime_from_low_cost", "mc_007_reliability_with_cost_cap", "mc_007_current_planning"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_008_old_success_new_failure_same_tool"
+task_type = "strategy_evolution"
+challenges = ["memory_conflict", "failure_learning", "temporal_reasoning"]
+question = "A tool succeeded in one old project, but failed recently under larger scale. What should the current decision consider?"
+expected_decision = "limit_tool_to_small_scope"
+distractor_decision = "reuse_tool_for_large_scope"
+relevant_memories = ["mc_008_old_tool_small_success", "mc_008_recent_tool_large_failure", "mc_008_scope_condition_identified", "mc_008_current_large_scope"]
+expected_trace = ["mc_008_old_tool_small_success", "mc_008_recent_tool_large_failure", "mc_008_scope_condition_identified", "mc_008_current_large_scope"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_009_old_team_capacity_new_hiring"
+task_type = "multi_hop_causal"
+challenges = ["memory_conflict", "team_constraint", "temporal_reasoning"]
+question = "Old memory says the team lacked capacity, but recent hiring changed ownership. What should guide the recommendation?"
+expected_decision = "allow_plan_with_new_owner_capacity"
+distractor_decision = "block_due_to_old_capacity"
+relevant_memories = ["mc_009_old_capacity_shortage", "mc_009_recent_hiring", "mc_009_owner_capacity_confirmed", "mc_009_current_project_plan"]
+expected_trace = ["mc_009_old_capacity_shortage", "mc_009_recent_hiring", "mc_009_owner_capacity_confirmed", "mc_009_current_project_plan"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_010_old_rejection_new_acceptance"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "contradiction"]
+question = "The user rejected notifications last month, but accepted scoped alerts after an outage. What should current design do?"
+expected_decision = "use_scoped_alerts"
+distractor_decision = "avoid_all_notifications"
+relevant_memories = ["mc_010_old_notification_rejection", "mc_010_outage_needed_alert", "mc_010_scoped_alert_acceptance", "mc_010_current_alert_design"]
+expected_trace = ["mc_010_old_notification_rejection", "mc_010_outage_needed_alert", "mc_010_scoped_alert_acceptance", "mc_010_current_alert_design"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_011_outdated_metric_goal"
+task_type = "retrieval_vs_reasoning"
+challenges = ["memory_conflict", "outdated_information", "metric_feedback"]
+question = "Old goals optimized signups, but the current plan optimizes retention after churn evidence. What should Synapse prioritize?"
+expected_decision = "prioritize_retention"
+distractor_decision = "prioritize_signups"
+relevant_memories = ["mc_011_old_signup_goal", "mc_011_churn_evidence", "mc_011_retention_goal_update", "mc_011_current_growth_plan"]
+expected_trace = ["mc_011_old_signup_goal", "mc_011_churn_evidence", "mc_011_retention_goal_update", "mc_011_current_growth_plan"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_012_legacy_region_rule"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "policy_change", "outdated_information"]
+question = "A region rule from last year conflicts with a new data residency policy. Which memory should dominate?"
+expected_decision = "apply_new_data_residency_policy"
+distractor_decision = "apply_legacy_region_rule"
+relevant_memories = ["mc_012_legacy_region_rule", "mc_012_new_residency_policy", "mc_012_policy_supersedes_rule", "mc_012_current_region_case"]
+expected_trace = ["mc_012_legacy_region_rule", "mc_012_new_residency_policy", "mc_012_policy_supersedes_rule", "mc_012_current_region_case"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_013_old_fast_onboarding_new_support"
+task_type = "strategy_evolution"
+challenges = ["memory_conflict", "user_feedback", "failure_learning"]
+question = "Fast onboarding was celebrated early, but later support showed users missed setup context. What should current onboarding do?"
+expected_decision = "use_guided_onboarding"
+distractor_decision = "reuse_fast_onboarding"
+relevant_memories = ["mc_013_old_fast_onboarding_win", "mc_013_support_missing_context", "mc_013_guided_onboarding_success", "mc_013_current_onboarding_plan"]
+expected_trace = ["mc_013_old_fast_onboarding_win", "mc_013_support_missing_context", "mc_013_guided_onboarding_success", "mc_013_current_onboarding_plan"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_014_old_experiment_win_new_replicate_fail"
+task_type = "multi_hop_causal"
+challenges = ["memory_conflict", "evidence_tracking", "contradiction"]
+question = "One old experiment won, but two later replications failed. What should the current hypothesis status be?"
+expected_decision = "mark_hypothesis_unproven"
+distractor_decision = "treat_old_win_as_proven"
+relevant_memories = ["mc_014_old_experiment_win", "mc_014_replication_fail_one", "mc_014_replication_fail_two", "mc_014_current_hypothesis_review"]
+expected_trace = ["mc_014_old_experiment_win", "mc_014_replication_fail_one", "mc_014_replication_fail_two", "mc_014_current_hypothesis_review"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_015_old_sales_priority_new_margin_rule"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "policy_change", "business_feedback"]
+question = "Old guidance prioritized sales volume, but a new margin rule was introduced after losses. What should guide pricing?"
+expected_decision = "follow_margin_rule"
+distractor_decision = "prioritize_sales_volume"
+relevant_memories = ["mc_015_old_sales_volume_guidance", "mc_015_losses_from_discounting", "mc_015_new_margin_rule", "mc_015_current_pricing_case"]
+expected_trace = ["mc_015_old_sales_volume_guidance", "mc_015_losses_from_discounting", "mc_015_new_margin_rule", "mc_015_current_pricing_case"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_016_old_library_recommendation_vulnerability"
+task_type = "retrieval_vs_reasoning"
+challenges = ["memory_conflict", "security_feedback", "outdated_information"]
+question = "An old recommendation favored a library, but a vulnerability report and patch gap arrived later. What should Synapse recommend?"
+expected_decision = "avoid_unpatched_library"
+distractor_decision = "use_old_recommended_library"
+relevant_memories = ["mc_016_old_library_recommendation", "mc_016_vulnerability_report", "mc_016_patch_gap_unresolved", "mc_016_current_dependency_choice"]
+expected_trace = ["mc_016_old_library_recommendation", "mc_016_vulnerability_report", "mc_016_patch_gap_unresolved", "mc_016_current_dependency_choice"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_017_old_cloud_preference_new_compliance"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "policy_change", "platform_constraint"]
+question = "The user preferred a cloud region earlier, but a new compliance rule excludes it. What should the current deployment choose?"
+expected_decision = "deploy_in_compliant_region"
+distractor_decision = "deploy_in_old_preferred_region"
+relevant_memories = ["mc_017_old_cloud_region_preference", "mc_017_new_compliance_rule", "mc_017_compliant_region_available", "mc_017_current_deployment"]
+expected_trace = ["mc_017_old_cloud_region_preference", "mc_017_new_compliance_rule", "mc_017_compliant_region_available", "mc_017_current_deployment"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_018_old_cache_win_new_consistency_bug"
+task_type = "strategy_evolution"
+challenges = ["memory_conflict", "failure_learning", "performance_feedback"]
+question = "A cache improved speed before, but newer evidence shows consistency bugs in this path. What should guide optimization?"
+expected_decision = "use_consistency_safe_optimization"
+distractor_decision = "reuse_old_cache_pattern"
+relevant_memories = ["mc_018_old_cache_speed_win", "mc_018_new_consistency_bug", "mc_018_safe_optimization_pattern", "mc_018_current_performance_need"]
+expected_trace = ["mc_018_old_cache_speed_win", "mc_018_new_consistency_bug", "mc_018_safe_optimization_pattern", "mc_018_current_performance_need"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_019_old_customer_request_new_usage_data"
+task_type = "multi_hop_causal"
+challenges = ["memory_conflict", "customer_feedback", "metric_feedback"]
+question = "An old customer requested a feature, but new usage data shows the workflow changed. What should the roadmap do?"
+expected_decision = "validate_current_workflow_before_build"
+distractor_decision = "build_old_customer_request"
+relevant_memories = ["mc_019_old_customer_feature_request", "mc_019_new_usage_data_changed", "mc_019_validation_needed", "mc_019_current_roadmap"]
+expected_trace = ["mc_019_old_customer_feature_request", "mc_019_new_usage_data_changed", "mc_019_validation_needed", "mc_019_current_roadmap"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_020_old_single_tenant_new_multi_tenant"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "context_shift", "architecture_tradeoff"]
+question = "Old architecture advice assumed single-tenant use, but the current context is multi-tenant. What should Synapse do?"
+expected_decision = "use_multi_tenant_safe_design"
+distractor_decision = "reuse_single_tenant_design"
+relevant_memories = ["mc_020_old_single_tenant_advice", "mc_020_current_multi_tenant_context", "mc_020_isolation_requirement", "mc_020_multi_tenant_safe_pattern"]
+expected_trace = ["mc_020_old_single_tenant_advice", "mc_020_current_multi_tenant_context", "mc_020_isolation_requirement", "mc_020_multi_tenant_safe_pattern"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_021_old_skip_review_new_incident"
+task_type = "governance_trace"
+challenges = ["memory_conflict", "quality_gate", "failure_learning"]
+question = "The user once skipped review successfully, but a later skipped review caused an incident. What should governance favor?"
+expected_decision = "require_review_for_risky_change"
+distractor_decision = "skip_review_based_on_old_success"
+relevant_memories = ["mc_021_old_skip_review_success", "mc_021_later_skipped_review_incident", "mc_021_review_gate_revision", "mc_021_current_risky_change"]
+expected_trace = ["mc_021_old_skip_review_success", "mc_021_later_skipped_review_incident", "mc_021_review_gate_revision", "mc_021_current_risky_change"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_022_old_diy_preference_new_vendor_success"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "maintenance_feedback"]
+question = "An old memory says the user preferred DIY, but vendor-managed operations later reduced incidents. What should current advice use?"
+expected_decision = "use_vendor_managed_component"
+distractor_decision = "build_diy_component"
+relevant_memories = ["mc_022_old_diy_preference", "mc_022_diy_incidents", "mc_022_vendor_managed_success", "mc_022_current_component_choice"]
+expected_trace = ["mc_022_old_diy_preference", "mc_022_diy_incidents", "mc_022_vendor_managed_success", "mc_022_current_component_choice"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_023_old_external_api_new_internal_api"
+task_type = "retrieval_vs_reasoning"
+challenges = ["memory_conflict", "outdated_information", "platform_constraint"]
+question = "Old docs reference an external API, but an internal API replaced it. What should integration planning use?"
+expected_decision = "use_internal_replacement_api"
+distractor_decision = "use_external_deprecated_api"
+relevant_memories = ["mc_023_old_external_api_docs", "mc_023_internal_replacement_api", "mc_023_external_api_deprecation", "mc_023_current_integration_plan"]
+expected_trace = ["mc_023_old_external_api_docs", "mc_023_internal_replacement_api", "mc_023_external_api_deprecation", "mc_023_current_integration_plan"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_024_old_design_token_new_brand"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "policy_change", "design_feedback"]
+question = "Old design tokens were approved, but the brand system changed. What should the new page use?"
+expected_decision = "use_current_brand_tokens"
+distractor_decision = "reuse_old_tokens"
+relevant_memories = ["mc_024_old_design_tokens", "mc_024_brand_system_changed", "mc_024_current_tokens_approved", "mc_024_current_page_request"]
+expected_trace = ["mc_024_old_design_tokens", "mc_024_brand_system_changed", "mc_024_current_tokens_approved", "mc_024_current_page_request"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_025_old_success_new_market_shift"
+task_type = "strategy_evolution"
+challenges = ["memory_conflict", "context_shift", "business_feedback"]
+question = "A sales motion worked before, but the market shifted and recent attempts failed. What should Synapse recommend?"
+expected_decision = "revalidate_sales_motion"
+distractor_decision = "reuse_old_sales_motion"
+relevant_memories = ["mc_025_old_sales_motion_success", "mc_025_market_shift", "mc_025_recent_attempts_failed", "mc_025_current_go_to_market"]
+expected_trace = ["mc_025_old_sales_motion_success", "mc_025_market_shift", "mc_025_recent_attempts_failed", "mc_025_current_go_to_market"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_026_old_localization_priority_new_region"
+task_type = "multi_hop_causal"
+challenges = ["memory_conflict", "context_shift", "customer_feedback"]
+question = "Old localization priority was low, but a new region launch depends on it. What should be prioritized now?"
+expected_decision = "prioritize_region_localization"
+distractor_decision = "keep_localization_low_priority"
+relevant_memories = ["mc_026_old_localization_low_priority", "mc_026_new_region_launch", "mc_026_localization_required_for_region", "mc_026_current_release_plan"]
+expected_trace = ["mc_026_old_localization_low_priority", "mc_026_new_region_launch", "mc_026_localization_required_for_region", "mc_026_current_release_plan"]
+expected_influence_delta = 0.79
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_027_old_model_accuracy_new_bias_audit"
+task_type = "governance_trace"
+challenges = ["memory_conflict", "governance_boundary", "quality_gate"]
+question = "Old evaluation showed model accuracy, but a new bias audit raised concerns. What should govern deployment?"
+expected_decision = "hold_for_bias_mitigation"
+distractor_decision = "deploy_based_on_old_accuracy"
+relevant_memories = ["mc_027_old_accuracy_eval", "mc_027_new_bias_audit", "mc_027_mitigation_needed", "mc_027_current_deployment_decision"]
+expected_trace = ["mc_027_old_accuracy_eval", "mc_027_new_bias_audit", "mc_027_mitigation_needed", "mc_027_current_deployment_decision"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_028_old_beta_positive_new_general_negative"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "scope_expansion", "user_feedback"]
+question = "A beta group liked a feature, but general users later rejected it. What should the current rollout decide?"
+expected_decision = "limit_feature_to_beta_segment"
+distractor_decision = "roll_out_to_all_users"
+relevant_memories = ["mc_028_beta_positive_feedback", "mc_028_general_user_rejection", "mc_028_segment_difference_identified", "mc_028_current_rollout_decision"]
+expected_trace = ["mc_028_beta_positive_feedback", "mc_028_general_user_rejection", "mc_028_segment_difference_identified", "mc_028_current_rollout_decision"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_029_old_incident_fixed_new_regression"
+task_type = "strategy_evolution"
+challenges = ["memory_conflict", "temporal_reasoning", "failure_learning"]
+question = "An old incident was fixed, but a new regression appears in the same area. What should Synapse infer?"
+expected_decision = "investigate_new_regression"
+distractor_decision = "assume_old_fix_still_sufficient"
+relevant_memories = ["mc_029_old_incident_fixed", "mc_029_new_regression", "mc_029_area_overlap", "mc_029_current_investigation_need"]
+expected_trace = ["mc_029_old_incident_fixed", "mc_029_new_regression", "mc_029_area_overlap", "mc_029_current_investigation_need"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"
+
+[[cases]]
+id = "memory_conflict_030_old_preference_preserved_but_reweighted"
+task_type = "longitudinal_consistency"
+challenges = ["memory_conflict", "preference_change", "contradiction"]
+question = "Old preference still matters, but newer failures changed its weight. What should current memory reasoning output?"
+expected_decision = "preserve_preference_with_updated_constraints"
+distractor_decision = "apply_old_preference_without_constraints"
+relevant_memories = ["mc_030_old_preference", "mc_030_new_failure_evidence", "mc_030_updated_constraints", "mc_030_current_decision"]
+expected_trace = ["mc_030_old_preference", "mc_030_new_failure_evidence", "mc_030_updated_constraints", "mc_030_current_decision"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "memory_conflict_standard"

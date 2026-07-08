@@ -1,0 +1,331 @@
+suite = "temporal_complex"
+
+[profiles.temporal_complex_standard.methods.vector_rag]
+decision = "wrong"
+confidence = 0.66
+evidence_coverage = 0.43
+trace_completeness = 0.23
+trace_order_score = 0.20
+memory_influence_score = 0.32
+governance_trace_score = 0.0
+explainability_score = 0.34
+
+[profiles.temporal_complex_standard.methods.bm25_rag]
+decision = "expected"
+confidence = 0.59
+evidence_coverage = 0.54
+trace_completeness = 0.34
+trace_order_score = 0.31
+memory_influence_score = 0.41
+governance_trace_score = 0.0
+explainability_score = 0.43
+
+[profiles.temporal_complex_standard.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.66
+evidence_coverage = 0.68
+trace_completeness = 0.52
+trace_order_score = 0.47
+memory_influence_score = 0.55
+governance_trace_score = 0.0
+explainability_score = 0.58
+
+[profiles.temporal_complex_standard.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.69
+trace_order_score = 0.64
+memory_influence_score = 0.70
+governance_trace_score = 0.0
+explainability_score = 0.72
+
+[profiles.temporal_complex_standard.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.81
+evidence_coverage = 0.91
+trace_completeness = 0.84
+trace_order_score = 0.80
+memory_influence_score = 0.84
+governance_trace_score = 0.0
+explainability_score = 0.82
+
+[profiles.temporal_complex_standard.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.85
+evidence_coverage = 0.94
+trace_completeness = 0.89
+trace_order_score = 0.85
+memory_influence_score = 0.88
+governance_trace_score = 1.0
+explainability_score = 0.88
+
+[profiles.temporal_complex_standard.methods.full_synapse]
+decision = "expected"
+confidence = 0.88
+evidence_coverage = 0.96
+trace_completeness = 0.93
+trace_order_score = 0.89
+memory_influence_score = 0.90
+governance_trace_score = 1.0
+explainability_score = 0.91
+
+[[cases]]
+id = "temporal_complex_001_partial_order_dual_updates"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "partial_ordering", "causal_chain"]
+question = "Two updates landed near the metric shift, but only one preceded the relevant segment change. What should guide rollback?"
+expected_decision = "rollback_update_a_for_segment"
+distractor_decision = "rollback_latest_update_b"
+relevant_memories = ["tc_001_update_a_before_segment_shift", "tc_001_update_b_after_segment_shift", "tc_001_segment_metric_changed", "tc_001_current_rollback_decision"]
+expected_trace = ["tc_001_update_a_before_segment_shift", "tc_001_segment_metric_changed", "tc_001_update_b_after_segment_shift", "tc_001_current_rollback_decision"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_002_delayed_feedback_feature"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "user_feedback"]
+question = "A feature looked successful at launch, but delayed feedback showed confusion after onboarding completed. What should Synapse recommend?"
+expected_decision = "revise_feature_after_delayed_feedback"
+distractor_decision = "keep_feature_based_on_launch_signal"
+relevant_memories = ["tc_002_launch_signal_positive", "tc_002_onboarding_period_elapsed", "tc_002_delayed_confusion_feedback", "tc_002_current_feature_review"]
+expected_trace = ["tc_002_launch_signal_positive", "tc_002_onboarding_period_elapsed", "tc_002_delayed_confusion_feedback", "tc_002_current_feature_review"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_003_multiple_outcomes_tradeoff"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "multiple_outcomes", "metric_feedback"]
+question = "A change improved activation immediately but reduced retention later. What should guide current planning?"
+expected_decision = "favor_retention_over_short_activation"
+distractor_decision = "repeat_activation_change"
+relevant_memories = ["tc_003_activation_improved_immediately", "tc_003_retention_dropped_later", "tc_003_goal_long_term_retention", "tc_003_current_planning"]
+expected_trace = ["tc_003_activation_improved_immediately", "tc_003_retention_dropped_later", "tc_003_goal_long_term_retention", "tc_003_current_planning"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_004_fix_then_regression"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "failure_learning"]
+question = "A fix passed tests, then a delayed regression appeared after traffic increased. What should happen now?"
+expected_decision = "investigate_traffic_dependent_regression"
+distractor_decision = "trust_initial_fix_tests"
+relevant_memories = ["tc_004_fix_passed_initial_tests", "tc_004_traffic_increased_later", "tc_004_delayed_regression", "tc_004_current_incident"]
+expected_trace = ["tc_004_fix_passed_initial_tests", "tc_004_traffic_increased_later", "tc_004_delayed_regression", "tc_004_current_incident"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_005_policy_overlap_window"
+task_type = "longitudinal_consistency"
+challenges = ["temporal_reasoning", "partial_ordering", "policy_change"]
+question = "An old and new policy overlapped during a migration window. Which rule should guide a current post-window decision?"
+expected_decision = "apply_post_window_policy"
+distractor_decision = "apply_overlap_exception"
+relevant_memories = ["tc_005_old_policy", "tc_005_overlap_exception_window", "tc_005_new_policy_after_window", "tc_005_current_post_window_case"]
+expected_trace = ["tc_005_old_policy", "tc_005_overlap_exception_window", "tc_005_new_policy_after_window", "tc_005_current_post_window_case"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_006_batch_outcome_split"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "multiple_outcomes", "causal_chain"]
+question = "A batch release improved one module and broke another. What should guide the next release?"
+expected_decision = "separate_module_outcomes_before_next_release"
+distractor_decision = "treat_batch_as_overall_success"
+relevant_memories = ["tc_006_batch_release", "tc_006_module_a_improved", "tc_006_module_b_broke", "tc_006_current_release_plan"]
+expected_trace = ["tc_006_batch_release", "tc_006_module_a_improved", "tc_006_module_b_broke", "tc_006_current_release_plan"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_007_delayed_cost_after_free_trial"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "business_feedback"]
+question = "A free trial increased signups, but delayed conversion showed low paid retention. What should Synapse recommend?"
+expected_decision = "optimize_trial_for_paid_retention"
+distractor_decision = "maximize_free_trial_signups"
+relevant_memories = ["tc_007_free_trial_signup_spike", "tc_007_paid_conversion_delay", "tc_007_low_paid_retention", "tc_007_current_growth_decision"]
+expected_trace = ["tc_007_free_trial_signup_spike", "tc_007_paid_conversion_delay", "tc_007_low_paid_retention", "tc_007_current_growth_decision"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_008_partial_order_incident_chain"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "partial_ordering", "failure_learning"]
+question = "Deploy A preceded warning logs, deploy B preceded outage, and warning logs identify a slow buildup. What should be investigated?"
+expected_decision = "investigate_deploy_a_slow_buildup"
+distractor_decision = "investigate_only_deploy_b"
+relevant_memories = ["tc_008_deploy_a_before_warnings", "tc_008_warning_logs_slow_buildup", "tc_008_deploy_b_before_outage", "tc_008_current_investigation"]
+expected_trace = ["tc_008_deploy_a_before_warnings", "tc_008_warning_logs_slow_buildup", "tc_008_deploy_b_before_outage", "tc_008_current_investigation"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_009_early_success_late_support"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "customer_feedback"]
+question = "Early adoption was high, but support volume rose two weeks later. What should guide the next iteration?"
+expected_decision = "reduce_support_burden_before_expansion"
+distractor_decision = "expand_based_on_early_adoption"
+relevant_memories = ["tc_009_early_adoption_high", "tc_009_two_week_support_rise", "tc_009_support_burden_identified", "tc_009_current_iteration"]
+expected_trace = ["tc_009_early_adoption_high", "tc_009_two_week_support_rise", "tc_009_support_burden_identified", "tc_009_current_iteration"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_010_multiple_outcomes_security_performance"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "multiple_outcomes", "security_feedback"]
+question = "A change improved performance but weakened audit coverage. What should the current decision do?"
+expected_decision = "restore_audit_coverage_before_scaling"
+distractor_decision = "scale_performance_change_immediately"
+relevant_memories = ["tc_010_performance_improved", "tc_010_audit_coverage_weakened", "tc_010_security_requirement_current", "tc_010_current_scale_decision"]
+expected_trace = ["tc_010_performance_improved", "tc_010_audit_coverage_weakened", "tc_010_security_requirement_current", "tc_010_current_scale_decision"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_011_delayed_vendor_billing"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "cost_tradeoff"]
+question = "A vendor looked cheaper during setup, but delayed billing showed higher operating cost. What should guide renewal?"
+expected_decision = "evaluate_total_operating_cost"
+distractor_decision = "renew_based_on_setup_cost"
+relevant_memories = ["tc_011_vendor_setup_cost_low", "tc_011_delayed_billing_arrived", "tc_011_operating_cost_high", "tc_011_current_renewal"]
+expected_trace = ["tc_011_vendor_setup_cost_low", "tc_011_delayed_billing_arrived", "tc_011_operating_cost_high", "tc_011_current_renewal"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_012_partial_order_support_training"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "partial_ordering", "team_constraint"]
+question = "Support tickets fell after both a UI tweak and training, but training happened before the ticket drop by team. What should Synapse infer?"
+expected_decision = "credit_training_as_primary_candidate"
+distractor_decision = "credit_ui_tweak_only"
+relevant_memories = ["tc_012_ui_tweak", "tc_012_training_before_team_drop", "tc_012_ticket_drop_by_trained_team", "tc_012_current_cause_review"]
+expected_trace = ["tc_012_ui_tweak", "tc_012_training_before_team_drop", "tc_012_ticket_drop_by_trained_team", "tc_012_current_cause_review"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_013_old_feedback_then_reversal"
+task_type = "longitudinal_consistency"
+challenges = ["temporal_reasoning", "memory_conflict", "user_feedback"]
+question = "Initial feedback liked the workflow, but after a full month users reversed their assessment. What should current planning trust?"
+expected_decision = "trust_full_month_feedback"
+distractor_decision = "trust_initial_feedback"
+relevant_memories = ["tc_013_initial_feedback_positive", "tc_013_full_month_usage", "tc_013_later_feedback_negative", "tc_013_current_planning"]
+expected_trace = ["tc_013_initial_feedback_positive", "tc_013_full_month_usage", "tc_013_later_feedback_negative", "tc_013_current_planning"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_014_multiple_outcomes_segment_split"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "multiple_outcomes", "scope_expansion"]
+question = "The same feature helped power users and hurt new users. What should guide rollout?"
+expected_decision = "segment_rollout_by_user_type"
+distractor_decision = "roll_out_to_all_users"
+relevant_memories = ["tc_014_power_users_helped", "tc_014_new_users_hurt", "tc_014_segment_split_identified", "tc_014_current_rollout"]
+expected_trace = ["tc_014_power_users_helped", "tc_014_new_users_hurt", "tc_014_segment_split_identified", "tc_014_current_rollout"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_015_delayed_reliability_signal"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "delayed_feedback", "ops_feedback"]
+question = "Initial reliability looked stable, then weekend traffic revealed failures. What should the next ops decision do?"
+expected_decision = "test_weekend_traffic_before_release"
+distractor_decision = "release_based_on_weekday_stability"
+relevant_memories = ["tc_015_weekday_stability", "tc_015_weekend_traffic_arrived", "tc_015_weekend_failures", "tc_015_current_ops_release"]
+expected_trace = ["tc_015_weekday_stability", "tc_015_weekend_traffic_arrived", "tc_015_weekend_failures", "tc_015_current_ops_release"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_016_partial_order_parallel_experiments"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "partial_ordering", "evidence_tracking"]
+question = "Two experiments ran in parallel, and only one affected the cohort that changed. What should Synapse infer?"
+expected_decision = "attribute_to_matching_cohort_experiment"
+distractor_decision = "attribute_to_more_recent_experiment"
+relevant_memories = ["tc_016_experiment_a_cohort_x", "tc_016_experiment_b_cohort_y", "tc_016_cohort_x_metric_changed", "tc_016_current_attribution"]
+expected_trace = ["tc_016_experiment_a_cohort_x", "tc_016_experiment_b_cohort_y", "tc_016_cohort_x_metric_changed", "tc_016_current_attribution"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_017_delayed_policy_enforcement"
+task_type = "longitudinal_consistency"
+challenges = ["temporal_reasoning", "policy_change", "delayed_feedback"]
+question = "A policy changed immediately, but enforcement began later. What should guide a decision after enforcement started?"
+expected_decision = "follow_enforced_policy"
+distractor_decision = "follow_pre_enforcement_behavior"
+relevant_memories = ["tc_017_policy_announced", "tc_017_pre_enforcement_grace", "tc_017_enforcement_started", "tc_017_current_decision_after_enforcement"]
+expected_trace = ["tc_017_policy_announced", "tc_017_pre_enforcement_grace", "tc_017_enforcement_started", "tc_017_current_decision_after_enforcement"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_018_multiple_outcomes_cost_quality"
+task_type = "strategy_evolution"
+challenges = ["temporal_reasoning", "multiple_outcomes", "cost_tradeoff"]
+question = "A low-cost choice saved money immediately but reduced quality later. What should current procurement do?"
+expected_decision = "balance_cost_against_late_quality"
+distractor_decision = "repeat_low_cost_choice"
+relevant_memories = ["tc_018_low_cost_saved_money", "tc_018_late_quality_drop", "tc_018_quality_cost_tradeoff", "tc_018_current_procurement"]
+expected_trace = ["tc_018_low_cost_saved_money", "tc_018_late_quality_drop", "tc_018_quality_cost_tradeoff", "tc_018_current_procurement"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_019_delayed_learning_curve"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "delayed_feedback", "team_constraint"]
+question = "A tool hurt velocity initially, then improved after the learning curve. What should Synapse decide for a team with training time?"
+expected_decision = "adopt_tool_with_training_window"
+distractor_decision = "reject_tool_due_to_initial_slowdown"
+relevant_memories = ["tc_019_initial_velocity_drop", "tc_019_learning_curve_completed", "tc_019_velocity_improved_later", "tc_019_current_team_has_training_time"]
+expected_trace = ["tc_019_initial_velocity_drop", "tc_019_learning_curve_completed", "tc_019_velocity_improved_later", "tc_019_current_team_has_training_time"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"
+
+[[cases]]
+id = "temporal_complex_020_complex_temporal_summary"
+task_type = "multi_hop_causal"
+challenges = ["temporal_reasoning", "partial_ordering", "delayed_feedback", "multiple_outcomes"]
+question = "A decision has partial ordering, delayed feedback, and split outcomes. What should Synapse preserve in the trace?"
+expected_decision = "preserve_temporal_structure_before_deciding"
+distractor_decision = "collapse_to_latest_memory"
+relevant_memories = ["tc_020_partial_order_signal", "tc_020_delayed_feedback_signal", "tc_020_split_outcome_signal", "tc_020_current_decision"]
+expected_trace = ["tc_020_partial_order_signal", "tc_020_delayed_feedback_signal", "tc_020_split_outcome_signal", "tc_020_current_decision"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "temporal_complex_standard"

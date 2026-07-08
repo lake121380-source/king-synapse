@@ -1,0 +1,461 @@
+suite = "multi_entity_reasoning"
+
+[profiles.multi_entity_standard.methods.vector_rag]
+decision = "wrong"
+confidence = 0.65
+evidence_coverage = 0.44
+trace_completeness = 0.24
+trace_order_score = 0.24
+memory_influence_score = 0.34
+governance_trace_score = 0.0
+explainability_score = 0.36
+
+[profiles.multi_entity_standard.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.61
+evidence_coverage = 0.53
+trace_completeness = 0.34
+trace_order_score = 0.33
+memory_influence_score = 0.42
+governance_trace_score = 0.0
+explainability_score = 0.44
+
+[profiles.multi_entity_standard.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.66
+evidence_coverage = 0.68
+trace_completeness = 0.52
+trace_order_score = 0.50
+memory_influence_score = 0.56
+governance_trace_score = 0.0
+explainability_score = 0.60
+
+[profiles.multi_entity_standard.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.74
+evidence_coverage = 0.82
+trace_completeness = 0.70
+trace_order_score = 0.68
+memory_influence_score = 0.70
+governance_trace_score = 0.0
+explainability_score = 0.74
+
+[profiles.multi_entity_standard.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.92
+trace_completeness = 0.86
+trace_order_score = 0.84
+memory_influence_score = 0.86
+governance_trace_score = 0.0
+explainability_score = 0.84
+
+[profiles.multi_entity_standard.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.86
+evidence_coverage = 0.95
+trace_completeness = 0.91
+trace_order_score = 0.89
+memory_influence_score = 0.89
+governance_trace_score = 1.0
+explainability_score = 0.89
+
+[profiles.multi_entity_standard.methods.full_synapse]
+decision = "expected"
+confidence = 0.89
+evidence_coverage = 0.97
+trace_completeness = 0.95
+trace_order_score = 0.93
+memory_influence_score = 0.91
+governance_trace_score = 1.0
+explainability_score = 0.92
+
+[[cases]]
+id = "multi_entity_reasoning_001_preference_team_budget_failure"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "budget_constraint", "failure_learning"]
+question = "User prefers speed, the team lacks ops capacity, budget is tight, and the last fast rollout failed. What recommendation should emerge?"
+expected_decision = "choose_low_ops_incremental_plan"
+distractor_decision = "choose_fast_ops_heavy_plan"
+relevant_memories = ["me_001_user_speed_preference", "me_001_team_ops_capacity_low", "me_001_budget_tight", "me_001_fast_rollout_failed"]
+expected_trace = ["me_001_user_speed_preference", "me_001_team_ops_capacity_low", "me_001_budget_tight", "me_001_fast_rollout_failed"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_002_enterprise_policy_small_team"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "policy_constraint", "team_constraint"]
+question = "Enterprise policy requires audit logs, the user wants simplicity, and the small team cannot maintain custom compliance tooling. What should Synapse choose?"
+expected_decision = "use_managed_audit_logging"
+distractor_decision = "build_custom_minimal_logging"
+relevant_memories = ["me_002_user_simplicity_preference", "me_002_enterprise_audit_policy", "me_002_small_team_constraint", "me_002_custom_compliance_cost"]
+expected_trace = ["me_002_user_simplicity_preference", "me_002_enterprise_audit_policy", "me_002_small_team_constraint", "me_002_custom_compliance_cost"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_003_budget_cut_reliability_need"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "budget_constraint", "risk_learning"]
+question = "Budget was cut, reliability requirements increased, and a cheap vendor caused an outage before. What option is best?"
+expected_decision = "pick_reliable_mid_cost_option"
+distractor_decision = "pick_cheapest_vendor"
+relevant_memories = ["me_003_budget_cut", "me_003_reliability_requirement", "me_003_cheap_vendor_outage", "me_003_mid_cost_vendor_success"]
+expected_trace = ["me_003_budget_cut", "me_003_reliability_requirement", "me_003_cheap_vendor_outage", "me_003_mid_cost_vendor_success"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_004_user_privacy_team_timeline"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "privacy_constraint", "schedule_feedback"]
+question = "User preference favors personalization, privacy constraints are strict, and timeline is short. What should guide the feature design?"
+expected_decision = "use_privacy_preserving_personalization"
+distractor_decision = "ship_full_tracking_personalization"
+relevant_memories = ["me_004_personalization_preference", "me_004_privacy_constraint", "me_004_short_timeline", "me_004_privacy_preserving_pattern"]
+expected_trace = ["me_004_personalization_preference", "me_004_privacy_constraint", "me_004_short_timeline", "me_004_privacy_preserving_pattern"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_005_platform_limit_customer_need"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "platform_constraint", "customer_feedback"]
+question = "A customer asks for real-time sync, but the platform limit and past sync failures point elsewhere. What should be recommended?"
+expected_decision = "offer_batched_sync_with_sla"
+distractor_decision = "promise_real_time_sync"
+relevant_memories = ["me_005_customer_realtime_request", "me_005_platform_limit", "me_005_past_realtime_sync_failure", "me_005_batched_sla_success"]
+expected_trace = ["me_005_customer_realtime_request", "me_005_platform_limit", "me_005_past_realtime_sync_failure", "me_005_batched_sla_success"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_006_team_junior_complex_architecture"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "team_constraint", "architecture_tradeoff"]
+question = "The user likes advanced architecture, but the team is junior and a prior complex design stalled. What should dominate?"
+expected_decision = "choose_teachable_simple_architecture"
+distractor_decision = "choose_advanced_architecture"
+relevant_memories = ["me_006_advanced_architecture_preference", "me_006_junior_team_constraint", "me_006_complex_design_stalled", "me_006_teachable_design_success"]
+expected_trace = ["me_006_advanced_architecture_preference", "me_006_junior_team_constraint", "me_006_complex_design_stalled", "me_006_teachable_design_success"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_007_budget_high_latency_strict_sla"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "budget_constraint", "performance_feedback"]
+question = "Budget is limited, latency SLA is strict, and a previous cheap queue missed the SLA. What should Synapse choose?"
+expected_decision = "use_targeted_low_latency_component"
+distractor_decision = "reuse_cheapest_queue"
+relevant_memories = ["me_007_budget_limited", "me_007_latency_sla_strict", "me_007_cheap_queue_missed_sla", "me_007_targeted_component_met_sla"]
+expected_trace = ["me_007_budget_limited", "me_007_latency_sla_strict", "me_007_cheap_queue_missed_sla", "me_007_targeted_component_met_sla"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_008_manager_preference_user_feedback"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "stakeholder_conflict", "user_feedback"]
+question = "A manager prefers a dashboard, users asked for alerts, and past dashboards were ignored. What should the decision be?"
+expected_decision = "prioritize_alert_workflow"
+distractor_decision = "build_manager_dashboard_first"
+relevant_memories = ["me_008_manager_dashboard_preference", "me_008_user_alert_feedback", "me_008_dashboard_ignored_before", "me_008_alert_workflow_success"]
+expected_trace = ["me_008_manager_dashboard_preference", "me_008_user_alert_feedback", "me_008_dashboard_ignored_before", "me_008_alert_workflow_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_009_legacy_dependency_security"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "security_feedback", "platform_constraint"]
+question = "Legacy dependency support is requested, but security policy changed after a vulnerability. What should be selected?"
+expected_decision = "migrate_to_supported_dependency"
+distractor_decision = "keep_legacy_dependency"
+relevant_memories = ["me_009_legacy_support_request", "me_009_security_policy_change", "me_009_dependency_vulnerability", "me_009_supported_dependency_path"]
+expected_trace = ["me_009_legacy_support_request", "me_009_security_policy_change", "me_009_dependency_vulnerability", "me_009_supported_dependency_path"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_010_marketing_deadline_quality_risk"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "schedule_feedback", "risk_learning"]
+question = "Marketing wants a date, quality risk is high, and a previous date-driven launch created churn. What should the plan do?"
+expected_decision = "launch_with_quality_gate"
+distractor_decision = "commit_to_fixed_date_only"
+relevant_memories = ["me_010_marketing_date_request", "me_010_quality_risk_high", "me_010_date_driven_churn", "me_010_quality_gate_reduced_churn"]
+expected_trace = ["me_010_marketing_date_request", "me_010_quality_risk_high", "me_010_date_driven_churn", "me_010_quality_gate_reduced_churn"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_011_open_source_policy_budget"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "policy_constraint", "budget_constraint"]
+question = "The user likes open source, policy requires license review, and budget cannot absorb legal rework. What should guide the dependency choice?"
+expected_decision = "select_reviewed_open_source_dependency"
+distractor_decision = "use_unreviewed_open_source_dependency"
+relevant_memories = ["me_011_open_source_preference", "me_011_license_review_policy", "me_011_legal_rework_cost", "me_011_reviewed_dependency_success"]
+expected_trace = ["me_011_open_source_preference", "me_011_license_review_policy", "me_011_legal_rework_cost", "me_011_reviewed_dependency_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_012_field_team_offline_budget"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "team_constraint", "customer_feedback"]
+question = "Field users need offline mode, budget is limited, and a full offline rewrite failed before. What is the right next step?"
+expected_decision = "build_minimal_offline_critical_path"
+distractor_decision = "rewrite_full_offline_mode"
+relevant_memories = ["me_012_field_offline_need", "me_012_budget_limited", "me_012_full_offline_rewrite_failed", "me_012_minimal_offline_success"]
+expected_trace = ["me_012_field_offline_need", "me_012_budget_limited", "me_012_full_offline_rewrite_failed", "me_012_minimal_offline_success"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_013_exec_scale_goal_ops_limit"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "ops_feedback", "stakeholder_conflict"]
+question = "Executives want rapid scale, ops capacity is limited, and prior rapid scale caused incidents. What should Synapse recommend?"
+expected_decision = "scale_with_operational_readiness_gate"
+distractor_decision = "scale_immediately"
+relevant_memories = ["me_013_exec_scale_goal", "me_013_ops_capacity_limit", "me_013_rapid_scale_incident", "me_013_readiness_gate_success"]
+expected_trace = ["me_013_exec_scale_goal", "me_013_ops_capacity_limit", "me_013_rapid_scale_incident", "me_013_readiness_gate_success"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_014_design_preference_accessibility"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "accessibility_constraint", "user_feedback"]
+question = "The user prefers compact UI, accessibility feedback requires clearer spacing, and previous compact UI caused errors. What should change?"
+expected_decision = "use_accessible_compact_layout"
+distractor_decision = "use_dense_layout_again"
+relevant_memories = ["me_014_compact_ui_preference", "me_014_accessibility_feedback", "me_014_dense_ui_errors", "me_014_accessible_compact_layout_success"]
+expected_trace = ["me_014_compact_ui_preference", "me_014_accessibility_feedback", "me_014_dense_ui_errors", "me_014_accessible_compact_layout_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_015_partner_api_contract"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "platform_constraint", "failure_learning"]
+question = "Partner API limits conflict with a requested feature, and a previous contract mismatch caused rollback. What should dominate?"
+expected_decision = "negotiate_contract_before_build"
+distractor_decision = "build_against_assumed_contract"
+relevant_memories = ["me_015_requested_partner_feature", "me_015_partner_api_limit", "me_015_contract_mismatch_rollback", "me_015_contract_first_playbook"]
+expected_trace = ["me_015_requested_partner_feature", "me_015_partner_api_limit", "me_015_contract_mismatch_rollback", "me_015_contract_first_playbook"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_016_region_law_team_bandwidth"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "policy_constraint", "team_constraint"]
+question = "A region launch has legal requirements, team bandwidth is low, and a previous unmanaged launch failed review. What should be done?"
+expected_decision = "delay_until_compliance_path_ready"
+distractor_decision = "launch_without_review"
+relevant_memories = ["me_016_region_launch_goal", "me_016_legal_requirement", "me_016_team_bandwidth_low", "me_016_unmanaged_launch_failed_review"]
+expected_trace = ["me_016_region_launch_goal", "me_016_legal_requirement", "me_016_team_bandwidth_low", "me_016_unmanaged_launch_failed_review"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_017_data_quality_model_ambition"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "data_quality", "strategy_evolution"]
+question = "The user wants a model upgrade, data quality is weak, and a previous model failed from bad labels. What should the next step be?"
+expected_decision = "fix_data_quality_before_model_upgrade"
+distractor_decision = "upgrade_model_immediately"
+relevant_memories = ["me_017_model_upgrade_preference", "me_017_data_quality_weak", "me_017_bad_labels_model_failure", "me_017_data_quality_fix_success"]
+expected_trace = ["me_017_model_upgrade_preference", "me_017_data_quality_weak", "me_017_bad_labels_model_failure", "me_017_data_quality_fix_success"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_018_support_team_training"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "team_constraint", "customer_feedback"]
+question = "Support wants a new workflow, training time is limited, and a previous abrupt workflow change raised tickets. What should Synapse choose?"
+expected_decision = "roll_out_workflow_with_training"
+distractor_decision = "switch_workflow_immediately"
+relevant_memories = ["me_018_support_workflow_request", "me_018_training_time_limited", "me_018_abrupt_change_tickets", "me_018_trained_rollout_success"]
+expected_trace = ["me_018_support_workflow_request", "me_018_training_time_limited", "me_018_abrupt_change_tickets", "me_018_trained_rollout_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_019_client_customization_core_product"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "stakeholder_conflict", "maintenance_feedback"]
+question = "A major client requests customization, product strategy favors core consistency, and past customization created maintenance cost. What is the decision?"
+expected_decision = "offer_configurable_core_option"
+distractor_decision = "build_one_off_customization"
+relevant_memories = ["me_019_major_client_custom_request", "me_019_core_product_strategy", "me_019_customization_maintenance_cost", "me_019_configurable_core_success"]
+expected_trace = ["me_019_major_client_custom_request", "me_019_core_product_strategy", "me_019_customization_maintenance_cost", "me_019_configurable_core_success"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_020_analytics_depth_privacy_budget"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "privacy_constraint", "budget_constraint"]
+question = "Analytics depth is requested, privacy constraints are strict, and budget cannot support a full warehouse rebuild. What should guide implementation?"
+expected_decision = "use_minimal_privacy_safe_metrics"
+distractor_decision = "collect_all_user_events"
+relevant_memories = ["me_020_analytics_depth_request", "me_020_privacy_constraint", "me_020_budget_no_warehouse_rebuild", "me_020_privacy_safe_metrics_success"]
+expected_trace = ["me_020_analytics_depth_request", "me_020_privacy_constraint", "me_020_budget_no_warehouse_rebuild", "me_020_privacy_safe_metrics_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_021_mobile_performance_design_brand"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "performance_feedback", "stakeholder_conflict"]
+question = "Brand wants heavy visuals, mobile users report slowness, and a previous rich page hurt conversion. What should dominate?"
+expected_decision = "optimize_lightweight_brand_experience"
+distractor_decision = "ship_heavy_visual_page"
+relevant_memories = ["me_021_brand_visual_request", "me_021_mobile_slowness_feedback", "me_021_rich_page_conversion_drop", "me_021_lightweight_brand_success"]
+expected_trace = ["me_021_brand_visual_request", "me_021_mobile_slowness_feedback", "me_021_rich_page_conversion_drop", "me_021_lightweight_brand_success"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_022_contract_deadline_security_review"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "security_feedback", "schedule_feedback"]
+question = "A contract deadline is near, security review is required, and a previous skipped review caused remediation. What should happen?"
+expected_decision = "ship_scope_after_security_review"
+distractor_decision = "skip_security_review_to_meet_deadline"
+relevant_memories = ["me_022_contract_deadline", "me_022_security_review_required", "me_022_skipped_review_remediation", "me_022_scoped_review_release_success"]
+expected_trace = ["me_022_contract_deadline", "me_022_security_review_required", "me_022_skipped_review_remediation", "me_022_scoped_review_release_success"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_023_sales_discount_margin_support"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "business_feedback", "ops_feedback"]
+question = "Sales wants a discount, margin is thin, and high-support accounts have caused losses. What should the offer include?"
+expected_decision = "offer_discount_with_support_limits"
+distractor_decision = "offer_unbounded_discount"
+relevant_memories = ["me_023_sales_discount_request", "me_023_margin_thin", "me_023_high_support_account_loss", "me_023_support_limited_offer_success"]
+expected_trace = ["me_023_sales_discount_request", "me_023_margin_thin", "me_023_high_support_account_loss", "me_023_support_limited_offer_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_024_internal_tool_external_quality"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "quality_gate", "stakeholder_conflict"]
+question = "An internal tool is being considered for external customers, quality expectations differ, and a prior internal-only assumption failed. What should be chosen?"
+expected_decision = "harden_before_external_release"
+distractor_decision = "release_internal_tool_directly"
+relevant_memories = ["me_024_internal_tool_available", "me_024_external_quality_expectation", "me_024_internal_assumption_failed", "me_024_hardening_playbook"]
+expected_trace = ["me_024_internal_tool_available", "me_024_external_quality_expectation", "me_024_internal_assumption_failed", "me_024_hardening_playbook"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_025_integration_partner_customer_sla"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "platform_constraint", "customer_feedback"]
+question = "A partner integration is requested, customer SLA is strict, and a previous partner outage cascaded. What should the design include?"
+expected_decision = "add_partner_failure_isolation"
+distractor_decision = "integrate_partner_directly"
+relevant_memories = ["me_025_partner_integration_request", "me_025_customer_sla_strict", "me_025_partner_outage_cascaded", "me_025_failure_isolation_success"]
+expected_trace = ["me_025_partner_integration_request", "me_025_customer_sla_strict", "me_025_partner_outage_cascaded", "me_025_failure_isolation_success"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_026_migration_budget_staffing"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "budget_constraint", "team_constraint"]
+question = "A migration is desired, budget is fixed, staffing is thin, and a big-bang migration failed before. What should guide the plan?"
+expected_decision = "use_phased_migration"
+distractor_decision = "use_big_bang_migration"
+relevant_memories = ["me_026_migration_desired", "me_026_budget_fixed", "me_026_staffing_thin", "me_026_big_bang_failed"]
+expected_trace = ["me_026_migration_desired", "me_026_budget_fixed", "me_026_staffing_thin", "me_026_big_bang_failed"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_027_research_novelty_safety"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "exploration_preservation", "risk_learning"]
+question = "Research value is high, safety risk is nonzero, and a prior uncontrolled experiment failed. What should the system recommend?"
+expected_decision = "run_bounded_experiment"
+distractor_decision = "block_experiment_entirely"
+relevant_memories = ["me_027_research_value_high", "me_027_safety_risk_nonzero", "me_027_uncontrolled_experiment_failed", "me_027_bounded_experiment_success"]
+expected_trace = ["me_027_research_value_high", "me_027_safety_risk_nonzero", "me_027_uncontrolled_experiment_failed", "me_027_bounded_experiment_success"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_028_self_service_enterprise_support"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "customer_feedback", "team_constraint"]
+question = "Self-service is preferred, enterprise customers need support, and the team cannot staff bespoke onboarding. What should be selected?"
+expected_decision = "build_guided_self_service"
+distractor_decision = "offer_bespoke_onboarding"
+relevant_memories = ["me_028_self_service_preference", "me_028_enterprise_support_need", "me_028_team_cannot_staff_bespoke", "me_028_guided_self_service_success"]
+expected_trace = ["me_028_self_service_preference", "me_028_enterprise_support_need", "me_028_team_cannot_staff_bespoke", "me_028_guided_self_service_success"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_029_feature_parity_arch_debt"
+task_type = "strategy_evolution"
+challenges = ["multi_entity_reasoning", "maintenance_feedback", "business_feedback"]
+question = "Feature parity is requested, architecture debt is high, and a previous parity push increased defects. What should guide planning?"
+expected_decision = "sequence_parity_after_debt_reduction"
+distractor_decision = "rush_feature_parity"
+relevant_memories = ["me_029_feature_parity_request", "me_029_arch_debt_high", "me_029_parity_push_defects", "me_029_debt_reduction_enabled_parity"]
+expected_trace = ["me_029_feature_parity_request", "me_029_arch_debt_high", "me_029_parity_push_defects", "me_029_debt_reduction_enabled_parity"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"
+
+[[cases]]
+id = "multi_entity_reasoning_030_multi_factor_balanced_decision"
+task_type = "multi_hop_causal"
+challenges = ["multi_entity_reasoning", "budget_constraint", "team_constraint", "failure_learning"]
+question = "Several memories point in different directions: speed preference, budget cap, team limit, and a past failure. What should Synapse do?"
+expected_decision = "choose_balanced_low_risk_plan"
+distractor_decision = "follow_single_speed_preference"
+relevant_memories = ["me_030_speed_preference", "me_030_budget_cap", "me_030_team_limit", "me_030_past_failure"]
+expected_trace = ["me_030_speed_preference", "me_030_budget_cap", "me_030_team_limit", "me_030_past_failure"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "multi_entity_standard"

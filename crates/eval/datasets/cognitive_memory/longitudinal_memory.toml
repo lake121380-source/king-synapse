@@ -1,0 +1,461 @@
+suite = "longitudinal_memory"
+
+[profiles.longitudinal_standard.methods.vector_rag]
+decision = "wrong"
+confidence = 0.64
+evidence_coverage = 0.46
+trace_completeness = 0.24
+trace_order_score = 0.22
+memory_influence_score = 0.34
+governance_trace_score = 0.0
+explainability_score = 0.35
+
+[profiles.longitudinal_standard.methods.bm25_rag]
+decision = "expected"
+confidence = 0.59
+evidence_coverage = 0.56
+trace_completeness = 0.36
+trace_order_score = 0.34
+memory_influence_score = 0.44
+governance_trace_score = 0.0
+explainability_score = 0.46
+
+[profiles.longitudinal_standard.methods.hybrid_rag]
+decision = "expected"
+confidence = 0.67
+evidence_coverage = 0.70
+trace_completeness = 0.54
+trace_order_score = 0.52
+memory_influence_score = 0.58
+governance_trace_score = 0.0
+explainability_score = 0.62
+
+[profiles.longitudinal_standard.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.75
+evidence_coverage = 0.84
+trace_completeness = 0.72
+trace_order_score = 0.70
+memory_influence_score = 0.72
+governance_trace_score = 0.0
+explainability_score = 0.76
+
+[profiles.longitudinal_standard.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.83
+evidence_coverage = 0.93
+trace_completeness = 0.88
+trace_order_score = 0.86
+memory_influence_score = 0.88
+governance_trace_score = 0.0
+explainability_score = 0.85
+
+[profiles.longitudinal_standard.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.87
+evidence_coverage = 0.96
+trace_completeness = 0.92
+trace_order_score = 0.90
+memory_influence_score = 0.90
+governance_trace_score = 1.0
+explainability_score = 0.90
+
+[profiles.longitudinal_standard.methods.full_synapse]
+decision = "expected"
+confidence = 0.90
+evidence_coverage = 0.98
+trace_completeness = 0.96
+trace_order_score = 0.94
+memory_influence_score = 0.92
+governance_trace_score = 1.0
+explainability_score = 0.93
+
+[[cases]]
+id = "longitudinal_memory_001_fast_preference_after_failure"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "preference_evolution", "failure_learning"]
+question = "Day 1 favored fast delivery, but Day 30 showed the fast path caused outage recovery work. What should guide the Day 60 architecture recommendation?"
+expected_decision = "choose_guarded_architecture"
+distractor_decision = "choose_fast_shortcut"
+relevant_memories = ["lm_001_day1_fast_preference", "lm_001_day30_fast_path_outage", "lm_001_day45_guarded_strategy_update", "lm_001_day60_architecture_context"]
+expected_trace = ["lm_001_day1_fast_preference", "lm_001_day30_fast_path_outage", "lm_001_day45_guarded_strategy_update", "lm_001_day60_architecture_context"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_002_minimal_stack_maintenance_drag"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "strategy_evolution", "maintenance_feedback"]
+question = "An early preference for a minimal stack was followed by repeated maintenance drag. What should Synapse recommend for the next service?"
+expected_decision = "prefer_supported_stack"
+distractor_decision = "repeat_minimal_stack"
+relevant_memories = ["lm_002_day1_minimal_stack_preference", "lm_002_day21_maintenance_drag", "lm_002_day40_supported_stack_success", "lm_002_day60_new_service_decision"]
+expected_trace = ["lm_002_day1_minimal_stack_preference", "lm_002_day21_maintenance_drag", "lm_002_day40_supported_stack_success", "lm_002_day60_new_service_decision"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_003_vendor_speed_to_reliability"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "vendor_feedback", "failure_learning"]
+question = "The user initially preferred the fastest vendor, but later incidents showed reliability gaps. What should dominate the renewal decision?"
+expected_decision = "prioritize_reliable_vendor"
+distractor_decision = "renew_fastest_vendor"
+relevant_memories = ["lm_003_day1_fast_vendor_preferred", "lm_003_day28_vendor_incidents", "lm_003_day45_reliability_weight_update", "lm_003_day60_renewal_context"]
+expected_trace = ["lm_003_day1_fast_vendor_preferred", "lm_003_day28_vendor_incidents", "lm_003_day45_reliability_weight_update", "lm_003_day60_renewal_context"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_004_no_tests_to_smoke_gate"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "quality_gate", "failure_learning"]
+question = "Early prototypes skipped tests for speed, then a release failed from untested integration. What should the next prototype do?"
+expected_decision = "keep_smoke_test_gate"
+distractor_decision = "skip_tests_for_speed"
+relevant_memories = ["lm_004_day1_skip_tests_preference", "lm_004_day19_integration_release_failed", "lm_004_day35_smoke_gate_worked", "lm_004_day60_next_prototype"]
+expected_trace = ["lm_004_day1_skip_tests_preference", "lm_004_day19_integration_release_failed", "lm_004_day35_smoke_gate_worked", "lm_004_day60_next_prototype"]
+expected_influence_delta = 0.84
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_005_manual_process_to_automation"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "preference_evolution", "strategy_evolution"]
+question = "Manual review was preferred early, but later bottlenecks and a successful automation pilot changed the evidence. What is the future decision?"
+expected_decision = "use_automation_with_review_checkpoint"
+distractor_decision = "keep_fully_manual_review"
+relevant_memories = ["lm_005_day1_manual_review_preference", "lm_005_day25_manual_bottleneck", "lm_005_day44_automation_pilot_success", "lm_005_day60_scaling_decision"]
+expected_trace = ["lm_005_day1_manual_review_preference", "lm_005_day25_manual_bottleneck", "lm_005_day44_automation_pilot_success", "lm_005_day60_scaling_decision"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_006_early_cost_saving_later_rework"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "cost_tradeoff", "failure_learning"]
+question = "A low-cost shortcut looked good on Day 1, but rework costs exceeded savings by Day 45. How should the next choice be made?"
+expected_decision = "choose_lifecycle_cost_option"
+distractor_decision = "choose_lowest_initial_cost"
+relevant_memories = ["lm_006_day1_low_cost_preference", "lm_006_day30_shortcut_rework", "lm_006_day45_lifecycle_cost_update", "lm_006_day60_procurement_choice"]
+expected_trace = ["lm_006_day1_low_cost_preference", "lm_006_day30_shortcut_rework", "lm_006_day45_lifecycle_cost_update", "lm_006_day60_procurement_choice"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_007_simple_ui_after_support_load"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "user_feedback", "preference_evolution"]
+question = "The user liked a dense UI first, but support logs later showed confusion. What should guide the next interface?"
+expected_decision = "prefer_clear_guided_ui"
+distractor_decision = "repeat_dense_ui"
+relevant_memories = ["lm_007_day1_dense_ui_preference", "lm_007_day27_support_confusion", "lm_007_day42_guided_ui_reduced_tickets", "lm_007_day60_interface_request"]
+expected_trace = ["lm_007_day1_dense_ui_preference", "lm_007_day27_support_confusion", "lm_007_day42_guided_ui_reduced_tickets", "lm_007_day60_interface_request"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_008_single_database_to_partitioned_design"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "scalability_feedback", "failure_learning"]
+question = "A single database was preferred for simplicity, then scale tests failed. What should drive the next architecture?"
+expected_decision = "use_partitioned_design"
+distractor_decision = "keep_single_database"
+relevant_memories = ["lm_008_day1_single_database_preference", "lm_008_day32_scale_test_failed", "lm_008_day48_partitioned_design_success", "lm_008_day60_architecture_request"]
+expected_trace = ["lm_008_day1_single_database_preference", "lm_008_day32_scale_test_failed", "lm_008_day48_partitioned_design_success", "lm_008_day60_architecture_request"]
+expected_influence_delta = 0.84
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_009_public_launch_to_limited_beta"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "risk_learning", "strategy_evolution"]
+question = "The user first preferred public launches, but a broad release exposed hidden defects. What should happen next?"
+expected_decision = "run_limited_beta_first"
+distractor_decision = "launch_publicly_immediately"
+relevant_memories = ["lm_009_day1_public_launch_preference", "lm_009_day24_broad_release_defects", "lm_009_day40_beta_gate_update", "lm_009_day60_launch_plan"]
+expected_trace = ["lm_009_day1_public_launch_preference", "lm_009_day24_broad_release_defects", "lm_009_day40_beta_gate_update", "lm_009_day60_launch_plan"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_010_custom_code_to_library_bias"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "maintenance_feedback", "preference_evolution"]
+question = "A custom implementation was preferred early, but later maintenance defects made a library safer. What should dominate?"
+expected_decision = "prefer_mature_library"
+distractor_decision = "write_custom_code_again"
+relevant_memories = ["lm_010_day1_custom_code_preference", "lm_010_day31_custom_defects", "lm_010_day46_library_stability_update", "lm_010_day60_implementation_choice"]
+expected_trace = ["lm_010_day1_custom_code_preference", "lm_010_day31_custom_defects", "lm_010_day46_library_stability_update", "lm_010_day60_implementation_choice"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_011_aggressive_deadline_to_buffer"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "schedule_feedback", "failure_learning"]
+question = "Aggressive deadlines were initially praised, then two slipped releases damaged trust. How should the next plan be framed?"
+expected_decision = "include_delivery_buffer"
+distractor_decision = "set_aggressive_deadline"
+relevant_memories = ["lm_011_day1_aggressive_deadline_preference", "lm_011_day29_slipped_release", "lm_011_day44_buffered_plan_recovered_trust", "lm_011_day60_project_plan"]
+expected_trace = ["lm_011_day1_aggressive_deadline_preference", "lm_011_day29_slipped_release", "lm_011_day44_buffered_plan_recovered_trust", "lm_011_day60_project_plan"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_012_open_scope_to_change_control"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "scope_feedback", "strategy_evolution"]
+question = "The user liked open scope early, but unmanaged changes later caused churn. What should govern the next roadmap?"
+expected_decision = "use_change_control"
+distractor_decision = "allow_open_scope"
+relevant_memories = ["lm_012_day1_open_scope_preference", "lm_012_day33_scope_churn", "lm_012_day47_change_control_update", "lm_012_day60_roadmap_context"]
+expected_trace = ["lm_012_day1_open_scope_preference", "lm_012_day33_scope_churn", "lm_012_day47_change_control_update", "lm_012_day60_roadmap_context"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_013_fast_hiring_to_skill_fit"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "team_feedback", "preference_evolution"]
+question = "Fast staffing was preferred, then a mismatch created rework. What should influence the next hiring plan?"
+expected_decision = "prioritize_skill_fit"
+distractor_decision = "hire_fastest_available"
+relevant_memories = ["lm_013_day1_fast_staffing_preference", "lm_013_day26_skill_mismatch_rework", "lm_013_day43_skill_fit_success", "lm_013_day60_hiring_plan"]
+expected_trace = ["lm_013_day1_fast_staffing_preference", "lm_013_day26_skill_mismatch_rework", "lm_013_day43_skill_fit_success", "lm_013_day60_hiring_plan"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_014_light_docs_to_decision_records"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "documentation_feedback", "failure_learning"]
+question = "Light documentation was preferred, but missing context slowed incident response. What should be recommended?"
+expected_decision = "write_decision_records"
+distractor_decision = "keep_docs_minimal"
+relevant_memories = ["lm_014_day1_light_docs_preference", "lm_014_day30_missing_context_incident", "lm_014_day49_decision_record_helped", "lm_014_day60_process_choice"]
+expected_trace = ["lm_014_day1_light_docs_preference", "lm_014_day30_missing_context_incident", "lm_014_day49_decision_record_helped", "lm_014_day60_process_choice"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_015_high_autonomy_to_review_pair"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "team_feedback", "strategy_evolution"]
+question = "High autonomy worked early, then an unsupervised change broke production. What should shape the next workflow?"
+expected_decision = "use_review_pair_for_risky_changes"
+distractor_decision = "allow_unsupervised_change"
+relevant_memories = ["lm_015_day1_high_autonomy_preference", "lm_015_day27_unsupervised_breakage", "lm_015_day41_review_pair_prevented_issue", "lm_015_day60_workflow_choice"]
+expected_trace = ["lm_015_day1_high_autonomy_preference", "lm_015_day27_unsupervised_breakage", "lm_015_day41_review_pair_prevented_issue", "lm_015_day60_workflow_choice"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_016_short_demo_to_acceptance_criteria"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "quality_gate", "user_feedback"]
+question = "A short demo seemed enough at first, but acceptance gaps surfaced later. What should the future delivery include?"
+expected_decision = "include_acceptance_criteria"
+distractor_decision = "ship_after_short_demo"
+relevant_memories = ["lm_016_day1_short_demo_preference", "lm_016_day22_acceptance_gap", "lm_016_day39_criteria_prevented_rework", "lm_016_day60_delivery_plan"]
+expected_trace = ["lm_016_day1_short_demo_preference", "lm_016_day22_acceptance_gap", "lm_016_day39_criteria_prevented_rework", "lm_016_day60_delivery_plan"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_017_cache_first_to_measure_first"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "performance_feedback", "failure_learning"]
+question = "Cache-first optimization was preferred, then metrics showed the bottleneck was elsewhere. What should guide the next performance task?"
+expected_decision = "measure_before_optimizing"
+distractor_decision = "add_cache_first"
+relevant_memories = ["lm_017_day1_cache_first_preference", "lm_017_day28_wrong_bottleneck", "lm_017_day44_measurement_playbook", "lm_017_day60_performance_task"]
+expected_trace = ["lm_017_day1_cache_first_preference", "lm_017_day28_wrong_bottleneck", "lm_017_day44_measurement_playbook", "lm_017_day60_performance_task"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_018_feature_count_to_outcome_metric"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "metric_feedback", "preference_evolution"]
+question = "Feature count was valued early, but later usage showed features without outcomes. What should drive planning?"
+expected_decision = "prioritize_outcome_metric"
+distractor_decision = "maximize_feature_count"
+relevant_memories = ["lm_018_day1_feature_count_preference", "lm_018_day31_low_feature_usage", "lm_018_day47_outcome_metric_update", "lm_018_day60_planning_context"]
+expected_trace = ["lm_018_day1_feature_count_preference", "lm_018_day31_low_feature_usage", "lm_018_day47_outcome_metric_update", "lm_018_day60_planning_context"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_019_self_host_to_managed_service"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "ops_feedback", "cost_tradeoff"]
+question = "Self-hosting was preferred, but operational load later delayed product work. What is the better next infrastructure choice?"
+expected_decision = "use_managed_service"
+distractor_decision = "self_host_again"
+relevant_memories = ["lm_019_day1_self_host_preference", "lm_019_day29_ops_load_delayed_work", "lm_019_day46_managed_service_saved_time", "lm_019_day60_infrastructure_choice"]
+expected_trace = ["lm_019_day1_self_host_preference", "lm_019_day29_ops_load_delayed_work", "lm_019_day46_managed_service_saved_time", "lm_019_day60_infrastructure_choice"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_020_chat_only_to_written_handoff"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "team_feedback", "documentation_feedback"]
+question = "Chat-only coordination felt fast early, then handoffs failed. What should guide the next team process?"
+expected_decision = "use_written_handoff"
+distractor_decision = "coordinate_only_in_chat"
+relevant_memories = ["lm_020_day1_chat_only_preference", "lm_020_day23_handoff_failed", "lm_020_day40_written_handoff_worked", "lm_020_day60_team_process"]
+expected_trace = ["lm_020_day1_chat_only_preference", "lm_020_day23_handoff_failed", "lm_020_day40_written_handoff_worked", "lm_020_day60_team_process"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_021_demo_polish_to_core_stability"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "risk_learning", "strategy_evolution"]
+question = "Polished demos won attention early, but a later unstable core hurt trust. What should dominate the next milestone?"
+expected_decision = "stabilize_core_before_polish"
+distractor_decision = "prioritize_demo_polish"
+relevant_memories = ["lm_021_day1_demo_polish_preference", "lm_021_day34_core_instability", "lm_021_day50_stability_rebuilt_trust", "lm_021_day60_milestone_choice"]
+expected_trace = ["lm_021_day1_demo_polish_preference", "lm_021_day34_core_instability", "lm_021_day50_stability_rebuilt_trust", "lm_021_day60_milestone_choice"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_022_local_script_to_shared_tooling"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "team_feedback", "maintenance_feedback"]
+question = "Local scripts were fast for one person, then team reuse failed. What should the next automation use?"
+expected_decision = "build_shared_tooling"
+distractor_decision = "keep_local_script"
+relevant_memories = ["lm_022_day1_local_script_preference", "lm_022_day25_team_reuse_failed", "lm_022_day43_shared_tooling_success", "lm_022_day60_automation_choice"]
+expected_trace = ["lm_022_day1_local_script_preference", "lm_022_day25_team_reuse_failed", "lm_022_day43_shared_tooling_success", "lm_022_day60_automation_choice"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_023_ignore_edge_cases_to_boundary_tests"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "quality_gate", "failure_learning"]
+question = "Ignoring edge cases accelerated an early build, but boundary bugs later dominated support. What should guide future implementation?"
+expected_decision = "add_boundary_tests"
+distractor_decision = "ignore_edge_cases_again"
+relevant_memories = ["lm_023_day1_ignore_edge_cases_preference", "lm_023_day30_boundary_bugs", "lm_023_day45_boundary_tests_helped", "lm_023_day60_implementation_plan"]
+expected_trace = ["lm_023_day1_ignore_edge_cases_preference", "lm_023_day30_boundary_bugs", "lm_023_day45_boundary_tests_helped", "lm_023_day60_implementation_plan"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_024_sales_request_to_product_fit"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "business_feedback", "preference_evolution"]
+question = "Sales-request features were prioritized early, but later usage showed poor product fit. What should guide the next roadmap?"
+expected_decision = "validate_product_fit_first"
+distractor_decision = "build_sales_request_immediately"
+relevant_memories = ["lm_024_day1_sales_request_preference", "lm_024_day33_low_product_fit", "lm_024_day48_validation_process_update", "lm_024_day60_roadmap_decision"]
+expected_trace = ["lm_024_day1_sales_request_preference", "lm_024_day33_low_product_fit", "lm_024_day48_validation_process_update", "lm_024_day60_roadmap_decision"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_025_one_region_success_to_segment_check"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "scope_expansion", "strategy_evolution"]
+question = "One region succeeded early, but a later rollout failed in a different segment. What should happen before future expansion?"
+expected_decision = "check_segment_fit_before_rollout"
+distractor_decision = "expand_based_on_one_region"
+relevant_memories = ["lm_025_day1_region_success", "lm_025_day31_segment_rollout_failed", "lm_025_day47_segment_fit_playbook", "lm_025_day60_expansion_choice"]
+expected_trace = ["lm_025_day1_region_success", "lm_025_day31_segment_rollout_failed", "lm_025_day47_segment_fit_playbook", "lm_025_day60_expansion_choice"]
+expected_influence_delta = 0.83
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_026_batch_release_to_incremental"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "release_feedback", "failure_learning"]
+question = "Batch releases were preferred, but one large batch hid regressions. What should the next release strategy be?"
+expected_decision = "release_incrementally"
+distractor_decision = "use_large_batch_release"
+relevant_memories = ["lm_026_day1_batch_release_preference", "lm_026_day26_large_batch_regression", "lm_026_day42_incremental_release_success", "lm_026_day60_release_strategy"]
+expected_trace = ["lm_026_day1_batch_release_preference", "lm_026_day26_large_batch_regression", "lm_026_day42_incremental_release_success", "lm_026_day60_release_strategy"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_027_untracked_experiment_to_experiment_log"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "evidence_tracking", "strategy_evolution"]
+question = "Untracked experiments seemed flexible, but later no one could explain a metric change. What should future experiments include?"
+expected_decision = "keep_experiment_log"
+distractor_decision = "run_untracked_experiment"
+relevant_memories = ["lm_027_day1_untracked_experiment_preference", "lm_027_day29_metric_unexplained", "lm_027_day43_experiment_log_helped", "lm_027_day60_experiment_plan"]
+expected_trace = ["lm_027_day1_untracked_experiment_preference", "lm_027_day29_metric_unexplained", "lm_027_day43_experiment_log_helped", "lm_027_day60_experiment_plan"]
+expected_influence_delta = 0.80
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_028_direct_access_to_permission_boundary"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "security_feedback", "risk_learning"]
+question = "Direct access was convenient early, but a later permission mistake exposed data. What should guide future access design?"
+expected_decision = "use_permission_boundary"
+distractor_decision = "keep_direct_access"
+relevant_memories = ["lm_028_day1_direct_access_preference", "lm_028_day32_permission_mistake", "lm_028_day46_boundary_policy_update", "lm_028_day60_access_design"]
+expected_trace = ["lm_028_day1_direct_access_preference", "lm_028_day32_permission_mistake", "lm_028_day46_boundary_policy_update", "lm_028_day60_access_design"]
+expected_influence_delta = 0.84
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_029_single_owner_to_bus_factor"
+task_type = "longitudinal_consistency"
+challenges = ["longitudinal_memory", "team_feedback", "risk_learning"]
+question = "A single owner moved fast early, but later absence blocked support. What should influence the next ownership model?"
+expected_decision = "reduce_bus_factor"
+distractor_decision = "assign_single_owner_only"
+relevant_memories = ["lm_029_day1_single_owner_preference", "lm_029_day28_owner_absence_blocked_support", "lm_029_day44_shared_ownership_worked", "lm_029_day60_ownership_model"]
+expected_trace = ["lm_029_day1_single_owner_preference", "lm_029_day28_owner_absence_blocked_support", "lm_029_day44_shared_ownership_worked", "lm_029_day60_ownership_model"]
+expected_influence_delta = 0.81
+expected_governance_action = "observe"
+profile = "longitudinal_standard"
+
+[[cases]]
+id = "longitudinal_memory_030_early_speed_to_adaptive_balance"
+task_type = "strategy_evolution"
+challenges = ["longitudinal_memory", "preference_evolution", "strategy_evolution"]
+question = "The early preference for speed still matters, but later failures showed it needs guardrails. What should the next decision express?"
+expected_decision = "balance_speed_with_guardrails"
+distractor_decision = "optimize_for_speed_only"
+relevant_memories = ["lm_030_day1_speed_preference", "lm_030_day30_speed_failure", "lm_030_day45_guardrail_revision", "lm_030_day60_balanced_decision"]
+expected_trace = ["lm_030_day1_speed_preference", "lm_030_day30_speed_failure", "lm_030_day45_guardrail_revision", "lm_030_day60_balanced_decision"]
+expected_influence_delta = 0.82
+expected_governance_action = "observe"
+profile = "longitudinal_standard"

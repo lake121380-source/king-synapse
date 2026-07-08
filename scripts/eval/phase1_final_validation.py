@@ -4,6 +4,8 @@ import argparse
 import json
 import subprocess
 import sys
+from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -12,8 +14,10 @@ from longmem_dmr_smoke import eval_cargo_profile, repo_root
 
 
 VERSION = "v0.6.0-cognitive-validation"
+DATASET_VERSION = "v1.2"
 STATUS = "frozen"
 PHASE = "phase1_complete"
+SCALING_STATUS = "benchmark_expanded"
 
 
 def run_phase1_final_validation(dataset_dir: Path, output_path: Path, tag: str) -> dict:
@@ -66,6 +70,81 @@ def write_phase1_summary(report: dict, summary_path: Path) -> dict:
     return summary
 
 
+def dataset_statistics(report: dict) -> dict:
+    categories = sorted(
+        {
+            challenge
+            for dataset in report["datasets"]
+            for case in dataset["cases"]
+            for challenge in case["challenges"]
+        }
+    )
+    trace_buckets = Counter()
+    relevant_memory_buckets = Counter()
+    task_types = Counter()
+    suite_case_counts = {}
+    for dataset in report["datasets"]:
+        suite_case_counts[dataset["suite"]] = dataset["case_count"]
+        for case in dataset["cases"]:
+            task_types[case["task_type"]] += 1
+            trace_len = case["expected_trace_len"]
+            relevant_memory_count = case["relevant_memory_count"]
+            trace_buckets[
+                "short" if trace_len <= 3 else "medium" if trace_len <= 5 else "long"
+            ] += 1
+            relevant_memory_buckets[
+                "low"
+                if relevant_memory_count <= 3
+                else "medium"
+                if relevant_memory_count <= 5
+                else "high"
+            ] += 1
+    return {
+        "version": DATASET_VERSION,
+        "cases": report["case_count"],
+        "suites": report["suite_count"],
+        "categories": categories,
+        "difficulty_distribution": {
+            "expected_trace_len": dict(sorted(trace_buckets.items())),
+            "relevant_memory_count": dict(sorted(relevant_memory_buckets.items())),
+            "task_type": dict(sorted(task_types.items())),
+        },
+        "suite_case_counts": dict(sorted(suite_case_counts.items())),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def write_dataset_report(report: dict, dataset_report_path: Path) -> dict:
+    statistics = dataset_statistics(report)
+    dataset_report_path.parent.mkdir(parents=True, exist_ok=True)
+    dataset_report_path.write_text(
+        json.dumps(statistics, indent=2) + "\n", encoding="utf-8"
+    )
+    return statistics
+
+
+def write_scaling_report(report: dict, scaling_report_path: Path) -> dict:
+    scaling_report = {
+        "baseline_version": VERSION,
+        "dataset_version": DATASET_VERSION,
+        "cases": report["case_count"],
+        "suites": report["suite_count"],
+        "mechanism_changed": False,
+        "score": round(report["full_synapse_score"], 4),
+        "baseline_score": round(report["best_rag_score"], 4),
+        "gain": round(report["full_over_best_rag_gain"], 4),
+        "failure_analysis": report["error_analysis"],
+        "failed_cases": report["failed_cases"],
+        "status": SCALING_STATUS,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    scaling_report_path.parent.mkdir(parents=True, exist_ok=True)
+    scaling_report_path.write_text(
+        json.dumps(scaling_report, indent=2) + "\n", encoding="utf-8"
+    )
+    return scaling_report
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run Phase 1 final cognitive memory validation benchmark."
@@ -85,12 +164,24 @@ def main() -> int:
         type=Path,
         default=repo_root() / "crates/eval/reports/phase1-summary.json",
     )
+    parser.add_argument(
+        "--dataset-report-path",
+        type=Path,
+        default=repo_root() / "crates/eval/reports/phase1-dataset-report.json",
+    )
+    parser.add_argument(
+        "--scaling-report-path",
+        type=Path,
+        default=repo_root() / "crates/eval/reports/phase1-scaling-report.json",
+    )
     parser.add_argument("--tag", default="phase1-final-validation")
     args = parser.parse_args()
 
     args.output_path.parent.mkdir(parents=True, exist_ok=True)
     report = run_phase1_final_validation(args.dataset_dir, args.output_path, args.tag)
     summary = write_phase1_summary(report, args.summary_path)
+    dataset_report = write_dataset_report(report, args.dataset_report_path)
+    scaling_report = write_scaling_report(report, args.scaling_report_path)
     print(
         "summary: stage={} cases={} challenges={} failed={} retrieval_fail={} reasoning_fail={} influence_gain={:+.4f} full={:.4f} best_rag={}:{:.4f} gain={:+.4f} trace={:.4f} contradiction={:.4f} multi_hop={:.4f} longitudinal={:.4f} pass={}".format(
             report["validation_stage"],
@@ -113,8 +204,17 @@ def main() -> int:
     )
     print(f"Saved to {args.output_path}")
     print(f"Summary saved to {args.summary_path}")
+    print(f"Dataset report saved to {args.dataset_report_path}")
+    print(f"Scaling report saved to {args.scaling_report_path}")
     if summary["phase"] == PHASE and report["pass"]:
         print("Phase 1 Closure Completed")
+    if (
+        report["pass"]
+        and dataset_report["version"] == DATASET_VERSION
+        and scaling_report["status"] == SCALING_STATUS
+        and report["case_count"] >= 200
+    ):
+        print("Phase 1.2 Benchmark Scaling Completed")
     return 0
 
 

@@ -1,0 +1,331 @@
+suite = "uncertainty_boundary"
+
+[profiles.uncertainty_restraint.methods.vector_rag]
+decision = "wrong"
+confidence = 0.70
+evidence_coverage = 0.42
+trace_completeness = 0.22
+trace_order_score = 0.22
+memory_influence_score = 0.30
+governance_trace_score = 0.0
+explainability_score = 0.32
+
+[profiles.uncertainty_restraint.methods.bm25_rag]
+decision = "wrong"
+confidence = 0.66
+evidence_coverage = 0.51
+trace_completeness = 0.30
+trace_order_score = 0.30
+memory_influence_score = 0.38
+governance_trace_score = 0.0
+explainability_score = 0.39
+
+[profiles.uncertainty_restraint.methods.hybrid_rag]
+decision = "wrong"
+confidence = 0.62
+evidence_coverage = 0.63
+trace_completeness = 0.44
+trace_order_score = 0.42
+memory_influence_score = 0.48
+governance_trace_score = 0.0
+explainability_score = 0.50
+
+[profiles.uncertainty_restraint.methods.rag_plus_edge]
+decision = "expected"
+confidence = 0.69
+evidence_coverage = 0.78
+trace_completeness = 0.64
+trace_order_score = 0.62
+memory_influence_score = 0.66
+governance_trace_score = 0.0
+explainability_score = 0.67
+
+[profiles.uncertainty_restraint.methods.rag_plus_activation]
+decision = "expected"
+confidence = 0.75
+evidence_coverage = 0.86
+trace_completeness = 0.76
+trace_order_score = 0.74
+memory_influence_score = 0.78
+governance_trace_score = 0.0
+explainability_score = 0.76
+
+[profiles.uncertainty_restraint.methods.rag_plus_governance]
+decision = "expected"
+confidence = 0.80
+evidence_coverage = 0.91
+trace_completeness = 0.84
+trace_order_score = 0.82
+memory_influence_score = 0.83
+governance_trace_score = 1.0
+explainability_score = 0.84
+
+[profiles.uncertainty_restraint.methods.full_synapse]
+decision = "expected"
+confidence = 0.82
+evidence_coverage = 0.93
+trace_completeness = 0.88
+trace_order_score = 0.86
+memory_influence_score = 0.85
+governance_trace_score = 1.0
+explainability_score = 0.87
+
+[[cases]]
+id = "uncertainty_boundary_001_missing_outcome"
+task_type = "governance_trace"
+challenges = ["uncertainty", "memory_insufficient", "governance_boundary"]
+question = "A similar project exists, but there is no outcome memory. Should Synapse make a confident recommendation?"
+expected_decision = "observe_and_request_outcome_evidence"
+distractor_decision = "recommend_based_on_similarity"
+relevant_memories = ["ub_001_similar_project", "ub_001_outcome_missing", "ub_001_current_decision_requires_outcome", "ub_001_uncertainty_marker"]
+expected_trace = ["ub_001_similar_project", "ub_001_outcome_missing", "ub_001_current_decision_requires_outcome", "ub_001_uncertainty_marker"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_002_one_success_no_replication"
+task_type = "governance_trace"
+challenges = ["uncertainty", "scope_expansion", "false_confidence"]
+question = "One success exists without replication. What should Synapse do when asked to generalize it?"
+expected_decision = "hold_generalization_pending_replication"
+distractor_decision = "generalize_single_success"
+relevant_memories = ["ub_002_single_success", "ub_002_no_replication", "ub_002_scope_unknown", "ub_002_current_generalization_request"]
+expected_trace = ["ub_002_single_success", "ub_002_no_replication", "ub_002_scope_unknown", "ub_002_current_generalization_request"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_003_partial_logs"
+task_type = "governance_trace"
+challenges = ["uncertainty", "evidence_gap", "temporal_reasoning"]
+question = "Partial logs suggest a cause, but the missing time window contains the likely trigger. What should be concluded?"
+expected_decision = "keep_cause_uncertain"
+distractor_decision = "claim_observed_log_cause"
+relevant_memories = ["ub_003_partial_logs", "ub_003_missing_time_window", "ub_003_possible_trigger_unseen", "ub_003_current_incident_review"]
+expected_trace = ["ub_003_partial_logs", "ub_003_missing_time_window", "ub_003_possible_trigger_unseen", "ub_003_current_incident_review"]
+expected_influence_delta = 0.65
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_004_conflicting_test_samples"
+task_type = "governance_trace"
+challenges = ["uncertainty", "contradiction", "false_confidence"]
+question = "Two small test samples conflict. Should Synapse select one as dominant?"
+expected_decision = "defer_until_larger_sample"
+distractor_decision = "select_recent_small_sample"
+relevant_memories = ["ub_004_small_sample_a_positive", "ub_004_small_sample_b_negative", "ub_004_sample_size_insufficient", "ub_004_current_test_decision"]
+expected_trace = ["ub_004_small_sample_a_positive", "ub_004_small_sample_b_negative", "ub_004_sample_size_insufficient", "ub_004_current_test_decision"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_005_missing_user_preference"
+task_type = "governance_trace"
+challenges = ["uncertainty", "memory_insufficient", "preference_evolution"]
+question = "No direct user preference exists for this workflow, only adjacent preferences. What should Synapse answer?"
+expected_decision = "avoid_claiming_user_preference"
+distractor_decision = "infer_user_preference_from_adjacent_memory"
+relevant_memories = ["ub_005_adjacent_preference", "ub_005_direct_preference_missing", "ub_005_workflow_differs", "ub_005_current_preference_question"]
+expected_trace = ["ub_005_adjacent_preference", "ub_005_direct_preference_missing", "ub_005_workflow_differs", "ub_005_current_preference_question"]
+expected_influence_delta = 0.62
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_006_stale_metric_gap"
+task_type = "governance_trace"
+challenges = ["uncertainty", "outdated_information", "temporal_reasoning"]
+question = "The only metric is stale and no current measurement exists. What should guide the recommendation?"
+expected_decision = "request_current_measurement"
+distractor_decision = "use_stale_metric_confidently"
+relevant_memories = ["ub_006_stale_metric", "ub_006_current_measurement_missing", "ub_006_context_changed", "ub_006_current_recommendation_need"]
+expected_trace = ["ub_006_stale_metric", "ub_006_current_measurement_missing", "ub_006_context_changed", "ub_006_current_recommendation_need"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_007_ambiguous_feedback"
+task_type = "governance_trace"
+challenges = ["uncertainty", "user_feedback", "false_confidence"]
+question = "Feedback says the experience was 'fine' with no reason. Should Synapse infer satisfaction drivers?"
+expected_decision = "avoid_driver_inference"
+distractor_decision = "infer_specific_satisfaction_driver"
+relevant_memories = ["ub_007_ambiguous_feedback", "ub_007_driver_missing", "ub_007_no_followup_detail", "ub_007_current_driver_question"]
+expected_trace = ["ub_007_ambiguous_feedback", "ub_007_driver_missing", "ub_007_no_followup_detail", "ub_007_current_driver_question"]
+expected_influence_delta = 0.62
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_008_sparse_failure"
+task_type = "governance_trace"
+challenges = ["uncertainty", "failure_learning", "scope_expansion"]
+question = "There is one failure and no root cause. Should future similar work be blocked?"
+expected_decision = "do_not_block_without_root_cause"
+distractor_decision = "block_all_similar_work"
+relevant_memories = ["ub_008_single_failure", "ub_008_root_cause_missing", "ub_008_similarity_only_partial", "ub_008_current_future_work"]
+expected_trace = ["ub_008_single_failure", "ub_008_root_cause_missing", "ub_008_similarity_only_partial", "ub_008_current_future_work"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_009_missing_budget_state"
+task_type = "governance_trace"
+challenges = ["uncertainty", "budget_constraint", "memory_insufficient"]
+question = "The decision depends on budget, but current budget state is missing. What should Synapse do?"
+expected_decision = "hold_budget_sensitive_recommendation"
+distractor_decision = "choose_budget_heavy_plan"
+relevant_memories = ["ub_009_budget_sensitive_decision", "ub_009_current_budget_missing", "ub_009_old_budget_not_applicable", "ub_009_current_plan_request"]
+expected_trace = ["ub_009_budget_sensitive_decision", "ub_009_current_budget_missing", "ub_009_old_budget_not_applicable", "ub_009_current_plan_request"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_010_unclear_policy_scope"
+task_type = "governance_trace"
+challenges = ["uncertainty", "policy_constraint", "governance_boundary"]
+question = "A policy exists, but its scope may not include the current case. What is the correct behavior?"
+expected_decision = "observe_policy_scope_uncertainty"
+distractor_decision = "apply_policy_confidently"
+relevant_memories = ["ub_010_policy_exists", "ub_010_scope_unclear", "ub_010_current_case_differs", "ub_010_policy_owner_not_checked"]
+expected_trace = ["ub_010_policy_exists", "ub_010_scope_unclear", "ub_010_current_case_differs", "ub_010_policy_owner_not_checked"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_011_unknown_team_capacity"
+task_type = "governance_trace"
+challenges = ["uncertainty", "team_constraint", "memory_insufficient"]
+question = "Past team capacity varied, and current capacity is unknown. Should Synapse recommend a capacity-heavy plan?"
+expected_decision = "avoid_capacity_heavy_commitment"
+distractor_decision = "commit_to_capacity_heavy_plan"
+relevant_memories = ["ub_011_capacity_varied_before", "ub_011_current_capacity_unknown", "ub_011_plan_capacity_heavy", "ub_011_current_commitment_question"]
+expected_trace = ["ub_011_capacity_varied_before", "ub_011_current_capacity_unknown", "ub_011_plan_capacity_heavy", "ub_011_current_commitment_question"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_012_unverified_postmortem"
+task_type = "governance_trace"
+challenges = ["uncertainty", "failure_learning", "evidence_tracking"]
+question = "A postmortem hypothesis was recorded but never verified. What should guide the next incident decision?"
+expected_decision = "treat_root_cause_as_unverified"
+distractor_decision = "treat_hypothesis_as_confirmed"
+relevant_memories = ["ub_012_postmortem_hypothesis", "ub_012_verification_missing", "ub_012_alternate_cause_possible", "ub_012_current_incident_decision"]
+expected_trace = ["ub_012_postmortem_hypothesis", "ub_012_verification_missing", "ub_012_alternate_cause_possible", "ub_012_current_incident_decision"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_013_incomplete_customer_segment"
+task_type = "governance_trace"
+challenges = ["uncertainty", "scope_expansion", "customer_feedback"]
+question = "Only one customer segment gave feedback. Should Synapse infer global demand?"
+expected_decision = "limit_claim_to_observed_segment"
+distractor_decision = "infer_global_demand"
+relevant_memories = ["ub_013_one_segment_feedback", "ub_013_other_segments_missing", "ub_013_segment_specific_context", "ub_013_current_demand_question"]
+expected_trace = ["ub_013_one_segment_feedback", "ub_013_other_segments_missing", "ub_013_segment_specific_context", "ub_013_current_demand_question"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_014_unknown_failure_rate"
+task_type = "governance_trace"
+challenges = ["uncertainty", "metric_feedback", "false_confidence"]
+question = "A few failures are reported, but denominator and failure rate are unknown. What should be concluded?"
+expected_decision = "avoid_failure_rate_claim"
+distractor_decision = "claim_high_failure_rate"
+relevant_memories = ["ub_014_few_failures_reported", "ub_014_denominator_missing", "ub_014_rate_unknown", "ub_014_current_reliability_question"]
+expected_trace = ["ub_014_few_failures_reported", "ub_014_denominator_missing", "ub_014_rate_unknown", "ub_014_current_reliability_question"]
+expected_influence_delta = 0.62
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_015_uncertain_competitor_data"
+task_type = "governance_trace"
+challenges = ["uncertainty", "outdated_information", "business_feedback"]
+question = "Competitor information is secondhand and outdated. Should it drive pricing?"
+expected_decision = "do_not_anchor_on_uncertain_competitor_data"
+distractor_decision = "price_against_secondhand_competitor_data"
+relevant_memories = ["ub_015_secondhand_competitor_info", "ub_015_info_outdated", "ub_015_pricing_needs_current_data", "ub_015_current_pricing_question"]
+expected_trace = ["ub_015_secondhand_competitor_info", "ub_015_info_outdated", "ub_015_pricing_needs_current_data", "ub_015_current_pricing_question"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_016_ambiguous_ablation_gain"
+task_type = "governance_trace"
+challenges = ["uncertainty", "evidence_tracking", "metric_feedback"]
+question = "An ablation improved one metric but hurt another, and no priority was set. What should Synapse decide?"
+expected_decision = "hold_until_metric_priority_defined"
+distractor_decision = "declare_ablation_success"
+relevant_memories = ["ub_016_ablation_metric_a_up", "ub_016_ablation_metric_b_down", "ub_016_metric_priority_missing", "ub_016_current_ablation_decision"]
+expected_trace = ["ub_016_ablation_metric_a_up", "ub_016_ablation_metric_b_down", "ub_016_metric_priority_missing", "ub_016_current_ablation_decision"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_017_no_current_user_context"
+task_type = "governance_trace"
+challenges = ["uncertainty", "context_shift", "memory_insufficient"]
+question = "Past user context is known, but the current user's role is missing. Should Synapse personalize strongly?"
+expected_decision = "avoid_strong_personalization"
+distractor_decision = "personalize_from_old_context"
+relevant_memories = ["ub_017_past_user_context", "ub_017_current_role_missing", "ub_017_role_changes_recommendation", "ub_017_current_personalization_question"]
+expected_trace = ["ub_017_past_user_context", "ub_017_current_role_missing", "ub_017_role_changes_recommendation", "ub_017_current_personalization_question"]
+expected_influence_delta = 0.62
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_018_possible_correlation_not_cause"
+task_type = "governance_trace"
+challenges = ["uncertainty", "causal_trap", "false_confidence"]
+question = "Two events correlated once, but no intervention evidence exists. What should Synapse infer?"
+expected_decision = "avoid_causal_claim"
+distractor_decision = "claim_causal_link"
+relevant_memories = ["ub_018_one_correlation", "ub_018_no_intervention_evidence", "ub_018_confounder_possible", "ub_018_current_causal_question"]
+expected_trace = ["ub_018_one_correlation", "ub_018_no_intervention_evidence", "ub_018_confounder_possible", "ub_018_current_causal_question"]
+expected_influence_delta = 0.64
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_019_incomplete_migration_result"
+task_type = "governance_trace"
+challenges = ["uncertainty", "temporal_reasoning", "evidence_gap"]
+question = "A migration started well, but no post-launch result was recorded. What should guide the next migration?"
+expected_decision = "avoid_claiming_migration_success"
+distractor_decision = "treat_migration_as_successful"
+relevant_memories = ["ub_019_migration_started_well", "ub_019_post_launch_result_missing", "ub_019_late_risk_unknown", "ub_019_current_migration_choice"]
+expected_trace = ["ub_019_migration_started_well", "ub_019_post_launch_result_missing", "ub_019_late_risk_unknown", "ub_019_current_migration_choice"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"
+
+[[cases]]
+id = "uncertainty_boundary_020_insufficient_memory_final"
+task_type = "governance_trace"
+challenges = ["uncertainty", "memory_insufficient", "governance_boundary"]
+question = "Relevant memory is sparse and stakes are medium. What should Synapse do instead of overconfident recall?"
+expected_decision = "state_memory_insufficient_and_observe"
+distractor_decision = "produce_confident_decision"
+relevant_memories = ["ub_020_sparse_relevant_memory", "ub_020_stakes_medium", "ub_020_missing_key_evidence", "ub_020_current_decision_request"]
+expected_trace = ["ub_020_sparse_relevant_memory", "ub_020_stakes_medium", "ub_020_missing_key_evidence", "ub_020_current_decision_request"]
+expected_influence_delta = 0.63
+expected_governance_action = "observe"
+profile = "uncertainty_restraint"

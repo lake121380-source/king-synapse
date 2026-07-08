@@ -92,6 +92,26 @@ weight and does not mutate memory state.
 The next externalized target is 200 cases with a stable scorer, frozen dataset
 schema, and broader adversarial coverage.
 
+## Dataset v1.2
+
+Cases: 200
+
+Suites: >=15
+
+Categories:
+
+- causal reasoning
+- longitudinal memory
+- contradiction
+- temporal reasoning
+- uncertainty
+- adversarial
+- governance boundary
+- multi entity reasoning
+
+This release is a dataset expansion only. No memory schema, retrieval pipeline,
+activation algorithm, governance algorithm, or scoring formula changed.
+
 ## Version Freeze Target
 
 `v0.6.0-cognitive-validation` should freeze:
