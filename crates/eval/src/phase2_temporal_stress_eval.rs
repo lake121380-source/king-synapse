@@ -44,7 +44,7 @@ fn evaluate_stress_scenarios(tag: String) -> Phase2TemporalStressEvaluationRepor
 
     let limitations = if metrics.state_recovery < 1.0 {
         vec![
-            "Superseded memories emit a recovery pressure signal, but Phase 2.8 does not reactivate them into Active or Challenged state.".to_string(),
+            "The Phase 2.8 weak-recovery stress scenario emits a recovery signal but does not cross the Phase 2.9 reactivation threshold.".to_string(),
         ]
     } else {
         Vec::new()
@@ -268,6 +268,8 @@ fn transition_step_report(step: &TemporalTransitionStep) -> Phase2TemporalStress
         influence_after: step.influence_after as f64,
         supersession_pressure_before: step.supersession_pressure_before as f64,
         supersession_pressure_after: step.supersession_pressure_after as f64,
+        reactivation_pressure_before: step.reactivation_pressure_before as f64,
+        reactivation_pressure_after: step.reactivation_pressure_after as f64,
         reason: step.reason.clone(),
     }
 }
@@ -365,5 +367,7 @@ pub struct Phase2TemporalStressStepReport {
     pub influence_after: f64,
     pub supersession_pressure_before: f64,
     pub supersession_pressure_after: f64,
+    pub reactivation_pressure_before: f64,
+    pub reactivation_pressure_after: f64,
     pub reason: String,
 }

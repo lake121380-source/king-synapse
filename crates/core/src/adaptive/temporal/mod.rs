@@ -6,8 +6,12 @@
 
 use serde::{Deserialize, Serialize};
 
+pub mod reactivation;
 pub mod supersession;
 
+pub use reactivation::{
+    ReactivationDecision, RuleBasedTemporalReactivationPolicy, TemporalReactivationPolicy,
+};
 pub use supersession::{
     RuleBasedTemporalSupersessionPolicy, SupersessionDecision, TemporalSupersessionPolicy,
 };
@@ -50,6 +54,7 @@ pub struct TemporalMemoryProfile {
     pub contradiction_count: u8,
     pub failure_count: u8,
     pub supersession_pressure: f32,
+    pub reactivation_pressure: f32,
     pub transition_history: Vec<TemporalTransitionStep>,
 }
 
@@ -65,6 +70,7 @@ impl TemporalMemoryProfile {
             contradiction_count: 0,
             failure_count: 0,
             supersession_pressure: 0.0,
+            reactivation_pressure: 0.0,
             transition_history: Vec::new(),
         }
     }
@@ -88,6 +94,8 @@ pub struct TemporalTransitionStep {
     pub influence_after: f32,
     pub supersession_pressure_before: f32,
     pub supersession_pressure_after: f32,
+    pub reactivation_pressure_before: f32,
+    pub reactivation_pressure_after: f32,
     pub reason: String,
 }
 
@@ -132,6 +140,7 @@ pub struct RuleBasedTemporalTransitionEngine {
     superseded_multiplier: f32,
     supersede_after_failures: u8,
     supersession_policy: RuleBasedTemporalSupersessionPolicy,
+    reactivation_policy: RuleBasedTemporalReactivationPolicy,
 }
 
 impl RuleBasedTemporalTransitionEngine {
@@ -150,6 +159,7 @@ impl RuleBasedTemporalTransitionEngine {
             superseded_multiplier,
             supersede_after_failures: supersede_after_failures.max(1),
             supersession_policy: RuleBasedTemporalSupersessionPolicy::default(),
+            reactivation_policy: RuleBasedTemporalReactivationPolicy::default(),
         }
     }
 
@@ -167,6 +177,10 @@ impl RuleBasedTemporalTransitionEngine {
 
     pub fn supersession_policy(&self) -> RuleBasedTemporalSupersessionPolicy {
         self.supersession_policy
+    }
+
+    pub fn reactivation_policy(&self) -> RuleBasedTemporalReactivationPolicy {
+        self.reactivation_policy
     }
 }
 
@@ -186,16 +200,29 @@ impl TemporalTransitionEngine for RuleBasedTemporalTransitionEngine {
         memory.base_influence = sanitize_influence(memory.base_influence);
         memory.current_influence = sanitize_influence(memory.current_influence);
         memory.supersession_pressure = sanitize_influence(memory.supersession_pressure);
+        memory.reactivation_pressure = sanitize_influence(memory.reactivation_pressure);
 
         let from = memory.state;
         let influence_before = memory.current_influence;
-        let pressure_before = memory.supersession_pressure;
+        let supersession_pressure_before = memory.supersession_pressure;
+        let reactivation_pressure_before = memory.reactivation_pressure;
         update_evidence_counts(&mut memory, event);
         let supersession =
             self.supersession_policy
                 .evaluate(memory.state, event, memory.supersession_pressure);
+        let reactivation =
+            self.reactivation_policy
+                .evaluate(memory.state, event, memory.reactivation_pressure);
         memory.supersession_pressure = supersession.pressure_after;
-        memory.state = next_state(memory.state, event, &memory, self, &supersession);
+        memory.reactivation_pressure = reactivation.pressure_after;
+        memory.state = next_state(
+            memory.state,
+            event,
+            &memory,
+            self,
+            &supersession,
+            &reactivation,
+        );
         memory.current_influence = influence_for_state(memory.state, memory.base_influence, *self);
 
         let transition = TemporalTransitionStep {
@@ -205,9 +232,19 @@ impl TemporalTransitionEngine for RuleBasedTemporalTransitionEngine {
             to: memory.state,
             influence_before,
             influence_after: memory.current_influence,
-            supersession_pressure_before: pressure_before,
+            supersession_pressure_before,
             supersession_pressure_after: memory.supersession_pressure,
-            reason: transition_reason(from, memory.state, event, &memory, self, &supersession),
+            reactivation_pressure_before,
+            reactivation_pressure_after: memory.reactivation_pressure,
+            reason: transition_reason(
+                from,
+                memory.state,
+                event,
+                &memory,
+                self,
+                &supersession,
+                &reactivation,
+            ),
         };
         memory.transition_history.push(transition.clone());
 
@@ -236,6 +273,7 @@ fn next_state(
     memory: &TemporalMemoryProfile,
     config: &RuleBasedTemporalTransitionEngine,
     supersession: &SupersessionDecision,
+    reactivation: &ReactivationDecision,
 ) -> MemoryInfluenceState {
     match (current, event) {
         (MemoryInfluenceState::Active, TemporalEvent::Contradiction)
@@ -260,6 +298,11 @@ fn next_state(
             if memory.contradiction_count >= 2 =>
         {
             MemoryInfluenceState::Superseded
+        }
+        (MemoryInfluenceState::Superseded, TemporalEvent::SupportingEvidence)
+            if reactivation.should_reactivate =>
+        {
+            MemoryInfluenceState::Challenged
         }
         (MemoryInfluenceState::Superseded, _) => MemoryInfluenceState::Superseded,
         (state, TemporalEvent::SupportingEvidence) => state,
@@ -288,6 +331,7 @@ fn transition_reason(
     memory: &TemporalMemoryProfile,
     config: &RuleBasedTemporalTransitionEngine,
     supersession: &SupersessionDecision,
+    reactivation: &ReactivationDecision,
 ) -> String {
     match (from, to, event) {
         (MemoryInfluenceState::Active, MemoryInfluenceState::Challenged, _) => {
@@ -315,8 +359,21 @@ fn transition_reason(
         (MemoryInfluenceState::Challenged, MemoryInfluenceState::Superseded, _) => {
             "superseded: repeated contradictory evidence changed future influence".to_string()
         }
+        (
+            MemoryInfluenceState::Superseded,
+            MemoryInfluenceState::Challenged,
+            TemporalEvent::SupportingEvidence,
+        ) => {
+            format!(
+                "reactivated: supporting evidence pressure {:.2} crossed threshold {:.2}",
+                reactivation.pressure_after, reactivation.threshold
+            )
+        }
         (MemoryInfluenceState::Superseded, MemoryInfluenceState::Superseded, _) => {
-            "preserved: memory remains stored while influence stays low".to_string()
+            format!(
+                "preserved: memory remains stored while influence stays low; reactivation pressure is {:.2}",
+                reactivation.pressure_after
+            )
         }
         (_, _, TemporalEvent::SupportingEvidence)
             if memory.contradiction_count == 0 && memory.failure_count == 0 =>
