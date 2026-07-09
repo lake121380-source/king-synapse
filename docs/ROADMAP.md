@@ -88,6 +88,19 @@ Phase 2.10 freezes the memory lifecycle research surface:
 The next research focus is Phase 3.0 Reflection Learning design: how experience
 becomes reusable strategy.
 
+Phase 3.0: Reflection Learning.
+
+Status: **Design phase**.
+
+Design RFC: [RFC-014 Reflection Learning](rfc/RFC-014-reflection-learning.md).
+
+Focus:
+
+- identify experiences worth reflection
+- separate facts from lessons
+- define playbook candidate formation
+- connect reflected strategy back into memory competition
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

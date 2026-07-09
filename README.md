@@ -61,6 +61,7 @@ Current research track:
 - Phase 2.8 temporal stress evaluation: stress-tested supersession without dataset changes; `oscillation_resistance = 1.0000`, `delayed_contradiction_handling = 1.0000`, `false_contradiction_restraint = 1.0000`, `memory_recovery_signal = 1.0000`, `historical_preservation = 1.0000`, `stability_score = 1.0000`, `state_recovery = 0.0000` for weak recovery stress.
 - Phase 2.9 temporal reactivation dynamics: added `reactivation_pressure` so superseded memories can recover limited influence under repeated supporting evidence; weak support does not resurrect, strong support moves `Superseded -> Challenged`, and recovered influence remains partial rather than full `Active`.
 - [Phase 2.10 Memory Lifecycle Freeze](docs/eval/PHASE2_MEMORY_LIFECYCLE_FINAL_REPORT.md): freezes Phase 2 as memory evolution research, with a separate [capability boundary](docs/eval/PHASE2_CAPABILITY_BOUNDARY.md) and [Phase 3 reflection research questions](docs/eval/PHASE3_REFLECTION_RESEARCH_QUESTIONS.md).
+- [RFC-014 Reflection Learning](docs/rfc/RFC-014-reflection-learning.md): Phase 3.0 design-only entry point for transforming selected experiences into auditable lesson and playbook candidates.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
