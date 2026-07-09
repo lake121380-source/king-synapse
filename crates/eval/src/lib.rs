@@ -18,6 +18,7 @@ pub mod governance_stress;
 pub mod harness;
 pub mod metrics;
 pub mod phase2_competition_eval;
+pub mod phase2_temporal_influence_eval;
 pub mod reporter;
 pub mod types;
 
@@ -52,6 +53,11 @@ pub use harness::{default_dataset_path, run};
 pub use phase2_competition_eval::{
     Phase2CompetitionCaseReport, Phase2CompetitionDeltaReport, Phase2CompetitionEvaluationReport,
     Phase2CompetitionEvaluator, Phase2CompetitionModeReport, Phase2CompetitionTraceStepReport,
+};
+pub use phase2_temporal_influence_eval::{
+    BeforeAfterImprovement, Phase2TemporalCaseReport, Phase2TemporalErrorsReport,
+    Phase2TemporalInfluenceEvaluationReport, Phase2TemporalInfluenceEvaluator,
+    Phase2TemporalMetricsReport, Phase2TemporalModeReport, Phase2TemporalTransitionStepReport,
 };
 pub use reporter::print_table;
 pub use types::{
