@@ -1,4 +1,5 @@
 pub mod algorithms;
+pub mod cognitive_competition_stability;
 pub mod cognitive_memory_benchmark;
 pub mod contextual_competition_integration;
 pub mod contract;
@@ -39,6 +40,15 @@ pub use algorithms::{
     hebbian_consistency_report, long_horizon_cognitive_memory_report,
     long_horizon_stability_audit_report, merge_precision_report, predictive_trace_report,
     reflection_yield_report, trace_reinforcement_report,
+};
+pub use cognitive_competition_stability::{
+    CognitiveCompetitionStabilityMetrics, DeterministicStabilityReport,
+    EvidenceStepReport as StabilityEvidenceStepReport,
+    EvidenceTransitionReport as StabilityEvidenceTransitionReport,
+    NoiseCaseReport as StabilityNoiseCaseReport, NoiseResistanceReport as StabilityNoiseReport,
+    Phase4CognitiveCompetitionStabilityEvaluator, Phase4CognitiveCompetitionStabilityReport,
+    StabilityCandidate, StabilityContext, StabilityExperimentStatus, StabilityResult,
+    StabilityScoreBreakdown,
 };
 pub use cognitive_memory_benchmark::CognitiveMemoryBenchmarkEvaluator;
 pub use contextual_competition_integration::{

@@ -1,0 +1,568 @@
+{
+  "tag": "phase4-cognitive-competition-stability",
+  "phase": "4.5",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase4.5-cognitive-competition-stability",
+  "baseline_version": "phase4.4-contextual-competition-integration",
+  "generated_at": "2026-07-09T16:16:23.818013500+00:00",
+  "metrics": {
+    "dominance_stability": 1.0,
+    "noise_resistance": 1.0,
+    "transition_consistency": 1.0,
+    "oscillation_rate": 0.0
+  },
+  "experiments": {
+    "deterministic": "PASS",
+    "noise_resistance": "PASS",
+    "evidence_transition": "PASS"
+  },
+  "core_changed": false,
+  "memory_written": false,
+  "runtime_weight_changed": false,
+  "pass": true,
+  "status": "PASS",
+  "deterministic": {
+    "runs": 100,
+    "expected_dominant": "candidate_a",
+    "same_dominant_count": 100,
+    "ranking_order": [
+      "candidate_a",
+      "candidate_b",
+      "candidate_c"
+    ],
+    "result": {
+      "experiment": "deterministic",
+      "dominant_sequence": [
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    }
+  },
+  "noise": {
+    "cases": 4,
+    "unchanged_cases": 4,
+    "case_reports": [
+      {
+        "case_id": "baseline_safety",
+        "context": {
+          "task": "production deployment safety priority",
+          "environment": "production",
+          "constraint_strength": 0.95
+        },
+        "expected_dominant": "failure_prevention",
+        "dominant_candidate": "failure_prevention",
+        "ranking": [
+          {
+            "candidate_id": "failure_prevention",
+            "base_component": 0.26599999999999996,
+            "reliability_component": 0.2277,
+            "temporal_component": 0.135,
+            "evidence_component": 0.168,
+            "total_score": 0.7967000000000001
+          },
+          {
+            "candidate_id": "speed_preference",
+            "base_component": 0.27299999999999996,
+            "reliability_component": 0.17325,
+            "temporal_component": 0.108,
+            "evidence_component": 0.128,
+            "total_score": 0.6822499999999999
+          }
+        ]
+      },
+      {
+        "case_id": "speed_request_noise",
+        "context": {
+          "task": "production deployment safety priority faster delivery requested",
+          "environment": "production",
+          "constraint_strength": 0.92
+        },
+        "expected_dominant": "failure_prevention",
+        "dominant_candidate": "failure_prevention",
+        "ranking": [
+          {
+            "candidate_id": "failure_prevention",
+            "base_component": 0.26599999999999996,
+            "reliability_component": 0.22632000000000002,
+            "temporal_component": 0.135,
+            "evidence_component": 0.168,
+            "total_score": 0.79532
+          },
+          {
+            "candidate_id": "speed_preference",
+            "base_component": 0.27299999999999996,
+            "reliability_component": 0.17220000000000002,
+            "temporal_component": 0.108,
+            "evidence_component": 0.128,
+            "total_score": 0.6812
+          }
+        ]
+      },
+      {
+        "case_id": "short_deadline_noise",
+        "context": {
+          "task": "production deployment safety priority short deadline",
+          "environment": "production",
+          "constraint_strength": 0.9
+        },
+        "expected_dominant": "failure_prevention",
+        "dominant_candidate": "failure_prevention",
+        "ranking": [
+          {
+            "candidate_id": "failure_prevention",
+            "base_component": 0.26599999999999996,
+            "reliability_component": 0.22540000000000004,
+            "temporal_component": 0.135,
+            "evidence_component": 0.168,
+            "total_score": 0.7944000000000001
+          },
+          {
+            "candidate_id": "speed_preference",
+            "base_component": 0.27299999999999996,
+            "reliability_component": 0.1715,
+            "temporal_component": 0.108,
+            "evidence_component": 0.128,
+            "total_score": 0.6805
+          }
+        ]
+      },
+      {
+        "case_id": "minor_cost_noise",
+        "context": {
+          "task": "production deployment safety priority minor cost concern",
+          "environment": "production",
+          "constraint_strength": 0.88
+        },
+        "expected_dominant": "failure_prevention",
+        "dominant_candidate": "failure_prevention",
+        "ranking": [
+          {
+            "candidate_id": "failure_prevention",
+            "base_component": 0.26599999999999996,
+            "reliability_component": 0.22448000000000004,
+            "temporal_component": 0.135,
+            "evidence_component": 0.168,
+            "total_score": 0.7934800000000001
+          },
+          {
+            "candidate_id": "speed_preference",
+            "base_component": 0.27299999999999996,
+            "reliability_component": 0.1708,
+            "temporal_component": 0.108,
+            "evidence_component": 0.128,
+            "total_score": 0.6798
+          }
+        ]
+      }
+    ],
+    "result": {
+      "experiment": "noise_resistance",
+      "dominant_sequence": [
+        "failure_prevention",
+        "failure_prevention",
+        "failure_prevention",
+        "failure_prevention"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    }
+  },
+  "transition": {
+    "evidence_levels": [
+      0.0,
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+      1.0
+    ],
+    "transition_count": 1,
+    "transition_consistency": 1.0,
+    "steps": [
+      {
+        "evidence_support": 0.0,
+        "dominant_candidate": "existing_preference",
+        "ranking": [
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          },
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.0,
+            "total_score": 0.5462
+          }
+        ]
+      },
+      {
+        "evidence_support": 0.2,
+        "dominant_candidate": "existing_preference",
+        "ranking": [
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          },
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.04000000000000001,
+            "total_score": 0.5862
+          }
+        ]
+      },
+      {
+        "evidence_support": 0.4,
+        "dominant_candidate": "existing_preference",
+        "ranking": [
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          },
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.08000000000000002,
+            "total_score": 0.6262000000000001
+          }
+        ]
+      },
+      {
+        "evidence_support": 0.6,
+        "dominant_candidate": "existing_preference",
+        "ranking": [
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          },
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.12,
+            "total_score": 0.6662
+          }
+        ]
+      },
+      {
+        "evidence_support": 0.8,
+        "dominant_candidate": "new_contradictory_evidence",
+        "ranking": [
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.16000000000000003,
+            "total_score": 0.7062
+          },
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          }
+        ]
+      },
+      {
+        "evidence_support": 1.0,
+        "dominant_candidate": "new_contradictory_evidence",
+        "ranking": [
+          {
+            "candidate_id": "new_contradictory_evidence",
+            "base_component": 0.1925,
+            "reliability_component": 0.21120000000000003,
+            "temporal_component": 0.1425,
+            "evidence_component": 0.2,
+            "total_score": 0.7462
+          },
+          {
+            "candidate_id": "existing_preference",
+            "base_component": 0.294,
+            "reliability_component": 0.20400000000000001,
+            "temporal_component": 0.12,
+            "evidence_component": 0.06,
+            "total_score": 0.6779999999999999
+          }
+        ]
+      }
+    ],
+    "result": {
+      "experiment": "evidence_transition",
+      "dominant_sequence": [
+        "existing_preference",
+        "existing_preference",
+        "existing_preference",
+        "existing_preference",
+        "new_contradictory_evidence",
+        "new_contradictory_evidence"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    }
+  },
+  "results": [
+    {
+      "experiment": "deterministic",
+      "dominant_sequence": [
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a",
+        "candidate_a"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    },
+    {
+      "experiment": "noise_resistance",
+      "dominant_sequence": [
+        "failure_prevention",
+        "failure_prevention",
+        "failure_prevention",
+        "failure_prevention"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    },
+    {
+      "experiment": "evidence_transition",
+      "dominant_sequence": [
+        "existing_preference",
+        "existing_preference",
+        "existing_preference",
+        "existing_preference",
+        "new_contradictory_evidence",
+        "new_contradictory_evidence"
+      ],
+      "stability_score": 1.0,
+      "oscillation_rate": 0.0,
+      "oscillation_events": 0
+    }
+  ]
+}

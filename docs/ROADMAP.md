@@ -250,6 +250,37 @@ Boundary:
 - does not write memory
 - does not change runtime weighting, activation, recall, or production ranking
 
+Phase 4.5: Cognitive Competition Stability Evaluation.
+
+Status: **Evaluation-only stability validation**.
+
+Report: `crates/eval/reports/phase4_cognitive_competition_stability.json`.
+
+Boundary:
+
+- validates deterministic dominance over 100 repeated runs
+- validates resistance to minor context noise in safety-critical competition
+- validates evidence-driven transition from old dominant candidate to new evidence
+- records oscillation rate and confirms no `A -> B -> A` instability
+- does not change core
+- does not write memory
+- does not change runtime weighting, activation, recall, or production ranking
+
+Phase 4 Cognitive Competition: **Complete**.
+
+Validated chain:
+
+```text
+Memory Candidates
+  -> Competition
+  -> Contextual Weighting
+  -> Dominant Candidate Emergence
+  -> Stable Cognitive State
+  -> Evidence Driven Transition
+```
+
+Next research entry: Phase 5 Algorithm Engineering.
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.
