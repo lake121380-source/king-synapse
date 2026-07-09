@@ -20,6 +20,7 @@ pub mod metrics;
 pub mod phase2_competition_eval;
 pub mod phase2_temporal_influence_eval;
 pub mod phase2_temporal_stress_eval;
+pub mod phase3_future_influence;
 pub mod phase3_lesson_candidate_eval;
 pub mod phase3_lesson_promotion;
 pub mod phase3_reflection_observation;
@@ -67,6 +68,10 @@ pub use phase2_temporal_stress_eval::{
     Phase2TemporalStressEvaluationReport, Phase2TemporalStressEvaluator,
     Phase2TemporalStressMetricsReport, Phase2TemporalStressScenarioReport,
     Phase2TemporalStressStepReport,
+};
+pub use phase3_future_influence::{
+    FutureInfluenceResultsReport, FutureInfluenceSafetyReport, FutureInfluenceTrace,
+    Phase3FutureInfluenceEvaluator, Phase3FutureInfluenceMetrics, Phase3FutureInfluenceReport,
 };
 pub use phase3_lesson_candidate_eval::{
     LessonCandidateReport, Phase3LessonCandidateEvaluationReport, Phase3LessonCandidateEvaluator,

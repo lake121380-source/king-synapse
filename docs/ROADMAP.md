@@ -146,6 +146,20 @@ Boundary:
 - does not write memory
 - does not modify future influence
 
+Phase 3.4: Future Influence Experiment.
+
+Status: **Evaluation-only influence experiment**.
+
+Report: `crates/eval/reports/phase3-future-influence.json`.
+
+Boundary:
+
+- compares baseline decisions with promoted-lesson-influenced decisions
+- tests helpful, irrelevant, and outdated lesson scenarios
+- does not write memory
+- does not create playbooks
+- does not modify runtime future influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.
