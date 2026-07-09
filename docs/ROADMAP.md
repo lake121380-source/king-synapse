@@ -174,6 +174,21 @@ Boundary:
 - does not create playbooks
 - does not modify runtime future influence
 
+Phase 3.6: Final Freeze Report.
+
+Status: **Frozen**.
+
+Report: [Phase 3 Final Freeze Report](eval/PHASE3_FINAL_REPORT.md).
+
+Boundary:
+
+- Phase 3 completed and frozen
+- documents experience-learning evaluation capabilities
+- no new algorithms
+- no core changes
+- no memory mutation
+- next research entry is Phase 4 Adaptive Cognition
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.
