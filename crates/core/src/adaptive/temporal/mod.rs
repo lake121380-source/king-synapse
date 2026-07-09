@@ -6,6 +6,12 @@
 
 use serde::{Deserialize, Serialize};
 
+pub mod supersession;
+
+pub use supersession::{
+    RuleBasedTemporalSupersessionPolicy, SupersessionDecision, TemporalSupersessionPolicy,
+};
+
 const DEFAULT_CHALLENGED_MULTIPLIER: f32 = 0.55;
 const DEFAULT_SUPERSEDED_MULTIPLIER: f32 = 0.20;
 const DEFAULT_SUPERSEDE_AFTER_FAILURES: u8 = 3;
@@ -43,6 +49,7 @@ pub struct TemporalMemoryProfile {
     pub current_influence: f32,
     pub contradiction_count: u8,
     pub failure_count: u8,
+    pub supersession_pressure: f32,
     pub transition_history: Vec<TemporalTransitionStep>,
 }
 
@@ -57,6 +64,7 @@ impl TemporalMemoryProfile {
             current_influence: base_influence,
             contradiction_count: 0,
             failure_count: 0,
+            supersession_pressure: 0.0,
             transition_history: Vec::new(),
         }
     }
@@ -78,6 +86,8 @@ pub struct TemporalTransitionStep {
     pub to: MemoryInfluenceState,
     pub influence_before: f32,
     pub influence_after: f32,
+    pub supersession_pressure_before: f32,
+    pub supersession_pressure_after: f32,
     pub reason: String,
 }
 
@@ -121,6 +131,7 @@ pub struct RuleBasedTemporalTransitionEngine {
     challenged_multiplier: f32,
     superseded_multiplier: f32,
     supersede_after_failures: u8,
+    supersession_policy: RuleBasedTemporalSupersessionPolicy,
 }
 
 impl RuleBasedTemporalTransitionEngine {
@@ -138,6 +149,7 @@ impl RuleBasedTemporalTransitionEngine {
             challenged_multiplier,
             superseded_multiplier,
             supersede_after_failures: supersede_after_failures.max(1),
+            supersession_policy: RuleBasedTemporalSupersessionPolicy::default(),
         }
     }
 
@@ -151,6 +163,10 @@ impl RuleBasedTemporalTransitionEngine {
 
     pub fn supersede_after_failures(&self) -> u8 {
         self.supersede_after_failures
+    }
+
+    pub fn supersession_policy(&self) -> RuleBasedTemporalSupersessionPolicy {
+        self.supersession_policy
     }
 }
 
@@ -169,11 +185,17 @@ impl TemporalTransitionEngine for RuleBasedTemporalTransitionEngine {
         memory.stored = true;
         memory.base_influence = sanitize_influence(memory.base_influence);
         memory.current_influence = sanitize_influence(memory.current_influence);
+        memory.supersession_pressure = sanitize_influence(memory.supersession_pressure);
 
         let from = memory.state;
         let influence_before = memory.current_influence;
+        let pressure_before = memory.supersession_pressure;
         update_evidence_counts(&mut memory, event);
-        memory.state = next_state(memory.state, event, &memory, self);
+        let supersession =
+            self.supersession_policy
+                .evaluate(memory.state, event, memory.supersession_pressure);
+        memory.supersession_pressure = supersession.pressure_after;
+        memory.state = next_state(memory.state, event, &memory, self, &supersession);
         memory.current_influence = influence_for_state(memory.state, memory.base_influence, *self);
 
         let transition = TemporalTransitionStep {
@@ -183,7 +205,9 @@ impl TemporalTransitionEngine for RuleBasedTemporalTransitionEngine {
             to: memory.state,
             influence_before,
             influence_after: memory.current_influence,
-            reason: transition_reason(from, memory.state, event, &memory, self),
+            supersession_pressure_before: pressure_before,
+            supersession_pressure_after: memory.supersession_pressure,
+            reason: transition_reason(from, memory.state, event, &memory, self, &supersession),
         };
         memory.transition_history.push(transition.clone());
 
@@ -211,12 +235,20 @@ fn next_state(
     event: TemporalEvent,
     memory: &TemporalMemoryProfile,
     config: &RuleBasedTemporalTransitionEngine,
+    supersession: &SupersessionDecision,
 ) -> MemoryInfluenceState {
     match (current, event) {
         (MemoryInfluenceState::Active, TemporalEvent::Contradiction)
         | (MemoryInfluenceState::Active, TemporalEvent::FailureOutcome)
         | (MemoryInfluenceState::Active, TemporalEvent::NewPreference) => {
-            MemoryInfluenceState::Challenged
+            if supersession.should_supersede {
+                MemoryInfluenceState::Superseded
+            } else {
+                MemoryInfluenceState::Challenged
+            }
+        }
+        (MemoryInfluenceState::Challenged, _) if supersession.should_supersede => {
+            MemoryInfluenceState::Superseded
         }
         (MemoryInfluenceState::Challenged, TemporalEvent::FailureOutcome)
             if memory.failure_count >= config.supersede_after_failures =>
@@ -255,10 +287,20 @@ fn transition_reason(
     event: TemporalEvent,
     memory: &TemporalMemoryProfile,
     config: &RuleBasedTemporalTransitionEngine,
+    supersession: &SupersessionDecision,
 ) -> String {
     match (from, to, event) {
         (MemoryInfluenceState::Active, MemoryInfluenceState::Challenged, _) => {
-            "challenged: later evidence reduced future influence".to_string()
+            format!(
+                "challenged: later evidence raised displacement pressure to {:.2}",
+                supersession.pressure_after
+            )
+        }
+        (_, MemoryInfluenceState::Superseded, _) if supersession.should_supersede => {
+            format!(
+                "superseded: displacement pressure {:.2} crossed threshold {:.2}",
+                supersession.pressure_after, supersession.threshold
+            )
         }
         (
             MemoryInfluenceState::Challenged,

@@ -48,6 +48,7 @@ pub use reflection::{
     ReflectionOutput, ReflectionSkipReason, RuleBasedReflectionAlgorithm,
 };
 pub use temporal::{
-    MemoryInfluenceState, RuleBasedTemporalTransitionEngine, TemporalEvent, TemporalMemoryProfile,
+    MemoryInfluenceState, RuleBasedTemporalSupersessionPolicy, RuleBasedTemporalTransitionEngine,
+    SupersessionDecision, TemporalEvent, TemporalMemoryProfile, TemporalSupersessionPolicy,
     TemporalTransitionEngine, TemporalTransitionReport, TemporalTransitionStep,
 };

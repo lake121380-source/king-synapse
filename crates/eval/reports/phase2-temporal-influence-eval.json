@@ -14,11 +14,11 @@
   },
   "temporal": {
     "name": "synapse+temporal+competition",
-    "score": 0.9508319334856651,
+    "score": 0.9509469334946058,
     "case_count": 200,
     "causal_order_error_count": 0,
-    "obsolete_memory_error_count": 22,
-    "mean_influence": 0.7001125034809103
+    "obsolete_memory_error_count": 4,
+    "mean_influence": 0.6714125026136628
   },
   "temporal_errors": {
     "causal_order_error": {
@@ -28,20 +28,20 @@
     },
     "obsolete_memory_error": {
       "before": 51,
-      "after": 22,
-      "improvement": 29
+      "after": 4,
+      "improvement": 47
     }
   },
   "metrics": {
     "temporal_update_accuracy": 1.0,
-    "obsolete_memory_detection": 0.5686274509803921,
+    "obsolete_memory_detection": 0.9215686274509803,
     "historical_preservation": 1.0,
     "causal_transition_accuracy": 1.0
   },
   "temporal_opportunities": 73,
   "obsolete_opportunities": 51,
   "causal_transition_opportunities": 36,
-  "pass": false,
+  "pass": true,
   "status": "temporal_influence_evaluated",
   "cases": [
     {
@@ -85,21 +85,21 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9148200000000001,
-      "temporal_score": 0.9332699993920327,
+      "temporal_score": 0.9476200009059906,
       "baseline_decision": "avoid_causal_claim",
       "temporal_decision": "avoid_causal_claim",
       "expected_decision": "avoid_causal_claim",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.8199999928474426,
-      "current_influence": 0.45100000500679016,
-      "influence_decrease": 0.36899998784065247,
+      "current_influence": 0.164000004529953,
+      "influence_decrease": 0.656000018119812,
       "transition_history": [
         {
           "memory_id": "tool_switch_before_success",
@@ -108,16 +108,16 @@
           "to": "Challenged",
           "influence_before": 0.8199999928474426,
           "influence_after": 0.45100000500679016,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "tool_switch_before_success",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.45100000500679016,
-          "influence_after": 0.45100000500679016,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.164000004529953,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -551,21 +551,21 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9346200000000001,
-      "temporal_score": 0.9539699997258188,
+      "temporal_score": 0.96262,
       "baseline_decision": "avoid_reuse_due_to_latency_constraint",
       "temporal_decision": "avoid_reuse_due_to_latency_constraint",
       "expected_decision": "avoid_reuse_due_to_latency_constraint",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.8600000143051147,
-      "current_influence": 0.47300001978874207,
-      "influence_decrease": 0.3869999945163727,
+      "current_influence": 0.1720000058412552,
+      "influence_decrease": 0.6880000233650208,
       "transition_history": [
         {
           "memory_id": "ae_009_old_win_no_latency_constraint",
@@ -574,16 +574,16 @@
           "to": "Challenged",
           "influence_before": 0.8600000143051147,
           "influence_after": 0.47300001978874207,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "ae_009_old_win_no_latency_constraint",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.47300001978874207,
-          "influence_after": 0.47300001978874207,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.1720000058412552,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -683,7 +683,7 @@
           "to": "Challenged",
           "influence_before": 0.8600000143051147,
           "influence_after": 0.47300001978874207,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "ae_012_beta_failure",
@@ -1059,25 +1059,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "import_pipeline_initial_success",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "import_pipeline_initial_success",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "import_pipeline_initial_success",
@@ -1086,7 +1068,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "import_pipeline_initial_success",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "import_pipeline_initial_success",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1125,25 +1125,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "fast_batch_job_adopted",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "fast_batch_job_adopted",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "fast_batch_job_adopted",
@@ -1152,7 +1134,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "fast_batch_job_adopted",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "fast_batch_job_adopted",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1250,25 +1250,7 @@
           "to": "Challenged",
           "influence_before": 0.9900000095367432,
           "influence_after": 0.5444999933242798,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "fast_solution_accepted",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "fast_solution_accepted",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "fast_solution_accepted",
@@ -1277,7 +1259,25 @@
           "to": "Superseded",
           "influence_before": 0.5444999933242798,
           "influence_after": 0.1979999989271164,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "fast_solution_accepted",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1979999989271164,
+          "influence_after": 0.1979999989271164,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "fast_solution_accepted",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1979999989271164,
+          "influence_after": 0.1979999989271164,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1346,7 +1346,7 @@
           "to": "Challenged",
           "influence_before": 0.9900000095367432,
           "influence_after": 0.5444999933242798,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "old_preference_fast_delivery",
@@ -1355,7 +1355,7 @@
           "to": "Superseded",
           "influence_before": 0.5444999933242798,
           "influence_after": 0.1979999989271164,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "old_preference_fast_delivery",
@@ -1404,7 +1404,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "old_fast_delivery_preference",
@@ -1413,7 +1413,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "old_fast_delivery_preference",
@@ -1438,7 +1438,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9434299999999999,
@@ -1448,11 +1448,11 @@
       "expected_decision": "avoid_option_a_for_this_risk_profile",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "user_liked_option_a",
@@ -1461,16 +1461,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "user_liked_option_a",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -1509,25 +1509,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "old_library_preferred",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "old_library_preferred",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "old_library_preferred",
@@ -1536,7 +1518,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "old_library_preferred",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "old_library_preferred",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1575,25 +1575,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "metric_improved_after_rollout",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "metric_improved_after_rollout",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "metric_improved_after_rollout",
@@ -1602,7 +1584,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "metric_improved_after_rollout",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "metric_improved_after_rollout",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1618,7 +1618,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.94907,
@@ -1628,11 +1628,11 @@
       "expected_decision": "use_scale_aware_approach",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "small_context_approach_success",
@@ -1641,16 +1641,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "small_context_approach_success",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -1666,7 +1666,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9434299999999999,
@@ -1676,11 +1676,11 @@
       "expected_decision": "use_guarded_automation",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "automation_failure_created_aversion",
@@ -1689,16 +1689,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "automation_failure_created_aversion",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -1714,7 +1714,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9434299999999999,
@@ -1724,11 +1724,11 @@
       "expected_decision": "reject_security_exception_without_review",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "security_exception_allowed_once",
@@ -1737,16 +1737,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "security_exception_allowed_once",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -1762,7 +1762,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9434299999999999,
@@ -1772,11 +1772,11 @@
       "expected_decision": "choose_tool_fit_for_new_team",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "old_team_tool_fit",
@@ -1785,16 +1785,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "old_team_tool_fit",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -1834,25 +1834,7 @@
           "to": "Challenged",
           "influence_before": 0.9900000095367432,
           "influence_after": 0.5444999933242798,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "prototype_initial_success",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "prototype_initial_success",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "prototype_initial_success",
@@ -1861,7 +1843,25 @@
           "to": "Superseded",
           "influence_before": 0.5444999933242798,
           "influence_after": 0.1979999989271164,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "prototype_initial_success",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1979999989271164,
+          "influence_after": 0.1979999989271164,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "prototype_initial_success",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1979999989271164,
+          "influence_after": 0.1979999989271164,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -1878,7 +1878,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.994,
@@ -1888,11 +1888,11 @@
       "expected_decision": "prefer_low_operational_risk",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9900000095367432,
-      "current_influence": 0.5444999933242798,
-      "influence_decrease": 0.4455000162124634,
+      "current_influence": 0.1979999989271164,
+      "influence_decrease": 0.7919999957084656,
       "transition_history": [
         {
           "memory_id": "cheap_stack_selected",
@@ -1901,16 +1901,16 @@
           "to": "Challenged",
           "influence_before": 0.9900000095367432,
           "influence_after": 0.5444999933242798,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "cheap_stack_selected",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.1979999989271164,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -2036,25 +2036,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "direct_launch_skipped_flag",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "direct_launch_skipped_flag",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "direct_launch_skipped_flag",
@@ -2063,7 +2045,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "direct_launch_skipped_flag",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "direct_launch_skipped_flag",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -2131,25 +2131,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "vendor_integration_fast",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "vendor_integration_fast",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "vendor_integration_fast",
@@ -2158,7 +2140,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "vendor_integration_fast",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "vendor_integration_fast",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -2226,25 +2226,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "manual_hotfix_restored_service",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "manual_hotfix_restored_service",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "manual_hotfix_restored_service",
@@ -2253,7 +2235,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "manual_hotfix_restored_service",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "manual_hotfix_restored_service",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -2270,7 +2270,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.998,
@@ -2280,11 +2280,11 @@
       "expected_decision": "preserve_exploration_with_guardrails",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9900000095367432,
-      "current_influence": 0.5444999933242798,
-      "influence_decrease": 0.4455000162124634,
+      "current_influence": 0.1979999989271164,
+      "influence_decrease": 0.7919999957084656,
       "transition_history": [
         {
           "memory_id": "launch_failed_once",
@@ -2293,16 +2293,16 @@
           "to": "Challenged",
           "influence_before": 0.9900000095367432,
           "influence_after": 0.5444999933242798,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "launch_failed_once",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5444999933242798,
-          "influence_after": 0.5444999933242798,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.1979999989271164,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -3272,7 +3272,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_001_old_fast_preference",
@@ -3281,7 +3281,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "mc_001_old_fast_preference",
@@ -3330,25 +3330,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "mc_002_old_direct_access_policy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "mc_002_old_direct_access_policy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_002_old_direct_access_policy",
@@ -3357,7 +3339,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "mc_002_old_direct_access_policy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "mc_002_old_direct_access_policy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -3397,25 +3397,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "mc_003_old_vendor_claim",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "mc_003_old_vendor_claim",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_003_old_vendor_claim",
@@ -3424,7 +3406,25 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "mc_003_old_vendor_claim",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "mc_003_old_vendor_claim",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.18200001120567322,
+          "influence_after": 0.18200001120567322,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -3501,7 +3501,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95495,
@@ -3511,11 +3511,11 @@
       "expected_decision": "migrate_to_current_api",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_006_old_api_success",
@@ -3524,16 +3524,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_006_old_api_success",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -3603,7 +3603,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_008_old_tool_small_success",
@@ -3621,7 +3621,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.90 crossed threshold 0.65"
         }
       ]
     },
@@ -3661,7 +3661,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_009_old_capacity_shortage",
@@ -3710,7 +3710,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_010_old_notification_rejection",
@@ -3719,7 +3719,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "mc_010_old_notification_rejection",
@@ -3745,7 +3745,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95495,
@@ -3755,11 +3755,11 @@
       "expected_decision": "prioritize_retention",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_011_old_signup_goal",
@@ -3768,16 +3768,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_011_old_signup_goal",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -3794,7 +3794,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9456299999999999,
@@ -3804,11 +3804,11 @@
       "expected_decision": "apply_new_data_residency_policy",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_012_legacy_region_rule",
@@ -3817,16 +3817,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_012_legacy_region_rule",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -3873,7 +3873,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95287,
@@ -3883,11 +3883,11 @@
       "expected_decision": "mark_hypothesis_unproven",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_014_old_experiment_win",
@@ -3896,16 +3896,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_014_old_experiment_win",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -3952,7 +3952,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95495,
@@ -3962,11 +3962,11 @@
       "expected_decision": "avoid_unpatched_library",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_016_old_library_recommendation",
@@ -3975,16 +3975,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_016_old_library_recommendation",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -4091,7 +4091,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9456299999999999,
@@ -4101,11 +4101,11 @@
       "expected_decision": "use_multi_tenant_safe_design",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_020_old_single_tenant_advice",
@@ -4114,16 +4114,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_020_old_single_tenant_advice",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -4200,7 +4200,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95495,
@@ -4210,11 +4210,11 @@
       "expected_decision": "use_internal_replacement_api",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_023_old_external_api_docs",
@@ -4223,16 +4223,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_023_old_external_api_docs",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -4279,7 +4279,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.9449599999999999,
@@ -4289,11 +4289,11 @@
       "expected_decision": "revalidate_sales_motion",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_025_old_sales_motion_success",
@@ -4302,16 +4302,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_025_old_sales_motion_success",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -4328,7 +4328,7 @@
       "obsolete_opportunity": true,
       "causal_transition_opportunity": false,
       "temporal_update_success": true,
-      "obsolete_detection_success": false,
+      "obsolete_detection_success": true,
       "historical_preservation_success": true,
       "causal_transition_success": false,
       "baseline_score": 0.95287,
@@ -4338,11 +4338,11 @@
       "expected_decision": "prioritize_region_localization",
       "baseline_failure_type": null,
       "temporal_failure_type": null,
-      "temporal_state": "Challenged",
+      "temporal_state": "Superseded",
       "stored": true,
       "base_influence": 0.9100000262260437,
-      "current_influence": 0.5005000233650208,
-      "influence_decrease": 0.40950000286102295,
+      "current_influence": 0.18200001120567322,
+      "influence_decrease": 0.7280000448226929,
       "transition_history": [
         {
           "memory_id": "mc_026_old_localization_low_priority",
@@ -4351,16 +4351,16 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "mc_026_old_localization_low_priority",
           "event": "FailureOutcome",
           "from": "Challenged",
-          "to": "Challenged",
+          "to": "Superseded",
           "influence_before": 0.5005000233650208,
-          "influence_after": 0.5005000233650208,
-          "reason": "stable: evidence did not cross transition threshold"
+          "influence_after": 0.18200001120567322,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         }
       ]
     },
@@ -4460,7 +4460,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_029_old_incident_fixed",
@@ -4478,7 +4478,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.90 crossed threshold 0.65"
         }
       ]
     },
@@ -4518,7 +4518,7 @@
           "to": "Challenged",
           "influence_before": 0.9100000262260437,
           "influence_after": 0.5005000233650208,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "mc_030_old_preference",
@@ -4527,7 +4527,7 @@
           "to": "Superseded",
           "influence_before": 0.5005000233650208,
           "influence_after": 0.18200001120567322,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "mc_030_old_preference",
@@ -5477,7 +5477,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "old_preference_speed",
@@ -5486,7 +5486,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "old_preference_speed",
@@ -5535,7 +5535,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "user_likes_minimal_systems",
@@ -5544,7 +5544,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "user_likes_minimal_systems",
@@ -5650,7 +5650,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "old_preference_full_explanations",
@@ -5659,7 +5659,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated contradictory evidence changed future influence"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
         },
         {
           "memory_id": "old_preference_full_explanations",
@@ -5736,25 +5736,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "old_rule_direct_deploy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "old_rule_direct_deploy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "old_rule_direct_deploy",
@@ -5763,7 +5745,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "old_rule_direct_deploy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "old_rule_direct_deploy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -5802,25 +5802,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "old_growth_metric_win",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "old_growth_metric_win",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "old_growth_metric_win",
@@ -5829,7 +5811,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "old_growth_metric_win",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "old_growth_metric_win",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -5868,7 +5868,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "old_bug_fix_worked",
@@ -5886,7 +5886,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.90 crossed threshold 0.65"
         }
       ]
     },
@@ -5925,25 +5925,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "old_vendor_claim_fastest",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "old_vendor_claim_fastest",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "old_vendor_claim_fastest",
@@ -5952,7 +5934,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "old_vendor_claim_fastest",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "old_vendor_claim_fastest",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -5991,7 +5991,7 @@
           "to": "Challenged",
           "influence_before": 0.7400000095367432,
           "influence_after": 0.40700000524520874,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -6030,7 +6030,7 @@
           "to": "Challenged",
           "influence_before": 0.7400000095367432,
           "influence_after": 0.40700000524520874,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -6070,7 +6070,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_001_update_a_before_segment_shift",
@@ -6119,7 +6119,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_002_launch_signal_positive",
@@ -6168,7 +6168,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_003_activation_improved_immediately",
@@ -6217,7 +6217,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_004_fix_passed_initial_tests",
@@ -6235,7 +6235,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.90 crossed threshold 0.65"
         }
       ]
     },
@@ -6275,25 +6275,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "tc_005_old_policy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "tc_005_old_policy",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "tc_005_old_policy",
@@ -6302,7 +6284,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "tc_005_old_policy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "tc_005_old_policy",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -6342,7 +6342,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_006_batch_release",
@@ -6391,7 +6391,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_007_free_trial_signup_spike",
@@ -6440,7 +6440,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_008_deploy_a_before_warnings",
@@ -6458,7 +6458,7 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.90 crossed threshold 0.65"
         }
       ]
     },
@@ -6498,7 +6498,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_009_early_adoption_high",
@@ -6547,7 +6547,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_010_performance_improved",
@@ -6596,7 +6596,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_011_vendor_setup_cost_low",
@@ -6645,7 +6645,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_012_ui_tweak",
@@ -6694,7 +6694,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_013_initial_feedback_positive",
@@ -6743,7 +6743,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_014_power_users_helped",
@@ -6792,7 +6792,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_015_weekday_stability",
@@ -6841,7 +6841,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_016_experiment_a_cohort_x",
@@ -6890,25 +6890,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
-        },
-        {
-          "memory_id": "tc_017_policy_announced",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
-        },
-        {
-          "memory_id": "tc_017_policy_announced",
-          "event": "FailureOutcome",
-          "from": "Challenged",
-          "to": "Challenged",
-          "influence_before": 0.4950000047683716,
-          "influence_after": 0.4950000047683716,
-          "reason": "stable: evidence did not cross transition threshold"
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
         },
         {
           "memory_id": "tc_017_policy_announced",
@@ -6917,7 +6899,25 @@
           "to": "Superseded",
           "influence_before": 0.4950000047683716,
           "influence_after": 0.17999999225139618,
-          "reason": "superseded: repeated failure evidence reached threshold 3"
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "tc_017_policy_announced",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "tc_017_policy_announced",
+          "event": "FailureOutcome",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.17999999225139618,
+          "influence_after": 0.17999999225139618,
+          "reason": "preserved: memory remains stored while influence stays low"
         }
       ]
     },
@@ -6957,7 +6957,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_018_low_cost_saved_money",
@@ -7006,7 +7006,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_019_initial_velocity_drop",
@@ -7056,7 +7056,7 @@
           "to": "Challenged",
           "influence_before": 0.8999999761581421,
           "influence_after": 0.4950000047683716,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         },
         {
           "memory_id": "tc_020_partial_order_signal",
@@ -7165,7 +7165,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -7205,7 +7205,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -7275,7 +7275,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -7555,7 +7555,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -7625,7 +7625,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },
@@ -7695,7 +7695,7 @@
           "to": "Challenged",
           "influence_before": 0.8500000238418579,
           "influence_after": 0.4675000309944153,
-          "reason": "challenged: later evidence reduced future influence"
+          "reason": "challenged: later evidence raised displacement pressure to 0.30"
         }
       ]
     },

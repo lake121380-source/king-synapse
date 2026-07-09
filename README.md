@@ -56,7 +56,8 @@ Current research track:
 - Phase 2.3 competition evaluation: same 200-case v1.2 benchmark, `synapse = 0.9400`, `synapse+competition = 0.9431`, decision mismatches reduced by `2`, causal-order errors reduced by `2`, `suppression_correctness = 1.0000`.
 - [Phase 2.4 Temporal Memory Dynamics Plan](docs/eval/PHASE2_4_TEMPORAL_MEMORY_PLAN.md): design for preserving historical memories while updating future influence.
 - Phase 2.5 temporal transition prototype: minimal `Active -> Challenged -> Superseded` influence-state layer with auditable transition history.
-- Phase 2.6 temporal influence evaluation: same 200-case v1.2 benchmark, `synapse+competition = 0.9431`, `synapse+temporal+competition = 0.9508`, `temporal_update_accuracy = 1.0000`, `historical_preservation = 1.0000`, `causal_transition_accuracy = 1.0000`, `obsolete_memory_detection = 0.5686` (`pass = false`, known strict-obsolete gap).
+- Phase 2.6 temporal influence evaluation: same 200-case v1.2 benchmark, `synapse+competition = 0.9431`, `synapse+temporal+competition = 0.9508`, `temporal_update_accuracy = 1.0000`, `historical_preservation = 1.0000`, `causal_transition_accuracy = 1.0000`, `obsolete_memory_detection = 0.5686` (`pass = false`, strict-obsolete gap found).
+- Phase 2.7 temporal supersession dynamics: added memory displacement pressure for `Challenged -> Superseded`; same temporal evaluation now reaches `synapse+temporal+competition = 0.9509`, `obsolete_memory_detection = 0.9216`, obsolete errors `51 -> 4`, `pass = true`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition experiments. Retrieval, benchmark scoring, memory schema,

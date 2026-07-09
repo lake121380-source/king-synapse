@@ -44,7 +44,7 @@ fn repeated_counterevidence_moves_challenged_to_superseded() {
     assert!(report.memory.transition_history.iter().any(|step| {
         step.from == MemoryInfluenceState::Challenged
             && step.to == MemoryInfluenceState::Superseded
-            && step.reason.contains("repeated failure")
+            && step.reason.contains("displacement pressure")
     }));
 }
 
