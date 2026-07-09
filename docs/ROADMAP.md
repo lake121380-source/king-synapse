@@ -118,6 +118,20 @@ Boundary:
 - does not create playbooks
 - does not modify future influence
 
+Phase 3.2: Lesson Candidate Evaluation.
+
+Status: **Evaluation-only gate**.
+
+Report: `crates/eval/reports/phase3-lesson-candidate-eval.json`.
+
+Boundary:
+
+- evaluates lesson candidates from reflection traces
+- can return `AcceptCandidate`, `ObserveMore`, or `RejectCandidate`
+- does not persist lessons
+- does not create playbooks
+- does not modify future influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

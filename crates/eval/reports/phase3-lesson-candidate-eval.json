@@ -1,0 +1,215 @@
+{
+  "tag": "phase3-lesson-candidate-eval",
+  "evaluation_version": "phase3.2-lesson-candidate-evaluation",
+  "baseline_version": "phase3.1-reflection-observation",
+  "generated_at": "2026-07-09T06:37:29.535576400+00:00",
+  "source_trace_count": 6,
+  "candidate_count": 6,
+  "candidate_opportunities": 3,
+  "accepted": 3,
+  "observe_more": 2,
+  "rejected": 1,
+  "mechanism_changed": false,
+  "schema_changed": false,
+  "retrieval_changed": false,
+  "activation_changed": false,
+  "temporal_lifecycle_changed": false,
+  "governance_changed": false,
+  "lesson_persisted": false,
+  "playbook_created": false,
+  "future_influence_changed": false,
+  "implementation_status": "evaluation_only",
+  "metrics": {
+    "lesson_grounding_score": 0.8805555555555556,
+    "lesson_scope_score": 0.9166666666666666,
+    "contradiction_resistance_score": 1.0,
+    "overgeneralization_guard_score": 1.0,
+    "candidate_accept_precision": 1.0,
+    "candidate_decision_agreement": 1.0,
+    "promotion_safety": 1.0
+  },
+  "pass": true,
+  "status": "lesson_candidates_evaluated",
+  "candidates": [
+    {
+      "source_experience_id": "reflection_obs_001_gpu_deployment_failure",
+      "source_action": "Reflect",
+      "has_lesson_candidate": true,
+      "lesson": "For GPU-limited model deployment, validate memory footprint before rollout.",
+      "evidence_count": 3,
+      "supporting_events": [
+        "gpu_failure_log",
+        "oom_runtime_error",
+        "user_correction_reduce_batch"
+      ],
+      "contradicting_events": [],
+      "confidence": 1.0,
+      "scope": "gpu_limited_model_deployment",
+      "grounding_score": 1.0,
+      "scope_score": 1.0,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "AcceptCandidate",
+      "expected_decision": "AcceptCandidate",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "candidate passed grounding and scope checks with 3 supporting events"
+      ]
+    },
+    {
+      "source_experience_id": "reflection_obs_002_routine_success",
+      "source_action": "Ignore",
+      "has_lesson_candidate": false,
+      "lesson": null,
+      "evidence_count": 0,
+      "supporting_events": [],
+      "contradicting_events": [],
+      "confidence": 0.6229,
+      "scope": "none",
+      "grounding_score": 1.0,
+      "scope_score": 1.0,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "RejectCandidate",
+      "expected_decision": "RejectCandidate",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "no useful lesson candidate accepted"
+      ]
+    },
+    {
+      "source_experience_id": "reflection_obs_003_ambiguous_one_off_error",
+      "source_action": "Observe",
+      "has_lesson_candidate": false,
+      "lesson": null,
+      "evidence_count": 1,
+      "supporting_events": [
+        "one_off_network_timeout"
+      ],
+      "contradicting_events": [],
+      "confidence": 0.6315,
+      "scope": "network_diagnostics_pending",
+      "grounding_score": 0.7,
+      "scope_score": 0.75,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "ObserveMore",
+      "expected_decision": "ObserveMore",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "candidate needs more evidence before promotion"
+      ]
+    },
+    {
+      "source_experience_id": "reflection_obs_004_repeated_permission_failure",
+      "source_action": "Reflect",
+      "has_lesson_candidate": true,
+      "lesson": "Before deployment, verify database write permissions for the runtime user.",
+      "evidence_count": 3,
+      "supporting_events": [
+        "first_permission_failure",
+        "second_permission_failure",
+        "operator_manual_fix"
+      ],
+      "contradicting_events": [],
+      "confidence": 0.9991,
+      "scope": "database_backed_deployment",
+      "grounding_score": 1.0,
+      "scope_score": 1.0,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "AcceptCandidate",
+      "expected_decision": "AcceptCandidate",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "candidate passed grounding and scope checks with 3 supporting events"
+      ]
+    },
+    {
+      "source_experience_id": "reflection_obs_005_local_docker_disk_scope",
+      "source_action": "Reflect",
+      "has_lesson_candidate": true,
+      "lesson": "For local Docker builds, check available disk space before image build.",
+      "evidence_count": 2,
+      "supporting_events": [
+        "docker_build_failure",
+        "disk_full_error"
+      ],
+      "contradicting_events": [],
+      "confidence": 0.920225,
+      "scope": "local_docker_build",
+      "grounding_score": 0.8833333333333333,
+      "scope_score": 1.0,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "AcceptCandidate",
+      "expected_decision": "AcceptCandidate",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "candidate passed grounding and scope checks with 2 supporting events"
+      ]
+    },
+    {
+      "source_experience_id": "reflection_obs_006_mixed_docker_evidence",
+      "source_action": "Observe",
+      "has_lesson_candidate": false,
+      "lesson": null,
+      "evidence_count": 1,
+      "supporting_events": [
+        "local_docker_failure"
+      ],
+      "contradicting_events": [
+        "ci_docker_success"
+      ],
+      "confidence": 0.395,
+      "scope": "docker_evidence_mixed",
+      "grounding_score": 0.7,
+      "scope_score": 0.75,
+      "contradiction_resistance_score": 1.0,
+      "overgeneralization_guard": true,
+      "evaluation_decision": "ObserveMore",
+      "expected_decision": "ObserveMore",
+      "promotion_status": "not_promoted",
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "evaluation_notes": [
+        "evaluation only: lesson not persisted",
+        "evaluation only: playbook not created",
+        "evaluation only: future influence not changed",
+        "candidate needs more evidence before promotion",
+        "contradicting evidence prevents acceptance"
+      ]
+    }
+  ]
+}
