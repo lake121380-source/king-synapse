@@ -18,6 +18,7 @@ pub mod hebbian;
 pub mod importance;
 pub mod merge;
 pub mod reflection;
+pub mod temporal;
 
 pub use competition::{
     MemoryCandidate, MemoryCompetition, MemoryCompetitionReport, MemoryCompetitionState,
@@ -45,4 +46,8 @@ pub use merge::{
 pub use reflection::{
     DeterministicReflectionAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,
     ReflectionOutput, ReflectionSkipReason, RuleBasedReflectionAlgorithm,
+};
+pub use temporal::{
+    MemoryInfluenceState, RuleBasedTemporalTransitionEngine, TemporalEvent, TemporalMemoryProfile,
+    TemporalTransitionEngine, TemporalTransitionReport, TemporalTransitionStep,
 };

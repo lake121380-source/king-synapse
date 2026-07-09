@@ -54,10 +54,12 @@ Current research track:
 - [Phase 2 Experiment Plan](docs/eval/PHASE2_EXPERIMENT_PLAN.md): design validation for conflict resolution, temporal influence, memory suppression, and uncertainty boundaries.
 - Phase 2.2 memory competition prototype: minimal adaptive competition layer for dominant, suppressed, and rejected memory candidates.
 - Phase 2.3 competition evaluation: same 200-case v1.2 benchmark, `synapse = 0.9400`, `synapse+competition = 0.9431`, decision mismatches reduced by `2`, causal-order errors reduced by `2`, `suppression_correctness = 1.0000`.
+- [Phase 2.4 Temporal Memory Dynamics Plan](docs/eval/PHASE2_4_TEMPORAL_MEMORY_PLAN.md): design for preserving historical memories while updating future influence.
+- Phase 2.5 temporal transition prototype: minimal `Active -> Challenged -> Superseded` influence-state layer with auditable transition history.
 
-Phase 2 implementation is being evaluated through isolated competition
-experiments. Retrieval, benchmark scoring, memory schema, activation, and
-governance remain unchanged.
+Phase 2 implementation is being evaluated through isolated competition and
+temporal-transition experiments. Retrieval, benchmark scoring, memory schema,
+activation, and governance remain unchanged.
 
 ## A Small Example
 
