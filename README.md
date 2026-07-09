@@ -69,6 +69,7 @@ Current research track:
 - Phase 3.4 future influence experiment: compares baseline decisions against promoted-lesson influence in eval-only simulations; `helpful_lessons = 1`, `neutral_lessons = 1`, `rejected_influence = 1`, `influence_gain_score = 0.2900`, `failure_reduction_score = 1.0000`, `no_write_safety = 1.0000`.
 - Phase 3.5 lesson lifecycle evaluation: simulates lesson reinforcement, challenge, supersession, and false-lesson protection; final states `active = 1`, `challenged = 1`, `superseded = 1`, `candidate = 1`, with `lifecycle_transition_accuracy = 1.0000` and `lifecycle_safety = 1.0000`.
 - [Phase 3.6 Final Freeze Report](docs/eval/PHASE3_FINAL_REPORT.md): freezes Phase 3 as an experience-learning evaluation framework; Phase 3 is complete with `phase3_frozen = true`, `core_changes = false`, `memory_mutation = false`, and `new_algorithms = false`.
+- Phase 4.1 cognitive influence evaluation: ranks memory, lesson, and playbook candidates under shared context with eval-only configurable weights; `scenarios = 5`, `influence_accuracy = 1.0000`, `context_alignment_score = 1.0000`, `competition_stability = 1.0000`, `explanation_quality = 1.0000`, with `core_changed = false`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory

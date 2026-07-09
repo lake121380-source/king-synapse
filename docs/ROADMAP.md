@@ -189,6 +189,21 @@ Boundary:
 - no memory mutation
 - next research entry is Phase 4 Adaptive Cognition
 
+Phase 4.1: Cognitive Influence Evaluation.
+
+Status: **Evaluation-only influence ranking**.
+
+Report: `crates/eval/reports/phase4-cognitive-influence.json`.
+
+Boundary:
+
+- ranks `Memory`, `Lesson`, and `PlaybookCandidate` inputs under the same context
+- uses configurable eval-only influence weights
+- outputs winning candidate, suppressed candidates, and score breakdown
+- does not change core
+- does not write memory
+- does not change runtime influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

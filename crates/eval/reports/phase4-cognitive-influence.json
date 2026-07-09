@@ -1,0 +1,335 @@
+{
+  "tag": "phase4-cognitive-influence",
+  "phase": "4.1",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase4.1-cognitive-influence-evaluation",
+  "baseline_version": "phase3.6-experience-learning-freeze",
+  "generated_at": "2026-07-09T14:31:45.611679400+00:00",
+  "scenarios": 5,
+  "weights": {
+    "historical_strength": 0.3,
+    "temporal_confidence": 0.25,
+    "context_alignment": 0.35,
+    "reliability_score": 0.1
+  },
+  "metrics": {
+    "influence_accuracy": 1.0,
+    "context_alignment_score": 1.0,
+    "competition_stability": 1.0,
+    "explanation_quality": 1.0
+  },
+  "safety": {
+    "core_changed": false,
+    "memory_written": false,
+    "runtime_influence_changed": false
+  },
+  "pass": true,
+  "status": "cognitive_influence_evaluated",
+  "traces": [
+    {
+      "scenario_id": "cognitive_influence_001_context_wins",
+      "context": "The current task is a GPU-constrained deployment where immediate resource fit matters more than generic historical success.",
+      "expected_winner_id": "lesson_current_gpu_context",
+      "winning_candidate_id": "lesson_current_gpu_context",
+      "winning_candidate_type": "Lesson",
+      "why_selected": "context alignment and temporal fit outweigh older generic success history",
+      "influence_ranking": [
+        {
+          "candidate_id": "lesson_current_gpu_context",
+          "candidate_type": "Lesson",
+          "score": 0.6975
+        },
+        {
+          "candidate_id": "memory_long_success_low_context",
+          "candidate_type": "Memory",
+          "score": 0.525
+        }
+      ],
+      "suppressed_candidates": [
+        {
+          "candidate_id": "memory_long_success_low_context",
+          "candidate_type": "Memory",
+          "score": 0.525,
+          "why_rejected": "lower context alignment under the current query"
+        }
+      ],
+      "score_breakdown": [
+        {
+          "candidate_id": "memory_long_success_low_context",
+          "candidate_type": "Memory",
+          "historical_component": 0.3,
+          "temporal_component": 0.1,
+          "context_component": 0.07,
+          "reliability_component": 0.055000003,
+          "total_score": 0.525
+        },
+        {
+          "candidate_id": "lesson_current_gpu_context",
+          "candidate_type": "Lesson",
+          "historical_component": 0.09,
+          "temporal_component": 0.2,
+          "context_component": 0.33249998,
+          "reliability_component": 0.075,
+          "total_score": 0.6975
+        }
+      ],
+      "winner_correct": true,
+      "context_alignment_ok": true,
+      "stable_under_perturbation": true,
+      "explanation_complete": true,
+      "top_margin": 0.17250001,
+      "influence_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_influence_changed": false
+    },
+    {
+      "scenario_id": "cognitive_influence_002_historical_reliability_wins",
+      "context": "The current task matches a long-running deployment pattern with no new contradiction.",
+      "expected_winner_id": "memory_reliable_deployment_pattern",
+      "winning_candidate_id": "memory_reliable_deployment_pattern",
+      "winning_candidate_type": "Memory",
+      "why_selected": "high historical strength and reliability beat a weaker candidate with similar context fit",
+      "influence_ranking": [
+        {
+          "candidate_id": "memory_reliable_deployment_pattern",
+          "candidate_type": "Memory",
+          "score": 0.885
+        },
+        {
+          "candidate_id": "lesson_weak_new_hint",
+          "candidate_type": "Lesson",
+          "score": 0.6225
+        }
+      ],
+      "suppressed_candidates": [
+        {
+          "candidate_id": "lesson_weak_new_hint",
+          "candidate_type": "Lesson",
+          "score": 0.6225,
+          "why_rejected": "lower temporal confidence than the winning candidate"
+        }
+      ],
+      "score_breakdown": [
+        {
+          "candidate_id": "memory_reliable_deployment_pattern",
+          "candidate_type": "Memory",
+          "historical_component": 0.285,
+          "temporal_component": 0.225,
+          "context_component": 0.28,
+          "reliability_component": 0.095,
+          "total_score": 0.885
+        },
+        {
+          "candidate_id": "lesson_weak_new_hint",
+          "candidate_type": "Lesson",
+          "historical_component": 0.09,
+          "temporal_component": 0.1875,
+          "context_component": 0.28,
+          "reliability_component": 0.065,
+          "total_score": 0.6225
+        }
+      ],
+      "winner_correct": true,
+      "context_alignment_ok": true,
+      "stable_under_perturbation": true,
+      "explanation_complete": true,
+      "top_margin": 0.2625,
+      "influence_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_influence_changed": false
+    },
+    {
+      "scenario_id": "cognitive_influence_003_temporal_decay",
+      "context": "The environment changed, so recent lesson evidence should beat an old strategy.",
+      "expected_winner_id": "lesson_new_environment_strategy",
+      "winning_candidate_id": "lesson_new_environment_strategy",
+      "winning_candidate_type": "Lesson",
+      "why_selected": "new evidence has stronger temporal confidence and current-context alignment",
+      "influence_ranking": [
+        {
+          "candidate_id": "lesson_new_environment_strategy",
+          "candidate_type": "Lesson",
+          "score": 0.787
+        },
+        {
+          "candidate_id": "lesson_old_environment_strategy",
+          "candidate_type": "Lesson",
+          "score": 0.5575
+        }
+      ],
+      "suppressed_candidates": [
+        {
+          "candidate_id": "lesson_old_environment_strategy",
+          "candidate_type": "Lesson",
+          "score": 0.5575,
+          "why_rejected": "lower context alignment under the current query"
+        }
+      ],
+      "score_breakdown": [
+        {
+          "candidate_id": "lesson_old_environment_strategy",
+          "candidate_type": "Lesson",
+          "historical_component": 0.24000001,
+          "temporal_component": 0.05,
+          "context_component": 0.1925,
+          "reliability_component": 0.075,
+          "total_score": 0.5575
+        },
+        {
+          "candidate_id": "lesson_new_environment_strategy",
+          "candidate_type": "Lesson",
+          "historical_component": 0.165,
+          "temporal_component": 0.225,
+          "context_component": 0.315,
+          "reliability_component": 0.082,
+          "total_score": 0.787
+        }
+      ],
+      "winner_correct": true,
+      "context_alignment_ok": true,
+      "stable_under_perturbation": true,
+      "explanation_complete": true,
+      "top_margin": 0.2295,
+      "influence_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_influence_changed": false
+    },
+    {
+      "scenario_id": "cognitive_influence_004_contradictory_candidates",
+      "context": "A recent production failure contradicts an older success pattern.",
+      "expected_winner_id": "memory_recent_failure_pattern",
+      "winning_candidate_id": "memory_recent_failure_pattern",
+      "winning_candidate_type": "Memory",
+      "why_selected": "recent failure evidence is more temporally relevant and context-aligned than older success evidence",
+      "influence_ranking": [
+        {
+          "candidate_id": "memory_recent_failure_pattern",
+          "candidate_type": "Memory",
+          "score": 0.82
+        },
+        {
+          "candidate_id": "memory_old_success_pattern",
+          "candidate_type": "Memory",
+          "score": 0.6525
+        }
+      ],
+      "suppressed_candidates": [
+        {
+          "candidate_id": "memory_old_success_pattern",
+          "candidate_type": "Memory",
+          "score": 0.6525,
+          "why_rejected": "lower context alignment under the current query"
+        }
+      ],
+      "score_breakdown": [
+        {
+          "candidate_id": "memory_old_success_pattern",
+          "candidate_type": "Memory",
+          "historical_component": 0.25500003,
+          "temporal_component": 0.125,
+          "context_component": 0.1925,
+          "reliability_component": 0.080000006,
+          "total_score": 0.6525
+        },
+        {
+          "candidate_id": "memory_recent_failure_pattern",
+          "candidate_type": "Memory",
+          "historical_component": 0.19500001,
+          "temporal_component": 0.225,
+          "context_component": 0.315,
+          "reliability_component": 0.085,
+          "total_score": 0.82
+        }
+      ],
+      "winner_correct": true,
+      "context_alignment_ok": true,
+      "stable_under_perturbation": true,
+      "explanation_complete": true,
+      "top_margin": 0.16750002,
+      "influence_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_influence_changed": false
+    },
+    {
+      "scenario_id": "cognitive_influence_005_explanation_trace",
+      "context": "The current task needs an auditable operational checklist and a clear reason for suppressing alternatives.",
+      "expected_winner_id": "playbook_traceable_checklist",
+      "winning_candidate_id": "playbook_traceable_checklist",
+      "winning_candidate_type": "PlaybookCandidate",
+      "why_selected": "weighted scores tie, so the report-only playbook candidate wins by deterministic type priority",
+      "influence_ranking": [
+        {
+          "candidate_id": "playbook_traceable_checklist",
+          "candidate_type": "PlaybookCandidate",
+          "score": 0.77500004
+        },
+        {
+          "candidate_id": "lesson_traceable_checklist",
+          "candidate_type": "Lesson",
+          "score": 0.77500004
+        },
+        {
+          "candidate_id": "memory_general_rollout",
+          "candidate_type": "Memory",
+          "score": 0.645
+        }
+      ],
+      "suppressed_candidates": [
+        {
+          "candidate_id": "lesson_traceable_checklist",
+          "candidate_type": "Lesson",
+          "score": 0.77500004,
+          "why_rejected": "tie resolved by candidate type priority and deterministic ordering"
+        },
+        {
+          "candidate_id": "memory_general_rollout",
+          "candidate_type": "Memory",
+          "score": 0.645,
+          "why_rejected": "lower context alignment under the current query"
+        }
+      ],
+      "score_breakdown": [
+        {
+          "candidate_id": "lesson_traceable_checklist",
+          "candidate_type": "Lesson",
+          "historical_component": 0.21000001,
+          "temporal_component": 0.1875,
+          "context_component": 0.2975,
+          "reliability_component": 0.080000006,
+          "total_score": 0.77500004
+        },
+        {
+          "candidate_id": "playbook_traceable_checklist",
+          "candidate_type": "PlaybookCandidate",
+          "historical_component": 0.21000001,
+          "temporal_component": 0.1875,
+          "context_component": 0.2975,
+          "reliability_component": 0.080000006,
+          "total_score": 0.77500004
+        },
+        {
+          "candidate_id": "memory_general_rollout",
+          "candidate_type": "Memory",
+          "historical_component": 0.18,
+          "temporal_component": 0.15,
+          "context_component": 0.24499999,
+          "reliability_component": 0.07,
+          "total_score": 0.645
+        }
+      ],
+      "winner_correct": true,
+      "context_alignment_ok": true,
+      "stable_under_perturbation": true,
+      "explanation_complete": true,
+      "top_margin": 0.0,
+      "influence_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_influence_changed": false
+    }
+  ]
+}
