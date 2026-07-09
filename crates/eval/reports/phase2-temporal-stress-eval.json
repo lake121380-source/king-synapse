@@ -1,0 +1,359 @@
+{
+  "tag": "phase2-temporal-stress-eval",
+  "baseline_version": "phase2.7-temporal-supersession",
+  "mechanism_changed": false,
+  "dataset_changed": false,
+  "scenario_count": 4,
+  "metrics": {
+    "oscillation_resistance": 1.0,
+    "delayed_contradiction_handling": 1.0,
+    "false_contradiction_restraint": 1.0,
+    "memory_recovery_signal": 1.0,
+    "state_recovery": 0.0,
+    "historical_preservation": 1.0,
+    "stability_score": 1.0
+  },
+  "pass": true,
+  "status": "temporal_stress_evaluated",
+  "limitations": [
+    "Superseded memories emit a recovery pressure signal, but Phase 2.8 does not reactivate them into Active or Challenged state."
+  ],
+  "scenarios": [
+    {
+      "id": "temporal_stress_001_oscillation",
+      "stress_type": "oscillation",
+      "name": "Oscillation Test",
+      "description": "Alternating contradiction and support should not wildly supersede a memory.",
+      "expected": "Memory remains challenged, not superseded, while pressure stays below the supersession threshold.",
+      "events": [
+        "Contradiction",
+        "SupportingEvidence",
+        "Contradiction",
+        "SupportingEvidence",
+        "Contradiction",
+        "SupportingEvidence"
+      ],
+      "final_state": "Challenged",
+      "stored": true,
+      "base_influence": 0.8999999761581421,
+      "current_influence": 0.4950000047683716,
+      "influence_delta": 0.4049999713897705,
+      "pressure_peak": 0.6483750343322754,
+      "pressure_final": 0.35660627484321594,
+      "state_recovered": false,
+      "success": true,
+      "observations": [
+        "Alternating evidence produced bounded displacement pressure.",
+        "The memory stayed stored and influence was reduced rather than erased."
+      ],
+      "transition_history": [
+        {
+          "memory_id": "oscillating_preference",
+          "event": "Contradiction",
+          "from": "Active",
+          "to": "Challenged",
+          "influence_before": 0.8999999761581421,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.3499999940395355,
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
+        },
+        {
+          "memory_id": "oscillating_preference",
+          "event": "SupportingEvidence",
+          "from": "Challenged",
+          "to": "Challenged",
+          "influence_before": 0.4950000047683716,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.3499999940395355,
+          "supersession_pressure_after": 0.19249999523162842,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "oscillating_preference",
+          "event": "Contradiction",
+          "from": "Challenged",
+          "to": "Challenged",
+          "influence_before": 0.4950000047683716,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.19249999523162842,
+          "supersession_pressure_after": 0.5425000190734863,
+          "reason": "stable: evidence did not cross transition threshold"
+        },
+        {
+          "memory_id": "oscillating_preference",
+          "event": "SupportingEvidence",
+          "from": "Challenged",
+          "to": "Challenged",
+          "influence_before": 0.4950000047683716,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.5425000190734863,
+          "supersession_pressure_after": 0.2983750104904175,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "oscillating_preference",
+          "event": "Contradiction",
+          "from": "Challenged",
+          "to": "Challenged",
+          "influence_before": 0.4950000047683716,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.2983750104904175,
+          "supersession_pressure_after": 0.6483750343322754,
+          "reason": "stable: evidence did not cross transition threshold"
+        },
+        {
+          "memory_id": "oscillating_preference",
+          "event": "SupportingEvidence",
+          "from": "Challenged",
+          "to": "Challenged",
+          "influence_before": 0.4950000047683716,
+          "influence_after": 0.4950000047683716,
+          "supersession_pressure_before": 0.6483750343322754,
+          "supersession_pressure_after": 0.35660627484321594,
+          "reason": "stable: supporting evidence preserved current influence"
+        }
+      ]
+    },
+    {
+      "id": "temporal_stress_002_delayed_contradiction",
+      "stress_type": "delayed_contradiction",
+      "name": "Delayed Contradiction Test",
+      "description": "A long-valid memory should become superseded when later contradiction and failure accumulate enough pressure.",
+      "expected": "Delayed counterevidence crosses the supersession threshold while preserving the historical memory.",
+      "events": [
+        "SupportingEvidence",
+        "SupportingEvidence",
+        "SupportingEvidence",
+        "Contradiction",
+        "FailureOutcome"
+      ],
+      "final_state": "Superseded",
+      "stored": true,
+      "base_influence": 0.8799999952316284,
+      "current_influence": 0.17599999904632568,
+      "influence_delta": 0.7039999961853027,
+      "pressure_peak": 0.6499999761581421,
+      "pressure_final": 0.6499999761581421,
+      "state_recovered": false,
+      "success": true,
+      "observations": [
+        "Early support did not block later displacement evidence.",
+        "The memory remained stored while future influence dropped to the superseded band."
+      ],
+      "transition_history": [
+        {
+          "memory_id": "long_lived_architecture_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8799999952316284,
+          "influence_after": 0.8799999952316284,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "long_lived_architecture_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8799999952316284,
+          "influence_after": 0.8799999952316284,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "long_lived_architecture_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8799999952316284,
+          "influence_after": 0.8799999952316284,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "long_lived_architecture_preference",
+          "event": "Contradiction",
+          "from": "Active",
+          "to": "Challenged",
+          "influence_before": 0.8799999952316284,
+          "influence_after": 0.48399999737739563,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.3499999940395355,
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
+        },
+        {
+          "memory_id": "long_lived_architecture_preference",
+          "event": "FailureOutcome",
+          "from": "Challenged",
+          "to": "Superseded",
+          "influence_before": 0.48399999737739563,
+          "influence_after": 0.17599999904632568,
+          "supersession_pressure_before": 0.3499999940395355,
+          "supersession_pressure_after": 0.6499999761581421,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        }
+      ]
+    },
+    {
+      "id": "temporal_stress_003_false_contradiction",
+      "stress_type": "false_contradiction",
+      "name": "False Contradiction Test",
+      "description": "Compatible later evidence should not be treated as a contradiction just because it is semantically nearby.",
+      "expected": "No displacement pressure is added and the memory stays active.",
+      "events": [
+        "SupportingEvidence",
+        "SupportingEvidence",
+        "SupportingEvidence"
+      ],
+      "final_state": "Active",
+      "stored": true,
+      "base_influence": 0.8199999928474426,
+      "current_influence": 0.8199999928474426,
+      "influence_delta": 0.0,
+      "pressure_peak": 0.0,
+      "pressure_final": 0.0,
+      "state_recovered": false,
+      "success": true,
+      "observations": [
+        "The stress harness encodes compatible evidence as support, not contradiction.",
+        "No premature supersession occurred."
+      ],
+      "transition_history": [
+        {
+          "memory_id": "coffee_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8199999928474426,
+          "influence_after": 0.8199999928474426,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "coffee_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8199999928474426,
+          "influence_after": 0.8199999928474426,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        },
+        {
+          "memory_id": "coffee_preference",
+          "event": "SupportingEvidence",
+          "from": "Active",
+          "to": "Active",
+          "influence_before": 0.8199999928474426,
+          "influence_after": 0.8199999928474426,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.0,
+          "reason": "stable: supporting evidence preserved current influence"
+        }
+      ]
+    },
+    {
+      "id": "temporal_stress_004_memory_recovery_signal",
+      "stress_type": "memory_recovery",
+      "name": "Memory Recovery Signal Test",
+      "description": "Later supporting evidence should show that a superseded memory can be reconsidered without being deleted.",
+      "expected": "Recovery appears as reduced displacement pressure; actual state recovery is intentionally not implemented yet.",
+      "events": [
+        "Contradiction",
+        "FailureOutcome",
+        "SupportingEvidence",
+        "SupportingEvidence",
+        "SupportingEvidence",
+        "SupportingEvidence"
+      ],
+      "final_state": "Superseded",
+      "stored": true,
+      "base_influence": 0.8600000143051147,
+      "current_influence": 0.1720000058412552,
+      "influence_delta": 0.6880000233650208,
+      "pressure_peak": 0.6499999761581421,
+      "pressure_final": 0.059479061514139175,
+      "state_recovered": false,
+      "success": true,
+      "observations": [
+        "Supporting evidence reduced displacement pressure after supersession.",
+        "State recovery remains unsupported: Superseded stayed Superseded."
+      ],
+      "transition_history": [
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "Contradiction",
+          "from": "Active",
+          "to": "Challenged",
+          "influence_before": 0.8600000143051147,
+          "influence_after": 0.47300001978874207,
+          "supersession_pressure_before": 0.0,
+          "supersession_pressure_after": 0.3499999940395355,
+          "reason": "challenged: later evidence raised displacement pressure to 0.35"
+        },
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "FailureOutcome",
+          "from": "Challenged",
+          "to": "Superseded",
+          "influence_before": 0.47300001978874207,
+          "influence_after": 0.1720000058412552,
+          "supersession_pressure_before": 0.3499999940395355,
+          "supersession_pressure_after": 0.6499999761581421,
+          "reason": "superseded: displacement pressure 0.65 crossed threshold 0.65"
+        },
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "SupportingEvidence",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1720000058412552,
+          "influence_after": 0.1720000058412552,
+          "supersession_pressure_before": 0.6499999761581421,
+          "supersession_pressure_after": 0.35749998688697815,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "SupportingEvidence",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1720000058412552,
+          "influence_after": 0.1720000058412552,
+          "supersession_pressure_before": 0.35749998688697815,
+          "supersession_pressure_after": 0.1966249942779541,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "SupportingEvidence",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1720000058412552,
+          "influence_after": 0.1720000058412552,
+          "supersession_pressure_before": 0.1966249942779541,
+          "supersession_pressure_after": 0.10814374685287476,
+          "reason": "preserved: memory remains stored while influence stays low"
+        },
+        {
+          "memory_id": "superseded_strategy_memory",
+          "event": "SupportingEvidence",
+          "from": "Superseded",
+          "to": "Superseded",
+          "influence_before": 0.1720000058412552,
+          "influence_after": 0.1720000058412552,
+          "supersession_pressure_before": 0.10814374685287476,
+          "supersession_pressure_after": 0.059479061514139175,
+          "reason": "preserved: memory remains stored while influence stays low"
+        }
+      ]
+    }
+  ]
+}

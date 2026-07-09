@@ -58,10 +58,11 @@ Current research track:
 - Phase 2.5 temporal transition prototype: minimal `Active -> Challenged -> Superseded` influence-state layer with auditable transition history.
 - Phase 2.6 temporal influence evaluation: same 200-case v1.2 benchmark, `synapse+competition = 0.9431`, `synapse+temporal+competition = 0.9508`, `temporal_update_accuracy = 1.0000`, `historical_preservation = 1.0000`, `causal_transition_accuracy = 1.0000`, `obsolete_memory_detection = 0.5686` (`pass = false`, strict-obsolete gap found).
 - Phase 2.7 temporal supersession dynamics: added memory displacement pressure for `Challenged -> Superseded`; same temporal evaluation now reaches `synapse+temporal+competition = 0.9509`, `obsolete_memory_detection = 0.9216`, obsolete errors `51 -> 4`, `pass = true`.
+- Phase 2.8 temporal stress evaluation: stress-tested supersession without mechanism or dataset changes; `oscillation_resistance = 1.0000`, `delayed_contradiction_handling = 1.0000`, `false_contradiction_restraint = 1.0000`, `memory_recovery_signal = 1.0000`, `historical_preservation = 1.0000`, `stability_score = 1.0000`, `state_recovery = 0.0000` (recovery signal exists, but reactivation is not implemented).
 
 Phase 2 implementation is being evaluated through isolated competition and
-temporal-transition experiments. Retrieval, benchmark scoring, memory schema,
-activation, and governance remain unchanged.
+temporal-transition stress experiments. Retrieval, benchmark scoring, memory
+schema, activation, and governance remain unchanged.
 
 ## A Small Example
 

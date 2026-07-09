@@ -19,6 +19,7 @@ pub mod harness;
 pub mod metrics;
 pub mod phase2_competition_eval;
 pub mod phase2_temporal_influence_eval;
+pub mod phase2_temporal_stress_eval;
 pub mod reporter;
 pub mod types;
 
@@ -58,6 +59,11 @@ pub use phase2_temporal_influence_eval::{
     BeforeAfterImprovement, Phase2TemporalCaseReport, Phase2TemporalErrorsReport,
     Phase2TemporalInfluenceEvaluationReport, Phase2TemporalInfluenceEvaluator,
     Phase2TemporalMetricsReport, Phase2TemporalModeReport, Phase2TemporalTransitionStepReport,
+};
+pub use phase2_temporal_stress_eval::{
+    Phase2TemporalStressEvaluationReport, Phase2TemporalStressEvaluator,
+    Phase2TemporalStressMetricsReport, Phase2TemporalStressScenarioReport,
+    Phase2TemporalStressStepReport,
 };
 pub use reporter::print_table;
 pub use types::{
