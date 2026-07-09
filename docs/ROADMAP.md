@@ -132,6 +132,20 @@ Boundary:
 - does not create playbooks
 - does not modify future influence
 
+Phase 3.3: Controlled Lesson Promotion.
+
+Status: **Evaluation-only promotion gate**.
+
+Report: `crates/eval/reports/phase3-lesson-promotion.json`.
+
+Boundary:
+
+- promotes accepted lesson candidates only as report states
+- can return `ProposedLesson`, `PlaybookCandidate`, or `NotPromoted`
+- `PlaybookCandidate` is report-only and does not create a playbook
+- does not write memory
+- does not modify future influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

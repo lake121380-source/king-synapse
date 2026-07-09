@@ -1,0 +1,206 @@
+{
+  "tag": "phase3-lesson-promotion",
+  "phase": "3.3",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase3.3-controlled-lesson-promotion",
+  "baseline_version": "phase3.2-lesson-candidate-evaluation",
+  "generated_at": "2026-07-09T07:10:06.788887600+00:00",
+  "input_candidates": 6,
+  "mechanism_changed": false,
+  "schema_changed": false,
+  "retrieval_changed": false,
+  "activation_changed": false,
+  "temporal_lifecycle_changed": false,
+  "governance_changed": false,
+  "promotion": {
+    "proposed_lessons": 2,
+    "playbook_candidates": 1,
+    "not_promoted": 3
+  },
+  "safety": {
+    "memory_written": false,
+    "lesson_persisted": false,
+    "playbook_created": false,
+    "future_influence_changed": false
+  },
+  "metrics": {
+    "promotion_precision": 1.0,
+    "promotion_readiness_score": 0.9572545833333334,
+    "evidence_sufficiency_score": 0.8888888888888888,
+    "scope_stability_score": 1.0,
+    "contradiction_safety_score": 1.0,
+    "promotion_decision_agreement": 1.0,
+    "promotion_safety": 1.0
+  },
+  "pass": true,
+  "status": "controlled_lesson_promotion_evaluated",
+  "traces": [
+    {
+      "candidate_id": "reflection_obs_001_gpu_deployment_failure",
+      "source_decision": "AcceptCandidate",
+      "status": "ProposedLesson",
+      "expected_status": "ProposedLesson",
+      "lesson": "For GPU-limited model deployment, validate memory footprint before rollout.",
+      "evidence_count": 3,
+      "supporting_events": [
+        "gpu_failure_log",
+        "oom_runtime_error",
+        "user_correction_reduce_batch"
+      ],
+      "contradicting_events": [],
+      "evidence_score": 1.0,
+      "scope_score": 1.0,
+      "contradiction_score": 1.0,
+      "procedural_score": 0.95,
+      "promotion_readiness_score": 0.9999999999999999,
+      "promotion_reason": "accepted candidate is grounded enough for proposed lesson review (1.00)",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    },
+    {
+      "candidate_id": "reflection_obs_002_routine_success",
+      "source_decision": "RejectCandidate",
+      "status": "NotPromoted",
+      "expected_status": "NotPromoted",
+      "lesson": null,
+      "evidence_count": 0,
+      "supporting_events": [],
+      "contradicting_events": [],
+      "evidence_score": 0.0,
+      "scope_score": 0.0,
+      "contradiction_score": 1.0,
+      "procedural_score": 0.0,
+      "promotion_readiness_score": 0.368015,
+      "promotion_reason": "Phase 3.2 decision was RejectCandidate, so promotion is blocked",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    },
+    {
+      "candidate_id": "reflection_obs_003_ambiguous_one_off_error",
+      "source_decision": "ObserveMore",
+      "status": "NotPromoted",
+      "expected_status": "NotPromoted",
+      "lesson": null,
+      "evidence_count": 1,
+      "supporting_events": [
+        "one_off_network_timeout"
+      ],
+      "contradicting_events": [],
+      "evidence_score": 0.3333333333333333,
+      "scope_score": 0.75,
+      "contradiction_score": 1.0,
+      "procedural_score": 0.0,
+      "promotion_readiness_score": 0.6210249999999999,
+      "promotion_reason": "Phase 3.2 decision was ObserveMore, so promotion is blocked",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    },
+    {
+      "candidate_id": "reflection_obs_004_repeated_permission_failure",
+      "source_decision": "AcceptCandidate",
+      "status": "PlaybookCandidate",
+      "expected_status": "PlaybookCandidate",
+      "lesson": "Before deployment, verify database write permissions for the runtime user.",
+      "evidence_count": 3,
+      "supporting_events": [
+        "first_permission_failure",
+        "second_permission_failure",
+        "operator_manual_fix"
+      ],
+      "contradicting_events": [],
+      "evidence_score": 1.0,
+      "scope_score": 1.0,
+      "contradiction_score": 1.0,
+      "procedural_score": 1.0,
+      "promotion_readiness_score": 0.999685,
+      "promotion_reason": "accepted candidate has sufficient evidence (1.00) and procedural form (1.00)",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    },
+    {
+      "candidate_id": "reflection_obs_005_local_docker_disk_scope",
+      "source_decision": "AcceptCandidate",
+      "status": "ProposedLesson",
+      "expected_status": "ProposedLesson",
+      "lesson": "For local Docker builds, check available disk space before image build.",
+      "evidence_count": 2,
+      "supporting_events": [
+        "docker_build_failure",
+        "disk_full_error"
+      ],
+      "contradicting_events": [],
+      "evidence_score": 0.6666666666666666,
+      "scope_score": 1.0,
+      "contradiction_score": 1.0,
+      "procedural_score": 0.95,
+      "promotion_readiness_score": 0.8720787499999999,
+      "promotion_reason": "accepted candidate is grounded enough for proposed lesson review (0.67)",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    },
+    {
+      "candidate_id": "reflection_obs_006_mixed_docker_evidence",
+      "source_decision": "ObserveMore",
+      "status": "NotPromoted",
+      "expected_status": "NotPromoted",
+      "lesson": null,
+      "evidence_count": 1,
+      "supporting_events": [
+        "local_docker_failure"
+      ],
+      "contradicting_events": [
+        "ci_docker_success"
+      ],
+      "evidence_score": 0.3333333333333333,
+      "scope_score": 0.75,
+      "contradiction_score": 0.0,
+      "procedural_score": 0.0,
+      "promotion_readiness_score": 0.38825,
+      "promotion_reason": "Phase 3.2 decision was ObserveMore, so promotion is blocked",
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: promotion does not write memory",
+        "evaluation only: playbook candidate is report-only",
+        "evaluation only: future influence remains unchanged"
+      ]
+    }
+  ]
+}

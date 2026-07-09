@@ -21,6 +21,7 @@ pub mod phase2_competition_eval;
 pub mod phase2_temporal_influence_eval;
 pub mod phase2_temporal_stress_eval;
 pub mod phase3_lesson_candidate_eval;
+pub mod phase3_lesson_promotion;
 pub mod phase3_reflection_observation;
 pub mod reporter;
 pub mod types;
@@ -70,6 +71,10 @@ pub use phase2_temporal_stress_eval::{
 pub use phase3_lesson_candidate_eval::{
     LessonCandidateReport, Phase3LessonCandidateEvaluationReport, Phase3LessonCandidateEvaluator,
     Phase3LessonCandidateMetrics,
+};
+pub use phase3_lesson_promotion::{
+    LessonPromotionTrace, Phase3LessonPromotionEvaluator, Phase3LessonPromotionMetrics,
+    Phase3LessonPromotionReport, PromotionSafetyReport, PromotionSummaryReport,
 };
 pub use phase3_reflection_observation::{
     Phase3ReflectionObservationEvaluator, Phase3ReflectionObservationMetrics,

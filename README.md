@@ -65,6 +65,7 @@ Current research track:
 - [Phase 3.0.1 Reflection Evaluation Design](docs/eval/PHASE3_REFLECTION_EVALUATION_DESIGN.md): defines learning evidence as grounded, scoped future influence change rather than lesson text generation.
 - Phase 3.1 reflection observation: generates observation-only `ReflectionTrace` reports over 6 synthetic experiences; `reflected = 3`, `observed = 2`, `ignored = 1`, `observation_safety = 1.0000`, with no playbook creation and no future influence change.
 - Phase 3.2 lesson candidate evaluation: evaluates Phase 3.1 lesson candidates without promotion; `accepted = 3`, `observe_more = 2`, `rejected = 1`, `lesson_grounding_score = 0.8806`, `lesson_scope_score = 0.9167`, `candidate_accept_precision = 1.0000`, `promotion_safety = 1.0000`.
+- Phase 3.3 controlled lesson promotion: evaluates accepted lesson candidates through a promotion gate without memory mutation; `proposed_lessons = 2`, `playbook_candidates = 1`, `not_promoted = 3`, `promotion_precision = 1.0000`, `evidence_sufficiency_score = 0.8889`, `promotion_safety = 1.0000`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
