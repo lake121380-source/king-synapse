@@ -234,6 +234,22 @@ Boundary:
 - does not write memory
 - does not change runtime weighting or production ranking
 
+Phase 4.4: Contextual Competition Integration Evaluation.
+
+Status: **Evaluation-only context-driven competition**.
+
+Report: `crates/eval/reports/phase4_contextual_competition_integration.json`.
+
+Boundary:
+
+- keeps the candidate pool fixed while changing only evaluation context
+- applies context-weight profiles before deterministic competition ranking
+- records dominant and suppressed candidates for each context case
+- measures context flip rate, dominance consistency, suppression correctness, and ranking stability
+- does not change core
+- does not write memory
+- does not change runtime weighting, activation, recall, or production ranking
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

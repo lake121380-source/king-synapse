@@ -72,6 +72,7 @@ Current research track:
 - Phase 4.1 cognitive influence evaluation: ranks memory, lesson, and playbook candidates under shared context with eval-only configurable weights; `scenarios = 5`, `influence_accuracy = 1.0000`, `context_alignment_score = 1.0000`, `competition_stability = 1.0000`, `explanation_quality = 1.0000`, with `core_changed = false`.
 - Phase 4.2 cognitive competition model: simulates activation updates, lateral inhibition, suppression, multi-hop activation paths, and dominant-candidate convergence; `scenarios = 6`, `dominant_selection_accuracy = 1.0000`, `competition_convergence = 1.0000`, `suppression_quality = 1.0000`, `activation_stability = 1.0000`, `explanation_quality = 1.0000`.
 - Phase 4.3 contextual cognitive weighting: evaluates dynamic candidate influence under task, environment, constraint, temporal, and reliability context without runtime weighting changes; `scenarios = 6`, `context_weight_accuracy = 1.0000`, `adaptive_weight_shift = 1.0000`, `cross_context_consistency = 1.0000`, `importance_explanation = 1.0000`, `conflict_resolution = 1.0000`.
+- Phase 4.4 contextual competition integration: validates that the same candidate set can produce different dominant candidates when context changes; `scenarios = 3`, `context_flips = 3/3`, `context_flip_rate = 1.0000`, `dominance_consistency = 1.0000`, `suppression_correctness = 1.0000`, `ranking_stability = 1.0000`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory

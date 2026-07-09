@@ -1,5 +1,6 @@
 pub mod algorithms;
 pub mod cognitive_memory_benchmark;
+pub mod contextual_competition_integration;
 pub mod contract;
 pub mod external;
 pub mod governance_aggregation;
@@ -40,6 +41,15 @@ pub use algorithms::{
     reflection_yield_report, trace_reinforcement_report,
 };
 pub use cognitive_memory_benchmark::CognitiveMemoryBenchmarkEvaluator;
+pub use contextual_competition_integration::{
+    CandidateScoreBreakdown as ContextualCompetitionScoreBreakdown,
+    CognitiveCandidate as ContextualCompetitionCandidate,
+    CompetitionResult as ContextualCompetitionResult,
+    ContextFlipSummary as ContextualCompetitionFlipSummary, ContextualCompetitionMetric,
+    EvaluationContext as ContextualCompetitionEvaluationContext, FlipPairReport,
+    Phase4ContextualCompetitionIntegrationEvaluator, Phase4ContextualCompetitionIntegrationReport,
+    ScenarioReport as ContextualCompetitionScenarioReport,
+};
 pub use contract::{AlgorithmMetric, BenchmarkReport};
 pub use external::{
     run_external_comparison, ExternalComparisonOptions, ExternalComparisonReport,

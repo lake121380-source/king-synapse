@@ -1,0 +1,436 @@
+{
+  "tag": "phase4-contextual-competition-integration",
+  "phase": "4.4",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase4.4-contextual-competition-integration",
+  "baseline_version": "phase4.3-contextual-cognitive-weighting",
+  "generated_at": "2026-07-09T15:56:24.733866+00:00",
+  "scenarios": 3,
+  "context_cases": 6,
+  "context_flips": {
+    "changed": 3,
+    "total": 3
+  },
+  "metric": {
+    "context_flip_rate": 1.0,
+    "dominance_consistency": 1.0,
+    "suppression_correctness": 1.0,
+    "ranking_stability": 1.0
+  },
+  "core_changed": false,
+  "memory_written": false,
+  "runtime_weight_changed": false,
+  "pass": true,
+  "status": "PASS",
+  "scenario_reports": [
+    {
+      "scenario_id": "contextual_integration_001_speed_vs_safety",
+      "description": "Same speed and safety memories flip dominance between prototype and production contexts.",
+      "candidates": [
+        {
+          "id": "speed_preference",
+          "base_strength": 0.82,
+          "task_alignment": 0.9,
+          "environment_alignment": 0.8,
+          "constraint_alignment": 0.4,
+          "temporal_confidence": 0.8,
+          "reliability": 0.8
+        },
+        {
+          "id": "failure_prevention",
+          "base_strength": 0.8,
+          "task_alignment": 0.6,
+          "environment_alignment": 0.7,
+          "constraint_alignment": 0.9,
+          "temporal_confidence": 0.9,
+          "reliability": 0.9
+        }
+      ],
+      "results": [
+        {
+          "context_id": "prototype_building",
+          "context": {
+            "task": "prototype_building",
+            "environment": "development",
+            "constraints": [
+              "speed_priority",
+              "low_risk"
+            ]
+          },
+          "ranked_candidates": [
+            "speed_preference",
+            "failure_prevention"
+          ],
+          "dominant_candidate": "speed_preference",
+          "suppressed_candidates": [
+            "failure_prevention"
+          ],
+          "expected_dominant_candidate": "speed_preference",
+          "expected_suppressed_candidates": [
+            "failure_prevention"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "speed_preference",
+              "base_component": 0.041,
+              "task_component": 0.315,
+              "environment_component": 0.2,
+              "constraint_component": 0.04000000000000001,
+              "temporal_component": 0.12,
+              "reliability_component": 0.08000000000000002,
+              "total_score": 0.796,
+              "reason": "speed_preference scored under task emphasis for task prototype_building in development"
+            },
+            {
+              "candidate_id": "failure_prevention",
+              "base_component": 0.04000000000000001,
+              "task_component": 0.21,
+              "environment_component": 0.175,
+              "constraint_component": 0.09000000000000001,
+              "temporal_component": 0.135,
+              "reliability_component": 0.09000000000000001,
+              "total_score": 0.74,
+              "reason": "failure_prevention scored under task emphasis for task prototype_building in development"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        },
+        {
+          "context_id": "production_deployment",
+          "context": {
+            "task": "production_deployment",
+            "environment": "production",
+            "constraints": [
+              "safety_priority",
+              "high_risk"
+            ]
+          },
+          "ranked_candidates": [
+            "failure_prevention",
+            "speed_preference"
+          ],
+          "dominant_candidate": "failure_prevention",
+          "suppressed_candidates": [
+            "speed_preference"
+          ],
+          "expected_dominant_candidate": "failure_prevention",
+          "expected_suppressed_candidates": [
+            "speed_preference"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "failure_prevention",
+              "base_component": 0.04000000000000001,
+              "task_component": 0.06,
+              "environment_component": 0.105,
+              "constraint_component": 0.315,
+              "temporal_component": 0.18000000000000002,
+              "reliability_component": 0.135,
+              "total_score": 0.8350000000000001,
+              "reason": "failure_prevention scored under constraint emphasis for task production_deployment in production"
+            },
+            {
+              "candidate_id": "speed_preference",
+              "base_component": 0.041,
+              "task_component": 0.09000000000000001,
+              "environment_component": 0.12,
+              "constraint_component": 0.13999999999999999,
+              "temporal_component": 0.16000000000000003,
+              "reliability_component": 0.12,
+              "total_score": 0.671,
+              "reason": "speed_preference scored under constraint emphasis for task production_deployment in production"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        }
+      ],
+      "flip_pairs": [
+        {
+          "left_context_id": "prototype_building",
+          "right_context_id": "production_deployment",
+          "left_dominant": "speed_preference",
+          "right_dominant": "failure_prevention",
+          "dominant_changed": true
+        }
+      ]
+    },
+    {
+      "scenario_id": "contextual_integration_002_old_preference_vs_new_evidence",
+      "description": "A simple-tools preference wins in a small context but recent scaling failure wins for large system design.",
+      "candidates": [
+        {
+          "id": "old_preference",
+          "base_strength": 0.82,
+          "task_alignment": 0.9,
+          "environment_alignment": 0.75,
+          "constraint_alignment": 0.6,
+          "temporal_confidence": 0.3,
+          "reliability": 0.85
+        },
+        {
+          "id": "recent_failure",
+          "base_strength": 0.76,
+          "task_alignment": 0.7,
+          "environment_alignment": 0.75,
+          "constraint_alignment": 0.9,
+          "temporal_confidence": 0.95,
+          "reliability": 0.9
+        }
+      ],
+      "results": [
+        {
+          "context_id": "simple_tooling",
+          "context": {
+            "task": "simple_tooling",
+            "environment": "small_project",
+            "constraints": [
+              "low_complexity"
+            ]
+          },
+          "ranked_candidates": [
+            "old_preference",
+            "recent_failure"
+          ],
+          "dominant_candidate": "old_preference",
+          "suppressed_candidates": [
+            "recent_failure"
+          ],
+          "expected_dominant_candidate": "old_preference",
+          "expected_suppressed_candidates": [
+            "recent_failure"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "old_preference",
+              "base_component": 0.082,
+              "task_component": 0.405,
+              "environment_component": 0.15000000000000002,
+              "constraint_component": 0.03,
+              "temporal_component": 0.015,
+              "reliability_component": 0.1275,
+              "total_score": 0.8095000000000001,
+              "reason": "old_preference scored under task emphasis for task simple_tooling in small_project"
+            },
+            {
+              "candidate_id": "recent_failure",
+              "base_component": 0.07600000000000001,
+              "task_component": 0.315,
+              "environment_component": 0.15000000000000002,
+              "constraint_component": 0.045000000000000005,
+              "temporal_component": 0.0475,
+              "reliability_component": 0.135,
+              "total_score": 0.7685000000000001,
+              "reason": "recent_failure scored under task emphasis for task simple_tooling in small_project"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        },
+        {
+          "context_id": "large_system_design",
+          "context": {
+            "task": "large_system_design",
+            "environment": "scaling_environment",
+            "constraints": [
+              "scaling_risk"
+            ]
+          },
+          "ranked_candidates": [
+            "recent_failure",
+            "old_preference"
+          ],
+          "dominant_candidate": "recent_failure",
+          "suppressed_candidates": [
+            "old_preference"
+          ],
+          "expected_dominant_candidate": "recent_failure",
+          "expected_suppressed_candidates": [
+            "old_preference"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "recent_failure",
+              "base_component": 0.038000000000000006,
+              "task_component": 0.13999999999999999,
+              "environment_component": 0.11249999999999999,
+              "constraint_component": 0.225,
+              "temporal_component": 0.2375,
+              "reliability_component": 0.09000000000000001,
+              "total_score": 0.8429999999999999,
+              "reason": "recent_failure scored under temporal emphasis for task large_system_design in scaling_environment"
+            },
+            {
+              "candidate_id": "old_preference",
+              "base_component": 0.041,
+              "task_component": 0.18000000000000002,
+              "environment_component": 0.11249999999999999,
+              "constraint_component": 0.15,
+              "temporal_component": 0.075,
+              "reliability_component": 0.085,
+              "total_score": 0.6435,
+              "reason": "old_preference scored under temporal emphasis for task large_system_design in scaling_environment"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        }
+      ],
+      "flip_pairs": [
+        {
+          "left_context_id": "simple_tooling",
+          "right_context_id": "large_system_design",
+          "left_dominant": "old_preference",
+          "right_dominant": "recent_failure",
+          "dominant_changed": true
+        }
+      ]
+    },
+    {
+      "scenario_id": "contextual_integration_003_environment_shift",
+      "description": "The same local and cloud memories flip when the execution environment changes.",
+      "candidates": [
+        {
+          "id": "local_solution",
+          "base_strength": 0.78,
+          "task_alignment": 0.7,
+          "environment_alignment": 0.65,
+          "constraint_alignment": 0.95,
+          "temporal_confidence": 0.8,
+          "reliability": 0.85
+        },
+        {
+          "id": "cloud_solution",
+          "base_strength": 0.8,
+          "task_alignment": 0.76,
+          "environment_alignment": 0.98,
+          "constraint_alignment": 0.45,
+          "temporal_confidence": 0.85,
+          "reliability": 0.88
+        }
+      ],
+      "results": [
+        {
+          "context_id": "offline_environment",
+          "context": {
+            "task": "environment_shift",
+            "environment": "offline",
+            "constraints": [
+              "no_network",
+              "offline_required"
+            ]
+          },
+          "ranked_candidates": [
+            "local_solution",
+            "cloud_solution"
+          ],
+          "dominant_candidate": "local_solution",
+          "suppressed_candidates": [
+            "cloud_solution"
+          ],
+          "expected_dominant_candidate": "local_solution",
+          "expected_suppressed_candidates": [
+            "cloud_solution"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "local_solution",
+              "base_component": 0.03900000000000001,
+              "task_component": 0.105,
+              "environment_component": 0.13,
+              "constraint_component": 0.33249999999999996,
+              "temporal_component": 0.12,
+              "reliability_component": 0.085,
+              "total_score": 0.8115,
+              "reason": "local_solution scored under constraint emphasis for task environment_shift in offline"
+            },
+            {
+              "candidate_id": "cloud_solution",
+              "base_component": 0.04000000000000001,
+              "task_component": 0.11399999999999999,
+              "environment_component": 0.196,
+              "constraint_component": 0.1575,
+              "temporal_component": 0.1275,
+              "reliability_component": 0.08800000000000001,
+              "total_score": 0.723,
+              "reason": "cloud_solution scored under constraint emphasis for task environment_shift in offline"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        },
+        {
+          "context_id": "cloud_environment",
+          "context": {
+            "task": "environment_shift",
+            "environment": "cloud",
+            "constraints": [
+              "network_available",
+              "managed_service"
+            ]
+          },
+          "ranked_candidates": [
+            "cloud_solution",
+            "local_solution"
+          ],
+          "dominant_candidate": "cloud_solution",
+          "suppressed_candidates": [
+            "local_solution"
+          ],
+          "expected_dominant_candidate": "cloud_solution",
+          "expected_suppressed_candidates": [
+            "local_solution"
+          ],
+          "score_breakdown": [
+            {
+              "candidate_id": "cloud_solution",
+              "base_component": 0.04000000000000001,
+              "task_component": 0.19,
+              "environment_component": 0.34299999999999997,
+              "constraint_component": 0.022500000000000003,
+              "temporal_component": 0.1275,
+              "reliability_component": 0.132,
+              "total_score": 0.8549999999999999,
+              "reason": "cloud_solution scored under environment emphasis for task environment_shift in cloud"
+            },
+            {
+              "candidate_id": "local_solution",
+              "base_component": 0.03900000000000001,
+              "task_component": 0.175,
+              "environment_component": 0.22749999999999998,
+              "constraint_component": 0.0475,
+              "temporal_component": 0.12,
+              "reliability_component": 0.1275,
+              "total_score": 0.7364999999999999,
+              "reason": "local_solution scored under environment emphasis for task environment_shift in cloud"
+            }
+          ],
+          "dominance_correct": true,
+          "suppression_correct": true,
+          "dominance_consistent": true,
+          "ranking_stable": true
+        }
+      ],
+      "flip_pairs": [
+        {
+          "left_context_id": "offline_environment",
+          "right_context_id": "cloud_environment",
+          "left_dominant": "local_solution",
+          "right_dominant": "cloud_solution",
+          "dominant_changed": true
+        }
+      ]
+    }
+  ]
+}
