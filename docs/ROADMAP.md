@@ -105,6 +105,19 @@ Focus:
 - connect reflected strategy back into memory competition
 - measure learning as grounded future influence change, not lesson text generation
 
+Phase 3.1: Reflection Observation.
+
+Status: **Observation-only prototype**.
+
+Report: `crates/eval/reports/phase3-reflection-observation.json`.
+
+Boundary:
+
+- generates reflection traces
+- does not persist lessons
+- does not create playbooks
+- does not modify future influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

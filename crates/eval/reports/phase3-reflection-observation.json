@@ -1,0 +1,198 @@
+{
+  "tag": "phase3-reflection-observation",
+  "evaluation_version": "phase3.1-reflection-observation",
+  "baseline_version": "phase2.10-memory-lifecycle-freeze",
+  "generated_at": "2026-07-09T06:22:53.115422800+00:00",
+  "trace_count": 6,
+  "reflected": 3,
+  "observed": 2,
+  "ignored": 1,
+  "mechanism_changed": false,
+  "schema_changed": false,
+  "retrieval_changed": false,
+  "activation_changed": false,
+  "temporal_lifecycle_changed": false,
+  "governance_changed": false,
+  "playbook_created": false,
+  "future_influence_changed": false,
+  "implementation_status": "observation_only",
+  "metrics": {
+    "reflection_trigger_precision": 1.0,
+    "reflection_trigger_recall": 1.0,
+    "action_agreement": 1.0,
+    "lesson_grounding_readiness": 1.0,
+    "lesson_scope_readiness": 1.0,
+    "observation_safety": 1.0
+  },
+  "pass": true,
+  "status": "reflection_observation_traced",
+  "traces": [
+    {
+      "experience_id": "reflection_obs_001_gpu_deployment_failure",
+      "expected_action": "Reflect",
+      "observed_action": "Reflect",
+      "outcome": "large model deployment failed under GPU memory pressure",
+      "impact": 0.92,
+      "failure_pattern": "resource validation missing before rollout",
+      "successful_pattern": null,
+      "lesson_candidate": "For GPU-limited model deployment, validate memory footprint before rollout.",
+      "lesson_scope": "gpu_limited_model_deployment",
+      "confidence": 1.0,
+      "supporting_events": [
+        "gpu_failure_log",
+        "oom_runtime_error",
+        "user_correction_reduce_batch"
+      ],
+      "contradicting_events": [],
+      "grounding_status": "grounded",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "reflection candidate is grounded in 3 supporting events"
+      ]
+    },
+    {
+      "experience_id": "reflection_obs_002_routine_success",
+      "expected_action": "Ignore",
+      "observed_action": "Ignore",
+      "outcome": "routine documentation update completed",
+      "impact": 0.12,
+      "failure_pattern": null,
+      "successful_pattern": "routine success with no reusable strategy signal",
+      "lesson_candidate": null,
+      "lesson_scope": "none",
+      "confidence": 0.162,
+      "supporting_events": [],
+      "contradicting_events": [],
+      "grounding_status": "not_applicable",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "low-value event ignored by reflection observation"
+      ]
+    },
+    {
+      "experience_id": "reflection_obs_003_ambiguous_one_off_error",
+      "expected_action": "Observe",
+      "observed_action": "Observe",
+      "outcome": "single transient network error without root cause",
+      "impact": 0.48,
+      "failure_pattern": "transient error without confirmed cause",
+      "successful_pattern": null,
+      "lesson_candidate": null,
+      "lesson_scope": "network_diagnostics_pending",
+      "confidence": 0.52,
+      "supporting_events": [
+        "one_off_network_timeout"
+      ],
+      "contradicting_events": [],
+      "grounding_status": "pending_evidence",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "insufficient evidence for lesson formation"
+      ]
+    },
+    {
+      "experience_id": "reflection_obs_004_repeated_permission_failure",
+      "expected_action": "Reflect",
+      "observed_action": "Reflect",
+      "outcome": "deployment failed twice because database write permission was missing",
+      "impact": 0.88,
+      "failure_pattern": "permission verification skipped before deployment",
+      "successful_pattern": null,
+      "lesson_candidate": "Before deployment, verify database write permissions for the runtime user.",
+      "lesson_scope": "database_backed_deployment",
+      "confidence": 0.998,
+      "supporting_events": [
+        "first_permission_failure",
+        "second_permission_failure",
+        "operator_manual_fix"
+      ],
+      "contradicting_events": [],
+      "grounding_status": "grounded",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "reflection candidate is grounded in 3 supporting events"
+      ]
+    },
+    {
+      "experience_id": "reflection_obs_005_local_docker_disk_scope",
+      "expected_action": "Reflect",
+      "observed_action": "Reflect",
+      "outcome": "local Docker image build failed because the workstation disk was full",
+      "impact": 0.83,
+      "failure_pattern": "local environment capacity check missing",
+      "successful_pattern": null,
+      "lesson_candidate": "For local Docker builds, check available disk space before image build.",
+      "lesson_scope": "local_docker_build",
+      "confidence": 0.9005,
+      "supporting_events": [
+        "docker_build_failure",
+        "disk_full_error"
+      ],
+      "contradicting_events": [],
+      "grounding_status": "grounded",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "reflection candidate is grounded in 2 supporting events"
+      ]
+    },
+    {
+      "experience_id": "reflection_obs_006_mixed_docker_evidence",
+      "expected_action": "Observe",
+      "observed_action": "Observe",
+      "outcome": "one Docker failure followed by successful CI Docker builds",
+      "impact": 0.6,
+      "failure_pattern": "local Docker failure may not generalize",
+      "successful_pattern": "CI Docker builds succeeded after cleanup",
+      "lesson_candidate": null,
+      "lesson_scope": "docker_evidence_mixed",
+      "confidence": 0.55,
+      "supporting_events": [
+        "local_docker_failure"
+      ],
+      "contradicting_events": [
+        "ci_docker_success"
+      ],
+      "grounding_status": "pending_evidence",
+      "overgeneralization_guard": true,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "observation only: no lesson persisted",
+        "observation only: no playbook created",
+        "observation only: no future influence changed",
+        "insufficient evidence for lesson formation"
+      ]
+    }
+  ]
+}

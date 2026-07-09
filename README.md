@@ -63,6 +63,7 @@ Current research track:
 - [Phase 2.10 Memory Lifecycle Freeze](docs/eval/PHASE2_MEMORY_LIFECYCLE_FINAL_REPORT.md): freezes Phase 2 as memory evolution research, with a separate [capability boundary](docs/eval/PHASE2_CAPABILITY_BOUNDARY.md) and [Phase 3 reflection research questions](docs/eval/PHASE3_REFLECTION_RESEARCH_QUESTIONS.md).
 - [RFC-014 Reflection Learning](docs/rfc/RFC-014-reflection-learning.md): Phase 3.0 design-only entry point for transforming selected experiences into auditable lesson and playbook candidates.
 - [Phase 3.0.1 Reflection Evaluation Design](docs/eval/PHASE3_REFLECTION_EVALUATION_DESIGN.md): defines learning evidence as grounded, scoped future influence change rather than lesson text generation.
+- Phase 3.1 reflection observation: generates observation-only `ReflectionTrace` reports over 6 synthetic experiences; `reflected = 3`, `observed = 2`, `ignored = 1`, `observation_safety = 1.0000`, with no playbook creation and no future influence change.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
