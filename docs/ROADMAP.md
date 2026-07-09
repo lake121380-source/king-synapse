@@ -160,6 +160,20 @@ Boundary:
 - does not create playbooks
 - does not modify runtime future influence
 
+Phase 3.5: Lesson Lifecycle Evaluation.
+
+Status: **Evaluation-only lifecycle simulation**.
+
+Report: `crates/eval/reports/phase3-lesson-lifecycle.json`.
+
+Boundary:
+
+- observes lesson state transitions from `Candidate` through `Superseded`
+- tests reinforcement, contradiction response, supersession, and false lesson protection
+- does not persist lessons
+- does not create playbooks
+- does not modify runtime future influence
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

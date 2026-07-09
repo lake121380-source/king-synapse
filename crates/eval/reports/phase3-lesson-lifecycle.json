@@ -1,0 +1,185 @@
+{
+  "tag": "phase3-lesson-lifecycle",
+  "phase": "3.5",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase3.5-lesson-lifecycle-evaluation",
+  "baseline_version": "phase3.4-future-influence-experiment",
+  "generated_at": "2026-07-09T13:56:09.827879800+00:00",
+  "scenarios": 4,
+  "future_influence_source_count": 3,
+  "mechanism_changed": false,
+  "schema_changed": false,
+  "retrieval_changed": false,
+  "activation_changed": false,
+  "temporal_lifecycle_changed": false,
+  "governance_changed": false,
+  "states": {
+    "candidate": 1,
+    "proposed": 0,
+    "active": 1,
+    "challenged": 1,
+    "superseded": 1
+  },
+  "metrics": {
+    "lifecycle_transition_accuracy": 1.0,
+    "contradiction_response_score": 1.0,
+    "supersession_score": 1.0,
+    "reinforcement_score": 1.0,
+    "false_lesson_protection_score": 1.0,
+    "lifecycle_safety": 1.0
+  },
+  "safety": {
+    "memory_written": false,
+    "lesson_persisted": false,
+    "playbook_created": false,
+    "future_influence_changed": false
+  },
+  "pass": true,
+  "status": "lesson_lifecycle_evaluated",
+  "traces": [
+    {
+      "scenario_id": "lesson_lifecycle_001_reinforcement",
+      "lifecycle_pattern": "Reinforcement",
+      "lesson_id": "lesson_env_resource_check",
+      "lesson_text": "Before deployment, check environment resources.",
+      "replacement_lesson": null,
+      "initial_state": "Proposed",
+      "transitions": [
+        {
+          "from": "Proposed",
+          "to": "Active",
+          "reason": "three supporting deployment outcomes reinforce the lesson"
+        }
+      ],
+      "support_events": 3,
+      "contradiction_events": 0,
+      "confidence_before": 0.7,
+      "confidence_after": 0.92,
+      "influence_before": 0.55,
+      "influence_after": 0.86,
+      "final_state": "Active",
+      "expected_final_state": "Active",
+      "lifecycle_safe": true,
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: no memory write",
+        "evaluation only: no lesson persistence",
+        "evaluation only: no playbook creation",
+        "evaluation only: no runtime future influence mutation",
+        "supporting evidence can move a proposed lesson into active simulation",
+        "final_state: Active"
+      ]
+    },
+    {
+      "scenario_id": "lesson_lifecycle_002_challenge",
+      "lifecycle_pattern": "Challenge",
+      "lesson_id": "lesson_method_a_fails_often",
+      "lesson_text": "Method A fails often.",
+      "replacement_lesson": null,
+      "initial_state": "Active",
+      "transitions": [
+        {
+          "from": "Active",
+          "to": "Challenged",
+          "reason": "contradicting success case lowers lesson confidence"
+        }
+      ],
+      "support_events": 0,
+      "contradiction_events": 1,
+      "confidence_before": 0.82,
+      "confidence_after": 0.57,
+      "influence_before": 0.78,
+      "influence_after": 0.44,
+      "final_state": "Challenged",
+      "expected_final_state": "Challenged",
+      "lifecycle_safe": true,
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: no memory write",
+        "evaluation only: no lesson persistence",
+        "evaluation only: no playbook creation",
+        "evaluation only: no runtime future influence mutation",
+        "contradicting evidence reduces lesson confidence and influence",
+        "final_state: Challenged"
+      ]
+    },
+    {
+      "scenario_id": "lesson_lifecycle_003_supersession",
+      "lifecycle_pattern": "Supersession",
+      "lesson_id": "lesson_always_method_a",
+      "lesson_text": "Always use method A.",
+      "replacement_lesson": "Choose the method based on environment constraints.",
+      "initial_state": "Active",
+      "transitions": [
+        {
+          "from": "Active",
+          "to": "Superseded",
+          "reason": "stronger environment-aware lesson replaces the old universal rule"
+        }
+      ],
+      "support_events": 0,
+      "contradiction_events": 2,
+      "confidence_before": 0.86,
+      "confidence_after": 0.31,
+      "influence_before": 0.8,
+      "influence_after": 0.12,
+      "final_state": "Superseded",
+      "expected_final_state": "Superseded",
+      "lifecycle_safe": true,
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: no memory write",
+        "evaluation only: no lesson persistence",
+        "evaluation only: no playbook creation",
+        "evaluation only: no runtime future influence mutation",
+        "stronger replacement lesson moves the old lesson out of recommendation",
+        "final_state: Superseded"
+      ]
+    },
+    {
+      "scenario_id": "lesson_lifecycle_004_false_lesson_protection",
+      "lifecycle_pattern": "FalseLessonProtection",
+      "lesson_id": "lesson_single_failure_overfit",
+      "lesson_text": "A single transient failure means the whole strategy is bad.",
+      "replacement_lesson": null,
+      "initial_state": "Candidate",
+      "transitions": [
+        {
+          "from": "Candidate",
+          "to": "Candidate",
+          "reason": "weak single-event evidence is insufficient for activation"
+        }
+      ],
+      "support_events": 1,
+      "contradiction_events": 0,
+      "confidence_before": 0.25,
+      "confidence_after": 0.25,
+      "influence_before": 0.1,
+      "influence_after": 0.1,
+      "final_state": "Candidate",
+      "expected_final_state": "Candidate",
+      "lifecycle_safe": true,
+      "memory_written": false,
+      "lesson_persisted": false,
+      "playbook_created": false,
+      "future_influence_changed": false,
+      "trace_notes": [
+        "evaluation only: no memory write",
+        "evaluation only: no lesson persistence",
+        "evaluation only: no playbook creation",
+        "evaluation only: no runtime future influence mutation",
+        "weak evidence remains candidate-level and does not activate",
+        "final_state: Candidate"
+      ]
+    }
+  ]
+}

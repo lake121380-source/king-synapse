@@ -22,6 +22,7 @@ pub mod phase2_temporal_influence_eval;
 pub mod phase2_temporal_stress_eval;
 pub mod phase3_future_influence;
 pub mod phase3_lesson_candidate_eval;
+pub mod phase3_lesson_lifecycle;
 pub mod phase3_lesson_promotion;
 pub mod phase3_reflection_observation;
 pub mod reporter;
@@ -76,6 +77,11 @@ pub use phase3_future_influence::{
 pub use phase3_lesson_candidate_eval::{
     LessonCandidateReport, Phase3LessonCandidateEvaluationReport, Phase3LessonCandidateEvaluator,
     Phase3LessonCandidateMetrics,
+};
+pub use phase3_lesson_lifecycle::{
+    LessonLifecycleSafetyReport, LessonLifecycleState, LessonLifecycleStateCounts,
+    LessonLifecycleTrace, LessonTransition, Phase3LessonLifecycleEvaluator,
+    Phase3LessonLifecycleMetrics, Phase3LessonLifecycleReport,
 };
 pub use phase3_lesson_promotion::{
     LessonPromotionTrace, Phase3LessonPromotionEvaluator, Phase3LessonPromotionMetrics,

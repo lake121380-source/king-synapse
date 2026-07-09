@@ -67,6 +67,7 @@ Current research track:
 - Phase 3.2 lesson candidate evaluation: evaluates Phase 3.1 lesson candidates without promotion; `accepted = 3`, `observe_more = 2`, `rejected = 1`, `lesson_grounding_score = 0.8806`, `lesson_scope_score = 0.9167`, `candidate_accept_precision = 1.0000`, `promotion_safety = 1.0000`.
 - Phase 3.3 controlled lesson promotion: evaluates accepted lesson candidates through a promotion gate without memory mutation; `proposed_lessons = 2`, `playbook_candidates = 1`, `not_promoted = 3`, `promotion_precision = 1.0000`, `evidence_sufficiency_score = 0.8889`, `promotion_safety = 1.0000`.
 - Phase 3.4 future influence experiment: compares baseline decisions against promoted-lesson influence in eval-only simulations; `helpful_lessons = 1`, `neutral_lessons = 1`, `rejected_influence = 1`, `influence_gain_score = 0.2900`, `failure_reduction_score = 1.0000`, `no_write_safety = 1.0000`.
+- Phase 3.5 lesson lifecycle evaluation: simulates lesson reinforcement, challenge, supersession, and false-lesson protection; final states `active = 1`, `challenged = 1`, `superseded = 1`, `candidate = 1`, with `lifecycle_transition_accuracy = 1.0000` and `lifecycle_safety = 1.0000`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
