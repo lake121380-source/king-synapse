@@ -219,6 +219,21 @@ Boundary:
 - does not write memory
 - does not change runtime activation
 
+Phase 4.3: Contextual Cognitive Weighting.
+
+Status: **Evaluation-only contextual weighting**.
+
+Report: `crates/eval/reports/phase4-contextual-weighting.json`.
+
+Boundary:
+
+- adjusts candidate influence in simulation from task, environment, constraints, temporal confidence, and reliability
+- compares the same candidate across different contexts and resolves context-dependent conflicts
+- records weight breakdown, final influence, and explanation trace
+- does not change core
+- does not write memory
+- does not change runtime weighting or production ranking
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.

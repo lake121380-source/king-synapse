@@ -1,0 +1,560 @@
+{
+  "tag": "phase4-contextual-weighting",
+  "phase": "4.3",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase4.3-contextual-cognitive-weighting",
+  "baseline_version": "phase4.2-cognitive-competition-model",
+  "generated_at": "2026-07-09T15:33:06.712360700+00:00",
+  "scenarios": 6,
+  "parameters": {
+    "context_match_weight": 0.35,
+    "constraint_match_weight": 0.25,
+    "temporal_confidence_weight": 0.2,
+    "reliability_weight": 0.2
+  },
+  "metrics": {
+    "context_weight_accuracy": 1.0,
+    "adaptive_weight_shift": 1.0,
+    "cross_context_consistency": 1.0,
+    "importance_explanation": 1.0,
+    "conflict_resolution": 1.0
+  },
+  "safety": {
+    "core_changed": false,
+    "memory_written": false,
+    "runtime_weight_changed": false
+  },
+  "pass": true,
+  "status": "contextual_cognitive_weighting_evaluated",
+  "traces": [
+    {
+      "scenario_id": "contextual_weighting_001_same_memory_different_context",
+      "context": {
+        "task_type": "production deployment",
+        "environment": "production",
+        "constraints": [
+          "resource constraints",
+          "rollback path"
+        ],
+        "urgency": 0.9
+      },
+      "expected_dominant_candidate": "lesson_check_resources",
+      "dominant_candidate": "lesson_check_resources",
+      "dominant_candidate_type": "Lesson",
+      "candidate_weights": [
+        {
+          "candidate_id": "lesson_check_resources",
+          "candidate_type": "Lesson",
+          "base_strength": 0.78,
+          "historical_confidence": 0.82,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.86,
+          "reliability": 0.9,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.172,
+          "reliability_component": 0.17999999,
+          "contextual_weight": 0.952,
+          "final_influence": 0.74255997,
+          "reason": "reason: lesson_check_resources matches current constraints for production deployment in production"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "lesson_check_resources",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.952,
+          "final_influence": 0.74255997
+        }
+      ],
+      "context_variants": [
+        {
+          "label": "production",
+          "context": {
+            "task_type": "production deployment",
+            "environment": "production",
+            "constraints": [
+              "resource constraints",
+              "rollback path"
+            ],
+            "urgency": 0.9
+          },
+          "candidate_id": "lesson_check_resources",
+          "contextual_weight": 0.952,
+          "final_influence": 0.74255997
+        },
+        {
+          "label": "local",
+          "context": {
+            "task_type": "local experiment",
+            "environment": "local",
+            "constraints": [
+              "resource constraints"
+            ],
+            "urgency": 0.2
+          },
+          "candidate_id": "lesson_check_resources",
+          "contextual_weight": 0.602,
+          "final_influence": 0.46955997
+        }
+      ],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate lesson_check_resources selected as dominant under contextual weighting",
+        "context task=production deployment environment=production urgency=0.90",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1720 reliability=0.1800",
+        "final influence 0.7426 = base_strength 0.7800 * contextual_weight 0.9520",
+        "reason: the same deployment resource lesson should matter more in production than in a local experiment",
+        "conflict_resolved=true ranked_candidates=lesson_check_resources",
+        "context_variants=production:lesson_check_resources:0.9520, local:lesson_check_resources:0.6020"
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    },
+    {
+      "scenario_id": "contextual_weighting_002_context_overrides_history",
+      "context": {
+        "task_type": "database incident response",
+        "environment": "production",
+        "constraints": [
+          "database connectivity",
+          "incident mitigation"
+        ],
+        "urgency": 0.95
+      },
+      "expected_dominant_candidate": "lesson_database_incident_context",
+      "dominant_candidate": "lesson_database_incident_context",
+      "dominant_candidate_type": "Lesson",
+      "candidate_weights": [
+        {
+          "candidate_id": "lesson_database_incident_context",
+          "candidate_type": "Lesson",
+          "base_strength": 0.56,
+          "historical_confidence": 0.5,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.92,
+          "reliability": 0.88,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.184,
+          "reliability_component": 0.176,
+          "contextual_weight": 0.96000004,
+          "final_influence": 0.53760004,
+          "reason": "reason: lesson_database_incident_context matches current constraints for database incident response in production"
+        },
+        {
+          "candidate_id": "memory_high_history_low_context",
+          "candidate_type": "Memory",
+          "base_strength": 0.95,
+          "historical_confidence": 0.95,
+          "context_match": 0.0,
+          "constraint_match": 0.0,
+          "temporal_confidence": 0.7,
+          "reliability": 0.75,
+          "context_component": 0.0,
+          "constraint_component": 0.0,
+          "temporal_component": 0.14,
+          "reliability_component": 0.15,
+          "contextual_weight": 0.29000002,
+          "final_influence": 0.27550003,
+          "reason": "reason: memory_high_history_low_context receives limited contextual support in this scenario"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "lesson_database_incident_context",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.96000004,
+          "final_influence": 0.53760004
+        },
+        {
+          "candidate_id": "memory_high_history_low_context",
+          "candidate_type": "Memory",
+          "contextual_weight": 0.29000002,
+          "final_influence": 0.27550003
+        }
+      ],
+      "context_variants": [],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate lesson_database_incident_context selected as dominant under contextual weighting",
+        "context task=database incident response environment=production urgency=0.95",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1840 reliability=0.1760",
+        "final influence 0.5376 = base_strength 0.5600 * contextual_weight 0.9600",
+        "reason: a weaker-history lesson can win when it fits the immediate incident context",
+        "conflict_resolved=true ranked_candidates=lesson_database_incident_context, memory_high_history_low_context",
+        "context_variants="
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    },
+    {
+      "scenario_id": "contextual_weighting_003_temporal_context_interaction",
+      "context": {
+        "task_type": "current deployment strategy",
+        "environment": "new runtime",
+        "constraints": [
+          "changed environment"
+        ],
+        "urgency": 0.7
+      },
+      "expected_dominant_candidate": "lesson_new_runtime_strategy",
+      "dominant_candidate": "lesson_new_runtime_strategy",
+      "dominant_candidate_type": "Lesson",
+      "candidate_weights": [
+        {
+          "candidate_id": "lesson_new_runtime_strategy",
+          "candidate_type": "Lesson",
+          "base_strength": 0.68,
+          "historical_confidence": 0.64,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.94,
+          "reliability": 0.9,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.18800001,
+          "reliability_component": 0.17999999,
+          "contextual_weight": 0.96800005,
+          "final_influence": 0.65824,
+          "reason": "reason: lesson_new_runtime_strategy matches current constraints for current deployment strategy in new runtime"
+        },
+        {
+          "candidate_id": "lesson_old_runtime_strategy",
+          "candidate_type": "Lesson",
+          "base_strength": 0.9,
+          "historical_confidence": 0.92,
+          "context_match": 0.38333333,
+          "constraint_match": 0.0,
+          "temporal_confidence": 0.12,
+          "reliability": 0.72,
+          "context_component": 0.13416666,
+          "constraint_component": 0.0,
+          "temporal_component": 0.024,
+          "reliability_component": 0.14400001,
+          "contextual_weight": 0.30216667,
+          "final_influence": 0.27195,
+          "reason": "reason: lesson_old_runtime_strategy receives limited contextual support in this scenario"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "lesson_new_runtime_strategy",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.96800005,
+          "final_influence": 0.65824
+        },
+        {
+          "candidate_id": "lesson_old_runtime_strategy",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.30216667,
+          "final_influence": 0.27195
+        }
+      ],
+      "context_variants": [],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate lesson_new_runtime_strategy selected as dominant under contextual weighting",
+        "context task=current deployment strategy environment=new runtime urgency=0.70",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1880 reliability=0.1800",
+        "final influence 0.6582 = base_strength 0.6800 * contextual_weight 0.9680",
+        "reason: newer context-fit evidence should beat an old high-history strategy after environment change",
+        "conflict_resolved=true ranked_candidates=lesson_new_runtime_strategy, lesson_old_runtime_strategy",
+        "context_variants="
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    },
+    {
+      "scenario_id": "contextual_weighting_004_constraint_aware_weighting",
+      "context": {
+        "task_type": "model deployment",
+        "environment": "limited memory",
+        "constraints": [
+          "limited memory",
+          "low resource"
+        ],
+        "urgency": 0.8
+      },
+      "expected_dominant_candidate": "lesson_memory_efficient_strategy",
+      "dominant_candidate": "lesson_memory_efficient_strategy",
+      "dominant_candidate_type": "Lesson",
+      "candidate_weights": [
+        {
+          "candidate_id": "lesson_memory_efficient_strategy",
+          "candidate_type": "Lesson",
+          "base_strength": 0.68,
+          "historical_confidence": 0.62,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.88,
+          "reliability": 0.88,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.176,
+          "reliability_component": 0.176,
+          "contextual_weight": 0.952,
+          "final_influence": 0.64736,
+          "reason": "reason: lesson_memory_efficient_strategy matches current constraints for model deployment in limited memory"
+        },
+        {
+          "candidate_id": "playbook_high_resource_strategy",
+          "candidate_type": "PlaybookCandidate",
+          "base_strength": 0.82,
+          "historical_confidence": 0.8,
+          "context_match": 0.7,
+          "constraint_match": 0.0,
+          "temporal_confidence": 0.72,
+          "reliability": 0.78,
+          "context_component": 0.24499999,
+          "constraint_component": 0.0,
+          "temporal_component": 0.14400001,
+          "reliability_component": 0.156,
+          "contextual_weight": 0.545,
+          "final_influence": 0.4469,
+          "reason": "reason: playbook_high_resource_strategy aligns with the current model deployment context"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "lesson_memory_efficient_strategy",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.952,
+          "final_influence": 0.64736
+        },
+        {
+          "candidate_id": "playbook_high_resource_strategy",
+          "candidate_type": "PlaybookCandidate",
+          "contextual_weight": 0.545,
+          "final_influence": 0.4469
+        }
+      ],
+      "context_variants": [],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate lesson_memory_efficient_strategy selected as dominant under contextual weighting",
+        "context task=model deployment environment=limited memory urgency=0.80",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1760 reliability=0.1760",
+        "final influence 0.6474 = base_strength 0.6800 * contextual_weight 0.9520",
+        "reason: limited-memory constraints should raise the memory-efficient strategy above high-resource alternatives",
+        "conflict_resolved=true ranked_candidates=lesson_memory_efficient_strategy, playbook_high_resource_strategy",
+        "context_variants="
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    },
+    {
+      "scenario_id": "contextual_weighting_005_cross_context_consistency",
+      "context": {
+        "task_type": "production deployment",
+        "environment": "production",
+        "constraints": [
+          "rollback path"
+        ],
+        "urgency": 0.8
+      },
+      "expected_dominant_candidate": "lesson_deployment_readiness",
+      "dominant_candidate": "lesson_deployment_readiness",
+      "dominant_candidate_type": "Lesson",
+      "candidate_weights": [
+        {
+          "candidate_id": "lesson_deployment_readiness",
+          "candidate_type": "Lesson",
+          "base_strength": 0.76,
+          "historical_confidence": 0.78,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.84,
+          "reliability": 0.86,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.168,
+          "reliability_component": 0.172,
+          "contextual_weight": 0.94,
+          "final_influence": 0.7144,
+          "reason": "reason: lesson_deployment_readiness matches current constraints for production deployment in production"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "lesson_deployment_readiness",
+          "candidate_type": "Lesson",
+          "contextual_weight": 0.94,
+          "final_influence": 0.7144
+        }
+      ],
+      "context_variants": [
+        {
+          "label": "production",
+          "context": {
+            "task_type": "production deployment",
+            "environment": "production",
+            "constraints": [
+              "rollback path"
+            ],
+            "urgency": 0.8
+          },
+          "candidate_id": "lesson_deployment_readiness",
+          "contextual_weight": 0.94,
+          "final_influence": 0.7144
+        },
+        {
+          "label": "staging",
+          "context": {
+            "task_type": "staging deployment",
+            "environment": "staging",
+            "constraints": [
+              "rollback path"
+            ],
+            "urgency": 0.55
+          },
+          "candidate_id": "lesson_deployment_readiness",
+          "contextual_weight": 0.7125,
+          "final_influence": 0.5415
+        },
+        {
+          "label": "local",
+          "context": {
+            "task_type": "local experiment",
+            "environment": "local",
+            "constraints": [
+              "fast iteration"
+            ],
+            "urgency": 0.15
+          },
+          "candidate_id": "lesson_deployment_readiness",
+          "contextual_weight": 0.34,
+          "final_influence": 0.2584
+        }
+      ],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate lesson_deployment_readiness selected as dominant under contextual weighting",
+        "context task=production deployment environment=production urgency=0.80",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1680 reliability=0.1720",
+        "final influence 0.7144 = base_strength 0.7600 * contextual_weight 0.9400",
+        "reason: the same readiness lesson should change monotonically as context moves away from production deployment",
+        "conflict_resolved=true ranked_candidates=lesson_deployment_readiness",
+        "context_variants=production:lesson_deployment_readiness:0.9400, staging:lesson_deployment_readiness:0.7125, local:lesson_deployment_readiness:0.3400"
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    },
+    {
+      "scenario_id": "contextual_weighting_006_explanation_trace",
+      "context": {
+        "task_type": "auditable production rollout",
+        "environment": "production",
+        "constraints": [
+          "rollback path",
+          "permission check"
+        ],
+        "urgency": 0.9
+      },
+      "expected_dominant_candidate": "playbook_auditable_rollout",
+      "dominant_candidate": "playbook_auditable_rollout",
+      "dominant_candidate_type": "PlaybookCandidate",
+      "candidate_weights": [
+        {
+          "candidate_id": "playbook_auditable_rollout",
+          "candidate_type": "PlaybookCandidate",
+          "base_strength": 0.74,
+          "historical_confidence": 0.74,
+          "context_match": 1.0,
+          "constraint_match": 1.0,
+          "temporal_confidence": 0.88,
+          "reliability": 0.92,
+          "context_component": 0.35,
+          "constraint_component": 0.25,
+          "temporal_component": 0.176,
+          "reliability_component": 0.184,
+          "contextual_weight": 0.96000004,
+          "final_influence": 0.71040004,
+          "reason": "reason: playbook_auditable_rollout matches current constraints for auditable production rollout in production"
+        },
+        {
+          "candidate_id": "memory_generic_rollout",
+          "candidate_type": "Memory",
+          "base_strength": 0.86,
+          "historical_confidence": 0.86,
+          "context_match": 0.76666665,
+          "constraint_match": 0.0,
+          "temporal_confidence": 0.76,
+          "reliability": 0.76,
+          "context_component": 0.26833332,
+          "constraint_component": 0.0,
+          "temporal_component": 0.152,
+          "reliability_component": 0.152,
+          "contextual_weight": 0.57233334,
+          "final_influence": 0.49220666,
+          "reason": "reason: memory_generic_rollout aligns with the current auditable production rollout context"
+        }
+      ],
+      "ranking": [
+        {
+          "candidate_id": "playbook_auditable_rollout",
+          "candidate_type": "PlaybookCandidate",
+          "contextual_weight": 0.96000004,
+          "final_influence": 0.71040004
+        },
+        {
+          "candidate_id": "memory_generic_rollout",
+          "candidate_type": "Memory",
+          "contextual_weight": 0.57233334,
+          "final_influence": 0.49220666
+        }
+      ],
+      "context_variants": [],
+      "context_weight_correct": true,
+      "adaptive_weight_shift": true,
+      "cross_context_consistent": true,
+      "explanation_complete": true,
+      "conflict_resolved": true,
+      "explanation": [
+        "candidate playbook_auditable_rollout selected as dominant under contextual weighting",
+        "context task=auditable production rollout environment=production urgency=0.90",
+        "weight_breakdown context=0.3500 constraint=0.2500 temporal=0.1760 reliability=0.1840",
+        "final influence 0.7104 = base_strength 0.7400 * contextual_weight 0.9600",
+        "reason: the trace must explain candidate, context, weight breakdown, final influence, and suppression reason",
+        "conflict_resolved=true ranked_candidates=playbook_auditable_rollout, memory_generic_rollout",
+        "context_variants="
+      ],
+      "contextual_weighting_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_weight_changed": false
+    }
+  ]
+}

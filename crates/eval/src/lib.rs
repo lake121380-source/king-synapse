@@ -27,6 +27,7 @@ pub mod phase3_lesson_promotion;
 pub mod phase3_reflection_observation;
 pub mod phase4_cognitive_competition;
 pub mod phase4_cognitive_influence;
+pub mod phase4_contextual_weighting;
 pub mod reporter;
 pub mod types;
 
@@ -104,6 +105,12 @@ pub use phase4_cognitive_influence::{
     CognitiveInfluenceTrace, CognitiveScoreBreakdown, InfluenceWeights,
     Phase4CognitiveInfluenceEvaluator, Phase4CognitiveInfluenceMetrics,
     Phase4CognitiveInfluenceReport, SuppressedCandidateReport,
+};
+pub use phase4_contextual_weighting::{
+    CognitiveContext, ContextVariantReport, ContextualCandidate, ContextualInfluenceRanking,
+    ContextualWeightBreakdown, ContextualWeightParameters, ContextualWeightingSafetyReport,
+    ContextualWeightingTrace, Phase4ContextualWeightingEvaluator, Phase4ContextualWeightingMetrics,
+    Phase4ContextualWeightingReport,
 };
 pub use reporter::print_table;
 pub use types::{
