@@ -94,12 +94,16 @@ Status: **Design phase**.
 
 Design RFC: [RFC-014 Reflection Learning](rfc/RFC-014-reflection-learning.md).
 
+Evaluation design:
+[Phase 3.0.1 Reflection Learning Evaluation Design](eval/PHASE3_REFLECTION_EVALUATION_DESIGN.md).
+
 Focus:
 
 - identify experiences worth reflection
 - separate facts from lessons
 - define playbook candidate formation
 - connect reflected strategy back into memory competition
+- measure learning as grounded future influence change, not lesson text generation
 
 Phase 2.4: Temporal Memory Dynamics.
 
