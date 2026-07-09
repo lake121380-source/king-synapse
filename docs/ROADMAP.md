@@ -67,7 +67,7 @@ Current focus
 
 Phase 2: Adaptive Cognitive Architecture.
 
-Status: **Design phase**.
+Status: **Memory lifecycle freeze**.
 
 Goals:
 
@@ -80,6 +80,13 @@ Phase 2 starts from [RFC-013 Adaptive Memory Dynamics](rfc/RFC-013-adaptive-memo
 The goal is to design adaptive memory dynamics after Phase 1 and Phase 1.2
 showed that the remaining bottleneck is memory influence regulation rather than
 retrieval.
+
+Phase 2.10 freezes the memory lifecycle research surface:
+[Phase 2 Memory Lifecycle Final Report](eval/PHASE2_MEMORY_LIFECYCLE_FINAL_REPORT.md),
+[Phase 2 Capability Boundary](eval/PHASE2_CAPABILITY_BOUNDARY.md), and
+[Phase 3 Reflection Research Questions](eval/PHASE3_REFLECTION_RESEARCH_QUESTIONS.md).
+The next research focus is Phase 3.0 Reflection Learning design: how experience
+becomes reusable strategy.
 
 Phase 2.4: Temporal Memory Dynamics.
 
