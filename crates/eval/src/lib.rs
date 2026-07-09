@@ -17,6 +17,7 @@ pub mod governance_soft_dominance;
 pub mod governance_stress;
 pub mod harness;
 pub mod metrics;
+pub mod phase2_competition_eval;
 pub mod reporter;
 pub mod types;
 
@@ -48,6 +49,10 @@ pub use governance_self_consistency::GovernanceSelfConsistencyEvaluator;
 pub use governance_soft_dominance::GovernanceSoftDominanceEvaluator;
 pub use governance_stress::GovernanceStressEvaluator;
 pub use harness::{default_dataset_path, run};
+pub use phase2_competition_eval::{
+    Phase2CompetitionCaseReport, Phase2CompetitionDeltaReport, Phase2CompetitionEvaluationReport,
+    Phase2CompetitionEvaluator, Phase2CompetitionModeReport, Phase2CompetitionTraceStepReport,
+};
 pub use reporter::print_table;
 pub use types::{
     BenchOptions, CognitiveMemoryAblationReport, CognitiveMemoryBenchmarkReport,

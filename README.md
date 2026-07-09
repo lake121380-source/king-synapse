@@ -53,10 +53,11 @@ Current research track:
 - [RFC-013 Adaptive Memory Dynamics](docs/rfc/RFC-013-adaptive-memory-dynamics.md): Phase 2 design entry point.
 - [Phase 2 Experiment Plan](docs/eval/PHASE2_EXPERIMENT_PLAN.md): design validation for conflict resolution, temporal influence, memory suppression, and uncertainty boundaries.
 - Phase 2.2 memory competition prototype: minimal adaptive competition layer for dominant, suppressed, and rejected memory candidates.
+- Phase 2.3 competition evaluation: same 200-case v1.2 benchmark, `synapse = 0.9400`, `synapse+competition = 0.9431`, decision mismatches reduced by `2`, causal-order errors reduced by `2`, `suppression_correctness = 1.0000`.
 
-Phase 2 implementation has started with an isolated memory competition
-prototype. Retrieval, benchmark scoring, memory schema, and governance remain
-unchanged.
+Phase 2 implementation is being evaluated through isolated competition
+experiments. Retrieval, benchmark scoring, memory schema, activation, and
+governance remain unchanged.
 
 ## A Small Example
 
