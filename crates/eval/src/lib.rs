@@ -25,6 +25,7 @@ pub mod phase3_lesson_candidate_eval;
 pub mod phase3_lesson_lifecycle;
 pub mod phase3_lesson_promotion;
 pub mod phase3_reflection_observation;
+pub mod phase4_cognitive_competition;
 pub mod phase4_cognitive_influence;
 pub mod reporter;
 pub mod types;
@@ -91,6 +92,12 @@ pub use phase3_lesson_promotion::{
 pub use phase3_reflection_observation::{
     Phase3ReflectionObservationEvaluator, Phase3ReflectionObservationMetrics,
     Phase3ReflectionObservationReport, ReflectionTraceReport,
+};
+pub use phase4_cognitive_competition::{
+    ActivationPathReport, CognitiveCompetitionSafetyReport, CompetitionCandidate,
+    CompetitionCandidateState, CompetitionParameters, CompetitionRound, CompetitionTrace,
+    Phase4CognitiveCompetitionEvaluator, Phase4CognitiveCompetitionMetrics,
+    Phase4CognitiveCompetitionReport, SuppressedCompetitionCandidate,
 };
 pub use phase4_cognitive_influence::{
     CandidateType, CognitiveCandidate, CognitiveInfluenceRanking, CognitiveInfluenceSafetyReport,

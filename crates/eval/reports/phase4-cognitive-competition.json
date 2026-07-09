@@ -1,0 +1,852 @@
+{
+  "tag": "phase4-cognitive-competition",
+  "phase": "4.2",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase4.2-cognitive-competition-model",
+  "baseline_version": "phase4.1-cognitive-influence-evaluation",
+  "generated_at": "2026-07-09T14:57:21.088775700+00:00",
+  "scenarios": 6,
+  "parameters": {
+    "rounds": 3,
+    "decay": 0.55,
+    "influence_weight": 0.25,
+    "context_weight": 0.25,
+    "reliability_weight": 0.1,
+    "inhibition_strength": 0.35
+  },
+  "metrics": {
+    "dominant_selection_accuracy": 1.0,
+    "competition_convergence": 1.0,
+    "suppression_quality": 1.0,
+    "activation_stability": 1.0,
+    "explanation_quality": 1.0
+  },
+  "safety": {
+    "core_changed": false,
+    "memory_written": false,
+    "runtime_activation_changed": false
+  },
+  "pass": true,
+  "status": "cognitive_competition_evaluated",
+  "traces": [
+    {
+      "scenario_id": "competition_001_clear_winner",
+      "context": "A candidate has a large initial activation advantage and matching influence.",
+      "expected_dominant_candidate": "memory_clear_a",
+      "dominant_candidate": "memory_clear_a",
+      "dominant_candidate_type": "Memory",
+      "suppressed_candidates": [
+        "lesson_clear_b",
+        "playbook_clear_c"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "lesson_clear_b",
+          "candidate_type": "Lesson",
+          "final_activation": 0.3595717,
+          "inhibited": 0.48967975,
+          "reason": "lower final activation after lateral inhibition"
+        },
+        {
+          "candidate_id": "playbook_clear_c",
+          "candidate_type": "PlaybookCandidate",
+          "final_activation": 0.17928843,
+          "inhibited": 0.6131574,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "memory_clear_a",
+          "states": [
+            {
+              "candidate_id": "memory_clear_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.9,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_clear_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.4,
+              "activation_after_update": 0.5425,
+              "path_boost": -0.0,
+              "inhibition": 0.16012499,
+              "activation_after_inhibition": 0.38237503
+            },
+            {
+              "candidate_id": "playbook_clear_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.3,
+              "activation_after_update": 0.4425,
+              "path_boost": -0.0,
+              "inhibition": 0.195125,
+              "activation_after_inhibition": 0.247375
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "memory_clear_a",
+          "states": [
+            {
+              "candidate_id": "memory_clear_a",
+              "candidate_type": "Memory",
+              "activation_before": 1.0,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_clear_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.38237503,
+              "activation_after_update": 0.5328063,
+              "path_boost": -0.0,
+              "inhibition": 0.1635178,
+              "activation_after_inhibition": 0.36928847
+            },
+            {
+              "candidate_id": "playbook_clear_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.247375,
+              "activation_after_update": 0.41355625,
+              "path_boost": -0.0,
+              "inhibition": 0.20525531,
+              "activation_after_inhibition": 0.20830093
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "memory_clear_a",
+          "states": [
+            {
+              "candidate_id": "memory_clear_a",
+              "candidate_type": "Memory",
+              "activation_before": 1.0,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_clear_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.36928847,
+              "activation_after_update": 0.52560866,
+              "path_boost": -0.0,
+              "inhibition": 0.16603696,
+              "activation_after_inhibition": 0.3595717
+            },
+            {
+              "candidate_id": "playbook_clear_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.20830093,
+              "activation_after_update": 0.3920655,
+              "path_boost": -0.0,
+              "inhibition": 0.21277706,
+              "activation_after_inhibition": 0.17928843
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.6404283,
+      "activation_path": [],
+      "explanation": [
+        "dominant candidate memory_clear_a selected with final activation 1.0000",
+        "suppressed candidates: lesson_clear_b, playbook_clear_c",
+        "confidence gap: 0.6404",
+        "activation_path: none",
+        "scenario reason: clear activation advantage should become dominant"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    },
+    {
+      "scenario_id": "competition_002_context_override",
+      "context": "Current context strongly matches the medium-history lesson, not the older memory.",
+      "expected_dominant_candidate": "lesson_context_high",
+      "dominant_candidate": "lesson_context_high",
+      "dominant_candidate_type": "Lesson",
+      "suppressed_candidates": [
+        "memory_history_high_context_low"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "memory_history_high_context_low",
+          "candidate_type": "Memory",
+          "final_activation": 0.68751544,
+          "inhibited": 0.14088441,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "lesson_context_high",
+          "states": [
+            {
+              "candidate_id": "lesson_context_high",
+              "candidate_type": "Lesson",
+              "activation_before": 0.55,
+              "activation_after_update": 0.78749996,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.78749996
+            },
+            {
+              "candidate_id": "memory_history_high_context_low",
+              "candidate_type": "Memory",
+              "activation_before": 0.7,
+              "activation_after_update": 0.7525,
+              "path_boost": -0.0,
+              "inhibition": 0.0122499885,
+              "activation_after_inhibition": 0.74025
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "lesson_context_high",
+          "states": [
+            {
+              "candidate_id": "lesson_context_high",
+              "candidate_type": "Lesson",
+              "activation_before": 0.78749996,
+              "activation_after_update": 0.918125,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.918125
+            },
+            {
+              "candidate_id": "memory_history_high_context_low",
+              "candidate_type": "Memory",
+              "activation_before": 0.74025,
+              "activation_after_update": 0.7746375,
+              "path_boost": -0.0,
+              "inhibition": 0.05022061,
+              "activation_after_inhibition": 0.7244169
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "lesson_context_high",
+          "states": [
+            {
+              "candidate_id": "lesson_context_high",
+              "candidate_type": "Lesson",
+              "activation_before": 0.918125,
+              "activation_after_update": 0.9899688,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.9899688
+            },
+            {
+              "candidate_id": "memory_history_high_context_low",
+              "candidate_type": "Memory",
+              "activation_before": 0.7244169,
+              "activation_after_update": 0.7659293,
+              "path_boost": -0.0,
+              "inhibition": 0.07841382,
+              "activation_after_inhibition": 0.68751544
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.30245334,
+      "activation_path": [],
+      "explanation": [
+        "dominant candidate lesson_context_high selected with final activation 0.9900",
+        "suppressed candidates: memory_history_high_context_low",
+        "confidence gap: 0.3025",
+        "activation_path: none",
+        "scenario reason: context alignment should override older low-context history"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    },
+    {
+      "scenario_id": "competition_003_near_tie",
+      "context": "Two candidates are close enough that deterministic confidence gap reporting matters.",
+      "expected_dominant_candidate": "memory_near_tie_a",
+      "dominant_candidate": "memory_near_tie_a",
+      "dominant_candidate_type": "Memory",
+      "suppressed_candidates": [
+        "lesson_near_tie_b"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "lesson_near_tie_b",
+          "candidate_type": "Lesson",
+          "final_activation": 0.97706306,
+          "inhibited": 0.008831227,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "memory_near_tie_a",
+          "states": [
+            {
+              "candidate_id": "memory_near_tie_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.8,
+              "activation_after_update": 0.90000004,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.90000004
+            },
+            {
+              "candidate_id": "lesson_near_tie_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.78,
+              "activation_after_update": 0.88899994,
+              "path_boost": -0.0,
+              "inhibition": 0.0038500337,
+              "activation_after_inhibition": 0.8851499
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "memory_near_tie_a",
+          "states": [
+            {
+              "candidate_id": "memory_near_tie_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.90000004,
+              "activation_after_update": 0.955,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.955
+            },
+            {
+              "candidate_id": "lesson_near_tie_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.8851499,
+              "activation_after_update": 0.9468324,
+              "path_boost": -0.0,
+              "inhibition": 0.0028586476,
+              "activation_after_inhibition": 0.9439738
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "memory_near_tie_a",
+          "states": [
+            {
+              "candidate_id": "memory_near_tie_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.955,
+              "activation_after_update": 0.98525,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.98525
+            },
+            {
+              "candidate_id": "lesson_near_tie_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.9439738,
+              "activation_after_update": 0.9791856,
+              "path_boost": -0.0,
+              "inhibition": 0.0021225451,
+              "activation_after_inhibition": 0.97706306
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.008186936,
+      "activation_path": [],
+      "explanation": [
+        "dominant candidate memory_near_tie_a selected with final activation 0.9852",
+        "suppressed candidates: lesson_near_tie_b",
+        "confidence gap: 0.0082",
+        "activation_path: none",
+        "scenario reason: near tie should stay deterministic and report a confidence gap"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    },
+    {
+      "scenario_id": "competition_004_inhibition",
+      "context": "The strongest memory should laterally inhibit two weaker alternatives.",
+      "expected_dominant_candidate": "memory_inhibition_a",
+      "dominant_candidate": "memory_inhibition_a",
+      "dominant_candidate_type": "Memory",
+      "suppressed_candidates": [
+        "lesson_inhibition_b",
+        "playbook_inhibition_c"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "lesson_inhibition_b",
+          "candidate_type": "Lesson",
+          "final_activation": 0.36199123,
+          "inhibited": 0.4670904,
+          "reason": "lower final activation after lateral inhibition"
+        },
+        {
+          "candidate_id": "playbook_inhibition_c",
+          "candidate_type": "PlaybookCandidate",
+          "final_activation": 0.24862477,
+          "inhibited": 0.5420495,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "memory_inhibition_a",
+          "states": [
+            {
+              "candidate_id": "memory_inhibition_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.88,
+              "activation_after_update": 0.999,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.999
+            },
+            {
+              "candidate_id": "lesson_inhibition_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.5,
+              "activation_after_update": 0.58500004,
+              "path_boost": -0.0,
+              "inhibition": 0.1449,
+              "activation_after_inhibition": 0.44010004
+            },
+            {
+              "candidate_id": "playbook_inhibition_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.45,
+              "activation_after_update": 0.5275,
+              "path_boost": -0.0,
+              "inhibition": 0.16502501,
+              "activation_after_inhibition": 0.36247498
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "memory_inhibition_a",
+          "states": [
+            {
+              "candidate_id": "memory_inhibition_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.999,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_inhibition_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.44010004,
+              "activation_after_update": 0.55205506,
+              "path_boost": -0.0,
+              "inhibition": 0.15678072,
+              "activation_after_inhibition": 0.39527434
+            },
+            {
+              "candidate_id": "playbook_inhibition_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.36247498,
+              "activation_after_update": 0.47936124,
+              "path_boost": -0.0,
+              "inhibition": 0.18222356,
+              "activation_after_inhibition": 0.29713768
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "memory_inhibition_a",
+          "states": [
+            {
+              "candidate_id": "memory_inhibition_a",
+              "candidate_type": "Memory",
+              "activation_before": 1.0,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_inhibition_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.39527434,
+              "activation_after_update": 0.5274009,
+              "path_boost": -0.0,
+              "inhibition": 0.16540968,
+              "activation_after_inhibition": 0.36199123
+            },
+            {
+              "candidate_id": "playbook_inhibition_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.29713768,
+              "activation_after_update": 0.44342574,
+              "path_boost": -0.0,
+              "inhibition": 0.19480097,
+              "activation_after_inhibition": 0.24862477
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.6380088,
+      "activation_path": [],
+      "explanation": [
+        "dominant candidate memory_inhibition_a selected with final activation 1.0000",
+        "suppressed candidates: lesson_inhibition_b, playbook_inhibition_c",
+        "confidence gap: 0.6380",
+        "activation_path: none",
+        "scenario reason: winner suppression should leave all candidates present but inhibited"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    },
+    {
+      "scenario_id": "competition_005_multi_hop",
+      "context": "Memory supports a lesson, and the lesson supports an operational playbook.",
+      "expected_dominant_candidate": "playbook_multihop_c",
+      "dominant_candidate": "playbook_multihop_c",
+      "dominant_candidate_type": "PlaybookCandidate",
+      "suppressed_candidates": [
+        "lesson_multihop_b",
+        "memory_multihop_a"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "lesson_multihop_b",
+          "candidate_type": "Lesson",
+          "final_activation": 1.0,
+          "inhibited": 0.020649148,
+          "reason": "lower context alignment during competition"
+        },
+        {
+          "candidate_id": "memory_multihop_a",
+          "candidate_type": "Memory",
+          "final_activation": 0.7938042,
+          "inhibited": 0.13720307,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "playbook_multihop_c",
+          "states": [
+            {
+              "candidate_id": "playbook_multihop_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.45,
+              "activation_after_update": 0.793,
+              "path_boost": 0.05,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.793
+            },
+            {
+              "candidate_id": "lesson_multihop_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.5,
+              "activation_after_update": 0.7835001,
+              "path_boost": 0.044,
+              "inhibition": 0.0033249676,
+              "activation_after_inhibition": 0.7801751
+            },
+            {
+              "candidate_id": "memory_multihop_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.55,
+              "activation_after_update": 0.7325,
+              "path_boost": -0.0,
+              "inhibition": 0.021174988,
+              "activation_after_inhibition": 0.71132505
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "playbook_multihop_c",
+          "states": [
+            {
+              "candidate_id": "playbook_multihop_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.793,
+              "activation_after_update": 1.0,
+              "path_boost": 0.07801751,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_multihop_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.7801751,
+              "activation_after_update": 0.95050234,
+              "path_boost": 0.056906004,
+              "inhibition": 0.017324181,
+              "activation_after_inhibition": 0.9331781
+            },
+            {
+              "candidate_id": "memory_multihop_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.71132505,
+              "activation_after_update": 0.8212288,
+              "path_boost": -0.0,
+              "inhibition": 0.062569916,
+              "activation_after_inhibition": 0.7586589
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "playbook_multihop_c",
+          "states": [
+            {
+              "candidate_id": "playbook_multihop_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 1.0,
+              "activation_after_update": 1.0,
+              "path_boost": 0.093317814,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "lesson_multihop_b",
+              "candidate_type": "Lesson",
+              "activation_before": 0.9331781,
+              "activation_after_update": 1.0,
+              "path_boost": 0.06069271,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "memory_multihop_a",
+              "candidate_type": "Memory",
+              "activation_before": 0.7586589,
+              "activation_after_update": 0.8472624,
+              "path_boost": -0.0,
+              "inhibition": 0.053458165,
+              "activation_after_inhibition": 0.7938042
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.0,
+      "activation_path": [
+        {
+          "from_candidate": "memory_multihop_a",
+          "to_candidate": "lesson_multihop_b",
+          "boost": 0.08,
+          "reason": "memory evidence reinforces lesson"
+        },
+        {
+          "from_candidate": "lesson_multihop_b",
+          "to_candidate": "playbook_multihop_c",
+          "boost": 0.1,
+          "reason": "lesson proceduralizes into playbook"
+        }
+      ],
+      "explanation": [
+        "dominant candidate playbook_multihop_c selected with final activation 1.0000",
+        "suppressed candidates: lesson_multihop_b, memory_multihop_a",
+        "confidence gap: 0.0000",
+        "activation_path: memory_multihop_a -> lesson_multihop_b, lesson_multihop_b -> playbook_multihop_c",
+        "scenario reason: activation path should lift the playbook into dominance"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    },
+    {
+      "scenario_id": "competition_006_stability_under_noise",
+      "context": "A small perturbation should not cause the dominant candidate to switch.",
+      "expected_dominant_candidate": "lesson_stable_a",
+      "dominant_candidate": "lesson_stable_a",
+      "dominant_candidate_type": "Lesson",
+      "suppressed_candidates": [
+        "memory_stable_b",
+        "playbook_stable_c"
+      ],
+      "suppressed_candidate_reports": [
+        {
+          "candidate_id": "memory_stable_b",
+          "candidate_type": "Memory",
+          "final_activation": 0.8297449,
+          "inhibited": 0.13838209,
+          "reason": "lower final activation after lateral inhibition"
+        },
+        {
+          "candidate_id": "playbook_stable_c",
+          "candidate_type": "PlaybookCandidate",
+          "final_activation": 0.6386235,
+          "inhibited": 0.2680291,
+          "reason": "lower final activation after lateral inhibition"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "winner_id": "lesson_stable_a",
+          "states": [
+            {
+              "candidate_id": "lesson_stable_a",
+              "candidate_type": "Lesson",
+              "activation_before": 0.82,
+              "activation_after_update": 0.941,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 0.941
+            },
+            {
+              "candidate_id": "memory_stable_b",
+              "candidate_type": "Memory",
+              "activation_before": 0.7,
+              "activation_after_update": 0.816,
+              "path_boost": -0.0,
+              "inhibition": 0.04375,
+              "activation_after_inhibition": 0.77225
+            },
+            {
+              "candidate_id": "playbook_stable_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.6,
+              "activation_after_update": 0.71250004,
+              "path_boost": -0.0,
+              "inhibition": 0.07997498,
+              "activation_after_inhibition": 0.6325251
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "winner_id": "lesson_stable_a",
+          "states": [
+            {
+              "candidate_id": "lesson_stable_a",
+              "candidate_type": "Lesson",
+              "activation_before": 0.941,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "memory_stable_b",
+              "candidate_type": "Memory",
+              "activation_before": 0.77225,
+              "activation_after_update": 0.8557375,
+              "path_boost": -0.0,
+              "inhibition": 0.050491873,
+              "activation_after_inhibition": 0.80524564
+            },
+            {
+              "candidate_id": "playbook_stable_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.6325251,
+              "activation_after_update": 0.7303888,
+              "path_boost": -0.0,
+              "inhibition": 0.09436391,
+              "activation_after_inhibition": 0.6360249
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "winner_id": "lesson_stable_a",
+          "states": [
+            {
+              "candidate_id": "lesson_stable_a",
+              "candidate_type": "Lesson",
+              "activation_before": 1.0,
+              "activation_after_update": 1.0,
+              "path_boost": -0.0,
+              "inhibition": 0.0,
+              "activation_after_inhibition": 1.0
+            },
+            {
+              "candidate_id": "memory_stable_b",
+              "candidate_type": "Memory",
+              "activation_before": 0.80524564,
+              "activation_after_update": 0.8738851,
+              "path_boost": -0.0,
+              "inhibition": 0.044140216,
+              "activation_after_inhibition": 0.8297449
+            },
+            {
+              "candidate_id": "playbook_stable_c",
+              "candidate_type": "PlaybookCandidate",
+              "activation_before": 0.6360249,
+              "activation_after_update": 0.7323137,
+              "path_boost": -0.0,
+              "inhibition": 0.09369021,
+              "activation_after_inhibition": 0.6386235
+            }
+          ]
+        }
+      ],
+      "convergence": true,
+      "confidence_gap": 0.17025512,
+      "activation_path": [],
+      "explanation": [
+        "dominant candidate lesson_stable_a selected with final activation 1.0000",
+        "suppressed candidates: memory_stable_b, playbook_stable_c",
+        "confidence gap: 0.1703",
+        "activation_path: none",
+        "scenario reason: dominant thought should remain stable under small score noise"
+      ],
+      "dominant_correct": true,
+      "suppression_correct": true,
+      "stable_under_noise": true,
+      "explanation_complete": true,
+      "competition_safe": true,
+      "core_changed": false,
+      "memory_written": false,
+      "runtime_activation_changed": false
+    }
+  ]
+}

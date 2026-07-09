@@ -70,6 +70,7 @@ Current research track:
 - Phase 3.5 lesson lifecycle evaluation: simulates lesson reinforcement, challenge, supersession, and false-lesson protection; final states `active = 1`, `challenged = 1`, `superseded = 1`, `candidate = 1`, with `lifecycle_transition_accuracy = 1.0000` and `lifecycle_safety = 1.0000`.
 - [Phase 3.6 Final Freeze Report](docs/eval/PHASE3_FINAL_REPORT.md): freezes Phase 3 as an experience-learning evaluation framework; Phase 3 is complete with `phase3_frozen = true`, `core_changes = false`, `memory_mutation = false`, and `new_algorithms = false`.
 - Phase 4.1 cognitive influence evaluation: ranks memory, lesson, and playbook candidates under shared context with eval-only configurable weights; `scenarios = 5`, `influence_accuracy = 1.0000`, `context_alignment_score = 1.0000`, `competition_stability = 1.0000`, `explanation_quality = 1.0000`, with `core_changed = false`.
+- Phase 4.2 cognitive competition model: simulates activation updates, lateral inhibition, suppression, multi-hop activation paths, and dominant-candidate convergence; `scenarios = 6`, `dominant_selection_accuracy = 1.0000`, `competition_convergence = 1.0000`, `suppression_quality = 1.0000`, `activation_stability = 1.0000`, `explanation_quality = 1.0000`.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory

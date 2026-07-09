@@ -204,6 +204,21 @@ Boundary:
 - does not write memory
 - does not change runtime influence
 
+Phase 4.2: Cognitive Competition Model.
+
+Status: **Evaluation-only competition simulation**.
+
+Report: `crates/eval/reports/phase4-cognitive-competition.json`.
+
+Boundary:
+
+- simulates activation update, lateral inhibition, and dominant-candidate convergence
+- preserves active and suppressed candidates in the trace
+- records confidence gaps, activation paths, and suppression reasons
+- does not replace graph or latent activation runtime
+- does not write memory
+- does not change runtime activation
+
 Phase 2.4: Temporal Memory Dynamics.
 
 Status: **Design**.
