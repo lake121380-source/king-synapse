@@ -81,6 +81,19 @@ The goal is to design adaptive memory dynamics after Phase 1 and Phase 1.2
 showed that the remaining bottleneck is memory influence regulation rather than
 retrieval.
 
+Phase 2.4: Temporal Memory Dynamics.
+
+Status: **Design**.
+
+Design plan: [Phase 2.4 Temporal Memory Dynamics Plan](eval/PHASE2_4_TEMPORAL_MEMORY_PLAN.md).
+
+Focus:
+
+- how new evidence modifies the influence of old memories
+- how historically valid memories become less influential
+- how temporal transitions affect future decisions
+- how to distinguish old-but-still-valid memories from outdated memories
+
 Phase 6 - Full System Evaluation. Feature growth is frozen by default while the
 system is validated for stability, consistency, and comparative value. See
 `docs/eval/SYSTEM_VALIDATION_PLAN.md`.
