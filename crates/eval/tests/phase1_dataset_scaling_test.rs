@@ -6,11 +6,9 @@ use toml::Value;
 #[test]
 fn phase1_dataset_scaling_loads_two_hundred_cases() {
     let dataset_dir = dataset_dir();
-    let report = CognitiveMemoryBenchmarkEvaluator::evaluate(
-        &dataset_dir,
-        "phase1-dataset-scaling-test",
-    )
-    .expect("phase1.2 cognitive memory benchmark dataset should load");
+    let report =
+        CognitiveMemoryBenchmarkEvaluator::evaluate(&dataset_dir, "phase1-dataset-scaling-test")
+            .expect("phase1.2 cognitive memory benchmark dataset should load");
 
     assert!(report.case_count >= 200, "expected at least 200 cases");
     assert!(report.suite_count >= 15, "expected at least 15 suites");

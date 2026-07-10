@@ -1,0 +1,1705 @@
+{
+  "schema_version": 1,
+  "tag": "phase5-trace-quality",
+  "phase": "5.2",
+  "mode": "evaluation_only",
+  "evaluation_version": "phase5.2-cognitive-trace-quality-evaluation",
+  "baseline_version": "phase5.1-cognitive-competition-trace-integration",
+  "generated_at": "2026-07-10T07:41:18.060495800+00:00",
+  "scenarios": 6,
+  "thresholds": {
+    "explanation_completeness": 0.9,
+    "factor_faithfulness": 1.0,
+    "trace_preference_rate": 0.8,
+    "determinism": 1.0
+  },
+  "metrics": {
+    "explanation_completeness": 1.0,
+    "factor_faithfulness": 1.0,
+    "trace_preference_rate": 1.0,
+    "determinism": 1.0,
+    "baseline_explanation_completeness": 0.39999999999999997,
+    "cognitive_explanation_completeness": 1.0,
+    "explanation_information_gain": 0.6000000000000001,
+    "retrieval_trace_alignment": 0.8333333333333334
+  },
+  "guards": {
+    "eval_only": true,
+    "core_behavior_changed": false,
+    "recall_ranking_changed": false,
+    "recall_scores_changed": false,
+    "memory_written": false,
+    "activation_changed": false,
+    "booster_enabled": false,
+    "external_model_called": false
+  },
+  "judge_protocol": {
+    "mode": "deterministic_pairwise_explanation_rubric_v1",
+    "purpose": "CI-stable proxy for pairwise explanation value",
+    "external_judge_ready": true,
+    "human_or_llm_judge_completed": false,
+    "caveat": "The preference metric is a deterministic rubric result, not a claim of completed human or LLM evaluation."
+  },
+  "pass": true,
+  "status": "PASS_LOCAL_DETERMINISTIC_QUALITY_GATE",
+  "scenario_reports": [
+    {
+      "scenario_id": "phase5_2_001_failure_evidence",
+      "query": "production deployment rollback failure",
+      "candidate_count": 3,
+      "retrieval_top_candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+      "cognitive_dominant_candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+      "retrieval_trace_aligned": true,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "rank": 1,
+            "score": 0.027587818,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJH9TVAHHJP158QANYKMK",
+            "rank": 2,
+            "score": 0.025548385,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJH9VAQEXKP7JAXFSW751",
+            "rank": 3,
+            "score": 0.018875876,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+        "suppressed_candidates": [
+          "01KX5FJH9TVAHHJP158QANYKMK",
+          "01KX5FJH9VAQEXKP7JAXFSW751"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJH9SRGR86K3NVSMHTTRX": [
+            {
+              "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+              "factor": "Reliability",
+              "contribution": 0.19
+            },
+            {
+              "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+              "factor": "FailureEvidence",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJH9TVAHHJP158QANYKMK": [
+            {
+              "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+              "factor": "SemanticMatch",
+              "contribution": 0.3241
+            },
+            {
+              "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+              "factor": "Reliability",
+              "contribution": 0.18
+            },
+            {
+              "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            }
+          ],
+          "01KX5FJH9VAQEXKP7JAXFSW751": [
+            {
+              "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+              "factor": "SemanticMatch",
+              "contribution": 0.2395
+            },
+            {
+              "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+              "factor": "Reliability",
+              "contribution": 0.156
+            },
+            {
+              "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            }
+          ]
+        },
+        "confidence": 0.2345
+      },
+      "trace": {
+        "query": "production deployment rollback failure",
+        "candidate_count": 3,
+        "dominant_candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+        "suppressed_candidates": [
+          "01KX5FJH9TVAHHJP158QANYKMK",
+          "01KX5FJH9VAQEXKP7JAXFSW751"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "factor": "Reliability",
+            "contribution": 0.19
+          },
+          {
+            "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJH9SRGR86K3NVSMHTTRX",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+            "factor": "SemanticMatch",
+            "contribution": 0.3241
+          },
+          {
+            "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+            "factor": "Reliability",
+            "contribution": 0.18
+          },
+          {
+            "candidate": "01KX5FJH9TVAHHJP158QANYKMK",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+            "factor": "SemanticMatch",
+            "contribution": 0.2395
+          },
+          {
+            "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+            "factor": "Reliability",
+            "contribution": 0.156
+          },
+          {
+            "candidate": "01KX5FJH9VAQEXKP7JAXFSW751",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          }
+        ],
+        "confidence": 0.2345,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 13,
+        "actual_factor_count": 13,
+        "faithful_factor_count": 13,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    },
+    {
+      "scenario_id": "phase5_2_002_preference_alignment",
+      "query": "local prototype iteration preference",
+      "candidate_count": 3,
+      "retrieval_top_candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+      "cognitive_dominant_candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+      "retrieval_trace_aligned": true,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "rank": 1,
+            "score": 0.014163933,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+            "rank": 2,
+            "score": 0.0114539685,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHA5D6H51C18427H0DKX",
+            "rank": 3,
+            "score": 0.009806451,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+        "suppressed_candidates": [
+          "01KX5FJHA4DD2RW3QXWJM6RXX6",
+          "01KX5FJHA5D6H51C18427H0DKX"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJHA3TEHK88N61PA3PK0X": [
+            {
+              "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+              "factor": "Reliability",
+              "contribution": 0.192
+            },
+            {
+              "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+              "factor": "PreferenceAlignment",
+              "contribution": 0.1
+            }
+          ],
+          "01KX5FJHA4DD2RW3QXWJM6RXX6": [
+            {
+              "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+              "factor": "SemanticMatch",
+              "contribution": 0.283
+            },
+            {
+              "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+              "factor": "Reliability",
+              "contribution": 0.176
+            },
+            {
+              "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            }
+          ],
+          "01KX5FJHA5D6H51C18427H0DKX": [
+            {
+              "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+              "factor": "SemanticMatch",
+              "contribution": 0.2423
+            },
+            {
+              "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+              "factor": "Reliability",
+              "contribution": 0.16
+            },
+            {
+              "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            }
+          ]
+        },
+        "confidence": 0.2438
+      },
+      "trace": {
+        "query": "local prototype iteration preference",
+        "candidate_count": 3,
+        "dominant_candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+        "suppressed_candidates": [
+          "01KX5FJHA4DD2RW3QXWJM6RXX6",
+          "01KX5FJHA5D6H51C18427H0DKX"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "factor": "Reliability",
+            "contribution": 0.192
+          },
+          {
+            "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHA3TEHK88N61PA3PK0X",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.1
+          },
+          {
+            "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+            "factor": "SemanticMatch",
+            "contribution": 0.283
+          },
+          {
+            "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+            "factor": "Reliability",
+            "contribution": 0.176
+          },
+          {
+            "candidate": "01KX5FJHA4DD2RW3QXWJM6RXX6",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+            "factor": "SemanticMatch",
+            "contribution": 0.2423
+          },
+          {
+            "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+            "factor": "Reliability",
+            "contribution": 0.16
+          },
+          {
+            "candidate": "01KX5FJHA5D6H51C18427H0DKX",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          }
+        ],
+        "confidence": 0.2438,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 13,
+        "actual_factor_count": 13,
+        "faithful_factor_count": 13,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    },
+    {
+      "scenario_id": "phase5_2_003_reliability_competition",
+      "query": "api retry timeout evidence",
+      "candidate_count": 3,
+      "retrieval_top_candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+      "cognitive_dominant_candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+      "retrieval_trace_aligned": true,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "rank": 1,
+            "score": 0.029412903,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHAE3H5VC89AHCA28FKP",
+            "rank": 2,
+            "score": 0.025838979,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHACPW65A7BM1X20PQG8",
+            "rank": 3,
+            "score": 0.006775956,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+        "suppressed_candidates": [
+          "01KX5FJHAE3H5VC89AHCA28FKP",
+          "01KX5FJHACPW65A7BM1X20PQG8"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJHACPW65A7BM1X20PQG8": [
+            {
+              "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+              "factor": "SemanticMatch",
+              "contribution": 0.0806
+            },
+            {
+              "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+              "factor": "Reliability",
+              "contribution": 0.06
+            },
+            {
+              "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHAD0JM56HNJP5F23KF5": [
+            {
+              "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+              "factor": "Reliability",
+              "contribution": 0.194
+            },
+            {
+              "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+              "factor": "FailureEvidence",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHAE3H5VC89AHCA28FKP": [
+            {
+              "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+              "factor": "SemanticMatch",
+              "contribution": 0.3075
+            },
+            {
+              "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+              "factor": "Reliability",
+              "contribution": 0.182
+            },
+            {
+              "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            }
+          ]
+        },
+        "confidence": 0.2138
+      },
+      "trace": {
+        "query": "api retry timeout evidence",
+        "candidate_count": 3,
+        "dominant_candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+        "suppressed_candidates": [
+          "01KX5FJHAE3H5VC89AHCA28FKP",
+          "01KX5FJHACPW65A7BM1X20PQG8"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "factor": "Reliability",
+            "contribution": 0.194
+          },
+          {
+            "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAD0JM56HNJP5F23KF5",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+            "factor": "SemanticMatch",
+            "contribution": 0.3075
+          },
+          {
+            "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+            "factor": "Reliability",
+            "contribution": 0.182
+          },
+          {
+            "candidate": "01KX5FJHAE3H5VC89AHCA28FKP",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+            "factor": "SemanticMatch",
+            "contribution": 0.0806
+          },
+          {
+            "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+            "factor": "Reliability",
+            "contribution": 0.06
+          },
+          {
+            "candidate": "01KX5FJHACPW65A7BM1X20PQG8",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          }
+        ],
+        "confidence": 0.2138,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 13,
+        "actual_factor_count": 13,
+        "faithful_factor_count": 13,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    },
+    {
+      "scenario_id": "phase5_2_004_context_alignment",
+      "query": "gpu batch memory overflow",
+      "candidate_count": 3,
+      "retrieval_top_candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+      "cognitive_dominant_candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+      "retrieval_trace_aligned": true,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJHANJC562MM9J8YYFA6T",
+            "rank": 1,
+            "score": 0.014026228,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "rank": 2,
+            "score": 0.012,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+            "rank": 3,
+            "score": 0.011096775,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+        "suppressed_candidates": [
+          "01KX5FJHAPQ5EASA0QN8QQCMZA",
+          "01KX5FJHAPFRAB0B5SCPR0XA3N"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJHANJC562MM9J8YYFA6T": [
+            {
+              "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+              "factor": "Reliability",
+              "contribution": 0.186
+            },
+            {
+              "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+              "factor": "FailureEvidence",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHAPFRAB0B5SCPR0XA3N": [
+            {
+              "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+              "factor": "SemanticMatch",
+              "contribution": 0.2769
+            },
+            {
+              "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+              "factor": "Reliability",
+              "contribution": 0.172
+            },
+            {
+              "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+              "factor": "ContextAlignment",
+              "contribution": 0.075
+            }
+          ],
+          "01KX5FJHAPQ5EASA0QN8QQCMZA": [
+            {
+              "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+              "factor": "SemanticMatch",
+              "contribution": 0.2994
+            },
+            {
+              "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+              "factor": "Reliability",
+              "contribution": 0.18
+            },
+            {
+              "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+              "factor": "ContextAlignment",
+              "contribution": 0.075
+            },
+            {
+              "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+              "factor": "PreferenceAlignment",
+              "contribution": 0.075
+            }
+          ]
+        },
+        "confidence": 0.2178
+      },
+      "trace": {
+        "query": "gpu batch memory overflow",
+        "candidate_count": 3,
+        "dominant_candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+        "suppressed_candidates": [
+          "01KX5FJHAPQ5EASA0QN8QQCMZA",
+          "01KX5FJHAPFRAB0B5SCPR0XA3N"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+            "factor": "Reliability",
+            "contribution": 0.186
+          },
+          {
+            "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHANJC562MM9J8YYFA6T",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "factor": "SemanticMatch",
+            "contribution": 0.2994
+          },
+          {
+            "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "factor": "Reliability",
+            "contribution": 0.18
+          },
+          {
+            "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "factor": "ContextAlignment",
+            "contribution": 0.075
+          },
+          {
+            "candidate": "01KX5FJHAPQ5EASA0QN8QQCMZA",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.075
+          },
+          {
+            "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+            "factor": "SemanticMatch",
+            "contribution": 0.2769
+          },
+          {
+            "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+            "factor": "Reliability",
+            "contribution": 0.172
+          },
+          {
+            "candidate": "01KX5FJHAPFRAB0B5SCPR0XA3N",
+            "factor": "ContextAlignment",
+            "contribution": 0.075
+          }
+        ],
+        "confidence": 0.2178,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 14,
+        "actual_factor_count": 14,
+        "faithful_factor_count": 14,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    },
+    {
+      "scenario_id": "phase5_2_005_suppressed_alternatives",
+      "query": "release safety rollback verification",
+      "candidate_count": 4,
+      "retrieval_top_candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+      "cognitive_dominant_candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+      "retrieval_trace_aligned": false,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJHAYWWFBV5V55JDETMWH",
+            "rank": 1,
+            "score": 0.014327868,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "rank": 2,
+            "score": 0.013577779,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "rank": 3,
+            "score": 0.012058063,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHB050S4ESWNA7CHC8TM",
+            "rank": 4,
+            "score": 0.0103687495,
+            "sources": [
+              "fts"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+        "suppressed_candidates": [
+          "01KX5FJHAZKBJJHDWARWBTKM26",
+          "01KX5FJHAYWWFBV5V55JDETMWH",
+          "01KX5FJHB050S4ESWNA7CHC8TM"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJHAY3WC9XDYV9VF0AW1V": [
+            {
+              "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+              "factor": "SemanticMatch",
+              "contribution": 0.3317
+            },
+            {
+              "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+              "factor": "Reliability",
+              "contribution": 0.188
+            },
+            {
+              "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+              "factor": "FailureEvidence",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHAYWWFBV5V55JDETMWH": [
+            {
+              "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+              "factor": "Reliability",
+              "contribution": 0.19
+            },
+            {
+              "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHAZKBJJHDWARWBTKM26": [
+            {
+              "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+              "factor": "SemanticMatch",
+              "contribution": 0.2946
+            },
+            {
+              "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+              "factor": "Reliability",
+              "contribution": 0.178
+            },
+            {
+              "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+              "factor": "PreferenceAlignment",
+              "contribution": 0.1
+            }
+          ],
+          "01KX5FJHB050S4ESWNA7CHC8TM": [
+            {
+              "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+              "factor": "SemanticMatch",
+              "contribution": 0.2533
+            },
+            {
+              "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+              "factor": "Reliability",
+              "contribution": 0.168
+            },
+            {
+              "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            }
+          ]
+        },
+        "confidence": 0.1042
+      },
+      "trace": {
+        "query": "release safety rollback verification",
+        "candidate_count": 4,
+        "dominant_candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+        "suppressed_candidates": [
+          "01KX5FJHAZKBJJHDWARWBTKM26",
+          "01KX5FJHAYWWFBV5V55JDETMWH",
+          "01KX5FJHB050S4ESWNA7CHC8TM"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "factor": "SemanticMatch",
+            "contribution": 0.3317
+          },
+          {
+            "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "factor": "Reliability",
+            "contribution": 0.188
+          },
+          {
+            "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAY3WC9XDYV9VF0AW1V",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "factor": "SemanticMatch",
+            "contribution": 0.2946
+          },
+          {
+            "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "factor": "Reliability",
+            "contribution": 0.178
+          },
+          {
+            "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHAZKBJJHDWARWBTKM26",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.1
+          },
+          {
+            "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+            "factor": "Reliability",
+            "contribution": 0.19
+          },
+          {
+            "candidate": "01KX5FJHAYWWFBV5V55JDETMWH",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+            "factor": "SemanticMatch",
+            "contribution": 0.2533
+          },
+          {
+            "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+            "factor": "Reliability",
+            "contribution": 0.168
+          },
+          {
+            "candidate": "01KX5FJHB050S4ESWNA7CHC8TM",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          }
+        ],
+        "confidence": 0.1042,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 18,
+        "actual_factor_count": 18,
+        "faithful_factor_count": 18,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    },
+    {
+      "scenario_id": "phase5_2_006_mixed_candidate_kinds",
+      "query": "database migration backup recovery",
+      "candidate_count": 4,
+      "retrieval_top_candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+      "cognitive_dominant_candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+      "retrieval_trace_aligned": true,
+      "baseline_explanation": {
+        "selected_candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+        "candidates": [
+          {
+            "candidate_id": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "rank": 1,
+            "score": 0.028423809,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+            "rank": 2,
+            "score": 0.027904034,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHB9STQ4YQ0YT005768F",
+            "rank": 3,
+            "score": 0.02366803,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          },
+          {
+            "candidate_id": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+            "rank": 4,
+            "score": 0.020632256,
+            "sources": [
+              "fts",
+              "entity"
+            ],
+            "valid_from": 1783669278
+          }
+        ]
+      },
+      "cognitive_explanation": {
+        "dominant_candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+        "suppressed_candidates": [
+          "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+          "01KX5FJHB9STQ4YQ0YT005768F",
+          "01KX5FJHB9P4FWCYQARGAZ4QW8"
+        ],
+        "factors_by_candidate": {
+          "01KX5FJHB7RA5JFPT62BRNKC3G": [
+            {
+              "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+              "factor": "SemanticMatch",
+              "contribution": 0.35
+            },
+            {
+              "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+              "factor": "Reliability",
+              "contribution": 0.192
+            },
+            {
+              "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            },
+            {
+              "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+              "factor": "FailureEvidence",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHB8GQ5QJ2EAAW60VAV3": [
+            {
+              "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+              "factor": "SemanticMatch",
+              "contribution": 0.3436
+            },
+            {
+              "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+              "factor": "Reliability",
+              "contribution": 0.188
+            },
+            {
+              "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHB9P4FWCYQARGAZ4QW8": [
+            {
+              "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+              "factor": "SemanticMatch",
+              "contribution": 0.2541
+            },
+            {
+              "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+              "factor": "Reliability",
+              "contribution": 0.164
+            },
+            {
+              "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+              "factor": "ContextAlignment",
+              "contribution": 0.15
+            }
+          ],
+          "01KX5FJHB9STQ4YQ0YT005768F": [
+            {
+              "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+              "factor": "SemanticMatch",
+              "contribution": 0.2914
+            },
+            {
+              "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+              "factor": "TemporalConfidence",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+              "factor": "Reliability",
+              "contribution": 0.176
+            },
+            {
+              "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+              "factor": "ContextAlignment",
+              "contribution": 0.1125
+            },
+            {
+              "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+              "factor": "PreferenceAlignment",
+              "contribution": 0.0875
+            }
+          ]
+        },
+        "confidence": 0.168
+      },
+      "trace": {
+        "query": "database migration backup recovery",
+        "candidate_count": 4,
+        "dominant_candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+        "suppressed_candidates": [
+          "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+          "01KX5FJHB9STQ4YQ0YT005768F",
+          "01KX5FJHB9P4FWCYQARGAZ4QW8"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "factor": "Reliability",
+            "contribution": 0.192
+          },
+          {
+            "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHB7RA5JFPT62BRNKC3G",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+            "factor": "SemanticMatch",
+            "contribution": 0.3436
+          },
+          {
+            "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+            "factor": "Reliability",
+            "contribution": 0.188
+          },
+          {
+            "candidate": "01KX5FJHB8GQ5QJ2EAAW60VAV3",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+            "factor": "SemanticMatch",
+            "contribution": 0.2914
+          },
+          {
+            "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+            "factor": "Reliability",
+            "contribution": 0.176
+          },
+          {
+            "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB9STQ4YQ0YT005768F",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.0875
+          },
+          {
+            "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+            "factor": "SemanticMatch",
+            "contribution": 0.2541
+          },
+          {
+            "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+            "factor": "Reliability",
+            "contribution": 0.164
+          },
+          {
+            "candidate": "01KX5FJHB9P4FWCYQARGAZ4QW8",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          }
+        ],
+        "confidence": 0.168,
+        "mutated": false
+      },
+      "explanation_completeness": 1.0,
+      "completeness": {
+        "dominant_identified": true,
+        "suppressed_candidates_explained": true,
+        "candidate_factor_coverage": true,
+        "required_factors_present": true,
+        "confidence_reported": true,
+        "satisfied_components": 5,
+        "total_components": 5,
+        "score": 1.0
+      },
+      "factor_faithfulness": 1.0,
+      "factor_audit": {
+        "expected_factor_count": 18,
+        "actual_factor_count": 18,
+        "faithful_factor_count": 18,
+        "hallucinated_factor_count": 0,
+        "missing_factor_count": 0,
+        "hallucinated_factors": [],
+        "missing_factors": [],
+        "score": 1.0
+      },
+      "judge": {
+        "protocol": "deterministic_pairwise_explanation_rubric_v1",
+        "baseline_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": false,
+          "evidence_attributed": false,
+          "confidence_reported": false,
+          "candidate_coverage": true
+        },
+        "cognitive_criteria": {
+          "outcome_identified": true,
+          "alternatives_explained": true,
+          "evidence_attributed": true,
+          "confidence_reported": true,
+          "candidate_coverage": true
+        },
+        "baseline_score": 0.4,
+        "cognitive_score": 1.0,
+        "preferred_explanation": "cognitive_trace",
+        "reasons": [
+          "dominant outcome is explicit",
+          "suppressed alternatives are explicit",
+          "candidate-level factors are attributed",
+          "competition confidence is reported"
+        ]
+      },
+      "deterministic": true,
+      "ranking_unchanged": true,
+      "scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true
+    }
+  ]
+}

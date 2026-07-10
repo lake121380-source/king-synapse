@@ -77,6 +77,7 @@ Current research track:
 - [Phase 4 Final Report](docs/eval/PHASE4_FINAL_REPORT.md): freezes Phase 4 as an evaluation-only cognitive competition proof; Phase 5 entry is algorithm engineering, not more eval-only proof accumulation.
 - [Phase 5.0 Algorithm Integration Design](docs/PHASE5_ALGORITHM_DESIGN.md): defines the production-integration boundary for cognitive competition; first implementation path is inspection-only trace work, with any score mutation limited to a later default-off bounded booster.
 - Phase 5.1 cognitive competition trace integration: adds an inspection-only `CognitiveTraceEvaluator` over existing `RecallHit` candidates and `kr recall --trace`; report `crates/eval/reports/phase5_cognitive_trace.json` records `trace_generation_rate = 1.0000`, `dominant_validity = 1.0000`, `factor_explanation_rate = 1.0000`, `trace_determinism = 1.0000`, and `recall_regression = 0.0000`, with no ranking, memory, activation, or recall-output mutation.
+- [Phase 5.2 Cognitive Trace Quality Evaluation](docs/eval/PHASE5_2_TRACE_QUALITY_EVALUATION.md): freezes the local deterministic trace-quality proof over real `RecallHit` candidates while external human/LLM validation remains pending; the gate records `explanation_completeness = 1.0000`, `factor_faithfulness = 1.0000`, `trace_preference_rate = 1.0000`, `determinism = 1.0000`, and explanation information gain `+0.6000`, while keeping external human/LLM preference judging explicitly open and leaving all booster paths disabled.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
@@ -416,6 +417,9 @@ cargo bench -p synapse-eval --bench long_horizon_stability_audit
 
 # Run recall benchmarks
 cargo run --release -p synapse-eval --bin kr-eval -- --tag baseline-rrf --json crates/eval/reports/baseline-rrf.json
+
+# Run the Phase 5.2 cognitive trace quality gate
+python scripts/eval/phase5_trace_quality.py
 
 # Run the Phase 6 lightweight replay baselines
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json

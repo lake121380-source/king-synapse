@@ -4,11 +4,8 @@ use synapse_eval::CognitiveMemoryBenchmarkEvaluator;
 #[test]
 fn phase1_cognitive_memory_freeze_protocol_is_stable() {
     let dataset_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("datasets/cognitive_memory");
-    let report = CognitiveMemoryBenchmarkEvaluator::evaluate(
-        dataset_dir,
-        "phase1-freeze-test",
-    )
-    .expect("phase1 cognitive memory benchmark dataset should load");
+    let report = CognitiveMemoryBenchmarkEvaluator::evaluate(dataset_dir, "phase1-freeze-test")
+        .expect("phase1 cognitive memory benchmark dataset should load");
 
     assert!(report.case_count >= 50);
     assert!(report.challenge_count >= 5);

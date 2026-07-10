@@ -362,6 +362,38 @@ Validated metrics:
 - `trace_determinism = 1.0000`
 - `recall_regression = 0.0000`
 
+Phase 5.2: Cognitive Trace Quality Evaluation.
+
+Status: **Frozen - local deterministic quality gate complete; external judge pending**.
+
+Documentation: [Phase 5.2 Cognitive Trace Quality Evaluation](eval/PHASE5_2_TRACE_QUALITY_EVALUATION.md).
+
+Report: `crates/eval/reports/phase5_trace_quality.json`.
+
+Freeze boundary:
+
+- evaluates real `RecallHit` candidates against baseline retrieval metadata
+- records dominant, suppressed, factor attribution, confidence, and deterministic pairwise-rubric evidence
+- independently audits factor source faithfulness and reports zero hallucinated or missing factors
+- keeps recall ranking, scores, activation, memory storage, schema, and runtime behavior unchanged
+- freezes the local deterministic proof while leaving blinded human/LLM judging explicitly open
+- does not authorize a booster, production reranking, or any default-on cognitive behavior
+
+Validated metrics:
+
+- `explanation_completeness = 1.0000`
+- `factor_faithfulness = 1.0000`
+- `trace_preference_rate = 1.0000` under `deterministic_pairwise_explanation_rubric_v1`
+- `determinism = 1.0000`
+- `explanation_information_gain = +0.6000`
+- `retrieval_trace_alignment = 0.8333` as a diagnostic only
+
+Freeze decision:
+
+- local status is `PASS_LOCAL_DETERMINISTIC_QUALITY_GATE`
+- `human_or_llm_judge_completed = false`; no external preference claim is made
+- Phase 5.3 may begin only as an OFF-by-default bounded booster prototype with baseline/A/B comparison and rollback
+
 Completed foundations
 
 - v0.5.1 — Memory Importance skeleton (10 tests)
