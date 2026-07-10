@@ -39,6 +39,7 @@ pub mod phase5_trace_quality;
 pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
+pub mod phase7_cognitive_architecture_contract;
 pub mod reporter;
 pub mod types;
 
@@ -195,6 +196,13 @@ pub use phase6_recall_score_distribution::{
     MarginCoverage, Phase6RecallScoreDistributionEvaluator, Phase6RecallScoreDistributionReport,
     RankScoreDistribution, RecallScoreDistributionDecision, RecallScoreDistributionGuards,
     RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
+};
+pub use phase7_cognitive_architecture_contract::{
+    validate_pattern_candidate, CognitiveArtifactContract, ConfidenceUpdatePolicy,
+    EvidenceReference, FalsificationCondition, NorthStarContract, PatternCandidate,
+    PatternCondition, PatternContractCase, PatternContractValidation, PatternLifecycleTransition,
+    PatternPrediction, PatternStatus, Phase7ArchitectureDecision, Phase7ArchitectureGuards,
+    Phase7CognitiveArchitectureContractEvaluator, Phase7CognitiveArchitectureContractReport,
 };
 pub use reporter::print_table;
 pub use types::{

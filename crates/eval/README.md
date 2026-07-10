@@ -551,3 +551,19 @@ Artifacts:
 - `reports/phase6_recall_score_distribution.json`
 - `../../scripts/eval/phase6_recall_score_distribution.py`
 - `../../docs/eval/PHASE6_2_RECALL_SCORE_DISTRIBUTION_STUDY.md`
+
+## Phase 7.0 Cognitive Architecture Contract
+
+Phase 7.0 moves the research mainline from retrieval-score intervention to evidence-grounded Experience-to-Pattern learning. The eval-only contract defines `PatternCandidate`, evidence provenance, scope and exclusions, counterexample search, testable predictions, falsification conditions, confidence boundaries, and a non-autonomous lifecycle.
+
+The contract gate rejects missing evidence, missing scope, missing falsification, skipped counterexample search, invalid confidence, and premature `Active` status. It does not implement Pattern discovery, persist Patterns, change RecallEngine or CognitiveBooster, connect Hermes, execute a strategy, or authorize runtime.
+
+Artifacts:
+
+- `src/phase7_cognitive_architecture_contract.rs`
+- `src/bin/phase7_cognitive_architecture_contract.rs`
+- `tests/phase7_cognitive_architecture_contract_test.rs`
+- `reports/phase7_cognitive_architecture_contract.json`
+- `../../scripts/eval/phase7_cognitive_architecture_contract.py`
+- `../../docs/COGNITIVE_ARCHITECTURE_NORTH_STAR.md`
+- `../../docs/eval/PHASE7_0_COGNITIVE_ARCHITECTURE_REORIENTATION.md`

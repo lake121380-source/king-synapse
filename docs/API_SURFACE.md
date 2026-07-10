@@ -622,3 +622,27 @@ Eval-only exports from `synapse-eval`:
 - `phase6_recall_score_distribution` binary
 
 This surface re-runs `Phase6MemoryIntelligenceBenchmarkEvaluator`, observes the returned real `RecallHit.score` values, and produces descriptive score/gap and fixed-margin coverage statistics. It does not execute Cognitive ranking, choose a threshold, modify RecallEngine, register a runtime booster, or authorize Hermes/runtime integration.
+
+## Phase 7.0 cognitive architecture contract
+
+Eval-only exports from `synapse-eval`:
+
+- `Phase7CognitiveArchitectureContractEvaluator`
+- `Phase7CognitiveArchitectureContractReport`
+- `PatternCandidate`
+- `PatternStatus`
+- `EvidenceReference`
+- `PatternCondition`
+- `PatternPrediction`
+- `FalsificationCondition`
+- `PatternContractValidation`
+- `PatternLifecycleTransition`
+- `ConfidenceUpdatePolicy`
+- `CognitiveArtifactContract`
+- `NorthStarContract`
+- `Phase7ArchitectureDecision`
+- `Phase7ArchitectureGuards`
+- `validate_pattern_candidate`
+- `phase7_cognitive_architecture_contract` binary
+
+This surface is Experimental and eval-only. It defines the evidence and authority contract for future Pattern research. It does not modify stable `synapse-core` APIs, persist Patterns, change RecallEngine or CognitiveBooster, execute Pattern discovery, connect Hermes, or authorize runtime.

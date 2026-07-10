@@ -864,3 +864,37 @@ runtime authorization                      false
 ```
 
 Any later authority-policy experiment must be separately specified and pre-register its desired coverage before validation. Phase 6.2 results must not be used as an in-place threshold tuning loop.
+
+## Phase 7.0 Cognitive Architecture Reorientation
+
+Status: **contract implementation complete; Experience-to-Pattern becomes the research mainline; no Pattern algorithm or runtime authority.**
+
+Phase 7.0 preserves King Recall as the evidence substrate and redirects the main research question from score intervention to knowledge formation and transfer:
+
+```text
+Experience
+    -> Evidence
+    -> Pattern Candidate
+    -> Validated Pattern
+    -> Strategy Candidate
+    -> Transfer
+    -> Outcome Feedback
+    -> Knowledge Evolution
+```
+
+The eval-only `PatternCandidate` contract requires multiple supporting memories, provenance, counterexample search, applicability conditions, source domains, predictions, falsification conditions, bounded confidence, and validation outcomes before non-proposed lifecycle states. All lifecycle transitions require explicit evaluation and none are autonomous.
+
+Decision boundary:
+
+```text
+retrieval booster mainline                 stopped
+Experience-to-Pattern mainline             authorized
+Pattern discovery algorithm                not authorized
+Pattern persistence                        not authorized
+Knowledge Graph                            not authorized
+autonomous self-improvement                not authorized
+Hermes                                     not authorized
+runtime                                    not authorized
+```
+
+Next: Phase 7.1 must design a held-out Transfer Benchmark comparing LLM-only, raw-memory, memory-summary, Pattern, and Pattern-with-counterexamples conditions. It must measure negative transfer before implementing an autonomous induction algorithm.

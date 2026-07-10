@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "tag": "phase7-cognitive-architecture-contract",
+  "phase": "Phase 7.0 Cognitive Architecture Reorientation",
+  "mode": "eval_only_contract",
+  "evaluation_version": "phase7.0-cognitive-architecture-contract-v1",
+  "generated_at": "2026-07-10T14:48:40.486686700+00:00",
+  "north_star": {
+    "statement": "Transform grounded experiences into scoped, falsifiable, transferable patterns; use outcomes to validate, refine, supersede, or reject them.",
+    "mainline": [
+      "experience",
+      "evidence",
+      "pattern_candidate",
+      "validated_pattern",
+      "strategy_candidate",
+      "transfer",
+      "outcome_feedback",
+      "knowledge_evolution"
+    ],
+    "memory_role": "evidence substrate, not the final cognitive product",
+    "retrieval_booster_role": "bounded evidence-selection research, not the project mainline"
+  },
+  "artifact_ladder": [
+    {
+      "artifact": "experience",
+      "purpose": "record an observed event and outcome",
+      "required_grounding": "source and outcome provenance",
+      "allowed_authority": "evidence only",
+      "runtime_authority": false
+    },
+    {
+      "artifact": "pattern_candidate",
+      "purpose": "express a scoped and falsifiable hypothesis induced from multiple experiences",
+      "required_grounding": "supporting evidence, counterexample search, scope, prediction, falsification",
+      "allowed_authority": "proposal and evaluation only",
+      "runtime_authority": false
+    },
+    {
+      "artifact": "validated_pattern",
+      "purpose": "represent a pattern supported by independent validation outcomes",
+      "required_grounding": "independent evidence and observed transfer outcomes",
+      "allowed_authority": "future shadow strategy input only",
+      "runtime_authority": false
+    },
+    {
+      "artifact": "strategy_candidate",
+      "purpose": "adapt one or more patterns to a new task",
+      "required_grounding": "pattern provenance, task conditions, risk and expected outcome",
+      "allowed_authority": "proposal and shadow evaluation only",
+      "runtime_authority": false
+    },
+    {
+      "artifact": "outcome",
+      "purpose": "record what happened after an authorized experiment",
+      "required_grounding": "action, environment, observation and attribution boundaries",
+      "allowed_authority": "future lifecycle evidence only",
+      "runtime_authority": false
+    }
+  ],
+  "canonical_pattern_candidate": {
+    "id": "pattern.service-diagnosis.observability-first.v0",
+    "proposition": "For an unavailable long-running service, establish observability before applying remediation.",
+    "supporting_evidence": [
+      {
+        "memory_id": "memory.redis-outage-001",
+        "experience_id": "experience.redis-outage-001",
+        "domain": "redis",
+        "independent_source": true,
+        "observed_outcome": true
+      },
+      {
+        "memory_id": "memory.postgresql-outage-004",
+        "experience_id": "experience.postgresql-outage-004",
+        "domain": "postgresql",
+        "independent_source": true,
+        "observed_outcome": true
+      }
+    ],
+    "counterexamples": [
+      {
+        "memory_id": "memory.managed-service-incident-002",
+        "experience_id": "experience.managed-service-incident-002",
+        "domain": "managed_service",
+        "independent_source": true,
+        "observed_outcome": true
+      }
+    ],
+    "counterexample_search_performed": true,
+    "applicability_conditions": [
+      {
+        "field": "system.kind",
+        "operator": "equals",
+        "value": "long_running_service"
+      }
+    ],
+    "exclusion_conditions": [
+      {
+        "field": "operator.host_access",
+        "operator": "equals",
+        "value": "unavailable"
+      }
+    ],
+    "source_domains": [
+      "redis",
+      "postgresql"
+    ],
+    "predictions": [
+      {
+        "statement": "Observability-first diagnosis reduces unsupported remediation attempts.",
+        "observable": "unsupported_remediation_attempt_count",
+        "success_criterion": "lower_than_direct_remediation_baseline"
+      }
+    ],
+    "falsification_conditions": [
+      {
+        "statement": "Reject or narrow the pattern if observability-first diagnosis does not reduce unsupported remediation across independent service incidents.",
+        "observable": "independent_incident_outcomes"
+      }
+    ],
+    "validation_outcome_ids": [],
+    "confidence": 0.55,
+    "status": "proposed"
+  },
+  "canonical_validation": {
+    "valid": true,
+    "violations": []
+  },
+  "invalid_contract_cases": [
+    {
+      "name": "missing_supporting_evidence",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "at_least_two_distinct_supporting_memories_required"
+      ],
+      "expectation_met": true
+    },
+    {
+      "name": "missing_applicability_scope",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "applicability_conditions_required"
+      ],
+      "expectation_met": true
+    },
+    {
+      "name": "missing_falsification_condition",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "falsification_condition_required"
+      ],
+      "expectation_met": true
+    },
+    {
+      "name": "counterexample_search_not_performed",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "counterexample_search_required"
+      ],
+      "expectation_met": true
+    },
+    {
+      "name": "invalid_confidence",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "confidence_must_be_finite_and_bounded"
+      ],
+      "expectation_met": true
+    },
+    {
+      "name": "premature_active_status",
+      "expected_valid": false,
+      "observed_valid": false,
+      "violations": [
+        "non_proposed_status_requires_validation_outcome"
+      ],
+      "expectation_met": true
+    }
+  ],
+  "lifecycle": [
+    {
+      "from": "proposed",
+      "to": "supported",
+      "required_evidence": "independent supporting evidence and evaluation gate",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "supported",
+      "to": "active",
+      "required_evidence": "successful held-out transfer validation and explicit authorization",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "active",
+      "to": "challenged",
+      "required_evidence": "material counterexample or failed transfer outcome",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "challenged",
+      "to": "refined",
+      "required_evidence": "scope or proposition revised with traceable evidence",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "refined",
+      "to": "active",
+      "required_evidence": "revalidation on held-out evidence",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "active",
+      "to": "superseded",
+      "required_evidence": "better supported replacement pattern",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    },
+    {
+      "from": "proposed",
+      "to": "rejected",
+      "required_evidence": "insufficient grounding or falsifying evidence",
+      "autonomous": false,
+      "requires_explicit_evaluation_gate": true
+    }
+  ],
+  "confidence_update_policy": {
+    "allowed_sources": [
+      "new_independent_supporting_evidence",
+      "new_counterexample",
+      "observed_transfer_outcome",
+      "explicit_human_or_evaluator_review"
+    ],
+    "prohibited_sources": [
+      "retrieval_count",
+      "usage_count_without_outcome",
+      "model_self_assertion",
+      "generated_explanation_without_evidence"
+    ]
+  },
+  "decision": {
+    "cognitive_architecture_north_star_frozen": true,
+    "experience_to_pattern_mainline_authorized": true,
+    "retrieval_booster_mainline_continued": false,
+    "pattern_contract_established": true,
+    "pattern_discovery_algorithm_authorized": false,
+    "phase7_1_transfer_benchmark_design_recommended": true,
+    "knowledge_graph_authorized": false,
+    "autonomous_self_improvement_authorized": false,
+    "runtime_authorization": false
+  },
+  "guards": {
+    "eval_only": true,
+    "contract_only": true,
+    "recall_engine_modified": false,
+    "cognitive_booster_modified": false,
+    "memory_schema_changed": false,
+    "memory_written": false,
+    "pattern_persisted": false,
+    "pattern_algorithm_implemented": false,
+    "autonomous_pattern_promotion": false,
+    "strategy_execution_performed": false,
+    "runtime_applied": false,
+    "hermes_integration_performed": false,
+    "production_claim_authorized": false
+  },
+  "pass": true,
+  "status": "PASS",
+  "conclusion": "Phase 7.0 defines the evidence-grounded Experience-to-Pattern contract only; it does not discover, persist, promote, execute, or deploy patterns."
+}
