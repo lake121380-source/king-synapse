@@ -266,7 +266,9 @@ Boundary:
 - does not write memory
 - does not change runtime weighting, activation, recall, or production ranking
 
-Phase 4 Cognitive Competition: **Complete**.
+Phase 4 Cognitive Competition: **Complete and frozen**.
+
+Final report: [Phase 4 Final Report](eval/PHASE4_FINAL_REPORT.md).
 
 Validated chain:
 
