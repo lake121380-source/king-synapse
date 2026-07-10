@@ -19,7 +19,8 @@ pub(crate) mod store;
 pub mod working_memory;
 
 pub use adaptive::{
-    AlgorithmContext, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
+    AlgorithmContext, CognitiveCompetitionTrace, CognitiveFactor, CognitiveFactorType,
+    CognitiveTraceEvaluator, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
     ForgetReason, ForgetSkipReason, ForgetTarget, HebbianAlgorithm, HebbianOutput,
     HebbianSkipReason, HebbianTarget, ImportanceEstimator, ImportanceSignal, ImportanceSignals,
     InMemoryMemoryEventStream, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,

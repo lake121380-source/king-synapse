@@ -1,0 +1,310 @@
+{
+  "tag": "phase5-cognitive-trace",
+  "phase": "5.1",
+  "mode": "inspection_only",
+  "evaluation_version": "phase5.1-cognitive-competition-trace-integration",
+  "baseline_version": "phase5.0-algorithm-integration-design",
+  "generated_at": "2026-07-10T04:20:21.561495900+00:00",
+  "scenarios": 3,
+  "metrics": {
+    "trace_generation_rate": 1.0,
+    "dominant_validity": 1.0,
+    "factor_explanation_rate": 1.0,
+    "trace_determinism": 1.0,
+    "recall_regression": 0.0
+  },
+  "guards": {
+    "core_behavior_changed": false,
+    "recall_output_changed": false,
+    "ranking_changed": false,
+    "memory_written": false,
+    "activation_changed": false
+  },
+  "latency": {
+    "before": {
+      "p50_ms": 0.7048,
+      "p95_ms": 1.1414000000000002
+    },
+    "after": {
+      "p50_ms": 0.7481,
+      "p95_ms": 1.2620000000000002
+    },
+    "overhead_p50_ratio": 0.0614,
+    "overhead_p95_ratio": 0.1057
+  },
+  "pass": true,
+  "status": "PASS",
+  "scenario_reports": [
+    {
+      "scenario_id": "phase5_trace_001_deployment_failure",
+      "query": "deployment gpu memory resource",
+      "candidate_count": 3,
+      "baseline_ranking": [
+        "01KX542KD45P9445HK6N67Q6C3",
+        "01KX542KD5GJKHSD9RWE5QEAR7",
+        "01KX542KD6J80KCMYB58PX1FNP"
+      ],
+      "trace_ranking": [
+        "01KX542KD45P9445HK6N67Q6C3",
+        "01KX542KD5GJKHSD9RWE5QEAR7",
+        "01KX542KD6J80KCMYB58PX1FNP"
+      ],
+      "baseline_scores": [
+        0.02758781798183918,
+        0.017921146005392075,
+        0.01585470512509346
+      ],
+      "trace_scores": [
+        0.02758781798183918,
+        0.017921146005392075,
+        0.01585470512509346
+      ],
+      "trace": {
+        "query": "deployment gpu memory resource",
+        "candidate_count": 3,
+        "dominant_candidate": "01KX542KD45P9445HK6N67Q6C3",
+        "suppressed_candidates": [
+          "01KX542KD5GJKHSD9RWE5QEAR7",
+          "01KX542KD6J80KCMYB58PX1FNP"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX542KD45P9445HK6N67Q6C3",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX542KD45P9445HK6N67Q6C3",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KD45P9445HK6N67Q6C3",
+            "factor": "Reliability",
+            "contribution": 0.19
+          },
+          {
+            "candidate": "01KX542KD45P9445HK6N67Q6C3",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX542KD45P9445HK6N67Q6C3",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX542KD5GJKHSD9RWE5QEAR7",
+            "factor": "SemanticMatch",
+            "contribution": 0.2274
+          },
+          {
+            "candidate": "01KX542KD5GJKHSD9RWE5QEAR7",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KD5GJKHSD9RWE5QEAR7",
+            "factor": "Reliability",
+            "contribution": 0.16
+          },
+          {
+            "candidate": "01KX542KD5GJKHSD9RWE5QEAR7",
+            "factor": "ContextAlignment",
+            "contribution": 0.0375
+          },
+          {
+            "candidate": "01KX542KD5GJKHSD9RWE5QEAR7",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.0625
+          },
+          {
+            "candidate": "01KX542KD6J80KCMYB58PX1FNP",
+            "factor": "SemanticMatch",
+            "contribution": 0.2011
+          },
+          {
+            "candidate": "01KX542KD6J80KCMYB58PX1FNP",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KD6J80KCMYB58PX1FNP",
+            "factor": "Reliability",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX542KD6J80KCMYB58PX1FNP",
+            "factor": "ContextAlignment",
+            "contribution": 0.0375
+          }
+        ],
+        "confidence": 0.3702,
+        "mutated": false
+      },
+      "trace_generated": true,
+      "dominant_valid": true,
+      "factor_explanation_complete": true,
+      "trace_deterministic": true,
+      "ranking_changed": false,
+      "scores_changed": false,
+      "memory_written": false,
+      "activation_changed": false,
+      "latency_before_ms": 1.1414000000000002,
+      "latency_after_ms": 1.2620000000000002,
+      "trace_latency_ms": 0.1206
+    },
+    {
+      "scenario_id": "phase5_trace_002_preference_alignment",
+      "query": "fast local prototype iteration preference",
+      "candidate_count": 1,
+      "baseline_ranking": [
+        "01KX542KDERFTK0FJ1778XVDZD"
+      ],
+      "trace_ranking": [
+        "01KX542KDERFTK0FJ1778XVDZD"
+      ],
+      "baseline_scores": [
+        0.012367213144898415
+      ],
+      "trace_scores": [
+        0.012367213144898415
+      ],
+      "trace": {
+        "query": "fast local prototype iteration preference",
+        "candidate_count": 1,
+        "dominant_candidate": "01KX542KDERFTK0FJ1778XVDZD",
+        "suppressed_candidates": [],
+        "factors": [
+          {
+            "candidate": "01KX542KDERFTK0FJ1778XVDZD",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX542KDERFTK0FJ1778XVDZD",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KDERFTK0FJ1778XVDZD",
+            "factor": "Reliability",
+            "contribution": 0.184
+          },
+          {
+            "candidate": "01KX542KDERFTK0FJ1778XVDZD",
+            "factor": "ContextAlignment",
+            "contribution": 0.12
+          },
+          {
+            "candidate": "01KX542KDERFTK0FJ1778XVDZD",
+            "factor": "PreferenceAlignment",
+            "contribution": 0.09
+          }
+        ],
+        "confidence": 0.8565,
+        "mutated": false
+      },
+      "trace_generated": true,
+      "dominant_valid": true,
+      "factor_explanation_complete": true,
+      "trace_deterministic": true,
+      "ranking_changed": false,
+      "scores_changed": false,
+      "memory_written": false,
+      "activation_changed": false,
+      "latency_before_ms": 0.7048,
+      "latency_after_ms": 0.7481,
+      "trace_latency_ms": 0.043300000000000005
+    },
+    {
+      "scenario_id": "phase5_trace_003_playbook_context",
+      "query": "production release rollback verification",
+      "candidate_count": 2,
+      "baseline_ranking": [
+        "01KX542KDPMJ8FD8DFF45G50NE",
+        "01KX542KDR924N5Y9RT6NH7A09"
+      ],
+      "trace_ranking": [
+        "01KX542KDPMJ8FD8DFF45G50NE",
+        "01KX542KDR924N5Y9RT6NH7A09"
+      ],
+      "baseline_scores": [
+        0.013341935351490974,
+        0.012118032202124596
+      ],
+      "trace_scores": [
+        0.013341935351490974,
+        0.012118032202124596
+      ],
+      "trace": {
+        "query": "production release rollback verification",
+        "candidate_count": 2,
+        "dominant_candidate": "01KX542KDR924N5Y9RT6NH7A09",
+        "suppressed_candidates": [
+          "01KX542KDPMJ8FD8DFF45G50NE"
+        ],
+        "factors": [
+          {
+            "candidate": "01KX542KDR924N5Y9RT6NH7A09",
+            "factor": "SemanticMatch",
+            "contribution": 0.3179
+          },
+          {
+            "candidate": "01KX542KDR924N5Y9RT6NH7A09",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KDR924N5Y9RT6NH7A09",
+            "factor": "Reliability",
+            "contribution": 0.176
+          },
+          {
+            "candidate": "01KX542KDR924N5Y9RT6NH7A09",
+            "factor": "ContextAlignment",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX542KDR924N5Y9RT6NH7A09",
+            "factor": "FailureEvidence",
+            "contribution": 0.15
+          },
+          {
+            "candidate": "01KX542KDPMJ8FD8DFF45G50NE",
+            "factor": "SemanticMatch",
+            "contribution": 0.35
+          },
+          {
+            "candidate": "01KX542KDPMJ8FD8DFF45G50NE",
+            "factor": "TemporalConfidence",
+            "contribution": 0.1125
+          },
+          {
+            "candidate": "01KX542KDPMJ8FD8DFF45G50NE",
+            "factor": "Reliability",
+            "contribution": 0.188
+          },
+          {
+            "candidate": "01KX542KDPMJ8FD8DFF45G50NE",
+            "factor": "ContextAlignment",
+            "contribution": 0.1125
+          }
+        ],
+        "confidence": 0.1582,
+        "mutated": false
+      },
+      "trace_generated": true,
+      "dominant_valid": true,
+      "factor_explanation_complete": true,
+      "trace_deterministic": true,
+      "ranking_changed": false,
+      "scores_changed": false,
+      "memory_written": false,
+      "activation_changed": false,
+      "latency_before_ms": 0.6694,
+      "latency_after_ms": 0.7439,
+      "trace_latency_ms": 0.0745
+    }
+  ]
+}

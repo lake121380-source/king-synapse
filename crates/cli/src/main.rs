@@ -3,15 +3,16 @@ use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
 use std::str::FromStr;
 use synapse_core::{
-    config::Config, AlgorithmContext, CognitiveTraceConfig, CognitiveTracePredictionReport,
-    CognitiveTraceProbe, CognitiveTraceReport, DeterministicHebbianStoreMutationDispatcher,
-    GraphActivationBooster, HebbianAlgorithm, HebbianExecutor, HebbianTarget,
-    InMemoryMemoryEventStream, LatentActivationBooster, LatentActivationContext,
-    LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
-    MemoryEventStream, MemoryKind, PersistentStoreExecutor, PlanOnlyHebbianExecutor,
-    QueryLatentActivationProbe, QueryLatentActivationReport, RecallBooster, RecallEngine,
-    RecallHit, RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope,
-    Source, Store, StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
+    config::Config, AlgorithmContext, CognitiveCompetitionTrace, CognitiveTraceConfig,
+    CognitiveTraceEvaluator, CognitiveTracePredictionReport, CognitiveTraceProbe,
+    CognitiveTraceReport, DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster,
+    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
+    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
+    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe,
+    QueryLatentActivationReport, RecallBooster, RecallEngine, RecallHit, RecallQuery,
+    RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 /// King Synapse CLI -- write, recall, and inspect agent memories.
@@ -68,6 +69,9 @@ enum Cmd {
         /// rerank logit, activation bonus, booster list, final score.
         #[arg(long)]
         explain: bool,
+        /// Print an inspection-only cognitive competition trace for the recalled candidates.
+        #[arg(long)]
+        trace: bool,
         /// Enable Store-backed graph activation over existing recall candidates.
         #[arg(long)]
         graph_activation: bool,
@@ -354,6 +358,7 @@ fn main() -> Result<()> {
             rerank,
             rerank_pool,
             explain,
+            trace,
             graph_activation,
             graph_scale,
             graph_cap,
@@ -439,30 +444,45 @@ fn main() -> Result<()> {
             } else {
                 None
             };
+            let cognitive_trace = trace.then(|| CognitiveTraceEvaluator::evaluate(&q.query, &hits));
             if json {
-                if let Some(reinforcement) = reinforcement {
-                    println!(
-                        "{}",
-                        serde_json::to_string_pretty(&serde_json::json!({
-                            "hits": hits,
-                            "reinforcement": reinforcement,
-                        }))?
-                    );
+                if cognitive_trace.is_some() || reinforcement.is_some() {
+                    let mut payload = serde_json::Map::new();
+                    payload.insert("hits".to_string(), serde_json::to_value(&hits)?);
+                    if let Some(trace) = cognitive_trace.as_ref() {
+                        payload.insert("cognitive_trace".to_string(), serde_json::to_value(trace)?);
+                    }
+                    if let Some(reinforcement) = reinforcement.as_ref() {
+                        payload.insert(
+                            "reinforcement".to_string(),
+                            serde_json::to_value(reinforcement)?,
+                        );
+                    }
+                    println!("{}", serde_json::to_string_pretty(&payload)?);
                 } else {
                     println!("{}", serde_json::to_string_pretty(&hits)?);
                 }
             } else if hits.is_empty() {
                 println!("(no matches)");
+                if let Some(trace) = cognitive_trace.as_ref() {
+                    print_cognitive_competition_trace(trace);
+                }
             } else if explain {
                 for (i, h) in hits.iter().enumerate() {
                     print_hit_explain(i + 1, h, &booster_names);
+                }
+                if let Some(trace) = cognitive_trace.as_ref() {
+                    print_cognitive_competition_trace(trace);
                 }
                 if let Some(reinforcement) = reinforcement.as_ref() {
                     print_reinforcement_summary(reinforcement);
                 }
             } else {
-                for h in hits {
-                    print_hit(&h);
+                for h in &hits {
+                    print_hit(h);
+                }
+                if let Some(trace) = cognitive_trace.as_ref() {
+                    print_cognitive_competition_trace(trace);
                 }
                 if let Some(reinforcement) = reinforcement.as_ref() {
                     print_reinforcement_summary(reinforcement);
@@ -1109,6 +1129,48 @@ fn print_trace_candidate(candidate: &synapse_core::CognitiveTraceCandidate, pref
         matched,
         truncate(&candidate.memory.content, 90)
     );
+}
+
+fn print_cognitive_competition_trace(trace: &CognitiveCompetitionTrace) {
+    println!();
+    println!("Cognitive Competition Trace:");
+    println!("Candidates:");
+    println!("{}", trace.candidate_count);
+    println!();
+    println!("Dominant:");
+    println!(
+        "{}",
+        trace
+            .dominant_candidate
+            .as_deref()
+            .map(short_id)
+            .unwrap_or("(none)")
+    );
+    println!();
+    println!("Influence:");
+    if let Some(dominant) = trace.dominant_candidate.as_ref() {
+        for factor in trace
+            .factors
+            .iter()
+            .filter(|factor| &factor.candidate_id == dominant)
+        {
+            println!("+ {:?} ({:.4})", factor.factor_type, factor.contribution);
+        }
+    } else {
+        println!("(none)");
+    }
+    println!();
+    println!("Suppressed:");
+    if trace.suppressed_candidates.is_empty() {
+        println!("(none)");
+    } else {
+        for candidate in &trace.suppressed_candidates {
+            println!("{}", short_id(candidate));
+        }
+    }
+    println!();
+    println!("Confidence:");
+    println!("{:.4}", trace.confidence);
 }
 
 fn print_hit(h: &synapse_core::RecallHit) {

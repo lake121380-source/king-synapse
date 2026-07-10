@@ -30,6 +30,7 @@ pub mod phase3_reflection_observation;
 pub mod phase4_cognitive_competition;
 pub mod phase4_cognitive_influence;
 pub mod phase4_contextual_weighting;
+pub mod phase5_cognitive_trace;
 pub mod reporter;
 pub mod types;
 
@@ -131,6 +132,11 @@ pub use phase4_contextual_weighting::{
     ContextualWeightBreakdown, ContextualWeightParameters, ContextualWeightingSafetyReport,
     ContextualWeightingTrace, Phase4ContextualWeightingEvaluator, Phase4ContextualWeightingMetrics,
     Phase4ContextualWeightingReport,
+};
+pub use phase5_cognitive_trace::{
+    LatencySummary as Phase5CognitiveTraceLatencySummary, Phase5CognitiveTraceEvaluator,
+    Phase5CognitiveTraceGuards, Phase5CognitiveTraceLatency, Phase5CognitiveTraceMetrics,
+    Phase5CognitiveTraceReport, Phase5CognitiveTraceScenarioReport,
 };
 pub use reporter::print_table;
 pub use types::{

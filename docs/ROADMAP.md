@@ -340,6 +340,28 @@ Boundary:
 - rejects initial RRF rewrites, reranker replacement, candidate expansion, schema changes, and default-on behavior
 - requires A/B recall, MRR, latency, trace-quality, and regression gates before any production decision
 
+Phase 5.1: Cognitive Competition Trace Integration.
+
+Status: **Inspection-only integration complete**.
+
+Report: `crates/eval/reports/phase5_cognitive_trace.json`.
+
+Boundary:
+
+- adds `CognitiveTraceEvaluator` under `crates/core/src/adaptive/cognitive_trace`
+- evaluates already-returned `RecallHit` candidates into dominant, suppressed, factor, and confidence trace fields
+- exposes `kr recall "query" --trace` as an explanatory surface
+- does not change recall output, ranking, scores, activation, memory schema, or memory writes
+- keeps the cognitive trace score explanation-only and separate from production ranking
+
+Validated metrics:
+
+- `trace_generation_rate = 1.0000`
+- `dominant_validity = 1.0000`
+- `factor_explanation_rate = 1.0000`
+- `trace_determinism = 1.0000`
+- `recall_regression = 0.0000`
+
 Completed foundations
 
 - v0.5.1 — Memory Importance skeleton (10 tests)

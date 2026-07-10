@@ -9,6 +9,7 @@
 //! `AlgorithmContext<'a>`. Per RFC-011 Part C rule 3, no further service
 //! dependencies may be added to `AlgorithmContext` after v0.5.2.
 
+pub mod cognitive_trace;
 pub mod competition;
 pub mod context;
 pub mod event;
@@ -20,6 +21,9 @@ pub mod merge;
 pub mod reflection;
 pub mod temporal;
 
+pub use cognitive_trace::{
+    CognitiveCompetitionTrace, CognitiveFactor, CognitiveFactorType, CognitiveTraceEvaluator,
+};
 pub use competition::{
     MemoryCandidate, MemoryCompetition, MemoryCompetitionReport, MemoryCompetitionState,
     MemoryCompetitionTraceStep, RuleBasedMemoryCompetition,

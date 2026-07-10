@@ -76,6 +76,7 @@ Current research track:
 - Phase 4.5 cognitive competition stability evaluation: validates deterministic dominance, context-noise resistance, and evidence-driven transition stability; `dominance_stability = 1.0000`, `noise_resistance = 1.0000`, `transition_consistency = 1.0000`, `oscillation_rate = 0.0000`, with `core_changed = false`, `memory_written = false`, and `runtime_weight_changed = false`.
 - [Phase 4 Final Report](docs/eval/PHASE4_FINAL_REPORT.md): freezes Phase 4 as an evaluation-only cognitive competition proof; Phase 5 entry is algorithm engineering, not more eval-only proof accumulation.
 - [Phase 5.0 Algorithm Integration Design](docs/PHASE5_ALGORITHM_DESIGN.md): defines the production-integration boundary for cognitive competition; first implementation path is inspection-only trace work, with any score mutation limited to a later default-off bounded booster.
+- Phase 5.1 cognitive competition trace integration: adds an inspection-only `CognitiveTraceEvaluator` over existing `RecallHit` candidates and `kr recall --trace`; report `crates/eval/reports/phase5_cognitive_trace.json` records `trace_generation_rate = 1.0000`, `dominant_validity = 1.0000`, `factor_explanation_rate = 1.0000`, `trace_determinism = 1.0000`, and `recall_regression = 0.0000`, with no ranking, memory, activation, or recall-output mutation.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
@@ -117,6 +118,7 @@ Recall and inspect the chain:
 
 ```bash
 ./target/release/kr recall "water commute attention" --explain
+./target/release/kr recall "water commute attention" --trace
 ./target/release/kr trace "forgot water before commute while tired" --auto-context --predict
 ./target/release/kr trace "forgot water before commute while tired" --auto-context --reinforce --reinforce-k 3
 ```
