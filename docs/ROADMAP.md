@@ -415,6 +415,54 @@ Validation:
 - no Recall@K, MRR, latency, regression, human-preference, or runtime-improvement claim is made
 - Phase 5.3.2 is limited to a shadow ranking experiment that preserves baseline output
 
+Phase 5.3.2: Deterministic Cognitive Booster v0 Shadow Ranking Experiment.
+
+Status: **Frozen; runtime authorization withheld**.
+
+Documentation: [Phase 5.3.2 Shadow Ranking Experiment](eval/PHASE5_3_2_SHADOW_RANKING_EXPERIMENT.md).
+
+Report: `crates/eval/reports/phase5_shadow_ranking.json`.
+
+Boundary:
+
+- adds `DeterministicCognitiveBoosterV0` over immutable candidates and the real cognitive trace
+- excludes semantic match from the bonus so the experiment measures additional cognitive factors
+- creates a copied shadow order from `baseline_score + bounded_bonus` without sorting or mutating `RecallHit`
+- preserves the candidate pool and uses baseline rank as the deterministic tie-breaker
+- keeps baseline recall authoritative and leaves runtime registration absent
+- does not write memory, change activation, change schema, or authorize production behavior
+
+Local shadow metrics:
+
+- `proposal_coverage = 1.0000`
+- `changed_positions = 13`
+- `avg_abs_rank_delta = 0.9474`
+- `max_abs_rank_delta = 3`
+- `max_proposed_bonus = 0.0848`
+- `bounded_rate = 1.0000`
+- `determinism = 1.0000`
+- `shadow_recall_delta = +0.0000` at Recall@3
+- `shadow_mrr_delta = -0.1250`
+
+Decision:
+
+- the shadow mechanism and safety gate pass
+- v0 does not establish positive ranking value on the local fixture; MRR regresses
+- runtime integration remains unauthorized
+- any Phase 5.3.3 work must remain shadow-only and address score-scale calibration
+
+Phase 5.3.3: Cognitive Score Calibration Study.
+
+Status: **Pending**.
+
+Scope:
+
+- compare proportional bonus, normalized blending, and tie-break-only policies
+- sweep bounded cognitive weights such as `0.01`, `0.02`, `0.05`, `0.10`, and `0.20`
+- measure Recall@K, MRR, rank movement, and regression rate against the authoritative baseline
+- keep the experiment default-off, shadow-only, reversible, and free of memory or schema mutation
+- require a separate authorization decision before any runtime A/B or production integration
+
 Completed foundations
 
 - v0.5.1 — Memory Importance skeleton (10 tests)

@@ -5,9 +5,11 @@
 //! no `RecallHit` field can be changed, and outputs are never applied by the
 //! recall runtime in Phase 5.3.1.
 
+mod deterministic_v0;
 mod interface;
 mod types;
 
+pub use deterministic_v0::DeterministicCognitiveBoosterV0;
 pub use interface::{CognitiveBooster, NoOpCognitiveBooster};
 pub use types::{
     CognitiveAdjustedScore, CognitiveBoosterConfig, CognitiveBoosterConfigError,

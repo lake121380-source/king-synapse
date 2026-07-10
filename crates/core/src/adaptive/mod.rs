@@ -24,8 +24,8 @@ pub mod temporal;
 
 pub use cognitive_booster::{
     CognitiveAdjustedScore, CognitiveBooster, CognitiveBoosterConfig, CognitiveBoosterConfigError,
-    CognitiveBoosterInput, CognitiveBoosterMode, CognitiveBoosterOutput, NoOpCognitiveBooster,
-    MAX_COGNITIVE_BOOSTER_BONUS,
+    CognitiveBoosterInput, CognitiveBoosterMode, CognitiveBoosterOutput,
+    DeterministicCognitiveBoosterV0, NoOpCognitiveBooster, MAX_COGNITIVE_BOOSTER_BONUS,
 };
 pub use cognitive_trace::{
     CognitiveCompetitionTrace, CognitiveFactor, CognitiveFactorType, CognitiveTraceEvaluator,

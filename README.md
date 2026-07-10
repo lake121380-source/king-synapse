@@ -1,4 +1,4 @@
-﻿# King Synapse
+# King Synapse
 
 <p align="center">
   <strong>Readable memory for coding agents.</strong><br />
@@ -79,6 +79,7 @@ Current research track:
 - Phase 5.1 cognitive competition trace integration: adds an inspection-only `CognitiveTraceEvaluator` over existing `RecallHit` candidates and `kr recall --trace`; report `crates/eval/reports/phase5_cognitive_trace.json` records `trace_generation_rate = 1.0000`, `dominant_validity = 1.0000`, `factor_explanation_rate = 1.0000`, `trace_determinism = 1.0000`, and `recall_regression = 0.0000`, with no ranking, memory, activation, or recall-output mutation.
 - [Phase 5.2 Cognitive Trace Quality Evaluation](docs/eval/PHASE5_2_TRACE_QUALITY_EVALUATION.md): freezes the local deterministic trace-quality proof over real `RecallHit` candidates while external human/LLM validation remains pending; the gate records `explanation_completeness = 1.0000`, `factor_faithfulness = 1.0000`, `trace_preference_rate = 1.0000`, `determinism = 1.0000`, and explanation information gain `+0.6000`, while keeping external human/LLM preference judging explicitly open and leaving all booster paths disabled.
 - [Phase 5.3.1 Bounded Cognitive Booster Interface](docs/PHASE5_3_1_BOUNDED_COGNITIVE_BOOSTER_INTERFACE.md) ([freeze record](docs/eval/PHASE5_3_1_FREEZE.md)): freezes an experimental, OFF-by-default `CognitiveBooster` contract over immutable `RecallHit` candidates and `CognitiveCompetitionTrace`. It emits capped shadow proposals only, filters proposals to a configured candidate prefix, preserves `runtime_applied = false` and `memory_mutated = false`, and is not registered with `RecallEngine` or the mutable `RecallBooster` path.
+- [Phase 5.3.2 Shadow Ranking Experiment](docs/eval/PHASE5_3_2_SHADOW_RANKING_EXPERIMENT.md): freezes a deterministic report-only cognitive ranking proposal. The local safety gate passes, while Recall@3 delta is `+0.0000` and MRR delta is `-0.1250`; positive ranking value is not established, calibration is required, and runtime authorization remains withheld.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
@@ -424,6 +425,9 @@ python scripts/eval/phase5_trace_quality.py
 
 # Run the Phase 5.3.1 bounded cognitive booster interface contract
 cargo test -p synapse-core --test cognitive_booster_interface_test
+
+# Run the Phase 5.3.2 deterministic shadow ranking experiment
+python scripts/eval/phase5_shadow_ranking.py
 
 # Run the Phase 6 lightweight replay baselines
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json

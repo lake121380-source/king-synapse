@@ -31,6 +31,7 @@ pub mod phase4_cognitive_competition;
 pub mod phase4_cognitive_influence;
 pub mod phase4_contextual_weighting;
 pub mod phase5_cognitive_trace;
+pub mod phase5_shadow_ranking;
 pub mod phase5_trace_quality;
 pub mod reporter;
 pub mod types;
@@ -138,6 +139,11 @@ pub use phase5_cognitive_trace::{
     LatencySummary as Phase5CognitiveTraceLatencySummary, Phase5CognitiveTraceEvaluator,
     Phase5CognitiveTraceGuards, Phase5CognitiveTraceLatency, Phase5CognitiveTraceMetrics,
     Phase5CognitiveTraceReport, Phase5CognitiveTraceScenarioReport,
+};
+pub use phase5_shadow_ranking::{
+    Phase5ShadowRankingEvaluator, Phase5ShadowRankingGuards, Phase5ShadowRankingLatency,
+    Phase5ShadowRankingMetrics, Phase5ShadowRankingReport, Phase5ShadowRankingScenarioReport,
+    ShadowCandidateReport,
 };
 pub use phase5_trace_quality::{
     BaselineCandidateMetadata, BaselineExplanation, CognitiveExplanation,

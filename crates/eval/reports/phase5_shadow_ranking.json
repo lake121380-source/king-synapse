@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "tag": "phase5-shadow-ranking",
+  "phase": "5.3.2",
+  "mode": "offline_shadow_ranking",
+  "algorithm": "deterministic_cognitive_booster_v0",
+  "evaluation_version": "phase5.3.2-deterministic-cognitive-booster-v0",
+  "baseline_version": "phase5.3.1-bounded-cognitive-booster-interface",
+  "generated_at": "2026-07-10T08:44:29.678649200+00:00",
+  "metric_cutoff": 3,
+  "candidate_limit": 6,
+  "max_bonus": 0.1,
+  "scenarios": 4,
+  "metrics": {
+    "proposal_coverage": 1.0,
+    "changed_positions": 13,
+    "avg_abs_rank_delta": 0.9473684210526315,
+    "max_abs_rank_delta": 3,
+    "max_proposed_bonus": 0.0848,
+    "bounded_rate": 1.0,
+    "determinism": 1.0,
+    "baseline_recall_at_k": 1.0,
+    "shadow_recall_at_k": 1.0,
+    "shadow_recall_delta": 0.0,
+    "baseline_mrr": 0.875,
+    "shadow_mrr": 0.75,
+    "shadow_mrr_delta": -0.125
+  },
+  "guards": {
+    "eval_only": true,
+    "shadow_only": true,
+    "baseline_authoritative": true,
+    "runtime_applied": false,
+    "memory_written": false,
+    "memory_mutated": false,
+    "ranking_mutated": false,
+    "scores_mutated": false,
+    "activation_changed": false,
+    "candidate_pool_changed": false,
+    "recall_engine_integrated": false,
+    "production_claim_authorized": false
+  },
+  "latency": {
+    "recall_p50_ms": 1.1189,
+    "recall_p95_ms": 1.1935,
+    "shadow_p50_ms": 0.0281,
+    "shadow_p95_ms": 0.0312
+  },
+  "pass": true,
+  "status": "PASS",
+  "conclusion": "Local deterministic shadow evidence only; runtime authorization and production ranking benefit are not claimed.",
+  "scenario_reports": [
+    {
+      "id": "phase5_shadow_001_failure_evidence",
+      "query": "production rollback resource validation",
+      "candidate_count": 5,
+      "relevant_candidate_ids": [
+        "01KX5K682CZWMK8N4M63MRHZB8"
+      ],
+      "baseline_ranking": [
+        "01KX5K682ARP280KSBPQQ2DWTF",
+        "01KX5K682CZWMK8N4M63MRHZB8",
+        "01KX5K682CFCQ06T9YV762DK23",
+        "01KX5K682D898KGTKZ7AG4VJ00",
+        "01KX5K682DPE3GBY159VZTHPG3"
+      ],
+      "shadow_ranking": [
+        "01KX5K682CZWMK8N4M63MRHZB8",
+        "01KX5K682D898KGTKZ7AG4VJ00",
+        "01KX5K682ARP280KSBPQQ2DWTF",
+        "01KX5K682DPE3GBY159VZTHPG3",
+        "01KX5K682CFCQ06T9YV762DK23"
+      ],
+      "candidates": [
+        {
+          "candidate_id": "01KX5K682CZWMK8N4M63MRHZB8",
+          "baseline_rank": 2,
+          "shadow_rank": 1,
+          "baseline_score": 0.012793846428394318,
+          "proposed_bonus": 0.0673,
+          "shadow_score": 0.08009384642839432,
+          "position_delta": 1,
+          "relevant": true,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682D898KGTKZ7AG4VJ00",
+          "baseline_rank": 4,
+          "shadow_rank": 2,
+          "baseline_score": 0.011500000022351742,
+          "proposed_bonus": 0.05715,
+          "shadow_score": 0.06865000002235175,
+          "position_delta": 2,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682ARP280KSBPQQ2DWTF",
+          "baseline_rank": 1,
+          "shadow_rank": 3,
+          "baseline_score": 0.014245160855352879,
+          "proposed_bonus": 0.0542,
+          "shadow_score": 0.06844516085535288,
+          "position_delta": -2,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682DPE3GBY159VZTHPG3",
+          "baseline_rank": 5,
+          "shadow_rank": 4,
+          "baseline_score": 0.008970491588115692,
+          "proposed_bonus": 0.050199999999999995,
+          "shadow_score": 0.05917049158811569,
+          "position_delta": 1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682CFCQ06T9YV762DK23",
+          "baseline_rank": 3,
+          "shadow_rank": 5,
+          "baseline_score": 0.012000000104308128,
+          "proposed_bonus": 0.043000000000000003,
+          "shadow_score": 0.05500000010430813,
+          "position_delta": -2,
+          "relevant": false,
+          "runtime_applied": false
+        }
+      ],
+      "baseline_recall_at_k": 1.0,
+      "shadow_recall_at_k": 1.0,
+      "shadow_recall_delta": 0.0,
+      "baseline_reciprocal_rank": 0.5,
+      "shadow_reciprocal_rank": 1.0,
+      "shadow_mrr_delta": 0.5,
+      "deterministic": true,
+      "baseline_ranking_unchanged": true,
+      "baseline_scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true,
+      "candidate_pool_preserved": true,
+      "runtime_applied": false,
+      "memory_mutated": false,
+      "recall_latency_ms": 1.0457999999999998,
+      "shadow_latency_ms": 0.0312
+    },
+    {
+      "id": "phase5_shadow_002_preference_alignment",
+      "query": "fast local prototype iteration preference",
+      "candidate_count": 5,
+      "relevant_candidate_ids": [
+        "01KX5K682PE073KJKVQJYZ9VAP"
+      ],
+      "baseline_ranking": [
+        "01KX5K682PE073KJKVQJYZ9VAP",
+        "01KX5K682P2NHG2SZBCMTQXRED",
+        "01KX5K682Q4D46ZZD3F0MGV4T2",
+        "01KX5K682QRV1QBX4ZZF3566EV",
+        "01KX5K682RNH5YG62SJ9MVN306"
+      ],
+      "shadow_ranking": [
+        "01KX5K682QRV1QBX4ZZF3566EV",
+        "01KX5K682PE073KJKVQJYZ9VAP",
+        "01KX5K682P2NHG2SZBCMTQXRED",
+        "01KX5K682Q4D46ZZD3F0MGV4T2",
+        "01KX5K682RNH5YG62SJ9MVN306"
+      ],
+      "candidates": [
+        {
+          "candidate_id": "01KX5K682QRV1QBX4ZZF3566EV",
+          "baseline_rank": 4,
+          "shadow_rank": 1,
+          "baseline_score": 0.010319999419152737,
+          "proposed_bonus": 0.06819999999999998,
+          "shadow_score": 0.07851999941915272,
+          "position_delta": 3,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682PE073KJKVQJYZ9VAP",
+          "baseline_rank": 1,
+          "shadow_rank": 2,
+          "baseline_score": 0.013241271488368511,
+          "proposed_bonus": 0.0594,
+          "shadow_score": 0.07264127148836852,
+          "position_delta": -1,
+          "relevant": true,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682P2NHG2SZBCMTQXRED",
+          "baseline_rank": 2,
+          "shadow_rank": 3,
+          "baseline_score": 0.011291802860796452,
+          "proposed_bonus": 0.0518,
+          "shadow_score": 0.06309180286079645,
+          "position_delta": -1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682Q4D46ZZD3F0MGV4T2",
+          "baseline_rank": 3,
+          "shadow_rank": 4,
+          "baseline_score": 0.010999999940395355,
+          "proposed_bonus": 0.0486,
+          "shadow_score": 0.05959999994039535,
+          "position_delta": -1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K682RNH5YG62SJ9MVN306",
+          "baseline_rank": 5,
+          "shadow_rank": 5,
+          "baseline_score": 0.008354838006198406,
+          "proposed_bonus": 0.0418,
+          "shadow_score": 0.0501548380061984,
+          "position_delta": 0,
+          "relevant": false,
+          "runtime_applied": false
+        }
+      ],
+      "baseline_recall_at_k": 1.0,
+      "shadow_recall_at_k": 1.0,
+      "shadow_recall_delta": 0.0,
+      "baseline_reciprocal_rank": 1.0,
+      "shadow_reciprocal_rank": 0.5,
+      "shadow_mrr_delta": -0.5,
+      "deterministic": true,
+      "baseline_ranking_unchanged": true,
+      "baseline_scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true,
+      "candidate_pool_preserved": true,
+      "runtime_applied": false,
+      "memory_mutated": false,
+      "recall_latency_ms": 0.8819,
+      "shadow_latency_ms": 0.0281
+    },
+    {
+      "id": "phase5_shadow_003_playbook_context",
+      "query": "deployment rollback verification playbook",
+      "candidate_count": 4,
+      "relevant_candidate_ids": [
+        "01KX5K6830DDPDV7R05YMYJ7QD"
+      ],
+      "baseline_ranking": [
+        "01KX5K6830DDPDV7R05YMYJ7QD",
+        "01KX5K6831P56P39KP42Q40YDC",
+        "01KX5K6831HF96TWK421J5HFPQ",
+        "01KX5K6832TAWJEH2ZZHV27PPG"
+      ],
+      "shadow_ranking": [
+        "01KX5K6831P56P39KP42Q40YDC",
+        "01KX5K6830DDPDV7R05YMYJ7QD",
+        "01KX5K6831HF96TWK421J5HFPQ",
+        "01KX5K6832TAWJEH2ZZHV27PPG"
+      ],
+      "candidates": [
+        {
+          "candidate_id": "01KX5K6831P56P39KP42Q40YDC",
+          "baseline_rank": 2,
+          "shadow_rank": 1,
+          "baseline_score": 0.023955242708325386,
+          "proposed_bonus": 0.07466,
+          "shadow_score": 0.09861524270832539,
+          "position_delta": 1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K6830DDPDV7R05YMYJ7QD",
+          "baseline_rank": 1,
+          "shadow_rank": 2,
+          "baseline_score": 0.027663933113217354,
+          "proposed_bonus": 0.0542,
+          "shadow_score": 0.08186393311321735,
+          "position_delta": -1,
+          "relevant": true,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K6831HF96TWK421J5HFPQ",
+          "baseline_rank": 3,
+          "shadow_rank": 3,
+          "baseline_score": 0.021966204047203064,
+          "proposed_bonus": 0.0501,
+          "shadow_score": 0.07206620404720307,
+          "position_delta": 0,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K6832TAWJEH2ZZHV27PPG",
+          "baseline_rank": 4,
+          "shadow_rank": 4,
+          "baseline_score": 0.018120842054486275,
+          "proposed_bonus": 0.0456,
+          "shadow_score": 0.06372084205448628,
+          "position_delta": 0,
+          "relevant": false,
+          "runtime_applied": false
+        }
+      ],
+      "baseline_recall_at_k": 1.0,
+      "shadow_recall_at_k": 1.0,
+      "shadow_recall_delta": 0.0,
+      "baseline_reciprocal_rank": 1.0,
+      "shadow_reciprocal_rank": 0.5,
+      "shadow_mrr_delta": -0.5,
+      "deterministic": true,
+      "baseline_ranking_unchanged": true,
+      "baseline_scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true,
+      "candidate_pool_preserved": true,
+      "runtime_applied": false,
+      "memory_mutated": false,
+      "recall_latency_ms": 1.1189,
+      "shadow_latency_ms": 0.0236
+    },
+    {
+      "id": "phase5_shadow_004_reliability_tradeoff",
+      "query": "gpu memory deployment capacity evidence",
+      "candidate_count": 5,
+      "relevant_candidate_ids": [
+        "01KX5K683AY8P6C92Q6J5RAA84"
+      ],
+      "baseline_ranking": [
+        "01KX5K683AY8P6C92Q6J5RAA84",
+        "01KX5K683BD3AC8A39T6XFXV7C",
+        "01KX5K683BBTXGZV623QMPC01F",
+        "01KX5K683AASWRW6WV1S67BM56",
+        "01KX5K683CDA304SZEW0VZMB1R"
+      ],
+      "shadow_ranking": [
+        "01KX5K683AY8P6C92Q6J5RAA84",
+        "01KX5K683BBTXGZV623QMPC01F",
+        "01KX5K683BD3AC8A39T6XFXV7C",
+        "01KX5K683AASWRW6WV1S67BM56",
+        "01KX5K683CDA304SZEW0VZMB1R"
+      ],
+      "candidates": [
+        {
+          "candidate_id": "01KX5K683AY8P6C92Q6J5RAA84",
+          "baseline_rank": 1,
+          "shadow_rank": 1,
+          "baseline_score": 0.02619374915957451,
+          "proposed_bonus": 0.0848,
+          "shadow_score": 0.11099374915957451,
+          "position_delta": 0,
+          "relevant": true,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K683BBTXGZV623QMPC01F",
+          "baseline_rank": 3,
+          "shadow_rank": 2,
+          "baseline_score": 0.022505495697259903,
+          "proposed_bonus": 0.053,
+          "shadow_score": 0.0755054956972599,
+          "position_delta": 1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K683BD3AC8A39T6XFXV7C",
+          "baseline_rank": 2,
+          "shadow_rank": 3,
+          "baseline_score": 0.02486451528966427,
+          "proposed_bonus": 0.0498,
+          "shadow_score": 0.07466451528966427,
+          "position_delta": -1,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K683AASWRW6WV1S67BM56",
+          "baseline_rank": 4,
+          "shadow_rank": 4,
+          "baseline_score": 0.02131672017276287,
+          "proposed_bonus": 0.0506,
+          "shadow_score": 0.07191672017276288,
+          "position_delta": 0,
+          "relevant": false,
+          "runtime_applied": false
+        },
+        {
+          "candidate_id": "01KX5K683CDA304SZEW0VZMB1R",
+          "baseline_rank": 5,
+          "shadow_rank": 5,
+          "baseline_score": 0.01705942675471306,
+          "proposed_bonus": 0.045399999999999996,
+          "shadow_score": 0.062459426754713054,
+          "position_delta": 0,
+          "relevant": false,
+          "runtime_applied": false
+        }
+      ],
+      "baseline_recall_at_k": 1.0,
+      "shadow_recall_at_k": 1.0,
+      "shadow_recall_delta": 0.0,
+      "baseline_reciprocal_rank": 1.0,
+      "shadow_reciprocal_rank": 1.0,
+      "shadow_mrr_delta": 0.0,
+      "deterministic": true,
+      "baseline_ranking_unchanged": true,
+      "baseline_scores_unchanged": true,
+      "activation_unchanged": true,
+      "memory_unchanged": true,
+      "candidate_pool_preserved": true,
+      "runtime_applied": false,
+      "memory_mutated": false,
+      "recall_latency_ms": 1.1935,
+      "shadow_latency_ms": 0.0277
+    }
+  ]
+}

@@ -53,6 +53,7 @@ Detailed per-crate listings follow below.
 - `CognitiveAdjustedScore`
 - `CognitiveBoosterOutput`
 - `NoOpCognitiveBooster`
+- `DeterministicCognitiveBoosterV0` (Experimental, shadow-only)
 - `MAX_COGNITIVE_BOOSTER_BONUS`
 
 The Phase 5.1 trace types are observation-only over already-returned
@@ -61,6 +62,10 @@ OFF-by-default shadow proposal contract and are not the runtime
 `RecallBooster` extension point. They receive immutable inputs, enforce bounded
 candidate and bonus limits, and expose no `RecallEngine`, retriever, Store, or
 memory mutation handle. No cognitive booster is registered with runtime recall.
+Phase 5.3.2 adds `DeterministicCognitiveBoosterV0`, which converts trace
+factors into bounded report-only score proposals; it is not registered with
+`RecallEngine`, does not implement mutable runtime `RecallBooster`, and does not
+authorize production ranking changes.
 
 ### recall
 
