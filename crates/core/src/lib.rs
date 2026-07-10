@@ -19,16 +19,19 @@ pub(crate) mod store;
 pub mod working_memory;
 
 pub use adaptive::{
-    AlgorithmContext, CognitiveCompetitionTrace, CognitiveFactor, CognitiveFactorType,
+    AlgorithmContext, CognitiveAdjustedScore, CognitiveBooster, CognitiveBoosterConfig,
+    CognitiveBoosterConfigError, CognitiveBoosterInput, CognitiveBoosterMode,
+    CognitiveBoosterOutput, CognitiveCompetitionTrace, CognitiveFactor, CognitiveFactorType,
     CognitiveTraceEvaluator, DeterministicReflectionAlgorithm, ForgetAlgorithm, ForgetOutput,
     ForgetReason, ForgetSkipReason, ForgetTarget, HebbianAlgorithm, HebbianOutput,
     HebbianSkipReason, HebbianTarget, ImportanceEstimator, ImportanceSignal, ImportanceSignals,
     InMemoryMemoryEventStream, MemoryEvent, MemoryEventId, MemoryEventKind, MemoryEventPayload,
     MemoryEventStream, MemoryImportance, MergeAlgorithm, MergeOutput, MergeSkipReason, MergeTarget,
-    NoOpForgetAlgorithm, NoOpHebbianAlgorithm, NoOpImportanceEstimator, NoOpMemoryEventStream,
-    NoOpMergeAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm, ReflectionOutput,
-    ReflectionSkipReason, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm,
+    NoOpCognitiveBooster, NoOpForgetAlgorithm, NoOpHebbianAlgorithm, NoOpImportanceEstimator,
+    NoOpMemoryEventStream, NoOpMergeAlgorithm, NoOpReflectionAlgorithm, ReflectionAlgorithm,
+    ReflectionOutput, ReflectionSkipReason, RuleBasedForgetAlgorithm, RuleBasedHebbianAlgorithm,
     RuleBasedMergeAlgorithm, RuleBasedReflectionAlgorithm, UniformImportanceEstimator,
+    MAX_COGNITIVE_BOOSTER_BONUS,
 };
 pub use embed::Embedder;
 pub use entity::{Entity, EntityRef, EntityType};

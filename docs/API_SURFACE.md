@@ -37,6 +37,31 @@ Detailed per-crate listings follow below.
 
 ## synapse-core
 
+### adaptive cognition
+
+**Experimental**
+
+- `CognitiveCompetitionTrace`
+- `CognitiveFactor`
+- `CognitiveFactorType`
+- `CognitiveTraceEvaluator`
+- `CognitiveBooster`
+- `CognitiveBoosterConfig`
+- `CognitiveBoosterConfigError`
+- `CognitiveBoosterInput`
+- `CognitiveBoosterMode`
+- `CognitiveAdjustedScore`
+- `CognitiveBoosterOutput`
+- `NoOpCognitiveBooster`
+- `MAX_COGNITIVE_BOOSTER_BONUS`
+
+The Phase 5.1 trace types are observation-only over already-returned
+`RecallHit` candidates. The Phase 5.3.1 booster types are a separate,
+OFF-by-default shadow proposal contract and are not the runtime
+`RecallBooster` extension point. They receive immutable inputs, enforce bounded
+candidate and bonus limits, and expose no `RecallEngine`, retriever, Store, or
+memory mutation handle. No cognitive booster is registered with runtime recall.
+
 ### recall
 
 **Stable**

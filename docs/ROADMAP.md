@@ -394,6 +394,27 @@ Freeze decision:
 - `human_or_llm_judge_completed = false`; no external preference claim is made
 - Phase 5.3 may begin only as an OFF-by-default bounded booster prototype with baseline/A/B comparison and rollback
 
+Phase 5.3.1: Bounded Cognitive Booster Interface.
+
+Status: **Frozen interface; runtime integration not started**.
+
+Documentation: [Phase 5.3.1 Bounded Cognitive Booster Interface](PHASE5_3_1_BOUNDED_COGNITIVE_BOOSTER_INTERFACE.md) and [Phase 5.3.1 Freeze](eval/PHASE5_3_1_FREEZE.md).
+
+Boundary:
+
+- adds an experimental `CognitiveBooster` contract separate from mutable runtime `RecallBooster` implementations
+- accepts immutable `RecallHit` candidates, `CognitiveCompetitionTrace`, and validated default-off configuration
+- emits serializable shadow proposals with a `0.10` absolute bonus cap and configured candidate-prefix limit
+- reconstructs baseline ranks and scores from immutable input and ignores unknown or ineligible candidate proposals
+- keeps `runtime_applied = false`, `memory_mutated = false`, and leaves `RecallEngine` registration absent
+- does not change ranking, scores, `activation_bonus`, memory, working memory, storage schema, or baseline recall output
+
+Validation:
+
+- dedicated interface tests cover default-off configuration, bounded deserialization, candidate limits, score capping, proposal filtering, deterministic no-op behavior, immutable recall signatures, and stable safety serialization
+- no Recall@K, MRR, latency, regression, human-preference, or runtime-improvement claim is made
+- Phase 5.3.2 is limited to a shadow ranking experiment that preserves baseline output
+
 Completed foundations
 
 - v0.5.1 — Memory Importance skeleton (10 tests)
