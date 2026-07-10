@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_no_intervention_currency"
+category = "no_intervention"
+query = "invoice currency for the signed renewal"
+expected_top = "signed_renewal"
+intervention_required = false
+
+[[scenario.memory]]
+label = "signed_renewal"
+content = "The signed renewal specifies invoice currency EUR."
+kind = "fact"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.9400
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "draft_quote"
+content = "An unsigned draft quote used USD (currency)."
+kind = "fact"
+confidence = 0.7000
+importance = 0.8200
+baseline_score = 0.4100
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "billing_guide"
+content = "Billing currency setup guide."
+kind = "playbook"
+confidence = 0.8400
+importance = 0.8200
+baseline_score = 0.2900
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "exchange_note"
+content = "Exchange rate note (currency)."
+kind = "fact"
+confidence = 0.7600
+importance = 0.8200
+baseline_score = 0.1800
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_no_intervention_port"
+category = "no_intervention"
+query = "health probe port in the deployed service manifest"
+expected_top = "deployed_manifest"
+intervention_required = false
+
+[[scenario.memory]]
+label = "deployed_manifest"
+content = "The deployed service manifest sets the health probe port to 9091."
+kind = "state"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.7600
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "example_manifest"
+content = "A tutorial example uses health probe port 8080."
+kind = "fact"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.2600
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "network_note"
+content = "Cluster network policy note (deployed)."
+kind = "fact"
+confidence = 0.7900
+importance = 0.8200
+baseline_score = 0.2000
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "probe_guide"
+content = "Health probe troubleshooting guide."
+kind = "playbook"
+confidence = 0.8300
+importance = 0.8200
+baseline_score = 0.1600
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_no_intervention_deadline"
+category = "no_intervention"
+query = "contract renewal deadline confirmed by legal"
+expected_top = "legal_confirmation"
+intervention_required = false
+
+[[scenario.memory]]
+label = "legal_confirmation"
+content = "Legal confirmed the contract renewal deadline is September 30."
+kind = "fact"
+confidence = 1.0000
+importance = 0.8200
+baseline_score = 0.8800
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "planning_guess"
+content = "An early planning sheet guessed October 15 (confirmed)."
+kind = "fact"
+confidence = 0.6100
+importance = 0.8200
+baseline_score = 0.3300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "calendar_note"
+content = "Renewal calendar instructions."
+kind = "playbook"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.2300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "vendor_note"
+content = "Vendor contact note (confirmed)."
+kind = "fact"
+confidence = 0.7500
+importance = 0.8200
+baseline_score = 0.1400
+temporal_state = "active"
+relevant = false

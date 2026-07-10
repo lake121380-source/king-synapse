@@ -80,6 +80,12 @@ Current research track:
 - [Phase 5.2 Cognitive Trace Quality Evaluation](docs/eval/PHASE5_2_TRACE_QUALITY_EVALUATION.md): freezes the local deterministic trace-quality proof over real `RecallHit` candidates while external human/LLM validation remains pending; the gate records `explanation_completeness = 1.0000`, `factor_faithfulness = 1.0000`, `trace_preference_rate = 1.0000`, `determinism = 1.0000`, and explanation information gain `+0.6000`, while keeping external human/LLM preference judging explicitly open and leaving all booster paths disabled.
 - [Phase 5.3.1 Bounded Cognitive Booster Interface](docs/PHASE5_3_1_BOUNDED_COGNITIVE_BOOSTER_INTERFACE.md) ([freeze record](docs/eval/PHASE5_3_1_FREEZE.md)): freezes an experimental, OFF-by-default `CognitiveBooster` contract over immutable `RecallHit` candidates and `CognitiveCompetitionTrace`. It emits capped shadow proposals only, filters proposals to a configured candidate prefix, preserves `runtime_applied = false` and `memory_mutated = false`, and is not registered with `RecallEngine` or the mutable `RecallBooster` path.
 - [Phase 5.3.2 Shadow Ranking Experiment](docs/eval/PHASE5_3_2_SHADOW_RANKING_EXPERIMENT.md): freezes a deterministic report-only cognitive ranking proposal. The local safety gate passes, while Recall@3 delta is `+0.0000` and MRR delta is `-0.1250`; positive ranking value is not established, calibration is required, and runtime authorization remains withheld.
+- [Phase 5.3.3 Cognitive Ranking Policy Study](docs/eval/PHASE5_3_3_COGNITIVE_RANKING_POLICY_STUDY.md): freezes a 42-scenario controlled hard benchmark comparing absolute bonus, normalized weighted fusion, and margin-guarded authority, with intervention and factor-ablation metrics. The controlled fixture favors Margin Guard; runtime integration remains unauthorized.
+- [Phase 5.3.4 Generalization Validation](docs/eval/PHASE5_3_4_GENERALIZATION_VALIDATION.md): freezes locked `threshold = 0.08` / `alpha = 0.20` evidence over disjoint 30/12/21 train-validation-test splits. Held-out Margin Guard records MRR `0.9524`, intervention precision/recall `1.0000/0.8824`, and zero unnecessary or catastrophic interventions. See the [Phase 5.3 freeze record](docs/eval/PHASE5_3_FREEZE.md); this remains controlled shadow evidence.
+- [Phase 5.4 Independent End-to-End Cognitive Validation](docs/eval/PHASE5_4_INDEPENDENT_END_TO_END_COGNITIVE_VALIDATION.md): runs real `Store + RecallEngine` candidate generation and scores over 24 deterministic Agent-memory scenarios, then compares retrieval, confidence, recency, failure, and locked cognitive shadow policies. Cognitive MRR@5 improves from `0.6667` to `0.8333` with zero top-1 regressions, but ties the best recency/failure controls (`delta = 0.0000`); independent cognitive value is not established and runtime authorization remains false.
+- [Phase 6.0 Memory Intelligence Benchmark](docs/eval/PHASE6_0_MEMORY_INTELLIGENCE_BENCHMARK.md): freezes a repository-authored workload of 320 scenarios / 1,920 memories across 10 balanced conflict categories and a 160/80/80 split. Real `Store + RecallEngine` retrieval reaches every expected candidate in top-5 (`Recall@1 = 0.3000`, `Recall@3/5 = 1.0000`, `MRR@5 = 0.6500`) with deterministic rankings and no Store mutation. This is benchmark infrastructure only; no cognitive comparison, runtime authorization, or production claim is made.
+- [Phase 6.1 Cognitive vs Simple Baseline Evaluation](docs/eval/PHASE6_1_COGNITIVE_BASELINE_COMPARISON.md): compares retrieval, confidence, recency, failure, simple-combined, and locked Margin-Guard Cognitive policies over the same 320 real-RecallEngine scenarios. All policies remain at Recall@1 `0.3000` / MRR@5 `0.6500`: the fixed `threshold = 0.08` admits no two-candidate competitions (`eligible rate = 0.0000`), so independent cognitive value and factor attribution remain unresolved. Hermes shadow integration and runtime authorization are not recommended.
+- [Phase 6.2 Recall Score Distribution Study](docs/eval/PHASE6_2_RECALL_SCORE_DISTRIBUTION_STUDY.md): replays the frozen 320-query real-RecallEngine workload without executing Cognitive ranking and establishes raw score, adjacent-gap, candidate-count, and top-relative Margin coverage distributions. The locked `threshold = 0.08` remains below the observed minimum Top1/Top2 normalized gap (`0.101449`) and triggers `0 / 320`; `0.15` and `0.20` descriptively cover `192 / 320`, but no threshold is selected, Hermes remains blocked, and runtime stays unauthorized.
 
 Phase 2 implementation is being evaluated through isolated competition and
 temporal-transition stress experiments. Retrieval, benchmark scoring, memory
@@ -429,6 +435,24 @@ cargo test -p synapse-core --test cognitive_booster_interface_test
 # Run the Phase 5.3.2 deterministic shadow ranking experiment
 python scripts/eval/phase5_shadow_ranking.py
 
+# Run the Phase 5.3.3 controlled ranking policy study
+python scripts/eval/phase5_cognitive_policy.py
+
+# Run the Phase 5.3.4 controlled generalization validation
+python scripts/eval/phase5_cognitive_generalization.py
+
+# Run the Phase 5.4 real-RecallEngine shadow validation
+python scripts/eval/phase5_end_to_end_cognitive.py
+
+# Validate the Phase 6.0 Memory Intelligence Benchmark foundation
+python scripts/eval/phase6_memory_intelligence_benchmark.py
+
+# Compare Cognitive with fixed simple baselines on the Phase 6.0 workload
+python scripts/eval/phase6_cognitive_baseline_comparison.py
+
+# Study real RecallEngine score and gap distributions without changing ranking
+python scripts/eval/phase6_recall_score_distribution.py
+
 # Run the Phase 6 lightweight replay baselines
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/coding_mem.toml --tag phase6-coding-mem-baseline --json crates/eval/reports/phase6-coding-mem-baseline.json
 cargo run -p synapse-eval --bin kr-eval -- --dataset crates/eval/datasets/reference.toml --tag phase6-reference-baseline --json crates/eval/reports/phase6-reference-baseline.json
@@ -450,6 +474,10 @@ cargo build --release
 | `docs/DEMO.md` | A disposable CLI run with real sample output. |
 | `docs/eval/SYSTEM_VALIDATION_PLAN.md` | Feature freeze rules, validation order, failure modes, and win criteria. |
 | `docs/eval/SYSTEM_VALIDATION_REPORT.md` | Current system-validation conclusion and remaining limits. |
+| `docs/eval/PHASE6_0_MEMORY_INTELLIGENCE_BENCHMARK.md` | Frozen 320-scenario Agent-memory workload, real RecallEngine provenance, label-alignment correction, metrics, and claim boundary. |
+| `docs/eval/PHASE6_2_RECALL_SCORE_DISTRIBUTION_STUDY.md` | Phase 6.2 real RecallEngine score/gap distribution baseline and descriptive fixed-margin coverage; no threshold selection or runtime authorization. |
+| `crates/eval/reports/phase6_memory_intelligence_benchmark.json` | Phase 6.0 benchmark-integrity report; it contains no algorithm comparison or runtime authorization. |
+| `crates/eval/reports/phase6_recall_score_distribution.json` | Phase 6.2 raw/normalized score-gap, candidate-count, and descriptive Margin coverage report; Cognitive is not executed and no threshold is selected. |
 | `crates/eval/reports/phase6-current-system-gate.json` | One-file Phase 6 gate: current system can continue validation, while heavy next-gate and productization remain blocked. |
 | `crates/eval/reports/official-dmr-task-gate.json` | One-file DMR task gate: local official-style DMR evidence passes, while published-comparable DMR remains blocked. |
 | `crates/eval/reports/ranking-task-gate.json` | One-file ranking task gate: ranking evidence is consolidated, while global runtime defaults remain blocked. |

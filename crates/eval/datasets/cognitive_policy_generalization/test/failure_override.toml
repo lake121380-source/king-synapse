@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_failure_cache"
+category = "failure_override"
+query = "Should we reuse the cache warming sequence for the next release?"
+expected_top = "failure_record"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "Reuse the cache warming sequence before every release."
+kind = "playbook"
+confidence = 0.9600
+importance = 0.8200
+baseline_score = 0.7600
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_record"
+content = "The cache warming sequence caused stale authorization data in the last release."
+kind = "failure"
+confidence = 0.9400
+importance = 0.8200
+baseline_score = 0.7440
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "safe_alternative"
+content = "Use staged cache validation after release."
+kind = "playbook"
+confidence = 0.8800
+importance = 0.8200
+baseline_score = 0.5000
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "release_note"
+content = "Release notes mention cache maintenance."
+kind = "fact"
+confidence = 0.7600
+importance = 0.8200
+baseline_score = 0.3300
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_failure_import"
+category = "failure_override"
+query = "Is the bulk customer import procedure safe to repeat?"
+expected_top = "observed_failure"
+intervention_required = true
+
+[[scenario.memory]]
+label = "procedure"
+content = "The bulk customer import procedure is the standard migration path."
+kind = "playbook"
+confidence = 0.9500
+importance = 0.8200
+baseline_score = 0.3800
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "observed_failure"
+content = "Bulk customer import duplicated billing profiles during the previous migration."
+kind = "failure"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.3710
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "rollback"
+content = "Rollback instructions for customer migration."
+kind = "playbook"
+confidence = 0.8700
+importance = 0.8200
+baseline_score = 0.2600
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "summary"
+content = "Migration planning summary (bulk)."
+kind = "fact"
+confidence = 0.7400
+importance = 0.8200
+baseline_score = 0.1800
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_failure_retry"
+category = "failure_override"
+query = "best approach after payment retry storms"
+expected_top = "retry_failure"
+intervention_required = true
+
+[[scenario.memory]]
+label = "legacy_advice"
+content = "After payment retry storms increase worker concurrency immediately."
+kind = "playbook"
+confidence = 0.9300
+importance = 0.8200
+baseline_score = 0.6900
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "retry_failure"
+content = "Increasing concurrency during a payment retry storm exhausted database connections."
+kind = "failure"
+confidence = 0.9700
+importance = 0.8200
+baseline_score = 0.6740
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "bounded_plan"
+content = "Apply bounded retry admission and inspect connection pressure."
+kind = "playbook"
+confidence = 0.9100
+importance = 0.8200
+baseline_score = 0.4900
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "dashboard"
+content = "Payment retry dashboard reference."
+kind = "fact"
+confidence = 0.8000
+importance = 0.8200
+baseline_score = 0.3100
+temporal_state = "active"
+relevant = false

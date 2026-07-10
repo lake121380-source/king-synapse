@@ -1,0 +1,48 @@
+﻿schema_version = 1
+
+[[scenario]]
+id = "no_intervention_006"
+category = "no_intervention"
+query = "database port exact answer"
+expected_top = "clear_baseline"
+intervention_required = false
+
+[[scenario.memory]]
+label = "clear_baseline"
+content = "database port exact answer: 5432."
+kind = "fact"
+confidence = 0.55
+importance = 0.82
+baseline_score = 0.0400
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "cognitive_distractor"
+content = "database port exact answer failure discussion without the exact answer."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0364
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "preference_distractor"
+content = "database port exact answer user preference unrelated to the exact answer."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0120
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "archive_distractor"
+content = "database port historical archive note."
+kind = "fact"
+confidence = 0.70
+importance = 0.82
+baseline_score = 0.0070
+temporal_state = "superseded"
+relevant = false

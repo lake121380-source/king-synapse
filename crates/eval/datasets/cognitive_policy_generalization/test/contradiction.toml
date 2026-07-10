@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_contradiction_backup"
+category = "contradiction"
+query = "Can snapshots alone restore the analytics cluster?"
+expected_top = "restore_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_claim"
+content = "Snapshots alone always restore the analytics cluster."
+kind = "playbook"
+confidence = 0.9400
+importance = 0.8200
+baseline_score = 0.6400
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "restore_evidence"
+content = "The last analytics recovery failed because snapshots omitted external catalog state."
+kind = "failure"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.6260
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "recovery_plan"
+content = "Restore snapshots and external catalog state together."
+kind = "playbook"
+confidence = 0.9100
+importance = 0.8200
+baseline_score = 0.4500
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "catalog_note"
+content = "External catalog ownership note (alone)."
+kind = "fact"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.2800
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_contradiction_token"
+category = "contradiction"
+query = "Does rotating the token leave active sessions unchanged?"
+expected_top = "session_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_assumption"
+content = "Rotating the access token leaves all active sessions unchanged."
+kind = "fact"
+confidence = 0.9200
+importance = 0.8200
+baseline_score = 0.3500
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "session_evidence"
+content = "A token rotation invalidated active mobile sessions during the observed rollout."
+kind = "failure"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.3430
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "rotation_runbook"
+content = "Token rotation and session notification runbook."
+kind = "playbook"
+confidence = 0.9000
+importance = 0.8200
+baseline_score = 0.2400
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "mobile_note"
+content = "Mobile session telemetry note (active)."
+kind = "fact"
+confidence = 0.7700
+importance = 0.8200
+baseline_score = 0.1700
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_contradiction_index"
+category = "contradiction"
+query = "Will rebuilding the search index preserve custom synonyms?"
+expected_top = "measured_result"
+intervention_required = true
+
+[[scenario.memory]]
+label = "documentation_claim"
+content = "The old documentation says index rebuilds preserve custom synonyms."
+kind = "fact"
+confidence = 0.9000
+importance = 0.8200
+baseline_score = 0.7800
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "measured_result"
+content = "A measured index rebuild removed custom synonyms until they were reimported."
+kind = "failure"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.7630
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "safe_runbook"
+content = "Export and reimport synonyms around the index rebuild."
+kind = "playbook"
+confidence = 0.9300
+importance = 0.8200
+baseline_score = 0.5200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "search_note"
+content = "Search maintenance note."
+kind = "fact"
+confidence = 0.7800
+importance = 0.8200
+baseline_score = 0.3500
+temporal_state = "active"
+relevant = false

@@ -1,0 +1,189 @@
+schema_version = 1
+
+[[scenario]]
+id = "temporal_001"
+category = "temporal_update"
+query = "vehicle choice current preference"
+expected_top = "current_state"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_state"
+content = "vehicle choice current preference: user previously selected Tesla."
+kind = "preference"
+confidence = 0.96
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_state"
+content = "vehicle choice current preference: user now explicitly selected BYD."
+kind = "preference"
+confidence = 0.97
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "vehicle choice current preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "vehicle choice current preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "temporal_002"
+category = "temporal_update"
+query = "deployment region current preference"
+expected_top = "current_state"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_state"
+content = "deployment region current preference: user previously selected us-east."
+kind = "preference"
+confidence = 0.96
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_state"
+content = "deployment region current preference: user now explicitly selected ap-southeast."
+kind = "preference"
+confidence = 0.97
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "deployment region current preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "deployment region current preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "temporal_003"
+category = "temporal_update"
+query = "database engine current preference"
+expected_top = "current_state"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_state"
+content = "database engine current preference: user previously selected MySQL."
+kind = "preference"
+confidence = 0.96
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_state"
+content = "database engine current preference: user now explicitly selected PostgreSQL."
+kind = "preference"
+confidence = 0.97
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "database engine current preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "database engine current preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "temporal_004"
+category = "temporal_update"
+query = "editor workflow current preference"
+expected_top = "current_state"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_state"
+content = "editor workflow current preference: user previously selected Vim."
+kind = "preference"
+confidence = 0.96
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_state"
+content = "editor workflow current preference: user now explicitly selected Neovim."
+kind = "preference"
+confidence = 0.97
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "editor workflow current preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "editor workflow current preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

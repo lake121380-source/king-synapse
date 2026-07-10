@@ -391,12 +391,73 @@ P95 lat:    1.89 ms
 ```
 
 Two queries miss:
-- "What dimension are our memory embeddings?" — paraphrase, vector branch should fix.
-- "user language preference for commits" — CN-EN cross-lingual, vector branch should fix.
+- "What dimension are our memory embeddings?" 鈥?paraphrase, vector branch should fix.
+- "user language preference for commits" 鈥?CN-EN cross-lingual, vector branch should fix.
 
 Both are exactly the kind of miss the dense + rerank branches are designed
 to recover, so the harness gives us a real signal to optimize against.
 
+## Phase 5.4 end-to-end cognitive shadow evaluator
+
+Run:
+
+```bash
+python scripts/eval/phase5_end_to_end_cognitive.py
+```
+
+The evaluator builds an isolated Agent-memory workload through `Store`, obtains
+all candidate ranks and scores from the real `RecallEngine`, and compares the
+retrieval baseline with margin-guarded confidence, recency, failure, and full
+cognitive policies. It is shadow-only. A protocol `PASS` validates provenance,
+determinism, candidate-pool preservation, and safety; it does not require or
+claim positive cognitive gain.
+
+Current stable workload result: cognitive MRR@5 is `0.8333` versus retrieval
+`0.6667`, but equals the best recency/failure control. Runtime authorization is
+false.
+
+## Phase 6.0 Memory Intelligence Benchmark
+
+Run:
+
+```bash
+python scripts/eval/phase6_memory_intelligence_benchmark.py
+```
+
+This benchmark freezes 320 repository-authored Agent-memory scenarios / 1,920
+memories across 10 categories and a fixed 160/80/80 split. Each scenario is
+written through a real isolated `Store`, and candidate ranks/scores come from
+`RecallEngine::recall_profiled`; the dataset contains no manual
+`baseline_score` field.
+
+The current foundation result is `Recall@1 = 0.3000`, `Recall@3/5 = 1.0000`,
+`MRR@5 = 0.6500`, expected-candidate retrieval `1.0000`, determinism `1.0000`,
+and Store-unchanged rate `1.0000`. `PASS` validates workload integrity,
+provenance, reachability, determinism, and safety only. No cognitive policy or
+simple baseline is compared, and runtime authorization remains false. See
+`docs/eval/PHASE6_0_MEMORY_INTELLIGENCE_BENCHMARK.md`.
+
+## Phase 6.1 Cognitive vs Simple Baseline Evaluation
+
+Run:
+
+```bash
+python scripts/eval/phase6_cognitive_baseline_comparison.py
+```
+
+The evaluator reuses all 320 Phase 6.0 real-RecallEngine scenarios and compares
+retrieval, confidence-only, recency-only, failure-only, simple-combined, and the
+unchanged Margin-Guard Cognitive policy. It also runs five single-factor
+removals by deleting one factor from a cloned Cognitive Trace and invoking the
+same booster.
+
+The current result is equality at Recall@1 `0.3000` / MRR@5 `0.6500` for every
+policy. This does not prove metadata aggregation: with the locked
+`threshold = 0.08`, no scenario has two candidates inside the guarded margin,
+so the competition-eligible and top-1-change rates are both `0.0000`.
+Attribution is therefore unresolved, Hermes shadow integration is not
+recommended, and runtime authorization remains false. See
+`docs/eval/PHASE6_1_COGNITIVE_BASELINE_COMPARISON.md`.
 ## Layout (v0.5.3 harness contract)
 
 The `crates/eval` layout is frozen by `v0.5.3-benchmark-harness`. Existing
@@ -407,11 +468,15 @@ non-breaking.
 
 | Path | Role |
 | --- | --- |
-| `datasets/reference.toml` | Recall Platform baseline. `Recall@10 = 1.000` — must not regress. |
-| `datasets/multihop.toml` | Multi-hop and mixed Chinese/English technical recall baseline. `Recall@10 = 1.000` after ADR-006 CJK query expansion — must not regress. |
+| `datasets/reference.toml` | Recall Platform baseline. `Recall@10 = 1.000` 鈥?must not regress. |
+| `datasets/multihop.toml` | Multi-hop and mixed Chinese/English technical recall baseline. `Recall@10 = 1.000` after ADR-006 CJK query expansion 鈥?must not regress. |
 | `datasets/coding_mem.toml` | Bundled 20-memory / 30-query golden set for `cargo bench-recall`. |
 | `datasets/regression/` | Frozen regression datasets. Add here to lock in a known corpus + queries and detect future retrieval / algorithm regressions. |
 | `datasets/synthetic/` | Synthetic datasets for scale and stress testing (controlled size and distribution). |
+| `datasets/cognitive_policy/` | Phase 5.3.3 controlled policy-authority scenarios with stable labels and explicit baseline scores; evaluation-only and not an end-to-end recall benchmark. |
+| `datasets/cognitive_policy_generalization/` | Phase 5.3.4 disjoint 30/12/21 train-validation-held-out policy split with fixed parameters and SHA-256 seals; controlled shadow evidence only. |
+| `datasets/cognitive_end_to_end/` | Phase 5.4 deterministic Agent-memory workload. Candidate ranks and scores come from real `Store + RecallEngine`; no manual `baseline_score` field is allowed. |
+| `datasets/memory_intelligence/` | Phase 6.0 generated 320-scenario / 1,920-memory benchmark foundation with balanced splits, explicit timelines and labels, real RecallEngine scores, and no policy comparison. |
 | `datasets/dmr/` | Deep Memory Retrieval external dataset mirrors. |
 | `datasets/longmemeval/` | LongMemEval external dataset mirrors. |
 | `benches/recall/` | Recall-pipeline benchmark source (RRF, vector, rerank). |
@@ -432,14 +497,14 @@ BenchmarkReport {
 
 Rules (RFC-011 Part D):
 
-1. **Deterministic value object.** Same `(dataset, algorithm, config)` → identical `BenchmarkReport`. No `timestamp`, `hostname`, `cpu`, `random_seed`, or `git_dirty` fields.
+1. **Deterministic value object.** Same `(dataset, algorithm, config)` 鈫?identical `BenchmarkReport`. No `timestamp`, `hostname`, `cpu`, `random_seed`, or `git_dirty` fields.
 2. **Sparse by design.** A report contains only the metrics that are meaningful for that benchmark. Missing metrics MUST NOT be treated as `0.0`.
 3. **Finite values (SHOULD).** Producers should emit finite `f64` values; `NaN` / `Inf` are neither validated nor forbidden.
 4. **Benchmark naming.** `benchmark` field uses `lowercase-kebab-case`: `reference-recall`, `multihop-recall`, `reflection-yield`, `merge-precision`, `hebbian-consistency`.
 
 `AlgorithmMetric` is `#[non_exhaustive]`. Adding a new variant is non-breaking; removing or renaming one is breaking.
 
-## Algorithm → Benchmark → Metric Discipline
+## Algorithm 鈫?Benchmark 鈫?Metric Discipline
 
 Every algorithm RFC (RFC-012 onward) MUST:
 
@@ -448,3 +513,41 @@ Every algorithm RFC (RFC-012 onward) MUST:
 3. Emit results as `BenchmarkReport` values that satisfy the determinism invariant.
 
 An algorithm that ships without a benchmark cannot be compared against previous versions, so it does not ship.
+
+
+## Phase 6.2 Recall Score Distribution Study
+
+Phase 6.2 stops booster development and measures the real RecallEngine score operating point:
+
+```bash
+python scripts/eval/phase6_recall_score_distribution.py
+```
+
+It re-runs the frozen 320-query / 1,920-memory Phase 6.0 workload and reports:
+
+- candidate-count and per-rank score distributions;
+- raw and normalized Top1-Top2, Top2-Top3, Top3-Top4, and Top4-Top5 gaps;
+- mean, median/P50, P90, P95, and P99;
+- descriptive coverage for `0.01`, `0.02`, `0.05`, `0.08`, `0.10`, `0.15`, and `0.20` top-relative margins;
+- category/split diagnostics and all 320 scenario score records.
+
+Observed on the frozen workload:
+
+```text
+minimum Top1-Top2 normalized gap = 0.101449
+locked threshold                 = 0.080000
+locked eligible scenarios        = 0 / 320
+0.15 descriptive coverage        = 192 / 320
+0.20 descriptive coverage        = 192 / 320
+```
+
+The `0.15`/`0.20` observations are not threshold recommendations. The evaluator does not execute Cognitive ranking, modify RecallEngine, mutate scores, select a threshold, connect Hermes, or authorize runtime.
+
+Artifacts:
+
+- `src/phase6_recall_score_distribution.rs`
+- `src/bin/phase6_recall_score_distribution.rs`
+- `tests/phase6_recall_score_distribution_test.rs`
+- `reports/phase6_recall_score_distribution.json`
+- `../../scripts/eval/phase6_recall_score_distribution.py`
+- `../../docs/eval/PHASE6_2_RECALL_SCORE_DISTRIBUTION_STUDY.md`

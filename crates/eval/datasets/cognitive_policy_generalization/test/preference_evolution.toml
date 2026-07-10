@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_preference_editor"
+category = "preference_evolution"
+query = "preferred editor for pair programming sessions"
+expected_top = "new_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_preference"
+content = "The user preferred Vim for pair programming sessions last year."
+kind = "preference"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.5800
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "new_preference"
+content = "The user now prefers Zed for pair programming sessions."
+kind = "preference"
+confidence = 0.9600
+importance = 0.8200
+baseline_score = 0.5680
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "editor_note"
+content = "Editor plugin compatibility note."
+kind = "fact"
+confidence = 0.8100
+importance = 0.8200
+baseline_score = 0.3900
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "session_guide"
+content = "Pair programming session guide."
+kind = "playbook"
+confidence = 0.7900
+importance = 0.8200
+baseline_score = 0.2500
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_preference_reports"
+category = "preference_evolution"
+query = "How does the user want weekly reports delivered now?"
+expected_top = "current_delivery"
+intervention_required = true
+
+[[scenario.memory]]
+label = "former_delivery"
+content = "The user previously wanted weekly reports as email attachments."
+kind = "preference"
+confidence = 0.9700
+importance = 0.8200
+baseline_score = 0.4700
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_delivery"
+content = "The user now wants weekly reports posted to the project dashboard."
+kind = "preference"
+confidence = 0.9500
+importance = 0.8200
+baseline_score = 0.4590
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "report_schema"
+content = "Weekly report schema reference."
+kind = "fact"
+confidence = 0.8400
+importance = 0.8200
+baseline_score = 0.3100
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "delivery_playbook"
+content = "Report delivery playbook (delivered)."
+kind = "playbook"
+confidence = 0.8000
+importance = 0.8200
+baseline_score = 0.2000
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_preference_language"
+category = "preference_evolution"
+query = "current language preference for automation scripts"
+expected_top = "current_language"
+intervention_required = true
+
+[[scenario.memory]]
+label = "previous_language"
+content = "The user previously preferred Python for automation scripts."
+kind = "preference"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.8100
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_language"
+content = "The user currently prefers Rust for automation scripts that ship to production."
+kind = "preference"
+confidence = 0.9400
+importance = 0.8200
+baseline_score = 0.7920
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "migration_note"
+content = "Automation migration compatibility note."
+kind = "fact"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.5300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "style_guide"
+content = "Automation style guide."
+kind = "playbook"
+confidence = 0.8500
+importance = 0.8200
+baseline_score = 0.3400
+temporal_state = "active"
+relevant = false

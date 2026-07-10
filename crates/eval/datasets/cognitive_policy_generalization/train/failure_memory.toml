@@ -1,0 +1,189 @@
+schema_version = 1
+
+[[scenario]]
+id = "failure_001"
+category = "failure_override"
+query = "release rollback verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "release rollback verified recovery old playbook recommends skip preflight."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "release rollback verified recovery failure evidence shows skip preflight failed; use validate resources."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "release rollback verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "release rollback verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "failure_002"
+category = "failure_override"
+query = "database migration verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "database migration verified recovery old playbook recommends run direct alter."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "database migration verified recovery failure evidence shows run direct alter failed; use stage backup."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "database migration verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "database migration verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "failure_003"
+category = "failure_override"
+query = "GPU deployment verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "GPU deployment verified recovery old playbook recommends ignore capacity."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "GPU deployment verified recovery failure evidence shows ignore capacity failed; use check memory."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "GPU deployment verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "GPU deployment verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "failure_004"
+category = "failure_override"
+query = "API rollout verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "API rollout verified recovery old playbook recommends remove compatibility test."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "API rollout verified recovery failure evidence shows remove compatibility test failed; use run contract suite."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "API rollout verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "API rollout verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

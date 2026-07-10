@@ -4,9 +4,9 @@ This document lists the stable public API of King Synapse as of `v0.5.9-adaptive
 
 APIs are classified into three levels:
 
-- **Stable** — SemVer-guaranteed. Breaking changes require a major version bump. See `docs/COMPATIBILITY.md`.
-- **Experimental** — Public but subject to change. Documented as such at introduction.
-- **Internal** — Not part of the public API. May change at any time. Do not depend on internal items.
+- **Stable** 鈥?SemVer-guaranteed. Breaking changes require a major version bump. See `docs/COMPATIBILITY.md`.
+- **Experimental** 鈥?Public but subject to change. Documented as such at introduction.
+- **Internal** 鈥?Not part of the public API. May change at any time. Do not depend on internal items.
 
 Stable items in `synapse-core` live under the crate's re-export table in `crates/core/src/lib.rs`. Stable items in other crates live in their crate's `src/lib.rs` re-exports. If an item is not re-exported there, it is **Internal**.
 
@@ -321,7 +321,7 @@ Frozen by `v0.4.49-adaptive-policies-freeze`.
 - `NoOpMemoryEventStream`
 - `InMemoryMemoryEventStream` (reference implementation only; not production)
 - `AlgorithmContext<'a>` (`#[non_exhaustive]`; fields: `now`, `session_id`, `importance: &'a dyn ImportanceEstimator`, `events: &'a dyn MemoryEventStream`; trait-object surface **closed** at v0.5.2)
-- `AlgorithmContext::new(now, session_id, importance, events)` — the only supported constructor
+- `AlgorithmContext::new(now, session_id, importance, events)` 鈥?the only supported constructor
 
 Frozen (incrementally): `v0.5.1-memory-importance` (importance kernel), `v0.5.2-memory-event-and-context` (event kernel + context closure). Full RFC-011 model frozen at `v0.5.9-adaptive-common-freeze`.
 
@@ -478,6 +478,88 @@ suppressed candidates, and hidden paths for a query.
 Trace reinforcement is disabled by default and runs only after the report is
 produced, so it does not affect the current dominant/suppressed ranking.
 
+## Phase 5.3.3 cognitive policy evaluator
+
+**Experimental; evaluation-only**
+
+- `Phase5CognitivePolicyEvaluator`
+- `load_cognitive_policy_benchmark()`
+- `Phase5CognitivePolicyReport` and its benchmark, policy, scenario, candidate, metric, ablation, normalization, and safety report types
+- `phase5_cognitive_policy` binary
+
+This surface parses the controlled TOML benchmark under
+`crates/eval/datasets/cognitive_policy/`, rebuilds real Store-backed candidate
+IDs, and emits shadow policy comparisons. It has no `RecallEngine` registration,
+no runtime authority, and no stable compatibility guarantee.
+
+## Phase 5.3.4 cognitive generalization evaluator
+
+**Experimental; evaluation-only**
+
+- `Phase5CognitiveGeneralizationEvaluator`
+- `Phase5CognitiveGeneralizationReport`
+- `GeneralizationSplitReport`, `GeneralizationPolicySummary`, `GeneralizationDecision`, `FactorInteractionReport`, and safety/lock report types
+- `phase5_cognitive_generalization` binary
+
+This surface loads the disjoint controlled split under
+`crates/eval/datasets/cognitive_policy_generalization/`, verifies split hashes,
+applies the locked Margin Guard parameters, compares simple policy controls, and
+reports held-out factor interactions. It is shadow-only, has no runtime
+registration, and does not authorize end-to-end or production claims.
+
+## Phase 5.4 end-to-end cognitive evaluator
+
+**Experimental; evaluation-only**
+
+- `Phase5EndToEndCognitiveEvaluator`
+- `load_phase5_end_to_end_workload()`
+- `Phase5EndToEndReport`
+- `EndToEndProtocol`, `EndToEndDatasetSummary`, `EndToEndPolicyResult`, `EndToEndMetrics`, `EndToEndDecision`, `EndToEndSafetyGuards`, and scenario/candidate/workload types
+- `phase5_end_to_end_cognitive` binary
+
+This surface writes the deterministic Agent-memory workload to isolated Stores,
+uses `RecallEngine::recall_profiled` for all candidates and baseline scores,
+generates real cognitive traces, and compares shadow-only controls. It does not
+register a runtime booster or mutate authoritative recall output. Its `pass`
+field validates protocol and safety integrity, not positive gain. The current
+report records cognitive parity with the strongest recency/failure controls and
+keeps runtime and production authorization false.
+
+## Phase 6.0 memory intelligence benchmark evaluator
+
+**Experimental; evaluation-only**
+
+- `Phase6MemoryIntelligenceBenchmarkEvaluator`
+- `load_phase6_memory_intelligence_benchmark()`
+- `Phase6MemoryIntelligenceReport`
+- `MemoryIntelligenceProtocol`, `MemoryIntelligenceDatasetSummary`, `MemoryIntelligenceRetrievalMetrics`, `MemoryIntelligenceGroupMetrics`, `MemoryIntelligenceGuards`, and scenario/memory specification and report types
+- `phase6_memory_intelligence_benchmark` binary
+
+This surface loads the generated 320-scenario workload under
+`crates/eval/datasets/memory_intelligence/`, writes each scenario through an
+isolated Store, and records real `RecallEngine::recall_profiled` rankings and
+scores. It verifies generator/dataset hashes, balanced splits, ground-truth
+labels, expected-candidate reachability, repeatable ranking, and no Store
+mutation. It performs no algorithm comparison and has no runtime authority or
+stable compatibility guarantee. Its `pass` field is a benchmark-integrity gate,
+not evidence of cognitive gain.
+
+## Phase 6.1 cognitive baseline comparison evaluator
+
+**Experimental; evaluation-only**
+
+- `Phase6CognitiveBaselineComparisonEvaluator`
+- `Phase6CognitiveBaselineComparisonReport`
+- `CognitiveBaselineComparisonProtocol`, `CognitiveBaselineDatasetSummary`, `PolicyResult`, `AblationResult`, `ComparisonMetrics`, `CognitiveBaselineDecision`, `FactorContribution`, `CognitiveBaselineComparisonGuards`, and scenario/candidate report types
+- `phase6_cognitive_baseline_comparison` binary
+
+This surface reuses the Phase 6.0 dataset and real RecallEngine candidate pools
+to compare fixed simple heuristics with the unchanged Margin-Guard Cognitive
+policy. Factor ablations remove one trace factor before invoking the same
+booster. It is shadow-only and has no Store, schema, retrieval, candidate, or
+runtime mutation authority. The current report records policy equality at a
+zero-competition-eligibility operating point; independent value and metadata-
+aggregation attribution are both unresolved.
 ## synapse-eval
 
 ### benchmark harness contract (Phase 5)
@@ -488,7 +570,7 @@ produced, so it does not affect the current dominant/suppressed ranking.
 - `BenchmarkReport` (`#[non_exhaustive]`; fields: `benchmark: String` in `lowercase-kebab-case` by convention, `metrics: BTreeMap<AlgorithmMetric, f64>`)
 
 Invariants (RFC-011 Part D):
-- `BenchmarkReport` is a deterministic value object: same `(dataset, algorithm, config)` → identical report. It MUST NOT carry runtime metadata (timestamp, hostname, cpu, random_seed, git_dirty).
+- `BenchmarkReport` is a deterministic value object: same `(dataset, algorithm, config)` 鈫?identical report. It MUST NOT carry runtime metadata (timestamp, hostname, cpu, random_seed, git_dirty).
 - Reports are sparse: only meaningful metrics are included. Missing metrics MUST NOT be interpreted as `0.0`.
 - Directory layout under `crates/eval/{datasets,benches,reports}/` is stable per `docs/COMPATIBILITY.md`. Adding a sibling directory is non-breaking; renaming or deleting one is breaking.
 
@@ -514,7 +596,29 @@ The `kr-eval` runner and its `Report` output type predate `BenchmarkReport` and 
 
 ## Item Classification Rules
 
-- If an item is re-exported from `synapse_core::*` and appears above → **Stable**.
-- If an item is re-exported from `synapse_core::*` but marked *Experimental* in this document → **Experimental**.
-- If an item is not re-exported at the crate root → **Internal**.
+- If an item is re-exported from `synapse_core::*` and appears above 鈫?**Stable**.
+- If an item is re-exported from `synapse_core::*` but marked *Experimental* in this document 鈫?**Experimental**.
+- If an item is not re-exported at the crate root 鈫?**Internal**.
 - Test-only items (`#[cfg(test)]`, `PlanOnly*` helpers used in tests) may be stable but should be documented as such.
+
+
+## Phase 6.2 recall score distribution evaluator
+
+Eval-only exports from `synapse-eval`:
+
+- `Phase6RecallScoreDistributionEvaluator`
+- `Phase6RecallScoreDistributionReport`
+- `RecallScoreDistributionProtocol`
+- `DistributionSummary`
+- `CandidateCountDistribution`
+- `ScoreDistributionReport`
+- `RankScoreDistribution`
+- `AdjacentGapDistribution`
+- `MarginCoverage`
+- `GroupMarginCoverage`
+- `RecallScoreScenarioReport`
+- `RecallScoreDistributionDecision`
+- `RecallScoreDistributionGuards`
+- `phase6_recall_score_distribution` binary
+
+This surface re-runs `Phase6MemoryIntelligenceBenchmarkEvaluator`, observes the returned real `RecallHit.score` values, and produces descriptive score/gap and fixed-margin coverage statistics. It does not execute Cognitive ranking, choose a threshold, modify RecallEngine, register a runtime booster, or authorize Hermes/runtime integration.

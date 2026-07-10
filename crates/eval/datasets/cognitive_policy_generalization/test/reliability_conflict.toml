@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_reliability_tax"
+category = "reliability_conflict"
+query = "What tax region did the account owner confirm?"
+expected_top = "owner_confirmation"
+intervention_required = true
+
+[[scenario.memory]]
+label = "chat_guess"
+content = "A copied chat message guesses the tax region is west."
+kind = "fact"
+confidence = 0.3100
+importance = 0.8200
+baseline_score = 0.6200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "owner_confirmation"
+content = "The account owner confirmed the tax region is central."
+kind = "fact"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.6080
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "help_page"
+content = "Tax region help page without account details."
+kind = "fact"
+confidence = 0.7800
+importance = 0.8200
+baseline_score = 0.4300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "workflow"
+content = "Tax setup workflow."
+kind = "playbook"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.2700
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_reliability_key"
+category = "reliability_conflict"
+query = "Which signing key fingerprint is verified for production?"
+expected_top = "verified_key"
+intervention_required = true
+
+[[scenario.memory]]
+label = "forum_key"
+content = "An unverified forum post lists production signing key fingerprint 11-AA."
+kind = "fact"
+confidence = 0.2200
+importance = 0.8200
+baseline_score = 0.5100
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "verified_key"
+content = "Security operations verified production signing key fingerprint 74-C9."
+kind = "fact"
+confidence = 1.0000
+importance = 0.8200
+baseline_score = 0.5000
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "rotation_note"
+content = "Signing key rotation schedule."
+kind = "fact"
+confidence = 0.8400
+importance = 0.8200
+baseline_score = 0.3500
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "security_guide"
+content = "General signing key security guide."
+kind = "playbook"
+confidence = 0.8600
+importance = 0.8200
+baseline_score = 0.2400
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_reliability_address"
+category = "reliability_conflict"
+query = "confirmed returns address for the enterprise customer"
+expected_top = "confirmed_address"
+intervention_required = true
+
+[[scenario.memory]]
+label = "cached_address"
+content = "A cached sales note suggests the enterprise returns address is Harbor Road."
+kind = "fact"
+confidence = 0.4000
+importance = 0.8200
+baseline_score = 0.8700
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "confirmed_address"
+content = "The enterprise customer explicitly confirmed the returns address is Cedar Park."
+kind = "fact"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.8500
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "shipping_policy"
+content = "Enterprise return shipping policy."
+kind = "playbook"
+confidence = 0.8300
+importance = 0.8200
+baseline_score = 0.5400
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "old_ticket"
+content = "An unrelated delivery ticket (address)."
+kind = "fact"
+confidence = 0.7100
+importance = 0.8200
+baseline_score = 0.3600
+temporal_state = "active"
+relevant = false

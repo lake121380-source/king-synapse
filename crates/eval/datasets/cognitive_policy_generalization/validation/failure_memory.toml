@@ -1,0 +1,95 @@
+schema_version = 1
+
+[[scenario]]
+id = "failure_005"
+category = "failure_override"
+query = "cache migration verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "cache migration verified recovery old playbook recommends flush globally."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "cache migration verified recovery failure evidence shows flush globally failed; use use staged invalidation."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "cache migration verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "cache migration verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "failure_006"
+category = "failure_override"
+query = "credential rotation verified recovery"
+expected_top = "failure_lesson"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_playbook"
+content = "credential rotation verified recovery old playbook recommends restart manually."
+kind = "playbook"
+confidence = 0.93
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "failure_lesson"
+content = "credential rotation verified recovery failure evidence shows restart manually failed; use use atomic rotation."
+kind = "failure"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "credential rotation verified recovery supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "credential rotation verified recovery generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

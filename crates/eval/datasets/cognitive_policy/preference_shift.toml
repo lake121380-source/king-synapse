@@ -1,0 +1,283 @@
+schema_version = 1
+
+[[scenario]]
+id = "preference_001"
+category = "preference_evolution"
+query = "implementation language user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "implementation language user preference generic advice favors Python."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "implementation language user preference: user explicitly prefers Rust instead of Python."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "implementation language user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "implementation language user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "preference_002"
+category = "preference_evolution"
+query = "test style user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "test style user preference generic advice favors manual checks."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "test style user preference: user explicitly prefers property tests instead of manual checks."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "test style user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "test style user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "preference_003"
+category = "preference_evolution"
+query = "deployment mode user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "deployment mode user preference generic advice favors mutable server."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "deployment mode user preference: user explicitly prefers immutable image instead of mutable server."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "deployment mode user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "deployment mode user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "preference_004"
+category = "preference_evolution"
+query = "package manager user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "package manager user preference generic advice favors npm."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "package manager user preference: user explicitly prefers pnpm instead of npm."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "package manager user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "package manager user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "preference_005"
+category = "preference_evolution"
+query = "API style user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "API style user preference generic advice favors REST only."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "API style user preference: user explicitly prefers typed RPC instead of REST only."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "API style user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "API style user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "preference_006"
+category = "preference_evolution"
+query = "review workflow user preference"
+expected_top = "current_preference"
+intervention_required = true
+
+[[scenario.memory]]
+label = "generic_advice"
+content = "review workflow user preference generic advice favors large batches."
+kind = "fact"
+confidence = 0.90
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "current_preference"
+content = "review workflow user preference: user explicitly prefers small pull requests instead of large batches."
+kind = "preference"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0297
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "review workflow user preference supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "review workflow user preference generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

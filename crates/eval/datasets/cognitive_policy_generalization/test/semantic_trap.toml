@@ -1,0 +1,143 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_semantic_flag"
+category = "semantic_trap"
+query = "current production fraud flag behavior"
+expected_top = "current_behavior"
+intervention_required = true
+
+[[scenario.memory]]
+label = "keyword_trap"
+content = "Current production fraud flag behavior current production: legacy hard block description."
+kind = "fact"
+confidence = 0.5500
+importance = 0.8200
+baseline_score = 0.7300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_behavior"
+content = "Production fraud flags currently open a manual review instead of a hard block."
+kind = "state"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.7140
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "review_note"
+content = "Manual review queue operations note (behavior)."
+kind = "fact"
+confidence = 0.8000
+importance = 0.8200
+baseline_score = 0.4800
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "fraud_guide"
+content = "General fraud response guide."
+kind = "playbook"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.3000
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_semantic_quota"
+category = "semantic_trap"
+query = "authoritative API quota for partner uploads"
+expected_top = "authoritative_current"
+intervention_required = false
+
+[[scenario.memory]]
+label = "authoritative_current"
+content = "The authoritative API quota for partner uploads is 800 requests per minute."
+kind = "state"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.9000
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "obsolete_quota"
+content = "Authoritative API quota partner uploads repeated: old 300 request limit."
+kind = "fact"
+confidence = 0.4800
+importance = 0.8200
+baseline_score = 0.4900
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "quota_math"
+content = "Quota calculation example."
+kind = "fact"
+confidence = 0.7900
+importance = 0.8200
+baseline_score = 0.3200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "partner_guide"
+content = "Partner upload integration guide."
+kind = "playbook"
+confidence = 0.8400
+importance = 0.8200
+baseline_score = 0.2100
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_semantic_region"
+category = "semantic_trap"
+query = "active disaster recovery region status"
+expected_top = "active_region"
+intervention_required = true
+
+[[scenario.memory]]
+label = "stale_region"
+content = "Active disaster recovery region status active: retired north cluster."
+kind = "fact"
+confidence = 0.5700
+importance = 0.8200
+baseline_score = 0.6600
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "active_region"
+content = "The active disaster recovery region is now the south cluster."
+kind = "state"
+confidence = 0.9700
+importance = 0.8200
+baseline_score = 0.6470
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "dr_drill"
+content = "Disaster recovery drill checklist."
+kind = "playbook"
+confidence = 0.8600
+importance = 0.8200
+baseline_score = 0.4400
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "capacity"
+content = "Regional capacity note (active)."
+kind = "fact"
+confidence = 0.7500
+importance = 0.8200
+baseline_score = 0.2800
+temporal_state = "active"
+relevant = false
+

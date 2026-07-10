@@ -30,9 +30,15 @@ pub mod phase3_reflection_observation;
 pub mod phase4_cognitive_competition;
 pub mod phase4_cognitive_influence;
 pub mod phase4_contextual_weighting;
+pub mod phase5_cognitive_generalization;
+pub mod phase5_cognitive_policy;
 pub mod phase5_cognitive_trace;
+pub mod phase5_end_to_end_cognitive;
 pub mod phase5_shadow_ranking;
 pub mod phase5_trace_quality;
+pub mod phase6_cognitive_baseline_comparison;
+pub mod phase6_memory_intelligence_benchmark;
+pub mod phase6_recall_score_distribution;
 pub mod reporter;
 pub mod types;
 
@@ -135,10 +141,28 @@ pub use phase4_contextual_weighting::{
     ContextualWeightingTrace, Phase4ContextualWeightingEvaluator, Phase4ContextualWeightingMetrics,
     Phase4ContextualWeightingReport,
 };
+pub use phase5_cognitive_generalization::{
+    FactorInteractionReport, GeneralizationDecision, GeneralizationPolicySummary,
+    GeneralizationSafetyGuards, GeneralizationSplitReport, Phase5CognitiveGeneralizationEvaluator,
+    Phase5CognitiveGeneralizationReport, PolicyLockReport,
+};
+pub use phase5_cognitive_policy::{
+    load_cognitive_policy_benchmark, CognitiveFactorContributionReport,
+    CognitivePolicyAblationReport, CognitivePolicyBenchmarkSummary, CognitivePolicyCandidateReport,
+    CognitivePolicyMemorySpec, CognitivePolicyMetrics, CognitivePolicyResult,
+    CognitivePolicySafetyGuards, CognitivePolicyScenarioReport, CognitivePolicyScenarioSpec,
+    Phase5CognitivePolicyEvaluator, Phase5CognitivePolicyReport, PolicyNormalizationReport,
+};
 pub use phase5_cognitive_trace::{
     LatencySummary as Phase5CognitiveTraceLatencySummary, Phase5CognitiveTraceEvaluator,
     Phase5CognitiveTraceGuards, Phase5CognitiveTraceLatency, Phase5CognitiveTraceMetrics,
     Phase5CognitiveTraceReport, Phase5CognitiveTraceScenarioReport,
+};
+pub use phase5_end_to_end_cognitive::{
+    load_phase5_end_to_end_workload, EndToEndCandidateReport, EndToEndDatasetSummary,
+    EndToEndDecision, EndToEndMemorySpec, EndToEndMetrics, EndToEndPolicyResult, EndToEndProtocol,
+    EndToEndSafetyGuards, EndToEndScenarioReport, EndToEndScenarioSpec,
+    Phase5EndToEndCognitiveEvaluator, Phase5EndToEndReport,
 };
 pub use phase5_shadow_ranking::{
     Phase5ShadowRankingEvaluator, Phase5ShadowRankingGuards, Phase5ShadowRankingLatency,
@@ -151,6 +175,26 @@ pub use phase5_trace_quality::{
     FactorFaithfulnessAudit, PairwiseExplanationJudgeReport, Phase5TraceQualityEvaluator,
     Phase5TraceQualityGuards, Phase5TraceQualityJudgeProtocol, Phase5TraceQualityMetrics,
     Phase5TraceQualityReport, Phase5TraceQualityScenarioReport, Phase5TraceQualityThresholds,
+};
+pub use phase6_cognitive_baseline_comparison::{
+    AblationResult, CandidatePolicyReport, CognitiveBaselineComparisonGuards,
+    CognitiveBaselineComparisonProtocol, CognitiveBaselineDatasetSummary,
+    CognitiveBaselineDecision, ComparisonMetrics, FactorContribution,
+    Phase6CognitiveBaselineComparisonEvaluator, Phase6CognitiveBaselineComparisonReport,
+    PolicyResult, ScenarioPolicyReport,
+};
+pub use phase6_memory_intelligence_benchmark::{
+    load_phase6_memory_intelligence_benchmark, MemoryIntelligenceDatasetSummary,
+    MemoryIntelligenceGroupMetrics, MemoryIntelligenceGuards, MemoryIntelligenceMemorySpec,
+    MemoryIntelligenceProtocol, MemoryIntelligenceRetrievalMetrics,
+    MemoryIntelligenceScenarioReport, MemoryIntelligenceScenarioSpec,
+    Phase6MemoryIntelligenceBenchmarkEvaluator, Phase6MemoryIntelligenceReport,
+};
+pub use phase6_recall_score_distribution::{
+    AdjacentGapDistribution, CandidateCountDistribution, DistributionSummary, GroupMarginCoverage,
+    MarginCoverage, Phase6RecallScoreDistributionEvaluator, Phase6RecallScoreDistributionReport,
+    RankScoreDistribution, RecallScoreDistributionDecision, RecallScoreDistributionGuards,
+    RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
 };
 pub use reporter::print_table;
 pub use types::{

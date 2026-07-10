@@ -1,0 +1,95 @@
+schema_version = 1
+
+[[scenario]]
+id = "semantic_trap_005"
+category = "semantic_trap"
+query = "incident status current authoritative status"
+expected_top = "correct_current"
+intervention_required = true
+
+[[scenario.memory]]
+label = "semantic_trap"
+content = "incident status current authoritative status initial alert repeated current authoritative status."
+kind = "fact"
+confidence = 0.58
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "correct_current"
+content = "incident status current authoritative status: resolved status."
+kind = "state"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "partial_context"
+content = "incident status archive without authoritative status."
+kind = "fact"
+confidence = 0.80
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "incident status generic lookup playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "semantic_trap_006"
+category = "semantic_trap"
+query = "feature flag current authoritative status"
+expected_top = "correct_current"
+intervention_required = true
+
+[[scenario.memory]]
+label = "semantic_trap"
+content = "feature flag current authoritative status old enabled state repeated current authoritative status."
+kind = "fact"
+confidence = 0.58
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "correct_current"
+content = "feature flag current authoritative status: current disabled state."
+kind = "state"
+confidence = 0.99
+importance = 0.82
+baseline_score = 0.0294
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "partial_context"
+content = "feature flag archive without authoritative status."
+kind = "fact"
+confidence = 0.80
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "feature flag generic lookup playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

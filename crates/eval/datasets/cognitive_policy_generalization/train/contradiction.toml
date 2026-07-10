@@ -1,0 +1,236 @@
+schema_version = 1
+
+[[scenario]]
+id = "contradiction_001"
+category = "contradiction"
+query = "release approval conflict resolution"
+expected_top = "conflict_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "contradicted_claim"
+content = "release approval conflict resolution prior success claim."
+kind = "fact"
+confidence = 0.82
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "conflict_evidence"
+content = "release approval conflict resolution verified failed audit contradicts the old claim."
+kind = "failure"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "release approval conflict resolution supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "release approval conflict resolution generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "contradiction_002"
+category = "contradiction"
+query = "backup integrity conflict resolution"
+expected_top = "conflict_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "contradicted_claim"
+content = "backup integrity conflict resolution assumed healthy."
+kind = "fact"
+confidence = 0.82
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "conflict_evidence"
+content = "backup integrity conflict resolution verified restore failure contradicts the old claim."
+kind = "failure"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "backup integrity conflict resolution supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "backup integrity conflict resolution generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "contradiction_003"
+category = "contradiction"
+query = "dependency safety conflict resolution"
+expected_top = "conflict_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "contradicted_claim"
+content = "dependency safety conflict resolution old compatible note."
+kind = "fact"
+confidence = 0.82
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "conflict_evidence"
+content = "dependency safety conflict resolution verified breaking failure contradicts the old claim."
+kind = "failure"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "dependency safety conflict resolution supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "dependency safety conflict resolution generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "contradiction_004"
+category = "contradiction"
+query = "network route conflict resolution"
+expected_top = "conflict_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "contradicted_claim"
+content = "network route conflict resolution cached reachable state."
+kind = "fact"
+confidence = 0.82
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "conflict_evidence"
+content = "network route conflict resolution verified current outage contradicts the old claim."
+kind = "failure"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "network route conflict resolution supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "network route conflict resolution generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "contradiction_005"
+category = "contradiction"
+query = "data retention conflict resolution"
+expected_top = "conflict_evidence"
+intervention_required = true
+
+[[scenario.memory]]
+label = "contradicted_claim"
+content = "data retention conflict resolution legacy policy."
+kind = "fact"
+confidence = 0.82
+importance = 0.82
+baseline_score = 0.0300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "conflict_evidence"
+content = "data retention conflict resolution verified new legal hold contradicts the old claim."
+kind = "failure"
+confidence = 0.98
+importance = 0.82
+baseline_score = 0.0288
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "supporting_note"
+content = "data retention conflict resolution supporting archive note."
+kind = "fact"
+confidence = 0.72
+importance = 0.82
+baseline_score = 0.0200
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_playbook"
+content = "data retention conflict resolution generic operational playbook."
+kind = "playbook"
+confidence = 0.78
+importance = 0.82
+baseline_score = 0.0130
+temporal_state = "active"
+relevant = false

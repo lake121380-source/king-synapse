@@ -1,0 +1,142 @@
+schema_version = 1
+
+[[scenario]]
+id = "hidden_temporal_ledger"
+category = "temporal_update"
+query = "Which ledger is approved for July invoice reconciliation?"
+expected_top = "july_ledger"
+intervention_required = true
+
+[[scenario.memory]]
+label = "spring_ledger"
+content = "The invoice reconciliation ledger was Spring-Archive during the earlier rollout."
+kind = "state"
+confidence = 0.9800
+importance = 0.8200
+baseline_score = 0.8300
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "july_ledger"
+content = "For July invoice reconciliation the approved ledger is Finance-Live."
+kind = "state"
+confidence = 0.9600
+importance = 0.8200
+baseline_score = 0.8120
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "audit_note"
+content = "July invoice audit note lists retention requirements."
+kind = "fact"
+confidence = 0.8200
+importance = 0.8200
+baseline_score = 0.5100
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "generic_guide"
+content = "General invoice reconciliation guide."
+kind = "playbook"
+confidence = 0.7800
+importance = 0.8200
+baseline_score = 0.3200
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_temporal_route"
+category = "temporal_update"
+query = "current route for urgent warehouse returns"
+expected_top = "current_route"
+intervention_required = true
+
+[[scenario.memory]]
+label = "old_route"
+content = "Urgent warehouse returns formerly used dock seven."
+kind = "state"
+confidence = 0.9600
+importance = 0.8200
+baseline_score = 0.4400
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "current_route"
+content = "Urgent warehouse returns now use the north intake desk."
+kind = "state"
+confidence = 0.9500
+importance = 0.8200
+baseline_score = 0.4300
+temporal_state = "accessed"
+relevant = true
+
+[[scenario.memory]]
+label = "carrier_note"
+content = "Carrier note for ordinary warehouse deliveries."
+kind = "fact"
+confidence = 0.8000
+importance = 0.8200
+baseline_score = 0.2900
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "return_checklist"
+content = "Warehouse return inspection checklist."
+kind = "playbook"
+confidence = 0.8300
+importance = 0.8200
+baseline_score = 0.2200
+temporal_state = "active"
+relevant = false
+
+[[scenario]]
+id = "hidden_temporal_owner"
+category = "temporal_update"
+query = "Who currently owns the incident review rotation?"
+expected_top = "new_owner"
+intervention_required = true
+
+[[scenario.memory]]
+label = "former_owner"
+content = "Incident review rotation owner was Mina before the handoff."
+kind = "state"
+confidence = 0.9900
+importance = 0.8200
+baseline_score = 0.9100
+temporal_state = "superseded"
+relevant = false
+
+[[scenario.memory]]
+label = "new_owner"
+content = "After the handoff, Omar currently owns the incident review rotation."
+kind = "state"
+confidence = 0.9300
+importance = 0.8200
+baseline_score = 0.8870
+temporal_state = "active"
+relevant = true
+
+[[scenario.memory]]
+label = "review_template"
+content = "Incident review meeting template."
+kind = "playbook"
+confidence = 0.8400
+importance = 0.8200
+baseline_score = 0.6000
+temporal_state = "active"
+relevant = false
+
+[[scenario.memory]]
+label = "observer"
+content = "A support observer attends incident reviews."
+kind = "fact"
+confidence = 0.7500
+importance = 0.8200
+baseline_score = 0.4100
+temporal_state = "active"
+relevant = false
