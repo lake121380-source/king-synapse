@@ -326,6 +326,20 @@ Goal
 
 Turn the frozen contracts into concrete adaptive behavior without changing any stable API.
 
+Phase 5.0: Algorithm Integration Design.
+
+Status: **Design-only entry point**.
+
+Design: [Phase 5 Algorithm Integration Design](PHASE5_ALGORITHM_DESIGN.md).
+
+Boundary:
+
+- translates the Phase 4 cognitive competition proof into an engineering plan
+- starts with inspection-only trace integration, not runtime ranking mutation
+- allows only later default-off bounded booster experiments
+- rejects initial RRF rewrites, reranker replacement, candidate expansion, schema changes, and default-on behavior
+- requires A/B recall, MRR, latency, trace-quality, and regression gates before any production decision
+
 Completed foundations
 
 - v0.5.1 — Memory Importance skeleton (10 tests)
