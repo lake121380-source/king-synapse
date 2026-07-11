@@ -155,6 +155,16 @@ other
 
 A Supported/Partially Supported difference is not treated as equivalent to a Supported/Unsupported difference. Segmentation disagreement is also first-class because calibration is invalid when the reviewers and Judge are not evaluating the same semantic unit.
 
+## Mandatory Agreement Gate before adjudication
+
+Independent Reviewer submissions are not sent directly into adjudication. Phase 7.3.1-B first freezes and reports segmentation, Claim-count, and semantic agreement from the two raw submissions. Atomic Claims now carry exact half-open Unicode-character source spans so alignment does not depend on a pre-imposed machine segmentation or semantic Claim-text matching.
+
+The Agreement Report must be preserved before adjudication. See:
+
+```text
+docs/eval/PHASE7_3_1_INTER_REVIEWER_AGREEMENT_GATE.md
+```
+
 ## Frozen-Judge calibration
 
 The frozen scorer emits candidate-level warnings, not atomic-claim decisions. Atomic claims are therefore adjudicated first and then aggregated to one candidate-level semantic label before comparison. Claim-level warnings must not be fabricated by copying one Candidate warning onto every Claim.

@@ -45,6 +45,8 @@ Do not place the two completed submissions in a shared location until both are f
 
 Do not copy another segmentation. Segmentation disagreement is a measured result.
 
+Each atomic Claim must identify a half-open Unicode-character span `[start_char, end_char)` inside its ClaimSourceAnchor. `source_excerpt` must exactly equal that span. Byte offsets and token offsets are not allowed. If one source field contains multiple atomic Claims, give each Claim its own span; do not force identical boundaries merely to simplify agreement.
+
 ## Required annotation per atomic Claim
 
 Each Claim must include:
@@ -54,6 +56,9 @@ claim_id
 case_id
 response_sha256
 anchor_id
+source_span.start_char
+source_span.end_char
+source_span.source_excerpt
 claim_text
 claim_origin
 claimed_evidence_ids

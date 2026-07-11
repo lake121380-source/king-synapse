@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.1-inter-reviewer-agreement-gate-v1",
+  "parent_protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+  "phase": "Phase 7.3.1-B Inter-reviewer Agreement Gate",
+  "purpose": "Measure independent segmentation and semantic agreement before adjudication or frozen-Judge calibration.",
+  "measurement_order": [
+    "independent_reviewer_a",
+    "independent_reviewer_b",
+    "agreement_report",
+    "adjudication",
+    "frozen_gold_labels",
+    "candidate_level_judge_calibration"
+  ],
+  "source_span_unit": "unicode_scalar_index_half_open",
+  "alignment_policy": {
+    "grouping_keys": [
+      "case_id",
+      "anchor_id"
+    ],
+    "pair_score": "character_span_intersection_over_union",
+    "matching": "deterministic_greedy_descending_iou_then_claim_ids",
+    "minimum_iou": 0.5,
+    "exact_boundary_requires_identical_start_and_end": true,
+    "claim_text_similarity_used": false
+  },
+  "segmentation_metrics": [
+    "exact_boundary_agreement_rate",
+    "matched_span_mean_iou",
+    "overlap_alignment_rate",
+    "unmatched_claim_rate",
+    "split_disagreement_count",
+    "merge_disagreement_count"
+  ],
+  "claim_count_metrics": [
+    "reviewer_a_claim_count",
+    "reviewer_b_claim_count",
+    "absolute_claim_count_difference",
+    "per_case_claim_count_pearson_correlation"
+  ],
+  "semantic_metrics": [
+    "support_raw_agreement",
+    "support_linear_weighted_kappa",
+    "support_krippendorff_alpha_ordinal",
+    "provenance_agreement",
+    "scope_agreement",
+    "causal_strength_agreement",
+    "prediction_support_agreement",
+    "counterexample_handling_agreement",
+    "falsifiability_agreement"
+  ],
+  "agreement_input": "raw_blind_reviewer_submissions_only",
+  "adjudicated_labels_allowed": false,
+  "frozen_judge_visible": false,
+  "phase7_3_seed_visible": false,
+  "held_out_accessed": false,
+  "runtime_authorized": false,
+  "hermes_authorized": false
+}

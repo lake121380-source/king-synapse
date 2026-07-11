@@ -175,11 +175,19 @@ pub struct ClaimDimensionLabels {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub struct ClaimSourceSpan {
+    pub start_char: usize,
+    pub end_char: usize,
+    pub source_excerpt: String,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AtomicClaimAnnotation {
     pub claim_id: String,
     pub case_id: String,
     pub response_sha256: String,
     pub anchor_id: String,
+    pub source_span: ClaimSourceSpan,
     pub claim_text: String,
     pub claim_origin: ClaimOrigin,
     pub claimed_evidence_ids: Vec<String>,
@@ -439,6 +447,16 @@ pub fn load_phase7_adjudication_template() -> Result<AdjudicationSubmission> {
     serde_json::from_str(ADJUDICATION_JSON).context("parse Phase 7.3.1 adjudication template")
 }
 
+pub fn validate_phase7_reviewer_submission_against_frozen_inputs(
+    submission: &ReviewerAnnotationSubmission,
+) -> Result<()> {
+    let execution = load_phase7_real_provider_execution()?;
+    let protocol = load_phase7_adjudication_measurement_protocol()?;
+    validate_protocol(&protocol)?;
+    let anchors = build_claim_source_anchors(&execution.outputs);
+    validate_reviewer_submission(submission, &protocol, &execution.execution_id, &anchors)
+}
+
 pub fn build_phase7_blind_review_packet() -> Result<BlindReviewPacket> {
     let execution = load_phase7_real_provider_execution()?;
     let protocol = load_phase7_adjudication_measurement_protocol()?;
@@ -678,6 +696,20 @@ fn validate_reviewer_submission(
         }
         if claim.claim_text.trim().is_empty() || claim.reviewer_rationale.trim().is_empty() {
             bail!("reviewer_claim_text_and_rationale_required");
+        }
+        if claim.source_span.start_char >= claim.source_span.end_char {
+            bail!("reviewer_claim_source_span_must_be_non_empty");
+        }
+        let source_chars = anchor.source_text.chars().collect::<Vec<_>>();
+        if claim.source_span.end_char > source_chars.len() {
+            bail!("reviewer_claim_source_span_out_of_bounds");
+        }
+        let expected_excerpt = source_chars
+            [claim.source_span.start_char..claim.source_span.end_char]
+            .iter()
+            .collect::<String>();
+        if expected_excerpt != claim.source_span.source_excerpt {
+            bail!("reviewer_claim_source_excerpt_mismatch");
         }
     }
     Ok(())

@@ -899,3 +899,37 @@ Phase7AdjudicationCalibrationReport
 ```
 
 The evaluator derives 65 exact hash-bound claim-source anchors from the frozen Phase 7.2.3 Candidate fields. It intentionally emits no agreement or calibration values while both blind reviewer templates and adjudication remain incomplete. The frozen Judge emits Candidate-level warnings rather than atomic-Claim decisions, so adjudicated Claim labels are first aggregated into Candidate-level support and scope labels before confusion-matrix comparison; one Candidate warning is never duplicated across all Claims. Support and scope calibration include Wilson 95% intervals when observations become available. The module cannot call a Provider, modify the Candidate or frozen Judge, access held-out cases, persist knowledge, invoke Hermes, or authorize runtime behavior.
+
+
+## Phase 7.3.1-B inter-reviewer Agreement Gate API
+
+Module:
+
+```text
+synapse_eval::phase7_inter_reviewer_agreement
+```
+
+Primary API:
+
+```rust
+Phase7InterReviewerAgreementEvaluator::evaluate(tag)
+load_phase7_inter_reviewer_agreement_protocol()
+compute_inter_reviewer_agreement(reviewer_a, reviewer_b, alignment_policy)
+```
+
+Primary contracts:
+
+```text
+ClaimSourceSpan
+ClaimAlignmentPolicy
+ClaimAlignment
+SegmentationAgreementMetrics
+SemanticAgreementMetrics
+InterReviewerAgreementMetrics
+InterReviewerAgreementProtocol
+InterReviewerAgreementGuards
+InterReviewerAgreementDecision
+InterReviewerAgreementReport
+```
+
+The API aligns independently segmented Claims by frozen Unicode-character spans within the same `case_id + anchor_id`. Matching uses deterministic descending span IoU with a predeclared `0.50` minimum and never uses Claim-text similarity. It reports segmentation, Claim-count, support, provenance, scope, causal, prediction, counterexample, falsifiability, and confidence agreement only after both raw blind submissions are complete. Adjudicated labels and frozen-Judge outputs are forbidden inputs.
