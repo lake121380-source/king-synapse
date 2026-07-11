@@ -866,6 +866,7 @@ load_phase7_adjudication_measurement_protocol()
 load_phase7_reviewer_a_template()
 load_phase7_reviewer_b_template()
 load_phase7_adjudication_template()
+build_phase7_blind_review_packet()
 compute_support_agreement(labels)
 aggregate_candidate_support_label(claim_labels)
 aggregate_candidate_scope_expansion(scope_labels)
@@ -879,6 +880,8 @@ Primary contracts:
 Phase7AdjudicationMeasurementProtocol
 MeasurementObjectDefinition
 ClaimSourceAnchor
+BlindReviewCase
+BlindReviewPacket
 AtomicClaimAnnotation
 ReviewerAnnotationSubmission
 AdjudicationSubmission

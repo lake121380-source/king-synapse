@@ -1,11 +1,11 @@
 use synapse_eval::phase7_independent_adjudication_calibration::{
     aggregate_candidate_scope_expansion, aggregate_candidate_support_label,
-    compute_confusion_matrix, compute_scope_confusion_matrix, compute_support_agreement,
-    load_phase7_adjudication_measurement_protocol, load_phase7_adjudication_template,
-    load_phase7_reviewer_a_template, load_phase7_reviewer_b_template, BinaryCalibrationView,
-    CandidateJudgeCalibrationRow, HumanSupportLabel, MeasurementObjectKind,
-    Phase7AdjudicationCalibrationDecision, Phase7AdjudicationCalibrationEvaluator, ScopeAssessment,
-    ScopeJudgeCalibrationRow,
+    build_phase7_blind_review_packet, compute_confusion_matrix, compute_scope_confusion_matrix,
+    compute_support_agreement, load_phase7_adjudication_measurement_protocol,
+    load_phase7_adjudication_template, load_phase7_reviewer_a_template,
+    load_phase7_reviewer_b_template, BinaryCalibrationView, CandidateJudgeCalibrationRow,
+    HumanSupportLabel, MeasurementObjectKind, Phase7AdjudicationCalibrationDecision,
+    Phase7AdjudicationCalibrationEvaluator, ScopeAssessment, ScopeJudgeCalibrationRow,
 };
 
 fn close(actual: Option<f64>, expected: f64) {
@@ -283,4 +283,61 @@ fn repeated_evaluation_preserves_all_scientific_content() {
     b.as_object_mut().unwrap().remove("tag");
     b.as_object_mut().unwrap().remove("generated_at");
     assert_eq!(a, b);
+}
+
+#[test]
+fn blind_review_packet_contains_only_frozen_evidence_candidates_and_anchors() {
+    let packet = build_phase7_blind_review_packet().expect("blind review packet");
+    assert_eq!(packet.cases.len(), 10);
+    assert_eq!(
+        packet
+            .cases
+            .iter()
+            .map(|case| case.claim_source_anchors.len())
+            .sum::<usize>(),
+        65
+    );
+    assert!(packet.blind_to_other_reviewer);
+    assert!(packet.blind_to_frozen_judge);
+    assert!(packet.blind_to_phase7_3_aggregates);
+    assert!(!packet.held_out_accessed);
+    assert!(packet.cases.iter().all(|case| {
+        case.case_id == case.evidence_input.case_id
+            && case.claim_source_anchors.iter().all(|anchor| {
+                anchor.case_id == case.case_id && anchor.response_sha256 == case.response_sha256
+            })
+    }));
+
+    let value = serde_json::to_value(packet).expect("serialize packet");
+    let forbidden_structural_keys = [
+        "reference_candidate",
+        "unsupported_claim_rate",
+        "scope_retention",
+        "scorer_policy",
+        "capability_matrix",
+        "judge_warning",
+        "reviewer_a",
+        "reviewer_b",
+        "adjudication",
+    ];
+    fn assert_keys_are_blind(value: &serde_json::Value, forbidden: &[&str]) {
+        match value {
+            serde_json::Value::Object(map) => {
+                for (key, child) in map {
+                    assert!(
+                        !forbidden.contains(&key.as_str()),
+                        "forbidden blind-packet key: {key}"
+                    );
+                    assert_keys_are_blind(child, forbidden);
+                }
+            }
+            serde_json::Value::Array(items) => {
+                for item in items {
+                    assert_keys_are_blind(item, forbidden);
+                }
+            }
+            _ => {}
+        }
+    }
+    assert_keys_are_blind(&value, &forbidden_structural_keys);
 }

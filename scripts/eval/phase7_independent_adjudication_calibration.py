@@ -14,6 +14,7 @@ PROTOCOL = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_measuremen
 REVIEWER_A = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_a_template.json"
 REVIEWER_B = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json"
 ADJUDICATION = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json"
+BLIND_PACKET = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_blind_review_packet.json"
 
 
 def main() -> int:
@@ -39,6 +40,7 @@ def main() -> int:
     reviewer_a = json.loads(REVIEWER_A.read_text(encoding="utf-8"))
     reviewer_b = json.loads(REVIEWER_B.read_text(encoding="utf-8"))
     adjudication = json.loads(ADJUDICATION.read_text(encoding="utf-8"))
+    blind_packet = json.loads(BLIND_PACKET.read_text(encoding="utf-8"))
 
     assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
     assert report["decision"] == "protocol_ready_waiting_for_independent_annotation"
@@ -74,6 +76,26 @@ def main() -> int:
         assert reviewer["blind_to_phase7_3_aggregates"] is True
         assert reviewer["held_out_accessed"] is False
 
+    assert len(blind_packet["cases"]) == 10
+    assert sum(len(case["claim_source_anchors"]) for case in blind_packet["cases"]) == 65
+    assert blind_packet["blind_to_other_reviewer"] is True
+    assert blind_packet["blind_to_frozen_judge"] is True
+    assert blind_packet["blind_to_phase7_3_aggregates"] is True
+    assert blind_packet["held_out_accessed"] is False
+    serialized_packet = json.dumps(blind_packet, sort_keys=True)
+    for forbidden_key in (
+        '"reference_candidate":',
+        '"unsupported_claim_rate":',
+        '"scope_retention":',
+        '"scorer_policy":',
+        '"capability_matrix":',
+        '"judge_warning":',
+        '"reviewer_a":',
+        '"reviewer_b":',
+        '"adjudication":',
+    ):
+        assert forbidden_key not in serialized_packet
+
     assert adjudication["completed"] is False
     assert adjudication["claims"] == []
     assert adjudication["disagreements_preserved"] is True
@@ -101,6 +123,7 @@ def main() -> int:
     print("Phase: Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration")
     print("Measurement objects: Candidate + Frozen Judge studied; all controls frozen")
     print("Claim-source anchors: 65 frozen fields awaiting independent atomic segmentation")
+    print("Blind packet: 10 design cases / 65 anchors / no Judge or seed-label leakage")
     print("Reviewer A/B: blind templates ready, 0 completed submissions")
     print("Agreement/calibration: intentionally unavailable")
     print("Decision: protocol_ready_waiting_for_independent_annotation")

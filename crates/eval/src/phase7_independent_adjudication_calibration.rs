@@ -1,10 +1,14 @@
 use crate::phase7_candidate_error_analysis::CandidateFailureKind;
+use crate::phase7_cognitive_architecture_contract::PatternCandidate;
+use crate::phase7_pattern_extraction_protocol::{
+    load_phase7_pattern_extraction_design, PatternExtractionInput,
+};
 use crate::phase7_real_provider_readiness::load_phase7_real_provider_execution;
 use anyhow::{bail, Context, Result};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 
 const PROTOCOL_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_measurement_protocol.json");
@@ -314,6 +318,34 @@ pub struct SupportAgreementMetrics {
     pub fundamental_disagreement_count: usize,
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+pub struct BlindReviewCase {
+    pub case_id: String,
+    pub response_sha256: String,
+    pub evidence_input: PatternExtractionInput,
+    pub candidate: PatternCandidate,
+    pub claim_source_anchors: Vec<ClaimSourceAnchor>,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+pub struct BlindReviewPacket {
+    pub schema_version: u32,
+    pub packet_id: String,
+    pub protocol_id: String,
+    pub source_execution_id: String,
+    pub packet_role: String,
+    pub reviewer_copy_rule: String,
+    pub blind_to_other_reviewer: bool,
+    pub blind_to_frozen_judge: bool,
+    pub blind_to_phase7_3_aggregates: bool,
+    pub held_out_accessed: bool,
+    pub prohibited_context: Vec<String>,
+    pub claim_origin_definitions: serde_json::Value,
+    pub support_label_definitions: serde_json::Value,
+    pub disagreement_kinds: Vec<DisagreementKind>,
+    pub cases: Vec<BlindReviewCase>,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MetricDefinition {
     pub name: String,
@@ -405,6 +437,82 @@ pub fn load_phase7_reviewer_b_template() -> Result<ReviewerAnnotationSubmission>
 
 pub fn load_phase7_adjudication_template() -> Result<AdjudicationSubmission> {
     serde_json::from_str(ADJUDICATION_JSON).context("parse Phase 7.3.1 adjudication template")
+}
+
+pub fn build_phase7_blind_review_packet() -> Result<BlindReviewPacket> {
+    let execution = load_phase7_real_provider_execution()?;
+    let protocol = load_phase7_adjudication_measurement_protocol()?;
+    let dataset = load_phase7_pattern_extraction_design()?;
+    let anchors = build_claim_source_anchors(&execution.outputs);
+    let inputs = dataset
+        .cases
+        .into_iter()
+        .map(|case| (case.id, case.input))
+        .collect::<BTreeMap<_, _>>();
+
+    let cases = execution
+        .outputs
+        .iter()
+        .map(|output| {
+            let evidence_input = inputs
+                .get(&output.case_id)
+                .with_context(|| format!("missing frozen evidence input for {}", output.case_id))?
+                .clone();
+            let case_anchors = anchors
+                .iter()
+                .filter(|anchor| anchor.case_id == output.case_id)
+                .cloned()
+                .collect::<Vec<_>>();
+            if case_anchors.is_empty() {
+                bail!(
+                    "blind review case has no claim-source anchors: {}",
+                    output.case_id
+                );
+            }
+            Ok(BlindReviewCase {
+                case_id: output.case_id.clone(),
+                response_sha256: output.response_sha256.clone(),
+                evidence_input,
+                candidate: output.candidate.clone(),
+                claim_source_anchors: case_anchors,
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    if cases.len() != 10
+        || cases
+            .iter()
+            .map(|case| case.claim_source_anchors.len())
+            .sum::<usize>()
+            != 65
+    {
+        bail!("blind review packet must contain ten design cases and 65 anchors");
+    }
+
+    Ok(BlindReviewPacket {
+        schema_version: 1,
+        packet_id: "phase7.3.1-blind-independent-review-packet-v1".to_string(),
+        protocol_id: protocol.protocol_id,
+        source_execution_id: execution.execution_id,
+        packet_role: "reviewer_evidence_and_candidate_input_only".to_string(),
+        reviewer_copy_rule: "Give one clean copy to each genuinely independent reviewer; do not merge, pre-segment, or pre-label their work.".to_string(),
+        blind_to_other_reviewer: true,
+        blind_to_frozen_judge: true,
+        blind_to_phase7_3_aggregates: true,
+        held_out_accessed: false,
+        prohibited_context: vec![
+            "other_reviewer_submission".to_string(),
+            "frozen_judge_warnings_or_scores".to_string(),
+            "phase7_3_seed_labels_or_aggregates".to_string(),
+            "held_out_cases".to_string(),
+            "reference_candidates".to_string(),
+            "provider_raw_responses".to_string(),
+        ],
+        claim_origin_definitions: protocol.claim_origin_definitions,
+        support_label_definitions: protocol.support_label_definitions,
+        disagreement_kinds: protocol.disagreement_kinds,
+        cases,
+    })
 }
 
 fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {

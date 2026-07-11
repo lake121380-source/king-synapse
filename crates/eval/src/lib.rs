@@ -221,11 +221,12 @@ pub use phase7_cognitive_architecture_contract::{
 };
 pub use phase7_independent_adjudication_calibration::{
     aggregate_candidate_scope_expansion, aggregate_candidate_support_label,
-    compute_confusion_matrix, compute_scope_confusion_matrix, compute_support_agreement,
-    load_phase7_adjudication_measurement_protocol, load_phase7_adjudication_template,
-    load_phase7_reviewer_a_template, load_phase7_reviewer_b_template, AdjudicatedClaim,
-    AdjudicationSubmission, AnnotationConfidence, AtomicClaimAnnotation, BinaryCalibrationView,
-    CalibrationPolicy, CandidateJudgeCalibrationRow, CausalStrengthAssessment,
+    build_phase7_blind_review_packet, compute_confusion_matrix, compute_scope_confusion_matrix,
+    compute_support_agreement, load_phase7_adjudication_measurement_protocol,
+    load_phase7_adjudication_template, load_phase7_reviewer_a_template,
+    load_phase7_reviewer_b_template, AdjudicatedClaim, AdjudicationSubmission,
+    AnnotationConfidence, AtomicClaimAnnotation, BinaryCalibrationView, BlindReviewCase,
+    BlindReviewPacket, CalibrationPolicy, CandidateJudgeCalibrationRow, CausalStrengthAssessment,
     ClaimDimensionLabels, ClaimOrigin, ClaimSourceAnchor, ClaimSourceField, ConfidenceInterval,
     ConfusionMatrix, CounterexampleAssessment, DisagreementKind, FalsifiabilityAssessment,
     HumanSupportLabel, JudgeFailureKind, MeasurementObjectDefinition, MeasurementObjectKind,

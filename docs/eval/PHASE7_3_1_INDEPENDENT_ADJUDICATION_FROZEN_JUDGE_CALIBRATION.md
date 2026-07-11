@@ -120,6 +120,24 @@ Both reviewer templates are currently empty and incomplete. A valid submission r
 
 The current Phase 7.3 seed labels are not silently converted into independent claim-level ground truth.
 
+## Blind review work packet
+
+The reproducible generator now emits:
+
+```text
+crates/eval/datasets/pattern_extraction/phase7_3_1_blind_review_packet.json
+```
+
+It contains exactly the ten frozen design Evidence Bundles, parsed Pattern Candidates, and 65 hash-bound ClaimSourceAnchors. It excludes reference Candidates, frozen-Judge warnings and metrics, Phase 7.3 seed labels and aggregates, held-out cases, and raw Provider responses. Give a separate clean copy to each genuinely independent reviewer together with that reviewer?s empty submission template.
+
+Operational instructions are frozen in:
+
+```text
+docs/eval/PHASE7_3_1_REVIEWER_GUIDE.md
+```
+
+Creating this packet does not constitute an independent review. The current agent has seen prior scorer and taxonomy context and therefore must not impersonate Reviewer A or Reviewer B.
+
 ## Disagreement taxonomy
 
 The protocol preserves:
