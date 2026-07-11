@@ -558,3 +558,9 @@ Phase 7.2 freezes an evidence-grounded Pattern extraction protocol over ten desi
 The first design-only provider is frozen as `deterministic_bounded_pattern_extractor_v0`. It executes only on the ten Phase 7.2 design inputs, preserves exact evidence lineage and supplied counterexamples, emits only `PatternStatus::Proposed`, performs no automatic repair, and has no persistence or runtime authority.
 
 Its result intentionally separates `accepted_contract_only` from semantic quality: all ten candidates satisfy the structural boundary, while nine receive deterministic quality diagnostics and mean design-reference token recall is approximately `0.064`. See `docs/eval/PHASE7_2_1_BOUNDED_PATTERN_EXTRACTION_PROVIDER.md`.
+
+## Phase 7.2.2 frozen provider capability matrix
+
+Phase 7.2.2 freezes `PatternExtractorPrompt-v1`, strict single-object JSON parsing, reject-only/no-repair behavior, an evidence-grounded scorer, provider manifests, and artifact hashes. The primary safety metric is `unsupported_claim_rate`; fluency and style receive no reward.
+
+The deterministic weak baseline row is complete. The DeepSeek model row is explicitly `blocked_authorization` after a sanitized HTTP 401 preflight, so it contains no fabricated capability metrics. Phase 7.1 held-out cases remain closed and persistence, knowledge promotion, Hermes, and runtime remain unauthorized. See `docs/eval/PHASE7_2_2_PROVIDER_CAPABILITY_MATRIX.md`.

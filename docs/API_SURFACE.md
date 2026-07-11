@@ -754,3 +754,36 @@ evaluate_provider(tag, provider, frozen_provider_config)
 ```
 
 The module is evaluation-only. It exports frozen provider configuration, per-case contract disposition, deterministic extraction-quality diagnostics, fault-injection results, and a JSON report. It does not expose persistence, knowledge promotion, RecallEngine mutation, Hermes integration, or runtime ranking authority.
+
+## Phase 7.2.2 eval-only provider comparison API
+
+Module:
+
+```text
+synapse_eval::phase7_pattern_provider_comparison
+```
+
+Primary API:
+
+```rust
+Phase7ProviderComparisonEvaluator::evaluate(tag)
+load_phase7_provider_manifests()
+load_phase7_model_execution()
+strict_parse_pattern_candidate_json(raw)
+```
+
+Primary contracts:
+
+```text
+ProviderComparisonManifestSet
+ProviderManifest
+StrictParserPolicy
+ExtractionScorerPolicy
+ModelProviderExecutionArtifact
+ModelProviderCaseOutput
+ProviderCapabilityRow
+ProviderComparisonProtocolGuards
+Phase7ProviderComparisonReport
+```
+
+The API verifies frozen SHA-256 identities, reports the weak baseline and model provider as separate capability rows, and leaves unavailable model metrics as `None`. It cannot access held-out transfer cases, repair model output, persist Pattern Candidates, promote knowledge, invoke Hermes, or modify runtime behavior.

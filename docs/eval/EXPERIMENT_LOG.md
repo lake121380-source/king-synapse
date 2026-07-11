@@ -128,3 +128,32 @@ raw third-party records and credential values.
 | 2026-07-11 | Phase 7.1 Transfer Evaluation Protocol | `crates/eval/datasets/transfer/phase7_1_transfer_benchmark.json`, `crates/eval/src/phase7_transfer_evaluation_protocol.rs`, `crates/eval/reports/phase7_transfer_evaluation_protocol.json`, `docs/eval/PHASE7_1_TRANSFER_EVALUATION_PROTOCOL.md` | Frozen 30 scenarios (`10` design, `20` held-out), six transfer categories, six comparison arms, 13 transfer/safety metrics, evidence lineage, must-apply and must-withhold labels, and eight failure classes. All scenario contracts pass. | Protocol complete only. Transfer outcome evaluation, Pattern Discovery, persistence, Hermes, autonomous promotion, and runtime remain unauthorized. |
 | 2026-07-11 | Phase 7.2 Evidence-Grounded Pattern Extraction Protocol | `crates/eval/datasets/pattern_extraction/phase7_2_pattern_extraction_design.json`, `crates/eval/src/phase7_pattern_extraction_protocol.rs`, `crates/eval/reports/phase7_pattern_extraction_protocol.json`, `docs/eval/PHASE7_2_PATTERN_EXTRACTION_PROTOCOL.md` | Frozen a design-only extraction interface over 10 Phase 7.1 design cases with 20 supporting experiences, 10 counterexamples, 11 extraction metrics, a confidence cap, exact provenance checks, and seven deterministic rejection cases. | Protocol only. No extractor/model output, held-out access, transfer result, persistence, Hermes integration, autonomous promotion, or runtime authority. |
 | 2026-07-11 | Phase 7.2.1 Bounded Pattern Extraction Provider | `crates/eval/src/phase7_bounded_pattern_extraction_provider.rs`, `crates/eval/reports/phase7_bounded_pattern_extraction_provider.json`, `docs/eval/PHASE7_2_1_BOUNDED_PATTERN_EXTRACTION_PROVIDER.md` | Executed a frozen deterministic weak-baseline provider on the ten design cases. All ten outputs passed the structural/provenance contract, nine retained quality diagnostics, mean design-reference token recall was approximately `0.064`, and all six injected invalid outputs were rejected with explicit reasons. | Contract acceptance is not semantic validation. Held-out access, Pattern persistence, knowledge promotion, transfer claims, Hermes, and runtime remain blocked. |
+
+## Phase 7.2.2 - Frozen Provider Capability Matrix
+
+Date: 2026-07-11
+
+Objective: freeze a reproducible weak-baseline-versus-model extraction comparison without rewarding linguistic sophistication or opening held-out cases.
+
+Result:
+
+```text
+canonical prompt                    PatternExtractorPrompt-v1
+strict parser                       frozen
+output repair                       disabled
+primary safety metric               unsupported_claim_rate
+weak baseline                       completed 10/10
+model provider preflight            HTTP 401 authorization_error
+model design calls                  0
+fabricated model metrics            0
+held-out access                     false
+runtime/persistence/Hermes          false
+```
+
+Decision:
+
+```text
+comparison_protocol_frozen_model_execution_blocked
+```
+
+Conclusion: the comparison protocol and manifest discipline are reproducible, and the weak provider row is measured. Model capability remains unknown because authorization failed. This phase does not prove LLM extraction quality, Pattern validation, transfer improvement, or knowledge formation.

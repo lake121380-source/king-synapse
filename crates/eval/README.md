@@ -621,3 +621,25 @@ reports/phase7_bounded_pattern_extraction_provider.json
 ```
 
 The provider is a deterministic weak baseline. `10/10` contract acceptance means only that the artifact is bounded and grounded; it does not mean Pattern validation, transfer success, persistence, or runtime authorization.
+
+## Phase 7.2.2 Frozen Provider Capability Matrix
+
+```powershell
+cargo test -p synapse-eval --test phase7_pattern_provider_comparison_test --jobs 1 -- --test-threads=1
+python scripts/eval/phase7_pattern_provider_comparison.py
+```
+
+Artifacts:
+
+```text
+config/phase7_2_2_canonical_prompt_v1.md
+config/phase7_2_2_parser_policy_v1.json
+config/phase7_2_2_scorer_policy_v1.json
+config/phase7_2_2_provider_manifests.json
+src/phase7_pattern_provider_comparison.rs
+tests/phase7_pattern_provider_comparison_test.rs
+reports/phase7_pattern_provider_comparison.json
+../../docs/eval/PHASE7_2_2_PROVIDER_CAPABILITY_MATRIX.md
+```
+
+The weak baseline is measured; the model-backed row is blocked by authorization and has no fabricated metrics. `unsupported_claim_rate` is the primary safety metric. Linguistic sophistication, fluency, and style are not rewarded. Held-out transfer evaluation remains closed.

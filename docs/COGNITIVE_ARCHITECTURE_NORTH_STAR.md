@@ -1,4 +1,4 @@
-﻿# Cognitive Architecture North Star
+# Cognitive Architecture North Star
 
 ## Mission
 
@@ -186,3 +186,18 @@ Experience bundle
 ```
 
 The transparent weak baseline is intentionally not described as Pattern Discovery. Its low design-reference alignment is retained as research evidence rather than repaired or hidden.
+
+## Phase 7.2.2 provider reproducibility boundary
+
+The executable extraction boundary now includes a frozen provider-comparison layer:
+
+```text
+Experience bundle
+  -> frozen provider manifest
+  -> frozen prompt / parser / no-repair policy
+  -> Pattern Candidate or explicit rejection/blocker
+  -> evidence-grounded diagnostics
+  -> no automatic knowledge authority
+```
+
+Provider identity and experimental configuration are part of the evidence record. A provider that cannot execute is represented as blocked rather than being assigned synthetic scores. Language polish is not a cognitive-quality signal; unsupported claims, evidence attribution, scope, counterexamples, prediction, and falsifiability remain the evaluated properties.

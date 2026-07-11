@@ -42,6 +42,7 @@ pub mod phase6_recall_score_distribution;
 pub mod phase7_bounded_pattern_extraction_provider;
 pub mod phase7_cognitive_architecture_contract;
 pub mod phase7_pattern_extraction_protocol;
+pub mod phase7_pattern_provider_comparison;
 pub mod phase7_transfer_evaluation_protocol;
 pub mod reporter;
 pub mod types;
@@ -201,11 +202,12 @@ pub use phase6_recall_score_distribution::{
     RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
 };
 pub use phase7_bounded_pattern_extraction_provider::{
-    evaluate_provider, BoundedPatternExtractionGuards, BoundedPatternExtractionProviderConfig,
-    DeterministicBoundedPatternExtractionProvider, PatternExtractionProviderCaseReport,
-    PatternExtractionProviderSummary, PatternExtractionQualityMetrics,
-    Phase7BoundedPatternExtractionDecision, Phase7BoundedPatternExtractionEvaluator,
-    Phase7BoundedPatternExtractionReport, ProviderFaultInjectionReport, ProviderOutputDisposition,
+    evaluate_pattern_extraction_quality, evaluate_provider, BoundedPatternExtractionGuards,
+    BoundedPatternExtractionProviderConfig, DeterministicBoundedPatternExtractionProvider,
+    PatternExtractionProviderCaseReport, PatternExtractionProviderSummary,
+    PatternExtractionQualityMetrics, Phase7BoundedPatternExtractionDecision,
+    Phase7BoundedPatternExtractionEvaluator, Phase7BoundedPatternExtractionReport,
+    ProviderFaultInjectionReport, ProviderOutputDisposition,
 };
 pub use phase7_cognitive_architecture_contract::{
     validate_pattern_candidate, CognitiveArtifactContract, ConfidenceUpdatePolicy,
@@ -222,6 +224,14 @@ pub use phase7_pattern_extraction_protocol::{
     PatternExtractionProtocolGuards, PatternExtractionProvider,
     PatternExtractionSubmissionValidation, Phase7PatternExtractionDecision,
     Phase7PatternExtractionProtocolEvaluator, Phase7PatternExtractionReport,
+};
+pub use phase7_pattern_provider_comparison::{
+    load_phase7_model_execution, load_phase7_provider_manifests,
+    strict_parse_pattern_candidate_json, ExtractionScorerPolicy, FrozenArtifactHashes,
+    ModelExecutionBlocker, ModelProviderCaseOutput, ModelProviderExecutionArtifact,
+    Phase7ProviderComparisonDecision, Phase7ProviderComparisonEvaluator,
+    Phase7ProviderComparisonReport, ProviderCapabilityRow, ProviderComparisonManifestSet,
+    ProviderComparisonProtocolGuards, ProviderManifest, StrictParserPolicy,
 };
 pub use phase7_transfer_evaluation_protocol::{
     load_phase7_transfer_benchmark, validate_transfer_scenario, DangerousTransfer,

@@ -973,3 +973,29 @@ Current result:
 ```
 
 Next gate: freeze and compare a stronger or model-backed provider on the same design cases. Do not open held-out transfer cases until provider/model/prompt/decoding/repair policy and quality scoring are frozen.
+
+## Phase 7.2.2 Frozen Provider Capability Matrix
+
+Status: **protocol frozen; weak baseline complete; model-backed execution blocked by authorization.**
+
+Frozen components:
+
+```text
+PatternExtractorPrompt-v1
+strict single-object JSON parser
+reject-only/no-repair policy
+evidence-grounded scorer
+provider manifest and artifact hashes
+10 design cases only
+```
+
+Current result:
+
+```text
+deterministic weak baseline  completed 10/10
+DeepSeek provider            blocked_authorization 0/10
+held-out cases               untouched
+runtime / persistence        unauthorized
+```
+
+No LLM extraction-quality or transfer-value claim is permitted until authorization is valid and the frozen design comparison completes. The next action is to repair provider credentials or select a separately manifested model provider without changing the frozen prompt/parser/scorer after seeing held-out data.

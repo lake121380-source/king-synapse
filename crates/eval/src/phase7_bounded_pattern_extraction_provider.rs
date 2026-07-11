@@ -386,9 +386,9 @@ pub fn evaluate_provider(
     for case in &dataset.cases {
         let candidates = provider.extract(&case.input)?;
         let validation = validate_pattern_extraction_batch(&case.input, &candidates);
-        let quality_metrics = candidates
-            .first()
-            .map(|candidate| quality_metrics(&case.input, candidate, &case.reference_candidate));
+        let quality_metrics = candidates.first().map(|candidate| {
+            evaluate_pattern_extraction_quality(&case.input, candidate, &case.reference_candidate)
+        });
         let diagnostics = quality_metrics
             .as_ref()
             .map(quality_diagnostics)
@@ -456,7 +456,7 @@ pub fn evaluate_provider(
     })
 }
 
-fn quality_metrics(
+pub fn evaluate_pattern_extraction_quality(
     input: &PatternExtractionInput,
     candidate: &PatternCandidate,
     reference: &PatternCandidate,

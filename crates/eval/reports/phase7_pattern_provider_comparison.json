@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.2.2-provider-capability-matrix-v1",
+  "tag": "phase7.2.2-protocol-frozen",
+  "generated_at": "2026-07-11T06:47:25.186883700+00:00",
+  "phase": "Phase 7.2.2 Frozen Provider Capability Matrix",
+  "canonical_prompt_version": "PatternExtractorPrompt-v1",
+  "artifact_hashes": {
+    "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+    "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+    "scorer_sha256": "fd1a23b61ca428ec97b0689643b69b00ecddb535844422a1b5518d05bc015d26",
+    "dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "all_match_manifest": true
+  },
+  "parser_policy": {
+    "schema_version": 1,
+    "parser_id": "strict_pattern_candidate_json_v1",
+    "accepted_top_level": "single_json_object",
+    "markdown_fences_allowed": false,
+    "extra_commentary_allowed": false,
+    "unknown_fields_allowed": false,
+    "automatic_repair": false,
+    "retry_on_parse_error": false,
+    "failure_disposition": "reject_with_parser_error"
+  },
+  "scorer_policy": {
+    "schema_version": 1,
+    "scorer_id": "evidence_grounded_extraction_scorer_v1",
+    "principle": "never_reward_linguistic_sophistication",
+    "primary_safety_metric": "unsupported_claim_rate",
+    "metrics": [
+      "contract_validity",
+      "pattern_completeness",
+      "evidence_attribution_accuracy",
+      "evidence_coverage",
+      "scope_retention",
+      "counterexample_handling",
+      "unsupported_claim_rate",
+      "abstraction_distance_score",
+      "design_reference_token_recall",
+      "compression_ratio"
+    ],
+    "fluency_metric": null,
+    "style_metric": null,
+    "held_out_threshold_selection": false
+  },
+  "provider_manifests": [
+    {
+      "provider_name": "deterministic_bounded_pattern_extractor_v0",
+      "provider_version": "v0",
+      "provider_kind": "deterministic_transparent_weak_baseline",
+      "model": null,
+      "temperature": null,
+      "top_p": null,
+      "prompt_version": null,
+      "prompt_sha256": null,
+      "parser_id": "native_rust_pattern_candidate_v1",
+      "parser_sha256": null,
+      "repair_policy": "reject_only_no_automatic_repair",
+      "dataset_version": "phase7.2-pattern-extraction-design-v1",
+      "execution_status": "completed"
+    },
+    {
+      "provider_name": "deepseek_pattern_extractor_v1",
+      "provider_version": "v1",
+      "provider_kind": "openai_compatible_chat_completion",
+      "model": "deepseek-v4-flash",
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "prompt_version": "PatternExtractorPrompt-v1",
+      "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+      "parser_id": "strict_pattern_candidate_json_v1",
+      "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+      "repair_policy": "reject_only_no_automatic_repair",
+      "dataset_version": "phase7.2-pattern-extraction-design-v1",
+      "execution_status": "blocked_authorization"
+    }
+  ],
+  "capability_matrix": [
+    {
+      "provider_name": "deterministic_bounded_pattern_extractor_v0",
+      "provider_version": "v0",
+      "model": null,
+      "execution_status": "completed",
+      "design_cases_attempted": 10,
+      "design_cases_completed": 10,
+      "contract_validity": 1.0,
+      "evidence_attribution_accuracy": 1.0,
+      "scope_preservation": 1.0,
+      "counterexample_retention": 1.0,
+      "unsupported_claim_rate": 0.04416666666666667,
+      "abstraction_distance": 0.3827612671947648,
+      "design_reference_token_recall": 0.06357864357864358,
+      "cases_with_quality_diagnostics": 9,
+      "blocker": null
+    },
+    {
+      "provider_name": "deepseek_pattern_extractor_v1",
+      "provider_version": "v1",
+      "model": "deepseek-v4-flash",
+      "execution_status": "blocked_authorization",
+      "design_cases_attempted": 0,
+      "design_cases_completed": 0,
+      "contract_validity": null,
+      "evidence_attribution_accuracy": null,
+      "scope_preservation": null,
+      "counterexample_retention": null,
+      "unsupported_claim_rate": null,
+      "abstraction_distance": null,
+      "design_reference_token_recall": null,
+      "cases_with_quality_diagnostics": null,
+      "blocker": {
+        "stage": "sanitized_preflight",
+        "http_status": 401,
+        "reason": "authorization_required"
+      }
+    }
+  ],
+  "preflight_status": "authorization_error",
+  "guards": {
+    "canonical_prompt_frozen": true,
+    "provider_manifests_frozen": true,
+    "parser_policy_frozen": true,
+    "repair_policy_frozen": true,
+    "scorer_policy_frozen": true,
+    "linguistic_sophistication_rewarded": false,
+    "unsupported_claim_rate_primary_safety_metric": true,
+    "design_cases_only": true,
+    "held_out_cases_untouched": true,
+    "model_execution_completed": false,
+    "pattern_persistence_authorized": false,
+    "knowledge_promotion_authorized": false,
+    "transfer_value_claimed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  },
+  "decision": "comparison_protocol_frozen_model_execution_blocked",
+  "conclusion": "The canonical prompt, provider manifests, strict parser, reject-only repair policy, scorer, and capability matrix are frozen. The deterministic weak baseline is the only completed row. The model-backed row is blocked by authorization and contains no fabricated metrics. Held-out cases remain closed."
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "experiment_id": "phase7.2.2-provider-capability-matrix-v1",
+  "canonical_prompt_version": "PatternExtractorPrompt-v1",
+  "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+  "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+  "scorer_sha256": "fd1a23b61ca428ec97b0689643b69b00ecddb535844422a1b5518d05bc015d26",
+  "dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+  "providers": [
+    {
+      "provider_name": "deterministic_bounded_pattern_extractor_v0",
+      "provider_version": "v0",
+      "provider_kind": "deterministic_transparent_weak_baseline",
+      "model": null,
+      "temperature": null,
+      "top_p": null,
+      "prompt_version": null,
+      "prompt_sha256": null,
+      "parser_id": "native_rust_pattern_candidate_v1",
+      "parser_sha256": null,
+      "repair_policy": "reject_only_no_automatic_repair",
+      "dataset_version": "phase7.2-pattern-extraction-design-v1",
+      "execution_status": "completed"
+    },
+    {
+      "provider_name": "deepseek_pattern_extractor_v1",
+      "provider_version": "v1",
+      "provider_kind": "openai_compatible_chat_completion",
+      "model": "deepseek-v4-flash",
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "prompt_version": "PatternExtractorPrompt-v1",
+      "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+      "parser_id": "strict_pattern_candidate_json_v1",
+      "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+      "repair_policy": "reject_only_no_automatic_repair",
+      "dataset_version": "phase7.2-pattern-extraction-design-v1",
+      "execution_status": "blocked_authorization"
+    }
+  ]
+}
