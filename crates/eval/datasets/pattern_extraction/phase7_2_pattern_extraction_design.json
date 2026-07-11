@@ -1,0 +1,1398 @@
+{
+  "schema_version": 1,
+  "dataset_id": "phase7.2-evidence-grounded-pattern-extraction-design-v1",
+  "source_protocol": "phase7.1-transfer-evaluation-protocol-v1",
+  "description": "Design-only extraction fixtures. Extractor inputs exclude target transfer answers and all held-out cases.",
+  "cases": [
+    {
+      "id": "extract_01",
+      "source_transfer_scenario_id": "transfer_001_direct_software_release",
+      "input": {
+        "case_id": "extract_01",
+        "source_domain": "software_delivery",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_01_support_1",
+            "experience_id": "payments_canary",
+            "domain": "software_delivery",
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_01_support_2",
+            "experience_id": "search_cohorts",
+            "domain": "software_delivery",
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_01_counter_3",
+            "experience_id": "atomic_schema",
+            "domain": "software_delivery",
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_direct_software_release",
+        "proposition": "Small batches with observable checkpoints reduce rollback cost when requirements are uncertain.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_01_support_1",
+            "experience_id": "payments_canary",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_01_support_2",
+            "experience_id": "search_cohorts",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_01_counter_3",
+            "experience_id": "atomic_schema",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to software_delivery"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Copying the exact old deployment commands instead of transferring the risk-control principle."
+          }
+        ],
+        "source_domains": [
+          "software_delivery"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Small batches with observable checkpoints reduce rollback cost when requirements are uncertain.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Small batches with observable checkpoints reduce rollback cost when requirements are uncertain.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_02",
+      "source_transfer_scenario_id": "transfer_002_direct_support_triage",
+      "input": {
+        "case_id": "extract_02",
+        "source_domain": "customer_support",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_02_support_1",
+            "experience_id": "mixed_queue",
+            "domain": "customer_support",
+            "context": "A support queue labeled cases by customer impact and time sensitivity before assignment.",
+            "action_or_observation": "A support queue labeled cases by customer impact and time sensitivity before assignment.",
+            "outcome": "Outages reached incident responders quickly while ordinary questions stayed visible.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_02_support_2",
+            "experience_id": "billing_deadlines",
+            "domain": "customer_support",
+            "context": "A billing backlog added severity and regulatory deadline labels.",
+            "action_or_observation": "A billing backlog added severity and regulatory deadline labels.",
+            "outcome": "Deadline cases stopped being hidden behind newer low-impact tickets.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_02_counter_3",
+            "experience_id": "vip_proxy",
+            "domain": "customer_support",
+            "context": "All VIP messages were ranked above other cases regardless of impact.",
+            "action_or_observation": "All VIP messages were ranked above other cases regardless of impact.",
+            "outcome": "A widespread login failure waited behind low-impact VIP requests.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_02_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_direct_support_triage",
+        "proposition": "Classifying incidents by impact and urgency improves triage consistency.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_02_support_1",
+            "experience_id": "mixed_queue",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_02_support_2",
+            "experience_id": "billing_deadlines",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_02_counter_3",
+            "experience_id": "vip_proxy",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to customer_support"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Treating every complaint as an outage because outages were prominent in the source cases."
+          }
+        ],
+        "source_domains": [
+          "customer_support"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Classifying incidents by impact and urgency improves triage consistency.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Classifying incidents by impact and urgency improves triage consistency.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_03",
+      "source_transfer_scenario_id": "transfer_003_direct_experiment_design",
+      "input": {
+        "case_id": "extract_03",
+        "source_domain": "product_experiment",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_03_support_1",
+            "experience_id": "onboarding_test",
+            "domain": "product_experiment",
+            "context": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "action_or_observation": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "outcome": "The team accepted a neutral result instead of redefining success afterward.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_03_support_2",
+            "experience_id": "pricing_test",
+            "domain": "product_experiment",
+            "context": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "action_or_observation": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "outcome": "It stopped when cancellations crossed the guardrail despite temporary revenue gain.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_03_counter_3",
+            "experience_id": "discovery_interviews",
+            "domain": "product_experiment",
+            "context": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "action_or_observation": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "outcome": "Unexpected themes were discarded even though they later explained customer pain.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_03_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_direct_experiment_design",
+        "proposition": "Predefined success and stop criteria reduce post-hoc interpretation.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_03_support_1",
+            "experience_id": "onboarding_test",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_03_support_2",
+            "experience_id": "pricing_test",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_03_counter_3",
+            "experience_id": "discovery_interviews",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to product_experiment"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Reusing the previous experiment's numeric thresholds without checking traffic and risk."
+          }
+        ],
+        "source_domains": [
+          "product_experiment"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Predefined success and stop criteria reduce post-hoc interpretation.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Predefined success and stop criteria reduce post-hoc interpretation.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_04",
+      "source_transfer_scenario_id": "transfer_004_direct_database_incident",
+      "input": {
+        "case_id": "extract_04",
+        "source_domain": "service_operations",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_04_support_1",
+            "experience_id": "redis_failure",
+            "domain": "service_operations",
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_04_support_2",
+            "experience_id": "mysql_failure",
+            "domain": "service_operations",
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_04_counter_3",
+            "experience_id": "active_corruption",
+            "domain": "service_operations",
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "outcome": "More records were damaged before writes were isolated.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_direct_database_incident",
+        "proposition": "Checking logs, resource pressure, configuration, permissions, and network narrows service failures efficiently.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_04_support_1",
+            "experience_id": "redis_failure",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_04_support_2",
+            "experience_id": "mysql_failure",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_04_counter_3",
+            "experience_id": "active_corruption",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to service_operations"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Assuming the old root cause must recur and skipping fresh evidence collection."
+          }
+        ],
+        "source_domains": [
+          "service_operations"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Checking logs, resource pressure, configuration, permissions, and network narrows service failures efficiently.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Checking logs, resource pressure, configuration, permissions, and network narrows service failures efficiently.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_05",
+      "source_transfer_scenario_id": "transfer_005_direct_content_research",
+      "input": {
+        "case_id": "extract_05",
+        "source_domain": "content_operations",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_05_support_1",
+            "experience_id": "matched_posts",
+            "domain": "content_operations",
+            "context": "Twenty successful and twenty failed AI posts from the same audience and month were compared.",
+            "action_or_observation": "Twenty successful and twenty failed AI posts from the same audience and month were compared.",
+            "outcome": "Concrete examples and early problem framing recurred in winners but not controls.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_05_support_2",
+            "experience_id": "replication_sample",
+            "domain": "content_operations",
+            "context": "A second account repeated the comparison in another tool category including failed posts.",
+            "action_or_observation": "A second account repeated the comparison in another tool category including failed posts.",
+            "outcome": "The same features remained associated with saves and qualified comments.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_05_counter_3",
+            "experience_id": "celebrity_spike",
+            "domain": "content_operations",
+            "context": "One post went viral only after an unrelated celebrity repost.",
+            "action_or_observation": "One post went viral only after an unrelated celebrity repost.",
+            "outcome": "Copying its content structure failed on later ordinary posts.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_05_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_direct_content_research",
+        "proposition": "Comparing multiple successful and failed examples separates recurring features from anecdotes.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_05_support_1",
+            "experience_id": "matched_posts",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_05_support_2",
+            "experience_id": "replication_sample",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_05_counter_3",
+            "experience_id": "celebrity_spike",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to content_operations"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Imitating one viral post as if it established a general rule."
+          }
+        ],
+        "source_domains": [
+          "content_operations"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Comparing multiple successful and failed examples separates recurring features from anecdotes.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Comparing multiple successful and failed examples separates recurring features from anecdotes.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_06",
+      "source_transfer_scenario_id": "transfer_006_cross_batch_to_startup",
+      "input": {
+        "case_id": "extract_06",
+        "source_domain": "software_delivery",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_06_support_1",
+            "experience_id": "feature_flag",
+            "domain": "software_delivery",
+            "context": "A risky feature was exposed to one internal group behind a reversible flag.",
+            "action_or_observation": "A risky feature was exposed to one internal group behind a reversible flag.",
+            "outcome": "A dependency assumption failed while reversal still required one configuration change.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_06_support_2",
+            "experience_id": "migration_probe",
+            "domain": "software_delivery",
+            "context": "One representative tenant was migrated before the full fleet.",
+            "action_or_observation": "One representative tenant was migrated before the full fleet.",
+            "outcome": "An undocumented data shape was found before fleet-wide commitment.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_06_counter_3",
+            "experience_id": "simple_probe",
+            "domain": "software_delivery",
+            "context": "Only the smallest tenant was tested before generalizing to complex tenants.",
+            "action_or_observation": "Only the smallest tenant was tested before generalizing to complex tenants.",
+            "outcome": "The full rollout failed on data shapes absent from the probe.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_06_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_cross_batch_to_startup",
+        "proposition": "Small reversible experiments reduce the cost of being wrong under uncertainty.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_06_support_1",
+            "experience_id": "feature_flag",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_06_support_2",
+            "experience_id": "migration_probe",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_06_counter_3",
+            "experience_id": "simple_probe",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to software_delivery"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Concluding that the startup must literally ship software every day."
+          }
+        ],
+        "source_domains": [
+          "software_delivery"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Small reversible experiments reduce the cost of being wrong under uncertainty.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Small reversible experiments reduce the cost of being wrong under uncertainty.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_07",
+      "source_transfer_scenario_id": "transfer_007_cross_incident_to_campaign",
+      "input": {
+        "case_id": "extract_07",
+        "source_domain": "incident_response",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_07_support_1",
+            "experience_id": "error_ceiling",
+            "domain": "incident_response",
+            "context": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "action_or_observation": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "outcome": "Traffic stopped at twenty percent and prevented a full outage.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_07_support_2",
+            "experience_id": "queue_stop",
+            "domain": "incident_response",
+            "context": "An operations change defined queue depth and recovery-time stop conditions.",
+            "action_or_observation": "An operations change defined queue depth and recovery-time stop conditions.",
+            "outcome": "It reversed before backlog recovery exceeded the overnight window.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_07_counter_3",
+            "experience_id": "noisy_alert",
+            "domain": "incident_response",
+            "context": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "action_or_observation": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "outcome": "Repeated false stops delayed delivery without reducing incidents.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_07_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_cross_incident_to_campaign",
+        "proposition": "Predefined stop conditions limit cascading loss when live signals deteriorate.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_07_support_1",
+            "experience_id": "error_ceiling",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_07_support_2",
+            "experience_id": "queue_stop",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_07_counter_3",
+            "experience_id": "noisy_alert",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to incident_response"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Treating normal campaign variance as a production outage requiring immediate shutdown."
+          }
+        ],
+        "source_domains": [
+          "incident_response"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Predefined stop conditions limit cascading loss when live signals deteriorate.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Predefined stop conditions limit cascading loss when live signals deteriorate.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_08",
+      "source_transfer_scenario_id": "transfer_008_cross_medical_to_security",
+      "input": {
+        "case_id": "extract_08",
+        "source_domain": "clinical_safety",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_08_support_1",
+            "experience_id": "staged_treatment",
+            "domain": "clinical_safety",
+            "context": "A reversible lower-risk intervention was used while tests were collected before a high-risk procedure.",
+            "action_or_observation": "A reversible lower-risk intervention was used while tests were collected before a high-risk procedure.",
+            "outcome": "The condition stabilized and later evidence ruled out the invasive action.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_08_support_2",
+            "experience_id": "escalation_trigger",
+            "domain": "clinical_safety",
+            "context": "A protocol linked stronger intervention to independent confirmation and worsening signs.",
+            "action_or_observation": "A protocol linked stronger intervention to independent confirmation and worsening signs.",
+            "outcome": "Escalation remained fast when both confirmation and deterioration appeared.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_08_counter_3",
+            "experience_id": "critical_delay",
+            "domain": "clinical_safety",
+            "context": "A team waited for complete evidence despite rapidly worsening vital signs.",
+            "action_or_observation": "A team waited for complete evidence despite rapidly worsening vital signs.",
+            "outcome": "The delay increased harm because emergency action needed a lower evidence threshold.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_08_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_cross_medical_to_security",
+        "proposition": "High-impact interventions should require stronger evidence and staged escalation.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_08_support_1",
+            "experience_id": "staged_treatment",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_08_support_2",
+            "experience_id": "escalation_trigger",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_08_counter_3",
+            "experience_id": "critical_delay",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to clinical_safety"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Equating cyber evidence with medical diagnosis or importing clinical procedures literally."
+          }
+        ],
+        "source_domains": [
+          "clinical_safety"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: High-impact interventions should require stronger evidence and staged escalation.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: High-impact interventions should require stronger evidence and staged escalation.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_09",
+      "source_transfer_scenario_id": "transfer_009_cross_research_to_hiring",
+      "input": {
+        "case_id": "extract_09",
+        "source_domain": "scientific_research",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_09_support_1",
+            "experience_id": "replicated_measurement",
+            "domain": "scientific_research",
+            "context": "Two laboratories used different instruments and samples to estimate one material property.",
+            "action_or_observation": "Two laboratories used different instruments and samples to estimate one material property.",
+            "outcome": "Their estimates converged within a preregistered tolerance.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_09_support_2",
+            "experience_id": "method_triangulation",
+            "domain": "scientific_research",
+            "context": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "action_or_observation": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "outcome": "All three sources supported the same behavioral change.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_09_counter_3",
+            "experience_id": "citation_echo",
+            "domain": "scientific_research",
+            "context": "Five reports repeated a number originating from one unverified blog post.",
+            "action_or_observation": "Five reports repeated a number originating from one unverified blog post.",
+            "outcome": "The apparent consensus disappeared when the source was corrected.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_09_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_cross_research_to_hiring",
+        "proposition": "Independent evidence sources reduce confidence in conclusions driven by one noisy observation.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_09_support_1",
+            "experience_id": "replicated_measurement",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_09_support_2",
+            "experience_id": "method_triangulation",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_09_counter_3",
+            "experience_id": "citation_echo",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to scientific_research"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Treating candidates as laboratory subjects or demanding statistically large samples."
+          }
+        ],
+        "source_domains": [
+          "scientific_research"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Independent evidence sources reduce confidence in conclusions driven by one noisy observation.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Independent evidence sources reduce confidence in conclusions driven by one noisy observation.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "extract_10",
+      "source_transfer_scenario_id": "transfer_010_cross_supply_to_compute",
+      "input": {
+        "case_id": "extract_10",
+        "source_domain": "supply_chain",
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "experiences": [
+          {
+            "memory_id": "px_10_support_1",
+            "experience_id": "long_lead_parts",
+            "domain": "supply_chain",
+            "context": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "action_or_observation": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "outcome": "Interruptions fell while carrying cost stayed within its declared limit.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_10_support_2",
+            "experience_id": "seasonal_inventory",
+            "domain": "supply_chain",
+            "context": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "action_or_observation": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "outcome": "Stockouts fell during peak demand and inventory returned to baseline later.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": false,
+            "outcome_observed": true,
+            "independent_source": true
+          },
+          {
+            "memory_id": "px_10_counter_3",
+            "experience_id": "fast_replenishment",
+            "domain": "supply_chain",
+            "context": "The same large buffer was held for an item replenished daily with stable demand.",
+            "action_or_observation": "The same large buffer was held for an item replenished daily with stable demand.",
+            "outcome": "Most inventory expired and cost exceeded avoided stockouts.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "counterexample": true,
+            "outcome_observed": true,
+            "independent_source": true
+          }
+        ],
+        "supplied_counterexample_ids": [
+          "px_10_counter_3"
+        ],
+        "max_pattern_candidates": 1,
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ]
+      },
+      "reference_candidate": {
+        "id": "extracted_pattern_cross_supply_to_compute",
+        "proposition": "Capacity buffers are useful when replenishment is slow and demand variance is high.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_10_support_1",
+            "experience_id": "long_lead_parts",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_10_support_2",
+            "experience_id": "seasonal_inventory",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_10_counter_3",
+            "experience_id": "fast_replenishment",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "applicability_1",
+            "operator": "requires",
+            "value": "evidence is comparable to supply_chain"
+          },
+          {
+            "field": "applicability_2",
+            "operator": "requires",
+            "value": "outcomes are observable"
+          },
+          {
+            "field": "applicability_3",
+            "operator": "requires",
+            "value": "intervention remains bounded"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "exclusion_1",
+            "operator": "excludes",
+            "value": "Always maximizing idle capacity regardless of cost or replenishment speed."
+          }
+        ],
+        "source_domains": [
+          "supply_chain"
+        ],
+        "predictions": [
+          {
+            "statement": "In a future in-scope case, applying this bounded pattern should improve the relevant outcome: Capacity buffers are useful when replenishment is slow and demand variance is high.",
+            "observable": "future in-scope outcome compared with an explicit baseline",
+            "success_criterion": "the intended outcome improves without triggering the exclusion condition"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Reject or refine the pattern if comparable in-scope cases repeatedly fail to show its predicted advantage: Capacity buffers are useful when replenishment is slow and demand variance is high.",
+            "observable": "repeated comparable outcomes and recorded counterexamples"
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.7,
+        "status": "proposed"
+      }
+    }
+  ]
+}

@@ -159,3 +159,16 @@ Phase 7.1 now freezes the first Transfer Evaluation Protocol:
 ```
 
 The protocol adds explicit measurements for useful transfer, dangerous transfer, withholding accuracy, compression with fidelity, and explanation dependency. This is a benchmark contract only: no Pattern Discovery output has been evaluated and no outcome-performance claim is authorized.
+
+## Phase 7.2 extraction boundary
+
+Phase 7.2 now defines the boundary between Experience evidence and a Pattern Candidate. Extraction inputs exclude target answers and held-out transfer cases. Outputs must remain proposed artifacts with grounded provenance, explicit scope, counterexamples, prediction, falsification, bounded confidence, and no validation outcomes.
+
+This adds an epistemic separation that remains permanent:
+
+```text
+Pattern extraction
+    != Pattern validation
+    != knowledge promotion
+    != runtime authority
+```

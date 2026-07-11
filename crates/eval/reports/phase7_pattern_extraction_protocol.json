@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.2-pattern-extraction-protocol-v1",
+  "tag": "phase7.2-protocol-frozen",
+  "generated_at": "2026-07-11T03:49:09.880219300+00:00",
+  "phase": "Phase 7.2 Evidence-Grounded Pattern Extraction Protocol",
+  "dataset": {
+    "case_count": 10,
+    "distinct_source_scenarios": 10,
+    "source_domain_count": 9,
+    "supporting_experience_count": 20,
+    "counterexample_count": 10,
+    "reference_candidates_valid": 10,
+    "held_out_references": 0
+  },
+  "metrics": [
+    {
+      "name": "contract_validity",
+      "direction": "higher",
+      "definition": "Fraction of outputs satisfying the Phase 7 PatternCandidate contract.",
+      "requires_model_output": false
+    },
+    {
+      "name": "evidence_grounding",
+      "direction": "higher",
+      "definition": "Fraction of cited evidence that exactly matches authoritative input provenance.",
+      "requires_model_output": true
+    },
+    {
+      "name": "evidence_coverage",
+      "direction": "higher",
+      "definition": "Coverage of independent supporting experiences relevant to the proposition.",
+      "requires_model_output": true
+    },
+    {
+      "name": "scope_preservation",
+      "direction": "higher",
+      "definition": "Retention of material applicability constraints from the experiences.",
+      "requires_model_output": true
+    },
+    {
+      "name": "counterexample_handling",
+      "direction": "higher",
+      "definition": "Coverage and correct use of supplied limiting evidence.",
+      "requires_model_output": true
+    },
+    {
+      "name": "abstraction_specificity",
+      "direction": "higher_with_boundary",
+      "definition": "The proposition is reusable but not a vague truism or literal event copy.",
+      "requires_model_output": true
+    },
+    {
+      "name": "compression_ratio",
+      "direction": "higher_with_fidelity",
+      "definition": "Input evidence size divided by Pattern package size, interpreted with grounding and scope.",
+      "requires_model_output": true
+    },
+    {
+      "name": "unsupported_claim_rate",
+      "direction": "lower",
+      "definition": "Unsupported proposition, scope, prediction, or causal claims per output.",
+      "requires_model_output": true
+    },
+    {
+      "name": "evidence_id_hallucination_rate",
+      "direction": "lower",
+      "definition": "Citations not present in the extraction input divided by all citations.",
+      "requires_model_output": false
+    },
+    {
+      "name": "boundary_loss_rate",
+      "direction": "lower",
+      "definition": "Material exclusions or conditions omitted from the Pattern Candidate.",
+      "requires_model_output": true
+    },
+    {
+      "name": "falsifiability_rate",
+      "direction": "higher",
+      "definition": "Fraction of outputs with an observable prediction and falsification condition.",
+      "requires_model_output": false
+    }
+  ],
+  "reference_validations": [
+    {
+      "case_id": "extract_01",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_direct_software_release",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_02",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_direct_support_triage",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_03",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_direct_experiment_design",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_04",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_direct_database_incident",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_05",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_direct_content_research",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_06",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_cross_batch_to_startup",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_07",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_cross_incident_to_campaign",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_08",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_cross_medical_to_security",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_09",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_cross_research_to_hiring",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    },
+    {
+      "case_id": "extract_10",
+      "valid": true,
+      "candidate_validations": [
+        {
+          "candidate_id": "extracted_pattern_cross_supply_to_compute",
+          "valid": true,
+          "base_contract": {
+            "valid": true,
+            "violations": []
+          },
+          "violations": []
+        }
+      ],
+      "violations": []
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "hallucinated_evidence_id",
+      "rejected": true,
+      "expected_violation": "evidence_reference_not_in_extraction_input",
+      "observed_violations": [
+        "evidence_reference_not_in_extraction_input"
+      ]
+    },
+    {
+      "name": "provenance_mismatch",
+      "rejected": true,
+      "expected_violation": "evidence_provenance_mismatch",
+      "observed_violations": [
+        "evidence_provenance_mismatch"
+      ]
+    },
+    {
+      "name": "counterexample_omitted",
+      "rejected": true,
+      "expected_violation": "supplied_counterexample_omitted",
+      "observed_violations": [
+        "supplied_counterexample_must_be_considered",
+        "supplied_counterexample_omitted"
+      ]
+    },
+    {
+      "name": "premature_active_status",
+      "rejected": true,
+      "expected_violation": "extraction_output_must_remain_proposed",
+      "observed_violations": [
+        "extraction_output_must_remain_proposed",
+        "non_proposed_status_requires_validation_outcome"
+      ]
+    },
+    {
+      "name": "premature_confidence",
+      "rejected": true,
+      "expected_violation": "proposed_confidence_exceeds_phase7_2_cap",
+      "observed_violations": [
+        "proposed_confidence_exceeds_phase7_2_cap"
+      ]
+    },
+    {
+      "name": "fabricated_validation_outcome",
+      "rejected": true,
+      "expected_violation": "extraction_cannot_claim_validation_outcomes",
+      "observed_violations": [
+        "extraction_cannot_claim_validation_outcomes"
+      ]
+    },
+    {
+      "name": "candidate_limit_exceeded",
+      "rejected": true,
+      "expected_violation": "pattern_candidate_limit_exceeded",
+      "observed_violations": [
+        "pattern_candidate_limit_exceeded"
+      ]
+    }
+  ],
+  "all_reference_candidates_valid": true,
+  "all_negative_cases_rejected": true,
+  "guards": {
+    "eval_only": true,
+    "design_cases_only": true,
+    "target_problem_excluded": true,
+    "expected_transfer_excluded": true,
+    "held_out_cases_untouched": true,
+    "max_one_candidate_per_case": true,
+    "proposed_status_required": true,
+    "proposed_confidence_capped": true,
+    "extraction_algorithm_implemented": false,
+    "model_evaluation_completed": false,
+    "pattern_persistence_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "autonomous_promotion_authorized": false
+  },
+  "decision": "protocol_frozen_extraction_algorithm_blocked",
+  "conclusion": "The design-only extraction input, PatternCandidate output boundary, automatic grounding checks, metrics, and rejection cases are frozen. No extraction algorithm or transfer performance is implemented or claimed."
+}

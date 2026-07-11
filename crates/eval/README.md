@@ -584,3 +584,21 @@ crates/eval/reports/phase7_transfer_evaluation_protocol.json
 ```
 
 The report intentionally keeps `outcome_evaluation_complete=false`. It validates the benchmark and experimental protocol; it does not run Pattern Mining or claim transfer improvement.
+
+## Phase 7.2 Pattern Extraction Protocol
+
+The eval crate now defines a design-only `PatternExtractionProvider` boundary and deterministic validation for grounded Pattern Candidate output.
+
+```powershell
+cargo run -p synapse-eval --bin phase7_pattern_extraction_protocol
+python scripts/eval/phase7_pattern_extraction_protocol.py
+```
+
+Dataset and report:
+
+```text
+crates/eval/datasets/pattern_extraction/phase7_2_pattern_extraction_design.json
+crates/eval/reports/phase7_pattern_extraction_protocol.json
+```
+
+The ten inputs contain 20 supporting experiences and 10 counterexamples. They exclude target transfer answers and all held-out cases. No model provider or extraction performance is included.

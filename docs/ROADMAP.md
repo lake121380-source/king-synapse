@@ -931,3 +931,26 @@ runtime                                  not authorized
 ```
 
 Next: implement a bounded Pattern Discovery prototype against the `design` split only, freeze its prompts and rules, and only then open the held-out split for transfer evaluation.
+
+## Phase 7.2 Evidence-Grounded Pattern Extraction Protocol
+
+Status: **protocol complete; extraction algorithm and model evaluation remain unimplemented.**
+
+Phase 7.2 adds a design-only extraction view over the ten Phase 7.1 design cases. Extractor inputs contain concrete experiences, outcomes, constraints, and supplied counterexamples but exclude target problems, expected transfer answers, runtime state, and every held-out case.
+
+The eval-only output contract requires one `Proposed` Pattern Candidate with grounded evidence IDs, exact provenance, explicit scope, supplied counterexamples, prediction, falsification, empty validation outcomes, and confidence no greater than `0.75`.
+
+Decision boundary:
+
+```text
+extraction protocol                 frozen
+design fixtures                     frozen
+held-out transfer cases             untouched
+extraction provider                 not implemented
+model evaluation                    not completed
+Pattern persistence                 not authorized
+Hermes                              not authorized
+runtime                             not authorized
+```
+
+Next: Phase 7.2.1 may implement one bounded extraction provider against the ten design inputs only. Provider prompts and repair rules must be frozen before held-out evaluation.

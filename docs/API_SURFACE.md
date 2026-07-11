@@ -687,3 +687,51 @@ cargo run -p synapse-eval --bin phase7_transfer_evaluation_protocol
 ```
 
 This surface is not exported through `synapse-core`, CLI recall, MCP runtime tools, or the production memory schema. It cannot write memories, promote Patterns, modify rankings, or execute strategies.
+
+## Phase 7.2 Pattern extraction protocol surface
+
+Eval-only module:
+
+```text
+synapse_eval::phase7_pattern_extraction_protocol
+```
+
+Primary entry points:
+
+```rust
+load_phase7_pattern_extraction_design()
+validate_pattern_extraction_submission(input, candidate)
+validate_pattern_extraction_batch(input, candidates)
+Phase7PatternExtractionProtocolEvaluator::evaluate(tag)
+```
+
+Provider boundary:
+
+```rust
+trait PatternExtractionProvider {
+    fn provider_id(&self) -> &str;
+    fn extract(&self, input: &PatternExtractionInput) -> Result<Vec<PatternCandidate>>;
+}
+```
+
+Primary contracts:
+
+```text
+PatternExtractionDataset
+PatternExtractionCase
+PatternExtractionInput
+ExtractionExperience
+PatternExtractionSubmissionValidation
+PatternExtractionBatchValidation
+PatternExtractionMetricDefinition
+PatternExtractionProtocolGuards
+Phase7PatternExtractionReport
+```
+
+Report generator:
+
+```text
+cargo run -p synapse-eval --bin phase7_pattern_extraction_protocol
+```
+
+No provider implementation is present. This surface cannot read held-out transfer cases, write memories, promote Patterns, claim validation outcomes, invoke Hermes, or modify runtime behavior.
