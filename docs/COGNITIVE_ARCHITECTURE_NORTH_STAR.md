@@ -172,3 +172,17 @@ Pattern extraction
     != knowledge promotion
     != runtime authority
 ```
+
+## Phase 7.2.1 executable extraction boundary
+
+Phase 7.2.1 adds the first executable extraction provider without changing the North Star lifecycle. The provider produces only proposed cognition artifacts. Contract acceptance is recorded independently from abstraction-quality diagnostics, and no provider output may become validated knowledge without later evidence and outcome gates.
+
+```text
+Experience bundle
+  -> deterministic bounded provider
+  -> PatternStatus::Proposed
+  -> contract accept/reject + explicit diagnostics
+  -> no persistence / no runtime
+```
+
+The transparent weak baseline is intentionally not described as Pattern Discovery. Its low design-reference alignment is retained as research evidence rather than repaired or hidden.

@@ -735,3 +735,22 @@ cargo run -p synapse-eval --bin phase7_pattern_extraction_protocol
 ```
 
 No provider implementation is present. This surface cannot read held-out transfer cases, write memories, promote Patterns, claim validation outcomes, invoke Hermes, or modify runtime behavior.
+
+## Phase 7.2.1 eval-only extraction API
+
+Module:
+
+```text
+synapse_eval::phase7_bounded_pattern_extraction_provider
+```
+
+Primary API:
+
+```rust
+DeterministicBoundedPatternExtractionProvider::new()
+PatternExtractionProvider::extract(&PatternExtractionInput)
+Phase7BoundedPatternExtractionEvaluator::evaluate(tag)
+evaluate_provider(tag, provider, frozen_provider_config)
+```
+
+The module is evaluation-only. It exports frozen provider configuration, per-case contract disposition, deterministic extraction-quality diagnostics, fault-injection results, and a JSON report. It does not expose persistence, knowledge promotion, RecallEngine mutation, Hermes integration, or runtime ranking authority.

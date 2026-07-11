@@ -1,0 +1,1225 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.2.1-bounded-pattern-extraction-provider-v1",
+  "tag": "phase7.2.1-provider-frozen",
+  "generated_at": "2026-07-11T04:25:57.143059+00:00",
+  "phase": "Phase 7.2.1 Bounded Pattern Extraction Provider",
+  "provider_config": {
+    "provider_id": "deterministic_bounded_pattern_extractor_v0",
+    "provider_kind": "deterministic_transparent_weak_baseline",
+    "model_id": null,
+    "prompt_or_ruleset_id": "deterministic_ruleset_v0_no_model_prompt",
+    "design_cases_only": true,
+    "max_candidates_per_case": 1,
+    "max_confidence": 0.6,
+    "output_repair_policy": "reject_only_no_automatic_repair",
+    "deterministic": true,
+    "held_out_access": false,
+    "persistence_authorized": false,
+    "runtime_authorized": false
+  },
+  "summary": {
+    "design_case_count": 10,
+    "provider_executions": 10,
+    "candidates_produced": 10,
+    "contract_accepted_cases": 10,
+    "contract_rejected_cases": 0,
+    "cases_with_quality_diagnostics": 9,
+    "mean_pattern_completeness": 1.0,
+    "mean_evidence_attribution_accuracy": 1.0,
+    "mean_scope_retention": 1.0,
+    "mean_counterexample_handling": 1.0,
+    "mean_abstraction_distance_score": 0.3827612671947648,
+    "mean_design_reference_token_recall": 0.06357864357864358,
+    "mean_unsupported_claim_rate": 0.04416666666666667
+  },
+  "cases": [
+    {
+      "case_id": "extract_01",
+      "source_transfer_scenario_id": "transfer_001_direct_software_release",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_01",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_01.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.31746031746031744,
+        "design_reference_token_recall": 0.09090909090909091,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.4567901234567901
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_01.deterministic_v0",
+          "proposition": "Within software_delivery, recurring evidence involving audited, cohort, cohorts, connection is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_01_support_1",
+              "experience_id": "payments_canary",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_01_support_2",
+              "experience_id": "search_cohorts",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_01_counter_3",
+              "experience_id": "atomic_schema",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "software_delivery"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_01_counter_3",
+              "operator": "excludes",
+              "value": "Old and new record formats could not coexist during a storage migration. Outcome: Partial rollout created incompatible records and more recovery work."
+            }
+          ],
+          "source_domains": [
+            "software_delivery"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope software_delivery case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Only the canary cohort needed rollback; the old version remained available.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "Partial rollout created incompatible records and more recovery work."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "source_transfer_scenario_id": "transfer_002_direct_support_triage",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_02",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_02.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.4926108374384237,
+        "design_reference_token_recall": 0.14285714285714285,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.41975308641975306
+      },
+      "diagnostics": [
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_02.deterministic_v0",
+          "proposition": "Within customer_support, recurring evidence involving cases, deadline, impact, assignment is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_02_support_1",
+              "experience_id": "mixed_queue",
+              "domain": "customer_support",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_02_support_2",
+              "experience_id": "billing_deadlines",
+              "domain": "customer_support",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_02_counter_3",
+              "experience_id": "vip_proxy",
+              "domain": "customer_support",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "customer_support"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_02_counter_3",
+              "operator": "excludes",
+              "value": "All VIP messages were ranked above other cases regardless of impact. Outcome: A widespread login failure waited behind low-impact VIP requests."
+            }
+          ],
+          "source_domains": [
+            "customer_support"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope customer_support case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Outages reached incident responders quickly while ordinary questions stayed visible.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "A widespread login failure waited behind low-impact VIP requests."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "source_transfer_scenario_id": "transfer_003_direct_experiment_design",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_03",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_03.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.29556650246305416,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.4349593495934959
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_03.deterministic_v0",
+          "proposition": "Within product_experiment, recurring evidence involving guardrail, fixed, revenue, activation is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_03_support_1",
+              "experience_id": "onboarding_test",
+              "domain": "product_experiment",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_03_support_2",
+              "experience_id": "pricing_test",
+              "domain": "product_experiment",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_03_counter_3",
+              "experience_id": "discovery_interviews",
+              "domain": "product_experiment",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "product_experiment"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_03_counter_3",
+              "operator": "excludes",
+              "value": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood. Outcome: Unexpected themes were discarded even though they later explained customer pain."
+            }
+          ],
+          "source_domains": [
+            "product_experiment"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope product_experiment case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "The team accepted a neutral result instead of redefining success afterward.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "Unexpected themes were discarded even though they later explained customer pain."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "source_transfer_scenario_id": "transfer_004_direct_database_incident",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_04",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_04.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.43956043956043966,
+        "design_reference_token_recall": 0.09090909090909091,
+        "unsupported_claim_rate": 0.0,
+        "compression_ratio": 0.44537815126050423
+      },
+      "diagnostics": [
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_04.deterministic_v0",
+          "proposition": "Within service_operations, recurring evidence involving memory, cache, change, checked is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_04_support_1",
+              "experience_id": "redis_failure",
+              "domain": "service_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_04_support_2",
+              "experience_id": "mysql_failure",
+              "domain": "service_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_04_counter_3",
+              "experience_id": "active_corruption",
+              "domain": "service_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "service_operations"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_04_counter_3",
+              "operator": "excludes",
+              "value": "Routine diagnosis continued while a writer actively corrupted customer records. Outcome: More records were damaged before writes were isolated."
+            }
+          ],
+          "source_domains": [
+            "service_operations"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope service_operations case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "A memory limit change was isolated without replacing unrelated components.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "More records were damaged before writes were isolated."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "source_transfer_scenario_id": "transfer_005_direct_content_research",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_05",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_05.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5102040816326532,
+        "design_reference_token_recall": 0.2,
+        "unsupported_claim_rate": 0.0,
+        "compression_ratio": 0.4669421487603306
+      },
+      "diagnostics": [
+        "no_deterministic_quality_warning"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_05.deterministic_v0",
+          "proposition": "Within content_operations, recurring evidence involving failed, posts, twenty, account is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_05_support_1",
+              "experience_id": "matched_posts",
+              "domain": "content_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_05_support_2",
+              "experience_id": "replication_sample",
+              "domain": "content_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_05_counter_3",
+              "experience_id": "celebrity_spike",
+              "domain": "content_operations",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "content_operations"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_05_counter_3",
+              "operator": "excludes",
+              "value": "One post went viral only after an unrelated celebrity repost. Outcome: Copying its content structure failed on later ordinary posts."
+            }
+          ],
+          "source_domains": [
+            "content_operations"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope content_operations case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Concrete examples and early problem framing recurred in winners but not controls.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "Copying its content structure failed on later ordinary posts."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "source_transfer_scenario_id": "transfer_006_cross_batch_to_startup",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_06",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_06.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.29556650246305416,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.42276422764227645
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_06.deterministic_v0",
+          "proposition": "Within software_delivery, recurring evidence involving fleet, behind, exposed, feature is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_06_support_1",
+              "experience_id": "feature_flag",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_06_support_2",
+              "experience_id": "migration_probe",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_06_counter_3",
+              "experience_id": "simple_probe",
+              "domain": "software_delivery",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "software_delivery"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_06_counter_3",
+              "operator": "excludes",
+              "value": "Only the smallest tenant was tested before generalizing to complex tenants. Outcome: The full rollout failed on data shapes absent from the probe."
+            }
+          ],
+          "source_domains": [
+            "software_delivery"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope software_delivery case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "A dependency assumption failed while reversal still required one configuration change.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "The full rollout failed on data shapes absent from the probe."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "source_transfer_scenario_id": "transfer_007_cross_incident_to_campaign",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_07",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_07.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.30612244897959184,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.4375
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_07.deterministic_v0",
+          "proposition": "Within incident_response, recurring evidence involving recovery, traffic, automatic, ceiling is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_07_support_1",
+              "experience_id": "error_ceiling",
+              "domain": "incident_response",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_07_support_2",
+              "experience_id": "queue_stop",
+              "domain": "incident_response",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_07_counter_3",
+              "experience_id": "noisy_alert",
+              "domain": "incident_response",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "incident_response"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_07_counter_3",
+              "operator": "excludes",
+              "value": "A rollout automatically stopped on a noisy metric weakly related to harm. Outcome: Repeated false stops delayed delivery without reducing incidents."
+            }
+          ],
+          "source_domains": [
+            "incident_response"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope incident_response case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Traffic stopped at twenty percent and prevented a full outage.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "Repeated false stops delayed delivery without reducing incidents."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "source_transfer_scenario_id": "transfer_008_cross_medical_to_security",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_08",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_08.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.31746031746031744,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.0625,
+        "compression_ratio": 0.4596774193548387
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_08.deterministic_v0",
+          "proposition": "Within clinical_safety, recurring evidence involving intervention, confirmation, collected, independent is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_08_support_1",
+              "experience_id": "staged_treatment",
+              "domain": "clinical_safety",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_08_support_2",
+              "experience_id": "escalation_trigger",
+              "domain": "clinical_safety",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_08_counter_3",
+              "experience_id": "critical_delay",
+              "domain": "clinical_safety",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "clinical_safety"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_08_counter_3",
+              "operator": "excludes",
+              "value": "A team waited for complete evidence despite rapidly worsening vital signs. Outcome: The delay increased harm because emergency action needed a lower evidence threshold."
+            }
+          ],
+          "source_domains": [
+            "clinical_safety"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope clinical_safety case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "The condition stabilized and later evidence ruled out the invasive action.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "The delay increased harm because emergency action needed a lower evidence threshold."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "source_transfer_scenario_id": "transfer_009_cross_research_to_hiring",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_09",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_09.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.34285714285714286,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.06666666666666667,
+        "compression_ratio": 0.40336134453781514
+      },
+      "diagnostics": [
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_09.deterministic_v0",
+          "proposition": "Within scientific_research, recurring evidence involving claim, collected, different, estimate is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_09_support_1",
+              "experience_id": "replicated_measurement",
+              "domain": "scientific_research",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_09_support_2",
+              "experience_id": "method_triangulation",
+              "domain": "scientific_research",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_09_counter_3",
+              "experience_id": "citation_echo",
+              "domain": "scientific_research",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "scientific_research"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_09_counter_3",
+              "operator": "excludes",
+              "value": "Five reports repeated a number originating from one unverified blog post. Outcome: The apparent consensus disappeared when the source was corrected."
+            }
+          ],
+          "source_domains": [
+            "scientific_research"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope scientific_research case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Their estimates converged within a preregistered tolerance.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "The apparent consensus disappeared when the source was corrected."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "source_transfer_scenario_id": "transfer_010_cross_supply_to_compute",
+      "provider_id": "deterministic_bounded_pattern_extractor_v0",
+      "candidate_count": 1,
+      "validation": {
+        "case_id": "extract_10",
+        "valid": true,
+        "candidate_validations": [
+          {
+            "candidate_id": "pattern_candidate.extract_10.deterministic_v0",
+            "valid": true,
+            "base_contract": {
+              "valid": true,
+              "violations": []
+            },
+            "violations": []
+          }
+        ],
+        "violations": []
+      },
+      "disposition": "accepted_contract_only",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5102040816326532,
+        "design_reference_token_recall": 0.1111111111111111,
+        "unsupported_claim_rate": 0.0,
+        "compression_ratio": 0.4567901234567901
+      },
+      "diagnostics": [
+        "low_design_reference_alignment_not_a_rejection_gate"
+      ],
+      "candidates": [
+        {
+          "id": "pattern_candidate.extract_10.deterministic_v0",
+          "proposition": "Within supply_chain, recurring evidence involving buffered, demand, component, distributor is associated with observed outcomes; the supplied counterexample bounds the claim.",
+          "supporting_evidence": [
+            {
+              "memory_id": "px_10_support_1",
+              "experience_id": "long_lead_parts",
+              "domain": "supply_chain",
+              "independent_source": true,
+              "observed_outcome": true
+            },
+            {
+              "memory_id": "px_10_support_2",
+              "experience_id": "seasonal_inventory",
+              "domain": "supply_chain",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexamples": [
+            {
+              "memory_id": "px_10_counter_3",
+              "experience_id": "fast_replenishment",
+              "domain": "supply_chain",
+              "independent_source": true,
+              "observed_outcome": true
+            }
+          ],
+          "counterexample_search_performed": true,
+          "applicability_conditions": [
+            {
+              "field": "source_domain",
+              "operator": "equals",
+              "value": "supply_chain"
+            },
+            {
+              "field": "independent_supporting_experiences",
+              "operator": "greater_than_or_equal",
+              "value": "2"
+            },
+            {
+              "field": "outcomes",
+              "operator": "requires",
+              "value": "observable"
+            }
+          ],
+          "exclusion_conditions": [
+            {
+              "field": "counterexample.px_10_counter_3",
+              "operator": "excludes",
+              "value": "The same large buffer was held for an item replenished daily with stable demand. Outcome: Most inventory expired and cost exceeded avoided stockouts."
+            }
+          ],
+          "source_domains": [
+            "supply_chain"
+          ],
+          "predictions": [
+            {
+              "statement": "For a future in-scope supply_chain case, the bounded pattern predicts an outcome consistent with the supplied evidence.",
+              "observable": "Interruptions fell while carrying cost stayed within its declared limit.",
+              "success_criterion": "observed outcome is more consistent with supporting evidence than the supplied counterexample"
+            }
+          ],
+          "falsification_conditions": [
+            {
+              "statement": "Reject or narrow the candidate when repeated comparable outcomes match the supplied counterexample rather than the supporting evidence.",
+              "observable": "Most inventory expired and cost exceeded avoided stockouts."
+            }
+          ],
+          "validation_outcome_ids": [],
+          "confidence": 0.6,
+          "status": "proposed"
+        }
+      ]
+    }
+  ],
+  "fault_injections": [
+    {
+      "name": "hallucinated_evidence",
+      "rejected": true,
+      "observed_violations": [
+        "evidence_reference_not_in_extraction_input"
+      ]
+    },
+    {
+      "name": "omitted_counterexample",
+      "rejected": true,
+      "observed_violations": [
+        "supplied_counterexample_must_be_considered",
+        "supplied_counterexample_omitted"
+      ]
+    },
+    {
+      "name": "premature_active",
+      "rejected": true,
+      "observed_violations": [
+        "extraction_output_must_remain_proposed",
+        "non_proposed_status_requires_validation_outcome"
+      ]
+    },
+    {
+      "name": "fabricated_validation",
+      "rejected": true,
+      "observed_violations": [
+        "extraction_cannot_claim_validation_outcomes"
+      ]
+    },
+    {
+      "name": "candidate_limit_exceeded",
+      "rejected": true,
+      "observed_violations": [
+        "pattern_candidate_limit_exceeded"
+      ]
+    },
+    {
+      "name": "empty_provider_output",
+      "rejected": true,
+      "observed_violations": [
+        "at_least_one_pattern_candidate_required"
+      ]
+    }
+  ],
+  "guards": {
+    "eval_only": true,
+    "design_cases_only": true,
+    "held_out_cases_untouched": true,
+    "provider_config_frozen": true,
+    "deterministic_provider": true,
+    "automatic_output_repair": false,
+    "pattern_persistence_authorized": false,
+    "knowledge_promotion_authorized": false,
+    "transfer_value_claimed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  },
+  "decision": "provider_frozen_design_evaluation_only",
+  "conclusion": "The frozen deterministic weak-baseline provider can produce structurally bounded Pattern Candidates from the ten design inputs, and invalid provider outputs receive explicit rejection reasons. Contract acceptance is not semantic validation, transfer evidence, knowledge promotion, persistence, or runtime authority."
+}

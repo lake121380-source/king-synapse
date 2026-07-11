@@ -602,3 +602,22 @@ crates/eval/reports/phase7_pattern_extraction_protocol.json
 ```
 
 The ten inputs contain 20 supporting experiences and 10 counterexamples. They exclude target transfer answers and all held-out cases. No model provider or extraction performance is included.
+
+## Phase 7.2.1 Bounded Pattern Extraction Provider
+
+```powershell
+cargo test -p synapse-eval --test phase7_bounded_pattern_extraction_provider_test --jobs 1 -- --test-threads=1
+python scripts/eval/phase7_bounded_pattern_extraction_provider.py
+```
+
+Artifacts:
+
+```text
+src/phase7_bounded_pattern_extraction_provider.rs
+src/bin/phase7_bounded_pattern_extraction_provider.rs
+tests/phase7_bounded_pattern_extraction_provider_test.rs
+reports/phase7_bounded_pattern_extraction_provider.json
+../../docs/eval/PHASE7_2_1_BOUNDED_PATTERN_EXTRACTION_PROVIDER.md
+```
+
+The provider is a deterministic weak baseline. `10/10` contract acceptance means only that the artifact is bounded and grounded; it does not mean Pattern validation, transfer success, persistence, or runtime authorization.

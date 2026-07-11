@@ -954,3 +954,22 @@ runtime                             not authorized
 ```
 
 Next: Phase 7.2.1 may implement one bounded extraction provider against the ten design inputs only. Provider prompts and repair rules must be frozen before held-out evaluation.
+
+## Phase 7.2.1: Bounded Pattern Extraction Provider
+
+Status: frozen design evaluation.
+
+The first executable provider is `deterministic_bounded_pattern_extractor_v0`, a transparent deterministic weak baseline over the ten design cases. Provider configuration, candidate limit, confidence cap, and reject-only output policy are frozen. Contract-valid outputs receive only `accepted_contract_only`.
+
+Current result:
+
+```text
+10 provider executions
+10 structurally accepted candidates
+9 cases with quality diagnostics
+6/6 injected invalid outputs rejected
+0 held-out cases opened
+0 persistence/runtime authority
+```
+
+Next gate: freeze and compare a stronger or model-backed provider on the same design cases. Do not open held-out transfer cases until provider/model/prompt/decoding/repair policy and quality scoring are frozen.

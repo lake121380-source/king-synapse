@@ -39,6 +39,7 @@ pub mod phase5_trace_quality;
 pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
+pub mod phase7_bounded_pattern_extraction_provider;
 pub mod phase7_cognitive_architecture_contract;
 pub mod phase7_pattern_extraction_protocol;
 pub mod phase7_transfer_evaluation_protocol;
@@ -198,6 +199,13 @@ pub use phase6_recall_score_distribution::{
     MarginCoverage, Phase6RecallScoreDistributionEvaluator, Phase6RecallScoreDistributionReport,
     RankScoreDistribution, RecallScoreDistributionDecision, RecallScoreDistributionGuards,
     RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
+};
+pub use phase7_bounded_pattern_extraction_provider::{
+    evaluate_provider, BoundedPatternExtractionGuards, BoundedPatternExtractionProviderConfig,
+    DeterministicBoundedPatternExtractionProvider, PatternExtractionProviderCaseReport,
+    PatternExtractionProviderSummary, PatternExtractionQualityMetrics,
+    Phase7BoundedPatternExtractionDecision, Phase7BoundedPatternExtractionEvaluator,
+    Phase7BoundedPatternExtractionReport, ProviderFaultInjectionReport, ProviderOutputDisposition,
 };
 pub use phase7_cognitive_architecture_contract::{
     validate_pattern_candidate, CognitiveArtifactContract, ConfidenceUpdatePolicy,

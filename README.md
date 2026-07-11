@@ -552,3 +552,9 @@ Apache-2.0. See `LICENSE`.
 Phase 7.1 freezes the transfer evaluation standard before Pattern Discovery begins: 30 scenarios, 20 held-out cases, six experimental arms, explicit must-transfer and must-withhold decisions, evidence lineage, scope, counterexamples, and negative-transfer safety metrics. Transfer outcome performance remains unmeasured and runtime remains unauthorized. See `docs/eval/PHASE7_1_TRANSFER_EVALUATION_PROTOCOL.md`.
 
 Phase 7.2 freezes an evidence-grounded Pattern extraction protocol over ten design-only cases. Outputs must remain `Proposed`, cite authoritative evidence, preserve counterexamples and scope, expose predictions and falsification, and cannot claim validation or runtime authority. No extractor/model performance is claimed. See `docs/eval/PHASE7_2_PATTERN_EXTRACTION_PROTOCOL.md`.
+
+## Phase 7.2.1 bounded extraction provider
+
+The first design-only provider is frozen as `deterministic_bounded_pattern_extractor_v0`. It executes only on the ten Phase 7.2 design inputs, preserves exact evidence lineage and supplied counterexamples, emits only `PatternStatus::Proposed`, performs no automatic repair, and has no persistence or runtime authority.
+
+Its result intentionally separates `accepted_contract_only` from semantic quality: all ten candidates satisfy the structural boundary, while nine receive deterministic quality diagnostics and mean design-reference token recall is approximately `0.064`. See `docs/eval/PHASE7_2_1_BOUNDED_PATTERN_EXTRACTION_PROVIDER.md`.
