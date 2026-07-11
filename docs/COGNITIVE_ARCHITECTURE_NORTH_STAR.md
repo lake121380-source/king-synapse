@@ -201,3 +201,18 @@ Experience bundle
 ```
 
 Provider identity and experimental configuration are part of the evidence record. A provider that cannot execute is represented as blocked rather than being assigned synthetic scores. Language polish is not a cognitive-quality signal; unsupported claims, evidence attribution, scope, counterexamples, prediction, and falsifiability remain the evaluated properties.
+
+## Phase 7.2.3 real-provider execution boundary
+
+A real LLM provider has now crossed only the execution boundary:
+
+```text
+Frozen Experience bundle
+  -> authenticated DeepSeek provider
+  -> strict Pattern Candidate parsing
+  -> contract-valid Proposed artifact
+  -> unsupported-abstraction and scope diagnostics
+  -> no learning / persistence / runtime authority
+```
+
+Provider readiness is established independently from cognition quality. The first frozen real-provider run completed `10/10` design cases, but `unsupported_claim_rate=0.5129` and scope preservation `0.7000` require quality review. These outputs remain proposed hypotheses; no held-out transfer evidence or outcome validation has been observed.

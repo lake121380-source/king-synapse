@@ -105,10 +105,16 @@ def frozen_hashes() -> dict[str, str]:
     }
 
 
-def write_artifact(provider: dict[str, Any], hashes: dict[str, str], **state: Any) -> None:
+def write_artifact(
+    output: Path,
+    execution_id: str,
+    provider: dict[str, Any],
+    hashes: dict[str, str],
+    **state: Any,
+) -> None:
     artifact = {
         "schema_version": 1,
-        "execution_id": "phase7.2.2-deepseek-design-run-v1",
+        "execution_id": execution_id,
         "provider_name": provider["provider_name"],
         "provider_version": provider["provider_version"],
         "model_requested": provider["model"],
@@ -124,10 +130,10 @@ def write_artifact(provider: dict[str, Any], hashes: dict[str, str], **state: An
         **hashes,
         "outputs": state.get("outputs", []),
     }
-    OUTPUT.write_text(json.dumps(artifact, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(artifact, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def execute_design() -> int:
+def execute_design(output: Path, execution_id: str) -> int:
     manifests = load_json(MANIFESTS)
     provider = manifests["providers"][1]
     hashes = frozen_hashes()
@@ -139,7 +145,7 @@ def execute_design() -> int:
 
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
     if not api_key:
-        write_artifact(provider, hashes, status="blocked_configuration", blocker={
+        write_artifact(output, execution_id, provider, hashes, status="blocked_configuration", blocker={
             "stage": "credential_preflight", "http_status": None, "reason": "api_key_missing"
         })
         print("BLOCKED: DEEPSEEK_API_KEY is not present", file=sys.stderr)
@@ -180,19 +186,19 @@ def execute_design() -> int:
         except urllib.error.HTTPError as error:
             status = "blocked_authorization" if error.code in (401, 403) else "blocked_provider_http"
             reason = "authorization_required" if error.code in (401, 403) else "provider_http_error"
-            write_artifact(provider, hashes, status=status, attempted=attempted, completed=len(outputs),
+            write_artifact(output, execution_id, provider, hashes, status=status, attempted=attempted, completed=len(outputs),
                            resolved_model=resolved_model, outputs=outputs,
                            blocker={"stage": "model_request", "http_status": error.code, "reason": reason})
             print(f"BLOCKED: provider HTTP {error.code}; raw response not recorded", file=sys.stderr)
             return 2
         except urllib.error.URLError as error:
-            write_artifact(provider, hashes, status="blocked_transport", attempted=attempted,
+            write_artifact(output, execution_id, provider, hashes, status="blocked_transport", attempted=attempted,
                            completed=len(outputs), resolved_model=resolved_model, outputs=outputs,
                            blocker={"stage": "model_request", "http_status": None, "reason": type(error.reason).__name__})
             print("BLOCKED: provider transport failed; raw response not recorded", file=sys.stderr)
             return 2
         except (KeyError, IndexError, TypeError, ValueError) as error:
-            write_artifact(provider, hashes, status="rejected_parse_error", attempted=attempted,
+            write_artifact(output, execution_id, provider, hashes, status="rejected_parse_error", attempted=attempted,
                            completed=len(outputs), resolved_model=resolved_model, outputs=outputs,
                            blocker={"stage": "strict_parser", "http_status": None, "reason": type(error).__name__})
             print("REJECTED: strict parser failed; no repair or retry performed", file=sys.stderr)
@@ -205,7 +211,7 @@ def execute_design() -> int:
             "candidate": candidate,
         })
 
-    write_artifact(provider, hashes, status="completed", attempted=10, completed=10,
+    write_artifact(output, execution_id, provider, hashes, status="completed", attempted=10, completed=10,
                    resolved_model=resolved_model, outputs=outputs, blocker=None)
     print("Completed 10 design-only model extractions. Held-out cases were not accessed.")
     return 0
@@ -214,13 +220,24 @@ def execute_design() -> int:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--execute-design", action="store_true", help="explicitly authorize ten design API calls")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=OUTPUT,
+        help="execution artifact path; use a phase-specific path to preserve frozen history",
+    )
+    parser.add_argument(
+        "--execution-id",
+        default="phase7.2.2-deepseek-design-run-v1",
+        help="execution artifact identity",
+    )
     args = parser.parse_args()
     if not args.execute_design:
-        artifact = load_json(OUTPUT)
+        artifact = load_json(args.output)
         print(f"Execution status: {artifact['status']}")
         print("No network call made. Use --execute-design only after provider authorization is valid.")
         return 0
-    return execute_design()
+    return execute_design(args.output, args.execution_id)
 
 
 if __name__ == "__main__":

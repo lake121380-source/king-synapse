@@ -787,3 +787,32 @@ Phase7ProviderComparisonReport
 ```
 
 The API verifies frozen SHA-256 identities, reports the weak baseline and model provider as separate capability rows, and leaves unavailable model metrics as `None`. It cannot access held-out transfer cases, repair model output, persist Pattern Candidates, promote knowledge, invoke Hermes, or modify runtime behavior.
+
+## Phase 7.2.3 real provider readiness API
+
+Module:
+
+```text
+synapse_eval::phase7_real_provider_readiness
+```
+
+Primary API:
+
+```rust
+Phase7RealProviderReadinessEvaluator::evaluate(tag)
+load_phase7_real_provider_execution()
+```
+
+Primary contracts:
+
+```text
+ProviderReadinessPreflight
+ReadinessArtifactHashes
+RealProviderCaseReadiness
+RealProviderReadinessSummary
+RealProviderReadinessGuards
+Phase7RealProviderReadinessDecision
+Phase7RealProviderReadinessReport
+```
+
+The API verifies that a real provider completed all ten design requests exactly once under the frozen Phase 7.2.2 prompt/parser/scorer/dataset identities. It emits per-case deterministic quality diagnostics and explicitly separates `provider_ready` from candidate learning, persistence, knowledge promotion, transfer, Hermes, and runtime authority.

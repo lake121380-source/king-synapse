@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.2.3-real-provider-readiness-v1",
+  "tag": "phase7.2.3-provider-readiness",
+  "generated_at": "2026-07-11T08:27:54.367835400+00:00",
+  "phase": "Phase 7.2.3 Real Provider Readiness Validation",
+  "purpose": "Determine whether one real provider can reliably produce evaluable Pattern Candidates under the frozen design-only protocol; do not establish knowledge or transfer value.",
+  "preflight": {
+    "schema_version": 1,
+    "probe_id": "phase7.2.3-deepseek-readiness-preflight-v1",
+    "provider_name": "deepseek_pattern_extractor_v1",
+    "base_url": "https://api.deepseek.com",
+    "requested_model": "deepseek-v4-flash",
+    "models_endpoint_http_status": 200,
+    "chat_completion_http_status": 200,
+    "resolved_model": "deepseek-v4-flash",
+    "authentication_status": "authenticated",
+    "api_key_recorded": false,
+    "raw_response_text_recorded": false,
+    "held_out_cases_accessed": false
+  },
+  "artifact_hashes": {
+    "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+    "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+    "scorer_sha256": "fd1a23b61ca428ec97b0689643b69b00ecddb535844422a1b5518d05bc015d26",
+    "dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+    "frozen_protocol_matches_manifest": true,
+    "execution_matches_frozen_protocol": true
+  },
+  "parser_policy": {
+    "schema_version": 1,
+    "parser_id": "strict_pattern_candidate_json_v1",
+    "accepted_top_level": "single_json_object",
+    "markdown_fences_allowed": false,
+    "extra_commentary_allowed": false,
+    "unknown_fields_allowed": false,
+    "automatic_repair": false,
+    "retry_on_parse_error": false,
+    "failure_disposition": "reject_with_parser_error"
+  },
+  "scorer_policy": {
+    "schema_version": 1,
+    "scorer_id": "evidence_grounded_extraction_scorer_v1",
+    "principle": "never_reward_linguistic_sophistication",
+    "primary_safety_metric": "unsupported_claim_rate",
+    "metrics": [
+      "contract_validity",
+      "pattern_completeness",
+      "evidence_attribution_accuracy",
+      "evidence_coverage",
+      "scope_retention",
+      "counterexample_handling",
+      "unsupported_claim_rate",
+      "abstraction_distance_score",
+      "design_reference_token_recall",
+      "compression_ratio"
+    ],
+    "fluency_metric": null,
+    "style_metric": null,
+    "held_out_threshold_selection": false
+  },
+  "summary": {
+    "provider_name": "deepseek_pattern_extractor_v1",
+    "provider_version": "v1",
+    "requested_model": "deepseek-v4-flash",
+    "resolved_model": "deepseek-v4-flash",
+    "design_case_count": 10,
+    "attempted_design_cases": 10,
+    "completed_design_cases": 10,
+    "strict_parser_acceptance_rate": 1.0,
+    "contract_validity": 1.0,
+    "evidence_attribution_accuracy": 1.0,
+    "scope_preservation": 0.7,
+    "counterexample_retention": 1.0,
+    "unsupported_claim_rate": 0.5128640676484479,
+    "abstraction_distance": 0.6158211828129112,
+    "design_reference_token_recall": 0.26041847041847044,
+    "cases_with_quality_diagnostics": 10,
+    "unsupported_claim_review_threshold": 0.2,
+    "unsupported_claim_requires_review": true
+  },
+  "cases": [
+    {
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.2597402597402598,
+        "design_reference_token_recall": 0.09090909090909091,
+        "unsupported_claim_rate": 0.7368421052631579,
+        "compression_ratio": 0.4457831325301205
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "abstraction_distance_outside_preferred_band",
+        "low_design_reference_alignment_not_a_rejection_gate",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.6060606060606062,
+        "design_reference_token_recall": 0.14285714285714285,
+        "unsupported_claim_rate": 0.6818181818181818,
+        "compression_ratio": 0.35789473684210527
+      },
+      "diagnostics": [
+        "low_design_reference_alignment_not_a_rejection_gate",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5911330049261084,
+        "design_reference_token_recall": 0.5714285714285714,
+        "unsupported_claim_rate": 0.47368421052631576,
+        "compression_ratio": 0.4713656387665198
+      },
+      "diagnostics": [
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7373271889400922,
+        "design_reference_token_recall": 0.45454545454545453,
+        "unsupported_claim_rate": 0.48,
+        "compression_ratio": 0.34983498349834985
+      },
+      "diagnostics": [
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7518796992481203,
+        "design_reference_token_recall": 0.1,
+        "unsupported_claim_rate": 0.3225806451612903,
+        "compression_ratio": 0.3843537414965986
+      },
+      "diagnostics": [
+        "low_design_reference_alignment_not_a_rejection_gate",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5194805194805195,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.5135135135135135,
+        "compression_ratio": 0.3291139240506329
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "low_design_reference_alignment_not_a_rejection_gate",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.8163265306122449,
+        "design_reference_token_recall": 0.3,
+        "unsupported_claim_rate": 0.5,
+        "compression_ratio": 0.29411764705882354
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5442176870748299,
+        "design_reference_token_recall": 0.25,
+        "unsupported_claim_rate": 0.4444444444444444,
+        "compression_ratio": 0.3630573248407643
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.6177606177606179,
+        "design_reference_token_recall": 0.25,
+        "unsupported_claim_rate": 0.5666666666666667,
+        "compression_ratio": 0.35555555555555557
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "unsupported_language_requires_review"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "contract_valid": true,
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7142857142857144,
+        "design_reference_token_recall": 0.4444444444444444,
+        "unsupported_claim_rate": 0.4090909090909091,
+        "compression_ratio": 0.3881118881118881
+      },
+      "diagnostics": [
+        "scope_boundary_loss",
+        "unsupported_language_requires_review"
+      ]
+    }
+  ],
+  "guards": {
+    "frozen_prompt_reused": true,
+    "frozen_parser_reused": true,
+    "frozen_scorer_reused": true,
+    "frozen_design_dataset_reused": true,
+    "authenticated_preflight_completed": true,
+    "all_design_requests_attempted_once": true,
+    "all_design_outputs_strictly_parsed": true,
+    "all_candidates_contract_valid": true,
+    "automatic_output_repair": false,
+    "selective_retry": false,
+    "api_key_recorded": false,
+    "raw_response_text_recorded": false,
+    "design_cases_only": true,
+    "held_out_cases_untouched": true,
+    "provider_ready": true,
+    "candidate_learning_authorized": false,
+    "pattern_persistence_authorized": false,
+    "knowledge_promotion_authorized": false,
+    "transfer_value_claimed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  },
+  "decision": "provider_ready_candidates_require_quality_review",
+  "conclusion": "DeepSeek completed all ten frozen design-only extractions with strict parsing and contract validity, so provider readiness is established. Candidate learning remains unauthorized because extraction quality is diagnostic-only and unsupported abstraction requires review; held-out transfer evaluation, persistence, knowledge promotion, Hermes, and runtime remain closed."
+}

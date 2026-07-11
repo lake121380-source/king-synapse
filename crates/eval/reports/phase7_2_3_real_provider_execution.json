@@ -1,0 +1,796 @@
+{
+  "schema_version": 1,
+  "execution_id": "phase7.2.3-deepseek-real-provider-readiness-v1",
+  "provider_name": "deepseek_pattern_extractor_v1",
+  "provider_version": "v1",
+  "model_requested": "deepseek-v4-flash",
+  "resolved_model": "deepseek-v4-flash",
+  "design_case_count": 10,
+  "attempted_design_cases": 10,
+  "completed_design_cases": 10,
+  "status": "completed",
+  "blocker": null,
+  "api_key_recorded": false,
+  "raw_response_text_recorded": false,
+  "prompt_version": "PatternExtractorPrompt-v1",
+  "prompt_sha256": "240a1db1994a91c4694643dbc2627595f0ab7eb84d3de30ba8a98ef8172c9499",
+  "parser_sha256": "47e7feef23ed515df0785c779e5ef8c9b1eeff85f1aec571a239149a1311e43b",
+  "scorer_sha256": "fd1a23b61ca428ec97b0689643b69b00ecddb535844422a1b5518d05bc015d26",
+  "dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+  "outputs": [
+    {
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "candidate": {
+        "id": "candidate_incremental_rollout",
+        "proposition": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects while keeping the old version available, provided the new and old versions are backward compatible.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_01_support_1",
+            "experience_id": "payments_canary",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_01_support_2",
+            "experience_id": "search_cohorts",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_01_counter_3",
+            "experience_id": "atomic_schema",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "deployment_strategy",
+            "operator": "equals",
+            "value": "incremental"
+          },
+          {
+            "field": "backward_compatibility",
+            "operator": "equals",
+            "value": "true"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "backward_compatibility",
+            "operator": "equals",
+            "value": "false"
+          }
+        ],
+        "source_domains": [
+          "software_delivery"
+        ],
+        "predictions": [
+          {
+            "statement": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system.",
+            "observable": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back.",
+            "success_criterion": "The old version remains fully operational during the entire rollout phase."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+            "observable": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.45,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "candidate": {
+        "id": "px_02_pattern",
+        "proposition": "In customer support queues, labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly, while labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_02_support_1",
+            "experience_id": "mixed_queue",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_02_support_2",
+            "experience_id": "billing_deadlines",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_02_counter_3",
+            "experience_id": "vip_proxy",
+            "domain": "customer_support",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "domain",
+            "operator": "==",
+            "value": "customer_support"
+          },
+          {
+            "field": "task_type",
+            "operator": "==",
+            "value": "triage_and_assignment"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "labeling_criteria",
+            "operator": "==",
+            "value": "fixed_requester_priority_only"
+          }
+        ],
+        "source_domains": [
+          "customer_support"
+        ],
+        "predictions": [
+          {
+            "statement": "When a customer support queue labels cases by customer impact and time sensitivity before assignment, high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones.",
+            "observable": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first.",
+            "success_criterion": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified.",
+            "observable": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.45,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "candidate": {
+        "id": "pattern_extract_03",
+        "proposition": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch, the team adheres to those thresholds in outcome evaluation and does not redefine success metrics post-hoc.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_03_support_1",
+            "experience_id": "onboarding_test",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_03_support_2",
+            "experience_id": "pricing_test",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_03_counter_3",
+            "experience_id": "discovery_interviews",
+            "domain": "product_experiment",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "domain",
+            "operator": "eq",
+            "value": "product_experiment"
+          },
+          {
+            "field": "action_or_observation",
+            "operator": "contains",
+            "value": "fixed"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "action_or_observation",
+            "operator": "contains",
+            "value": "exploratory"
+          }
+        ],
+        "source_domains": [
+          "product_experiment"
+        ],
+        "predictions": [
+          {
+            "statement": "In a product experiment with predefined quantitative thresholds, the team will accept the outcome based on those thresholds without redefining success.",
+            "observable": "The team does not alter success criteria after observing the result.",
+            "success_criterion": "The team's final decision (e.g., launch, abandon) matches the predefined threshold triggers."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If a product experiment with predefined quantitative thresholds results in the team redefining success metrics after seeing the outcome, the pattern is falsified.",
+            "observable": "Post-hoc modification of guardrails, stop criteria, or success metrics."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.4,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "candidate": {
+        "id": "pattern_candidate_04",
+        "proposition": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_04_support_1",
+            "experience_id": "redis_failure",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_04_support_2",
+            "experience_id": "mysql_failure",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_04_counter_3",
+            "experience_id": "active_corruption",
+            "domain": "service_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "domain",
+            "operator": "eq",
+            "value": "service_operations"
+          },
+          {
+            "field": "diagnosis_method",
+            "operator": "includes",
+            "value": "logs, memory, configuration, permissions, network evidence"
+          },
+          {
+            "field": "failure_type",
+            "operator": "in",
+            "value": "cache outage, database startup failure"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "active_corruption",
+            "operator": "eq",
+            "value": "true"
+          },
+          {
+            "field": "ongoing_damaging_writes",
+            "operator": "eq",
+            "value": "true"
+          }
+        ],
+        "source_domains": [
+          "service_operations"
+        ],
+        "predictions": [
+          {
+            "statement": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+            "observable": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur.",
+            "success_criterion": "The root cause matches one of the evidence findings and no unrelated components were replaced during recovery."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present.",
+            "observable": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence, or the root cause is not found within those evidence classes."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.55,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "candidate": {
+        "id": "pattern_05_001",
+        "proposition": "In AI tool category posts within the same audience and month, including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments), except when success is driven by an external virality source such as an unrelated celebrity repost.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_05_support_1",
+            "experience_id": "matched_posts",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_05_support_2",
+            "experience_id": "replication_sample",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_05_counter_3",
+            "experience_id": "celebrity_spike",
+            "domain": "content_operations",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "domain",
+            "operator": "eq",
+            "value": "content_operations"
+          },
+          {
+            "field": "post_type",
+            "operator": "eq",
+            "value": "AI"
+          },
+          {
+            "field": "audience_and_time",
+            "operator": "eq",
+            "value": "same_audience_and_month"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "external_virality_source",
+            "operator": "eq",
+            "value": "unrelated_celebrity_repost"
+          }
+        ],
+        "source_domains": [
+          "content_operations"
+        ],
+        "predictions": [
+          {
+            "statement": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features, assuming organic distribution without external virality.",
+            "observable": "Number of saves and qualified comments per post within the same audience and month.",
+            "success_criterion": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "A post with concrete examples and early problem framing fails to achieve higher engagement, or a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost).",
+            "observable": "Engagement metrics and identification of any external sources driving traffic."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.45,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "candidate": {
+        "id": "pc_extract_06_001",
+        "proposition": "In software delivery, exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout, whereas testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_06_support_1",
+            "experience_id": "feature_flag",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_06_support_2",
+            "experience_id": "migration_probe",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_06_counter_3",
+            "experience_id": "simple_probe",
+            "domain": "software_delivery",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "introduction_strategy",
+            "operator": "is",
+            "value": "limited_exposure_to_subset_before_full_rollout"
+          },
+          {
+            "field": "subset_selection_criteria",
+            "operator": "is",
+            "value": "representative_of_full_population_complexity"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "subset_selection_criteria",
+            "operator": "is",
+            "value": "only_smallest_or_simplest_subset"
+          }
+        ],
+        "source_domains": [
+          "software_delivery"
+        ],
+        "predictions": [
+          {
+            "statement": "If a risky change is first exposed to a representative subset (e.g., a typical tenant or internal group) before full rollout, then at least one hidden issue (dependency assumption failure or undocumented data shape) will be discovered before full rollout.",
+            "observable": "Hidden issue is detected during the limited exposure phase and documented before full rollout.",
+            "success_criterion": "At least one issue is identified and can be addressed before full rollout."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If a change is exposed to a representative subset and no issues are found, but full rollout fails due to issues that were present in that subset's complexity, the pattern is falsified.",
+            "observable": "Full rollout failure due to data shapes or assumptions that existed in the representative subset but were not detected."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.5,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "candidate": {
+        "id": "pc_07_001",
+        "proposition": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops, whereas noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_07_support_1",
+            "experience_id": "error_ceiling",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_07_support_2",
+            "experience_id": "queue_stop",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_07_counter_3",
+            "experience_id": "noisy_alert",
+            "domain": "incident_response",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "metric_harm_relevance",
+            "operator": "is",
+            "value": "directly harmful"
+          },
+          {
+            "field": "metric_noise_level",
+            "operator": "is",
+            "value": "low"
+          },
+          {
+            "field": "stop_trigger_type",
+            "operator": "is",
+            "value": "predefined threshold"
+          },
+          {
+            "field": "automation_type",
+            "operator": "is",
+            "value": "automatic"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "metric_harm_relevance",
+            "operator": "is",
+            "value": "weakly related to harm"
+          },
+          {
+            "field": "metric_noise_level",
+            "operator": "is",
+            "value": "noisy"
+          }
+        ],
+        "source_domains": [
+          "incident_response"
+        ],
+        "predictions": [
+          {
+            "statement": "If a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases, then the rollout will stop at a low traffic percentage and prevent a full outage.",
+            "observable": "Traffic pauses at or below 20% and no full outage occurs.",
+            "success_criterion": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage."
+          },
+          {
+            "statement": "If an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines, then the change will reverse before backlog recovery exceeds the allowed window.",
+            "observable": "The change is reversed before the recovery time exceeds the overnight window.",
+            "success_criterion": "The automatic stop triggers and the system recovers within the specified time."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified.",
+            "observable": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.5,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "candidate": {
+        "id": "pattern_candidate_08",
+        "proposition": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action. However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_08_support_1",
+            "experience_id": "staged_treatment",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_08_support_2",
+            "experience_id": "escalation_trigger",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_08_counter_3",
+            "experience_id": "critical_delay",
+            "domain": "clinical_safety",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "risk_level_of_intervention",
+            "operator": "exists",
+            "value": "reversible lower-risk"
+          },
+          {
+            "field": "evidence_gathering_phase",
+            "operator": "exists",
+            "value": "ongoing"
+          },
+          {
+            "field": "escalation_rule",
+            "operator": "exists",
+            "value": "requires both independent confirmation and worsening signs"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "vital_sign_trend",
+            "operator": "is",
+            "value": "rapidly worsening"
+          },
+          {
+            "field": "action_urgency",
+            "operator": "is",
+            "value": "emergency requiring lower evidence threshold"
+          }
+        ],
+        "source_domains": [
+          "clinical_safety"
+        ],
+        "predictions": [
+          {
+            "statement": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+            "observable": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+            "success_criterion": "Outcome matches the observed outcome in memory px_08_support_1."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+            "observable": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.35,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "candidate": {
+        "id": "px_09_pattern_candidate",
+        "proposition": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust. In contrast, apparent consensus from multiple reports that merely repeat a single unverified source is fragile and collapses when the original source is corrected.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_09_support_1",
+            "experience_id": "replicated_measurement",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_09_support_2",
+            "experience_id": "method_triangulation",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_09_counter_3",
+            "experience_id": "citation_echo",
+            "domain": "scientific_research",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "number_of_independent_sources",
+            "operator": "greater_than",
+            "value": "1"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "source_independence",
+            "operator": "equals",
+            "value": "false"
+          },
+          {
+            "field": "all_sources_trace_to_single_origin",
+            "operator": "equals",
+            "value": "true"
+          }
+        ],
+        "source_domains": [
+          "scientific_research"
+        ],
+        "predictions": [
+          {
+            "statement": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+            "observable": "The difference between the two estimates is within the tolerance range.",
+            "success_criterion": "abs(estimate_1 - estimate_2) <= tolerance"
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails.",
+            "observable": "The difference between estimates exceeds the tolerance."
+          },
+          {
+            "statement": "If multiple reports supporting a claim are all traced to a single unverified original source, the pattern of apparent consensus does not hold.",
+            "observable": "Correction of the original source causes the consensus to disappear."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.3,
+        "status": "proposed"
+      }
+    },
+    {
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "candidate": {
+        "id": "px_10_pattern_1",
+        "proposition": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow. Buffering is counterproductive when replenishment lead time is short and demand is stable.",
+        "supporting_evidence": [
+          {
+            "memory_id": "px_10_support_1",
+            "experience_id": "long_lead_parts",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          },
+          {
+            "memory_id": "px_10_support_2",
+            "experience_id": "seasonal_inventory",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexamples": [
+          {
+            "memory_id": "px_10_counter_3",
+            "experience_id": "fast_replenishment",
+            "domain": "supply_chain",
+            "independent_source": true,
+            "observed_outcome": true
+          }
+        ],
+        "counterexample_search_performed": true,
+        "applicability_conditions": [
+          {
+            "field": "replenishment_lead_time",
+            "operator": "in",
+            "value": "long, slow"
+          },
+          {
+            "field": "demand_characteristic",
+            "operator": "in",
+            "value": "volatile, predictable_spikes"
+          }
+        ],
+        "exclusion_conditions": [
+          {
+            "field": "replenishment_lead_time",
+            "operator": "is",
+            "value": "short"
+          },
+          {
+            "field": "demand_stability",
+            "operator": "is",
+            "value": "stable"
+          }
+        ],
+        "source_domains": [
+          "supply_chain"
+        ],
+        "predictions": [
+          {
+            "statement": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit.",
+            "observable": "Interruption events decrease and carrying cost as a percentage of product value does not exceed the planned budget.",
+            "success_criterion": "Measured over a typical planning horizon, stockout frequency drops by at least 30% and carrying cost remains under the target threshold set by management."
+          }
+        ],
+        "falsification_conditions": [
+          {
+            "statement": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+            "observable": "Observed inventory write-offs due to expiration and total holding cost greater than the cost of stockouts that would have occurred without buffering."
+          }
+        ],
+        "validation_outcome_ids": [],
+        "confidence": 0.4,
+        "status": "proposed"
+      }
+    }
+  ]
+}

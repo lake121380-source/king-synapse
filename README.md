@@ -564,3 +564,9 @@ Its result intentionally separates `accepted_contract_only` from semantic qualit
 Phase 7.2.2 freezes `PatternExtractorPrompt-v1`, strict single-object JSON parsing, reject-only/no-repair behavior, an evidence-grounded scorer, provider manifests, and artifact hashes. The primary safety metric is `unsupported_claim_rate`; fluency and style receive no reward.
 
 The deterministic weak baseline row is complete. The DeepSeek model row is explicitly `blocked_authorization` after a sanitized HTTP 401 preflight, so it contains no fabricated capability metrics. Phase 7.1 held-out cases remain closed and persistence, knowledge promotion, Hermes, and runtime remain unauthorized. See `docs/eval/PHASE7_2_2_PROVIDER_CAPABILITY_MATRIX.md`.
+
+## Phase 7.2.3 real provider readiness validation
+
+Phase 7.2.3 preserves the Phase 7.2.2 authorization-blocked artifacts as immutable history and records a separate authenticated DeepSeek design run under the exact frozen prompt, parser, no-repair policy, scorer, model configuration, and ten design cases. All `10/10` requests completed, strict parsing and contract validity were `1.0`, no retry or repair occurred, and held-out cases remained closed.
+
+Provider readiness is complete, but candidate learning remains unauthorized. The observed `unsupported_claim_rate` is `0.5129` and scope preservation is `0.7000`, demonstrating that legal structured output and valid evidence IDs do not establish grounded cognition or validated knowledge. See `docs/eval/PHASE7_2_3_REAL_PROVIDER_READINESS.md`.
