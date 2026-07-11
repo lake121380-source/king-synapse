@@ -144,3 +144,18 @@ Phase 7.0 does not:
 ## Current decision
 
 The retrieval-booster research line is preserved as a bounded evidence-selection experiment, but it is no longer the mainline. The mainline is now Experience-to-Pattern-to-Transfer. Phase 7.1 should design an independent transfer benchmark before selecting or implementing a pattern induction algorithm.
+
+## Phase 7.1 protocol status
+
+Phase 7.1 now freezes the first Transfer Evaluation Protocol:
+
+```text
+30 scenarios
+10 design cases
+20 held-out cases
+6 transfer categories
+6 comparison arms
+13 quality and safety metrics
+```
+
+The protocol adds explicit measurements for useful transfer, dangerous transfer, withholding accuracy, compression with fidelity, and explanation dependency. This is a benchmark contract only: no Pattern Discovery output has been evaluated and no outcome-performance claim is authorized.

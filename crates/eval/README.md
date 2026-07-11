@@ -567,3 +567,20 @@ Artifacts:
 - `../../scripts/eval/phase7_cognitive_architecture_contract.py`
 - `../../docs/COGNITIVE_ARCHITECTURE_NORTH_STAR.md`
 - `../../docs/eval/PHASE7_0_COGNITIVE_ARCHITECTURE_REORIENTATION.md`
+
+## Phase 7.1 Transfer Evaluation Protocol
+
+The eval crate contains a frozen 30-scenario transfer benchmark with 20 held-out cases, six comparison arms, 13 transfer/safety metrics, and a deterministic failure taxonomy.
+
+```powershell
+cargo run -p synapse-eval --bin phase7_transfer_evaluation_protocol
+python scripts/eval/phase7_transfer_evaluation_protocol.py
+```
+
+Outputs:
+
+```text
+crates/eval/reports/phase7_transfer_evaluation_protocol.json
+```
+
+The report intentionally keeps `outcome_evaluation_complete=false`. It validates the benchmark and experimental protocol; it does not run Pattern Mining or claim transfer improvement.

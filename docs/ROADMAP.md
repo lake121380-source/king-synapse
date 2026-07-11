@@ -898,3 +898,36 @@ runtime                                    not authorized
 ```
 
 Next: Phase 7.1 must design a held-out Transfer Benchmark comparing LLM-only, raw-memory, memory-summary, Pattern, and Pattern-with-counterexamples conditions. It must measure negative transfer before implementing an autonomous induction algorithm.
+
+## Phase 7.1 Transfer Evaluation Protocol
+
+Status: **protocol implementation complete; transfer outcome evaluation pending; Pattern algorithm and runtime remain unauthorized.**
+
+Phase 7.1 freezes a 30-scenario benchmark with `10` design and `20` held-out cases across direct transfer, cross-domain transfer, negative transfer, scope boundaries, counterexample-sensitive decisions, and no-transfer controls.
+
+The comparison protocol contains six arms:
+
+```text
+LLM only
+raw memories
+memory summary
+Pattern Candidate
+Pattern + scope + counterexamples
+Pattern + evidence graph
+```
+
+The protocol measures grounding, abstraction correctness, scope precision, counterexample coverage, useful transfer, withholding accuracy, negative and dangerous transfer, hallucinated rules, strategy quality, compression, and explanation dependency. It explicitly records `outcome_evaluation_complete=false`: Phase 7.1 freezes the test standard but does not claim model or Pattern performance.
+
+Decision boundary:
+
+```text
+Transfer dataset                         frozen
+held-out transfer cases                  reserved
+baseline comparison protocol             complete
+Pattern Discovery                        not authorized
+Pattern persistence                      not authorized
+Hermes                                   not authorized
+runtime                                  not authorized
+```
+
+Next: implement a bounded Pattern Discovery prototype against the `design` split only, freeze its prompts and rules, and only then open the held-out split for transfer evaluation.

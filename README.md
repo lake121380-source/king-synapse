@@ -548,3 +548,5 @@ Stars are not the point of the engine, but they do help people find the work.
 ## License
 
 Apache-2.0. See `LICENSE`.
+
+Phase 7.1 freezes the transfer evaluation standard before Pattern Discovery begins: 30 scenarios, 20 held-out cases, six experimental arms, explicit must-transfer and must-withhold decisions, evidence lineage, scope, counterexamples, and negative-transfer safety metrics. Transfer outcome performance remains unmeasured and runtime remains unauthorized. See `docs/eval/PHASE7_1_TRANSFER_EVALUATION_PROTOCOL.md`.

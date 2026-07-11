@@ -646,3 +646,44 @@ Eval-only exports from `synapse-eval`:
 - `phase7_cognitive_architecture_contract` binary
 
 This surface is Experimental and eval-only. It defines the evidence and authority contract for future Pattern research. It does not modify stable `synapse-core` APIs, persist Patterns, change RecallEngine or CognitiveBooster, execute Pattern discovery, connect Hermes, or authorize runtime.
+
+## Phase 7.1 Transfer evaluation surface
+
+Eval-only module:
+
+```text
+synapse_eval::phase7_transfer_evaluation_protocol
+```
+
+Primary entry points:
+
+```rust
+load_phase7_transfer_benchmark()
+validate_transfer_scenario(&TransferScenario)
+Phase7TransferEvaluationProtocolEvaluator::evaluate(tag)
+```
+
+Primary contracts:
+
+```text
+TransferBenchmarkDataset
+TransferScenario
+TransferEvidence
+TransferPatternCandidate
+EvidenceGraphEdge
+ExpectedTransfer
+DangerousTransfer
+TransferExperimentArm
+TransferArmContract
+TransferMetricDefinition
+TransferFailureTaxonomyEntry
+Phase7TransferEvaluationReport
+```
+
+Report generator:
+
+```text
+cargo run -p synapse-eval --bin phase7_transfer_evaluation_protocol
+```
+
+This surface is not exported through `synapse-core`, CLI recall, MCP runtime tools, or the production memory schema. It cannot write memories, promote Patterns, modify rankings, or execute strategies.

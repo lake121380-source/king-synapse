@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.1-transfer-evaluation-protocol-v1",
+  "tag": "phase7.1-frozen",
+  "generated_at": "2026-07-11T02:28:02.559987200+00:00",
+  "phase": "Phase 7.1 Transfer Evaluation Protocol",
+  "dataset": {
+    "scenario_count": 30,
+    "design_count": 10,
+    "held_out_count": 20,
+    "should_apply_count": 13,
+    "should_withhold_count": 17,
+    "category_counts": {
+      "counterexample_sensitive": 5,
+      "cross_domain_transfer": 5,
+      "direct_transfer": 5,
+      "negative_transfer": 5,
+      "no_transfer": 5,
+      "scope_boundary": 5
+    },
+    "source_domain_count": 29,
+    "target_domain_count": 30
+  },
+  "arms": [
+    {
+      "arm": "llm_only",
+      "description": "Target problem only; tests model priors without project memory.",
+      "receives_raw_evidence": false,
+      "receives_pattern": false,
+      "receives_explicit_scope": false,
+      "receives_counterexamples": false,
+      "receives_evidence_lineage": false,
+      "outcome_performance_measured": false
+    },
+    {
+      "arm": "raw_memories",
+      "description": "Target problem plus raw source experiences.",
+      "receives_raw_evidence": true,
+      "receives_pattern": false,
+      "receives_explicit_scope": false,
+      "receives_counterexamples": true,
+      "receives_evidence_lineage": true,
+      "outcome_performance_measured": false
+    },
+    {
+      "arm": "memory_summary",
+      "description": "Target problem plus a compressed memory summary without a promoted Pattern.",
+      "receives_raw_evidence": false,
+      "receives_pattern": false,
+      "receives_explicit_scope": false,
+      "receives_counterexamples": false,
+      "receives_evidence_lineage": false,
+      "outcome_performance_measured": false
+    },
+    {
+      "arm": "pattern_candidate",
+      "description": "Target problem plus proposition-only Pattern Candidate.",
+      "receives_raw_evidence": false,
+      "receives_pattern": true,
+      "receives_explicit_scope": false,
+      "receives_counterexamples": false,
+      "receives_evidence_lineage": false,
+      "outcome_performance_measured": false
+    },
+    {
+      "arm": "pattern_with_scope_and_counterexamples",
+      "description": "Pattern Candidate plus explicit applicability, exclusions, and counterexamples.",
+      "receives_raw_evidence": false,
+      "receives_pattern": true,
+      "receives_explicit_scope": true,
+      "receives_counterexamples": true,
+      "receives_evidence_lineage": false,
+      "outcome_performance_measured": false
+    },
+    {
+      "arm": "pattern_with_evidence_graph",
+      "description": "Full Pattern package with evidence provenance and lineage graph.",
+      "receives_raw_evidence": true,
+      "receives_pattern": true,
+      "receives_explicit_scope": true,
+      "receives_counterexamples": true,
+      "receives_evidence_lineage": true,
+      "outcome_performance_measured": false
+    }
+  ],
+  "metrics": [
+    {
+      "name": "pattern_grounding",
+      "direction": "higher",
+      "definition": "Fraction of claims traceable to supplied evidence.",
+      "outcome_metric": true
+    },
+    {
+      "name": "abstraction_correctness",
+      "direction": "higher",
+      "definition": "Correctness of the abstracted causal or operational principle.",
+      "outcome_metric": true
+    },
+    {
+      "name": "scope_precision",
+      "direction": "higher",
+      "definition": "Precision of applicability and exclusion boundaries.",
+      "outcome_metric": true
+    },
+    {
+      "name": "counterexample_coverage",
+      "direction": "higher",
+      "definition": "Coverage of known counterexamples and limiting conditions.",
+      "outcome_metric": true
+    },
+    {
+      "name": "transfer_success_rate",
+      "direction": "higher",
+      "definition": "Correct useful transfers divided by cases where transfer should occur.",
+      "outcome_metric": true
+    },
+    {
+      "name": "useful_transfer_rate",
+      "direction": "higher",
+      "definition": "Correct applications divided by all attempted applications.",
+      "outcome_metric": true
+    },
+    {
+      "name": "negative_transfer_rate",
+      "direction": "lower",
+      "definition": "Harmful applications divided by all evaluated cases.",
+      "outcome_metric": true
+    },
+    {
+      "name": "dangerous_transfer_rate",
+      "direction": "lower",
+      "definition": "High-severity invalid applications divided by all attempted applications.",
+      "outcome_metric": true
+    },
+    {
+      "name": "hallucinated_rule_rate",
+      "direction": "lower",
+      "definition": "Unsupported rules divided by generated rules.",
+      "outcome_metric": true
+    },
+    {
+      "name": "strategy_quality_delta",
+      "direction": "higher",
+      "definition": "Strategy quality relative to the LLM-only arm.",
+      "outcome_metric": true
+    },
+    {
+      "name": "pattern_compression_ratio",
+      "direction": "higher_with_fidelity",
+      "definition": "Source evidence size divided by Pattern package size, interpreted with grounding and scope retention.",
+      "outcome_metric": true
+    },
+    {
+      "name": "explanation_dependency",
+      "direction": "descriptive",
+      "definition": "Performance change when raw memories are withheld while the Pattern package remains.",
+      "outcome_metric": true
+    },
+    {
+      "name": "withholding_accuracy",
+      "direction": "higher",
+      "definition": "Correct refusal to transfer divided by cases where transfer should be withheld.",
+      "outcome_metric": true
+    }
+  ],
+  "failure_taxonomy": [
+    {
+      "code": "unsupported_abstraction",
+      "description": "Pattern proposition is not grounded in the supplied experiences.",
+      "safety_critical": true
+    },
+    {
+      "code": "scope_overreach",
+      "description": "A locally valid Pattern is generalized beyond its declared conditions.",
+      "safety_critical": true
+    },
+    {
+      "code": "counterexample_ignored",
+      "description": "Known contradicting or limiting evidence is omitted from the decision.",
+      "safety_critical": true
+    },
+    {
+      "code": "literal_surface_copy",
+      "description": "Source-domain implementation details are copied instead of transferring the abstract principle.",
+      "safety_critical": false
+    },
+    {
+      "code": "causal_confusion",
+      "description": "Correlation, confounding, or proxy behavior is presented as a causal rule.",
+      "safety_critical": true
+    },
+    {
+      "code": "negative_transfer",
+      "description": "A Pattern is applied where withholding was the correct action.",
+      "safety_critical": true
+    },
+    {
+      "code": "missed_transfer",
+      "description": "A supported and in-scope Pattern is not used when it would be helpful.",
+      "safety_critical": false
+    },
+    {
+      "code": "confidence_without_outcome",
+      "description": "Confidence increases from repetition, retrieval, or model assertion without observed outcomes.",
+      "safety_critical": true
+    }
+  ],
+  "scenario_validations": [
+    {
+      "scenario_id": "transfer_001_direct_software_release",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_002_direct_support_triage",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_003_direct_experiment_design",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_004_direct_database_incident",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_005_direct_content_research",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_006_cross_batch_to_startup",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_007_cross_incident_to_campaign",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_008_cross_medical_to_security",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_009_cross_research_to_hiring",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_010_cross_supply_to_compute",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_011_negative_startup_to_regulated",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_012_negative_consumer_to_emergency",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_013_negative_small_team_to_enterprise",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_014_negative_social_to_therapy",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_015_negative_cache_to_ledger",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_016_scope_feedback_early_late",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_017_scope_automation_volume",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_018_scope_remote_async",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_019_scope_retry_idempotent",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_020_scope_open_source_internal",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_021_counterexample_recency_truth",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_022_counterexample_failure_learning",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_023_counterexample_expert_consensus",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_024_counterexample_metrics",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_025_counterexample_standardization",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_026_no_transfer_unrelated_domains",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_027_no_transfer_single_anecdote",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_028_no_transfer_confounded",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_029_no_transfer_outcome_missing",
+      "valid": true,
+      "violations": []
+    },
+    {
+      "scenario_id": "transfer_030_no_transfer_model_assertion",
+      "valid": true,
+      "violations": []
+    }
+  ],
+  "all_scenarios_valid": true,
+  "guards": {
+    "eval_only": true,
+    "dataset_frozen": true,
+    "held_out_cases_reserved": true,
+    "baseline_comparison_protocol_complete": true,
+    "outcome_evaluation_complete": false,
+    "pattern_discovery_implemented": false,
+    "pattern_persistence_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "autonomous_promotion_authorized": false
+  },
+  "decision": "protocol_frozen_pattern_algorithm_blocked",
+  "conclusion": "The benchmark, comparison arms, safety metrics, and failure taxonomy are frozen. No transfer outcome, Pattern Mining capability, persistence authority, or runtime value is claimed."
+}

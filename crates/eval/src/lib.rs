@@ -40,6 +40,7 @@ pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
 pub mod phase7_cognitive_architecture_contract;
+pub mod phase7_transfer_evaluation_protocol;
 pub mod reporter;
 pub mod types;
 
@@ -203,6 +204,15 @@ pub use phase7_cognitive_architecture_contract::{
     PatternCondition, PatternContractCase, PatternContractValidation, PatternLifecycleTransition,
     PatternPrediction, PatternStatus, Phase7ArchitectureDecision, Phase7ArchitectureGuards,
     Phase7CognitiveArchitectureContractEvaluator, Phase7CognitiveArchitectureContractReport,
+};
+pub use phase7_transfer_evaluation_protocol::{
+    load_phase7_transfer_benchmark, validate_transfer_scenario, DangerousTransfer,
+    EvidenceGraphEdge, ExpectedTransfer, Phase7TransferDecision,
+    Phase7TransferEvaluationProtocolEvaluator, Phase7TransferEvaluationReport, TransferArmContract,
+    TransferBenchmarkDataset, TransferCategory, TransferDatasetSummary, TransferEvidence,
+    TransferExperimentArm, TransferFailureTaxonomyEntry, TransferMetricDefinition,
+    TransferPatternCandidate, TransferProtocolGuards, TransferScenario, TransferScenarioValidation,
+    TransferSplit,
 };
 pub use reporter::print_table;
 pub use types::{
