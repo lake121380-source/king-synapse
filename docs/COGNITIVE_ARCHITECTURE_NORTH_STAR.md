@@ -234,3 +234,13 @@ Measurement confound
 ```
 
 A scorer warning is evidence for review, not semantic ground truth. The first ten-case seed review found correct evidence lineage and counterexample retention but repeated claim-strength escalation during abstraction. Falsification structure is also separated from falsification validity. No Candidate becomes knowledge from taxonomy membership, and extraction changes remain unauthorized until independent adjudication measures annotation agreement.
+
+## Phase 7.3.1 measurement separation rule
+
+The cognitive evaluation mainline now applies a permanent control-variable rule:
+
+> Never modify the evaluated object and the evaluation object in the same experimental stage.
+
+For Phase 7.3.1, frozen Evidence Bundles are authoritative inputs but are not themselves evaluated. Frozen Pattern Candidates are the evaluated object; the existing token/scope scorer is the calibrated measurement object. Prompt, Provider, Parser, repair policy, extraction algorithm, held-out data, persistence, Hermes, and runtime remain frozen.
+
+Claim provenance is explicitly separated into `explicit`, `inferred`, and `synthesized`. Synthesis is not automatically unsupported: the future knowledge system must distinguish grounded synthesis from unsupported synthesis. No semantic ground truth or calibration metric exists until two blind claim-level reviews and adjudication are complete.

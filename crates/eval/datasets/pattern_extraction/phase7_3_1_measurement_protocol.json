@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+  "phase": "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration",
+  "measurement_objects": [
+    {"object": "evidence_bundle", "role": "frozen_authoritative_input", "studied": false, "modified": false},
+    {"object": "candidate", "role": "evaluated_object", "studied": true, "modified": false},
+    {"object": "frozen_judge", "role": "calibrated_measurement_object", "studied": true, "modified": false},
+    {"object": "prompt", "role": "controlled_variable", "studied": false, "modified": false},
+    {"object": "provider", "role": "controlled_variable", "studied": false, "modified": false},
+    {"object": "parser", "role": "controlled_variable", "studied": false, "modified": false},
+    {"object": "repair_policy", "role": "controlled_variable", "studied": false, "modified": false},
+    {"object": "extraction_algorithm", "role": "controlled_variable", "studied": false, "modified": false}
+  ],
+  "one_experimental_variable_rule": "Never modify the evaluated object and the evaluation object in the same experimental stage.",
+  "evidence_boundary": "Evidence bundles are frozen authoritative inputs for this phase, not claims of real-world epistemic perfection.",
+  "claim_origin_definitions": {
+    "explicit": "The core proposition, scope, and strength are directly present in the frozen evidence; bounded paraphrase is allowed.",
+    "inferred": "A finite traceable combination of supplied evidence supports the claim without external knowledge, causal escalation, scope expansion, or deterministic prediction.",
+    "synthesized": "The claim introduces a new abstraction, causal model, prediction, transfer, strategy, scope, or theory not directly stated in the evidence. Synthesized does not automatically mean unsupported."
+  },
+  "support_label_definitions": {
+    "supported": "Claim strength, scope, and causal language are supported by the frozen evidence.",
+    "partially_supported": "The core direction is supported but scope, prediction, certainty, causality, or detail is stronger than the evidence.",
+    "unsupported": "The material claim cannot be established from the frozen evidence.",
+    "not_assessable": "The evidence or claim boundary is insufficient for stable adjudication."
+  },
+  "binary_views": {
+    "strict_safety": {"supported": "negative", "partially_supported": "positive", "unsupported": "positive", "not_assessable": "excluded"},
+    "strong_error": {"supported": "negative", "partially_supported": "excluded", "unsupported": "positive", "not_assessable": "excluded"}
+  },
+  "blind_review_requirements": [
+    "Reviewer B must not see Reviewer A labels.",
+    "Reviewer B must not see frozen judge warnings or scores.",
+    "Reviewer B must not see Phase 7.3 aggregate conclusions.",
+    "Both reviewers segment and label claims independently.",
+    "Disagreements remain preserved after adjudication."
+  ],
+  "disagreement_kinds": [
+    "boundary_disagreement",
+    "fundamental_disagreement",
+    "segmentation_disagreement",
+    "evidence_disagreement",
+    "provenance_disagreement",
+    "taxonomy_disagreement",
+    "confidence_disagreement",
+    "other"
+  ],
+  "judge_failure_kinds": [
+    "lexical_novelty_false_positive",
+    "scope_field_placement_false_positive",
+    "paraphrase_entailment_miss",
+    "bridging_inference_false_positive",
+    "unsupported_prediction_false_negative",
+    "causal_leap_false_negative",
+    "scope_expansion_false_negative",
+    "partial_support_collapsed",
+    "claim_boundary_mismatch",
+    "other"
+  ],
+  "calibration_policy": {
+    "positive_class": "human_unsupported",
+    "threshold_change_allowed": false,
+    "prompt_change_allowed": false,
+    "rule_change_allowed": false,
+    "semantic_judge_addition_allowed": false,
+    "same_data_optimization_allowed": false,
+    "report_confidence_intervals": true
+  },
+  "held_out_accessed": false,
+  "runtime_authorized": false,
+  "hermes_authorized": false
+}

@@ -42,6 +42,7 @@ pub mod phase6_recall_score_distribution;
 pub mod phase7_bounded_pattern_extraction_provider;
 pub mod phase7_candidate_error_analysis;
 pub mod phase7_cognitive_architecture_contract;
+pub mod phase7_independent_adjudication_calibration;
 pub mod phase7_pattern_extraction_protocol;
 pub mod phase7_pattern_provider_comparison;
 pub mod phase7_real_provider_readiness;
@@ -217,6 +218,22 @@ pub use phase7_cognitive_architecture_contract::{
     PatternCondition, PatternContractCase, PatternContractValidation, PatternLifecycleTransition,
     PatternPrediction, PatternStatus, Phase7ArchitectureDecision, Phase7ArchitectureGuards,
     Phase7CognitiveArchitectureContractEvaluator, Phase7CognitiveArchitectureContractReport,
+};
+pub use phase7_independent_adjudication_calibration::{
+    aggregate_candidate_scope_expansion, aggregate_candidate_support_label,
+    compute_confusion_matrix, compute_scope_confusion_matrix, compute_support_agreement,
+    load_phase7_adjudication_measurement_protocol, load_phase7_adjudication_template,
+    load_phase7_reviewer_a_template, load_phase7_reviewer_b_template, AdjudicatedClaim,
+    AdjudicationSubmission, AnnotationConfidence, AtomicClaimAnnotation, BinaryCalibrationView,
+    CalibrationPolicy, CandidateJudgeCalibrationRow, CausalStrengthAssessment,
+    ClaimDimensionLabels, ClaimOrigin, ClaimSourceAnchor, ClaimSourceField, ConfidenceInterval,
+    ConfusionMatrix, CounterexampleAssessment, DisagreementKind, FalsifiabilityAssessment,
+    HumanSupportLabel, JudgeFailureKind, MeasurementObjectDefinition, MeasurementObjectKind,
+    MetricDefinition, Phase7AdjudicationCalibrationDecision,
+    Phase7AdjudicationCalibrationEvaluator, Phase7AdjudicationCalibrationGuards,
+    Phase7AdjudicationCalibrationReport, Phase7AdjudicationMeasurementProtocol,
+    PredictionSupportAssessment, ReviewerAnnotationSubmission, ScopeAssessment,
+    ScopeJudgeCalibrationRow, SupportAgreementMetrics,
 };
 pub use phase7_pattern_extraction_protocol::{
     load_phase7_pattern_extraction_design, validate_pattern_extraction_batch,

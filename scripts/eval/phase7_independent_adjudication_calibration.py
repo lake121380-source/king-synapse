@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Deterministic gate for Phase 7.3.1 protocol readiness and frozen-judge calibration harness."""
+
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+REPORT = ROOT / "crates/eval/reports/phase7_independent_adjudication_calibration.json"
+PROTOCOL = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_measurement_protocol.json"
+REVIEWER_A = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_a_template.json"
+REVIEWER_B = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json"
+ADJUDICATION = ROOT / "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json"
+
+
+def main() -> int:
+    env = os.environ.copy()
+    env["CARGO_PROFILE_DEV_DEBUG"] = "0"
+    env["CARGO_BUILD_JOBS"] = "1"
+    subprocess.run(
+        [
+            "cargo",
+            "run",
+            "-p",
+            "synapse-eval",
+            "--bin",
+            "phase7_independent_adjudication_calibration",
+        ],
+        cwd=ROOT,
+        env=env,
+        check=True,
+    )
+
+    report = json.loads(REPORT.read_text(encoding="utf-8"))
+    protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
+    reviewer_a = json.loads(REVIEWER_A.read_text(encoding="utf-8"))
+    reviewer_b = json.loads(REVIEWER_B.read_text(encoding="utf-8"))
+    adjudication = json.loads(ADJUDICATION.read_text(encoding="utf-8"))
+
+    assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
+    assert report["decision"] == "protocol_ready_waiting_for_independent_annotation"
+    assert len(report["claim_source_anchors"]) == 65
+    assert all(anchor["requires_independent_atomic_segmentation"] for anchor in report["claim_source_anchors"])
+    assert len({anchor["anchor_id"] for anchor in report["claim_source_anchors"]}) == 65
+
+    objects = {item["object"]: item for item in protocol["measurement_objects"]}
+    assert set(objects) == {
+        "evidence_bundle",
+        "candidate",
+        "frozen_judge",
+        "prompt",
+        "provider",
+        "parser",
+        "repair_policy",
+        "extraction_algorithm",
+    }
+    assert objects["candidate"]["studied"] is True
+    assert objects["frozen_judge"]["studied"] is True
+    assert all(item["modified"] is False for item in objects.values())
+    assert protocol["claim_origin_definitions"].keys() == {"explicit", "inferred", "synthesized"}
+    assert protocol["calibration_policy"]["threshold_change_allowed"] is False
+    assert protocol["calibration_policy"]["prompt_change_allowed"] is False
+    assert protocol["calibration_policy"]["rule_change_allowed"] is False
+    assert protocol["calibration_policy"]["same_data_optimization_allowed"] is False
+
+    for reviewer in (reviewer_a, reviewer_b):
+        assert reviewer["completed"] is False
+        assert reviewer["claims"] == []
+        assert reviewer["blind_to_other_reviewer"] is True
+        assert reviewer["blind_to_frozen_judge"] is True
+        assert reviewer["blind_to_phase7_3_aggregates"] is True
+        assert reviewer["held_out_accessed"] is False
+
+    assert adjudication["completed"] is False
+    assert adjudication["claims"] == []
+    assert adjudication["disagreements_preserved"] is True
+    assert report["agreement"] is None
+    assert report["strict_safety_calibration"] is None
+    assert report["strong_error_calibration"] is None
+    assert report["scope_calibration"] is None
+
+    guards = report["guards"]
+    assert guards["frozen_phase7_2_3_outputs_reused"] is True
+    assert guards["evidence_bundle_frozen"] is True
+    assert guards["candidate_modified"] is False
+    assert guards["frozen_judge_modified"] is False
+    assert guards["provider_calls_made"] is False
+    assert guards["reviewer_a_completed"] is False
+    assert guards["reviewer_b_completed"] is False
+    assert guards["independent_adjudication_completed"] is False
+    assert guards["scorer_calibration_completed"] is False
+    assert guards["held_out_cases_untouched"] is True
+    assert guards["runtime_authorized"] is False
+    assert guards["hermes_authorized"] is False
+    assert guards["candidate_learning_authorized"] is False
+    assert guards["knowledge_promotion_authorized"] is False
+
+    print("Phase: Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration")
+    print("Measurement objects: Candidate + Frozen Judge studied; all controls frozen")
+    print("Claim-source anchors: 65 frozen fields awaiting independent atomic segmentation")
+    print("Reviewer A/B: blind templates ready, 0 completed submissions")
+    print("Agreement/calibration: intentionally unavailable")
+    print("Decision: protocol_ready_waiting_for_independent_annotation")
+    print("Held-out/runtime/Hermes: blocked")
+    print("PASS")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

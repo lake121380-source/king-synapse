@@ -849,3 +849,50 @@ Phase7CandidateErrorAnalysisReport
 ```
 
 The API validates that the seed annotations cover exactly the ten frozen Phase 7.2.3 design outputs and match each output `response_sha256`. It aggregates primary and secondary failure mechanisms, scorer confounds, and falsifiability structure without invoking a provider or changing the frozen prompt, parser, scorer, extraction algorithm, held-out dataset, persistence, Hermes, or runtime authority.
+
+## Phase 7.3.1 independent adjudication and frozen-Judge calibration API
+
+Module:
+
+```text
+synapse_eval::phase7_independent_adjudication_calibration
+```
+
+Primary API:
+
+```rust
+Phase7AdjudicationCalibrationEvaluator::evaluate(tag)
+load_phase7_adjudication_measurement_protocol()
+load_phase7_reviewer_a_template()
+load_phase7_reviewer_b_template()
+load_phase7_adjudication_template()
+compute_support_agreement(labels)
+aggregate_candidate_support_label(claim_labels)
+aggregate_candidate_scope_expansion(scope_labels)
+compute_confusion_matrix(rows, view)
+compute_scope_confusion_matrix(rows)
+```
+
+Primary contracts:
+
+```text
+Phase7AdjudicationMeasurementProtocol
+MeasurementObjectDefinition
+ClaimSourceAnchor
+AtomicClaimAnnotation
+ReviewerAnnotationSubmission
+AdjudicationSubmission
+ClaimOrigin
+HumanSupportLabel
+DisagreementKind
+JudgeFailureKind
+SupportAgreementMetrics
+CandidateJudgeCalibrationRow
+ScopeJudgeCalibrationRow
+ConfidenceInterval
+ConfusionMatrix
+Phase7AdjudicationCalibrationGuards
+Phase7AdjudicationCalibrationReport
+```
+
+The evaluator derives 65 exact hash-bound claim-source anchors from the frozen Phase 7.2.3 Candidate fields. It intentionally emits no agreement or calibration values while both blind reviewer templates and adjudication remain incomplete. The frozen Judge emits Candidate-level warnings rather than atomic-Claim decisions, so adjudicated Claim labels are first aggregated into Candidate-level support and scope labels before confusion-matrix comparison; one Candidate warning is never duplicated across all Claims. Support and scope calibration include Wilson 95% intervals when observations become available. The module cannot call a Provider, modify the Candidate or frozen Judge, access held-out cases, persist knowledge, invoke Hermes, or authorize runtime behavior.

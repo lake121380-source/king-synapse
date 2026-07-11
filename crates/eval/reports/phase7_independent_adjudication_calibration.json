@@ -1,0 +1,900 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+  "tag": "phase7.3.1-independent-adjudication-frozen-judge-calibration",
+  "generated_at": "2026-07-11T11:41:00.981760100+00:00",
+  "phase": "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration",
+  "purpose": "Freeze measurement-object separation, independent atomic-claim annotation, disagreement analysis, and frozen-judge calibration before any extractor or judge redesign.",
+  "source_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+  "protocol_sha256": "99f6cb53ac4f4325056cba5e796ef4099047a881d18f1a6f61dad07f9e33779b",
+  "reviewer_a_template_sha256": "74f67d7eb2a24e573045c4eebd03b649d2232bb982d3682d13fc3f640307c0a9",
+  "reviewer_b_template_sha256": "9ea1b1766e8f717ca25cee6b8183005a28aa36e1fd7e27cd0894233fc62cd637",
+  "adjudication_template_sha256": "56cc8423f1f097ec5c3ef9d2d43607e5a099c711c1681d2b7b2a3dd5be33dc3b",
+  "protocol": {
+    "schema_version": 1,
+    "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+    "phase": "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration",
+    "measurement_objects": [
+      {
+        "object": "evidence_bundle",
+        "role": "frozen_authoritative_input",
+        "studied": false,
+        "modified": false
+      },
+      {
+        "object": "candidate",
+        "role": "evaluated_object",
+        "studied": true,
+        "modified": false
+      },
+      {
+        "object": "frozen_judge",
+        "role": "calibrated_measurement_object",
+        "studied": true,
+        "modified": false
+      },
+      {
+        "object": "prompt",
+        "role": "controlled_variable",
+        "studied": false,
+        "modified": false
+      },
+      {
+        "object": "provider",
+        "role": "controlled_variable",
+        "studied": false,
+        "modified": false
+      },
+      {
+        "object": "parser",
+        "role": "controlled_variable",
+        "studied": false,
+        "modified": false
+      },
+      {
+        "object": "repair_policy",
+        "role": "controlled_variable",
+        "studied": false,
+        "modified": false
+      },
+      {
+        "object": "extraction_algorithm",
+        "role": "controlled_variable",
+        "studied": false,
+        "modified": false
+      }
+    ],
+    "one_experimental_variable_rule": "Never modify the evaluated object and the evaluation object in the same experimental stage.",
+    "evidence_boundary": "Evidence bundles are frozen authoritative inputs for this phase, not claims of real-world epistemic perfection.",
+    "claim_origin_definitions": {
+      "explicit": "The core proposition, scope, and strength are directly present in the frozen evidence; bounded paraphrase is allowed.",
+      "inferred": "A finite traceable combination of supplied evidence supports the claim without external knowledge, causal escalation, scope expansion, or deterministic prediction.",
+      "synthesized": "The claim introduces a new abstraction, causal model, prediction, transfer, strategy, scope, or theory not directly stated in the evidence. Synthesized does not automatically mean unsupported."
+    },
+    "support_label_definitions": {
+      "not_assessable": "The evidence or claim boundary is insufficient for stable adjudication.",
+      "partially_supported": "The core direction is supported but scope, prediction, certainty, causality, or detail is stronger than the evidence.",
+      "supported": "Claim strength, scope, and causal language are supported by the frozen evidence.",
+      "unsupported": "The material claim cannot be established from the frozen evidence."
+    },
+    "binary_views": {
+      "strict_safety": {
+        "not_assessable": "excluded",
+        "partially_supported": "positive",
+        "supported": "negative",
+        "unsupported": "positive"
+      },
+      "strong_error": {
+        "not_assessable": "excluded",
+        "partially_supported": "excluded",
+        "supported": "negative",
+        "unsupported": "positive"
+      }
+    },
+    "blind_review_requirements": [
+      "Reviewer B must not see Reviewer A labels.",
+      "Reviewer B must not see frozen judge warnings or scores.",
+      "Reviewer B must not see Phase 7.3 aggregate conclusions.",
+      "Both reviewers segment and label claims independently.",
+      "Disagreements remain preserved after adjudication."
+    ],
+    "disagreement_kinds": [
+      "boundary_disagreement",
+      "fundamental_disagreement",
+      "segmentation_disagreement",
+      "evidence_disagreement",
+      "provenance_disagreement",
+      "taxonomy_disagreement",
+      "confidence_disagreement",
+      "other"
+    ],
+    "judge_failure_kinds": [
+      "lexical_novelty_false_positive",
+      "scope_field_placement_false_positive",
+      "paraphrase_entailment_miss",
+      "bridging_inference_false_positive",
+      "unsupported_prediction_false_negative",
+      "causal_leap_false_negative",
+      "scope_expansion_false_negative",
+      "partial_support_collapsed",
+      "claim_boundary_mismatch",
+      "other"
+    ],
+    "calibration_policy": {
+      "positive_class": "human_unsupported",
+      "threshold_change_allowed": false,
+      "prompt_change_allowed": false,
+      "rule_change_allowed": false,
+      "semantic_judge_addition_allowed": false,
+      "same_data_optimization_allowed": false,
+      "report_confidence_intervals": true
+    },
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  },
+  "claim_source_anchors": [
+    {
+      "anchor_id": "extract_01-proposition-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects while keeping the old version available, provided the new and old versions are backward compatible.",
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_01-prediction_statement-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system.",
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_01-prediction_observable-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back.",
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "The old version remains fully operational during the entire rollout phase.",
+      "source_text_sha256": "a743b533b84b7d73f25e02c887deb510dfa71492b47653344cddf1d19ed80f07",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_01-falsification_statement-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_01-falsification_observable-01",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout.",
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-proposition-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In customer support queues, labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly, while labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-prediction_statement-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "When a customer support queue labels cases by customer impact and time sensitivity before assignment, high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones.",
+      "source_text_sha256": "a62889cbc587254fc226c9ee61c318cd5e3c992c8356346ec3210592a0ddf7ee",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-prediction_observable-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first.",
+      "source_text_sha256": "4b8921a381974effdf86eafce37c7b50dcfce708eee5c132d669ee8fad7ef7ef",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-prediction_success_criterion-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window.",
+      "source_text_sha256": "499b3ca8791efee3092716545d886ae4e14ca9eb3246162c6a54502f0bae67fc",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-falsification_statement-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified.",
+      "source_text_sha256": "2f2aef78a6c49326802d7299a873959f091e84aedba7a822f1356ff6b65f3599",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_02-falsification_observable-01",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later.",
+      "source_text_sha256": "39637bdb0ca74786044f092df64ee8b41077ff6576b598488a531cca1d7c1a15",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-proposition-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch, the team adheres to those thresholds in outcome evaluation and does not redefine success metrics post-hoc.",
+      "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-prediction_statement-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "In a product experiment with predefined quantitative thresholds, the team will accept the outcome based on those thresholds without redefining success.",
+      "source_text_sha256": "6fb3f4252c53a2ce15b2161aeec8cf1b414c18693e4ea5ad38f012f0c9eb8027",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-prediction_observable-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "The team does not alter success criteria after observing the result.",
+      "source_text_sha256": "3d2b0dca7ae1a2db950afbe67cda44b497d1783b1c1ed3fd28bf53f96fb230a8",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-prediction_success_criterion-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "The team's final decision (e.g., launch, abandon) matches the predefined threshold triggers.",
+      "source_text_sha256": "d49e39aedefad953e5e338712968d27f6c9045891667b2269fb06ed7e1ff047c",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-falsification_statement-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If a product experiment with predefined quantitative thresholds results in the team redefining success metrics after seeing the outcome, the pattern is falsified.",
+      "source_text_sha256": "238acd1ccbc7083cbea3384f5f61b8bddc2f33a4d4ee0da118ae86fb2b653659",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_03-falsification_observable-01",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "Post-hoc modification of guardrails, stop criteria, or success metrics.",
+      "source_text_sha256": "91b37641532d0159a3dcb582ee42f625a275d07838e126ae77ec137752e78c87",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-proposition-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+      "source_text_sha256": "ec74628571bf62bcae197619215cadb4eff09a71d23e9f67e39014de2865aa43",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-prediction_statement-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+      "source_text_sha256": "d14800450a0559b789fa9d0783a3110127c1a076d01466e5c39c4dda4451be46",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-prediction_observable-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur.",
+      "source_text_sha256": "971f0e49cc983b114c9c77662b824af42ea6393fbe25b89c806b2d0f36018527",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-prediction_success_criterion-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "The root cause matches one of the evidence findings and no unrelated components were replaced during recovery.",
+      "source_text_sha256": "9a593c12785ff6ccd0da4cc49c13c700078a091dc3046380f0aee590bc651f51",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-falsification_statement-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present.",
+      "source_text_sha256": "8723a5a8aef279271d0e46df9b31dcf9a7e2430a2172380fe2d1ae59c3f5acea",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_04-falsification_observable-01",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence, or the root cause is not found within those evidence classes.",
+      "source_text_sha256": "863331910be8dcfbfc39d9bb9537b1e7e8034142cf81c0e87d2b09cae8e10254",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-proposition-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In AI tool category posts within the same audience and month, including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments), except when success is driven by an external virality source such as an unrelated celebrity repost.",
+      "source_text_sha256": "92f39b61e7968dfa8701b567d3e5074becc8389deac062a1bdd974634f746c32",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-prediction_statement-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features, assuming organic distribution without external virality.",
+      "source_text_sha256": "4d7aadc22823bb41c6afc37ce2830db69c44ae4b5f15ab3ab98f21592a8aa162",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-prediction_observable-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Number of saves and qualified comments per post within the same audience and month.",
+      "source_text_sha256": "0394fe9413845ceb9ac1858dbadb6a24b81617c07be618ca9e62a7f3664aae2a",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-prediction_success_criterion-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month.",
+      "source_text_sha256": "5ead6913f7a8293386acc20dca683ad603e5e76f00dcfef3d6bb3b51de2d4ff5",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-falsification_statement-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "A post with concrete examples and early problem framing fails to achieve higher engagement, or a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost).",
+      "source_text_sha256": "d697a349b85ba2d94f69149840ea9ce82ea134e1af70ef3a544c582cbc33ccfb",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_05-falsification_observable-01",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "Engagement metrics and identification of any external sources driving traffic.",
+      "source_text_sha256": "d7f905784abd9342f9c6bfdaed78336fb322c2c431384266ca82e5fd143cee41",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-proposition-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In software delivery, exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout, whereas testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases.",
+      "source_text_sha256": "e02e3184bb68cbe04fcf789bbe629413e685091302c6c91188db33d0efbe50c9",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-prediction_statement-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "If a risky change is first exposed to a representative subset (e.g., a typical tenant or internal group) before full rollout, then at least one hidden issue (dependency assumption failure or undocumented data shape) will be discovered before full rollout.",
+      "source_text_sha256": "c0af661dc5ff0d952d220ab2f1f1df0da341c10722acc4a2a97e251099e78e9c",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-prediction_observable-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Hidden issue is detected during the limited exposure phase and documented before full rollout.",
+      "source_text_sha256": "88c0facf0e10324293c7c937eb6b330db58f9e81c59bfb938249b137177b7675",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-prediction_success_criterion-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "At least one issue is identified and can be addressed before full rollout.",
+      "source_text_sha256": "7fc06eb483a3814006a9db7e2d5afc9b0bd52d5f17b3596346f1c18a91b1f6ba",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-falsification_statement-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If a change is exposed to a representative subset and no issues are found, but full rollout fails due to issues that were present in that subset's complexity, the pattern is falsified.",
+      "source_text_sha256": "02932a8a70bf2b6137bffad0d43534b76163664977bf7cf41953c8b017a5bcfe",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_06-falsification_observable-01",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "Full rollout failure due to data shapes or assumptions that existed in the representative subset but were not detected.",
+      "source_text_sha256": "79607fdd19809dd63d74497a529fb16bce726ebce49a968e366debec97fdd438",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-proposition-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops, whereas noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction.",
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_statement-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "If a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases, then the rollout will stop at a low traffic percentage and prevent a full outage.",
+      "source_text_sha256": "833ba94949c4c355fb81ce6f89a460e2f6063c560d2e566f468023f2244a2ef9",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_observable-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Traffic pauses at or below 20% and no full outage occurs.",
+      "source_text_sha256": "eb1521e73e1d8f36508edcaa91499e2183fa61839129ade487489c4bd25ad402",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage.",
+      "source_text_sha256": "2631a746526b616d1d52048208c462e7ec3eb6b8de28d958ad457038d664de24",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_statement-02",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_statement",
+      "source_index": 1,
+      "source_text": "If an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines, then the change will reverse before backlog recovery exceeds the allowed window.",
+      "source_text_sha256": "be98bef0f7930a4c6ab1e6792dee52794efa6ffb8011472037e88b424af68822",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_observable-02",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_observable",
+      "source_index": 1,
+      "source_text": "The change is reversed before the recovery time exceeds the overnight window.",
+      "source_text_sha256": "0d55598d9e23ab4c06489219708d3e7480b6cdf0b93b8bea3faeea3b33e07dbf",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "prediction_success_criterion",
+      "source_index": 1,
+      "source_text": "The automatic stop triggers and the system recovers within the specified time.",
+      "source_text_sha256": "364cfde1c9e894a0a9e7a0995dc2dd097b4ab95579732f0d6150763fdae62e5e",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-falsification_statement-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified.",
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_07-falsification_observable-01",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise.",
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-proposition-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action. However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-prediction_statement-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+      "source_text_sha256": "c93de5ce8e8670d943efc2528aa15b0ff25f8e2979bfc31732a98c1ce7f43659",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-prediction_observable-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+      "source_text_sha256": "8d6d9beb3e3efad7a0f506aceee63142c701f2fc0bbbfb4a6203dc78a19d9a58",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "Outcome matches the observed outcome in memory px_08_support_1.",
+      "source_text_sha256": "d5c396c28be9c796a7c0bb3094d70a101db78951dd52efe674d1b9a41f8b11ab",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-falsification_statement-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+      "source_text_sha256": "29997b935ecc492914fdbe72989aa535eaa2c3e0938b5545fe3aa01f11e99f5a",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_08-falsification_observable-01",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3.",
+      "source_text_sha256": "6f56fffa2317e904dcaa7de7b325894f8a9d4a0cfff542fe0442e9434f00f019",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-proposition-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust. In contrast, apparent consensus from multiple reports that merely repeat a single unverified source is fragile and collapses when the original source is corrected.",
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-prediction_statement-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+      "source_text_sha256": "6a061da0fee71793b9c36f4ab735f18094d984a7244f73b44db2ae00b37ab745",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-prediction_observable-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "The difference between the two estimates is within the tolerance range.",
+      "source_text_sha256": "0c80332aba9662f9222c2e86bc2f8bc7943a905e260b77438f654640ab7516eb",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-prediction_success_criterion-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "abs(estimate_1 - estimate_2) <= tolerance",
+      "source_text_sha256": "6080eafc39ffd90a8e0fa2f8895ef3a2b9663a9fde118e84b559276041d59b05",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-falsification_statement-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails.",
+      "source_text_sha256": "3331b01decfa30e489b97d0348533c00385c2c1b5f4a864c9f9d67e63b9e1a81",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-falsification_observable-01",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "The difference between estimates exceeds the tolerance.",
+      "source_text_sha256": "4562df562094c3c2483cd29f81946abc1e76cfed6cbe1a2f9315a7427b704fee",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-falsification_statement-02",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "falsification_statement",
+      "source_index": 1,
+      "source_text": "If multiple reports supporting a claim are all traced to a single unverified original source, the pattern of apparent consensus does not hold.",
+      "source_text_sha256": "ea7b347a9bcc955ee4212721f848cde7e94c0768a705f0f79ec51db6abf9e2d4",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_09-falsification_observable-02",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "source_field": "falsification_observable",
+      "source_index": 1,
+      "source_text": "Correction of the original source causes the consensus to disappear.",
+      "source_text_sha256": "360e319517e2197858d3fc33e23429e593c1c58db4a4d832c4e1fc91a1009c9f",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-proposition-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow. Buffering is counterproductive when replenishment lead time is short and demand is stable.",
+      "source_text_sha256": "fa44cb50d9a84c159e313ef7bb2ed723d4a28d0fa35a2c2b4f8bb66fd53a9c7f",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-prediction_statement-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit.",
+      "source_text_sha256": "260b9a02bfe84251d10add893af105f03fe5c3fa0efbca05975162feca340cf9",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-prediction_observable-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text": "Interruption events decrease and carrying cost as a percentage of product value does not exceed the planned budget.",
+      "source_text_sha256": "d9e20099404b7c141a5bcf483cc50b2722c5de5bd1e6f5bf22e4a641d27fb3c6",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30% and carrying cost remains under the target threshold set by management.",
+      "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-falsification_statement-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+      "source_text_sha256": "12323fcd79ec6d94840805758d5e6ef75ac5c948d25e559983fb70228cd2a40b",
+      "requires_independent_atomic_segmentation": true
+    },
+    {
+      "anchor_id": "extract_10-falsification_observable-01",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text": "Observed inventory write-offs due to expiration and total holding cost greater than the cost of stockouts that would have occurred without buffering.",
+      "source_text_sha256": "30e2b8a16c326181cb147a32cafdc14d1740fcc893dbf2a191468b630d56781a",
+      "requires_independent_atomic_segmentation": true
+    }
+  ],
+  "reviewer_a": {
+    "schema_version": 1,
+    "submission_id": "phase7.3.1-reviewer-a-pending-v1",
+    "reviewer_id": "reviewer_a_pending",
+    "reviewer_role": "independent_semantic_reviewer",
+    "source_execution_id": "phase7.2.3-deepseek-real-provider-readiness-v1",
+    "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+    "completed": false,
+    "blind_to_other_reviewer": true,
+    "blind_to_frozen_judge": true,
+    "blind_to_phase7_3_aggregates": true,
+    "held_out_accessed": false,
+    "claims": []
+  },
+  "reviewer_b": {
+    "schema_version": 1,
+    "submission_id": "phase7.3.1-reviewer-b-pending-v1",
+    "reviewer_id": "reviewer_b_pending",
+    "reviewer_role": "independent_semantic_reviewer",
+    "source_execution_id": "phase7.2.3-deepseek-real-provider-readiness-v1",
+    "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+    "completed": false,
+    "blind_to_other_reviewer": true,
+    "blind_to_frozen_judge": true,
+    "blind_to_phase7_3_aggregates": true,
+    "held_out_accessed": false,
+    "claims": []
+  },
+  "adjudication": {
+    "schema_version": 1,
+    "adjudication_id": "phase7.3.1-adjudication-pending-v1",
+    "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
+    "reviewer_a_submission_id": "phase7.3.1-reviewer-a-pending-v1",
+    "reviewer_b_submission_id": "phase7.3.1-reviewer-b-pending-v1",
+    "completed": false,
+    "held_out_accessed": false,
+    "disagreements_preserved": true,
+    "claims": []
+  },
+  "metric_definitions": [
+    {
+      "name": "support_label_raw_agreement",
+      "definition": "Exact agreement over aligned assessable atomic claims."
+    },
+    {
+      "name": "linear_weighted_kappa",
+      "definition": "Chance-corrected agreement that treats adjacent support-label disagreement as less severe than supported-versus-unsupported disagreement."
+    },
+    {
+      "name": "boundary_disagreement_rate",
+      "definition": "Adjacent Supported/Partially Supported or Partially Supported/Unsupported disagreements divided by aligned assessable claims."
+    },
+    {
+      "name": "fundamental_disagreement_rate",
+      "definition": "Supported-versus-Unsupported disagreements divided by aligned assessable claims."
+    },
+    {
+      "name": "judge_precision",
+      "definition": "Human-confirmed unsupported claims among frozen-judge unsupported warnings."
+    },
+    {
+      "name": "judge_recall_sensitivity",
+      "definition": "Human-confirmed unsupported claims detected by the frozen judge."
+    },
+    {
+      "name": "judge_specificity",
+      "definition": "Human-supported claims not warned on by the frozen judge."
+    },
+    {
+      "name": "judge_false_positive_rate",
+      "definition": "Human-supported claims warned on by the frozen judge."
+    },
+    {
+      "name": "judge_false_negative_rate",
+      "definition": "Human-unsupported claims missed by the frozen judge."
+    },
+    {
+      "name": "balanced_accuracy",
+      "definition": "Mean of frozen-judge sensitivity and specificity."
+    },
+    {
+      "name": "matthews_correlation_coefficient",
+      "definition": "Balanced binary calibration correlation, undefined when its denominator is zero."
+    }
+  ],
+  "agreement": null,
+  "strict_safety_calibration": null,
+  "strong_error_calibration": null,
+  "scope_calibration": null,
+  "guards": {
+    "frozen_phase7_2_3_outputs_reused": true,
+    "evidence_bundle_frozen": true,
+    "candidate_modified": false,
+    "frozen_judge_modified": false,
+    "prompt_modified": false,
+    "provider_modified": false,
+    "parser_modified": false,
+    "repair_policy_modified": false,
+    "extraction_algorithm_modified": false,
+    "provider_calls_made": false,
+    "reviewer_a_completed": false,
+    "reviewer_b_completed": false,
+    "independent_adjudication_completed": false,
+    "scorer_calibration_completed": false,
+    "held_out_cases_untouched": true,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "candidate_learning_authorized": false,
+    "knowledge_promotion_authorized": false
+  },
+  "decision": "protocol_ready_waiting_for_independent_annotation",
+  "conclusion": "The Phase 7.3.1 protocol and calibration harness are ready, but no independent claim-level annotations or adjudicated semantic ground truth exist yet. Candidate and frozen-judge error rates must remain unreported until two blind submissions and adjudication are complete."
+}
