@@ -216,3 +216,21 @@ Frozen Experience bundle
 ```
 
 Provider readiness is established independently from cognition quality. The first frozen real-provider run completed `10/10` design cases, but `unsupported_claim_rate=0.5129` and scope preservation `0.7000` require quality review. These outputs remain proposed hypotheses; no held-out transfer evidence or outcome validation has been observed.
+
+## Phase 7.3 epistemic error boundary
+
+Pattern extraction quality now distinguishes two error surfaces:
+
+```text
+Candidate error
+  - unsupported generalization
+  - prediction overcommitment
+  - causal leap
+  - over-abstraction
+
+Measurement confound
+  - lexical novelty counted as unsupported
+  - preserved scope stored outside the field inspected by the proxy
+```
+
+A scorer warning is evidence for review, not semantic ground truth. The first ten-case seed review found correct evidence lineage and counterexample retention but repeated claim-strength escalation during abstraction. Falsification structure is also separated from falsification validity. No Candidate becomes knowledge from taxonomy membership, and extraction changes remain unauthorized until independent adjudication measures annotation agreement.

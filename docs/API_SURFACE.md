@@ -816,3 +816,36 @@ Phase7RealProviderReadinessReport
 ```
 
 The API verifies that a real provider completed all ten design requests exactly once under the frozen Phase 7.2.2 prompt/parser/scorer/dataset identities. It emits per-case deterministic quality diagnostics and explicitly separates `provider_ready` from candidate learning, persistence, knowledge promotion, transfer, Hermes, and runtime authority.
+
+## Phase 7.3 candidate error analysis API
+
+Module:
+
+```text
+synapse_eval::phase7_candidate_error_analysis
+```
+
+Primary API:
+
+```rust
+Phase7CandidateErrorAnalysisEvaluator::evaluate(tag)
+load_phase7_candidate_error_annotations()
+```
+
+Primary contracts:
+
+```text
+CandidateFailureKind
+CandidateFailureLabel
+MetricConfoundKind
+FalsifiabilitySeedAssessment
+CandidateErrorSeedCase
+CandidateErrorAnnotationDataset
+CandidateErrorCaseAnalysis
+CandidateErrorAnalysisSummary
+CandidateErrorAnalysisGuards
+Phase7CandidateErrorAnalysisDecision
+Phase7CandidateErrorAnalysisReport
+```
+
+The API validates that the seed annotations cover exactly the ten frozen Phase 7.2.3 design outputs and match each output `response_sha256`. It aggregates primary and secondary failure mechanisms, scorer confounds, and falsifiability structure without invoking a provider or changing the frozen prompt, parser, scorer, extraction algorithm, held-out dataset, persistence, Hermes, or runtime authority.

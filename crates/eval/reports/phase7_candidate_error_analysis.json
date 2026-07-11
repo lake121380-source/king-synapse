@@ -1,0 +1,1113 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.3-failure-taxonomy-candidate-error-analysis-v1",
+  "tag": "phase7.3-candidate-error-analysis",
+  "generated_at": "2026-07-11T10:54:05.810483500+00:00",
+  "phase": "Phase 7.3 Failure Taxonomy & Candidate Error Analysis",
+  "purpose": "Explain candidate-level failure mechanisms in the frozen ten-case real-provider design run without changing extraction, scoring, held-out data, persistence, or runtime behavior.",
+  "source_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+  "annotation_sha256": "bbcfd4d6d76ee5880d5783c477683be139393ae2aac6b81ebdce3d13128ea050",
+  "annotation_protocol": {
+    "schema_version": 1,
+    "dataset_id": "phase7.3-candidate-error-annotations-v1",
+    "source_execution_id": "phase7.2.3-deepseek-real-provider-readiness-v1",
+    "annotation_mode": "single_reviewer_model_assisted_seed",
+    "reviewer_count": 1,
+    "independent_second_review": false,
+    "inter_rater_agreement": null,
+    "held_out_accessed": false,
+    "cases": [
+      {
+        "case_id": "extract_01",
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "primary_failure": {
+          "kind": "prediction_without_support",
+          "severity": "high",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The prediction claims that the first cohort will expose any critical regression. Two observed rollouts support bounded early detection, but not universal detection of every critical regression."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "Observed rollback containment is upgraded to a deterministic no-impact future claim."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "lexical_novelty_confound",
+            "rationale": "Terms such as backward compatibility and subset are semantically connected to the supplied counterexample and cohorts but are treated as unsupported by exact token matching."
+          },
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "The software-delivery scope appears in the proposition and source_domains but not as an applicability-condition value, which the frozen scope proxy requires."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "A system-wide outage or forced rollback of the old version contradicts the stated containment prediction, but no outcome validation exists."
+        }
+      },
+      {
+        "case_id": "extract_02",
+        "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+        "primary_failure": {
+          "kind": "causal_leap",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "The word ensures converts two favorable observations into a deterministic causal guarantee."
+        },
+        "secondary_failures": [
+          {
+            "kind": "prediction_without_support",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "The future ordering guarantee is stronger than the observed queue outcomes."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "lexical_novelty_confound",
+            "rationale": "Several unsupported tokens are paraphrases of impact, urgency, and queue outcomes rather than independently invented evidence."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "A delayed critical outage under the proposed labeling scheme directly contradicts the prediction."
+        }
+      },
+      {
+        "case_id": "extract_03",
+        "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+        "primary_failure": {
+          "kind": "unsupported_generalization",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Two experiments are generalized into a rule that teams with fixed thresholds adhere to them and never redefine success post-hoc."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "medium",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "Predefinition is treated as sufficient to cause disciplined interpretation rather than as evidence associated with it."
+          },
+          {
+            "kind": "prediction_without_support",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "The prediction states that a future team will accept the outcome without redefining success."
+          }
+        ],
+        "metric_confounds": [],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "Post-hoc metric redefinition is an observable contradiction of the candidate."
+        }
+      },
+      {
+        "case_id": "extract_04",
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "primary_failure": {
+          "kind": "unsupported_generalization",
+          "severity": "high",
+          "components": [
+            "proposition",
+            "prediction"
+          ],
+          "rationale": "Two service incidents are expanded into a general claim that the checklist isolates a root cause for a new service failure."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "high",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "The evidence supports narrowing diagnosis in two cases, not guaranteed isolation of a specific root cause."
+          },
+          {
+            "kind": "prediction_without_support",
+            "severity": "high",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "The future-case prediction guarantees root-cause isolation without replacement of unrelated components."
+          }
+        ],
+        "metric_confounds": [],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "Failure to isolate a cause under the stated safe conditions directly tests the prediction."
+        }
+      },
+      {
+        "case_id": "extract_05",
+        "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+        "primary_failure": {
+          "kind": "prediction_without_support",
+          "severity": "high",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The proposition correctly uses associated, but the prediction upgrades that association to a will-have-higher-engagement guarantee."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "A replicated association is expressed as a deterministic future effect."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "lexical_novelty_confound",
+            "rationale": "The proposition is substantially grounded in the matched comparison and replication evidence despite novel connecting language."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "Failure of the features under ordinary distribution can contradict the prediction; the external-virality branch is only an exclusion reminder."
+        }
+      },
+      {
+        "case_id": "extract_06",
+        "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+        "primary_failure": {
+          "kind": "unsupported_generalization",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Two probes become a general rule that representative subsets reveal hidden issues and simple subsets fail to detect complex-case issues."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "high",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "Reveal and fail are stated as deterministic outcomes instead of bounded risk-reduction tendencies."
+          },
+          {
+            "kind": "prediction_without_support",
+            "severity": "high",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "The prediction requires at least one hidden issue to be found, which need not occur in every representative probe."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "Software-delivery scope is explicit in proposition and source_domains but absent from applicability-condition values."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "A missed issue that was present in the representative subset directly contradicts the claimed detection behavior."
+        }
+      },
+      {
+        "case_id": "extract_07",
+        "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+        "primary_failure": {
+          "kind": "causal_leap",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "The candidate states that selected metrics prevent incidents and avoid false stops, exceeding the two observed operational outcomes."
+        },
+        "secondary_failures": [
+          {
+            "kind": "unsupported_generalization",
+            "severity": "high",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "The observed error-rate and queue examples are generalized to automated rollout-stop conditions broadly."
+          },
+          {
+            "kind": "prediction_without_support",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "The candidate predicts incident prevention rather than bounded early stopping or reduced exposure."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "Incident-response scope is recorded in proposition and source_domains, not in applicability-condition values."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "False stops without incident reduction under the proposed metric conditions directly challenge the claim."
+        }
+      },
+      {
+        "case_id": "extract_08",
+        "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+        "primary_failure": {
+          "kind": "prediction_without_support",
+          "severity": "high",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The proposition is association-bounded, but the prediction guarantees stabilization and avoidance of invasive action."
+        },
+        "secondary_failures": [
+          {
+            "kind": "causal_leap",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "One staged-treatment outcome is elevated into a deterministic clinical result."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "lexical_novelty_confound",
+            "rationale": "Novel clinical phrasing restates intervention risk, evidence collection, and deterioration conditions already present in the evidence."
+          },
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "Clinical-safety scope is stated in proposition and source_domains rather than as an applicability-condition value."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": false,
+          "semantic_validity_established": false,
+          "rationale": "The falsification condition tests the explicitly excluded rapidly worsening emergency case rather than failure inside the proposed non-emergency scope."
+        }
+      },
+      {
+        "case_id": "extract_09",
+        "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+        "primary_failure": {
+          "kind": "over_abstraction",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Robust compresses different meanings of convergence, corroboration, and source independence into one broad epistemic conclusion."
+        },
+        "secondary_failures": [
+          {
+            "kind": "unsupported_generalization",
+            "severity": "high",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "Two examples are generalized to independent sources of any instrument, method, or collection process."
+          },
+          {
+            "kind": "causal_leap",
+            "severity": "medium",
+            "components": [
+              "proposition"
+            ],
+            "rationale": "Convergence is treated as sufficient for robustness despite possible shared bias or common confounding."
+          },
+          {
+            "kind": "prediction_without_support",
+            "severity": "medium",
+            "components": [
+              "prediction"
+            ],
+            "rationale": "Future independent laboratories are predicted to converge within tolerance from one prior convergence example."
+          }
+        ],
+        "metric_confounds": [
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "Scientific-research scope is present in source_domains and evidence lineage but not in applicability-condition values."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": true,
+          "semantic_validity_established": false,
+          "rationale": "Failure of independent measurements to converge directly challenges the prediction, though robustness requires more than convergence."
+        }
+      },
+      {
+        "case_id": "extract_10",
+        "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+        "primary_failure": {
+          "kind": "prediction_without_support",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "A future buffered product is predicted to reduce interruptions while remaining inside its cost limit; the evidence does not establish that joint outcome for every in-scope product."
+        },
+        "secondary_failures": [],
+        "metric_confounds": [
+          {
+            "kind": "lexical_novelty_confound",
+            "rationale": "The core proposition closely tracks the two positive inventory cases and the stable-demand counterexample despite token novelty."
+          },
+          {
+            "kind": "scope_field_placement_confound",
+            "rationale": "Supply-chain scope appears in proposition and source_domains, but the frozen scope proxy searches applicability-condition values."
+          }
+        ],
+        "falsifiability": {
+          "structural_fields_present": true,
+          "directly_tests_in_scope_prediction": false,
+          "semantic_validity_established": false,
+          "rationale": "The falsification condition repeats the excluded short-lead stable-demand counterexample instead of testing failure under long-lead volatile demand."
+        }
+      }
+    ]
+  },
+  "taxonomy": [
+    {
+      "kind": "unsupported_generalization",
+      "definition": "The candidate extends beyond the number, domain, conditions, or outcome range supported by the supplied evidence.",
+      "evidence_required": "Identify the exact broader claim and the missing evidence needed to support it."
+    },
+    {
+      "kind": "scope_expansion",
+      "definition": "The candidate drops or widens an applicability or exclusion boundary present in the evidence.",
+      "evidence_required": "Compare proposition, applicability conditions, exclusions, source domains, and counterexample semantics."
+    },
+    {
+      "kind": "missing_evidence",
+      "definition": "A claim cites absent, incorrect, or incomplete evidence lineage.",
+      "evidence_required": "Show a missing or provenance-invalid memory or experience reference."
+    },
+    {
+      "kind": "weak_evidence",
+      "definition": "The evidence is correctly cited but lacks independent, observed, or sufficient support for the claim strength.",
+      "evidence_required": "Show insufficient independent observations or missing outcomes relative to the claim."
+    },
+    {
+      "kind": "prediction_without_support",
+      "definition": "The prediction introduces a guarantee, detail, or outcome not warranted by the observed evidence.",
+      "evidence_required": "Compare prediction strength with observed outcomes and proposition uncertainty."
+    },
+    {
+      "kind": "causal_leap",
+      "definition": "Observational or associational evidence is converted into causal or deterministic language.",
+      "evidence_required": "Identify causal-strength language and the missing intervention or alternative-explanation evidence."
+    },
+    {
+      "kind": "over_abstraction",
+      "definition": "Compression removes distinctions that are necessary for the Pattern to remain meaningful and bounded.",
+      "evidence_required": "Identify merged concepts or conditions whose differences matter to the outcome."
+    },
+    {
+      "kind": "counterexample_ignored",
+      "definition": "A supplied counterexample is omitted or retained only by ID without preserving its limiting meaning.",
+      "evidence_required": "Compare counterexample evidence with exclusions and falsification conditions."
+    },
+    {
+      "kind": "ambiguous_pattern",
+      "definition": "The Pattern cannot be applied or tested consistently because key terms or outcomes are underspecified.",
+      "evidence_required": "Identify undefined terms, unobservable outcomes, or incompatible interpretations."
+    },
+    {
+      "kind": "duplicate_pattern",
+      "definition": "The candidate adds no distinct proposition, boundary, or prediction relative to another candidate.",
+      "evidence_required": "Show semantic equivalence and absence of new scope or evidence lineage."
+    },
+    {
+      "kind": "other",
+      "definition": "A candidate-level failure not captured by the frozen taxonomy.",
+      "evidence_required": "Provide a bounded rationale and evidence for taxonomy revision."
+    }
+  ],
+  "metric_confound_taxonomy": [
+    {
+      "kind": "lexical_novelty_confound",
+      "definition": "The token-level unsupported-claim proxy counts grounded paraphrases or bridging terms as unsupported because it does not perform semantic entailment."
+    },
+    {
+      "kind": "scope_field_placement_confound",
+      "definition": "The frozen scope proxy requires the source domain inside applicability-condition values and can warn even when the domain is preserved in proposition and source_domains."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.2597402597402598,
+        "design_reference_token_recall": 0.09090909090909091,
+        "unsupported_claim_rate": 0.7368421052631579,
+        "compression_ratio": 0.4457831325301205
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "prediction_without_support",
+        "severity": "high",
+        "components": [
+          "prediction"
+        ],
+        "rationale": "The prediction claims that the first cohort will expose any critical regression. Two observed rollouts support bounded early detection, but not universal detection of every critical regression."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "Observed rollback containment is upgraded to a deterministic no-impact future claim."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "lexical_novelty_confound",
+          "rationale": "Terms such as backward compatibility and subset are semantically connected to the supplied counterexample and cohorts but are treated as unsupported by exact token matching."
+        },
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "The software-delivery scope appears in the proposition and source_domains but not as an applicability-condition value, which the frozen scope proxy requires."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "A system-wide outage or forced rollback of the old version contradicts the stated containment prediction, but no outcome validation exists."
+      }
+    },
+    {
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.6060606060606062,
+        "design_reference_token_recall": 0.14285714285714285,
+        "unsupported_claim_rate": 0.6818181818181818,
+        "compression_ratio": 0.35789473684210527
+      },
+      "unsupported_warning": true,
+      "scope_warning": false,
+      "primary_failure": {
+        "kind": "causal_leap",
+        "severity": "high",
+        "components": [
+          "proposition"
+        ],
+        "rationale": "The word ensures converts two favorable observations into a deterministic causal guarantee."
+      },
+      "secondary_failures": [
+        {
+          "kind": "prediction_without_support",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The future ordering guarantee is stronger than the observed queue outcomes."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "lexical_novelty_confound",
+          "rationale": "Several unsupported tokens are paraphrases of impact, urgency, and queue outcomes rather than independently invented evidence."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "A delayed critical outage under the proposed labeling scheme directly contradicts the prediction."
+      }
+    },
+    {
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5911330049261084,
+        "design_reference_token_recall": 0.5714285714285714,
+        "unsupported_claim_rate": 0.47368421052631576,
+        "compression_ratio": 0.4713656387665198
+      },
+      "unsupported_warning": true,
+      "scope_warning": false,
+      "primary_failure": {
+        "kind": "unsupported_generalization",
+        "severity": "high",
+        "components": [
+          "proposition"
+        ],
+        "rationale": "Two experiments are generalized into a rule that teams with fixed thresholds adhere to them and never redefine success post-hoc."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "medium",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Predefinition is treated as sufficient to cause disciplined interpretation rather than as evidence associated with it."
+        },
+        {
+          "kind": "prediction_without_support",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The prediction states that a future team will accept the outcome without redefining success."
+        }
+      ],
+      "metric_confounds": [],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "Post-hoc metric redefinition is an observable contradiction of the candidate."
+      }
+    },
+    {
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7373271889400922,
+        "design_reference_token_recall": 0.45454545454545453,
+        "unsupported_claim_rate": 0.48,
+        "compression_ratio": 0.34983498349834985
+      },
+      "unsupported_warning": true,
+      "scope_warning": false,
+      "primary_failure": {
+        "kind": "unsupported_generalization",
+        "severity": "high",
+        "components": [
+          "proposition",
+          "prediction"
+        ],
+        "rationale": "Two service incidents are expanded into a general claim that the checklist isolates a root cause for a new service failure."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "The evidence supports narrowing diagnosis in two cases, not guaranteed isolation of a specific root cause."
+        },
+        {
+          "kind": "prediction_without_support",
+          "severity": "high",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The future-case prediction guarantees root-cause isolation without replacement of unrelated components."
+        }
+      ],
+      "metric_confounds": [],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "Failure to isolate a cause under the stated safe conditions directly tests the prediction."
+      }
+    },
+    {
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 1.0,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7518796992481203,
+        "design_reference_token_recall": 0.1,
+        "unsupported_claim_rate": 0.3225806451612903,
+        "compression_ratio": 0.3843537414965986
+      },
+      "unsupported_warning": true,
+      "scope_warning": false,
+      "primary_failure": {
+        "kind": "prediction_without_support",
+        "severity": "high",
+        "components": [
+          "prediction"
+        ],
+        "rationale": "The proposition correctly uses associated, but the prediction upgrades that association to a will-have-higher-engagement guarantee."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "A replicated association is expressed as a deterministic future effect."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "lexical_novelty_confound",
+          "rationale": "The proposition is substantially grounded in the matched comparison and replication evidence despite novel connecting language."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "Failure of the features under ordinary distribution can contradict the prediction; the external-virality branch is only an exclusion reminder."
+      }
+    },
+    {
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5194805194805195,
+        "design_reference_token_recall": 0.0,
+        "unsupported_claim_rate": 0.5135135135135135,
+        "compression_ratio": 0.3291139240506329
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "unsupported_generalization",
+        "severity": "high",
+        "components": [
+          "proposition"
+        ],
+        "rationale": "Two probes become a general rule that representative subsets reveal hidden issues and simple subsets fail to detect complex-case issues."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Reveal and fail are stated as deterministic outcomes instead of bounded risk-reduction tendencies."
+        },
+        {
+          "kind": "prediction_without_support",
+          "severity": "high",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The prediction requires at least one hidden issue to be found, which need not occur in every representative probe."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "Software-delivery scope is explicit in proposition and source_domains but absent from applicability-condition values."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "A missed issue that was present in the representative subset directly contradicts the claimed detection behavior."
+      }
+    },
+    {
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.8163265306122449,
+        "design_reference_token_recall": 0.3,
+        "unsupported_claim_rate": 0.5,
+        "compression_ratio": 0.29411764705882354
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "causal_leap",
+        "severity": "high",
+        "components": [
+          "proposition"
+        ],
+        "rationale": "The candidate states that selected metrics prevent incidents and avoid false stops, exceeding the two observed operational outcomes."
+      },
+      "secondary_failures": [
+        {
+          "kind": "unsupported_generalization",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "The observed error-rate and queue examples are generalized to automated rollout-stop conditions broadly."
+        },
+        {
+          "kind": "prediction_without_support",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "The candidate predicts incident prevention rather than bounded early stopping or reduced exposure."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "Incident-response scope is recorded in proposition and source_domains, not in applicability-condition values."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "False stops without incident reduction under the proposed metric conditions directly challenge the claim."
+      }
+    },
+    {
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.5442176870748299,
+        "design_reference_token_recall": 0.25,
+        "unsupported_claim_rate": 0.4444444444444444,
+        "compression_ratio": 0.3630573248407643
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "prediction_without_support",
+        "severity": "high",
+        "components": [
+          "prediction"
+        ],
+        "rationale": "The proposition is association-bounded, but the prediction guarantees stabilization and avoidance of invasive action."
+      },
+      "secondary_failures": [
+        {
+          "kind": "causal_leap",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "One staged-treatment outcome is elevated into a deterministic clinical result."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "lexical_novelty_confound",
+          "rationale": "Novel clinical phrasing restates intervention risk, evidence collection, and deterioration conditions already present in the evidence."
+        },
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "Clinical-safety scope is stated in proposition and source_domains rather than as an applicability-condition value."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": false,
+        "semantic_validity_established": false,
+        "rationale": "The falsification condition tests the explicitly excluded rapidly worsening emergency case rather than failure inside the proposed non-emergency scope."
+      }
+    },
+    {
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.6177606177606179,
+        "design_reference_token_recall": 0.25,
+        "unsupported_claim_rate": 0.5666666666666667,
+        "compression_ratio": 0.35555555555555557
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "over_abstraction",
+        "severity": "high",
+        "components": [
+          "proposition"
+        ],
+        "rationale": "Robust compresses different meanings of convergence, corroboration, and source independence into one broad epistemic conclusion."
+      },
+      "secondary_failures": [
+        {
+          "kind": "unsupported_generalization",
+          "severity": "high",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Two examples are generalized to independent sources of any instrument, method, or collection process."
+        },
+        {
+          "kind": "causal_leap",
+          "severity": "medium",
+          "components": [
+            "proposition"
+          ],
+          "rationale": "Convergence is treated as sufficient for robustness despite possible shared bias or common confounding."
+        },
+        {
+          "kind": "prediction_without_support",
+          "severity": "medium",
+          "components": [
+            "prediction"
+          ],
+          "rationale": "Future independent laboratories are predicted to converge within tolerance from one prior convergence example."
+        }
+      ],
+      "metric_confounds": [
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "Scientific-research scope is present in source_domains and evidence lineage but not in applicability-condition values."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": true,
+        "semantic_validity_established": false,
+        "rationale": "Failure of independent measurements to converge directly challenges the prediction, though robustness requires more than convergence."
+      }
+    },
+    {
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "quality_metrics": {
+        "pattern_completeness": 1.0,
+        "evidence_attribution_accuracy": 1.0,
+        "evidence_coverage": 1.0,
+        "scope_retention": 0.5,
+        "counterexample_handling": 1.0,
+        "abstraction_distance_score": 0.7142857142857144,
+        "design_reference_token_recall": 0.4444444444444444,
+        "unsupported_claim_rate": 0.4090909090909091,
+        "compression_ratio": 0.3881118881118881
+      },
+      "unsupported_warning": true,
+      "scope_warning": true,
+      "primary_failure": {
+        "kind": "prediction_without_support",
+        "severity": "medium",
+        "components": [
+          "prediction"
+        ],
+        "rationale": "A future buffered product is predicted to reduce interruptions while remaining inside its cost limit; the evidence does not establish that joint outcome for every in-scope product."
+      },
+      "secondary_failures": [],
+      "metric_confounds": [
+        {
+          "kind": "lexical_novelty_confound",
+          "rationale": "The core proposition closely tracks the two positive inventory cases and the stable-demand counterexample despite token novelty."
+        },
+        {
+          "kind": "scope_field_placement_confound",
+          "rationale": "Supply-chain scope appears in proposition and source_domains, but the frozen scope proxy searches applicability-condition values."
+        }
+      ],
+      "falsifiability": {
+        "structural_fields_present": true,
+        "directly_tests_in_scope_prediction": false,
+        "semantic_validity_established": false,
+        "rationale": "The falsification condition repeats the excluded short-lead stable-demand counterexample instead of testing failure under long-lead volatile demand."
+      }
+    }
+  ],
+  "summary": {
+    "candidate_count": 10,
+    "candidates_with_failure_labels": 10,
+    "total_failure_labels": 25,
+    "unsupported_warning_count": 10,
+    "scope_warning_count": 6,
+    "scope_expansion_label_count": 0,
+    "scope_warning_confirmation_rate": 0.0,
+    "evidence_failure_case_count": 0,
+    "counterexample_failure_case_count": 0,
+    "primary_failure_distribution": [
+      {
+        "kind": "unsupported_generalization",
+        "primary_count": 3,
+        "any_label_count": 5,
+        "case_rate": 0.5,
+        "mean_unsupported_claim_rate": 0.5067728781412992
+      },
+      {
+        "kind": "scope_expansion",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "missing_evidence",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "weak_evidence",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "prediction_without_support",
+        "primary_count": 4,
+        "any_label_count": 10,
+        "case_rate": 1.0,
+        "mean_unsupported_claim_rate": 0.5128640676484479
+      },
+      {
+        "kind": "causal_leap",
+        "primary_count": 2,
+        "any_label_count": 9,
+        "case_rate": 0.9,
+        "mean_unsupported_claim_rate": 0.5243944185992856
+      },
+      {
+        "kind": "over_abstraction",
+        "primary_count": 1,
+        "any_label_count": 1,
+        "case_rate": 0.1,
+        "mean_unsupported_claim_rate": 0.5666666666666667
+      },
+      {
+        "kind": "counterexample_ignored",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "ambiguous_pattern",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "duplicate_pattern",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      },
+      {
+        "kind": "other",
+        "primary_count": 0,
+        "any_label_count": 0,
+        "case_rate": 0.0,
+        "mean_unsupported_claim_rate": null
+      }
+    ],
+    "metric_confound_distribution": [
+      {
+        "kind": "lexical_novelty_confound",
+        "case_count": 5,
+        "case_rate": 0.5
+      },
+      {
+        "kind": "scope_field_placement_confound",
+        "case_count": 6,
+        "case_rate": 0.6
+      }
+    ],
+    "falsifiability": {
+      "structural_fields_present_count": 10,
+      "structural_fields_present_rate": 1.0,
+      "direct_in_scope_test_count": 8,
+      "direct_in_scope_test_rate": 0.8,
+      "semantic_validity_established_count": 0,
+      "semantic_validity_established_rate": 0.0
+    }
+  },
+  "guards": {
+    "frozen_phase7_2_3_execution_reused": true,
+    "provider_calls_made": false,
+    "prompt_modified": false,
+    "parser_modified": false,
+    "scorer_modified": false,
+    "extraction_algorithm_modified": false,
+    "design_cases_only": true,
+    "held_out_cases_untouched": true,
+    "independent_second_review_completed": false,
+    "candidate_learning_authorized": false,
+    "pattern_persistence_authorized": false,
+    "knowledge_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  },
+  "decision": "taxonomy_seeded_independent_review_required",
+  "conclusion": "The seed review separates candidate errors from scorer confounds. Primary mechanisms are prediction overcommitment, unsupported generalization, causal certainty, and over-abstraction; evidence provenance and counterexample retention are not the observed bottlenecks. The frozen lexical unsupported-claim and scope proxies remain useful warnings but are not semantic ground truth, so extraction or admission changes remain blocked until independent adjudication."
+}

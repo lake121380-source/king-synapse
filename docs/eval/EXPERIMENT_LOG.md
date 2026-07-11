@@ -157,3 +157,34 @@ comparison_protocol_frozen_model_execution_blocked
 ```
 
 Conclusion: the comparison protocol and manifest discipline are reproducible, and the weak provider row is measured. Model capability remains unknown because authorization failed. This phase does not prove LLM extraction quality, Pattern validation, transfer improvement, or knowledge formation.
+
+## Phase 7.3 - Failure Taxonomy & Candidate Error Analysis
+
+Date: 2026-07-11
+
+Objective: explain why the ten frozen, contract-valid Phase 7.2.3 Candidates still receive high unsupported-claim warnings without changing the provider, prompt, parser, scorer, extraction algorithm, or held-out boundary.
+
+Result:
+
+```text
+candidates analyzed                    10
+primary prediction_without_support      4
+primary unsupported_generalization      3
+primary causal_leap                     2
+primary over_abstraction                 1
+missing/weak evidence cases              0
+counterexample-ignored cases             0
+lexical novelty confound cases           5
+scope field-placement confound cases     6
+falsification fields present            10/10
+direct in-scope falsification            8/10
+independent second review                false
+```
+
+Decision:
+
+```text
+taxonomy_seeded_independent_review_required
+```
+
+Conclusion: the provisional bottleneck is epistemic-strength escalation after correct evidence attribution, not provider transport or evidence-ID handling. The frozen lexical and scope metrics remain safety warnings rather than semantic ground truth. Do not optimize extraction or open held-out data until independent adjudication is completed.

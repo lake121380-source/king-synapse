@@ -40,6 +40,7 @@ pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
 pub mod phase7_bounded_pattern_extraction_provider;
+pub mod phase7_candidate_error_analysis;
 pub mod phase7_cognitive_architecture_contract;
 pub mod phase7_pattern_extraction_protocol;
 pub mod phase7_pattern_provider_comparison;
