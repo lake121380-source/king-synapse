@@ -119,3 +119,7 @@ waiting_for_two_independent_submissions
 ```
 
 No semantic reliability, Candidate error rate, Gold label, or Judge-calibration claim is made by this readiness result.
+
+## Phase 7.3.1-C lineage binding
+
+The Agreement Report now records exact-file SHA-256 references to Source Execution, Blind Review Packet, both raw Reviewer files, and the frozen Agreement Protocol. It does not embed its own hash. Any future Adjudication must reference the exact preserved Agreement Report file hash.

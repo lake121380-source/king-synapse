@@ -269,3 +269,7 @@ Until then, do not:
 - open held-out cases;
 - persist or promote Pattern Candidates;
 - connect Hermes or runtime learning.
+
+## Artifact-lineage prerequisite
+
+A completed Adjudication is invalid unless it references the exact SHA-256 values of Reviewer A, Reviewer B, and the preserved Agreement Report. Agreement must precede adjudication; adjudication must precede Gold freezing; Gold and frozen-Judge lineage must be valid before calibration is authorized. See `PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.

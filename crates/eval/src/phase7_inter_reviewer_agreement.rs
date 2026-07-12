@@ -7,9 +7,21 @@ use crate::phase7_independent_adjudication_calibration::{
 use anyhow::{bail, Context, Result};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
 
 const PROTOCOL_JSON: &str = include_str!(
+    "../datasets/pattern_extraction/phase7_3_1_inter_reviewer_agreement_protocol.json"
+);
+const SOURCE_EXECUTION_BYTES: &[u8] =
+    include_bytes!("../reports/phase7_2_3_real_provider_execution.json");
+const BLIND_REVIEW_PACKET_BYTES: &[u8] =
+    include_bytes!("../datasets/pattern_extraction/phase7_3_1_blind_review_packet.json");
+const REVIEWER_A_BYTES: &[u8] =
+    include_bytes!("../datasets/pattern_extraction/phase7_3_1_reviewer_a_template.json");
+const REVIEWER_B_BYTES: &[u8] =
+    include_bytes!("../datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json");
+const AGREEMENT_PROTOCOL_BYTES: &[u8] = include_bytes!(
     "../datasets/pattern_extraction/phase7_3_1_inter_reviewer_agreement_protocol.json"
 );
 const EVALUATION_VERSION: &str = "phase7.3.1-inter-reviewer-agreement-gate-v1";
@@ -116,6 +128,15 @@ pub enum InterReviewerAgreementDecision {
     AgreementProtocolInvalid,
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub struct AgreementArtifactLineage {
+    pub source_execution_sha256: String,
+    pub blind_review_packet_sha256: String,
+    pub reviewer_a_submission_sha256: String,
+    pub reviewer_b_submission_sha256: String,
+    pub agreement_protocol_sha256: String,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct InterReviewerAgreementReport {
     pub schema_version: u32,
@@ -124,6 +145,7 @@ pub struct InterReviewerAgreementReport {
     pub generated_at: String,
     pub phase: String,
     pub protocol: InterReviewerAgreementProtocol,
+    pub lineage: AgreementArtifactLineage,
     pub metrics: Option<InterReviewerAgreementMetrics>,
     pub guards: InterReviewerAgreementGuards,
     pub decision: InterReviewerAgreementDecision,
@@ -136,6 +158,10 @@ impl Phase7InterReviewerAgreementEvaluator {
     pub fn evaluate(tag: impl Into<String>) -> Result<InterReviewerAgreementReport> {
         evaluate(tag.into())
     }
+}
+
+fn sha256(bytes: &[u8]) -> String {
+    format!("{:x}", Sha256::digest(bytes))
 }
 
 pub fn load_phase7_inter_reviewer_agreement_protocol() -> Result<InterReviewerAgreementProtocol> {
@@ -189,6 +215,13 @@ fn evaluate(tag: String) -> Result<InterReviewerAgreementReport> {
         generated_at: Utc::now().to_rfc3339(),
         phase: protocol.phase.clone(),
         protocol,
+        lineage: AgreementArtifactLineage {
+            source_execution_sha256: sha256(SOURCE_EXECUTION_BYTES),
+            blind_review_packet_sha256: sha256(BLIND_REVIEW_PACKET_BYTES),
+            reviewer_a_submission_sha256: sha256(REVIEWER_A_BYTES),
+            reviewer_b_submission_sha256: sha256(REVIEWER_B_BYTES),
+            agreement_protocol_sha256: sha256(AGREEMENT_PROTOCOL_BYTES),
+        },
         metrics,
         guards,
         decision,

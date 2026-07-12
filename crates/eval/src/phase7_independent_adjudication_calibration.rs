@@ -18,6 +18,7 @@ const REVIEWER_B_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json");
 const ADJUDICATION_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_adjudication_template.json");
+const AGREEMENT_REPORT_JSON: &str = include_str!("../reports/phase7_inter_reviewer_agreement.json");
 const EVALUATION_VERSION: &str = "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1";
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
@@ -255,6 +256,13 @@ pub struct AdjudicatedClaim {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub struct AdjudicationLineageReference {
+    pub reviewer_a_submission_sha256: String,
+    pub reviewer_b_submission_sha256: String,
+    pub agreement_report_sha256: String,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AdjudicationSubmission {
     pub schema_version: u32,
     pub adjudication_id: String,
@@ -264,6 +272,7 @@ pub struct AdjudicationSubmission {
     pub completed: bool,
     pub held_out_accessed: bool,
     pub disagreements_preserved: bool,
+    pub lineage: Option<AdjudicationLineageReference>,
     pub claims: Vec<AdjudicatedClaim>,
 }
 
@@ -715,6 +724,28 @@ fn validate_reviewer_submission(
     Ok(())
 }
 
+pub fn validate_phase7_adjudication_artifact_lineage(
+    adjudication: &AdjudicationSubmission,
+) -> Result<()> {
+    if !adjudication.completed {
+        if adjudication.lineage.is_some() {
+            bail!("incomplete_adjudication_template_must_not_contain_lineage");
+        }
+        return Ok(());
+    }
+    let lineage = adjudication
+        .lineage
+        .as_ref()
+        .context("completed adjudication requires artifact lineage")?;
+    if lineage.reviewer_a_submission_sha256 != sha256(REVIEWER_A_JSON.as_bytes())
+        || lineage.reviewer_b_submission_sha256 != sha256(REVIEWER_B_JSON.as_bytes())
+        || lineage.agreement_report_sha256 != sha256(AGREEMENT_REPORT_JSON.as_bytes())
+    {
+        bail!("adjudication_artifact_lineage_mismatch");
+    }
+    Ok(())
+}
+
 fn validate_adjudication(
     adjudication: &AdjudicationSubmission,
     protocol: &Phase7AdjudicationMeasurementProtocol,
@@ -734,8 +765,10 @@ fn validate_adjudication(
         if !adjudication.claims.is_empty() {
             bail!("incomplete_adjudication_template_must_not_contain_results");
         }
+        validate_phase7_adjudication_artifact_lineage(adjudication)?;
         return Ok(());
     }
+    validate_phase7_adjudication_artifact_lineage(adjudication)?;
     if !reviewer_a.completed || !reviewer_b.completed || adjudication.claims.is_empty() {
         bail!("adjudication_requires_two_completed_independent_submissions");
     }

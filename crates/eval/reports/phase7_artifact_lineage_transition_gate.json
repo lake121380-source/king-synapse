@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1",
+  "tag": "phase7.3.1-artifact-lineage-transition-gate",
+  "generated_at": "2026-07-12T01:51:27.646274900+00:00",
+  "phase": "Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate",
+  "protocol": {
+    "schema_version": 1,
+    "protocol_id": "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1",
+    "parent_protocol_id": "phase7.3.1-inter-reviewer-agreement-gate-v1",
+    "phase": "Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate",
+    "purpose": "Bind every workflow authorization to exact immutable upstream artifacts and explicit transition preconditions.",
+    "review_completion_order_independent": true,
+    "states": [
+      "awaiting_independent_reviews",
+      "raw_reviews_complete_agreement_required",
+      "agreement_report_frozen_adjudication_allowed",
+      "adjudication_complete_gold_freeze_required",
+      "gold_labels_frozen",
+      "judge_calibration_allowed",
+      "artifact_lineage_invalid"
+    ],
+    "hash_policy": {
+      "algorithm": "sha256",
+      "hashed_representation": "exact_file_bytes",
+      "embedded_self_hash_allowed": false,
+      "downstream_references_upstream_hash": true,
+      "hash_mismatch_invalidates_downstream": true,
+      "generated_metadata_excluded": false
+    },
+    "transition_policy": {
+      "skip_allowed": false,
+      "backward_transition_allowed": false,
+      "same_state_recheck_allowed": true,
+      "agreement_must_precede_adjudication": true,
+      "gold_must_precede_judge_calibration": true
+    },
+    "required_lineage": [
+      "source_execution_sha256",
+      "blind_review_packet_sha256",
+      "reviewer_a_submission_sha256",
+      "reviewer_b_submission_sha256",
+      "agreement_protocol_sha256",
+      "agreement_report_sha256",
+      "adjudication_sha256",
+      "gold_labels_sha256",
+      "frozen_judge_sha256"
+    ],
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "memory_write_authorized": false,
+    "extractor_modification_authorized": false,
+    "judge_modification_authorized": false
+  },
+  "state": "awaiting_independent_reviews",
+  "review_progress": {
+    "reviewer_a_completed": false,
+    "reviewer_b_completed": false,
+    "completed_count": 0,
+    "required_count": 2,
+    "completion_order_independent": true
+  },
+  "artifacts": [
+    {
+      "artifact_id": "source_execution",
+      "path": "crates/eval/reports/phase7_2_3_real_provider_execution.json",
+      "sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1"
+    },
+    {
+      "artifact_id": "blind_review_packet",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_blind_review_packet.json",
+      "sha256": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8"
+    },
+    {
+      "artifact_id": "reviewer_a_submission",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_a_template.json",
+      "sha256": "74f67d7eb2a24e573045c4eebd03b649d2232bb982d3682d13fc3f640307c0a9"
+    },
+    {
+      "artifact_id": "reviewer_b_submission",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json",
+      "sha256": "9ea1b1766e8f717ca25cee6b8183005a28aa36e1fd7e27cd0894233fc62cd637"
+    },
+    {
+      "artifact_id": "agreement_protocol",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_inter_reviewer_agreement_protocol.json",
+      "sha256": "0653e6a273f63f4982e02b91ae519bf9f96d901669592129f547b64f9f88e257"
+    },
+    {
+      "artifact_id": "agreement_report",
+      "path": "crates/eval/reports/phase7_inter_reviewer_agreement.json",
+      "sha256": "13fd00b5ae63829c1cc2f44f9b9d301b9673dc5210660be4f0cedb8faeea4ac9"
+    },
+    {
+      "artifact_id": "adjudication",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json",
+      "sha256": "534100b2e7bd84707c2b89e0b3f2c2c2d5df14f4303a8de2b0c259af9c0694e3"
+    }
+  ],
+  "agreement_report_sha256": "13fd00b5ae63829c1cc2f44f9b9d301b9673dc5210660be4f0cedb8faeea4ac9",
+  "adjudication_sha256": "534100b2e7bd84707c2b89e0b3f2c2c2d5df14f4303a8de2b0c259af9c0694e3",
+  "gold_labels_sha256": null,
+  "frozen_judge_sha256": null,
+  "lineage": {
+    "foundational_lineage_valid": true,
+    "agreement_lineage_valid": true,
+    "adjudication_lineage_valid": true,
+    "gold_lineage_valid": null,
+    "calibration_lineage_valid": null,
+    "artifact_lineage_broken": false
+  },
+  "permissions": {
+    "agreement_computation_allowed": false,
+    "adjudication_allowed": false,
+    "gold_freeze_allowed": false,
+    "judge_calibration_allowed": false
+  },
+  "guards": {
+    "exact_file_sha256_used": true,
+    "embedded_self_hash_used": false,
+    "generated_metadata_included": true,
+    "skipped_transition_allowed": false,
+    "backward_transition_allowed": false,
+    "same_state_recheck_allowed": true,
+    "fake_reviewers_generated": false,
+    "fake_agreement_metrics_generated": false,
+    "adjudication_executed": false,
+    "gold_labels_generated": false,
+    "judge_calibration_executed": false,
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "memory_write_authorized": false,
+    "extractor_modified": false,
+    "judge_modified": false
+  },
+  "conclusion": "Artifact lineage is bound, but the workflow remains at 0/2 independent reviews; agreement, adjudication, Gold freezing, and Judge calibration are unauthorized."
+}

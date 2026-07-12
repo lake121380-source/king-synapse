@@ -39,6 +39,7 @@ pub mod phase5_trace_quality;
 pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
+pub mod phase7_artifact_lineage_transition_gate;
 pub mod phase7_bounded_pattern_extraction_provider;
 pub mod phase7_candidate_error_analysis;
 pub mod phase7_cognitive_architecture_contract;
@@ -205,6 +206,17 @@ pub use phase6_recall_score_distribution::{
     RankScoreDistribution, RecallScoreDistributionDecision, RecallScoreDistributionGuards,
     RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
 };
+pub use phase7_artifact_lineage_transition_gate::{
+    derive_phase7_workflow_state, exact_file_sha256, independent_review_progress,
+    load_phase7_artifact_lineage_protocol, permissions_for_state,
+    validate_agreement_artifact_lineage, validate_gold_labels_artifact_lineage,
+    validate_judge_calibration_artifact_lineage, validate_phase7_workflow_transition,
+    ArtifactDigest, ArtifactHashPolicy, ArtifactLineageGuards, ArtifactLineageStatus,
+    GoldLabelsLineageReference, IndependentReviewProgress, JudgeCalibrationLineageReference,
+    Phase731WorkflowState, Phase7ArtifactLineageProtocol, Phase7ArtifactLineageTransitionEvaluator,
+    Phase7ArtifactLineageTransitionReport, WorkflowFacts, WorkflowPermissions,
+    WorkflowTransitionPolicy,
+};
 pub use phase7_bounded_pattern_extraction_provider::{
     evaluate_pattern_extraction_quality, evaluate_provider, BoundedPatternExtractionGuards,
     BoundedPatternExtractionProviderConfig, DeterministicBoundedPatternExtractionProvider,
@@ -225,22 +237,23 @@ pub use phase7_independent_adjudication_calibration::{
     build_phase7_blind_review_packet, compute_confusion_matrix, compute_scope_confusion_matrix,
     compute_support_agreement, load_phase7_adjudication_measurement_protocol,
     load_phase7_adjudication_template, load_phase7_reviewer_a_template,
-    load_phase7_reviewer_b_template, validate_phase7_reviewer_submission_against_frozen_inputs,
-    AdjudicatedClaim, AdjudicationSubmission, AnnotationConfidence, AtomicClaimAnnotation,
-    BinaryCalibrationView, BlindReviewCase, BlindReviewPacket, CalibrationPolicy,
-    CandidateJudgeCalibrationRow, CausalStrengthAssessment, ClaimDimensionLabels, ClaimOrigin,
-    ClaimSourceAnchor, ClaimSourceField, ClaimSourceSpan, ConfidenceInterval, ConfusionMatrix,
-    CounterexampleAssessment, DisagreementKind, FalsifiabilityAssessment, HumanSupportLabel,
-    JudgeFailureKind, MeasurementObjectDefinition, MeasurementObjectKind, MetricDefinition,
-    Phase7AdjudicationCalibrationDecision, Phase7AdjudicationCalibrationEvaluator,
-    Phase7AdjudicationCalibrationGuards, Phase7AdjudicationCalibrationReport,
-    Phase7AdjudicationMeasurementProtocol, PredictionSupportAssessment,
-    ReviewerAnnotationSubmission, ScopeAssessment, ScopeJudgeCalibrationRow,
-    SupportAgreementMetrics,
+    load_phase7_reviewer_b_template, validate_phase7_adjudication_artifact_lineage,
+    validate_phase7_reviewer_submission_against_frozen_inputs, AdjudicatedClaim,
+    AdjudicationLineageReference, AdjudicationSubmission, AnnotationConfidence,
+    AtomicClaimAnnotation, BinaryCalibrationView, BlindReviewCase, BlindReviewPacket,
+    CalibrationPolicy, CandidateJudgeCalibrationRow, CausalStrengthAssessment,
+    ClaimDimensionLabels, ClaimOrigin, ClaimSourceAnchor, ClaimSourceField, ClaimSourceSpan,
+    ConfidenceInterval, ConfusionMatrix, CounterexampleAssessment, DisagreementKind,
+    FalsifiabilityAssessment, HumanSupportLabel, JudgeFailureKind, MeasurementObjectDefinition,
+    MeasurementObjectKind, MetricDefinition, Phase7AdjudicationCalibrationDecision,
+    Phase7AdjudicationCalibrationEvaluator, Phase7AdjudicationCalibrationGuards,
+    Phase7AdjudicationCalibrationReport, Phase7AdjudicationMeasurementProtocol,
+    PredictionSupportAssessment, ReviewerAnnotationSubmission, ScopeAssessment,
+    ScopeJudgeCalibrationRow, SupportAgreementMetrics,
 };
 pub use phase7_inter_reviewer_agreement::{
     compute_inter_reviewer_agreement, load_phase7_inter_reviewer_agreement_protocol,
-    ClaimAlignment, ClaimAlignmentPolicy, InterReviewerAgreementDecision,
+    AgreementArtifactLineage, ClaimAlignment, ClaimAlignmentPolicy, InterReviewerAgreementDecision,
     InterReviewerAgreementGuards, InterReviewerAgreementMetrics, InterReviewerAgreementProtocol,
     InterReviewerAgreementReport, Phase7InterReviewerAgreementEvaluator,
     SegmentationAgreementMetrics, SemanticAgreementMetrics,

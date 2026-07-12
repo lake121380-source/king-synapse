@@ -933,3 +933,31 @@ InterReviewerAgreementReport
 ```
 
 The API aligns independently segmented Claims by frozen Unicode-character spans within the same `case_id + anchor_id`. Matching uses deterministic descending span IoU with a predeclared `0.50` minimum and never uses Claim-text similarity. It reports segmentation, Claim-count, support, provenance, scope, causal, prediction, counterexample, falsifiability, and confidence agreement only after both raw blind submissions are complete. Adjudicated labels and frozen-Judge outputs are forbidden inputs.
+
+## Phase 7.3.1-C artifact lineage transition API
+
+Module: `phase7_artifact_lineage_transition_gate`
+
+Primary entry points:
+
+- `Phase7ArtifactLineageTransitionEvaluator::evaluate`
+- `load_phase7_artifact_lineage_protocol`
+- `derive_phase7_workflow_state`
+- `validate_phase7_workflow_transition`
+- `validate_agreement_artifact_lineage`
+- `validate_phase7_adjudication_artifact_lineage`
+- `exact_file_sha256`
+
+Primary types:
+
+- `Phase731WorkflowState`
+- `WorkflowFacts`
+- `WorkflowPermissions`
+- `IndependentReviewProgress`
+- `ArtifactDigest`
+- `ArtifactLineageStatus`
+- `AgreementArtifactLineage`
+- `AdjudicationLineageReference`
+- `Phase7ArtifactLineageTransitionReport`
+
+The API authorizes only one-step forward transitions or same-state rechecks. Exact upstream-file hash mismatches derive `ArtifactLineageInvalid` and disable downstream permissions.

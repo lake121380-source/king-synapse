@@ -586,3 +586,7 @@ Current decision: `protocol_ready_waiting_for_independent_annotation`. A generat
 ### Phase 7.3.1-B inter-reviewer Agreement Gate
 
 Before any adjudication or frozen-Judge calibration, the Agreement Gate now freezes Unicode-character source spans, deterministic span-IoU Claim alignment, segmentation diagnostics, semantic agreement, linear weighted kappa, and secondary ordinal Krippendorff alpha. The checked report intentionally contains no metrics because both real blind submissions remain incomplete. Agreement must be calculated from raw Reviewer A/B submissions and preserved before adjudication. See `docs/eval/PHASE7_3_1_INTER_REVIEWER_AGREEMENT_GATE.md`.
+
+### Phase 7.3.1-C artifact lineage and irreversible transition gate
+
+Phase 7.3.1-C binds Source Execution, Blind Review Packet, Reviewer submissions, Agreement Report, Adjudication, future Gold labels, and the frozen Judge through exact-file SHA-256 references. Reviewer completion is order-independent, same-state rechecks are allowed, and skipped/backward transitions are rejected. Any upstream byte change invalidates downstream authorization. The current checked state remains `awaiting_independent_reviews` at `0/2`; no agreement, adjudication, Gold, calibration, held-out, runtime, Hermes, or memory-write action is authorized. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
