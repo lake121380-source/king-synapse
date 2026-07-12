@@ -33,6 +33,10 @@ const ADJUDICATION_BYTES: &[u8] =
 const SILVER_LABELS_BYTES: &[u8] = include_bytes!(
     "../datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json"
 );
+const FROZEN_JUDGE_BYTES: &[u8] = include_bytes!("../reports/phase7_candidate_error_analysis.json");
+const CALIBRATION_LINEAGE_BYTES: &[u8] = include_bytes!(
+    "../datasets/pattern_extraction/phase7_3_1_frozen_judge_calibration_lineage.json"
+);
 const EVALUATION_VERSION: &str = "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1";
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -148,6 +152,24 @@ pub struct SilverLabelsLineageReference {
 pub struct JudgeCalibrationLineageReference {
     pub silver_labels_sha256: String,
     pub frozen_judge_sha256: String,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub struct JudgeCalibrationLineageDeclaration {
+    pub schema_version: u32,
+    pub declaration_id: String,
+    pub phase: String,
+    pub frozen: bool,
+    pub reference_status: String,
+    pub human_gold: bool,
+    pub held_out_accessed: bool,
+    pub lineage: JudgeCalibrationLineageReference,
+    pub frozen_judge_artifact: String,
+    pub scope_calibration_authorized: bool,
+    pub runtime_authorized: bool,
+    pub hermes_authorized: bool,
+    pub memory_write_authorized: bool,
+    pub conclusion: String,
 }
 
 pub fn validate_silver_labels_artifact_lineage(
@@ -412,6 +434,9 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
     let adjudication = load_phase7_adjudication_template()?;
     let silver_labels: ModelAdjudicatedSilverFreezeArtifact =
         serde_json::from_slice(SILVER_LABELS_BYTES).context("parse frozen Silver labels")?;
+    let calibration_lineage: JudgeCalibrationLineageDeclaration =
+        serde_json::from_slice(CALIBRATION_LINEAGE_BYTES)
+            .context("parse frozen Judge calibration lineage declaration")?;
 
     let agreement_lineage_valid = validate_agreement_artifact_lineage(&agreement_report.lineage);
     let agreement_report_completed = agreement_report.metrics.is_some()
@@ -431,6 +456,22 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
     let silver_lineage_valid = validate_model_adjudicated_silver_freeze(&silver_labels).is_ok()
         && silver_labels.lineage.adjudication_sha256 == adjudication_sha256;
     let silver_labels_sha256 = exact_file_sha256(SILVER_LABELS_BYTES);
+    let frozen_judge_sha256 = exact_file_sha256(FROZEN_JUDGE_BYTES);
+    let calibration_lineage_valid = calibration_lineage.schema_version == 1
+        && calibration_lineage.frozen
+        && !calibration_lineage.human_gold
+        && !calibration_lineage.held_out_accessed
+        && !calibration_lineage.scope_calibration_authorized
+        && !calibration_lineage.runtime_authorized
+        && !calibration_lineage.hermes_authorized
+        && !calibration_lineage.memory_write_authorized
+        && calibration_lineage.reference_status == "model_adjudicated_silver_not_human_gold"
+        && validate_judge_calibration_artifact_lineage(
+            &calibration_lineage.lineage,
+            &silver_labels_sha256,
+            &frozen_judge_sha256,
+        )
+        .is_ok();
 
     let facts = WorkflowFacts {
         reviewer_a_completed: reviewer_a.completed,
@@ -442,8 +483,8 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         adjudication_lineage_valid,
         silver_labels_frozen: silver_labels.frozen,
         silver_lineage_valid,
-        frozen_judge_available: false,
-        calibration_lineage_valid: false,
+        frozen_judge_available: calibration_lineage.frozen,
+        calibration_lineage_valid,
     };
     let state = derive_phase7_workflow_state(&facts);
     let progress = independent_review_progress(reviewer_a.completed, reviewer_b.completed);
@@ -500,17 +541,27 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
                 "crates/eval/datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json",
                 SILVER_LABELS_BYTES,
             ),
+            artifact(
+                "frozen_judge",
+                "crates/eval/reports/phase7_candidate_error_analysis.json",
+                FROZEN_JUDGE_BYTES,
+            ),
+            artifact(
+                "calibration_lineage_declaration",
+                "crates/eval/datasets/pattern_extraction/phase7_3_1_frozen_judge_calibration_lineage.json",
+                CALIBRATION_LINEAGE_BYTES,
+            ),
         ],
         agreement_report_sha256,
         adjudication_sha256,
         silver_labels_sha256: Some(silver_labels_sha256),
-        frozen_judge_sha256: None,
+        frozen_judge_sha256: Some(frozen_judge_sha256),
         lineage: ArtifactLineageStatus {
             foundational_lineage_valid: agreement_lineage_valid,
             agreement_lineage_valid,
             adjudication_lineage_valid,
             silver_lineage_valid: Some(silver_lineage_valid),
-            calibration_lineage_valid: None,
+            calibration_lineage_valid: Some(calibration_lineage_valid),
             artifact_lineage_broken,
         },
         permissions,
@@ -541,6 +592,9 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
                 .to_string()
         } else if state == Phase731WorkflowState::SilverLabelsFrozen {
             "The model-adjudicated Silver artifact is immutably frozen with exact adjudication lineage. It is not human Gold; Frozen Judge calibration remains unauthorized until its own exact lineage input is declared."
+                .to_string()
+        } else if state == Phase731WorkflowState::JudgeCalibrationAllowed {
+            "Exact Silver and frozen-Judge hashes are declared and lineage-valid. Diagnostic calibration is authorized against model-adjudicated Silver only; this grants no human-Gold, learning, held-out, memory, Hermes, or runtime authority."
                 .to_string()
         } else {
             "The workflow state is derived only from completed upstream artifacts and exact-file SHA-256 lineage references."

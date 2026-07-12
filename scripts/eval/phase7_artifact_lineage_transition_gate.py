@@ -40,14 +40,16 @@ def main() -> int:
 
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
-    assert report["state"] == "silver_labels_frozen"
+    assert report["state"] == "judge_calibration_allowed"
     assert report["review_progress"]["completed_count"] == 2
     assert report["review_progress"]["required_count"] == 2
     assert report["review_progress"]["completion_order_independent"] is True
     assert report["lineage"]["artifact_lineage_broken"] is False
     assert report["lineage"]["foundational_lineage_valid"] is True
     assert HEX64.fullmatch(report["silver_labels_sha256"])
-    assert report["frozen_judge_sha256"] is None
+    assert HEX64.fullmatch(report["frozen_judge_sha256"])
+    assert report["lineage"]["silver_lineage_valid"] is True
+    assert report["lineage"]["calibration_lineage_valid"] is True
 
     assert protocol["hash_policy"]["algorithm"] == "sha256"
     assert protocol["hash_policy"]["hashed_representation"] == "exact_file_bytes"
@@ -66,7 +68,7 @@ def main() -> int:
     assert report["permissions"]["agreement_computation_allowed"] is False
     assert report["permissions"]["adjudication_allowed"] is False
     assert report["permissions"]["silver_freeze_allowed"] is False
-    assert report["permissions"]["judge_calibration_allowed"] is False
+    assert report["permissions"]["judge_calibration_allowed"] is True
     for key in (
         "fake_reviewers_generated",
         "fake_agreement_metrics_generated",
@@ -84,9 +86,9 @@ def main() -> int:
     assert report["guards"]["adjudication_executed"] is True
     assert report["guards"]["silver_labels_generated"] is True
 
-    print("Workflow state: silver_labels_frozen (2/2 + 77/77 + immutable Silver)")
+    print("Workflow state: judge_calibration_allowed (exact Silver + frozen-Judge lineage)")
     print("Hash representation: exact file bytes, SHA-256")
-    print("Agreement/adjudication/Silver frozen; calibration lineage not yet declared")
+    print("Agreement/adjudication/Silver frozen; calibration lineage declared and valid")
     print("Held-out/runtime/Hermes/memory writes: blocked")
     print("PASS")
     return 0

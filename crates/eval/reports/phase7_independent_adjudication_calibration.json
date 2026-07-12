@@ -2,7 +2,7 @@
   "schema_version": 1,
   "evaluation_version": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
   "tag": "phase7.3.1-independent-adjudication-frozen-judge-calibration",
-  "generated_at": "2026-07-12T05:28:19.345798100+00:00",
+  "generated_at": "2026-07-12T05:47:23.460928800+00:00",
   "phase": "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration",
   "purpose": "Freeze measurement-object separation, independent atomic-claim annotation, disagreement analysis, and frozen-judge calibration before any extractor or judge redesign.",
   "source_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
@@ -12,6 +12,8 @@
   "adjudication_template_sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943",
   "silver_labels_sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
   "silver_label_status": "model_adjudicated_silver_not_human_gold",
+  "frozen_judge_sha256": "050a985d84c4052c36a37fe69a4eb411c390b724145daed0fbe5d09edfe0e94e",
+  "calibration_lineage_sha256": "2bdef802c3a7bf1d303aedc0a0efd99806df0c0ba00a04957854cc0a28d7f271",
   "protocol": {
     "schema_version": 1,
     "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
@@ -6282,23 +6284,23 @@
     },
     {
       "name": "judge_precision",
-      "definition": "Human-confirmed unsupported claims among frozen-judge unsupported warnings."
+      "definition": "Silver-reference unsupported candidates among frozen-Judge unsupported warnings."
     },
     {
       "name": "judge_recall_sensitivity",
-      "definition": "Human-confirmed unsupported claims detected by the frozen judge."
+      "definition": "Silver-reference unsupported candidates detected by the frozen Judge."
     },
     {
       "name": "judge_specificity",
-      "definition": "Human-supported claims not warned on by the frozen judge."
+      "definition": "Silver-reference supported candidates not warned on by the frozen Judge."
     },
     {
       "name": "judge_false_positive_rate",
-      "definition": "Human-supported claims warned on by the frozen judge."
+      "definition": "Silver-reference supported candidates warned on by the frozen Judge."
     },
     {
       "name": "judge_false_negative_rate",
-      "definition": "Human-unsupported claims missed by the frozen judge."
+      "definition": "Silver-reference unsupported candidates missed by the frozen Judge."
     },
     {
       "name": "balanced_accuracy",
@@ -6310,8 +6312,126 @@
     }
   ],
   "agreement": null,
-  "strict_safety_calibration": null,
-  "strong_error_calibration": null,
+  "candidate_calibration_rows": [
+    {
+      "case_id": "extract_01",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_02",
+      "silver_support_label": "unsupported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_03",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_04",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_05",
+      "silver_support_label": "unsupported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_06",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_07",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_08",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_09",
+      "silver_support_label": "supported",
+      "frozen_judge_unsupported_warning": true
+    },
+    {
+      "case_id": "extract_10",
+      "silver_support_label": "partially_supported",
+      "frozen_judge_unsupported_warning": true
+    }
+  ],
+  "strict_safety_calibration": {
+    "true_positive": 9,
+    "false_positive": 1,
+    "false_negative": 0,
+    "true_negative": 0,
+    "excluded": 0,
+    "precision": 0.9,
+    "precision_wilson_95": {
+      "lower": 0.5958499732047615,
+      "upper": 0.9821237869049271
+    },
+    "recall_sensitivity": 1.0,
+    "recall_sensitivity_wilson_95": {
+      "lower": 0.7008549515804559,
+      "upper": 1.0
+    },
+    "specificity": 0.0,
+    "specificity_wilson_95": {
+      "lower": 0.0,
+      "upper": 0.7934506856227626
+    },
+    "false_positive_rate": 1.0,
+    "false_positive_rate_wilson_95": {
+      "lower": 0.20654931437723745,
+      "upper": 1.0
+    },
+    "false_negative_rate": 0.0,
+    "false_negative_rate_wilson_95": {
+      "lower": 0.0,
+      "upper": 0.2991450484195441
+    },
+    "balanced_accuracy": 0.5,
+    "matthews_correlation_coefficient": null
+  },
+  "strong_error_calibration": {
+    "true_positive": 2,
+    "false_positive": 1,
+    "false_negative": 0,
+    "true_negative": 0,
+    "excluded": 7,
+    "precision": 0.6666666666666666,
+    "precision_wilson_95": {
+      "lower": 0.2076596008020477,
+      "upper": 0.9385080552796037
+    },
+    "recall_sensitivity": 1.0,
+    "recall_sensitivity_wilson_95": {
+      "lower": 0.34238022750665303,
+      "upper": 1.0
+    },
+    "specificity": 0.0,
+    "specificity_wilson_95": {
+      "lower": 0.0,
+      "upper": 0.7934506856227626
+    },
+    "false_positive_rate": 1.0,
+    "false_positive_rate_wilson_95": {
+      "lower": 0.20654931437723745,
+      "upper": 1.0
+    },
+    "false_negative_rate": 0.0,
+    "false_negative_rate_wilson_95": {
+      "lower": 0.0,
+      "upper": 0.6576197724933469
+    },
+    "balanced_accuracy": 0.5,
+    "matthews_correlation_coefficient": null
+  },
   "scope_calibration": null,
   "guards": {
     "frozen_phase7_2_3_outputs_reused": true,
@@ -6328,13 +6448,13 @@
     "reviewer_b_completed": true,
     "independent_adjudication_completed": true,
     "silver_labels_frozen": true,
-    "scorer_calibration_completed": false,
+    "scorer_calibration_completed": true,
     "held_out_cases_untouched": true,
     "runtime_authorized": false,
     "hermes_authorized": false,
     "candidate_learning_authorized": false,
     "knowledge_promotion_authorized": false
   },
-  "decision": "silver_labels_frozen_calibration_lineage_required",
-  "conclusion": "Phase 7.3.1 remains diagnostic-only; no Candidate learning or knowledge promotion is authorized."
+  "decision": "frozen_judge_diagnostic_calibration_complete",
+  "conclusion": "Diagnostic calibration against model-adjudicated Silver is complete. The frozen Judge warned on all ten candidates: sensitivity is high but discrimination is degenerate because no negative warning predictions exist. This is not human-Gold accuracy; scope calibration, learning, held-out access, memory writes, Hermes, and runtime remain unauthorized."
 }

@@ -172,8 +172,8 @@ The frozen scorer emits candidate-level warnings, not atomic-claim decisions. At
 The positive class is frozen as:
 
 ```text
-Human Unsupported = Positive
-Human Supported   = Negative
+Silver Unsupported = Positive
+Silver Supported   = Negative
 ```
 
 Two binary views are predeclared before annotations are observed:
@@ -213,7 +213,7 @@ boundary disagreement count
 fundamental disagreement count
 ```
 
-No calibration number is emitted yet because no adjudicated semantic labels exist.
+Calibration is now emitted only against immutable model-adjudicated Silver references. It is diagnostic and is not a human-Gold accuracy estimate.
 
 ## Judge failure taxonomy
 
@@ -241,10 +241,11 @@ claim-source anchors      65
 Reviewer A completed      true (GPT-4.1, 74 claims)
 Reviewer B completed      true (Qwen 3.5 Plus, 77 claims)
 adjudication completed    true (Gemini 2.5 Pro, 77/77 groups)
-Judge calibration         unavailable
+Judge calibration         complete against model Silver
+strict safety matrix      TP=9 FP=1 FN=0 TN=0
+strong error matrix       TP=2 FP=1 FN=0 TN=0 excluded=7
+scope calibration         unavailable
 held-out access           false
-extraction provider calls 0 (frozen outputs reused)
-reviewer model calls      completed under frozen AI-review protocol
 Prompt/Parser/Judge edits 0
 runtime/Hermes            false
 ```
@@ -252,14 +253,14 @@ runtime/Hermes            false
 Decision:
 
 ```text
-silver_labels_frozen_calibration_lineage_required
+frozen_judge_diagnostic_calibration_complete
 ```
 
-This is a three-model review/adjudication result and model-adjudicated silver candidate set, not human Gold, Candidate semantic truth, or Judge calibration.
+This is a diagnostic calibration against a three-model, model-adjudicated Silver reference set. It is not human Gold or Candidate semantic truth. The frozen Judge warns on all ten candidates, so high sensitivity coexists with zero observed specificity.
 
 ## Next valid action
 
-Preserve the two Reviewer submissions, Agreement Report, completed third-model adjudication, and immutable Silver artifact hashes. Next, declare an exact Silver-plus-frozen-Judge calibration lineage; only then calculate diagnostic calibration against the model Silver references.
+The exact Silver-plus-frozen-Judge lineage is now declared and diagnostic calibration is complete. The next scientific decision must keep extractor and Judge changes separated; do not optimize either component against these same ten design cases without opening a new controlled phase.
 
 Until then, do not:
 

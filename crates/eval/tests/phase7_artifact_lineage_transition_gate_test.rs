@@ -27,7 +27,7 @@ fn facts() -> WorkflowFacts {
 #[test]
 fn current_workflow_has_two_reviews_and_frozen_agreement() {
     let report = Phase7ArtifactLineageTransitionEvaluator::evaluate("test").expect("evaluate");
-    assert_eq!(report.state, Phase731WorkflowState::SilverLabelsFrozen);
+    assert_eq!(report.state, Phase731WorkflowState::JudgeCalibrationAllowed);
     assert_eq!(report.review_progress.completed_count, 2);
     assert_eq!(report.review_progress.required_count, 2);
     assert!(report.review_progress.completion_order_independent);
@@ -36,9 +36,10 @@ fn current_workflow_has_two_reviews_and_frozen_agreement() {
     assert!(!report.permissions.agreement_computation_allowed);
     assert!(!report.permissions.adjudication_allowed);
     assert!(!report.permissions.silver_freeze_allowed);
-    assert!(!report.permissions.judge_calibration_allowed);
+    assert!(report.permissions.judge_calibration_allowed);
     assert!(report.silver_labels_sha256.is_some());
-    assert!(report.frozen_judge_sha256.is_none());
+    assert!(report.frozen_judge_sha256.is_some());
+    assert_eq!(report.lineage.calibration_lineage_valid, Some(true));
 }
 
 #[test]
@@ -216,18 +217,19 @@ fn checked_in_report_preserves_governance_boundary() {
         "../reports/phase7_artifact_lineage_transition_gate.json"
     ))
     .expect("checked report");
-    assert_eq!(report["state"], "silver_labels_frozen");
+    assert_eq!(report["state"], "judge_calibration_allowed");
     assert_eq!(report["review_progress"]["completed_count"], 2);
     assert_eq!(report["review_progress"]["required_count"], 2);
     assert_eq!(report["permissions"]["adjudication_allowed"], false);
     assert_eq!(report["permissions"]["silver_freeze_allowed"], false);
-    assert_eq!(report["permissions"]["judge_calibration_allowed"], false);
+    assert_eq!(report["permissions"]["judge_calibration_allowed"], true);
     assert_eq!(report["guards"]["fake_reviewers_generated"], false);
     assert_eq!(report["guards"]["fake_agreement_metrics_generated"], false);
     assert_eq!(report["guards"]["silver_labels_generated"], true);
     assert_eq!(report["guards"]["held_out_accessed"], false);
     assert!(report["silver_labels_sha256"].is_string());
-    assert!(report["frozen_judge_sha256"].is_null());
+    assert!(report["frozen_judge_sha256"].is_string());
+    assert_eq!(report["lineage"]["calibration_lineage_valid"], true);
 }
 
 #[test]

@@ -43,7 +43,7 @@ def main() -> int:
     blind_packet = json.loads(BLIND_PACKET.read_text(encoding="utf-8"))
 
     assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
-    assert report["decision"] == "silver_labels_frozen_calibration_lineage_required"
+    assert report["decision"] == "frozen_judge_diagnostic_calibration_complete"
     assert len(report["claim_source_anchors"]) == 65
     assert all(anchor["requires_independent_atomic_segmentation"] for anchor in report["claim_source_anchors"])
     assert len({anchor["anchor_id"] for anchor in report["claim_source_anchors"]}) == 65
@@ -102,8 +102,22 @@ def main() -> int:
     assert adjudication["lineage"] is not None
     assert adjudication["disagreements_preserved"] is True
     assert report["agreement"] is None
-    assert report["strict_safety_calibration"] is None
-    assert report["strong_error_calibration"] is None
+    assert len(report["candidate_calibration_rows"]) == 10
+    assert all(row["frozen_judge_unsupported_warning"] is True for row in report["candidate_calibration_rows"])
+    strict = report["strict_safety_calibration"]
+    assert (strict["true_positive"], strict["false_positive"], strict["false_negative"], strict["true_negative"], strict["excluded"]) == (9, 1, 0, 0, 0)
+    assert strict["precision"] == 0.9
+    assert strict["recall_sensitivity"] == 1.0
+    assert strict["specificity"] == 0.0
+    assert strict["balanced_accuracy"] == 0.5
+    assert strict["matthews_correlation_coefficient"] is None
+    strong = report["strong_error_calibration"]
+    assert (strong["true_positive"], strong["false_positive"], strong["false_negative"], strong["true_negative"], strong["excluded"]) == (2, 1, 0, 0, 7)
+    assert abs(strong["precision"] - 2 / 3) < 1e-12
+    assert strong["recall_sensitivity"] == 1.0
+    assert strong["specificity"] == 0.0
+    assert strong["balanced_accuracy"] == 0.5
+    assert strong["matthews_correlation_coefficient"] is None
     assert report["scope_calibration"] is None
 
     guards = report["guards"]
@@ -115,7 +129,7 @@ def main() -> int:
     assert guards["reviewer_a_completed"] is True
     assert guards["reviewer_b_completed"] is True
     assert guards["independent_adjudication_completed"] is True
-    assert guards["scorer_calibration_completed"] is False
+    assert guards["scorer_calibration_completed"] is True
     assert guards["held_out_cases_untouched"] is True
     assert guards["runtime_authorized"] is False
     assert guards["hermes_authorized"] is False
@@ -128,7 +142,10 @@ def main() -> int:
     print("Blind packet: 10 design cases / 65 anchors / no Judge or seed-label leakage")
     print("Reviewer A/B: two blind heterogeneous AI submissions completed (74/77 claims)")
     print("Agreement: frozen separately; third-model adjudication: 77/77 complete")
-    print("Decision: silver_labels_frozen_calibration_lineage_required")
+    print("Strict safety: TP=9 FP=1 FN=0 TN=0; precision=0.9 recall=1.0 specificity=0.0")
+    print("Strong error: TP=2 FP=1 FN=0 TN=0 excluded=7; precision=0.6667 recall=1.0")
+    print("Scope calibration: unavailable (scope labels were not adjudicated)")
+    print("Decision: frozen_judge_diagnostic_calibration_complete")
     print("Held-out/runtime/Hermes: blocked")
     print("PASS")
     return 0

@@ -978,3 +978,8 @@ Primary types:
 - `ModelAdjudicatedSilverCandidateLabel`
 
 The API deterministically resolves each adjudicated group back to one design case, freezes 77 claim labels and ten conservative candidate aggregates, and binds the artifact to the exact adjudication SHA-256. The labels are model-adjudicated Silver, never human Gold. Scope calibration is deliberately unavailable because final scope labels were not adjudicated.
+
+
+### Phase 7.3.1-F diagnostic calibration result
+
+`Phase7AdjudicationCalibrationReport` now includes exact Silver/Judge lineage hashes, ten transparent `candidate_calibration_rows`, strict-safety and strong-error confusion matrices, and a deliberately null `scope_calibration`. Calibration-facing row fields use `silver_support_label`; model Silver is never represented as human Gold.

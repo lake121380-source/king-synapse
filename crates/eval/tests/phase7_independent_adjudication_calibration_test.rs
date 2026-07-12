@@ -113,27 +113,27 @@ fn frozen_judge_calibration_uses_unsupported_as_the_positive_class() {
     let rows = [
         CandidateJudgeCalibrationRow {
             case_id: "a".into(),
-            human_support_label: Supported,
+            silver_support_label: Supported,
             frozen_judge_unsupported_warning: false,
         },
         CandidateJudgeCalibrationRow {
             case_id: "b".into(),
-            human_support_label: Supported,
+            silver_support_label: Supported,
             frozen_judge_unsupported_warning: true,
         },
         CandidateJudgeCalibrationRow {
             case_id: "c".into(),
-            human_support_label: PartiallySupported,
+            silver_support_label: PartiallySupported,
             frozen_judge_unsupported_warning: true,
         },
         CandidateJudgeCalibrationRow {
             case_id: "d".into(),
-            human_support_label: Unsupported,
+            silver_support_label: Unsupported,
             frozen_judge_unsupported_warning: false,
         },
         CandidateJudgeCalibrationRow {
             case_id: "e".into(),
-            human_support_label: NotAssessable,
+            silver_support_label: NotAssessable,
             frozen_judge_unsupported_warning: true,
         },
     ];
@@ -190,17 +190,17 @@ fn candidate_aggregation_and_scope_calibration_are_predeclared_before_real_label
     let scope = compute_scope_confusion_matrix(&[
         ScopeJudgeCalibrationRow {
             case_id: "a".into(),
-            human_scope_expanded: Some(true),
+            adjudicated_scope_expanded: Some(true),
             frozen_judge_scope_warning: true,
         },
         ScopeJudgeCalibrationRow {
             case_id: "b".into(),
-            human_scope_expanded: Some(false),
+            adjudicated_scope_expanded: Some(false),
             frozen_judge_scope_warning: true,
         },
         ScopeJudgeCalibrationRow {
             case_id: "c".into(),
-            human_scope_expanded: None,
+            adjudicated_scope_expanded: None,
             frozen_judge_scope_warning: false,
         },
     ]);
@@ -210,15 +210,50 @@ fn candidate_aggregation_and_scope_calibration_are_predeclared_before_real_label
 }
 
 #[test]
-fn frozen_silver_requires_calibration_lineage_without_fabricating_metrics() {
+fn frozen_judge_is_diagnostically_calibrated_against_model_silver() {
     let report = Phase7AdjudicationCalibrationEvaluator::evaluate("test").expect("evaluate");
     assert_eq!(
         report.decision,
-        Phase7AdjudicationCalibrationDecision::SilverLabelsFrozenCalibrationLineageRequired
+        Phase7AdjudicationCalibrationDecision::FrozenJudgeDiagnosticCalibrationComplete
     );
     assert!(report.agreement.is_none());
-    assert!(report.strict_safety_calibration.is_none());
-    assert!(report.strong_error_calibration.is_none());
+    assert_eq!(report.candidate_calibration_rows.len(), 10);
+    let strict = report
+        .strict_safety_calibration
+        .expect("strict safety calibration");
+    assert_eq!(
+        (
+            strict.true_positive,
+            strict.false_positive,
+            strict.false_negative,
+            strict.true_negative,
+            strict.excluded
+        ),
+        (9, 1, 0, 0, 0)
+    );
+    close(strict.precision, 0.9);
+    close(strict.recall_sensitivity, 1.0);
+    close(strict.specificity, 0.0);
+    close(strict.balanced_accuracy, 0.5);
+    assert!(strict.matthews_correlation_coefficient.is_none());
+    let strong = report
+        .strong_error_calibration
+        .expect("strong error calibration");
+    assert_eq!(
+        (
+            strong.true_positive,
+            strong.false_positive,
+            strong.false_negative,
+            strong.true_negative,
+            strong.excluded
+        ),
+        (2, 1, 0, 0, 7)
+    );
+    close(strong.precision, 2.0 / 3.0);
+    close(strong.recall_sensitivity, 1.0);
+    close(strong.specificity, 0.0);
+    close(strong.balanced_accuracy, 0.5);
+    assert!(strong.matthews_correlation_coefficient.is_none());
     assert!(report.scope_calibration.is_none());
     assert!(report.guards.reviewer_a_completed);
     assert!(report.guards.reviewer_b_completed);
@@ -229,7 +264,7 @@ fn frozen_silver_requires_calibration_lineage_without_fabricating_metrics() {
         report.silver_label_status.as_deref(),
         Some("model_adjudicated_silver_not_human_gold")
     );
-    assert!(!report.guards.scorer_calibration_completed);
+    assert!(report.guards.scorer_calibration_completed);
 }
 
 #[test]
@@ -254,22 +289,32 @@ fn phase7_3_1_preserves_extractor_judge_held_out_and_runtime_boundaries() {
 }
 
 #[test]
-fn checked_in_report_matches_silver_frozen_boundary() {
+fn checked_in_report_matches_diagnostic_calibration_boundary() {
     let checked: serde_json::Value = serde_json::from_str(include_str!(
         "../reports/phase7_independent_adjudication_calibration.json"
     ))
     .expect("checked report");
     assert_eq!(
         checked["decision"],
-        "silver_labels_frozen_calibration_lineage_required"
+        "frozen_judge_diagnostic_calibration_complete"
     );
     assert_eq!(
         checked["claim_source_anchors"].as_array().unwrap().len(),
         65
     );
     assert!(checked["agreement"].is_null());
-    assert!(checked["strict_safety_calibration"].is_null());
-    assert!(checked["strong_error_calibration"].is_null());
+    assert_eq!(
+        checked["candidate_calibration_rows"]
+            .as_array()
+            .unwrap()
+            .len(),
+        10
+    );
+    assert_eq!(checked["strict_safety_calibration"]["true_positive"], 9);
+    assert_eq!(checked["strict_safety_calibration"]["false_positive"], 1);
+    assert_eq!(checked["strict_safety_calibration"]["specificity"], 0.0);
+    assert_eq!(checked["strong_error_calibration"]["true_positive"], 2);
+    assert_eq!(checked["strong_error_calibration"]["excluded"], 7);
     assert!(checked["scope_calibration"].is_null());
     assert_eq!(checked["guards"]["held_out_cases_untouched"], true);
     assert_eq!(checked["guards"]["runtime_authorized"], false);

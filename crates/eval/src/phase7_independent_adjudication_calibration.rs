@@ -1,4 +1,9 @@
-use crate::phase7_candidate_error_analysis::CandidateFailureKind;
+use crate::phase7_artifact_lineage_transition_gate::{
+    validate_judge_calibration_artifact_lineage, JudgeCalibrationLineageDeclaration,
+};
+use crate::phase7_candidate_error_analysis::{
+    CandidateFailureKind, Phase7CandidateErrorAnalysisReport,
+};
 use crate::phase7_cognitive_architecture_contract::PatternCandidate;
 use crate::phase7_model_adjudicated_silver_freeze::{
     validate_model_adjudicated_silver_freeze, ModelAdjudicatedSilverFreezeArtifact,
@@ -24,6 +29,10 @@ const ADJUDICATION_JSON: &str =
 const SILVER_LABELS_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json");
 const AGREEMENT_REPORT_JSON: &str = include_str!("../reports/phase7_inter_reviewer_agreement.json");
+const FROZEN_JUDGE_BYTES: &[u8] = include_bytes!("../reports/phase7_candidate_error_analysis.json");
+const CALIBRATION_LINEAGE_BYTES: &[u8] = include_bytes!(
+    "../datasets/pattern_extraction/phase7_3_1_frozen_judge_calibration_lineage.json"
+);
 const EVALUATION_VERSION: &str = "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1";
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
@@ -291,14 +300,14 @@ pub enum BinaryCalibrationView {
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct CandidateJudgeCalibrationRow {
     pub case_id: String,
-    pub human_support_label: HumanSupportLabel,
+    pub silver_support_label: HumanSupportLabel,
     pub frozen_judge_unsupported_warning: bool,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ScopeJudgeCalibrationRow {
     pub case_id: String,
-    pub human_scope_expanded: Option<bool>,
+    pub adjudicated_scope_expanded: Option<bool>,
     pub frozen_judge_scope_warning: bool,
 }
 
@@ -405,6 +414,7 @@ pub enum Phase7AdjudicationCalibrationDecision {
     IndependentAnnotationsReadyAdjudicationRequired,
     AdjudicationCompleteSilverFreezeRequired,
     SilverLabelsFrozenCalibrationLineageRequired,
+    FrozenJudgeDiagnosticCalibrationComplete,
     CandidateErrorsConfirmed,
     ScorerRecalibrationRequired,
     MixedCandidateAndScorerFailure,
@@ -425,6 +435,8 @@ pub struct Phase7AdjudicationCalibrationReport {
     pub adjudication_template_sha256: String,
     pub silver_labels_sha256: Option<String>,
     pub silver_label_status: Option<String>,
+    pub frozen_judge_sha256: Option<String>,
+    pub calibration_lineage_sha256: Option<String>,
     pub protocol: Phase7AdjudicationMeasurementProtocol,
     pub claim_source_anchors: Vec<ClaimSourceAnchor>,
     pub reviewer_a: ReviewerAnnotationSubmission,
@@ -432,6 +444,7 @@ pub struct Phase7AdjudicationCalibrationReport {
     pub adjudication: AdjudicationSubmission,
     pub metric_definitions: Vec<MetricDefinition>,
     pub agreement: Option<SupportAgreementMetrics>,
+    pub candidate_calibration_rows: Vec<CandidateJudgeCalibrationRow>,
     pub strict_safety_calibration: Option<ConfusionMatrix>,
     pub strong_error_calibration: Option<ConfusionMatrix>,
     pub scope_calibration: Option<ConfusionMatrix>,
@@ -559,6 +572,11 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
     let adjudication = load_phase7_adjudication_template()?;
     let silver_labels: ModelAdjudicatedSilverFreezeArtifact =
         serde_json::from_str(SILVER_LABELS_JSON).context("parse frozen Silver labels")?;
+    let frozen_judge: Phase7CandidateErrorAnalysisReport =
+        serde_json::from_slice(FROZEN_JUDGE_BYTES).context("parse frozen Judge report")?;
+    let calibration_lineage: JudgeCalibrationLineageDeclaration =
+        serde_json::from_slice(CALIBRATION_LINEAGE_BYTES)
+            .context("parse frozen Judge calibration lineage")?;
 
     validate_protocol(&protocol)?;
     let anchors = build_claim_source_anchors(&execution.outputs);
@@ -566,6 +584,65 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
     validate_reviewer_submission(&reviewer_b, &protocol, &execution.execution_id, &anchors)?;
     validate_adjudication(&adjudication, &protocol, &reviewer_a, &reviewer_b)?;
     validate_model_adjudicated_silver_freeze(&silver_labels)?;
+
+    let silver_labels_sha256 = sha256(SILVER_LABELS_JSON.as_bytes());
+    let frozen_judge_sha256 = sha256(FROZEN_JUDGE_BYTES);
+    validate_judge_calibration_artifact_lineage(
+        &calibration_lineage.lineage,
+        &silver_labels_sha256,
+        &frozen_judge_sha256,
+    )?;
+    if calibration_lineage.schema_version != 1
+        || !calibration_lineage.frozen
+        || calibration_lineage.reference_status != "model_adjudicated_silver_not_human_gold"
+        || calibration_lineage.human_gold
+        || calibration_lineage.held_out_accessed
+        || calibration_lineage.scope_calibration_authorized
+        || calibration_lineage.runtime_authorized
+        || calibration_lineage.hermes_authorized
+        || calibration_lineage.memory_write_authorized
+    {
+        bail!("phase7_3_1_frozen_judge_calibration_lineage_boundary_invalid");
+    }
+
+    let silver_by_case = silver_labels
+        .candidates
+        .iter()
+        .map(|candidate| {
+            (
+                candidate.case_id.as_str(),
+                candidate.aggregate_support_label,
+            )
+        })
+        .collect::<BTreeMap<_, _>>();
+    let judge_by_case = frozen_judge
+        .cases
+        .iter()
+        .map(|case| (case.case_id.as_str(), case.unsupported_warning))
+        .collect::<BTreeMap<_, _>>();
+    if silver_by_case.len() != 10 || judge_by_case.len() != 10 {
+        bail!("phase7_3_1_candidate_calibration_requires_ten_cases");
+    }
+    let candidate_calibration_rows = silver_by_case
+        .iter()
+        .map(|(case_id, silver_support_label)| {
+            Ok(CandidateJudgeCalibrationRow {
+                case_id: (*case_id).to_string(),
+                silver_support_label: *silver_support_label,
+                frozen_judge_unsupported_warning: *judge_by_case
+                    .get(case_id)
+                    .with_context(|| format!("missing frozen Judge case {case_id}"))?,
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+    let strict_safety_calibration = compute_confusion_matrix(
+        &candidate_calibration_rows,
+        BinaryCalibrationView::StrictSafety,
+    );
+    let strong_error_calibration = compute_confusion_matrix(
+        &candidate_calibration_rows,
+        BinaryCalibrationView::StrongError,
+    );
 
     let guards = Phase7AdjudicationCalibrationGuards {
         frozen_phase7_2_3_outputs_reused: true,
@@ -582,7 +659,7 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         reviewer_b_completed: reviewer_b.completed,
         independent_adjudication_completed: adjudication.completed,
         silver_labels_frozen: silver_labels.frozen,
-        scorer_calibration_completed: false,
+        scorer_calibration_completed: true,
         held_out_cases_untouched: !protocol.held_out_accessed
             && !reviewer_a.held_out_accessed
             && !reviewer_b.held_out_accessed
@@ -600,7 +677,7 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
     } else if !silver_labels.frozen {
         Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired
     } else {
-        Phase7AdjudicationCalibrationDecision::SilverLabelsFrozenCalibrationLineageRequired
+        Phase7AdjudicationCalibrationDecision::FrozenJudgeDiagnosticCalibrationComplete
     };
 
     Ok(Phase7AdjudicationCalibrationReport {
@@ -617,8 +694,10 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         reviewer_a_template_sha256: sha256(REVIEWER_A_JSON.as_bytes()),
         reviewer_b_template_sha256: sha256(REVIEWER_B_JSON.as_bytes()),
         adjudication_template_sha256: sha256(ADJUDICATION_JSON.as_bytes()),
-        silver_labels_sha256: Some(sha256(SILVER_LABELS_JSON.as_bytes())),
+        silver_labels_sha256: Some(silver_labels_sha256),
         silver_label_status: Some(silver_labels.label_status.clone()),
+        frozen_judge_sha256: Some(frozen_judge_sha256),
+        calibration_lineage_sha256: Some(sha256(CALIBRATION_LINEAGE_BYTES)),
         protocol,
         claim_source_anchors: anchors,
         reviewer_a,
@@ -626,8 +705,9 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         adjudication,
         metric_definitions: metric_definitions(),
         agreement: None,
-        strict_safety_calibration: None,
-        strong_error_calibration: None,
+        candidate_calibration_rows,
+        strict_safety_calibration: Some(strict_safety_calibration),
+        strong_error_calibration: Some(strong_error_calibration),
         scope_calibration: None,
         guards,
         decision,
@@ -635,6 +715,7 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
             Phase7AdjudicationCalibrationDecision::ProtocolReadyWaitingForIndependentAnnotation => "The Phase 7.3.1 protocol and calibration harness are ready, but two blind independent annotations are still required. Candidate and frozen-judge error rates must remain unreported.".to_string(),
             Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired => "Two blind AI reviewer submissions are frozen and the independent Agreement Report is available. These are heterogeneous model annotations, not human Gold. Preserve all disagreements and complete adjudication before freezing model-adjudicated silver labels or calibrating the frozen Judge.".to_string(),
             Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired => "Third-model adjudication is complete and produces model-adjudicated silver candidate labels, not human Gold. Freeze the silver artifact before any frozen-Judge calibration; no Candidate learning, knowledge promotion, held-out access, runtime, or Hermes integration is authorized.".to_string(),
+            Phase7AdjudicationCalibrationDecision::FrozenJudgeDiagnosticCalibrationComplete => "Diagnostic calibration against model-adjudicated Silver is complete. The frozen Judge warned on all ten candidates: sensitivity is high but discrimination is degenerate because no negative warning predictions exist. This is not human-Gold accuracy; scope calibration, learning, held-out access, memory writes, Hermes, and runtime remain unauthorized.".to_string(),
             _ => "Phase 7.3.1 remains diagnostic-only; no Candidate learning or knowledge promotion is authorized.".to_string(),
         },
     })
@@ -950,17 +1031,19 @@ pub fn compute_confusion_matrix(
 ) -> ConfusionMatrix {
     compute_binary_confusion_matrix(rows.iter().map(|row| {
         (
-            binary_human_label(row.human_support_label, view),
+            binary_human_label(row.silver_support_label, view),
             row.frozen_judge_unsupported_warning,
         )
     }))
 }
 
 pub fn compute_scope_confusion_matrix(rows: &[ScopeJudgeCalibrationRow]) -> ConfusionMatrix {
-    compute_binary_confusion_matrix(
-        rows.iter()
-            .map(|row| (row.human_scope_expanded, row.frozen_judge_scope_warning)),
-    )
+    compute_binary_confusion_matrix(rows.iter().map(|row| {
+        (
+            row.adjudicated_scope_expanded,
+            row.frozen_judge_scope_warning,
+        )
+    }))
 }
 
 fn compute_binary_confusion_matrix(
@@ -1099,11 +1182,11 @@ fn metric_definitions() -> Vec<MetricDefinition> {
         metric("linear_weighted_kappa", "Chance-corrected agreement that treats adjacent support-label disagreement as less severe than supported-versus-unsupported disagreement."),
         metric("boundary_disagreement_rate", "Adjacent Supported/Partially Supported or Partially Supported/Unsupported disagreements divided by aligned assessable claims."),
         metric("fundamental_disagreement_rate", "Supported-versus-Unsupported disagreements divided by aligned assessable claims."),
-        metric("judge_precision", "Human-confirmed unsupported claims among frozen-judge unsupported warnings."),
-        metric("judge_recall_sensitivity", "Human-confirmed unsupported claims detected by the frozen judge."),
-        metric("judge_specificity", "Human-supported claims not warned on by the frozen judge."),
-        metric("judge_false_positive_rate", "Human-supported claims warned on by the frozen judge."),
-        metric("judge_false_negative_rate", "Human-unsupported claims missed by the frozen judge."),
+        metric("judge_precision", "Silver-reference unsupported candidates among frozen-Judge unsupported warnings."),
+        metric("judge_recall_sensitivity", "Silver-reference unsupported candidates detected by the frozen Judge."),
+        metric("judge_specificity", "Silver-reference supported candidates not warned on by the frozen Judge."),
+        metric("judge_false_positive_rate", "Silver-reference supported candidates warned on by the frozen Judge."),
+        metric("judge_false_negative_rate", "Silver-reference unsupported candidates missed by the frozen Judge."),
         metric("balanced_accuracy", "Mean of frozen-judge sensitivity and specificity."),
         metric("matthews_correlation_coefficient", "Balanced binary calibration correlation, undefined when its denominator is zero."),
     ]

@@ -1,10 +1,10 @@
 # Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate
 
-Status: two heterogeneous blind AI reviews, the Agreement Report, the 77-group third-model adjudication, and the model-adjudicated Silver artifact are frozen. Workflow is at `silver_labels_frozen`.
+Status: two heterogeneous blind AI reviews, the Agreement Report, the 77-group third-model adjudication, the model-adjudicated Silver artifact, and the frozen-Judge calibration lineage are frozen. Workflow is at `judge_calibration_allowed`.
 
 ## Purpose
 
-This stage does not produce Reviewer labels, agreement statistics, adjudication, or Judge calibration. It now verifies the separately generated immutable Silver artifact. It makes the authorization chain explicit and detectable:
+This stage does not produce Reviewer labels, agreement statistics, adjudication, or calibration metrics. It verifies the immutable Silver artifact and the separate exact-hash declaration authorizing diagnostic calibration against the frozen Judge. It makes the authorization chain explicit and detectable:
 
 ```text
 Source execution + blind packet + Reviewer A/B files + agreement protocol
@@ -45,7 +45,7 @@ Same-state rechecks are allowed. Backward and skipped transitions are rejected. 
 
 ## Detectable invalidation
 
-?Irreversible? is a governance invariant, not a filesystem claim. Files can technically be edited, but any upstream byte change causes:
+`Irreversible` is a governance invariant, not a filesystem claim. Files can technically be edited, but any upstream byte change causes:
 
 ```text
 current SHA-256 != referenced SHA-256
@@ -58,19 +58,20 @@ Generated metadata, including timestamps, is included in the exact-file hash. Re
 ## Current result
 
 ```text
-state                         silver_labels_frozen
+state                         judge_calibration_allowed
 completed reviews             2/2
 adjudicated groups            77/77
 artifact lineage broken       false
 agreement computation         complete and frozen
 adjudication                  complete and lineage-valid
 Silver freeze                 complete and lineage-valid
-Judge calibration             unauthorized pending exact calibration lineage
+calibration lineage           complete and lineage-valid
+Judge calibration             authorized, diagnostic only
 Silver hash                   available
-Frozen-Judge hash             unavailable
+Frozen-Judge hash             available
 ```
 
-No fake Reviewer, fake agreement metric, human Gold claim, or calibration artifact was generated. The Silver artifact is deterministic, immutable, and explicitly model-adjudicated rather than human Gold.
+No fake Reviewer, fake agreement metric, or human Gold claim was generated. Authorization is diagnostic only: the Silver artifact is deterministic, immutable, and explicitly model-adjudicated rather than human Gold.
 
 ## Frozen boundaries
 

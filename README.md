@@ -589,12 +589,16 @@ Agreement is computed from raw Reviewer submissions before adjudication using Un
 
 ### Phase 7.3.1-C artifact lineage and irreversible transition gate
 
-The current workflow state is `silver_labels_frozen`. Reviewer A, Reviewer B, the Agreement Report, the completed third-model adjudication, and the immutable model-adjudicated Silver artifact are exact-file hash-bound; any upstream byte change invalidates downstream authorization. Judge calibration still requires its own exact Silver-plus-Judge lineage declaration, while held-out, runtime, Hermes, and memory writes remain blocked. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
+The current workflow state is `judge_calibration_allowed`. Reviewer A, Reviewer B, the Agreement Report, completed third-model adjudication, immutable model-adjudicated Silver artifact, and frozen Judge are exact-file hash-bound; any upstream byte change invalidates downstream authorization. The calibration lineage is valid, while held-out, runtime, Hermes, and memory writes remain blocked. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
 
 
 ### Phase 7.3.1-D model-adjudicated Silver freeze
 
 The completed 77-group adjudication is frozen into an immutable Silver artifact with ten conservative candidate-level support aggregates and an exact adjudication SHA-256 reference. The artifact explicitly records `human_gold=false`; scope calibration remains unavailable because final scope labels were not adjudicated. See `docs/eval/PHASE7_3_1_MODEL_ADJUDICATED_SILVER_FREEZE.md`.
+
+### Phase 7.3.1-F frozen-Judge diagnostic calibration
+
+Candidate-level calibration is now complete against the immutable **model-adjudicated Silver** references, never human Gold. The frozen Judge warned on all ten candidates. Under the strict-safety view the matrix is `TP=9, FP=1, FN=0, TN=0` (`precision=0.90`, `recall=1.00`, `specificity=0.00`, balanced accuracy `0.50`). Under the strong-error view it is `TP=2, FP=1, FN=0, TN=0`, with seven partially-supported candidates excluded. This establishes high sensitivity but no demonstrated discrimination: the Judge behaves as an always-positive warning proxy on these ten design cases. Scope calibration remains unavailable because final scope labels were not adjudicated. See `docs/eval/PHASE7_3_1_FROZEN_JUDGE_DIAGNOSTIC_CALIBRATION.md`.
 
 ### Phase 7.3.1-E resumable third-model adjudication runner
 
