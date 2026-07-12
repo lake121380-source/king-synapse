@@ -579,14 +579,20 @@ The analysis also separates Candidate errors from scorer confounds: lexical nove
 
 ## Phase 7.3.1 independent adjudication and frozen-Judge calibration
 
-Phase 7.3.1 freezes a measurement protocol for studying two separate objects: the Pattern Candidate and the existing frozen Judge. It derives 65 hash-bound claim-source anchors from the ten Phase 7.2.3 outputs, provides blind Reviewer A/B and adjudication templates, and implements agreement/confusion-matrix calibration metrics. The anchors are not presented as atomic semantic truth; reviewers must segment them independently so segmentation disagreement remains measurable.
+Phase 7.3.1 freezes a measurement protocol for studying two separate objects: the Pattern Candidate and the existing frozen Judge. Two heterogeneous blind AI Reviewers are now complete: GPT-4.1 produced 74 claims and Qwen 3.5 Plus produced 77 claims. The frozen Agreement Report aligns 74 pairs and preserves three unmatched Reviewer B claims.
 
-Current decision: `protocol_ready_waiting_for_independent_annotation`. A generated blind work packet now contains the ten frozen design Evidence Bundles, Candidates, and 65 anchors while excluding reference Candidates, frozen-Judge outputs, Phase 7.3 seed labels, held-out cases, and raw Provider responses. No human-independent claim-level submissions, adjudicated labels, Judge precision/recall, held-out access, Provider calls, scorer changes, learning, persistence, Hermes, or runtime authority are claimed.
+Observed agreement is high for segmentation but only moderate for semantic support after chance correction: exact boundary agreement `0.9091`, mean span IoU `0.9868`, raw support agreement `0.7647`, linear weighted kappa `0.3964`, and ordinal Krippendorff alpha `0.4604`. These are model annotations, not human Gold.
 
 ### Phase 7.3.1-B inter-reviewer Agreement Gate
 
-Before any adjudication or frozen-Judge calibration, the Agreement Gate now freezes Unicode-character source spans, deterministic span-IoU Claim alignment, segmentation diagnostics, semantic agreement, linear weighted kappa, and secondary ordinal Krippendorff alpha. The checked report intentionally contains no metrics because both real blind submissions remain incomplete. Agreement must be calculated from raw Reviewer A/B submissions and preserved before adjudication. See `docs/eval/PHASE7_3_1_INTER_REVIEWER_AGREEMENT_GATE.md`.
+Agreement is computed from raw Reviewer submissions before adjudication using Unicode-character source spans and deterministic span-IoU alignment. The exact Agreement Report is frozen and its SHA-256 becomes an adjudication prerequisite. See `docs/eval/PHASE7_3_1_INTER_REVIEWER_AGREEMENT_GATE.md`.
 
 ### Phase 7.3.1-C artifact lineage and irreversible transition gate
 
-Phase 7.3.1-C binds Source Execution, Blind Review Packet, Reviewer submissions, Agreement Report, Adjudication, future Gold labels, and the frozen Judge through exact-file SHA-256 references. Reviewer completion is order-independent, same-state rechecks are allowed, and skipped/backward transitions are rejected. Any upstream byte change invalidates downstream authorization. The current checked state remains `awaiting_independent_reviews` at `0/2`; no agreement, adjudication, Gold, calibration, held-out, runtime, Hermes, or memory-write action is authorized. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
+The current workflow state is `agreement_report_frozen_adjudication_allowed`. Reviewer A, Reviewer B, and the Agreement Report are exact-file hash-bound; any upstream byte change invalidates downstream authorization. Adjudication, silver/Gold freezing, Judge calibration, held-out, runtime, Hermes, and memory writes remain incomplete or blocked. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
+
+### Phase 7.3.1-E resumable third-model adjudication runner
+
+A strict third-model runner now constructs exactly 77 frozen groups across ten design cases, hides the frozen Judge and Phase 7.3 seed labels, rejects schema drift, stores no raw Provider responses, and checkpoints only normalized successful case decisions. Resume is bound to the model, prompt, packet, both Reviewer files, Agreement Report, and adapter hashes. Successful output will be named `model-adjudicated silver candidate labels`, never human Gold.
+
+The relay credential was accepted during Provider probes, but complete execution is currently blocked by `insufficient_user_quota`; therefore the checked adjudication template remains incomplete and no manifest is claimed. See `docs/eval/PHASE7_3_1_AI_ADJUDICATION_RUNNER.md`.
