@@ -1,5 +1,8 @@
 use crate::phase7_candidate_error_analysis::CandidateFailureKind;
 use crate::phase7_cognitive_architecture_contract::PatternCandidate;
+use crate::phase7_model_adjudicated_silver_freeze::{
+    validate_model_adjudicated_silver_freeze, ModelAdjudicatedSilverFreezeArtifact,
+};
 use crate::phase7_pattern_extraction_protocol::{
     load_phase7_pattern_extraction_design, PatternExtractionInput,
 };
@@ -18,6 +21,8 @@ const REVIEWER_B_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json");
 const ADJUDICATION_JSON: &str =
     include_str!("../datasets/pattern_extraction/phase7_3_1_adjudication_template.json");
+const SILVER_LABELS_JSON: &str =
+    include_str!("../datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json");
 const AGREEMENT_REPORT_JSON: &str = include_str!("../reports/phase7_inter_reviewer_agreement.json");
 const EVALUATION_VERSION: &str = "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1";
 
@@ -384,6 +389,7 @@ pub struct Phase7AdjudicationCalibrationGuards {
     pub reviewer_a_completed: bool,
     pub reviewer_b_completed: bool,
     pub independent_adjudication_completed: bool,
+    pub silver_labels_frozen: bool,
     pub scorer_calibration_completed: bool,
     pub held_out_cases_untouched: bool,
     pub runtime_authorized: bool,
@@ -398,6 +404,7 @@ pub enum Phase7AdjudicationCalibrationDecision {
     ProtocolReadyWaitingForIndependentAnnotation,
     IndependentAnnotationsReadyAdjudicationRequired,
     AdjudicationCompleteSilverFreezeRequired,
+    SilverLabelsFrozenCalibrationLineageRequired,
     CandidateErrorsConfirmed,
     ScorerRecalibrationRequired,
     MixedCandidateAndScorerFailure,
@@ -416,6 +423,8 @@ pub struct Phase7AdjudicationCalibrationReport {
     pub reviewer_a_template_sha256: String,
     pub reviewer_b_template_sha256: String,
     pub adjudication_template_sha256: String,
+    pub silver_labels_sha256: Option<String>,
+    pub silver_label_status: Option<String>,
     pub protocol: Phase7AdjudicationMeasurementProtocol,
     pub claim_source_anchors: Vec<ClaimSourceAnchor>,
     pub reviewer_a: ReviewerAnnotationSubmission,
@@ -548,12 +557,15 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
     let reviewer_a = load_phase7_reviewer_a_template()?;
     let reviewer_b = load_phase7_reviewer_b_template()?;
     let adjudication = load_phase7_adjudication_template()?;
+    let silver_labels: ModelAdjudicatedSilverFreezeArtifact =
+        serde_json::from_str(SILVER_LABELS_JSON).context("parse frozen Silver labels")?;
 
     validate_protocol(&protocol)?;
     let anchors = build_claim_source_anchors(&execution.outputs);
     validate_reviewer_submission(&reviewer_a, &protocol, &execution.execution_id, &anchors)?;
     validate_reviewer_submission(&reviewer_b, &protocol, &execution.execution_id, &anchors)?;
     validate_adjudication(&adjudication, &protocol, &reviewer_a, &reviewer_b)?;
+    validate_model_adjudicated_silver_freeze(&silver_labels)?;
 
     let guards = Phase7AdjudicationCalibrationGuards {
         frozen_phase7_2_3_outputs_reused: true,
@@ -569,6 +581,7 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         reviewer_a_completed: reviewer_a.completed,
         reviewer_b_completed: reviewer_b.completed,
         independent_adjudication_completed: adjudication.completed,
+        silver_labels_frozen: silver_labels.frozen,
         scorer_calibration_completed: false,
         held_out_cases_untouched: !protocol.held_out_accessed
             && !reviewer_a.held_out_accessed
@@ -584,8 +597,10 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         Phase7AdjudicationCalibrationDecision::ProtocolReadyWaitingForIndependentAnnotation
     } else if !adjudication.completed {
         Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired
-    } else {
+    } else if !silver_labels.frozen {
         Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired
+    } else {
+        Phase7AdjudicationCalibrationDecision::SilverLabelsFrozenCalibrationLineageRequired
     };
 
     Ok(Phase7AdjudicationCalibrationReport {
@@ -602,6 +617,8 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         reviewer_a_template_sha256: sha256(REVIEWER_A_JSON.as_bytes()),
         reviewer_b_template_sha256: sha256(REVIEWER_B_JSON.as_bytes()),
         adjudication_template_sha256: sha256(ADJUDICATION_JSON.as_bytes()),
+        silver_labels_sha256: Some(sha256(SILVER_LABELS_JSON.as_bytes())),
+        silver_label_status: Some(silver_labels.label_status.clone()),
         protocol,
         claim_source_anchors: anchors,
         reviewer_a,

@@ -961,3 +961,20 @@ Primary types:
 - `Phase7ArtifactLineageTransitionReport`
 
 The API authorizes only one-step forward transitions or same-state rechecks. Exact upstream-file hash mismatches derive `ArtifactLineageInvalid` and disable downstream permissions.
+
+## Phase 7.3.1-D model-adjudicated Silver freeze API
+
+Module: `phase7_model_adjudicated_silver_freeze`
+
+Primary entry points:
+
+- `Phase7ModelAdjudicatedSilverFreeze::build`
+- `validate_model_adjudicated_silver_freeze`
+
+Primary types:
+
+- `ModelAdjudicatedSilverFreezeArtifact`
+- `ModelAdjudicatedSilverClaim`
+- `ModelAdjudicatedSilverCandidateLabel`
+
+The API deterministically resolves each adjudicated group back to one design case, freezes 77 claim labels and ten conservative candidate aggregates, and binds the artifact to the exact adjudication SHA-256. The labels are model-adjudicated Silver, never human Gold. Scope calibration is deliberately unavailable because final scope labels were not adjudicated.

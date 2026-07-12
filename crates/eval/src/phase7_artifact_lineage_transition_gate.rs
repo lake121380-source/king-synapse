@@ -5,6 +5,9 @@ use crate::phase7_independent_adjudication_calibration::{
 use crate::phase7_inter_reviewer_agreement::{
     AgreementArtifactLineage, InterReviewerAgreementReport,
 };
+use crate::phase7_model_adjudicated_silver_freeze::{
+    validate_model_adjudicated_silver_freeze, ModelAdjudicatedSilverFreezeArtifact,
+};
 use anyhow::{bail, Context, Result};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
@@ -27,6 +30,9 @@ const AGREEMENT_REPORT_BYTES: &[u8] =
     include_bytes!("../reports/phase7_inter_reviewer_agreement.json");
 const ADJUDICATION_BYTES: &[u8] =
     include_bytes!("../datasets/pattern_extraction/phase7_3_1_adjudication_template.json");
+const SILVER_LABELS_BYTES: &[u8] = include_bytes!(
+    "../datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json"
+);
 const EVALUATION_VERSION: &str = "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1";
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -404,6 +410,8 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         serde_json::from_slice(AGREEMENT_REPORT_BYTES)
             .context("parse checked-in agreement report")?;
     let adjudication = load_phase7_adjudication_template()?;
+    let silver_labels: ModelAdjudicatedSilverFreezeArtifact =
+        serde_json::from_slice(SILVER_LABELS_BYTES).context("parse frozen Silver labels")?;
 
     let agreement_lineage_valid = validate_agreement_artifact_lineage(&agreement_report.lineage);
     let agreement_report_completed = agreement_report.metrics.is_some()
@@ -420,6 +428,10 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         !adjudication.completed
     };
 
+    let silver_lineage_valid = validate_model_adjudicated_silver_freeze(&silver_labels).is_ok()
+        && silver_labels.lineage.adjudication_sha256 == adjudication_sha256;
+    let silver_labels_sha256 = exact_file_sha256(SILVER_LABELS_BYTES);
+
     let facts = WorkflowFacts {
         reviewer_a_completed: reviewer_a.completed,
         reviewer_b_completed: reviewer_b.completed,
@@ -428,8 +440,8 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         agreement_lineage_valid,
         adjudication_completed: adjudication.completed,
         adjudication_lineage_valid,
-        silver_labels_frozen: false,
-        silver_lineage_valid: false,
+        silver_labels_frozen: silver_labels.frozen,
+        silver_lineage_valid,
         frozen_judge_available: false,
         calibration_lineage_valid: false,
     };
@@ -483,16 +495,21 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
                 "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json",
                 ADJUDICATION_BYTES,
             ),
+            artifact(
+                "model_adjudicated_silver_labels",
+                "crates/eval/datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json",
+                SILVER_LABELS_BYTES,
+            ),
         ],
         agreement_report_sha256,
         adjudication_sha256,
-        silver_labels_sha256: None,
+        silver_labels_sha256: Some(silver_labels_sha256),
         frozen_judge_sha256: None,
         lineage: ArtifactLineageStatus {
             foundational_lineage_valid: agreement_lineage_valid,
             agreement_lineage_valid,
             adjudication_lineage_valid,
-            silver_lineage_valid: None,
+            silver_lineage_valid: Some(silver_lineage_valid),
             calibration_lineage_valid: None,
             artifact_lineage_broken,
         },
@@ -507,7 +524,7 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
             fake_reviewers_generated: false,
             fake_agreement_metrics_generated: false,
             adjudication_executed: adjudication.completed,
-            silver_labels_generated: false,
+            silver_labels_generated: true,
             judge_calibration_executed: false,
             held_out_accessed: false,
             runtime_authorized: false,
@@ -521,6 +538,9 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
                 .to_string()
         } else if state == Phase731WorkflowState::AwaitingIndependentReviews {
             "Artifact lineage is bound, but the workflow remains at 0/2 independent reviews; agreement, adjudication, Silver freezing, and Judge calibration are unauthorized."
+                .to_string()
+        } else if state == Phase731WorkflowState::SilverLabelsFrozen {
+            "The model-adjudicated Silver artifact is immutably frozen with exact adjudication lineage. It is not human Gold; Frozen Judge calibration remains unauthorized until its own exact lineage input is declared."
                 .to_string()
         } else {
             "The workflow state is derived only from completed upstream artifacts and exact-file SHA-256 lineage references."

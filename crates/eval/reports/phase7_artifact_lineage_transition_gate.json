@@ -2,7 +2,7 @@
   "schema_version": 1,
   "evaluation_version": "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1",
   "tag": "phase7.3.1-artifact-lineage-transition-gate",
-  "generated_at": "2026-07-12T05:08:13.734502500+00:00",
+  "generated_at": "2026-07-12T05:28:31.007967600+00:00",
   "phase": "Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate",
   "protocol": {
     "schema_version": 1,
@@ -53,7 +53,7 @@
     "extractor_modification_authorized": false,
     "judge_modification_authorized": false
   },
-  "state": "adjudication_complete_silver_freeze_required",
+  "state": "silver_labels_frozen",
   "review_progress": {
     "reviewer_a_completed": true,
     "reviewer_b_completed": true,
@@ -96,24 +96,29 @@
       "artifact_id": "adjudication",
       "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json",
       "sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943"
+    },
+    {
+      "artifact_id": "model_adjudicated_silver_labels",
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_model_adjudicated_silver_labels.json",
+      "sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c"
     }
   ],
   "agreement_report_sha256": "fbc3b6a44f08ab792d25770fd1df15b82e95df7488888e509a2957391b699d07",
   "adjudication_sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943",
-  "silver_labels_sha256": null,
+  "silver_labels_sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
   "frozen_judge_sha256": null,
   "lineage": {
     "foundational_lineage_valid": true,
     "agreement_lineage_valid": true,
     "adjudication_lineage_valid": true,
-    "silver_lineage_valid": null,
+    "silver_lineage_valid": true,
     "calibration_lineage_valid": null,
     "artifact_lineage_broken": false
   },
   "permissions": {
     "agreement_computation_allowed": false,
     "adjudication_allowed": false,
-    "silver_freeze_allowed": true,
+    "silver_freeze_allowed": false,
     "judge_calibration_allowed": false
   },
   "guards": {
@@ -126,7 +131,7 @@
     "fake_reviewers_generated": false,
     "fake_agreement_metrics_generated": false,
     "adjudication_executed": true,
-    "silver_labels_generated": false,
+    "silver_labels_generated": true,
     "judge_calibration_executed": false,
     "held_out_accessed": false,
     "runtime_authorized": false,
@@ -135,5 +140,5 @@
     "extractor_modified": false,
     "judge_modified": false
   },
-  "conclusion": "The workflow state is derived only from completed upstream artifacts and exact-file SHA-256 lineage references."
+  "conclusion": "The model-adjudicated Silver artifact is immutably frozen with exact adjudication lineage. It is not human Gold; Frozen Judge calibration remains unauthorized until its own exact lineage input is declared."
 }

@@ -43,7 +43,7 @@ def main() -> int:
     blind_packet = json.loads(BLIND_PACKET.read_text(encoding="utf-8"))
 
     assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
-    assert report["decision"] == "adjudication_complete_silver_freeze_required"
+    assert report["decision"] == "silver_labels_frozen_calibration_lineage_required"
     assert len(report["claim_source_anchors"]) == 65
     assert all(anchor["requires_independent_atomic_segmentation"] for anchor in report["claim_source_anchors"])
     assert len({anchor["anchor_id"] for anchor in report["claim_source_anchors"]}) == 65
@@ -128,7 +128,7 @@ def main() -> int:
     print("Blind packet: 10 design cases / 65 anchors / no Judge or seed-label leakage")
     print("Reviewer A/B: two blind heterogeneous AI submissions completed (74/77 claims)")
     print("Agreement: frozen separately; third-model adjudication: 77/77 complete")
-    print("Decision: adjudication_complete_silver_freeze_required")
+    print("Decision: silver_labels_frozen_calibration_lineage_required")
     print("Held-out/runtime/Hermes: blocked")
     print("PASS")
     return 0

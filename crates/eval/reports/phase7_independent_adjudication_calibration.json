@@ -2,7 +2,7 @@
   "schema_version": 1,
   "evaluation_version": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
   "tag": "phase7.3.1-independent-adjudication-frozen-judge-calibration",
-  "generated_at": "2026-07-12T05:08:00.559307700+00:00",
+  "generated_at": "2026-07-12T05:28:19.345798100+00:00",
   "phase": "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration",
   "purpose": "Freeze measurement-object separation, independent atomic-claim annotation, disagreement analysis, and frozen-judge calibration before any extractor or judge redesign.",
   "source_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
@@ -10,6 +10,8 @@
   "reviewer_a_template_sha256": "5b5c3f9fe451bad029a4d8b2add1c54e65f4d860b6cfd5be66f43de744499779",
   "reviewer_b_template_sha256": "66c6033e920fefc4d1fd7f9b868c7c72e81f0f6ae6853ef8f569e91827820f75",
   "adjudication_template_sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943",
+  "silver_labels_sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+  "silver_label_status": "model_adjudicated_silver_not_human_gold",
   "protocol": {
     "schema_version": 1,
     "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
@@ -6325,6 +6327,7 @@
     "reviewer_a_completed": true,
     "reviewer_b_completed": true,
     "independent_adjudication_completed": true,
+    "silver_labels_frozen": true,
     "scorer_calibration_completed": false,
     "held_out_cases_untouched": true,
     "runtime_authorized": false,
@@ -6332,6 +6335,6 @@
     "candidate_learning_authorized": false,
     "knowledge_promotion_authorized": false
   },
-  "decision": "adjudication_complete_silver_freeze_required",
-  "conclusion": "Third-model adjudication is complete and produces model-adjudicated silver candidate labels, not human Gold. Freeze the silver artifact before any frozen-Judge calibration; no Candidate learning, knowledge promotion, held-out access, runtime, or Hermes integration is authorized."
+  "decision": "silver_labels_frozen_calibration_lineage_required",
+  "conclusion": "Phase 7.3.1 remains diagnostic-only; no Candidate learning or knowledge promotion is authorized."
 }

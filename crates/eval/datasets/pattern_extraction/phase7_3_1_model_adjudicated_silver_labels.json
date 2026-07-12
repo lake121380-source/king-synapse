@@ -1,0 +1,1551 @@
+{
+  "schema_version": 1,
+  "freeze_id": "phase7.3.1-model-adjudicated-silver-freeze-v1",
+  "phase": "Phase 7.3.1-D Model-Adjudicated Silver Label Freeze",
+  "frozen": true,
+  "label_status": "model_adjudicated_silver_not_human_gold",
+  "human_gold": false,
+  "held_out_accessed": false,
+  "source_adjudication_id": "phase7.3.1-model-adjudicated-silver-candidate-v1",
+  "lineage": {
+    "adjudication_sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943"
+  },
+  "claim_count": 77,
+  "candidate_count": 10,
+  "claims": [
+    {
+      "silver_claim_id": "model-silver-claim-001",
+      "adjudicated_claim_id": "model-silver-claim-001",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-007"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-008"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence mentions 'incompatible records and more recovery work' but does not explicitly state the 'entire system becomes unavailable' or that the 'old version is rolled back', making the claim an overstatement of detail."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-002",
+      "adjudicated_claim_id": "model-silver-claim-002",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-006"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-007"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "confidence_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The counterexample `px_01_counter_3` demonstrates that a lack of backward compatibility leads to system-wide issues, which supports the logic that the pattern would be falsified if similar issues occurred even when compatibility was present."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-003",
+      "adjudicated_claim_id": "model-silver-claim-003",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-004"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-005"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence `px_01_support_1` explicitly states 'Only the canary cohort needed rollback; the old version remained available,' which directly matches the claim."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-004",
+      "adjudicated_claim_id": "model-silver-claim-004",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-003"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-004"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence provides two examples of defects being caught, but this is insufficient to support the claim's certainty that 'any critical regression' will be exposed."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-005",
+      "adjudicated_claim_id": "model-silver-claim-005",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-005"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-006"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "evidence_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence `px_01_support_1` explicitly states the old version remained available, and `px_01_support_2` implies it by stating remaining tenants were not moved after a defect was found."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-006",
+      "adjudicated_claim_id": "model-silver-claim-006",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-001"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-001"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Both supporting evidence items (`px_01_support_1`, `px_01_support_2`) describe cases where deploying to a subset of traffic or users led to the detection of a defect."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-007",
+      "adjudicated_claim_id": "model-silver-claim-007",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-002"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-003"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "evidence_disagreement",
+        "provenance_disagreement",
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The supporting evidence shows the old version remained available, while the counterexample explicitly demonstrates that a lack of compatibility ('could not coexist') caused failure, thus grounding the condition."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-075",
+      "adjudicated_claim_id": "model-silver-claim-075",
+      "case_id": "extract_01",
+      "reviewer_a_claim_ids": [],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-002"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence `px_01_support_1` explicitly states the old version remained available, and `px_01_support_2` implies this by stating the remaining tenants were not migrated."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-008",
+      "adjudicated_claim_id": "model-silver-claim-008",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-014"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-015"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence in px_02_counter_3 directly describes a \"widespread login failure\" waiting behind \"low-impact VIP requests,\" which is a direct instance of the observable."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-009",
+      "adjudicated_claim_id": "model-silver-claim-009",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-013"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-014"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a logical condition for falsification that is directly instantiated by the provided counterexample px_02_counter_3, making it a supported synthesis."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-010",
+      "adjudicated_claim_id": "model-silver-claim-010",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-011"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-012"
+      ],
+      "final_support_label": "unsupported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "boundary_disagreement",
+        "evidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence supports general prioritization but does not mention or imply a specific mechanism like a \"combined score\" or a strict resolution order based on it."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-011",
+      "adjudicated_claim_id": "model-silver-claim-011",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-010"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-011"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "confidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence shows that prioritization improves outcomes for important cases, but it does not support the absolute claim that all high-impact issues \"will be addressed before\" all lower-impact ones."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-012",
+      "adjudicated_claim_id": "model-silver-claim-012",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-012"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-013"
+      ],
+      "final_support_label": "unsupported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence is entirely qualitative and provides no basis for the specific quantitative \"90%\" threshold or the strict comparative condition."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-013",
+      "adjudicated_claim_id": "model-silver-claim-013",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-008"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-009"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence shows positive outcomes from this labeling method, but the word \"ensures\" overstates the causal strength and certainty beyond what the two supporting examples can justify."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-014",
+      "adjudicated_claim_id": "model-silver-claim-014",
+      "case_id": "extract_02",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-009"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-010"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The counterexample px_02_counter_3 provides a direct instance of a critical issue being delayed due to labeling by requester status, which fully supports the claim."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-015",
+      "adjudicated_claim_id": "model-silver-claim-015",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-020"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-022"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "This claim is a definitional component of the pattern's falsification condition, not an empirical statement that can be assessed against the provided evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-016",
+      "adjudicated_claim_id": "model-silver-claim-016",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-019"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-021"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "This claim is a logical rule defining the pattern's falsification condition, not an empirical statement that can be validated by the supplied evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-017",
+      "adjudicated_claim_id": "model-silver-claim-017",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-017"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-019"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The outcomes of both supporting experiences (px_03_support_1 and px_03_support_2) explicitly state or directly imply that success criteria were not altered post-hoc."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-018",
+      "adjudicated_claim_id": "model-silver-claim-018",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-016"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-018"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence provides two examples of this occurring, but this is insufficient to support the predictive certainty implied by the word 'will'."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-019",
+      "adjudicated_claim_id": "model-silver-claim-019",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-018"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-020"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The outcomes in px_03_support_1 and px_03_support_2 directly show the teams' final decisions matching the predefined criteria."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-020",
+      "adjudicated_claim_id": "model-silver-claim-020",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-015"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-016"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "evidence_disagreement",
+        "segmentation_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The proposition makes a general causal claim that is supported by two examples, but this limited evidence base is insufficient to justify its scope and certainty."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-076",
+      "adjudicated_claim_id": "model-silver-claim-076",
+      "case_id": "extract_03",
+      "reviewer_a_claim_ids": [],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-017"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The two supporting experiences show this outcome, but they are insufficient to support the claim as a general rule."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-021",
+      "adjudicated_claim_id": "model-silver-claim-021",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-026"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-028"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "evidence_disagreement",
+        "fundamental_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The falsification observable is a logical negation of the successful outcomes in the supporting evidence and is therefore a valid, inferred condition for testing the pattern's limits."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-022",
+      "adjudicated_claim_id": "model-silver-claim-022",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-025"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-027"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "evidence_disagreement",
+        "fundamental_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The falsification statement is a valid hypothesis constructed by negating the pattern's successful outcomes while excluding the known counterexample condition, making it a supported inference from the evidence bundle."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-023",
+      "adjudicated_claim_id": "model-silver-claim-023",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-023"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-025"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The supporting evidence px_04_support_1 and px_04_support_2 explicitly state that a root cause was found from the specified evidence classes and unnecessary actions were avoided."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-024",
+      "adjudicated_claim_id": "model-silver-claim-024",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-022"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-024"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The prediction generalizes from two specific failure types (cache, database) to any \"new service failure,\" which overstates the scope of the provided evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-025",
+      "adjudicated_claim_id": "model-silver-claim-025",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-024"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-026"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The success criterion is an explicit summary of the positive outcomes observed in the supporting evidence px_04_support_1 and px_04_support_2."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-026",
+      "adjudicated_claim_id": "model-silver-claim-026",
+      "case_id": "extract_04",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-021"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-023"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The proposition correctly synthesizes the successful diagnostic process from two supporting examples and the failure condition from the counterexample into a new, general rule."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-027",
+      "adjudicated_claim_id": "model-silver-claim-027",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-033"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-035"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "evidence_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The supporting evidence establishes the use of engagement metrics, and the counterexample establishes the need to identify external sources."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-028",
+      "adjudicated_claim_id": "model-silver-claim-028",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-032"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-034"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The two clauses of the falsification statement are directly grounded in the supporting evidence and the counterexample, respectively."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-029",
+      "adjudicated_claim_id": "model-silver-claim-029",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-030"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-032"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence, particularly px_05_support_2, explicitly identifies \"saves and qualified comments\" as the relevant engagement metrics."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-030",
+      "adjudicated_claim_id": "model-silver-claim-030",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-029"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-031"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence describes an association (\"recurred in\", \"associated with\"), while the prediction's use of \"will have\" overstates the causal and predictive certainty."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-031",
+      "adjudicated_claim_id": "model-silver-claim-031",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-031"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-033"
+      ],
+      "final_support_label": "unsupported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "boundary_disagreement",
+        "evidence_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence indicates a positive association but provides no quantitative data to support the specific \"at least 50% more\" threshold."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-032",
+      "adjudicated_claim_id": "model-silver-claim-032",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-027"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-029"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim accurately combines the features observed in one experience with the engagement metrics observed in another to form a coherent proposition."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-033",
+      "adjudicated_claim_id": "model-silver-claim-033",
+      "case_id": "extract_05",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-028"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-030"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim accurately abstracts the specific event in the counterexample (px_05_counter_3) into a general exception condition for the pattern."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-034",
+      "adjudicated_claim_id": "model-silver-claim-034",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-040"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-042"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim describes a hypothetical observable for falsification, which cannot be assessed as supported or unsupported by the provided empirical evidence of past outcomes."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-035",
+      "adjudicated_claim_id": "model-silver-claim-035",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-039"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-041"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a definitional statement about the pattern's falsification conditions, not an empirical claim that can be verified against the supplied evidence experiences."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-036",
+      "adjudicated_claim_id": "model-silver-claim-036",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-037"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-039"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence `px_06_support_1` and `px_06_support_2` both explicitly describe the detection of a hidden issue during a limited exposure phase before a full rollout."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-037",
+      "adjudicated_claim_id": "model-silver-claim-037",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-036"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-038"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "boundary_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence provides two supporting instances, but these are insufficient to justify the predictive certainty that an issue \"will\" be discovered in all such cases."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-038",
+      "adjudicated_claim_id": "model-silver-claim-038",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-038"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-040"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence `px_06_support_1` and `px_06_support_2` both describe finding an issue at a stage where it was addressable (\"reversal still required one configuration change\", \"before fleet-wide commitment\")."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-039",
+      "adjudicated_claim_id": "model-silver-claim-039",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-034"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-036"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim accurately synthesizes the actions and outcomes from the two supporting experiences, `px_06_support_1` and `px_06_support_2`."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-040",
+      "adjudicated_claim_id": "model-silver-claim-040",
+      "case_id": "extract_06",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-035"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-037"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The counterexample `px_06_counter_3` explicitly states that testing only the smallest tenant led to a rollout failure caused by data shapes that were absent from that simple probe."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-041",
+      "adjudicated_claim_id": "model-silver-claim-041",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-050"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-052"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim describes a hypothetical scenario for falsification, not an observed event, so its support cannot be assessed from the provided evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-042",
+      "adjudicated_claim_id": "model-silver-claim-042",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-049"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-051"
+      ],
+      "final_support_label": "not_assessable",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a logical statement defining a falsification condition, not an assertion about observed events, and thus cannot be assessed against the evidence bundle."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-043",
+      "adjudicated_claim_id": "model-silver-claim-043",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-044"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-046"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence px_07_support_1 directly states that \"Traffic stopped at twenty percent and prevented a full outage,\" which fully supports the claim."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-044",
+      "adjudicated_claim_id": "model-silver-claim-044",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-047"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-049"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence px_07_support_2 explicitly states the outcome as \"It reversed before backlog recovery exceeded the overnight window,\" directly supporting the claim."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-045",
+      "adjudicated_claim_id": "model-silver-claim-045",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-043"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-045"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim generalizes a single observation from px_07_support_1 into a universal prediction (\"will stop\"), which overstates the certainty supported by the evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-046",
+      "adjudicated_claim_id": "model-silver-claim-046",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-046"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-048"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "confidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim generalizes a single observation from px_07_support_2 into a universal prediction (\"will reverse\"), which overstates the certainty supported by the evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-047",
+      "adjudicated_claim_id": "model-silver-claim-047",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-045"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-047"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence px_07_support_1 describes a rollout with an \"error-rate ceiling and automatic pause\" that \"prevented a full outage,\" directly supporting the claim."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-048",
+      "adjudicated_claim_id": "model-silver-claim-048",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-048"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-050"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence px_07_support_2 states the change \"reversed before backlog recovery exceeded the overnight window,\" which implies the stop triggered and recovery occurred within the specified time."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-049",
+      "adjudicated_claim_id": "model-silver-claim-049",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-041"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-043"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence supports incident prevention in two cases, but does not explicitly mention or prove the general property of \"avoiding false stops\" for this type of metric."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-050",
+      "adjudicated_claim_id": "model-silver-claim-050",
+      "case_id": "extract_07",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-042"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-044"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "Evidence px_07_counter_3 directly states that a \"noisy metric weakly related to harm\" resulted in \"Repeated false stops delayed delivery without reducing incidents.\""
+    },
+    {
+      "silver_claim_id": "model-silver-claim-051",
+      "adjudicated_claim_id": "model-silver-claim-051",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-057"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-059"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome in evidence px_08_counter_3, which states \"The delay increased harm\"."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-052",
+      "adjudicated_claim_id": "model-silver-claim-052",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-056"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-058"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim generalizes a single observation from px_08_counter_3 into a predictive rule (\"results in\"), which overstates the certainty and causal strength supported by the single piece of evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-053",
+      "adjudicated_claim_id": "model-silver-claim-053",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-054"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-056"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome described in evidence px_08_support_1."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-054",
+      "adjudicated_claim_id": "model-silver-claim-054",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-053"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-055"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "boundary_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim makes a deterministic prediction (\"will stabilize and... will be avoided\") based on evidence that only shows an association in a limited number of cases, thus overstating the certainty."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-055",
+      "adjudicated_claim_id": "model-silver-claim-055",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-055"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-057"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a self-referential statement defining a success criterion by pointing to an existing piece of evidence (px_08_support_1), which is present in the evidence bundle."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-056",
+      "adjudicated_claim_id": "model-silver-claim-056",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-051"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-053"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim correctly combines elements from two separate experiences (px_08_support_1 and px_08_support_2) into a single coherent statement, and its use of \"is associated with\" is appropriately supported by the evidence."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-057",
+      "adjudicated_claim_id": "model-silver-claim-057",
+      "case_id": "extract_08",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-052"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-054"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct inference based on px_08_counter_3, which shows that waiting for evidence (the pattern's approach) in the context of rapidly worsening vital signs led to increased harm."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-058",
+      "adjudicated_claim_id": "model-silver-claim-058",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-064"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-066"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "evidence_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is the logical negation of the outcome observed in evidence px_09_support_1, making it a valid and directly supported inference."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-059",
+      "adjudicated_claim_id": "model-silver-claim-059",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-066"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-068"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome described in the evidence px_09_counter_3."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-060",
+      "adjudicated_claim_id": "model-silver-claim-060",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-063"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-065"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "inferred",
+      "disagreements": [
+        "evidence_disagreement",
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a valid falsification condition derived by logically negating the successful outcome observed in evidence px_09_support_1."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-061",
+      "adjudicated_claim_id": "model-silver-claim-061",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-065"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-067"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct summary of the principle demonstrated by the counterexample evidence px_09_counter_3."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-062",
+      "adjudicated_claim_id": "model-silver-claim-062",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-061"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-063"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome, 'estimates converged within a preregistered tolerance', from evidence px_09_support_1."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-063",
+      "adjudicated_claim_id": "model-silver-claim-063",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-060"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-062"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The prediction statement is a direct restatement of the specific context and outcome observed in evidence px_09_support_1."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-064",
+      "adjudicated_claim_id": "model-silver-claim-064",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-062"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-064"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct mathematical translation of the phrase 'converged within a preregistered tolerance' from evidence px_09_support_1."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-065",
+      "adjudicated_claim_id": "model-silver-claim-065",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-058"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-060"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim generalizes from two specific examples (px_09_support_1, px_09_support_2) and introduces the abstract term 'robust' to describe the outcomes."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-066",
+      "adjudicated_claim_id": "model-silver-claim-066",
+      "case_id": "extract_09",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-059"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-061"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct summary of the principle observed in the single counterexample, px_09_counter_3."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-067",
+      "adjudicated_claim_id": "model-silver-claim-067",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-074"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-077"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome in evidence `px_10_counter_3`, which states \"Most inventory expired and cost exceeded avoided stockouts.\""
+    },
+    {
+      "silver_claim_id": "model-silver-claim-068",
+      "adjudicated_claim_id": "model-silver-claim-068",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-073"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-076"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim directly combines the context (\"replenished daily with stable demand\") and outcome (\"inventory expired and cost exceeded avoided stockouts\") from evidence `px_10_counter_3`."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-069",
+      "adjudicated_claim_id": "model-silver-claim-069",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-071"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-073"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct paraphrase of the outcome in evidence `px_10_support_1`, which states \"Interruptions fell while carrying cost stayed within its declared limit.\""
+    },
+    {
+      "silver_claim_id": "model-silver-claim-070",
+      "adjudicated_claim_id": "model-silver-claim-070",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-070"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-072"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim directly summarizes the context (\"twelve-week replenishment and volatile demand\") and outcome (\"Interruptions fell while carrying cost stayed within its declared limit\") from evidence `px_10_support_1`."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-071",
+      "adjudicated_claim_id": "model-silver-claim-071",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-072"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-074"
+      ],
+      "final_support_label": "partially_supported",
+      "final_claim_origin": "synthesized",
+      "disagreements": [
+        "boundary_disagreement",
+        "evidence_disagreement",
+        "provenance_disagreement",
+        "taxonomy_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The evidence supports the direction that interruptions fell, but it does not provide the specific quantitative measure of \"at least 30%\" or mention a \"typical planning horizon.\""
+    },
+    {
+      "silver_claim_id": "model-silver-claim-072",
+      "adjudicated_claim_id": "model-silver-claim-072",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-067"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-069"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement",
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct summary of evidence `px_10_support_1`, which describes reduced interruptions for a component with \"twelve-week replenishment\" (long) and \"volatile demand\"."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-073",
+      "adjudicated_claim_id": "model-silver-claim-073",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-068"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-070"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct summary of evidence `px_10_support_2`, which describes reduced stockouts for products with \"predictable spikes and slow supplier response\"."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-074",
+      "adjudicated_claim_id": "model-silver-claim-074",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [
+        "reviewer-a-claim-069"
+      ],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-071"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "provenance_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim is a direct summary of evidence `px_10_counter_3`, which describes a negative outcome for an item with \"replenished daily\" (short) and \"stable demand\"."
+    },
+    {
+      "silver_claim_id": "model-silver-claim-077",
+      "adjudicated_claim_id": "model-silver-claim-077",
+      "case_id": "extract_10",
+      "reviewer_a_claim_ids": [],
+      "reviewer_b_claim_ids": [
+        "reviewer-b-claim-075"
+      ],
+      "final_support_label": "supported",
+      "final_claim_origin": "explicit",
+      "disagreements": [
+        "segmentation_disagreement"
+      ],
+      "judge_failures": [],
+      "adjudication_rationale": "The claim that carrying cost remains under a target threshold is a direct paraphrase of the outcome in `px_10_support_1`, which states \"carrying cost stayed within its declared limit.\""
+    }
+  ],
+  "candidates": [
+    {
+      "case_id": "extract_01",
+      "silver_claim_ids": [
+        "model-silver-claim-001",
+        "model-silver-claim-002",
+        "model-silver-claim-003",
+        "model-silver-claim-004",
+        "model-silver-claim-005",
+        "model-silver-claim-006",
+        "model-silver-claim-007",
+        "model-silver-claim-075"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_02",
+      "silver_claim_ids": [
+        "model-silver-claim-008",
+        "model-silver-claim-009",
+        "model-silver-claim-010",
+        "model-silver-claim-011",
+        "model-silver-claim-012",
+        "model-silver-claim-013",
+        "model-silver-claim-014"
+      ],
+      "aggregate_support_label": "unsupported"
+    },
+    {
+      "case_id": "extract_03",
+      "silver_claim_ids": [
+        "model-silver-claim-015",
+        "model-silver-claim-016",
+        "model-silver-claim-017",
+        "model-silver-claim-018",
+        "model-silver-claim-019",
+        "model-silver-claim-020",
+        "model-silver-claim-076"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_04",
+      "silver_claim_ids": [
+        "model-silver-claim-021",
+        "model-silver-claim-022",
+        "model-silver-claim-023",
+        "model-silver-claim-024",
+        "model-silver-claim-025",
+        "model-silver-claim-026"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_05",
+      "silver_claim_ids": [
+        "model-silver-claim-027",
+        "model-silver-claim-028",
+        "model-silver-claim-029",
+        "model-silver-claim-030",
+        "model-silver-claim-031",
+        "model-silver-claim-032",
+        "model-silver-claim-033"
+      ],
+      "aggregate_support_label": "unsupported"
+    },
+    {
+      "case_id": "extract_06",
+      "silver_claim_ids": [
+        "model-silver-claim-034",
+        "model-silver-claim-035",
+        "model-silver-claim-036",
+        "model-silver-claim-037",
+        "model-silver-claim-038",
+        "model-silver-claim-039",
+        "model-silver-claim-040"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_07",
+      "silver_claim_ids": [
+        "model-silver-claim-041",
+        "model-silver-claim-042",
+        "model-silver-claim-043",
+        "model-silver-claim-044",
+        "model-silver-claim-045",
+        "model-silver-claim-046",
+        "model-silver-claim-047",
+        "model-silver-claim-048",
+        "model-silver-claim-049",
+        "model-silver-claim-050"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_08",
+      "silver_claim_ids": [
+        "model-silver-claim-051",
+        "model-silver-claim-052",
+        "model-silver-claim-053",
+        "model-silver-claim-054",
+        "model-silver-claim-055",
+        "model-silver-claim-056",
+        "model-silver-claim-057"
+      ],
+      "aggregate_support_label": "partially_supported"
+    },
+    {
+      "case_id": "extract_09",
+      "silver_claim_ids": [
+        "model-silver-claim-058",
+        "model-silver-claim-059",
+        "model-silver-claim-060",
+        "model-silver-claim-061",
+        "model-silver-claim-062",
+        "model-silver-claim-063",
+        "model-silver-claim-064",
+        "model-silver-claim-065",
+        "model-silver-claim-066"
+      ],
+      "aggregate_support_label": "supported"
+    },
+    {
+      "case_id": "extract_10",
+      "silver_claim_ids": [
+        "model-silver-claim-067",
+        "model-silver-claim-068",
+        "model-silver-claim-069",
+        "model-silver-claim-070",
+        "model-silver-claim-071",
+        "model-silver-claim-072",
+        "model-silver-claim-073",
+        "model-silver-claim-074",
+        "model-silver-claim-077"
+      ],
+      "aggregate_support_label": "partially_supported"
+    }
+  ],
+  "scope_labels_adjudicated": false,
+  "scope_calibration_available": false,
+  "conclusion": "These immutable labels are third-model-adjudicated Silver references for diagnostic calibration only. They are not human Gold, do not establish semantic truth, and authorize no learning, memory write, held-out access, Hermes integration, or runtime behavior."
+}

@@ -210,11 +210,11 @@ fn candidate_aggregation_and_scope_calibration_are_predeclared_before_real_label
 }
 
 #[test]
-fn completed_model_adjudication_requires_silver_freeze_without_fabricating_calibration() {
+fn frozen_silver_requires_calibration_lineage_without_fabricating_metrics() {
     let report = Phase7AdjudicationCalibrationEvaluator::evaluate("test").expect("evaluate");
     assert_eq!(
         report.decision,
-        Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired
+        Phase7AdjudicationCalibrationDecision::SilverLabelsFrozenCalibrationLineageRequired
     );
     assert!(report.agreement.is_none());
     assert!(report.strict_safety_calibration.is_none());
@@ -223,6 +223,12 @@ fn completed_model_adjudication_requires_silver_freeze_without_fabricating_calib
     assert!(report.guards.reviewer_a_completed);
     assert!(report.guards.reviewer_b_completed);
     assert!(report.guards.independent_adjudication_completed);
+    assert!(report.guards.silver_labels_frozen);
+    assert!(report.silver_labels_sha256.is_some());
+    assert_eq!(
+        report.silver_label_status.as_deref(),
+        Some("model_adjudicated_silver_not_human_gold")
+    );
     assert!(!report.guards.scorer_calibration_completed);
 }
 
@@ -248,14 +254,14 @@ fn phase7_3_1_preserves_extractor_judge_held_out_and_runtime_boundaries() {
 }
 
 #[test]
-fn checked_in_report_matches_silver_freeze_required_boundary() {
+fn checked_in_report_matches_silver_frozen_boundary() {
     let checked: serde_json::Value = serde_json::from_str(include_str!(
         "../reports/phase7_independent_adjudication_calibration.json"
     ))
     .expect("checked report");
     assert_eq!(
         checked["decision"],
-        "adjudication_complete_silver_freeze_required"
+        "silver_labels_frozen_calibration_lineage_required"
     );
     assert_eq!(
         checked["claim_source_anchors"].as_array().unwrap().len(),

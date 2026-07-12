@@ -45,6 +45,7 @@ pub mod phase7_candidate_error_analysis;
 pub mod phase7_cognitive_architecture_contract;
 pub mod phase7_independent_adjudication_calibration;
 pub mod phase7_inter_reviewer_agreement;
+pub mod phase7_model_adjudicated_silver_freeze;
 pub mod phase7_pattern_extraction_protocol;
 pub mod phase7_pattern_provider_comparison;
 pub mod phase7_real_provider_readiness;
@@ -256,6 +257,11 @@ pub use phase7_inter_reviewer_agreement::{
     InterReviewerAgreementGuards, InterReviewerAgreementMetrics, InterReviewerAgreementProtocol,
     InterReviewerAgreementReport, Phase7InterReviewerAgreementEvaluator,
     SegmentationAgreementMetrics, SemanticAgreementMetrics,
+};
+pub use phase7_model_adjudicated_silver_freeze::{
+    validate_model_adjudicated_silver_freeze, ModelAdjudicatedSilverCandidateLabel,
+    ModelAdjudicatedSilverClaim, ModelAdjudicatedSilverFreezeArtifact,
+    Phase7ModelAdjudicatedSilverFreeze,
 };
 pub use phase7_pattern_extraction_protocol::{
     load_phase7_pattern_extraction_design, validate_pattern_extraction_batch,

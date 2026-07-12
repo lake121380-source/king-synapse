@@ -252,14 +252,14 @@ runtime/Hermes            false
 Decision:
 
 ```text
-independent_annotations_ready_adjudication_required
+silver_labels_frozen_calibration_lineage_required
 ```
 
 This is a three-model review/adjudication result and model-adjudicated silver candidate set, not human Gold, Candidate semantic truth, or Judge calibration.
 
 ## Next valid action
 
-Preserve the two Reviewer submissions, Agreement Report, and completed third-model adjudication hashes. Next, freeze the model-adjudicated silver labels; only then calculate frozen-Judge calibration.
+Preserve the two Reviewer submissions, Agreement Report, completed third-model adjudication, and immutable Silver artifact hashes. Next, declare an exact Silver-plus-frozen-Judge calibration lineage; only then calculate diagnostic calibration against the model Silver references.
 
 Until then, do not:
 

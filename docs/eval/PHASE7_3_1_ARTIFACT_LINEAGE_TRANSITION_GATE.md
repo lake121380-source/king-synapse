@@ -1,10 +1,10 @@
 # Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate
 
-Status: two heterogeneous blind AI reviews, the Agreement Report, and the 77-group third-model adjudication are frozen. Workflow is at `adjudication_complete_silver_freeze_required`.
+Status: two heterogeneous blind AI reviews, the Agreement Report, the 77-group third-model adjudication, and the model-adjudicated Silver artifact are frozen. Workflow is at `silver_labels_frozen`.
 
 ## Purpose
 
-This stage does not produce Reviewer labels, agreement statistics, adjudication, Silver labels, or Judge calibration. It makes the authorization chain explicit and detectable:
+This stage does not produce Reviewer labels, agreement statistics, adjudication, or Judge calibration. It now verifies the separately generated immutable Silver artifact. It makes the authorization chain explicit and detectable:
 
 ```text
 Source execution + blind packet + Reviewer A/B files + agreement protocol
@@ -58,18 +58,19 @@ Generated metadata, including timestamps, is included in the exact-file hash. Re
 ## Current result
 
 ```text
-state                         adjudication_complete_silver_freeze_required
+state                         silver_labels_frozen
 completed reviews             2/2
 adjudicated groups            77/77
 artifact lineage broken       false
 agreement computation         complete and frozen
 adjudication                  complete and lineage-valid
-Silver freeze                 authorized, not executed
-Judge calibration             unauthorized
-Silver/Judge hashes              unavailable
+Silver freeze                 complete and lineage-valid
+Judge calibration             unauthorized pending exact calibration lineage
+Silver hash                   available
+Frozen-Judge hash             unavailable
 ```
 
-No fake Reviewer, fake agreement metric, human Gold claim, silver-freeze artifact, or calibration artifact was generated. The completed adjudication remains a model-produced silver candidate artifact.
+No fake Reviewer, fake agreement metric, human Gold claim, or calibration artifact was generated. The Silver artifact is deterministic, immutable, and explicitly model-adjudicated rather than human Gold.
 
 ## Frozen boundaries
 
