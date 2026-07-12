@@ -4,7 +4,7 @@ Status: protocol, span contract, alignment algorithm, report harness, and tests 
 
 ## Research purpose
 
-Frozen-Judge calibration is only meaningful if the semantic labels used as Gold have a documented independent-review history. This gate therefore measures the two raw blind submissions before adjudication.
+Frozen-Judge calibration is only meaningful if the semantic labels used for calibration have a documented independent-review history. This gate therefore measures the two raw blind submissions before adjudication.
 
 ```text
 Reviewer A raw submission
@@ -14,7 +14,7 @@ Inter-reviewer Agreement Report
           ↓
 Disagreement-preserving adjudication
           ↓
-Frozen Gold Labels
+Frozen Silver Labels
           ↓
 Candidate-level frozen-Judge calibration
 ```

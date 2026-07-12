@@ -397,7 +397,7 @@ pub struct Phase7AdjudicationCalibrationGuards {
 pub enum Phase7AdjudicationCalibrationDecision {
     ProtocolReadyWaitingForIndependentAnnotation,
     IndependentAnnotationsReadyAdjudicationRequired,
-    AdjudicationCompleteCalibrationDiagnosticOnly,
+    AdjudicationCompleteSilverFreezeRequired,
     CandidateErrorsConfirmed,
     ScorerRecalibrationRequired,
     MixedCandidateAndScorerFailure,
@@ -585,7 +585,7 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
     } else if !adjudication.completed {
         Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired
     } else {
-        Phase7AdjudicationCalibrationDecision::AdjudicationCompleteCalibrationDiagnosticOnly
+        Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired
     };
 
     Ok(Phase7AdjudicationCalibrationReport {
@@ -616,8 +616,8 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         decision,
         conclusion: match decision {
             Phase7AdjudicationCalibrationDecision::ProtocolReadyWaitingForIndependentAnnotation => "The Phase 7.3.1 protocol and calibration harness are ready, but two blind independent annotations are still required. Candidate and frozen-judge error rates must remain unreported.".to_string(),
-            Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired => "Two blind AI reviewer submissions are frozen and the independent Agreement Report is available. These are heterogeneous model annotations, not human Gold. Preserve all disagreements and complete adjudication before freezing silver/Gold labels or calibrating the frozen Judge.".to_string(),
-            Phase7AdjudicationCalibrationDecision::AdjudicationCompleteCalibrationDiagnosticOnly => "Adjudication is complete; frozen-Judge calibration is diagnostic only and does not authorize Candidate learning, knowledge promotion, held-out access, runtime, or Hermes integration.".to_string(),
+            Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired => "Two blind AI reviewer submissions are frozen and the independent Agreement Report is available. These are heterogeneous model annotations, not human Gold. Preserve all disagreements and complete adjudication before freezing model-adjudicated silver labels or calibrating the frozen Judge.".to_string(),
+            Phase7AdjudicationCalibrationDecision::AdjudicationCompleteSilverFreezeRequired => "Third-model adjudication is complete and produces model-adjudicated silver candidate labels, not human Gold. Freeze the silver artifact before any frozen-Judge calibration; no Candidate learning, knowledge promotion, held-out access, runtime, or Hermes integration is authorized.".to_string(),
             _ => "Phase 7.3.1 remains diagnostic-only; no Candidate learning or knowledge promotion is authorized.".to_string(),
         },
     })

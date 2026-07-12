@@ -1,11 +1,11 @@
 use std::collections::BTreeMap;
 use synapse_eval::{
     derive_phase7_workflow_state, independent_review_progress, load_phase7_adjudication_template,
-    validate_agreement_artifact_lineage, validate_gold_labels_artifact_lineage,
-    validate_judge_calibration_artifact_lineage, validate_phase7_adjudication_artifact_lineage,
-    validate_phase7_workflow_transition, AdjudicationLineageReference, GoldLabelsLineageReference,
+    validate_agreement_artifact_lineage, validate_judge_calibration_artifact_lineage,
+    validate_phase7_adjudication_artifact_lineage, validate_phase7_workflow_transition,
+    validate_silver_labels_artifact_lineage, AdjudicationLineageReference,
     JudgeCalibrationLineageReference, Phase731WorkflowState,
-    Phase7ArtifactLineageTransitionEvaluator, WorkflowFacts,
+    Phase7ArtifactLineageTransitionEvaluator, SilverLabelsLineageReference, WorkflowFacts,
 };
 
 fn facts() -> WorkflowFacts {
@@ -17,8 +17,8 @@ fn facts() -> WorkflowFacts {
         agreement_lineage_valid: true,
         adjudication_completed: false,
         adjudication_lineage_valid: true,
-        gold_labels_frozen: false,
-        gold_lineage_valid: false,
+        silver_labels_frozen: false,
+        silver_lineage_valid: false,
         frozen_judge_available: false,
         calibration_lineage_valid: false,
     }
@@ -29,7 +29,7 @@ fn current_workflow_has_two_reviews_and_frozen_agreement() {
     let report = Phase7ArtifactLineageTransitionEvaluator::evaluate("test").expect("evaluate");
     assert_eq!(
         report.state,
-        Phase731WorkflowState::AgreementReportFrozenAdjudicationAllowed
+        Phase731WorkflowState::AdjudicationCompleteSilverFreezeRequired
     );
     assert_eq!(report.review_progress.completed_count, 2);
     assert_eq!(report.review_progress.required_count, 2);
@@ -37,10 +37,10 @@ fn current_workflow_has_two_reviews_and_frozen_agreement() {
     assert!(report.lineage.foundational_lineage_valid);
     assert!(!report.lineage.artifact_lineage_broken);
     assert!(!report.permissions.agreement_computation_allowed);
-    assert!(report.permissions.adjudication_allowed);
-    assert!(!report.permissions.gold_freeze_allowed);
+    assert!(!report.permissions.adjudication_allowed);
+    assert!(report.permissions.silver_freeze_allowed);
     assert!(!report.permissions.judge_calibration_allowed);
-    assert!(report.gold_labels_sha256.is_none());
+    assert!(report.silver_labels_sha256.is_none());
     assert!(report.frozen_judge_sha256.is_none());
 }
 
@@ -85,14 +85,14 @@ fn state_machine_requires_each_forward_gate() {
     state_facts.adjudication_completed = true;
     assert_eq!(
         derive_phase7_workflow_state(&state_facts),
-        Phase731WorkflowState::AdjudicationCompleteGoldFreezeRequired
+        Phase731WorkflowState::AdjudicationCompleteSilverFreezeRequired
     );
 
-    state_facts.gold_labels_frozen = true;
-    state_facts.gold_lineage_valid = true;
+    state_facts.silver_labels_frozen = true;
+    state_facts.silver_lineage_valid = true;
     assert_eq!(
         derive_phase7_workflow_state(&state_facts),
-        Phase731WorkflowState::GoldLabelsFrozen
+        Phase731WorkflowState::SilverLabelsFrozen
     );
 
     state_facts.frozen_judge_available = true;
@@ -200,6 +200,8 @@ fn incomplete_adjudication_cannot_claim_lineage() {
     let report =
         Phase7ArtifactLineageTransitionEvaluator::evaluate("incomplete").expect("evaluate");
     let mut adjudication = load_phase7_adjudication_template().expect("adjudication template");
+    adjudication.completed = false;
+    adjudication.claims.clear();
     adjudication.lineage = Some(AdjudicationLineageReference {
         reviewer_a_submission_sha256: "0".repeat(64),
         reviewer_b_submission_sha256: "0".repeat(64),
@@ -219,36 +221,37 @@ fn checked_in_report_preserves_governance_boundary() {
     .expect("checked report");
     assert_eq!(
         report["state"],
-        "agreement_report_frozen_adjudication_allowed"
+        "adjudication_complete_silver_freeze_required"
     );
     assert_eq!(report["review_progress"]["completed_count"], 2);
     assert_eq!(report["review_progress"]["required_count"], 2);
-    assert_eq!(report["permissions"]["adjudication_allowed"], true);
+    assert_eq!(report["permissions"]["adjudication_allowed"], false);
+    assert_eq!(report["permissions"]["silver_freeze_allowed"], true);
     assert_eq!(report["permissions"]["judge_calibration_allowed"], false);
     assert_eq!(report["guards"]["fake_reviewers_generated"], false);
     assert_eq!(report["guards"]["fake_agreement_metrics_generated"], false);
-    assert_eq!(report["guards"]["gold_labels_generated"], false);
+    assert_eq!(report["guards"]["silver_labels_generated"], false);
     assert_eq!(report["guards"]["held_out_accessed"], false);
-    assert!(report["gold_labels_sha256"].is_null());
+    assert!(report["silver_labels_sha256"].is_null());
     assert!(report["frozen_judge_sha256"].is_null());
 }
 
 #[test]
-fn gold_and_calibration_require_exact_upstream_hashes() {
+fn silver_and_calibration_require_exact_upstream_hashes() {
     let adjudication_hash = "a".repeat(64);
-    let gold_hash = "b".repeat(64);
+    let silver_hash = "b".repeat(64);
     let judge_hash = "c".repeat(64);
-    let gold = GoldLabelsLineageReference {
+    let silver = SilverLabelsLineageReference {
         adjudication_sha256: adjudication_hash.clone(),
     };
-    validate_gold_labels_artifact_lineage(&gold, &adjudication_hash).expect("Gold lineage");
-    assert!(validate_gold_labels_artifact_lineage(&gold, &"d".repeat(64)).is_err());
+    validate_silver_labels_artifact_lineage(&silver, &adjudication_hash).expect("Silver lineage");
+    assert!(validate_silver_labels_artifact_lineage(&silver, &"d".repeat(64)).is_err());
 
     let calibration = JudgeCalibrationLineageReference {
-        gold_labels_sha256: gold_hash.clone(),
+        silver_labels_sha256: silver_hash.clone(),
         frozen_judge_sha256: judge_hash.clone(),
     };
-    validate_judge_calibration_artifact_lineage(&calibration, &gold_hash, &judge_hash)
+    validate_judge_calibration_artifact_lineage(&calibration, &silver_hash, &judge_hash)
         .expect("calibration lineage");
     assert!(validate_judge_calibration_artifact_lineage(
         &calibration,

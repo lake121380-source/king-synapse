@@ -240,7 +240,7 @@ This determines whether Phase 7.4 should constrain extraction or whether the con
 claim-source anchors      65
 Reviewer A completed      true (GPT-4.1, 74 claims)
 Reviewer B completed      true (Qwen 3.5 Plus, 77 claims)
-adjudication completed    false
+adjudication completed    true (Gemini 2.5 Pro, 77/77 groups)
 Judge calibration         unavailable
 held-out access           false
 extraction provider calls 0 (frozen outputs reused)
@@ -255,11 +255,11 @@ Decision:
 independent_annotations_ready_adjudication_required
 ```
 
-This is a two-model blind-review and agreement result, not human Gold, adjudication, Candidate semantic truth, or Judge calibration.
+This is a three-model review/adjudication result and model-adjudicated silver candidate set, not human Gold, Candidate semantic truth, or Judge calibration.
 
 ## Next valid action
 
-Preserve the two frozen heterogeneous-model submissions and the exact Agreement Report hash. Next, adjudicate all boundary and semantic disagreements; only then freeze silver/Gold labels and calculate frozen-Judge calibration.
+Preserve the two Reviewer submissions, Agreement Report, and completed third-model adjudication hashes. Next, freeze the model-adjudicated silver labels; only then calculate frozen-Judge calibration.
 
 Until then, do not:
 
@@ -273,4 +273,4 @@ Until then, do not:
 
 ## Artifact-lineage prerequisite
 
-A completed Adjudication is invalid unless it references the exact SHA-256 values of Reviewer A, Reviewer B, and the preserved Agreement Report. Agreement must precede adjudication; adjudication must precede Gold freezing; Gold and frozen-Judge lineage must be valid before calibration is authorized. See `PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
+A completed Adjudication is invalid unless it references the exact SHA-256 values of Reviewer A, Reviewer B, and the preserved Agreement Report. Agreement must precede adjudication; adjudication must precede silver freezing; silver-label and frozen-Judge lineage must be valid before calibration is authorized. See `PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.

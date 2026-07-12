@@ -1,6 +1,6 @@
 ﻿# Phase 7.3.1-D Heterogeneous AI Reviewer Execution
 
-Status: **two blind AI reviewer submissions completed; Agreement Report frozen; adjudication required.**
+Status: **two blind AI reviewer submissions and third-model adjudication completed; silver freeze required.**
 
 ## Reviewer identities
 
@@ -56,11 +56,11 @@ Interpretation: segmentation agreement is high, while semantic support agreement
 
 ```text
 Agreement Report       frozen
-Adjudication            allowed, not executed
-Gold/silver labels      not frozen
+Adjudication            completed, 77/77 groups
+Silver labels           not frozen
 Judge calibration       blocked
 Held-out                blocked
 Memory/runtime/Hermes   blocked
 ```
 
-The next valid action is independent adjudication that references the exact SHA-256 values of Reviewer A, Reviewer B, and the frozen Agreement Report.
+The independent adjudication now references the exact SHA-256 values of Reviewer A, Reviewer B, and the frozen Agreement Report. The next valid action is an explicit model-adjudicated silver-label freeze.

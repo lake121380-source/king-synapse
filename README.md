@@ -589,10 +589,10 @@ Agreement is computed from raw Reviewer submissions before adjudication using Un
 
 ### Phase 7.3.1-C artifact lineage and irreversible transition gate
 
-The current workflow state is `agreement_report_frozen_adjudication_allowed`. Reviewer A, Reviewer B, and the Agreement Report are exact-file hash-bound; any upstream byte change invalidates downstream authorization. Adjudication, silver/Gold freezing, Judge calibration, held-out, runtime, Hermes, and memory writes remain incomplete or blocked. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
+The current workflow state is `adjudication_complete_silver_freeze_required`. Reviewer A, Reviewer B, the Agreement Report, and the completed third-model adjudication are exact-file hash-bound; any upstream byte change invalidates downstream authorization. Model-adjudicated silver freezing is allowed, while Judge calibration, held-out, runtime, Hermes, and memory writes remain blocked. See `docs/eval/PHASE7_3_1_ARTIFACT_LINEAGE_TRANSITION_GATE.md`.
 
 ### Phase 7.3.1-E resumable third-model adjudication runner
 
-A strict third-model runner now constructs exactly 77 frozen groups across ten design cases, hides the frozen Judge and Phase 7.3 seed labels, rejects schema drift, stores no raw Provider responses, and checkpoints only normalized successful case decisions. Resume is bound to the model, prompt, packet, both Reviewer files, Agreement Report, and adapter hashes. Successful output will be named `model-adjudicated silver candidate labels`, never human Gold.
+A strict third-model runner now constructs exactly 77 frozen groups across ten design cases, hides the frozen Judge and Phase 7.3 seed labels, rejects schema drift, stores no raw Provider responses, and checkpoints only normalized successful case decisions. Resume is bound to the model, prompt, packet, both Reviewer files, Agreement Report, and adapter hashes. The completed output is named `model-adjudicated silver candidate labels`, never human Gold.
 
-The relay credential was accepted during Provider probes, but complete execution is currently blocked by `insufficient_user_quota`; therefore the checked adjudication template remains incomplete and no manifest is claimed. See `docs/eval/PHASE7_3_1_AI_ADJUDICATION_RUNNER.md`.
+After quota was replenished, `gemini-2.5-pro` completed all ten isolated cases and all 77 groups on the first strict-schema attempt. The checked adjudication and manifest preserve no raw Provider response, no Judge visibility, no held-out access, and no runtime authority. The next authorized action is an explicit silver-label freeze, not Judge calibration. See `docs/eval/PHASE7_3_1_AI_ADJUDICATION_RUNNER.md`.

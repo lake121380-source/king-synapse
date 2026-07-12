@@ -2,7 +2,7 @@
   "schema_version": 1,
   "evaluation_version": "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1",
   "tag": "phase7.3.1-artifact-lineage-transition-gate",
-  "generated_at": "2026-07-12T03:30:12.039097900+00:00",
+  "generated_at": "2026-07-12T05:08:13.734502500+00:00",
   "phase": "Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate",
   "protocol": {
     "schema_version": 1,
@@ -15,8 +15,8 @@
       "awaiting_independent_reviews",
       "raw_reviews_complete_agreement_required",
       "agreement_report_frozen_adjudication_allowed",
-      "adjudication_complete_gold_freeze_required",
-      "gold_labels_frozen",
+      "adjudication_complete_silver_freeze_required",
+      "silver_labels_frozen",
       "judge_calibration_allowed",
       "artifact_lineage_invalid"
     ],
@@ -33,7 +33,7 @@
       "backward_transition_allowed": false,
       "same_state_recheck_allowed": true,
       "agreement_must_precede_adjudication": true,
-      "gold_must_precede_judge_calibration": true
+      "silver_must_precede_judge_calibration": true
     },
     "required_lineage": [
       "source_execution_sha256",
@@ -43,7 +43,7 @@
       "agreement_protocol_sha256",
       "agreement_report_sha256",
       "adjudication_sha256",
-      "gold_labels_sha256",
+      "silver_labels_sha256",
       "frozen_judge_sha256"
     ],
     "held_out_accessed": false,
@@ -53,7 +53,7 @@
     "extractor_modification_authorized": false,
     "judge_modification_authorized": false
   },
-  "state": "agreement_report_frozen_adjudication_allowed",
+  "state": "adjudication_complete_silver_freeze_required",
   "review_progress": {
     "reviewer_a_completed": true,
     "reviewer_b_completed": true,
@@ -95,25 +95,25 @@
     {
       "artifact_id": "adjudication",
       "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json",
-      "sha256": "8860027b78b8df7d404aa722b4ee072c9d8932b3ed0ed725525c348a54d58b47"
+      "sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943"
     }
   ],
   "agreement_report_sha256": "fbc3b6a44f08ab792d25770fd1df15b82e95df7488888e509a2957391b699d07",
-  "adjudication_sha256": "8860027b78b8df7d404aa722b4ee072c9d8932b3ed0ed725525c348a54d58b47",
-  "gold_labels_sha256": null,
+  "adjudication_sha256": "05f40b89014ecb547b729d9975128def870cfa7676b5de93a43239c3b93cd943",
+  "silver_labels_sha256": null,
   "frozen_judge_sha256": null,
   "lineage": {
     "foundational_lineage_valid": true,
     "agreement_lineage_valid": true,
     "adjudication_lineage_valid": true,
-    "gold_lineage_valid": null,
+    "silver_lineage_valid": null,
     "calibration_lineage_valid": null,
     "artifact_lineage_broken": false
   },
   "permissions": {
     "agreement_computation_allowed": false,
-    "adjudication_allowed": true,
-    "gold_freeze_allowed": false,
+    "adjudication_allowed": false,
+    "silver_freeze_allowed": true,
     "judge_calibration_allowed": false
   },
   "guards": {
@@ -125,8 +125,8 @@
     "same_state_recheck_allowed": true,
     "fake_reviewers_generated": false,
     "fake_agreement_metrics_generated": false,
-    "adjudication_executed": false,
-    "gold_labels_generated": false,
+    "adjudication_executed": true,
+    "silver_labels_generated": false,
     "judge_calibration_executed": false,
     "held_out_accessed": false,
     "runtime_authorized": false,

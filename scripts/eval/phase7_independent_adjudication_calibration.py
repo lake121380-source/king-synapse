@@ -43,7 +43,7 @@ def main() -> int:
     blind_packet = json.loads(BLIND_PACKET.read_text(encoding="utf-8"))
 
     assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
-    assert report["decision"] == "independent_annotations_ready_adjudication_required"
+    assert report["decision"] == "adjudication_complete_silver_freeze_required"
     assert len(report["claim_source_anchors"]) == 65
     assert all(anchor["requires_independent_atomic_segmentation"] for anchor in report["claim_source_anchors"])
     assert len({anchor["anchor_id"] for anchor in report["claim_source_anchors"]}) == 65
@@ -97,8 +97,9 @@ def main() -> int:
     ):
         assert forbidden_key not in serialized_packet
 
-    assert adjudication["completed"] is False
-    assert adjudication["claims"] == []
+    assert adjudication["completed"] is True
+    assert len(adjudication["claims"]) == 77
+    assert adjudication["lineage"] is not None
     assert adjudication["disagreements_preserved"] is True
     assert report["agreement"] is None
     assert report["strict_safety_calibration"] is None
@@ -113,7 +114,7 @@ def main() -> int:
     assert guards["provider_calls_made"] is False
     assert guards["reviewer_a_completed"] is True
     assert guards["reviewer_b_completed"] is True
-    assert guards["independent_adjudication_completed"] is False
+    assert guards["independent_adjudication_completed"] is True
     assert guards["scorer_calibration_completed"] is False
     assert guards["held_out_cases_untouched"] is True
     assert guards["runtime_authorized"] is False
@@ -126,8 +127,8 @@ def main() -> int:
     print("Claim-source anchors: 65 frozen fields independently segmented")
     print("Blind packet: 10 design cases / 65 anchors / no Judge or seed-label leakage")
     print("Reviewer A/B: two blind heterogeneous AI submissions completed (74/77 claims)")
-    print("Agreement: frozen separately; adjudication/calibration: unavailable")
-    print("Decision: independent_annotations_ready_adjudication_required")
+    print("Agreement: frozen separately; third-model adjudication: 77/77 complete")
+    print("Decision: adjudication_complete_silver_freeze_required")
     print("Held-out/runtime/Hermes: blocked")
     print("PASS")
     return 0

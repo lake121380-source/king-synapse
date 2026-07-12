@@ -1,10 +1,10 @@
 # Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate
 
-Status: two heterogeneous blind AI reviews and the exact-file Agreement Report are frozen. Workflow is at `agreement_report_frozen_adjudication_allowed`; adjudication has not started.
+Status: two heterogeneous blind AI reviews, the Agreement Report, and the 77-group third-model adjudication are frozen. Workflow is at `adjudication_complete_silver_freeze_required`.
 
 ## Purpose
 
-This stage does not produce Reviewer labels, agreement statistics, adjudication, Gold labels, or Judge calibration. It makes the authorization chain explicit and detectable:
+This stage does not produce Reviewer labels, agreement statistics, adjudication, Silver labels, or Judge calibration. It makes the authorization chain explicit and detectable:
 
 ```text
 Source execution + blind packet + Reviewer A/B files + agreement protocol
@@ -18,12 +18,12 @@ Source execution + blind packet + Reviewer A/B files + agreement protocol
                 (Agreement Report hash)
                               |
                               v
-                         Gold Labels
+                         Silver Labels
                    (adjudication hash)
                               |
                               v
                  Frozen Judge Calibration
-                (Gold + Judge exact hashes)
+                (Silver + Judge exact hashes)
 ```
 
 An artifact never embeds its own complete-file hash. A downstream artifact references the SHA-256 of the exact upstream file bytes.
@@ -36,8 +36,8 @@ Reviewer completion is order-independent:
 awaiting_independent_reviews (0/2 or 1/2)
   -> raw_reviews_complete_agreement_required (2/2)
   -> agreement_report_frozen_adjudication_allowed
-  -> adjudication_complete_gold_freeze_required
-  -> gold_labels_frozen
+  -> adjudication_complete_silver_freeze_required
+  -> silver_labels_frozen
   -> judge_calibration_allowed
 ```
 
@@ -58,17 +58,18 @@ Generated metadata, including timestamps, is included in the exact-file hash. Re
 ## Current result
 
 ```text
-state                         agreement_report_frozen_adjudication_allowed
-completed                     2/2
+state                         adjudication_complete_silver_freeze_required
+completed reviews             2/2
+adjudicated groups            77/77
 artifact lineage broken       false
 agreement computation         complete and frozen
-adjudication                   authorized but not executed
-Gold freeze                    unauthorized
-Judge calibration              unauthorized
-Gold/Judge hashes              unavailable
+adjudication                  complete and lineage-valid
+Silver freeze                 authorized, not executed
+Judge calibration             unauthorized
+Silver/Judge hashes              unavailable
 ```
 
-No fake Reviewer, fake agreement metric, adjudication, Gold label, or calibration artifact was generated.
+No fake Reviewer, fake agreement metric, human Gold claim, silver-freeze artifact, or calibration artifact was generated. The completed adjudication remains a model-produced silver candidate artifact.
 
 ## Frozen boundaries
 

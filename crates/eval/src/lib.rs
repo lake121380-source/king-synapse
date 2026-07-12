@@ -209,13 +209,12 @@ pub use phase6_recall_score_distribution::{
 pub use phase7_artifact_lineage_transition_gate::{
     derive_phase7_workflow_state, exact_file_sha256, independent_review_progress,
     load_phase7_artifact_lineage_protocol, permissions_for_state,
-    validate_agreement_artifact_lineage, validate_gold_labels_artifact_lineage,
-    validate_judge_calibration_artifact_lineage, validate_phase7_workflow_transition,
-    ArtifactDigest, ArtifactHashPolicy, ArtifactLineageGuards, ArtifactLineageStatus,
-    GoldLabelsLineageReference, IndependentReviewProgress, JudgeCalibrationLineageReference,
-    Phase731WorkflowState, Phase7ArtifactLineageProtocol, Phase7ArtifactLineageTransitionEvaluator,
-    Phase7ArtifactLineageTransitionReport, WorkflowFacts, WorkflowPermissions,
-    WorkflowTransitionPolicy,
+    validate_agreement_artifact_lineage, validate_judge_calibration_artifact_lineage,
+    validate_phase7_workflow_transition, validate_silver_labels_artifact_lineage, ArtifactDigest,
+    ArtifactHashPolicy, ArtifactLineageGuards, ArtifactLineageStatus, IndependentReviewProgress,
+    JudgeCalibrationLineageReference, Phase731WorkflowState, Phase7ArtifactLineageProtocol,
+    Phase7ArtifactLineageTransitionEvaluator, Phase7ArtifactLineageTransitionReport,
+    SilverLabelsLineageReference, WorkflowFacts, WorkflowPermissions, WorkflowTransitionPolicy,
 };
 pub use phase7_bounded_pattern_extraction_provider::{
     evaluate_pattern_extraction_quality, evaluate_provider, BoundedPatternExtractionGuards,

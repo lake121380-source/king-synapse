@@ -45,7 +45,7 @@ pub struct WorkflowTransitionPolicy {
     pub backward_transition_allowed: bool,
     pub same_state_recheck_allowed: bool,
     pub agreement_must_precede_adjudication: bool,
-    pub gold_must_precede_judge_calibration: bool,
+    pub silver_must_precede_judge_calibration: bool,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -90,8 +90,8 @@ pub enum Phase731WorkflowState {
     AwaitingIndependentReviews,
     RawReviewsCompleteAgreementRequired,
     AgreementReportFrozenAdjudicationAllowed,
-    AdjudicationCompleteGoldFreezeRequired,
-    GoldLabelsFrozen,
+    AdjudicationCompleteSilverFreezeRequired,
+    SilverLabelsFrozen,
     JudgeCalibrationAllowed,
     ArtifactLineageInvalid,
 }
@@ -102,8 +102,8 @@ impl Phase731WorkflowState {
             Self::AwaitingIndependentReviews => Some(0),
             Self::RawReviewsCompleteAgreementRequired => Some(1),
             Self::AgreementReportFrozenAdjudicationAllowed => Some(2),
-            Self::AdjudicationCompleteGoldFreezeRequired => Some(3),
-            Self::GoldLabelsFrozen => Some(4),
+            Self::AdjudicationCompleteSilverFreezeRequired => Some(3),
+            Self::SilverLabelsFrozen => Some(4),
             Self::JudgeCalibrationAllowed => Some(5),
             Self::ArtifactLineageInvalid => None,
         }
@@ -114,7 +114,7 @@ impl Phase731WorkflowState {
 pub struct WorkflowPermissions {
     pub agreement_computation_allowed: bool,
     pub adjudication_allowed: bool,
-    pub gold_freeze_allowed: bool,
+    pub silver_freeze_allowed: bool,
     pub judge_calibration_allowed: bool,
 }
 
@@ -127,39 +127,39 @@ pub struct WorkflowFacts {
     pub agreement_lineage_valid: bool,
     pub adjudication_completed: bool,
     pub adjudication_lineage_valid: bool,
-    pub gold_labels_frozen: bool,
-    pub gold_lineage_valid: bool,
+    pub silver_labels_frozen: bool,
+    pub silver_lineage_valid: bool,
     pub frozen_judge_available: bool,
     pub calibration_lineage_valid: bool,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub struct GoldLabelsLineageReference {
+pub struct SilverLabelsLineageReference {
     pub adjudication_sha256: String,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct JudgeCalibrationLineageReference {
-    pub gold_labels_sha256: String,
+    pub silver_labels_sha256: String,
     pub frozen_judge_sha256: String,
 }
 
-pub fn validate_gold_labels_artifact_lineage(
-    lineage: &GoldLabelsLineageReference,
+pub fn validate_silver_labels_artifact_lineage(
+    lineage: &SilverLabelsLineageReference,
     current_adjudication_sha256: &str,
 ) -> Result<()> {
     if lineage.adjudication_sha256 != current_adjudication_sha256 {
-        bail!("gold_labels_artifact_lineage_mismatch");
+        bail!("silver_labels_artifact_lineage_mismatch");
     }
     Ok(())
 }
 
 pub fn validate_judge_calibration_artifact_lineage(
     lineage: &JudgeCalibrationLineageReference,
-    current_gold_labels_sha256: &str,
+    current_silver_labels_sha256: &str,
     current_frozen_judge_sha256: &str,
 ) -> Result<()> {
-    if lineage.gold_labels_sha256 != current_gold_labels_sha256
+    if lineage.silver_labels_sha256 != current_silver_labels_sha256
         || lineage.frozen_judge_sha256 != current_frozen_judge_sha256
     {
         bail!("judge_calibration_artifact_lineage_mismatch");
@@ -172,7 +172,7 @@ pub struct ArtifactLineageStatus {
     pub foundational_lineage_valid: bool,
     pub agreement_lineage_valid: bool,
     pub adjudication_lineage_valid: bool,
-    pub gold_lineage_valid: Option<bool>,
+    pub silver_lineage_valid: Option<bool>,
     pub calibration_lineage_valid: Option<bool>,
     pub artifact_lineage_broken: bool,
 }
@@ -188,7 +188,7 @@ pub struct ArtifactLineageGuards {
     pub fake_reviewers_generated: bool,
     pub fake_agreement_metrics_generated: bool,
     pub adjudication_executed: bool,
-    pub gold_labels_generated: bool,
+    pub silver_labels_generated: bool,
     pub judge_calibration_executed: bool,
     pub held_out_accessed: bool,
     pub runtime_authorized: bool,
@@ -211,7 +211,7 @@ pub struct Phase7ArtifactLineageTransitionReport {
     pub artifacts: Vec<ArtifactDigest>,
     pub agreement_report_sha256: String,
     pub adjudication_sha256: String,
-    pub gold_labels_sha256: Option<String>,
+    pub silver_labels_sha256: Option<String>,
     pub frozen_judge_sha256: Option<String>,
     pub lineage: ArtifactLineageStatus,
     pub permissions: WorkflowPermissions,
@@ -267,14 +267,14 @@ pub fn derive_phase7_workflow_state(facts: &WorkflowFacts) -> Phase731WorkflowSt
     if !facts.adjudication_lineage_valid {
         return Phase731WorkflowState::ArtifactLineageInvalid;
     }
-    if !facts.gold_labels_frozen {
-        return Phase731WorkflowState::AdjudicationCompleteGoldFreezeRequired;
+    if !facts.silver_labels_frozen {
+        return Phase731WorkflowState::AdjudicationCompleteSilverFreezeRequired;
     }
-    if !facts.gold_lineage_valid {
+    if !facts.silver_lineage_valid {
         return Phase731WorkflowState::ArtifactLineageInvalid;
     }
     if !facts.frozen_judge_available {
-        return Phase731WorkflowState::GoldLabelsFrozen;
+        return Phase731WorkflowState::SilverLabelsFrozen;
     }
     if !facts.calibration_lineage_valid {
         return Phase731WorkflowState::ArtifactLineageInvalid;
@@ -311,7 +311,8 @@ pub fn permissions_for_state(state: Phase731WorkflowState) -> WorkflowPermission
             == Phase731WorkflowState::RawReviewsCompleteAgreementRequired,
         adjudication_allowed: state
             == Phase731WorkflowState::AgreementReportFrozenAdjudicationAllowed,
-        gold_freeze_allowed: state == Phase731WorkflowState::AdjudicationCompleteGoldFreezeRequired,
+        silver_freeze_allowed: state
+            == Phase731WorkflowState::AdjudicationCompleteSilverFreezeRequired,
         judge_calibration_allowed: state == Phase731WorkflowState::JudgeCalibrationAllowed,
     }
 }
@@ -329,8 +330,8 @@ fn validate_protocol(protocol: &Phase7ArtifactLineageProtocol) -> Result<()> {
         "awaiting_independent_reviews",
         "raw_reviews_complete_agreement_required",
         "agreement_report_frozen_adjudication_allowed",
-        "adjudication_complete_gold_freeze_required",
-        "gold_labels_frozen",
+        "adjudication_complete_silver_freeze_required",
+        "silver_labels_frozen",
         "judge_calibration_allowed",
         "artifact_lineage_invalid",
     ];
@@ -342,7 +343,7 @@ fn validate_protocol(protocol: &Phase7ArtifactLineageProtocol) -> Result<()> {
         "agreement_protocol_sha256",
         "agreement_report_sha256",
         "adjudication_sha256",
-        "gold_labels_sha256",
+        "silver_labels_sha256",
         "frozen_judge_sha256",
     ];
     if protocol
@@ -372,7 +373,7 @@ fn validate_protocol(protocol: &Phase7ArtifactLineageProtocol) -> Result<()> {
             .agreement_must_precede_adjudication
         || !protocol
             .transition_policy
-            .gold_must_precede_judge_calibration
+            .silver_must_precede_judge_calibration
         || protocol.held_out_accessed
         || protocol.runtime_authorized
         || protocol.hermes_authorized
@@ -427,8 +428,8 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         agreement_lineage_valid,
         adjudication_completed: adjudication.completed,
         adjudication_lineage_valid,
-        gold_labels_frozen: false,
-        gold_lineage_valid: false,
+        silver_labels_frozen: false,
+        silver_lineage_valid: false,
         frozen_judge_available: false,
         calibration_lineage_valid: false,
     };
@@ -485,13 +486,13 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
         ],
         agreement_report_sha256,
         adjudication_sha256,
-        gold_labels_sha256: None,
+        silver_labels_sha256: None,
         frozen_judge_sha256: None,
         lineage: ArtifactLineageStatus {
             foundational_lineage_valid: agreement_lineage_valid,
             agreement_lineage_valid,
             adjudication_lineage_valid,
-            gold_lineage_valid: None,
+            silver_lineage_valid: None,
             calibration_lineage_valid: None,
             artifact_lineage_broken,
         },
@@ -505,8 +506,8 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
             same_state_recheck_allowed: true,
             fake_reviewers_generated: false,
             fake_agreement_metrics_generated: false,
-            adjudication_executed: false,
-            gold_labels_generated: false,
+            adjudication_executed: adjudication.completed,
+            silver_labels_generated: false,
             judge_calibration_executed: false,
             held_out_accessed: false,
             runtime_authorized: false,
@@ -519,7 +520,7 @@ fn evaluate(tag: String) -> Result<Phase7ArtifactLineageTransitionReport> {
             "An upstream exact-file SHA-256 mismatch invalidated all downstream authorization."
                 .to_string()
         } else if state == Phase731WorkflowState::AwaitingIndependentReviews {
-            "Artifact lineage is bound, but the workflow remains at 0/2 independent reviews; agreement, adjudication, Gold freezing, and Judge calibration are unauthorized."
+            "Artifact lineage is bound, but the workflow remains at 0/2 independent reviews; agreement, adjudication, Silver freezing, and Judge calibration are unauthorized."
                 .to_string()
         } else {
             "The workflow state is derived only from completed upstream artifacts and exact-file SHA-256 lineage references."

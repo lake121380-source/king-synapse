@@ -1,6 +1,6 @@
 ﻿# Phase 7.3.1-E Resumable Third-Model Adjudication Runner
 
-Status: **infrastructure frozen and locally validated; real adjudication remains blocked by provider quota.**
+Status: **third-model adjudication completed; 77 model-adjudicated silver candidate labels await explicit silver freeze.**
 
 ## Purpose
 
@@ -90,19 +90,48 @@ The checkpoint is removed only after both the completed adjudication artifact an
 
 ## Current execution result
 
-Provider probes established that the relay credential is authorized, but complete adjudication could not finish because the relay returned `insufficient_user_quota`. Partial normalized decisions from those pre-checkpoint attempts were not promoted and no final artifact was written.
-
-Current repository state must therefore remain:
+After the relay quota was replenished, one homogeneous adjudicator completed the frozen workload:
 
 ```text
-adjudication completed    false
+requested model           gemini-2.5-pro
+resolved model            gemini-2.5-pro
+design cases              10/10
+adjudication groups       77/77
+strict-schema attempts    1 for every case
+raw responses stored      false
+held-out accessed         false
+Frozen Judge visible      false
+checkpoint remaining      false
+```
+
+Final support-label distribution:
+
+```text
+supported                 52
+partially_supported       16
+unsupported                3
+not_assessable             6
+```
+
+Final Claim-origin distribution:
+
+```text
+explicit                  39
+inferred                  21
+synthesized               17
+```
+
+As a diagnostic only, the adjudicator matched Reviewer A on `55/74` claims and Reviewer B on `74/77` claims. This asymmetry must not be interpreted as Reviewer B accuracy or semantic ground truth; it is a reason to preserve reviewer/adjudicator identity and keep the labels at silver status.
+
+Current authorization:
+
+```text
+adjudication completed    true
 silver labels frozen      false
 Judge calibration         blocked
 held-out                  blocked
 runtime/Hermes/memory     blocked
 ```
-
-Do not replace the missing third-model decisions with deterministic Reviewer consensus. That would silently change the research protocol.
 
 ## Reproduction
 
@@ -125,4 +154,4 @@ python -m py_compile scripts/eval/phase7_ai_independent_adjudicator.py
 
 ## Next authorization
 
-After sufficient Provider quota is available, complete one homogeneous third-model run and validate its exact lineage. The resulting labels must be named **model-adjudicated silver candidate labels**. Only after a separate silver-freeze transition may frozen-Judge calibration begin.
+The homogeneous third-model run and exact-lineage validation are complete. The resulting labels are **model-adjudicated silver candidate labels**. The next action is a separate silver-freeze transition; only after that transition may frozen-Judge calibration begin.
