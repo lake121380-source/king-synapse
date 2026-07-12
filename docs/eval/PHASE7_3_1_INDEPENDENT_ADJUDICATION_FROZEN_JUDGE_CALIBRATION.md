@@ -238,12 +238,13 @@ This determines whether Phase 7.4 should constrain extraction or whether the con
 
 ```text
 claim-source anchors      65
-Reviewer A completed      false
-Reviewer B completed      false
+Reviewer A completed      true (GPT-4.1, 74 claims)
+Reviewer B completed      true (Qwen 3.5 Plus, 77 claims)
 adjudication completed    false
 Judge calibration         unavailable
 held-out access           false
-provider calls            0
+extraction provider calls 0 (frozen outputs reused)
+reviewer model calls      completed under frozen AI-review protocol
 Prompt/Parser/Judge edits 0
 runtime/Hermes            false
 ```
@@ -251,14 +252,14 @@ runtime/Hermes            false
 Decision:
 
 ```text
-protocol_ready_waiting_for_independent_annotation
+independent_annotations_ready_adjudication_required
 ```
 
-This is a readiness result, not an adjudication or model-quality result.
+This is a two-model blind-review and agreement result, not human Gold, adjudication, Candidate semantic truth, or Judge calibration.
 
 ## Next valid action
 
-Obtain two genuinely blind claim-level annotation submissions, preserve their segmentation and labeling disagreements, perform adjudication, and only then calculate frozen-Judge calibration.
+Preserve the two frozen heterogeneous-model submissions and the exact Agreement Report hash. Next, adjudicate all boundary and semantic disagreements; only then freeze silver/Gold labels and calculate frozen-Judge calibration.
 
 Until then, do not:
 

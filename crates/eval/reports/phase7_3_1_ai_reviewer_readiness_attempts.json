@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "phase": "7.3.1-ai-reviewer-readiness",
+  "accepted_submission_policy": "Only runs using the frozen canonical prompt, strict JSON parser, and response_format=json_object are eligible for final A/B submissions.",
+  "raw_provider_responses_stored": false,
+  "attempts": [
+    {
+      "model": "claude-sonnet-4-6",
+      "attempt_count": 2,
+      "status": "rejected_for_strict_json_incompatibility",
+      "blocked_case": "extract_01",
+      "artifact_written": false
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "attempt_count": 2,
+      "status": "rejected_for_unstable_strict_json",
+      "completed_cases_before_block": 2,
+      "blocked_case": "extract_03",
+      "artifact_written": false,
+      "response_format": "json_object"
+    },
+    {
+      "model": "gpt-4.1",
+      "attempt_count": 1,
+      "status": "discarded_for_condition_symmetry",
+      "completed_cases_before_discard": 10,
+      "artifact_written": true,
+      "reason": "Reviewer B required response_format=json_object; Reviewer A must be rerun under the same transport constraint."
+    },
+    {
+      "model": "qwen3.5-plus",
+      "attempt_count": 1,
+      "status": "accepted_as_reviewer_b",
+      "design_cases_completed": 10,
+      "claim_count": 77,
+      "artifact_written": true,
+      "response_format": "json_object"
+    }
+  ]
+}

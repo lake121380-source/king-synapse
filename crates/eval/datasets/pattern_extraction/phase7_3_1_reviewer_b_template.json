@@ -1,14 +1,2164 @@
 {
   "schema_version": 1,
-  "submission_id": "phase7.3.1-reviewer-b-pending-v1",
-  "reviewer_id": "reviewer_b_pending",
+  "submission_id": "phase7.3.1-ai-reviewer-b-v1",
+  "reviewer_id": "ai_reviewer_b_qwen3.5-plus",
   "reviewer_role": "independent_semantic_reviewer",
   "source_execution_id": "phase7.2.3-deepseek-real-provider-readiness-v1",
   "protocol_id": "phase7.3.1-independent-adjudication-frozen-judge-calibration-v1",
-  "completed": false,
+  "completed": true,
   "blind_to_other_reviewer": true,
   "blind_to_frozen_judge": true,
   "blind_to_phase7_3_aggregates": true,
   "held_out_accessed": false,
-  "claims": []
+  "claims": [
+    {
+      "claim_id": "reviewer-b-claim-001",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 117,
+        "source_excerpt": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects"
+      },
+      "claim_text": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "Both px_01_support_1 (payments_canary) and px_01_support_2 (search_cohorts) explicitly describe scenarios where incremental deployment to a subset (5% traffic, specific cohorts) led to the early detection of defects (connection-pool regression, language defect).",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-002",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_span": {
+        "start_char": 118,
+        "end_char": 157,
+        "source_excerpt": "while keeping the old version available"
+      },
+      "claim_text": "Incremental deployment keeps the old version available",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "px_01_support_1 states 'the old version remained available'. px_01_support_2 states 'remaining tenants were not moved', implying the old version/state remained available for them. The evidence supports the claim that the old version is kept available.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-003",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_span": {
+        "start_char": 159,
+        "end_char": 217,
+        "source_excerpt": "provided the new and old versions are backward compatible."
+      },
+      "claim_text": "The benefits of incremental deployment (early detection, keeping old version available) are provided the new and old versions are backward compatible.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The supporting cases (px_01_support_1, px_01_support_2) implicitly rely on compatibility to allow the old version to remain available while the new one is tested. The counterexample (px_01_counter_3) explicitly describes a failure ('incompatible records') when old and new formats could not coexist (lack of compatibility), leading to system issues. This contrast grounds the condition.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-004",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 172,
+        "source_excerpt": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system."
+      },
+      "claim_text": "When an incremental rollout with backward compatibility is used, the first cohort will expose any critical regression without affecting the rest of the system.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "The evidence shows specific defects were found in specific cohorts (payments, search cohort 2). However, the claim 'will expose any critical regression' is a universal guarantee not fully established by two positive instances. The evidence supports that it *can* expose defects, but 'any' implies a completeness not proven by the frozen evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-005",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 113,
+        "source_excerpt": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back."
+      },
+      "claim_text": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "px_01_support_1 explicitly states: 'Only the canary cohort needed rollback; the old version remained available.' This matches the claim exactly for the observed case.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-006",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 74,
+        "source_excerpt": "The old version remains fully operational during the entire rollout phase."
+      },
+      "claim_text": "The old version remains fully operational during the entire rollout phase.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "px_01_support_1 states 'the old version remained available'. px_01_support_2 implies the same by noting remaining tenants were not moved to the defective version. The evidence supports the operational status of the old version during the partial rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-007",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 152,
+        "source_excerpt": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified."
+      },
+      "claim_text": "If an incremental rollout with backward compatibility causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The counterexample px_01_counter_3 describes a scenario where partial rollout created incompatible records and 'more recovery work', implying a failure of the isolation benefit. While it doesn't explicitly say 'system-wide outage', it demonstrates the failure mode (incompatibility leading to broader issues) that the falsification condition aims to capture. The logic holds: if the old version cannot be kept safe/available due to incompatibility, the pattern fails.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-008",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 115,
+        "source_excerpt": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout."
+      },
+      "claim_text": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "weak_evidence"
+      ],
+      "reviewer_rationale": "px_01_counter_3 mentions 'more recovery work' and 'incompatible records' but does not explicitly state 'entire system becomes unavailable' or 'old version is rolled back'. It implies the strategy failed, but the specific observable of total unavailability or rolling back the *old* version is an extrapolation from 'more recovery work'.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-009",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 170,
+        "source_excerpt": "In customer support queues, labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly"
+      },
+      "claim_text": "Labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "causal_leap",
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "Evidence shows specific outcomes (outages reached responders, deadline cases not hidden) but does not support the universal guarantee 'ensures' or the generalization to all 'high-impact time-sensitive issues'. The evidence is observational for specific instances, not a systemic guarantee.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-010",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_span": {
+        "start_char": 172,
+        "end_char": 269,
+        "source_excerpt": "while labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked."
+      },
+      "claim_text": "Labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The counterexample evidence (px_02_counter_3) explicitly describes a scenario where VIP ranking caused a widespread login failure (critical issue) to wait, directly supporting the claim that this labeling 'can cause' issues to be overlooked.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-011",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 199,
+        "source_excerpt": "When a customer support queue labels cases by customer impact and time sensitivity before assignment, high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones."
+      },
+      "claim_text": "When a customer support queue labels cases by customer impact and time sensitivity before assignment, high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "prediction_without_support"
+      ],
+      "reviewer_rationale": "Evidence supports that specific high-impact cases were not hidden or reached responders quickly. It does not support the strict universal ordering prediction that ALL high-impact/time-sensitive issues will be addressed BEFORE ALL lower-impact ones. The evidence shows improvement, not perfect sorting.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-012",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 147,
+        "source_excerpt": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first."
+      },
+      "claim_text": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [],
+      "human_support_label": "unsupported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "not_present",
+        "prediction_support": "unsupported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "missing_evidence",
+        "over_abstraction"
+      ],
+      "reviewer_rationale": "The supplied evidence describes outcomes (outages reached responders, deadline cases visible) but contains no data regarding a 'combined score' calculation or a strict resolution order reflecting such a score. This is an abstract mechanism not present in the source text.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-013",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 172,
+        "source_excerpt": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window."
+      },
+      "claim_text": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [],
+      "human_support_label": "unsupported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "not_present",
+        "prediction_support": "unsupported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "missing_evidence",
+        "prediction_without_support"
+      ],
+      "reviewer_rationale": "The specific quantitative threshold '90%' and the comparative condition 'before any cases' are entirely absent from the supplied evidence. The evidence provides qualitative observations, not statistical success criteria.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-014",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 171,
+        "source_excerpt": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified."
+      },
+      "claim_text": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The falsification condition aligns directly with the supplied counterexample (px_02_counter_3) where a login failure waited behind VIP requests. The logic correctly identifies this scenario as a failure of the proposed pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-015",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 98,
+        "source_excerpt": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later."
+      },
+      "claim_text": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This observable is a direct restatement of the outcome in px_02_counter_3 ('widespread login failure waited behind low-impact VIP requests'), making it fully grounded in the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-016",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 117,
+        "source_excerpt": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch"
+      },
+      "claim_text": "A product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "not_present",
+        "counterexample_handling": "not_present",
+        "falsifiability": "not_assessable"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The condition of fixing thresholds before launch is explicitly stated in the action_or_observation of all three supplied experiences (px_03_support_1, px_03_support_2, px_03_counter_3).",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-017",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-proposition-01",
+      "source_span": {
+        "start_char": 119,
+        "end_char": 225,
+        "source_excerpt": "the team adheres to those thresholds in outcome evaluation and does not redefine success metrics post-hoc."
+      },
+      "claim_text": "The team adheres to those thresholds in outcome evaluation and does not redefine success metrics post-hoc.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "ignored",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "counterexample_ignored"
+      ],
+      "reviewer_rationale": "Evidence px_03_support_1 and px_03_support_2 support adherence in specific instances. However, the proposition presents this as a general rule ('When... the team adheres'), which is contradicted by px_03_counter_3 where thresholds were fixed but unexpected themes (success metrics/themes) were discarded/ignored, implying a failure to adhere to the exploratory intent or a rigid adherence that caused failure. More critically, the proposition implies a universal outcome for the condition, but the counterexample shows the condition existing without the desired positive adherence outcome (or showing adherence leading to negative outcomes). The claim ignores the counterexample where fixed thresholds led to discarding valuable insights, challenging the implied benefit or universality of the adherence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-018",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 151,
+        "source_excerpt": "In a product experiment with predefined quantitative thresholds, the team will accept the outcome based on those thresholds without redefining success."
+      },
+      "claim_text": "In a product experiment with predefined quantitative thresholds, the team will accept the outcome based on those thresholds without redefining success.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "ignored",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "prediction_without_support",
+        "counterexample_ignored"
+      ],
+      "reviewer_rationale": "The prediction asserts a future certainty ('will accept') based on two positive examples. It fails to account for the counterexample (px_03_counter_3) where fixed thresholds existed but the outcome was negative (discarding themes), suggesting the prediction is not universally true even if the mechanism (fixed thresholds) is present. The evidence supports that it *can* happen, not that it *will* happen in all such cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-019",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 68,
+        "source_excerpt": "The team does not alter success criteria after observing the result."
+      },
+      "claim_text": "The team does not alter success criteria after observing the result.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This observable is directly confirmed by the outcomes in px_03_support_1 ('accepted a neutral result instead of redefining success') and px_03_support_2 ('stopped when cancellations crossed the guardrail').",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-020",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 92,
+        "source_excerpt": "The team's final decision (e.g., launch, abandon) matches the predefined threshold triggers."
+      },
+      "claim_text": "The team's final decision (e.g., launch, abandon) matches the predefined threshold triggers.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "In px_03_support_1, the decision to accept the neutral result matches the pre-fixed criteria. In px_03_support_2, the decision to stop matches the cancellation guardrail trigger. The evidence supports this specific criterion for the supporting cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-021",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 162,
+        "source_excerpt": "If a product experiment with predefined quantitative thresholds results in the team redefining success metrics after seeing the outcome, the pattern is falsified."
+      },
+      "claim_text": "The pattern is falsified if a product experiment with predefined quantitative thresholds results in the team redefining success metrics after seeing the outcome.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_assessable",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This is a logical condition defining falsification for the pattern itself, not an empirical claim about the world requiring evidence validation. It sets the rules for the pattern's validity.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-022",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 71,
+        "source_excerpt": "Post-hoc modification of guardrails, stop criteria, or success metrics."
+      },
+      "claim_text": "Post-hoc modification of guardrails, stop criteria, or success metrics is the observable indicator of falsification.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_assessable",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This defines the observable metric for the falsification condition. It is a definition within the candidate structure, not a claim grounded in the specific experience data.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-023",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 283,
+        "source_excerpt": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present."
+      },
+      "claim_text": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim synthesizes the positive outcomes of px_04_support_1 and px_04_support_2 (isolating root cause without replacing components via specific evidence classes) and correctly incorporates the exclusion condition derived from px_04_counter_3 (active corruption/ongoing writes leading to failure). The evidence bundle fully supports this bounded generalization.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-024",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 239,
+        "source_excerpt": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening."
+      },
+      "claim_text": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "The prediction extends the observed outcomes of two specific cases (cache outage, database startup) to 'a new service failure' generally within the domain. While the direction is supported by the pattern, the evidence only covers two specific failure types, making the generalization to any new failure slightly broader than the strict evidence scope. The exclusion of active corruption is supported by px_04_counter_3.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-025",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 139,
+        "source_excerpt": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur."
+      },
+      "claim_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This claim explicitly restates the observed outcomes in px_04_support_1 (memory limit change isolated without replacing components) and px_04_support_2 (permission change found before risky restore). The evidence classes match those listed in the experiences.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-026",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 110,
+        "source_excerpt": "The root cause matches one of the evidence findings and no unrelated components were replaced during recovery."
+      },
+      "claim_text": "The root cause matches one of the evidence findings and no unrelated components were replaced during recovery.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This defines the success criteria based directly on the outcomes of px_04_support_1 and px_04_support_2, where specific evidence led to specific fixes without component replacement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-027",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 169,
+        "source_excerpt": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present."
+      },
+      "claim_text": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This statement correctly identifies the negation of the supported pattern. It posits failure (replacing unrelated components or missing root cause) in the absence of the known counterexample condition (active corruption), which would invalidate the pattern established by px_04_support_1 and px_04_support_2.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-028",
+      "case_id": "extract_04",
+      "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "anchor_id": "extract_04-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 196,
+        "source_excerpt": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence, or the root cause is not found within those evidence classes."
+      },
+      "claim_text": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence, or the root cause is not found within those evidence classes.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This observable describes the specific failure modes that contradict the successful outcomes in px_04_support_1 and px_04_support_2. It is a valid falsification condition grounded in the inverse of the supported evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-029",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 183,
+        "source_excerpt": "In AI tool category posts within the same audience and month, including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments)"
+      },
+      "claim_text": "In AI tool category posts within the same audience and month, including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments).",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim synthesizes the outcomes of px_05_support_1 and px_05_support_2, which both report that concrete examples and early problem framing recurred in successful posts and were associated with saves and qualified comments within the specified scope (same audience/month, AI posts).",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-030",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-proposition-01",
+      "source_span": {
+        "start_char": 185,
+        "end_char": 284,
+        "source_excerpt": "except when success is driven by an external virality source such as an unrelated celebrity repost."
+      },
+      "claim_text": "Success driven by an external virality source such as an unrelated celebrity repost is an exception to the association between concrete examples/early problem framing and higher engagement.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim directly reflects px_05_counter_3, where a post went viral due to a celebrity repost, and copying its structure (which presumably included the features) failed on ordinary posts, establishing the exception condition.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-031",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 229,
+        "source_excerpt": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features, assuming organic distribution without external virality."
+      },
+      "claim_text": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features, assuming organic distribution without external virality.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "causal_leap"
+      ],
+      "reviewer_rationale": "The evidence shows an association ('recurred in winners', 'associated with'), but the prediction uses 'will have', implying a stronger causal certainty than the observational evidence supports. The direction is supported, but the strength is overstated.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-032",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 83,
+        "source_excerpt": "Number of saves and qualified comments per post within the same audience and month."
+      },
+      "claim_text": "The observable metric for the prediction is the number of saves and qualified comments per post within the same audience and month.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The evidence explicitly mentions 'saves and qualified comments' as the outcomes associated with the features in both support cases, grounding the choice of observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-033",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 190,
+        "source_excerpt": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month."
+      },
+      "claim_text": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [],
+      "human_support_label": "unsupported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "not_present",
+        "prediction_support": "unsupported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "invalid"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "missing_evidence"
+      ],
+      "reviewer_rationale": "The supplied evidence states that features 'recurred in winners' and were 'associated with saves', but provides no quantitative data, percentages, or thresholds (e.g., '50% more'). This specific magnitude is invented and not grounded in the frozen evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-034",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 223,
+        "source_excerpt": "A post with concrete examples and early problem framing fails to achieve higher engagement, or a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost)."
+      },
+      "claim_text": "The pattern is falsified if a post with the features fails to achieve higher engagement, or if a post without them achieves higher engagement due to an external virality source like a celebrity repost.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The falsification conditions align with the observed outcomes in the evidence: px_05_counter_3 demonstrates the external virality exception, and the general failure of the pattern without the features is implied by the control group in px_05_support_1.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-035",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 78,
+        "source_excerpt": "Engagement metrics and identification of any external sources driving traffic."
+      },
+      "claim_text": "Falsification requires observing engagement metrics and identifying any external sources driving traffic.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_05_support_1",
+        "px_05_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The evidence relies on comparing engagement (saves/comments) and identifying the cause of virality (celebrity repost), making these the necessary observables for validation or falsification.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-036",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 286,
+        "source_excerpt": "In software delivery, exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout"
+      },
+      "claim_text": "Exposing a risky change to a representative subset that reflects the complexity of the full population reveals hidden issues like dependency assumption failures or undocumented data shapes before full rollout.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim synthesizes px_06_support_1 (internal group, dependency failure) and px_06_support_2 (representative tenant, undocumented data shape). Both sources confirm that using a representative subset revealed specific hidden issues before full commitment.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-037",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-proposition-01",
+      "source_span": {
+        "start_char": 288,
+        "end_char": 420,
+        "source_excerpt": "whereas testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases."
+      },
+      "claim_text": "Testing only the simplest subset fails to detect issues present only in more complex cases.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "px_06_counter_3 explicitly states that testing only the smallest tenant resulted in a full rollout failure on data shapes absent from the probe, supporting the claim that simple subsets fail to detect complex-case issues.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-038",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 255,
+        "source_excerpt": "If a risky change is first exposed to a representative subset (e.g., a typical tenant or internal group) before full rollout, then at least one hidden issue (dependency assumption failure or undocumented data shape) will be discovered before full rollout."
+      },
+      "claim_text": "If a risky change is exposed to a representative subset before full rollout, at least one hidden issue will be discovered before full rollout.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "prediction_without_support"
+      ],
+      "reviewer_rationale": "The evidence shows two instances where issues were found, but it does not establish the universal guarantee that 'at least one' issue *will* be discovered in every such case. The prediction strength exceeds the observational evidence provided.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-039",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 94,
+        "source_excerpt": "Hidden issue is detected during the limited exposure phase and documented before full rollout."
+      },
+      "claim_text": "A hidden issue is detected during the limited exposure phase and documented before full rollout.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "Both supporting experiences describe outcomes where issues (dependency failure, data shape) were identified during the limited exposure (flag/tenant migration) before the full fleet rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-040",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 74,
+        "source_excerpt": "At least one issue is identified and can be addressed before full rollout."
+      },
+      "claim_text": "At least one issue is identified and can be addressed before full rollout.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "weak_evidence"
+      ],
+      "reviewer_rationale": "Evidence confirms issues were identified. While px_06_support_1 mentions reversal required a change (implying addressability) and px_06_support_2 notes discovery before commitment, the explicit capability to 'address' the issue in all future cases is an inference slightly stronger than the raw outcome data.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-041",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 184,
+        "source_excerpt": "If a change is exposed to a representative subset and no issues are found, but full rollout fails due to issues that were present in that subset's complexity, the pattern is falsified."
+      },
+      "claim_text": "The pattern is falsified if a change exposed to a representative subset yields no issues, yet full rollout fails due to issues present in that subset's complexity.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This is a definition of falsification conditions for the pattern itself, not an empirical claim grounded in the provided evidence experiences. The evidence bundle contains observed outcomes, not meta-logical definitions of the pattern's validity conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-042",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 119,
+        "source_excerpt": "Full rollout failure due to data shapes or assumptions that existed in the representative subset but were not detected."
+      },
+      "claim_text": "Full rollout failure occurs due to data shapes or assumptions that existed in the representative subset but were not detected.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This describes a hypothetical observable condition for falsification. The supplied evidence describes actual observed outcomes (successes in finding issues, failure due to non-representative sampling), not an instance of this specific falsification scenario occurring.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-043",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 169,
+        "source_excerpt": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops"
+      },
+      "claim_text": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_07_support_1",
+        "px_07_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "scope_expansion",
+        "unsupported_generalization"
+      ],
+      "reviewer_rationale": "Evidence px_07_support_1 shows prevention of a full outage, and px_07_support_2 shows reversal before a deadline. However, neither source explicitly confirms the avoidance of 'false stops' for these specific low-noise metrics; they only report successful outcomes. The claim generalizes 'avoid false stops' as a guaranteed property of the pattern rather than an observed outcome in the limited samples.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-044",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_span": {
+        "start_char": 171,
+        "end_char": 290,
+        "source_excerpt": "whereas noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction."
+      },
+      "claim_text": "Noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "Source px_07_counter_3 explicitly states that a rollout stopped on a noisy metric weakly related to harm, resulting in 'Repeated false stops delayed delivery without reducing incidents.' The claim matches the evidence exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-045",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 199,
+        "source_excerpt": "If a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases, then the rollout will stop at a low traffic percentage and prevent a full outage."
+      },
+      "claim_text": "If a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases, then the rollout will stop at a low traffic percentage and prevent a full outage.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "prediction_without_support",
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "Source px_07_support_1 reports a specific instance where traffic stopped at twenty percent. The prediction generalizes this to 'a low traffic percentage' for any such rollout. While the direction is supported, the universal predictive strength ('will stop') exceeds the single observed data point.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-046",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 57,
+        "source_excerpt": "Traffic pauses at or below 20% and no full outage occurs."
+      },
+      "claim_text": "Traffic pauses at or below 20% and no full outage occurs.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "Source px_07_support_1 outcome states 'Traffic stopped at twenty percent and prevented a full outage.' The observable matches the specific values and outcome of the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-047",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 107,
+        "source_excerpt": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage."
+      },
+      "claim_text": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The success criterion describes the mechanism and outcome observed in px_07_support_1 ('rollout declared an error-rate ceiling... Traffic stopped... prevented a full outage').",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-048",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-02",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 188,
+        "source_excerpt": "If an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines, then the change will reverse before backlog recovery exceeds the allowed window."
+      },
+      "claim_text": "If an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines, then the change will reverse before backlog recovery exceeds the allowed window.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "prediction_without_support",
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "Source px_07_support_2 describes a single instance where the change reversed before the overnight window. The prediction asserts this 'will' happen generally. The evidence supports the possibility but not the universal certainty implied by the prediction statement.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "claim_id": "reviewer-b-claim-049",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-02",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 77,
+        "source_excerpt": "The change is reversed before the recovery time exceeds the overnight window."
+      },
+      "claim_text": "The change is reversed before the recovery time exceeds the overnight window.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "Source px_07_support_2 outcome states 'It reversed before backlog recovery exceeded the overnight window.' The observable is a direct restatement of this outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-050",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 78,
+        "source_excerpt": "The automatic stop triggers and the system recovers within the specified time."
+      },
+      "claim_text": "The automatic stop triggers and the system recovers within the specified time.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The success criterion summarizes the outcome of px_07_support_2 where the stop condition triggered and recovery happened within the window.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-051",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 224,
+        "source_excerpt": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified."
+      },
+      "claim_text": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This is a logical condition for falsification defined by the candidate, not a claim about observed reality grounded in the provided evidence bundle. No evidence exists of a false stop occurring under 'directly harmful, low-noise' conditions to test this.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-052",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 117,
+        "source_excerpt": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise."
+      },
+      "claim_text": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [],
+      "human_support_label": "not_assessable",
+      "dimension_labels": {
+        "scope": "not_assessable",
+        "causal_strength": "not_assessable",
+        "prediction_support": "not_assessable",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This describes a hypothetical observable scenario for falsification. The supplied evidence contains no instance of false stops associated with 'directly harmful, low-noise' metrics; the only false stop evidence (px_07_counter_3) involves a 'noisy metric weakly related to harm'.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-053",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 303,
+        "source_excerpt": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action."
+      },
+      "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim synthesizes the actions and outcomes of px_08_support_1 (reversible intervention, stabilization, avoidance) and px_08_support_2 (escalation linked to confirmation/worsening). The evidence explicitly supports the association described.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-054",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_span": {
+        "start_char": 304,
+        "end_char": 431,
+        "source_excerpt": "However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold."
+      },
+      "claim_text": "This pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim accurately reflects the counterexample px_08_counter_3, where waiting for complete evidence (the pattern) during rapidly worsening signs led to increased harm, indicating failure of the pattern under those specific conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-055",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 266,
+        "source_excerpt": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided."
+      },
+      "claim_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "scope_expansion",
+        "causal_leap"
+      ],
+      "reviewer_rationale": "The evidence shows this outcome occurred in specific instances (px_08_support_1, px_08_support_2). The claim elevates this to a deterministic prediction ('will stabilize', 'will be avoided') which is stronger than the 'associated with' relationship supported by the observational evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-056",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 112,
+        "source_excerpt": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action."
+      },
+      "claim_text": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This is a direct restatement of the outcome in px_08_support_1 ('The condition stabilized and later evidence ruled out the invasive action').",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-057",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 63,
+        "source_excerpt": "Outcome matches the observed outcome in memory px_08_support_1."
+      },
+      "claim_text": "Outcome matches the observed outcome in memory px_08_support_1.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "not_present",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim defines the success criterion by referencing the specific memory ID. The existence and content of px_08_support_1 validate this reference.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-058",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 173,
+        "source_excerpt": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay."
+      },
+      "claim_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "human_support_label": "partially_supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "overstated",
+        "prediction_support": "partially_supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [
+        "scope_expansion",
+        "causal_leap"
+      ],
+      "reviewer_rationale": "The evidence (px_08_counter_3) describes one instance where this occurred. The claim generalizes this to a rule ('results in') rather than an observed occurrence ('increased harm because...'). While the direction is correct, the certainty is elevated beyond the single data point.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-059",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 123,
+        "source_excerpt": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3."
+      },
+      "claim_text": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim explicitly ties the observable to the counterexample px_08_counter_3, which states 'The delay increased harm'. The phrasing 'leads to' here describes the mechanism observed in the specific cited case, making it grounded.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-060",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 154,
+        "source_excerpt": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust."
+      },
+      "claim_text": "When independent sources converge on the same estimate or conclusion, the result is robust.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_09_support_1",
+        "px_09_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [
+        "scope_expansion"
+      ],
+      "reviewer_rationale": "The evidence shows two specific instances (lab instruments, triangulated methods) where independent sources led to convergent/consistent outcomes described as 'converged within tolerance' and 'supported the same behavioral change'. The claim generalizes this to 'robust' results for any independent sources converging on any estimate/conclusion. While the direction is supported, the term 'robust' and the universal scope ('When independent sources...') are broader than the specific observed outcomes in the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-061",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_span": {
+        "start_char": 155,
+        "end_char": 318,
+        "source_excerpt": "In contrast, apparent consensus from multiple reports that merely repeat a single unverified source is fragile and collapses when the original source is corrected."
+      },
+      "claim_text": "Apparent consensus from multiple reports repeating a single unverified source is fragile and collapses when the original source is corrected.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The counterexample evidence (px_09_counter_3) explicitly states that five reports repeated a number from one unverified blog post, and the apparent consensus disappeared when the source was corrected. This directly supports the claim about fragility and collapse upon correction for this specific pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-062",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 171,
+        "source_excerpt": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance."
+      },
+      "claim_text": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This prediction is a direct restatement of the observation in px_09_support_1, where two laboratories used different instruments/samples and their estimates converged within a preregistered tolerance. The evidence supports this specific scenario as an observed outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-063",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 71,
+        "source_excerpt": "The difference between the two estimates is within the tolerance range."
+      },
+      "claim_text": "The difference between the two estimates is within the tolerance range.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This observable is directly derived from the outcome in px_09_support_1 ('estimates converged within a preregistered tolerance'). It describes the specific condition observed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-064",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 41,
+        "source_excerpt": "abs(estimate_1 - estimate_2) <= tolerance"
+      },
+      "claim_text": "The success criterion is that the absolute difference between estimate 1 and estimate 2 is less than or equal to the tolerance.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This mathematical formulation is a precise representation of 'converged within a preregistered tolerance' found in px_09_support_1. It is grounded in the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-065",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 148,
+        "source_excerpt": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails."
+      },
+      "claim_text": "The pattern fails if two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This falsification condition is the logical negation of the supported prediction based on px_09_support_1. Since the evidence supports the convergence, the failure condition (non-convergence) is a valid falsifier for the pattern derived from that evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-066",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 55,
+        "source_excerpt": "The difference between estimates exceeds the tolerance."
+      },
+      "claim_text": "The observable for failure is that the difference between estimates exceeds the tolerance.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This is the direct observable corresponding to the failure condition, logically derived from the success criterion in px_09_support_1.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-067",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-02",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 142,
+        "source_excerpt": "If multiple reports supporting a claim are all traced to a single unverified original source, the pattern of apparent consensus does not hold."
+      },
+      "claim_text": "The pattern of apparent consensus does not hold if multiple reports supporting a claim are all traced to a single unverified original source.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This statement reflects the lesson from the counterexample px_09_counter_3, where the consensus disappeared when the single unverified source was corrected. It correctly identifies the condition under which the 'apparent consensus' pattern is invalid.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-068",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-02",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 68,
+        "source_excerpt": "Correction of the original source causes the consensus to disappear."
+      },
+      "claim_text": "The observable for the failure of apparent consensus is that correction of the original source causes the consensus to disappear.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This observable is directly stated in the outcome of px_09_counter_3 ('The apparent consensus disappeared when the source was corrected').",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-069",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 132,
+        "source_excerpt": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile"
+      },
+      "claim_text": "Buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim matches the conditions (long lead, volatile demand) and outcome (interruptions fell) of px_10_support_1 exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-070",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_span": {
+        "start_char": 134,
+        "end_char": 202,
+        "source_excerpt": "or when demand has predictable spikes and supplier response is slow."
+      },
+      "claim_text": "Buffering inventory reduces interruptions or stockouts when demand has predictable spikes and supplier response is slow.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_10_support_2"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim aligns with px_10_support_2 where buffering products with predictable spikes and slow response led to reduced stockouts.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-071",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_span": {
+        "start_char": 203,
+        "end_char": 293,
+        "source_excerpt": "Buffering is counterproductive when replenishment lead time is short and demand is stable."
+      },
+      "claim_text": "Buffering is counterproductive when replenishment lead time is short and demand is stable.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim is directly supported by px_10_counter_3, which observed that buffering an item with daily replenishment (short lead) and stable demand resulted in expiration and excess cost.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-072",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 164,
+        "source_excerpt": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit."
+      },
+      "claim_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "px_10_support_1 explicitly states that for a component with twelve-week replenishment (long) and volatile demand, interruptions fell and carrying cost stayed within its declared limit.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-073",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 115,
+        "source_excerpt": "Interruption events decrease and carrying cost as a percentage of product value does not exceed the planned budget."
+      },
+      "claim_text": "Interruption events decrease and carrying cost as a percentage of product value does not exceed the planned budget.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The observable metrics (decrease in interruptions, cost within limit) are grounded in the outcome of px_10_support_1 ('Interruptions fell while carrying cost stayed within its declared limit').",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-074",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 154,
+        "source_excerpt": "Measured over a typical planning horizon, stockout frequency drops by at least 30% and carrying cost remains under the target threshold set by management."
+      },
+      "claim_text": "Stockout frequency drops by at least 30% over a typical planning horizon.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [],
+      "human_support_label": "unsupported",
+      "dimension_labels": {
+        "scope": "expanded",
+        "causal_strength": "not_present",
+        "prediction_support": "unsupported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "invalid"
+      },
+      "failure_kinds": [
+        "unsupported_generalization",
+        "missing_evidence"
+      ],
+      "reviewer_rationale": "The evidence (px_10_support_1) states interruptions fell but provides no quantitative data (e.g., '30%') to support this specific success criterion magnitude.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-075",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 154,
+        "source_excerpt": "Measured over a typical planning horizon, stockout frequency drops by at least 30% and carrying cost remains under the target threshold set by management."
+      },
+      "claim_text": "Carrying cost remains under the target threshold set by management.",
+      "claim_origin": "inferred",
+      "claimed_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "This part of the claim is supported by px_10_support_1 which notes carrying cost stayed within its declared limit.",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-076",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 175,
+        "source_excerpt": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts."
+      },
+      "claim_text": "For a product with daily replenishment and stable demand, applying a large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+      "claim_origin": "synthesized",
+      "claimed_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "supported",
+        "prediction_support": "supported",
+        "counterexample_handling": "preserved",
+        "falsifiability": "direct_in_scope"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The claim is a direct synthesis of px_10_counter_3, which observed exactly these conditions (daily replenishment, stable demand) and outcomes (inventory expired, cost exceeded avoided stockouts).",
+      "annotation_confidence": "high"
+    },
+    {
+      "claim_id": "reviewer-b-claim-077",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_span": {
+        "start_char": 0,
+        "end_char": 149,
+        "source_excerpt": "Observed inventory write-offs due to expiration and total holding cost greater than the cost of stockouts that would have occurred without buffering."
+      },
+      "claim_text": "Observed inventory write-offs due to expiration and total holding cost greater than the cost of stockouts that would have occurred without buffering.",
+      "claim_origin": "explicit",
+      "claimed_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "human_support_label": "supported",
+      "dimension_labels": {
+        "scope": "preserved",
+        "causal_strength": "not_present",
+        "prediction_support": "supported",
+        "counterexample_handling": "not_present",
+        "falsifiability": "structural_only"
+      },
+      "failure_kinds": [],
+      "reviewer_rationale": "The observable details match the outcome description in px_10_counter_3 ('Most inventory expired and cost exceeded avoided stockouts').",
+      "annotation_confidence": "high"
+    }
+  ]
 }

@@ -40,8 +40,8 @@ def main() -> int:
 
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
-    assert report["state"] == "awaiting_independent_reviews"
-    assert report["review_progress"]["completed_count"] == 0
+    assert report["state"] == "agreement_report_frozen_adjudication_allowed"
+    assert report["review_progress"]["completed_count"] == 2
     assert report["review_progress"]["required_count"] == 2
     assert report["review_progress"]["completion_order_independent"] is True
     assert report["lineage"]["artifact_lineage_broken"] is False
@@ -63,7 +63,10 @@ def main() -> int:
     assert HEX64.fullmatch(report["agreement_report_sha256"])
     assert HEX64.fullmatch(report["adjudication_sha256"])
 
-    assert all(value is False for value in report["permissions"].values())
+    assert report["permissions"]["agreement_computation_allowed"] is False
+    assert report["permissions"]["adjudication_allowed"] is True
+    assert report["permissions"]["gold_freeze_allowed"] is False
+    assert report["permissions"]["judge_calibration_allowed"] is False
     for key in (
         "fake_reviewers_generated",
         "fake_agreement_metrics_generated",
@@ -80,9 +83,9 @@ def main() -> int:
         assert report["guards"][key] is False
 
     print("Phase: Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate")
-    print("Workflow state: awaiting_independent_reviews (0/2)")
+    print("Workflow state: agreement_report_frozen_adjudication_allowed (2/2)")
     print("Hash representation: exact file bytes, SHA-256")
-    print("Agreement/adjudication/Gold/calibration: unauthorized")
+    print("Agreement frozen; adjudication allowed; Gold/calibration unauthorized")
     print("Held-out/runtime/Hermes/memory writes: blocked")
     print("PASS")
     return 0

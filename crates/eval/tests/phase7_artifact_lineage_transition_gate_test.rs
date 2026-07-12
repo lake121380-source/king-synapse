@@ -25,19 +25,19 @@ fn facts() -> WorkflowFacts {
 }
 
 #[test]
-fn current_workflow_is_honestly_waiting_at_zero_of_two() {
+fn current_workflow_has_two_reviews_and_frozen_agreement() {
     let report = Phase7ArtifactLineageTransitionEvaluator::evaluate("test").expect("evaluate");
     assert_eq!(
         report.state,
-        Phase731WorkflowState::AwaitingIndependentReviews
+        Phase731WorkflowState::AgreementReportFrozenAdjudicationAllowed
     );
-    assert_eq!(report.review_progress.completed_count, 0);
+    assert_eq!(report.review_progress.completed_count, 2);
     assert_eq!(report.review_progress.required_count, 2);
     assert!(report.review_progress.completion_order_independent);
     assert!(report.lineage.foundational_lineage_valid);
     assert!(!report.lineage.artifact_lineage_broken);
     assert!(!report.permissions.agreement_computation_allowed);
-    assert!(!report.permissions.adjudication_allowed);
+    assert!(report.permissions.adjudication_allowed);
     assert!(!report.permissions.gold_freeze_allowed);
     assert!(!report.permissions.judge_calibration_allowed);
     assert!(report.gold_labels_sha256.is_none());
@@ -217,10 +217,13 @@ fn checked_in_report_preserves_governance_boundary() {
         "../reports/phase7_artifact_lineage_transition_gate.json"
     ))
     .expect("checked report");
-    assert_eq!(report["state"], "awaiting_independent_reviews");
-    assert_eq!(report["review_progress"]["completed_count"], 0);
+    assert_eq!(
+        report["state"],
+        "agreement_report_frozen_adjudication_allowed"
+    );
+    assert_eq!(report["review_progress"]["completed_count"], 2);
     assert_eq!(report["review_progress"]["required_count"], 2);
-    assert_eq!(report["permissions"]["adjudication_allowed"], false);
+    assert_eq!(report["permissions"]["adjudication_allowed"], true);
     assert_eq!(report["permissions"]["judge_calibration_allowed"], false);
     assert_eq!(report["guards"]["fake_reviewers_generated"], false);
     assert_eq!(report["guards"]["fake_agreement_metrics_generated"], false);

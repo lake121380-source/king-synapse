@@ -63,16 +63,26 @@ fn submission(id: &str, claims: Vec<AtomicClaimAnnotation>) -> ReviewerAnnotatio
 }
 
 #[test]
-fn agreement_gate_waits_without_fabricating_statistics() {
+fn agreement_gate_reports_two_frozen_ai_submissions() {
     let report = Phase7InterReviewerAgreementEvaluator::evaluate("test").expect("report");
     assert_eq!(
         report.decision,
-        InterReviewerAgreementDecision::WaitingForTwoIndependentSubmissions
+        InterReviewerAgreementDecision::AgreementReportReadyAdjudicationRequired
     );
-    assert!(report.metrics.is_none());
-    assert!(!report.guards.reviewer_a_completed);
-    assert!(!report.guards.reviewer_b_completed);
-    assert!(!report.guards.agreement_report_completed);
+    let metrics = report.metrics.expect("agreement metrics");
+    assert_eq!(metrics.segmentation.reviewer_a_claim_count, 74);
+    assert_eq!(metrics.segmentation.reviewer_b_claim_count, 77);
+    assert!(
+        metrics
+            .semantic
+            .support
+            .raw_agreement
+            .expect("raw agreement")
+            > 0.0
+    );
+    assert!(report.guards.reviewer_a_completed);
+    assert!(report.guards.reviewer_b_completed);
+    assert!(report.guards.agreement_report_completed);
     assert!(report.guards.raw_blind_submissions_only);
     assert!(!report.guards.adjudicated_labels_used);
     assert!(!report.guards.frozen_judge_visible);
@@ -267,16 +277,23 @@ fn frozen_input_validation_rejects_a_mismatched_source_excerpt() {
 }
 
 #[test]
-fn checked_in_agreement_report_preserves_waiting_boundary() {
+fn checked_in_agreement_report_requires_adjudication() {
     let report: serde_json::Value = serde_json::from_str(include_str!(
         "../reports/phase7_inter_reviewer_agreement.json"
     ))
     .expect("checked report");
     assert_eq!(
         report["decision"],
-        "waiting_for_two_independent_submissions"
+        "agreement_report_ready_adjudication_required"
     );
-    assert!(report["metrics"].is_null());
+    assert_eq!(
+        report["metrics"]["segmentation"]["reviewer_a_claim_count"],
+        74
+    );
+    assert_eq!(
+        report["metrics"]["segmentation"]["reviewer_b_claim_count"],
+        77
+    );
     assert_eq!(report["guards"]["adjudicated_labels_used"], false);
     assert_eq!(report["guards"]["frozen_judge_visible"], false);
     assert_eq!(report["guards"]["held_out_cases_untouched"], true);

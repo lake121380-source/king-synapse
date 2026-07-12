@@ -614,7 +614,12 @@ fn evaluate(tag: String) -> Result<Phase7AdjudicationCalibrationReport> {
         scope_calibration: None,
         guards,
         decision,
-        conclusion: "The Phase 7.3.1 protocol and calibration harness are ready, but no independent claim-level annotations or adjudicated semantic ground truth exist yet. Candidate and frozen-judge error rates must remain unreported until two blind submissions and adjudication are complete.".to_string(),
+        conclusion: match decision {
+            Phase7AdjudicationCalibrationDecision::ProtocolReadyWaitingForIndependentAnnotation => "The Phase 7.3.1 protocol and calibration harness are ready, but two blind independent annotations are still required. Candidate and frozen-judge error rates must remain unreported.".to_string(),
+            Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired => "Two blind AI reviewer submissions are frozen and the independent Agreement Report is available. These are heterogeneous model annotations, not human Gold. Preserve all disagreements and complete adjudication before freezing silver/Gold labels or calibrating the frozen Judge.".to_string(),
+            Phase7AdjudicationCalibrationDecision::AdjudicationCompleteCalibrationDiagnosticOnly => "Adjudication is complete; frozen-Judge calibration is diagnostic only and does not authorize Candidate learning, knowledge promotion, held-out access, runtime, or Hermes integration.".to_string(),
+            _ => "Phase 7.3.1 remains diagnostic-only; no Candidate learning or knowledge promotion is authorized.".to_string(),
+        },
     })
 }
 

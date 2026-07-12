@@ -2,7 +2,7 @@
   "schema_version": 1,
   "evaluation_version": "phase7.3.1-artifact-lineage-irreversible-transition-gate-v1",
   "tag": "phase7.3.1-artifact-lineage-transition-gate",
-  "generated_at": "2026-07-12T01:51:27.646274900+00:00",
+  "generated_at": "2026-07-12T03:30:12.039097900+00:00",
   "phase": "Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate",
   "protocol": {
     "schema_version": 1,
@@ -53,11 +53,11 @@
     "extractor_modification_authorized": false,
     "judge_modification_authorized": false
   },
-  "state": "awaiting_independent_reviews",
+  "state": "agreement_report_frozen_adjudication_allowed",
   "review_progress": {
-    "reviewer_a_completed": false,
-    "reviewer_b_completed": false,
-    "completed_count": 0,
+    "reviewer_a_completed": true,
+    "reviewer_b_completed": true,
+    "completed_count": 2,
     "required_count": 2,
     "completion_order_independent": true
   },
@@ -75,12 +75,12 @@
     {
       "artifact_id": "reviewer_a_submission",
       "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_a_template.json",
-      "sha256": "74f67d7eb2a24e573045c4eebd03b649d2232bb982d3682d13fc3f640307c0a9"
+      "sha256": "5b5c3f9fe451bad029a4d8b2add1c54e65f4d860b6cfd5be66f43de744499779"
     },
     {
       "artifact_id": "reviewer_b_submission",
       "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_reviewer_b_template.json",
-      "sha256": "9ea1b1766e8f717ca25cee6b8183005a28aa36e1fd7e27cd0894233fc62cd637"
+      "sha256": "66c6033e920fefc4d1fd7f9b868c7c72e81f0f6ae6853ef8f569e91827820f75"
     },
     {
       "artifact_id": "agreement_protocol",
@@ -90,16 +90,16 @@
     {
       "artifact_id": "agreement_report",
       "path": "crates/eval/reports/phase7_inter_reviewer_agreement.json",
-      "sha256": "13fd00b5ae63829c1cc2f44f9b9d301b9673dc5210660be4f0cedb8faeea4ac9"
+      "sha256": "fbc3b6a44f08ab792d25770fd1df15b82e95df7488888e509a2957391b699d07"
     },
     {
       "artifact_id": "adjudication",
       "path": "crates/eval/datasets/pattern_extraction/phase7_3_1_adjudication_template.json",
-      "sha256": "534100b2e7bd84707c2b89e0b3f2c2c2d5df14f4303a8de2b0c259af9c0694e3"
+      "sha256": "8860027b78b8df7d404aa722b4ee072c9d8932b3ed0ed725525c348a54d58b47"
     }
   ],
-  "agreement_report_sha256": "13fd00b5ae63829c1cc2f44f9b9d301b9673dc5210660be4f0cedb8faeea4ac9",
-  "adjudication_sha256": "534100b2e7bd84707c2b89e0b3f2c2c2d5df14f4303a8de2b0c259af9c0694e3",
+  "agreement_report_sha256": "fbc3b6a44f08ab792d25770fd1df15b82e95df7488888e509a2957391b699d07",
+  "adjudication_sha256": "8860027b78b8df7d404aa722b4ee072c9d8932b3ed0ed725525c348a54d58b47",
   "gold_labels_sha256": null,
   "frozen_judge_sha256": null,
   "lineage": {
@@ -112,7 +112,7 @@
   },
   "permissions": {
     "agreement_computation_allowed": false,
-    "adjudication_allowed": false,
+    "adjudication_allowed": true,
     "gold_freeze_allowed": false,
     "judge_calibration_allowed": false
   },
@@ -135,5 +135,5 @@
     "extractor_modified": false,
     "judge_modified": false
   },
-  "conclusion": "Artifact lineage is bound, but the workflow remains at 0/2 independent reviews; agreement, adjudication, Gold freezing, and Judge calibration are unauthorized."
+  "conclusion": "The workflow state is derived only from completed upstream artifacts and exact-file SHA-256 lineage references."
 }

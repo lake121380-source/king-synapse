@@ -26,8 +26,10 @@ def main() -> int:
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
 
-    assert report["decision"] == "waiting_for_two_independent_submissions"
-    assert report["metrics"] is None
+    assert report["decision"] == "agreement_report_ready_adjudication_required"
+    assert report["metrics"] is not None
+    assert report["metrics"]["segmentation"]["reviewer_a_claim_count"] == 74
+    assert report["metrics"]["segmentation"]["reviewer_b_claim_count"] == 77
     assert protocol["source_span_unit"] == "unicode_scalar_index_half_open"
     assert protocol["alignment_policy"]["minimum_iou"] == 0.5
     assert protocol["alignment_policy"]["claim_text_similarity_used"] is False
@@ -43,18 +45,18 @@ def main() -> int:
     assert guards["frozen_judge_visible"] is False
     assert guards["phase7_3_seed_visible"] is False
     assert guards["held_out_cases_untouched"] is True
-    assert guards["reviewer_a_completed"] is False
-    assert guards["reviewer_b_completed"] is False
-    assert guards["agreement_report_completed"] is False
+    assert guards["reviewer_a_completed"] is True
+    assert guards["reviewer_b_completed"] is True
+    assert guards["agreement_report_completed"] is True
     assert guards["runtime_authorized"] is False
     assert guards["hermes_authorized"] is False
 
     print("Phase: Phase 7.3.1-B Inter-reviewer Agreement Gate")
     print("Source spans: Unicode scalar half-open offsets")
     print("Alignment: deterministic greedy span IoU, frozen threshold 0.5")
-    print("Reviewer A/B: incomplete")
-    print("Agreement: intentionally unavailable")
-    print("Adjudication/Judge/held-out/runtime/Hermes: blocked")
+    print("Reviewer A/B: completed (74/77 claims)")
+    print("Agreement: available and frozen")
+    print("Adjudication: required; Judge/held-out/runtime/Hermes: blocked")
     print("PASS")
     return 0
 

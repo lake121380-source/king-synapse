@@ -70,13 +70,13 @@ fn frozen_outputs_produce_stable_claim_source_anchors_without_claiming_segmentat
 }
 
 #[test]
-fn reviewer_templates_are_blind_empty_and_not_misreported_as_independent_reviews() {
-    for submission in [
-        load_phase7_reviewer_a_template().expect("reviewer a"),
-        load_phase7_reviewer_b_template().expect("reviewer b"),
+fn reviewer_submissions_are_completed_blind_and_adjudication_remains_empty() {
+    for (submission, expected_claims) in [
+        (load_phase7_reviewer_a_template().expect("reviewer a"), 74),
+        (load_phase7_reviewer_b_template().expect("reviewer b"), 77),
     ] {
-        assert!(!submission.completed);
-        assert!(submission.claims.is_empty());
+        assert!(submission.completed);
+        assert_eq!(submission.claims.len(), expected_claims);
         assert!(submission.blind_to_other_reviewer);
         assert!(submission.blind_to_frozen_judge);
         assert!(submission.blind_to_phase7_3_aggregates);
@@ -208,18 +208,18 @@ fn candidate_aggregation_and_scope_calibration_are_predeclared_before_real_label
 }
 
 #[test]
-fn protocol_ready_state_does_not_fabricate_agreement_or_calibration() {
+fn independent_annotations_require_adjudication_without_fabricating_calibration() {
     let report = Phase7AdjudicationCalibrationEvaluator::evaluate("test").expect("evaluate");
     assert_eq!(
         report.decision,
-        Phase7AdjudicationCalibrationDecision::ProtocolReadyWaitingForIndependentAnnotation
+        Phase7AdjudicationCalibrationDecision::IndependentAnnotationsReadyAdjudicationRequired
     );
     assert!(report.agreement.is_none());
     assert!(report.strict_safety_calibration.is_none());
     assert!(report.strong_error_calibration.is_none());
     assert!(report.scope_calibration.is_none());
-    assert!(!report.guards.reviewer_a_completed);
-    assert!(!report.guards.reviewer_b_completed);
+    assert!(report.guards.reviewer_a_completed);
+    assert!(report.guards.reviewer_b_completed);
     assert!(!report.guards.independent_adjudication_completed);
     assert!(!report.guards.scorer_calibration_completed);
 }
@@ -246,14 +246,14 @@ fn phase7_3_1_preserves_extractor_judge_held_out_and_runtime_boundaries() {
 }
 
 #[test]
-fn checked_in_report_matches_protocol_ready_boundary() {
+fn checked_in_report_matches_adjudication_required_boundary() {
     let checked: serde_json::Value = serde_json::from_str(include_str!(
         "../reports/phase7_independent_adjudication_calibration.json"
     ))
     .expect("checked report");
     assert_eq!(
         checked["decision"],
-        "protocol_ready_waiting_for_independent_annotation"
+        "independent_annotations_ready_adjudication_required"
     );
     assert_eq!(
         checked["claim_source_anchors"].as_array().unwrap().len(),

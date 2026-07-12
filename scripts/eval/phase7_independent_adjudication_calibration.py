@@ -43,7 +43,7 @@ def main() -> int:
     blind_packet = json.loads(BLIND_PACKET.read_text(encoding="utf-8"))
 
     assert report["phase"] == "Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration"
-    assert report["decision"] == "protocol_ready_waiting_for_independent_annotation"
+    assert report["decision"] == "independent_annotations_ready_adjudication_required"
     assert len(report["claim_source_anchors"]) == 65
     assert all(anchor["requires_independent_atomic_segmentation"] for anchor in report["claim_source_anchors"])
     assert len({anchor["anchor_id"] for anchor in report["claim_source_anchors"]}) == 65
@@ -68,9 +68,10 @@ def main() -> int:
     assert protocol["calibration_policy"]["rule_change_allowed"] is False
     assert protocol["calibration_policy"]["same_data_optimization_allowed"] is False
 
-    for reviewer in (reviewer_a, reviewer_b):
-        assert reviewer["completed"] is False
-        assert reviewer["claims"] == []
+    expected_claim_counts = (74, 77)
+    for reviewer, expected_count in zip((reviewer_a, reviewer_b), expected_claim_counts):
+        assert reviewer["completed"] is True
+        assert len(reviewer["claims"]) == expected_count
         assert reviewer["blind_to_other_reviewer"] is True
         assert reviewer["blind_to_frozen_judge"] is True
         assert reviewer["blind_to_phase7_3_aggregates"] is True
@@ -110,8 +111,8 @@ def main() -> int:
     assert guards["candidate_modified"] is False
     assert guards["frozen_judge_modified"] is False
     assert guards["provider_calls_made"] is False
-    assert guards["reviewer_a_completed"] is False
-    assert guards["reviewer_b_completed"] is False
+    assert guards["reviewer_a_completed"] is True
+    assert guards["reviewer_b_completed"] is True
     assert guards["independent_adjudication_completed"] is False
     assert guards["scorer_calibration_completed"] is False
     assert guards["held_out_cases_untouched"] is True
@@ -122,11 +123,11 @@ def main() -> int:
 
     print("Phase: Phase 7.3.1 Independent Candidate Adjudication & Frozen Judge Calibration")
     print("Measurement objects: Candidate + Frozen Judge studied; all controls frozen")
-    print("Claim-source anchors: 65 frozen fields awaiting independent atomic segmentation")
+    print("Claim-source anchors: 65 frozen fields independently segmented")
     print("Blind packet: 10 design cases / 65 anchors / no Judge or seed-label leakage")
-    print("Reviewer A/B: blind templates ready, 0 completed submissions")
-    print("Agreement/calibration: intentionally unavailable")
-    print("Decision: protocol_ready_waiting_for_independent_annotation")
+    print("Reviewer A/B: two blind heterogeneous AI submissions completed (74/77 claims)")
+    print("Agreement: frozen separately; adjudication/calibration: unavailable")
+    print("Decision: independent_annotations_ready_adjudication_required")
     print("Held-out/runtime/Hermes: blocked")
     print("PASS")
     return 0

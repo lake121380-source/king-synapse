@@ -1,6 +1,6 @@
 # Phase 7.3.1-C Artifact Lineage & Irreversible Transition Gate
 
-Status: governance protocol, exact-file SHA-256 lineage, transition state machine, report harness, and tests frozen. Scientific review remains at `0/2`.
+Status: two heterogeneous blind AI reviews and the exact-file Agreement Report are frozen. Workflow is at `agreement_report_frozen_adjudication_allowed`; adjudication has not started.
 
 ## Purpose
 
@@ -58,11 +58,11 @@ Generated metadata, including timestamps, is included in the exact-file hash. Re
 ## Current result
 
 ```text
-state                         awaiting_independent_reviews
-completed                     0/2
+state                         agreement_report_frozen_adjudication_allowed
+completed                     2/2
 artifact lineage broken       false
-agreement computation         unauthorized
-adjudication                   unauthorized
+agreement computation         complete and frozen
+adjudication                   authorized but not executed
 Gold freeze                    unauthorized
 Judge calibration              unauthorized
 Gold/Judge hashes              unavailable

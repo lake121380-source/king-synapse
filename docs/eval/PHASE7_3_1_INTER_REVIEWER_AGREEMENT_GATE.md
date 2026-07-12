@@ -103,9 +103,9 @@ annotation-confidence agreement
 ## Current result
 
 ```text
-Reviewer A completed  false
-Reviewer B completed  false
-Agreement metrics      unavailable
+Reviewer A completed  true (GPT-4.1, 74 claims)
+Reviewer B completed  true (Qwen 3.5 Plus, 77 claims)
+Agreement metrics      available and frozen
 Adjudication used      false
 Frozen Judge visible   false
 Held-out accessed      false
@@ -115,10 +115,10 @@ Runtime/Hermes         false
 Decision:
 
 ```text
-waiting_for_two_independent_submissions
+agreement_report_ready_adjudication_required
 ```
 
-No semantic reliability, Candidate error rate, Gold label, or Judge-calibration claim is made by this readiness result.
+The report measures heterogeneous-model agreement only. It does not create human Gold, adjudicated silver labels, Candidate error rates, or Judge calibration.
 
 ## Phase 7.3.1-C lineage binding
 
