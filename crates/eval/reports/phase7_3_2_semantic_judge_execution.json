@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "execution_id": "phase7.3.2-semantic-judge-design-execution-v1",
+  "phase": "Phase 7.3.2 Semantic Judge Redesign",
+  "status": "completed",
+  "provider_name": "https://api.gpt.ge/v1",
+  "model_requested": "gpt-5.4",
+  "resolved_model": "gpt-5.4-2026-03-05",
+  "prompt_version": "PatternSemanticJudgePrompt-v1",
+  "prompt_sha256": "a50a43e6ff78c4191f2888c55178a30acc85b031a24fe1d02af267960a23399a",
+  "protocol_sha256": "8b5de0324bf4f1505493ca24595d51b453f6d51a2eb6ac3b6dbbc3ec4534de52",
+  "design_dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+  "candidate_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+  "adapter_sha256": "20f8f432dab8f3c9aa031f77ec2d0ee28aec2e5f82411b6a5a0db4837b2027d1",
+  "temperature": 0,
+  "top_p": 1,
+  "strict_parser": true,
+  "automatic_repair": false,
+  "selective_retry": false,
+  "case_isolation": true,
+  "silver_labels_visible": false,
+  "reviewer_annotations_visible": false,
+  "adjudication_visible": false,
+  "old_judge_visible": false,
+  "reference_candidates_visible": false,
+  "held_out_accessed": false,
+  "api_key_recorded": false,
+  "raw_provider_responses_stored": false,
+  "design_case_count": 10,
+  "completed_case_count": 10,
+  "decisions": [
+    {
+      "case_id": "extract_01",
+      "candidate_response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_01_counter_3",
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "reasonable_bridging_inference",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded pattern that incremental/canary-style rollout can reveal defects early and limit impact to a subset: one case found a regression at 5% traffic and only that cohort needed rollback, and another found a defect at cohort two and stopped moving remaining tenants. The backward-compatibility condition is reasonably grounded by the supplied counterexample where coexistence was impossible and partial rollout caused harm. However, the candidate overstates the prediction with 'the first cohort will expose any critical regression without affecting the rest of the system' and 'old version remains fully operational during the entire rollout phase'; the evidence shows defects were found in one case at 5% and in another at cohort two, not guaranteed in the first cohort or for any critical regression.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_02",
+      "candidate_response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_02_counter_3",
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "reason_codes": [
+        "certainty_escalation",
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_preserved",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded pattern that impact/time-sensitivity labeling improved routing visibility and speed for urgent cases, and that requester-status-only ranking can delay critical issues. However, the candidate overstates this as 'ensures' prompt handling, adds stronger ordering details than observed, and makes a quantified prediction (90%, highest score resolved first) not supported by the experiences.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_03",
+      "candidate_response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_03_counter_3",
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_preserved",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded pattern that in the two cited product experiments, predefined quantitative criteria were followed in evaluation: one accepted a neutral result without redefining success, and one stopped when a guardrail was crossed despite temporary gain. The candidate appropriately excludes the exploratory counterexample. However, it overstates the supported outcome by predicting the team's final decision will match predefined threshold triggers; the evidence shows adherence in evaluation/stopping, but not a general rule for all final decisions such as launch or abandon.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_04",
+      "candidate_response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_04_counter_3",
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_preserved",
+        "unsupported_detail"
+      ],
+      "rationale": "The two supporting cases directly show that examining these evidence classes helped isolate a memory-limit change and a filesystem permission change, and one case explicitly avoided replacing unrelated components. The counterexample is appropriately preserved by excluding active corruption/ongoing damaging writes. However, the candidate overstates the observed evidence by claiming this diagnosis method generally isolates a specific root cause without unrelated replacement across new service failures; that predictive generalization and the repeated 'without replacing unrelated components' detail are not fully supported by both source cases.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_05",
+      "candidate_response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_05_counter_3",
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_preserved",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded association: in compared AI posts from the same audience/month, concrete examples and early problem framing recurred in more successful posts, and this association replicated on a second account with saves and qualified comments. The candidate also appropriately preserves the external-virality counterexample. However, the prediction overstates the evidence by saying such posts will have higher engagement and by adding a specific 50% lift threshold, neither of which was observed directly. The falsification statement also adds unsupported detail about posts without these features achieving higher engagement due to external virality.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_06",
+      "candidate_response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_06_counter_3",
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "reasonable_bridging_inference",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded pattern that limited exposure to a representative or internal subset can surface hidden issues before full rollout, and that probing only the simplest subset can miss issues seen later. However, the candidate adds stronger detail than observed: px_06_support_1 does not establish that the internal group was representative of full-population complexity, and the prediction overcommits by stating that representative-subset exposure will detect at least one hidden issue before rollout. The counterexample is properly preserved as a limitation on simplest-only probes.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_07",
+      "candidate_response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_07_counter_3",
+        "px_07_support_1",
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "certainty_escalation",
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "reasonable_bridging_inference",
+        "scope_expansion",
+        "unsupported_detail"
+      ],
+      "rationale": "The evidence supports a bounded pattern that predefined automatic stop conditions can limit harm in the two observed cases, and that a noisy metric weakly related to harm produced repeated false stops and delays in one counterexample. However, the candidate strengthens this into a broader claim that directly harmful, low-noise metrics prevent full incidents and avoid false stops, details not directly established by the evidence. The support cases do not explicitly establish low noise, direct harm relevance, or absence of false stops, and the predictions overcommit to specific future outcomes from single observations.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_08",
+      "candidate_response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_08_counter_3",
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_expansion"
+      ],
+      "rationale": "The candidate’s core pattern is grounded by one case where a reversible lower-risk intervention was used during testing and later avoided invasive action, plus one case where escalation stayed fast when both confirmation and deterioration were present. The counterexample is appropriately preserved: waiting for complete evidence during rapidly worsening vital signs increased harm. However, the candidate combines these observations into a broader rule and its prediction overcommits by stating that under the combined conditions the patient will stabilize and invasive action will be avoided; that exact combined outcome was not directly observed across the evidence.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_09",
+      "candidate_response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_09_counter_3",
+        "px_09_support_1",
+        "px_09_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_expansion"
+      ],
+      "rationale": "The evidence supports a bounded pattern that convergence across genuinely independent measurements or methods aligned with the same result in these observed cases, and that repeated claims from a single unverified origin can create fragile apparent consensus that disappears on correction. However, the candidate generalizes this into a broader claim that such convergence means the result is robust, and its prediction states that independent labs will converge within preregistered tolerance, which is stronger than the limited observed instances.",
+      "confidence": "high",
+      "abstained": false
+    },
+    {
+      "case_id": "extract_10",
+      "candidate_response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "support_label": "partially_supported",
+      "unsupported_warning": true,
+      "cited_evidence_ids": [
+        "px_10_counter_3",
+        "px_10_support_1",
+        "px_10_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "direct_evidence_match",
+        "prediction_overcommitment",
+        "scope_preserved",
+        "unsupported_detail"
+      ],
+      "rationale": "The core pattern is grounded by two observed cases: buffering helped for a long-lead, volatile-demand component and for products with predictable spikes plus slow supplier response, while a daily-replenished, stable-demand item showed buffering was counterproductive. However, the prediction adds unsupported specificity: the evidence only shows carrying cost stayed within a declared limit in one case, not a general measurable criterion of at least 30% stockout reduction or a generalized budget metric. The falsification statement also adds unobserved detail by specifying expiration for daily replenishment and stable demand as a general condition based on a single counterexample.",
+      "confidence": "high",
+      "abstained": false
+    }
+  ],
+  "protocol_id": "phase7.3.2-semantic-judge-redesign-v1"
+}

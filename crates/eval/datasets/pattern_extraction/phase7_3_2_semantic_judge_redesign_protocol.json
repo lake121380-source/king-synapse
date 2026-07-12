@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.2-semantic-judge-redesign-v1",
+  "phase": "Phase 7.3.2 Semantic Judge Redesign",
+  "purpose": "Measure whether an evidence-constrained semantic Judge can discriminate supported, partially supported, unsupported, and not-assessable design Candidates better than the frozen lexical proxy Judge.",
+  "measurement_objects": {
+    "evidence_bundle": "frozen_control",
+    "design_candidates": "frozen_control",
+    "model_adjudicated_silver": "diagnostic_reference_only_not_human_gold",
+    "extractor": "frozen_control",
+    "provider": "frozen_control",
+    "prompt_parser_repair": "frozen_control",
+    "old_frozen_judge": "frozen_comparison_baseline",
+    "semantic_judge": "sole_experimental_variable"
+  },
+  "support_labels": [
+    "supported",
+    "partially_supported",
+    "unsupported",
+    "not_assessable"
+  ],
+  "judge_input_policy": {
+    "allowed": [
+      "case_id",
+      "source_domain",
+      "objective",
+      "experience evidence",
+      "candidate",
+      "support-label definitions",
+      "reason-code definitions"
+    ],
+    "forbidden": [
+      "silver labels",
+      "adjudication rationale",
+      "reviewer annotations",
+      "old Judge warnings",
+      "Phase 7.3 aggregate metrics",
+      "held-out cases",
+      "reference candidate"
+    ],
+    "case_isolation": true
+  },
+  "decision_policy": {
+    "supported": "All material Candidate claims are directly supported or conservatively entailed by the supplied evidence without meaningful scope, causal, predictive, or certainty escalation.",
+    "partially_supported": "The central pattern is grounded, but at least one material detail, certainty level, scope, causal statement, prediction, or falsification statement is stronger than the evidence.",
+    "unsupported": "The central proposition is not supported, contradicts the evidence, ignores a decisive counterexample, or relies primarily on invented generalization.",
+    "not_assessable": "The supplied evidence is insufficient to determine support even conservatively; abstention is required rather than guessing.",
+    "strict_safety_positive": ["partially_supported", "unsupported"],
+    "strong_error_positive": ["unsupported"],
+    "not_assessable_excluded_from_binary_views": true
+  },
+  "reason_codes": [
+    "direct_evidence_match",
+    "conservative_entailment",
+    "reasonable_bridging_inference",
+    "scope_preserved",
+    "counterexample_preserved",
+    "scope_expansion",
+    "certainty_escalation",
+    "causal_leap",
+    "prediction_overcommitment",
+    "unsupported_detail",
+    "counterexample_ignored",
+    "central_proposition_unsupported",
+    "insufficient_evidence"
+  ],
+  "evaluation_metrics": [
+    "ordinal_exact_agreement",
+    "coverage",
+    "abstention_rate",
+    "precision",
+    "recall_sensitivity",
+    "specificity",
+    "false_positive_rate",
+    "balanced_accuracy",
+    "matthews_correlation_coefficient"
+  ],
+  "success_criteria": {
+    "specificity_must_exceed_old_judge": true,
+    "false_positive_rate_must_be_below_old_judge": true,
+    "balanced_accuracy_must_exceed_old_judge": true,
+    "recall_must_not_collapse": true,
+    "generalized_performance_claim_allowed": false
+  },
+  "frozen_execution": {
+    "design_cases_only": true,
+    "temperature": 0,
+    "top_p": 1,
+    "response_format": "strict_json_object",
+    "automatic_repair": false,
+    "selective_retry": false,
+    "raw_provider_responses_stored": false
+  },
+  "guards": {
+    "held_out_accessed": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "threshold_tuning_authorized": false,
+    "extractor_modification_authorized": false,
+    "human_gold_claimed": false
+  }
+}

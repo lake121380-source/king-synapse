@@ -983,3 +983,29 @@ The API deterministically resolves each adjudicated group back to one design cas
 ### Phase 7.3.1-F diagnostic calibration result
 
 `Phase7AdjudicationCalibrationReport` now includes exact Silver/Judge lineage hashes, ten transparent `candidate_calibration_rows`, strict-safety and strong-error confusion matrices, and a deliberately null `scope_calibration`. Calibration-facing row fields use `silver_support_label`; model Silver is never represented as human Gold.
+
+
+## Phase 7.3.2 Semantic Judge Redesign API
+
+Module: `phase7_semantic_judge_redesign`
+
+Primary entry points:
+
+- `Phase7SemanticJudgeRedesignEvaluator::evaluate`
+- `load_phase7_semantic_judge_execution`
+- `semantic_judge_execution_path`
+
+Primary types:
+
+- `SemanticJudgeDecision`
+- `SemanticJudgeExecutionArtifact`
+- `OrdinalComparisonRow`
+- `OrdinalAgreement`
+- `JudgeCalibrationSummary`
+- `SemanticJudgeDelta`
+- `SemanticJudgeArtifactHashes`
+- `SemanticJudgeGuards`
+- `Phase7SemanticJudgeRedesignDecision`
+- `Phase7SemanticJudgeRedesignReport`
+
+The evaluator compares the immutable old lexical-warning Judge and a separate ordinal semantic Judge against the same model-adjudicated Silver candidate references. Semantic-Judge inputs are case-isolated Evidence plus Candidate only; Silver, reviewer, adjudication, old-Judge, reference-Candidate, and held-out artifacts are forbidden. Binary strict-safety and strong-error views, ordinal agreement, abstention, exact artifact hashes, and no-authority guards are reported. Scope calibration remains null until independently adjudicated scope references exist.

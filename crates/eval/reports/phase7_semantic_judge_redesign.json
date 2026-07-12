@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "evaluation_version": "phase7.3.2-semantic-judge-redesign-v1",
+  "tag": "phase7.3.2-semantic-judge-redesign-design-only",
+  "generated_at": "2026-07-12T07:13:31.515076900+00:00",
+  "phase": "Phase 7.3.2 Semantic Judge Redesign",
+  "purpose": "Measure whether an evidence-constrained semantic Judge can discriminate supported, partially supported, unsupported, and not-assessable design Candidates better than the frozen lexical proxy Judge.",
+  "reference_status": "model_adjudicated_silver_not_human_gold",
+  "artifact_hashes": {
+    "protocol_sha256": "8b5de0324bf4f1505493ca24595d51b453f6d51a2eb6ac3b6dbbc3ec4534de52",
+    "prompt_sha256": "a50a43e6ff78c4191f2888c55178a30acc85b031a24fe1d02af267960a23399a",
+    "design_dataset_sha256": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "candidate_execution_sha256": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+    "silver_freeze_sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+    "old_judge_report_sha256": "050a985d84c4052c36a37fe69a4eb411c390b724145daed0fbe5d09edfe0e94e",
+    "semantic_judge_execution_sha256": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67"
+  },
+  "execution_status": "completed",
+  "semantic_judge_provider": "https://api.gpt.ge/v1",
+  "semantic_judge_model": "gpt-5.4-2026-03-05",
+  "ordinal_rows": [
+    {
+      "case_id": "extract_01",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_02",
+      "silver_support_label": "unsupported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": false
+    },
+    {
+      "case_id": "extract_03",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_04",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_05",
+      "silver_support_label": "unsupported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": false
+    },
+    {
+      "case_id": "extract_06",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_07",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_08",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    },
+    {
+      "case_id": "extract_09",
+      "silver_support_label": "supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": false
+    },
+    {
+      "case_id": "extract_10",
+      "silver_support_label": "partially_supported",
+      "semantic_judge_support_label": "partially_supported",
+      "exact_match": true
+    }
+  ],
+  "ordinal_agreement": {
+    "case_count": 10,
+    "exact_match_count": 7,
+    "exact_agreement": 0.7,
+    "confusion": {
+      "partially_supported": {
+        "partially_supported": 7
+      },
+      "supported": {
+        "partially_supported": 1
+      },
+      "unsupported": {
+        "partially_supported": 2
+      }
+    }
+  },
+  "old_frozen_judge": {
+    "strict_safety": {
+      "true_positive": 9,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_negative": 0,
+      "excluded": 0,
+      "precision": 0.9,
+      "precision_wilson_95": {
+        "lower": 0.5958499732047615,
+        "upper": 0.9821237869049271
+      },
+      "recall_sensitivity": 1.0,
+      "recall_sensitivity_wilson_95": {
+        "lower": 0.7008549515804559,
+        "upper": 1.0
+      },
+      "specificity": 0.0,
+      "specificity_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.7934506856227626
+      },
+      "false_positive_rate": 1.0,
+      "false_positive_rate_wilson_95": {
+        "lower": 0.20654931437723745,
+        "upper": 1.0
+      },
+      "false_negative_rate": 0.0,
+      "false_negative_rate_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.2991450484195441
+      },
+      "balanced_accuracy": 0.5,
+      "matthews_correlation_coefficient": null
+    },
+    "strong_error": {
+      "true_positive": 2,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_negative": 0,
+      "excluded": 7,
+      "precision": 0.6666666666666666,
+      "precision_wilson_95": {
+        "lower": 0.2076596008020477,
+        "upper": 0.9385080552796037
+      },
+      "recall_sensitivity": 1.0,
+      "recall_sensitivity_wilson_95": {
+        "lower": 0.34238022750665303,
+        "upper": 1.0
+      },
+      "specificity": 0.0,
+      "specificity_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.7934506856227626
+      },
+      "false_positive_rate": 1.0,
+      "false_positive_rate_wilson_95": {
+        "lower": 0.20654931437723745,
+        "upper": 1.0
+      },
+      "false_negative_rate": 0.0,
+      "false_negative_rate_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.6576197724933469
+      },
+      "balanced_accuracy": 0.5,
+      "matthews_correlation_coefficient": null
+    },
+    "coverage": 1.0,
+    "abstention_rate": 0.0
+  },
+  "redesigned_semantic_judge": {
+    "strict_safety": {
+      "true_positive": 9,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_negative": 0,
+      "excluded": 0,
+      "precision": 0.9,
+      "precision_wilson_95": {
+        "lower": 0.5958499732047615,
+        "upper": 0.9821237869049271
+      },
+      "recall_sensitivity": 1.0,
+      "recall_sensitivity_wilson_95": {
+        "lower": 0.7008549515804559,
+        "upper": 1.0
+      },
+      "specificity": 0.0,
+      "specificity_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.7934506856227626
+      },
+      "false_positive_rate": 1.0,
+      "false_positive_rate_wilson_95": {
+        "lower": 0.20654931437723745,
+        "upper": 1.0
+      },
+      "false_negative_rate": 0.0,
+      "false_negative_rate_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.2991450484195441
+      },
+      "balanced_accuracy": 0.5,
+      "matthews_correlation_coefficient": null
+    },
+    "strong_error": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 1,
+      "excluded": 7,
+      "precision": null,
+      "precision_wilson_95": null,
+      "recall_sensitivity": 0.0,
+      "recall_sensitivity_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.6576197724933469
+      },
+      "specificity": 1.0,
+      "specificity_wilson_95": {
+        "lower": 0.20654931437723745,
+        "upper": 1.0
+      },
+      "false_positive_rate": 0.0,
+      "false_positive_rate_wilson_95": {
+        "lower": 0.0,
+        "upper": 0.7934506856227626
+      },
+      "false_negative_rate": 1.0,
+      "false_negative_rate_wilson_95": {
+        "lower": 0.34238022750665303,
+        "upper": 1.0
+      },
+      "balanced_accuracy": 0.5,
+      "matthews_correlation_coefficient": null
+    },
+    "coverage": 1.0,
+    "abstention_rate": 0.0
+  },
+  "delta_vs_old_frozen_judge": {
+    "strict_specificity_delta": 0.0,
+    "strict_false_positive_rate_delta": 0.0,
+    "strict_balanced_accuracy_delta": 0.0,
+    "strict_recall_delta": 0.0,
+    "strong_specificity_delta": 1.0,
+    "strong_false_positive_rate_delta": -1.0,
+    "strong_balanced_accuracy_delta": 0.0,
+    "strong_recall_delta": -1.0
+  },
+  "scope_calibration": null,
+  "guards": {
+    "evidence_bundle_frozen": true,
+    "design_candidates_frozen": true,
+    "model_adjudicated_silver_frozen": true,
+    "human_gold_claimed": false,
+    "extractor_modified": false,
+    "provider_modified": false,
+    "old_frozen_judge_modified": false,
+    "semantic_judge_only_experimental_variable": true,
+    "silver_labels_visible_to_semantic_judge": false,
+    "reviewer_annotations_visible_to_semantic_judge": false,
+    "old_judge_visible_to_semantic_judge": false,
+    "reference_candidates_visible_to_semantic_judge": false,
+    "held_out_cases_untouched": true,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false,
+    "generalized_performance_claimed": false
+  },
+  "decision": "diagnostic_discrimination_not_improved",
+  "conclusion": "On the ten frozen design Candidates, the redesigned semantic Judge does not satisfy the frozen discrimination criteria against the always-positive lexical proxy. This negative result authorizes no tuning on held-out data and no runtime, memory, Hermes, or Pattern-promotion integration."
+}

@@ -49,6 +49,7 @@ pub mod phase7_model_adjudicated_silver_freeze;
 pub mod phase7_pattern_extraction_protocol;
 pub mod phase7_pattern_provider_comparison;
 pub mod phase7_real_provider_readiness;
+pub mod phase7_semantic_judge_redesign;
 pub mod phase7_transfer_evaluation_protocol;
 pub mod reporter;
 pub mod types;
