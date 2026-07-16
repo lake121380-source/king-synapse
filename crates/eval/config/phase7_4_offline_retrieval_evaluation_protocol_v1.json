@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.4.2-offline-retrieval-evaluation-protocol-v1",
+  "status": "frozen_before_independent_source_inventory_and_effect_content",
+  "entry_gate": "m0_governance_baseline_frozen_phase7_4_2_protocol_freeze_authorized",
+  "stage_role": "rq1_rq2_preregistration_not_dataset_opening_or_effect_execution",
+  "frozen_governance_inputs": {
+    "docs/KING_SYNAPSE_LONG_TERM_COMPLETION_PLAN.md": "eb20101e78f01726a3d9ebe5ce7f7ec2777c300647cf52aae98936ddeb9602bf",
+    "crates/eval/config/project_completion_contract_v1.json": "63831b2886346d047413656155eb95a960e04061eb5f161992439c1081d1f924",
+    "crates/eval/datasets/pattern_extraction/phase7_4_stage_state_v3.json": "8f8e8f6cc9d57308c2508595e7cf5885261795c3cd9c29c60c1a5d71417549b1",
+    "crates/eval/reports/phase7_4_readiness_v3.json": "e748ddef11d7d4a99b0bb28a229d748a70aa9aa4f01be175e9d3099bf9b7566d",
+    "crates/eval/reports/phase7_4_m0_governance_freeze_receipt_v1.json": "1e9f8e6ecf67c4ddeddd5d6268275d95f123851ddfe0ccc6f30f3a2867e03c0f"
+  },
+  "protocol_document": {
+    "path": "docs/eval/PHASE7_4_2_OFFLINE_RETRIEVAL_EVALUATION_PROTOCOL.md",
+    "sha256": "13ceee510f661e59c1ac468f3e1c4d20e89d8b0a6ea244c18be85dd1e6a60480"
+  },
+  "schemas": {
+    "blind_case": {
+      "path": "crates/eval/config/phase7_4_offline_retrieval_case_schema_v1.json",
+      "sha256": "d2a89998a154b0c6e58d10309b263f1199fd1e4efef2cb239243490e4731481f"
+    },
+    "gold": {
+      "path": "crates/eval/config/phase7_4_offline_retrieval_gold_schema_v1.json",
+      "sha256": "7c96fbd29e11b755dd932a0e81348305e40f4d22aabbbf41ec438b8252239f1d"
+    },
+    "blind_arm_output": {
+      "path": "crates/eval/config/phase7_4_offline_retrieval_arm_output_schema_v1.json",
+      "sha256": "b07881b289d5657eb1e66d5470c45532db54a18abed6ce193dfa6738605ce729"
+    }
+  },
+  "execution_environment": {
+    "path": "crates/eval/config/phase7_4_offline_retrieval_execution_environment_v1.json",
+    "sha256": "5b5b02a7651da6fb7ef4d0a4c25efb76beb38bacd7f63a518ec06b168bdff786",
+    "provider": "none",
+    "network_required": false,
+    "gpu_required": false
+  },
+  "research_family": {
+    "family_id": "phase7.4-rq1-rq2-capability-entry-family-v1",
+    "familywise_one_sided_alpha": 0.05,
+    "multiplicity_procedure": "holm_bonferroni",
+    "deterministic_equal_p_tie_order": [
+      "RQ1",
+      "RQ2"
+    ],
+    "rq3_in_family": false,
+    "rq3_can_compensate_for_rq1_and_rq2_failure": false,
+    "at_least_one_primary_rq_must_pass": true
+  },
+  "research_questions": [
+    {
+      "rq_id": "RQ1",
+      "name": "evidence_localization",
+      "primary_estimand": "mean_case_localization_f1_arm_b_minus_arm_a",
+      "beneficial_direction": "positive",
+      "minimum_practical_effect": 0.05,
+      "pass_requires_holm_adjusted_p_lte": 0.05,
+      "pass_requires_one_sided_95pct_lower_bound_gt": 0
+    },
+    {
+      "rq_id": "RQ2",
+      "name": "unsupported_or_contradictory_activation",
+      "primary_estimand": "mean_case_unsupported_activation_rate_arm_a_minus_arm_b",
+      "beneficial_direction": "positive",
+      "minimum_practical_effect": 0.03,
+      "pass_requires_holm_adjusted_p_lte": 0.05,
+      "pass_requires_one_sided_95pct_lower_bound_gt": 0,
+      "supported_recall_noninferiority_estimand": "mean_case_supported_evidence_recall_arm_b_minus_arm_a",
+      "supported_recall_noninferiority_margin": -0.02,
+      "supported_recall_lower_bound_must_be_gt": -0.02
+    }
+  ],
+  "sampling_design": {
+    "paired_experimental_unit": "independently_authored_phase7_4_case",
+    "target_selected_case_count": 168,
+    "minimum_analyzable_case_count": 160,
+    "candidate_memory_count_per_case": 10,
+    "result_cutoff_k": 5,
+    "strata": [
+      "temporal_update",
+      "contradiction",
+      "preference_evolution",
+      "failure_learning",
+      "causal_reasoning",
+      "multi_entity_reasoning",
+      "uncertainty_boundary",
+      "adversarial_lexical_overlap"
+    ],
+    "target_selected_cases_per_stratum": 21,
+    "minimum_analyzable_cases_per_stratum": 20,
+    "primary_weighting": "equal_case_weight",
+    "strata_are_diagnostic_not_additional_confirmatory_hypotheses": true,
+    "sampling_frame_seed": 7402101,
+    "effect_content_opened_during_protocol_freeze": false
+  },
+  "design_power": {
+    "assumed_paired_difference_sd": 0.2,
+    "conservative_per_hypothesis_one_sided_alpha": 0.025,
+    "target_power": 0.8,
+    "minimum_analyzable_n": 160,
+    "normal_approximation_mde": 0.0443,
+    "rq1_practical_threshold_rounded_up_to": 0.05,
+    "phase7_3_3_d_effect_data_used": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm_a_chunk_retrieval",
+      "representation_unit": "complete_memory_chunk",
+      "scores_all_candidate_memories": true,
+      "result_cutoff_k": 5,
+      "activation_exposure": "all_assessable_gold_claims_in_retrieved_chunk",
+      "localization_exposure": "complete_source_memory_span"
+    },
+    {
+      "arm_id": "arm_b_atomic_retrieval_evidence_reconstruction",
+      "representation_unit": "frozen_atomic_evidence_unit",
+      "scores_all_atomic_units_in_candidate_memories": true,
+      "memory_reconstruction_score": "maximum_retrieved_atomic_unit_score",
+      "memory_tie_breaker": "frozen_candidate_pool_ordinal",
+      "result_cutoff_k": 5,
+      "activation_exposure": "selected_atomic_claims_only",
+      "localization_exposure": "selected_atomic_source_spans_only",
+      "unit_inference_repair_drop_relabel_merge_or_resegmentation_allowed": false
+    }
+  ],
+  "arm_equality": {
+    "same_case_and_query_bytes": true,
+    "same_candidate_memory_ids_and_hashes": true,
+    "same_candidate_pool_order": true,
+    "same_tokenizer_and_query_normalization": true,
+    "same_scoring_formula_and_precision": true,
+    "same_result_cutoff": true,
+    "same_hardware_process_timeout_and_clock": true,
+    "same_tie_policy": true,
+    "same_failure_logging_and_output_schema": true,
+    "atomic_extra_work_is_measured_treatment_cost": true,
+    "artificial_atomic_pool_truncation_allowed": false
+  },
+  "gold_support_states": [
+    "supported",
+    "partially_supported",
+    "unsupported",
+    "contradictory",
+    "not_assessable"
+  ],
+  "primary_metrics": {
+    "localization_f1": {
+      "unit": "union_of_unicode_scalar_character_intervals",
+      "gold_states": [
+        "supported",
+        "partially_supported"
+      ],
+      "empty_prediction_f1": 0
+    },
+    "unsupported_activation_rate": {
+      "numerator_states": [
+        "unsupported",
+        "contradictory"
+      ],
+      "denominator": "all_activated_assessable_gold_claims",
+      "duplicate_claim_exposure_counts_once": true
+    },
+    "supported_evidence_recall": {
+      "supported_states": [
+        "supported",
+        "partially_supported"
+      ]
+    }
+  },
+  "secondary_metrics": [
+    "memory_recall_at_1",
+    "memory_recall_at_3",
+    "memory_recall_at_5",
+    "memory_mrr_at_5",
+    "evidence_precision_at_5",
+    "evidence_recall_at_5",
+    "contradiction_exposure_rate",
+    "not_assessable_exposure_rate",
+    "reconstruction_failure_rate",
+    "deterministic_semantic_replay_rate",
+    "latency_p50_p95_p99",
+    "scored_representation_unit_count",
+    "peak_process_memory_delta",
+    "serialized_overlay_to_source_byte_ratio"
+  ],
+  "statistical_plan": {
+    "primary_test": "one_sided_paired_sign_flip_permutation",
+    "exact_enumeration_when_feasible": true,
+    "monte_carlo_samples": 100000,
+    "permutation_seed": 7402001,
+    "plus_one_p_value_correction": true,
+    "numeric_precision": "ieee754_binary64",
+    "intermediate_rounding_allowed": false,
+    "bootstrap": {
+      "method": "paired_case_percentile",
+      "samples": 20000,
+      "seed": 7402002,
+      "two_sided_effect_interval": 0.95,
+      "one_sided_gate_lower_bound": 0.95
+    }
+  },
+  "missing_and_failure_policy": {
+    "intent_to_evaluate_all_selected_cases": true,
+    "selective_rerun_allowed": false,
+    "selective_case_deletion_allowed": false,
+    "silent_repair_allowed": false,
+    "maximum_unpaired_or_unusable_rate": 0.05,
+    "minimum_analyzable_cases": 160,
+    "minimum_analyzable_cases_per_stratum": 20,
+    "arm_b_only_localization_failure_f1": 0,
+    "arm_b_only_activation_failure_unsupported_rate": 1,
+    "arm_b_only_activation_failure_supported_recall": 0,
+    "arm_a_only_failure": "pair_unidentifiable_retained_in_failure_accounting",
+    "shared_infrastructure_failure": "classified_no_silent_replacement",
+    "complete_pair_analysis_role": "sensitivity_only"
+  },
+  "pre_effect_gates": {
+    "representation_gate": {
+      "aggregate_atomic_units_gt_memory_chunks": true,
+      "whole_memory_single_unit_case_count_max": 0,
+      "query_or_gold_used_for_segmentation_allowed": false,
+      "deterministic_overlay_and_claim_ids_required": true
+    },
+    "evidence_coverage_gate": {
+      "source_and_overlay_hashes_required": true,
+      "valid_source_locator_and_provenance_required": true,
+      "gold_spans_in_bounds_required": true,
+      "supported_gold_evidence_per_case_required": true,
+      "undeclared_overlap_or_gap_allowed": false
+    },
+    "reference_gate": {
+      "blind_reviewer_count": 2,
+      "minimum_aggregate_span_f1": 0.8,
+      "minimum_aggregate_support_state_cohen_kappa": 0.7,
+      "minimum_stratum_support_state_cohen_kappa": 0.6,
+      "all_disagreements_adjudicated_required": true,
+      "deferred_count_for_gold_freeze": 0
+    },
+    "leakage_gate": {
+      "exact_case_id_overlap_max": 0,
+      "exact_source_id_overlap_max": 0,
+      "exact_normalized_source_text_hash_overlap_max": 0,
+      "exact_candidate_hash_overlap_max": 0,
+      "exact_evidence_hash_overlap_max": 0,
+      "label_or_adjudication_lineage_reuse_max": 0,
+      "normalized_five_gram_jaccard_manual_review_threshold": 0.85,
+      "unresolved_high_similarity_pair_max": 0
+    },
+    "dataset_opening_gate_requires_frozen": [
+      "source_inventory_and_sampling_frame",
+      "selection_algorithm_and_seed",
+      "case_worklist_and_gold_schemas",
+      "atomic_segmentation_implementation",
+      "arm_a_and_arm_b_implementation_hashes",
+      "metrics_and_statistical_implementation_hashes",
+      "execution_environment_and_cost_accounting",
+      "all_pre_effect_gate_reports_and_receipts"
+    ]
+  },
+  "realized_identifiability_gate": {
+    "same_case_query_pool_and_cutoff_hashes_required": true,
+    "gold_or_arm_output_access_by_segmentation_allowed": false,
+    "frozen_implementation_and_environment_required": true,
+    "nondegenerate_atomic_exposure_required": true,
+    "minimum_analyzable_pairs": 160,
+    "minimum_pairs_per_stratum": 20,
+    "maximum_unusable_rate": 0.05,
+    "systematic_arm_specific_failure_imbalance_allowed": false,
+    "complete_failure_and_resource_accounting_required": true,
+    "byte_identical_semantic_projection_replay_required": true,
+    "on_failure": "freeze_authoritative_invalid_or_unidentifiable_result"
+  },
+  "regression_gate": {
+    "memory_recall_at_5_arm_b_minus_arm_a_one_sided_lower_bound_gt": -0.02,
+    "mean_mrr_at_5_arm_b_minus_arm_a_min": -0.03,
+    "maximum_harmful_activation_increase_per_stratum": 0.01,
+    "deterministic_semantic_replay_rate_min": 1,
+    "lineage_failure_count_max": 0,
+    "reconstruction_failure_rate_max": 0.01
+  },
+  "cost_gate": {
+    "p95_latency_ratio_arm_b_over_arm_a_max": 2,
+    "p95_absolute_latency_increase_ms_max": 20,
+    "peak_process_memory_delta_bytes_max": 268435456,
+    "peak_process_memory_ratio_arm_b_over_arm_a_max": 2,
+    "mean_scored_atomic_units_over_chunks_max": 8,
+    "serialized_overlay_bytes_over_source_bytes_max": 6,
+    "provider_cost_usd": 0
+  },
+  "failure_taxonomy": [
+    "input_lineage_failure",
+    "selection_failure",
+    "leakage_failure",
+    "reference_failure",
+    "representation_failure",
+    "evidence_coverage_failure",
+    "structural_identifiability_failure",
+    "environment_failure",
+    "arm_equality_failure",
+    "timeout_failure",
+    "retrieval_failure",
+    "reconstruction_failure",
+    "unsupported_activation_accounting_failure",
+    "metric_failure",
+    "determinism_failure",
+    "realized_identifiability_failure",
+    "power_failure",
+    "regression_failure",
+    "cost_failure",
+    "audit_failure"
+  ],
+  "privacy_and_commit_policy": {
+    "sanitized_protocol_schema_manifest_aggregate_state_readiness_audit_receipt_allowed": true,
+    "credentials_allowed": false,
+    "raw_provider_request_or_response_allowed": false,
+    "private_source_data_allowed": false,
+    "unlicensed_third_party_content_allowed": false,
+    "local_absolute_paths_allowed": false,
+    "nondeterministic_identifiers_in_semantic_hashes_allowed": false,
+    "attempt_log_overwrite_allowed": false,
+    "failure_omission_allowed": false
+  },
+  "freeze_status": {
+    "independent_source_inventory_constructed": false,
+    "sampling_frame_constructed": false,
+    "selected_effect_content_opened": false,
+    "reference_review_started": false,
+    "gold_frozen": false,
+    "retrieval_implementation_frozen": false,
+    "arm_execution_started": false,
+    "effect_scoring_started": false,
+    "phase7_4_effect_provider_called": false,
+    "phase7_3_3_d_effect_data_loaded": false,
+    "memory_kind_modified": false,
+    "memory_schema_modified": false,
+    "recall_engine_modified": false,
+    "production_write_path_modified": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage": "construct_phase7_4_independent_source_inventory_and_sampling_frame_v1"
+}

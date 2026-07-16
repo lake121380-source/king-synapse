@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.4-offline-retrieval-arm-output-schema-v1",
+  "title": "Phase 7.4 Offline Retrieval Blind Arm Output",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "arm_id",
+    "status",
+    "protocol_sha256",
+    "implementation_sha256",
+    "environment_sha256",
+    "worklist_manifest_sha256",
+    "cutoff_k",
+    "case_count",
+    "case_outputs",
+    "resource_summary",
+    "authority"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^phase7\\.4-offline-retrieval-arm-[ab]-run-v[0-9]+$"
+    },
+    "arm_id": {
+      "enum": [
+        "arm_a_chunk_retrieval",
+        "arm_b_atomic_retrieval_evidence_reconstruction"
+      ]
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "completed_with_classified_failures",
+        "blocked"
+      ]
+    },
+    "protocol_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "implementation_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "environment_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "worklist_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "cutoff_k": {
+      "const": 5
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 160
+    },
+    "case_outputs": {
+      "type": "array",
+      "minItems": 160,
+      "items": {
+        "$ref": "#/$defs/case_output"
+      }
+    },
+    "resource_summary": {
+      "$ref": "#/$defs/resource_summary"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "span": {
+      "type": "object",
+      "required": [
+        "source_memory_id",
+        "start_char",
+        "end_char"
+      ],
+      "properties": {
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ranked_memory": {
+      "type": "object",
+      "required": [
+        "rank",
+        "source_memory_id",
+        "score",
+        "pool_ordinal",
+        "activated_atomic_claim_ids",
+        "activated_spans"
+      ],
+      "properties": {
+        "rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "type": "number"
+        },
+        "pool_ordinal": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        },
+        "activated_atomic_claim_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^aes-claim-v1-[0-9a-f]{64}$"
+          }
+        },
+        "activated_spans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "case_output": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "query_sha256",
+        "candidate_pool_sha256",
+        "status",
+        "failure_class",
+        "ranked_memories",
+        "scored_representation_unit_count",
+        "latency_ns",
+        "output_sha256"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^p74-[a-z0-9][a-z0-9_-]{7,95}$"
+        },
+        "query_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "candidate_pool_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ]
+        },
+        "failure_class": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ranked_memories": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/ranked_memory"
+          }
+        },
+        "scored_representation_unit_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latency_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resource_summary": {
+      "type": "object",
+      "required": [
+        "p50_latency_ns",
+        "p95_latency_ns",
+        "p99_latency_ns",
+        "peak_process_memory_delta_bytes",
+        "scored_representation_unit_count",
+        "provider_cost_usd"
+      ],
+      "properties": {
+        "p50_latency_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p95_latency_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p99_latency_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "peak_process_memory_delta_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scored_representation_unit_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "provider_cost_usd": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "eval_only",
+        "gold_accessed_during_arm_execution",
+        "provider_called",
+        "store_written",
+        "recall_engine_mutated",
+        "runtime_applied",
+        "promotion_authorized"
+      ],
+      "properties": {
+        "eval_only": {
+          "const": true
+        },
+        "gold_accessed_during_arm_execution": {
+          "const": false
+        },
+        "provider_called": {
+          "const": false
+        },
+        "store_written": {
+          "const": false
+        },
+        "recall_engine_mutated": {
+          "const": false
+        },
+        "runtime_applied": {
+          "const": false
+        },
+        "promotion_authorized": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "case outputs exactly match the frozen worklist order",
+    "ranked memories are unique and ranks are contiguous",
+    "Arm A activated spans cover complete retrieved Memory content",
+    "Arm B activated claim IDs and spans come only from frozen overlays",
+    "output_sha256 hashes the canonical semantic case projection excluding output_sha256 and latency_ns",
+    "arm execution cannot access Gold or effect-analysis artifacts"
+  ]
+}

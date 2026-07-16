@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "environment_id": "phase7.4-offline-retrieval-execution-environment-v1",
+  "status": "frozen_protocol_environment_no_effect_execution",
+  "protocol_freeze_baseline_head": "c8465f875cd6c01fc0e7fc5c804352462e6b6ef9",
+  "platform": {
+    "os_caption": "Microsoft Windows 10 Enterprise",
+    "os_version": "10.0.19045",
+    "os_build": "19045",
+    "architecture": "x86_64",
+    "powershell": "5.1.19041.6456"
+  },
+  "hardware_baseline": {
+    "cpu": "Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz",
+    "logical_processors": 24,
+    "physical_memory_bytes": 34191482880,
+    "gpu_required": false,
+    "network_required": false
+  },
+  "toolchain": {
+    "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+    "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+    "python": "3.13.12",
+    "jsonschema": "4.26.0"
+  },
+  "execution_lane": {
+    "mode": "offline_local_deterministic_provider_free",
+    "provider": "none",
+    "embedding_model": "none",
+    "reranker_model": "none",
+    "llm": "none",
+    "network_access_allowed": false,
+    "gpu_access_allowed": false,
+    "store_handle_allowed": false,
+    "recall_engine_handle_allowed": false,
+    "runtime_configuration_access_allowed": false,
+    "gold_access_during_segmentation_allowed": false,
+    "gold_access_during_arm_execution_allowed": false
+  },
+  "determinism": {
+    "unicode_normalization": "none",
+    "case_folding": "unicode_lowercase",
+    "numeric_precision": "ieee754_binary64",
+    "result_cutoff_k": 5,
+    "candidate_memory_count_per_case": 10,
+    "permutation_seed": 7402001,
+    "permutation_monte_carlo_samples": 100000,
+    "bootstrap_seed": 7402002,
+    "bootstrap_samples": 20000,
+    "sampling_frame_seed": 7402101,
+    "tie_breaker": "frozen_candidate_pool_ordinal",
+    "semantic_replay_projection_excludes": [
+      "latency_ns",
+      "resource_summary"
+    ]
+  },
+  "resource_measurement": {
+    "case_timeout_ms": 250,
+    "warmup_case_count": 10,
+    "performance_repetitions": 3,
+    "per_case_latency_aggregation": "median_of_three_after_warmup",
+    "run_latency_quantiles": [
+      0.5,
+      0.95,
+      0.99
+    ],
+    "clock": "std_time_instant_monotonic",
+    "memory_measurement": "process_working_set_delta",
+    "provider_cost_currency": "USD",
+    "provider_cost_usd": 0
+  },
+  "environment_drift_policy": {
+    "exact_toolchain_required_for_formal_execution": true,
+    "exact_os_build_required_for_formal_cost_gate": true,
+    "hardware_substitution_allowed": false,
+    "successor_environment_required_for_drift": true,
+    "same_version_environment_repair_allowed": false
+  },
+  "freeze_status": {
+    "effect_dataset_opened": false,
+    "effect_provider_called": false,
+    "phase7_3_3_d_effect_data_loaded": false,
+    "retrieval_implementation_frozen": false,
+    "arm_execution_started": false,
+    "effect_scoring_started": false,
+    "runtime_integration_authorized": false
+  }
+}

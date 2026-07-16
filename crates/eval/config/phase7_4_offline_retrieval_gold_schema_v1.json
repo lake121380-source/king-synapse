@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.4-offline-retrieval-gold-schema-v1",
+  "title": "Phase 7.4 Offline Retrieval Gold",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "gold_id",
+    "status",
+    "worklist_manifest_sha256",
+    "review_protocol_sha256",
+    "reviewer_a_submission_sha256",
+    "reviewer_b_submission_sha256",
+    "agreement_report_sha256",
+    "adjudication_submission_sha256",
+    "case_count",
+    "deferred_count",
+    "cases",
+    "provider_called_for_gold_freeze",
+    "phase7_3_3_d_effect_data_used"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "gold_id": {
+      "type": "string",
+      "pattern": "^phase7\\.4-offline-retrieval-gold-v[0-9]+$"
+    },
+    "status": {
+      "const": "frozen_independent_offline_retrieval_gold"
+    },
+    "worklist_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "review_protocol_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "reviewer_a_submission_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "reviewer_b_submission_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "agreement_report_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "adjudication_submission_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 160
+    },
+    "deferred_count": {
+      "const": 0
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 160,
+      "items": {
+        "$ref": "#/$defs/gold_case"
+      }
+    },
+    "provider_called_for_gold_freeze": {
+      "const": false
+    },
+    "phase7_3_3_d_effect_data_used": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "span": {
+      "type": "object",
+      "required": [
+        "start_char",
+        "end_char"
+      ],
+      "properties": {
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_annotation": {
+      "type": "object",
+      "required": [
+        "atomic_claim_id",
+        "source_memory_id",
+        "support_state",
+        "evidence_spans",
+        "query_relevant"
+      ],
+      "properties": {
+        "atomic_claim_id": {
+          "type": "string",
+          "pattern": "^aes-claim-v1-[0-9a-f]{64}$"
+        },
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "support_state": {
+          "enum": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "contradictory",
+            "not_assessable"
+          ]
+        },
+        "evidence_spans": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/span"
+          }
+        },
+        "query_relevant": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gold_case": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "blind_case_sha256",
+        "relevant_memory_ids",
+        "claim_annotations"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^p74-[a-z0-9][a-z0-9_-]{7,95}$"
+        },
+        "blind_case_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "relevant_memory_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "claim_annotations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/claim_annotation"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "case IDs are unique and exactly match the frozen selected worklist",
+    "every relevant memory and claim belongs to its blind case candidate pool",
+    "every evidence span is in bounds and anchored to exact source bytes",
+    "all reviewer disagreements are adjudicated and deferred_count is zero",
+    "Gold was not visible to segmentation, arm execution, or output construction"
+  ]
+}
