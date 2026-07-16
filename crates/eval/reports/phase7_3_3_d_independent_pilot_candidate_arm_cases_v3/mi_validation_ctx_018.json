@@ -1,0 +1,55 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_ctx_018",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "2b322eab5ac7a601ddfa59d20a4d05f8fc0785accf5861f2d55a4e99daff4f2f",
+  "content_sha256": "fbb16d6eccf8713fd3c7aaffbde7cbd3fb5ddd9afc65f83a4abf8f93bca1f9ad",
+  "latency_ms": 3701.7769000376575,
+  "usage": {
+    "prompt_tokens": 1015,
+    "completion_tokens": 89,
+    "total_tokens": 1104,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 564,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1404,
+      "total_duration_ms": 1328,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_ctx_018",
+    "support_label": "partially_supported",
+    "rationale": "Evidence supports that a playbook satisfies the active safety and scope constraint, and that a generic playbook violates the active constraint despite stronger overlap. However, the evidence does not explicitly entail that the active task constraint selects the context-compatible playbook, nor does it state selection or use the criterion of context compatibility.",
+    "source_span": {
+      "start": 0,
+      "end": 66
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

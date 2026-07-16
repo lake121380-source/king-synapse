@@ -1,0 +1,576 @@
+{
+  "schema_version": 1,
+  "execution_id": "phase7.3.3-c-first-real-segmentation-controlled-classifier-control-execution",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "status": "completed",
+  "execution_manifest_sha256": "36af44456cf3c06bd0553302121f92af8d605227420a11f71ce7a8797b52f82e",
+  "execution_policy_sha256": "f4cd6a5f7f7239f87a1082d56d6b058c493bac938cb6fe75f2e14e4856b16440",
+  "execution_started_at": "2026-07-12T14:36:35.717562+00:00",
+  "execution_completed_at": "2026-07-12T14:37:34.174039+00:00",
+  "provider_base_url": "https://api.gpt.ge/v1",
+  "model_requested": "gpt-4.1",
+  "resolved_model": "gpt-4.1-2025-04-14",
+  "temperature": 0,
+  "top_p": 1,
+  "first_returned_output_authoritative": true,
+  "automatic_repair": false,
+  "semantic_retry": false,
+  "api_key_recorded": false,
+  "raw_provider_responses_stored": false,
+  "gold_labels_visible_to_provider": false,
+  "design_cases_accessed": false,
+  "held_out_accessed": false,
+  "original_control_count": 16,
+  "supplement_control_count": 4,
+  "valid_output_count": 20,
+  "invalid_output_count": 0,
+  "results": [
+    {
+      "case_id": "ctrl_supported_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "ea9c83b39469d49da58fb99f7cc963c4958951eb8017632be3ab48ea7d8b8905",
+      "output": {
+        "case_id": "ctrl_supported_01",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_supported_01_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 states that a canary cohort was used and only that cohort required rollback, directly supporting the claim that a canary rollout limited rollback to the affected cohort."
+          },
+          {
+            "claim_id": "ctrl_supported_01_claim_02",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "scope_limitation_explicit"
+            ],
+            "rationale": "Evidence e1 only discusses the canary cohort and does not mention behavior outside canary deployments, supporting the claim that the result does not establish behavior outside canary deployments."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_supported_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "ecf2fd98af78326abc3a8e22c673f6574a7c58255bf83e412e5677d81b9fac61",
+      "output": {
+        "case_id": "ctrl_supported_02",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_supported_02_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 shows that pilot team A used smaller batches (10) and received feedback the same day, while e2 shows pilot team B used larger batches (12) and received feedback before the weekly review. This supports the claim that, in these two pilot teams, smaller batches produced earlier feedback."
+          },
+          {
+            "claim_id": "ctrl_supported_02_claim_02",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "scope_limited_to_evidence"
+            ],
+            "rationale": "Both evidence items only describe the tested pilot teams (A and B), supporting the claim that the observation is limited to these teams."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_supported_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "698330c85be4ffe6d70287d3bfabfe612f3b5ad498530616b18a2ddbe11a0e65",
+      "output": {
+        "case_id": "ctrl_supported_03",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_supported_03_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match",
+              "causal_relationship_observed"
+            ],
+            "rationale": "Evidence e1 describes a controlled test where only the cache setting was changed, and median latency decreased from 180 ms to 95 ms when caching was enabled, directly supporting the claim that enabling caching reduced median latency in this controlled test."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_supported_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "1979e4d65c24635545f9c2f101e8d478dbd20ac241bda997620b78835926fb86",
+      "output": {
+        "case_id": "ctrl_supported_04",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_supported_04_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 states that two backward-compatible schema migrations completed with localized rollback and low recovery work, directly supporting the claim that backward-compatible schemas reduced recovery work in these migrations."
+          },
+          {
+            "claim_id": "ctrl_supported_04_claim_02",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e2"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e2 describes an incompatible migration that produced unreadable records and extensive recovery work, which serves as a counterexample to the low-recovery pattern, directly supporting the claim."
+          },
+          {
+            "claim_id": "ctrl_supported_04_claim_03",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e3"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e3 explicitly states that an incompatible migration with equally low recovery work would falsify the proposed compatibility pattern, directly supporting the claim about falsifiability."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_partial_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "bfe96fae28972964e25868ae25a52adb28262fe940f957fd66f40ef30da65ee3",
+      "output": {
+        "case_id": "ctrl_partial_01",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_partial_01_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 directly states that two early-stage pilot teams obtained feedback faster after reducing batch size, which supports the claim about smaller batches producing faster feedback in the two pilot teams."
+          },
+          {
+            "claim_id": "ctrl_partial_01_claim_02",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "overgeneralization",
+              "insufficient_scope"
+            ],
+            "rationale": "Evidence e1 only describes the effect of smaller batches on feedback speed in two pilot teams, not in every organization. There is no evidence provided to support the universal claim."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_partial_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "166044f2b684aaa59b61a925f14518c4b057ac75bba941273fd831caa1c360f0",
+      "output": {
+        "case_id": "ctrl_partial_02",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_partial_02_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 states that high queue depth accompanied three observed latency spikes, which supports the claim that high queue depth accompanied several observed latency spikes."
+          },
+          {
+            "claim_id": "ctrl_partial_02_claim_02",
+            "support_label": "partially_supported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "contradictory_evidence",
+              "partial_causal_support"
+            ],
+            "rationale": "Evidence e1 shows high queue depth accompanied some latency spikes, but evidence e2 describes a latency spike occurring while queue depth was normal due to a database lock, contradicting the claim that high queue depth caused every latency spike. Thus, the claim is only partially supported."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_partial_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "0335ea4feda07efe0fd9166500a663a523c80b0545ac98e6bfa715712eaa87bc",
+      "output": {
+        "case_id": "ctrl_partial_03",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_partial_03_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 states that a compatibility check detected schema conflicts in two releases, directly supporting the claim."
+          },
+          {
+            "claim_id": "ctrl_partial_03_claim_02",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "no_future_outcome_evidence"
+            ],
+            "rationale": "Evidence e1 only describes past events and does not provide information or support for the prediction that the check will prevent all future deployment failures."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_partial_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "eee1fa1314cc38739871e1f435071f4b476345a8f8c2d78f398d7180ed28837d",
+      "output": {
+        "case_id": "ctrl_partial_04",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_partial_04_claim_01",
+            "support_label": "supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "direct_evidence_match"
+            ],
+            "rationale": "Evidence e1 directly states that three support cases were resolved faster when logs included request identifiers, matching the claim."
+          },
+          {
+            "claim_id": "ctrl_partial_04_claim_02",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e2"
+            ],
+            "reason_codes": [
+              "explicit_evidence_contradiction",
+              "no_evidence_for_causal_link"
+            ],
+            "rationale": "Evidence e2 explicitly states that the evidence does not record staffing levels or customer satisfaction, contradicting the claim that improvement was due to staffing doubling and increased customer satisfaction."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_unsupported_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "be8f472b7f1ad6d42bcbb2b712f75f5125e7ac7fc6a7d533f01fcfc59f81be15",
+      "output": {
+        "case_id": "ctrl_unsupported_01",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_unsupported_01_claim_01",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "contradictory_evidence",
+              "no_direct_support"
+            ],
+            "rationale": "Evidence e1 states that the large-batch release required a full rollback, while e2 states that the small-batch release required only a localized rollback. This suggests that larger batches increased rollback risk, contradicting the claim that larger release batches reduced rollback risk. No evidence supports the claim."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_unsupported_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "6a4b2585ffb6c0cf90bf0c721178f15586ad0a0c5738d46ac3074c00567d33bb",
+      "output": {
+        "case_id": "ctrl_unsupported_02",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_unsupported_02_claim_01",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "contradictory_evidence"
+            ],
+            "rationale": "Evidence e1 states that the experiment found no measurable relationship between reminder color and task completion, which directly contradicts the claim that blue reminders increased task completion."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_unsupported_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "fd52310ee5d5f117974a1c8d579bd2f5f96bce806d3bb42b3186ed84c3e5a45a",
+      "output": {
+        "case_id": "ctrl_unsupported_03",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_unsupported_03_claim_01",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "contradictory_evidence",
+              "scope_overreach"
+            ],
+            "rationale": "Evidence e1 shows improvement in two teams, but e2 demonstrates that a third team experienced worsened delivery time after adopting daily stand-ups. This directly contradicts the claim that daily stand-ups improve delivery time in every team."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_unsupported_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "19d2b18e6f23ccd773e68cb20a8edce39e19047f6e7f1a3035144904d0e033af",
+      "output": {
+        "case_id": "ctrl_unsupported_04",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_unsupported_04_claim_01",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "no_relevant_evidence"
+            ],
+            "rationale": "The evidence describes database backup duration and restore success, but does not mention remote work or product creativity. There is no relevant information to support the claim."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_not_assessable_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "3b1f998f933646f2dc8a25e7bab223072631eaeeb71f5e5681d38aa7e7f26879",
+      "output": {
+        "case_id": "ctrl_not_assessable_01",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_not_assessable_01_claim_01",
+            "support_label": "not_assessable",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "insufficient_scope",
+              "no_comparative_baseline"
+            ],
+            "rationale": "Evidence e1 only reports the performance of one query type after the new index was enabled, with no baseline or information about other query types. There is no evidence to assess whether the new index improves all query types."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_not_assessable_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "82195e07976f6026c9274bcbc981eed53b9d6f03bd9221e87577edc9fc7d7a62",
+      "output": {
+        "case_id": "ctrl_not_assessable_02",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_not_assessable_02_claim_01",
+            "support_label": "not_assessable",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "missing_outcome_data"
+            ],
+            "rationale": "Evidence e1 states that the outcome field was not recorded, so there is no information available to assess whether the planning template reduced delivery time."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_not_assessable_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "b6047aa5dbf9f9a64c6a38207b19b375db75df5afc29a57dc9261071595d8c7c",
+      "output": {
+        "case_id": "ctrl_not_assessable_03",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_not_assessable_03_claim_01",
+            "support_label": "not_assessable",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "insufficient_scope",
+              "no_team_level_outcome"
+            ],
+            "rationale": "The evidence only reports individual preferences for productivity (two members at night, two in the morning) and does not provide information about the team's overall productivity or a comparison between night and morning work at the team level. Therefore, it is not possible to assess whether night work is more productive for the team as a whole."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "ctrl_not_assessable_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "status": "valid",
+      "response_sha256": "db29cc1f2a57a3dc2ec23a9906f452afe865a374db1ad59299fbfc20185c0eb3",
+      "output": {
+        "case_id": "ctrl_not_assessable_04",
+        "claim_judgments": [
+          {
+            "claim_id": "ctrl_not_assessable_04_claim_01",
+            "support_label": "not_assessable",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "no_relevant_measurement_data"
+            ],
+            "rationale": "Evidence e1 states that there are no energy measurements, so it is not possible to assess whether the server configuration reduces energy use."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "diag_partial_01_proposition",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "status": "valid",
+      "response_sha256": "2b61bb84897e71c684d503a2fe9dc531814d63baeff4ccc024a50e19f72faeab",
+      "output": {
+        "case_id": "diag_partial_01_proposition",
+        "claim_judgments": [
+          {
+            "claim_id": "diag_partial_01_proposition_claim_01",
+            "support_label": "partially_supported",
+            "evidence_ids": [
+              "e1",
+              "e2"
+            ],
+            "reason_codes": [
+              "partial_evidence_match",
+              "contradictory_evidence"
+            ],
+            "rationale": "Evidence e1 shows that pilot teams A, B, and C completed the task faster after the workflow change, supporting the claim for those teams. However, evidence e2 states that pilot team D showed no measurable change, contradicting the claim for that team. Therefore, the claim is only partially supported."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "diag_partial_02_scope",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "status": "valid",
+      "response_sha256": "bf2d42d9802a5ec2bac72a996d9c3176def0ab2ac0c814bf2af2976753dfdca5",
+      "output": {
+        "case_id": "diag_partial_02_scope",
+        "claim_judgments": [
+          {
+            "claim_id": "diag_partial_02_scope_claim_01",
+            "support_label": "partially_supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "scope_too_broad",
+              "direct_evidence_match"
+            ],
+            "rationale": "The evidence describes two early-stage startups in one accelerator reducing rework after weekly customer interviews, but the claim generalizes this effect to early-stage startups in general. The evidence supports the effect in a limited context, not the broader generalization."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "diag_partial_03_causal",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "status": "valid",
+      "response_sha256": "7826d9b02ac44b76076bced2be5a0a70adb88f2fb778b5b372255b521838e17e",
+      "output": {
+        "case_id": "diag_partial_03_causal",
+        "claim_judgments": [
+          {
+            "claim_id": "diag_partial_03_causal_claim_01",
+            "support_label": "partially_supported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "association_without_causal_confirmation",
+              "confounding_factor_present"
+            ],
+            "rationale": "Evidence e1 states that teams using smaller batches received feedback sooner, which supports an association. However, it also notes that those teams had dedicated reviewers, introducing a confounding factor and preventing confirmation that smaller batch size alone caused the outcome."
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "diag_partial_04_prediction",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "status": "valid",
+      "response_sha256": "95571ed305636103875b45a1d0f296092da360233a765d53d19d74d0bdfc8626",
+      "output": {
+        "case_id": "diag_partial_04_prediction",
+        "claim_judgments": [
+          {
+            "claim_id": "diag_partial_04_prediction_claim_01",
+            "support_label": "unsupported",
+            "evidence_ids": [
+              "e1"
+            ],
+            "reason_codes": [
+              "evidence_reports_past_not_future",
+              "no_direct_prediction_evidence"
+            ],
+            "rationale": "The evidence (e1) describes outcomes from two prior canary deployments, stating that rollback remained isolated to the canary cohort in those cases. However, it does not provide information or evidence about what will happen in the next canary deployment, nor does it make a prediction about future behavior. Therefore, the claim about the next deployment is unsupported by the supplied evidence."
+          }
+        ]
+      }
+    }
+  ]
+}

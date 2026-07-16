@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrl_018",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "4434be95318e207f75ab791c681c113539a693306c58096e00f222b825c275d1",
+  "content_sha256": "0d9816459ba72a71bc68d5eb19b1e64234170743739a13144096ffc4bcae54a4",
+  "latency_ms": 6457.098199985921,
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 100,
+    "total_tokens": 1300,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3443,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4283,
+      "total_duration_ms": 4207,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrl_018",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrl_018-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence directly supports the claimed preference ordering: one item is described as a recent weak observation that is accessible but not verified, while another states that high confidence confirmation remains authoritative. Together these entail that a high-confidence confirmation is preferred over a recent but weak observation."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 4,
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string"
+      },
+      "support_label": {
+        "type": "string",
+        "enum": [
+          "not_assessable",
+          "partially_supported",
+          "supported",
+          "unsupported"
+        ]
+      },
+      "rationale": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "case_id",
+      "support_label",
+      "rationale"
+    ],
+    "additionalProperties": false
+  }
+}

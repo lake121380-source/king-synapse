@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-c-first-segmentation-controlled-classifier-execution-manifest-v1",
+  "execution_id": "phase7.3.3-c-first-real-segmentation-controlled-classifier-control-execution",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "status": "frozen_execution_pending",
+  "manifest_frozen_at": "2026-07-12T14:36:07.349733+00:00",
+  "execution_started_at": null,
+  "execution_started_at_recorded_in_final_report": true,
+  "execution_config": {
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "judge_model": "gpt-4.1",
+    "temperature": 0,
+    "top_p": 1,
+    "response_format": "json_object",
+    "case_isolation": true,
+    "original_control_count": 16,
+    "diagnostics_supplement_count": 4,
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY"
+  },
+  "artifact_sha256": {
+    "execution_policy": "f4cd6a5f7f7239f87a1082d56d6b058c493bac938cb6fe75f2e14e4856b16440",
+    "protocol": "3ca2f705ff4ae10f9275bb7da6f10f81bd9e872814f95a9906a936ae79cc0a44",
+    "classifier_prompt": "bd9300d38e19cbd1df115ccff8ccb87d9b9fe9068f5bfd6dc8a519bef845eaeb",
+    "provider_visible_controls": "ba8cc5843177e400d74cea2e014cea15223ff24cdbb085f29a79f9fe8a7c5d37",
+    "original_balanced_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_claim_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd",
+    "originating_negative_result_analysis": "90a5c8c944496c705ac0db3f5611b79178d16acc6b617b14633cc18587ba4fbf",
+    "offline_readiness_report": "2aef43000829e01e1e12fa3bd4243f186460dc1ff9a2badce7b752aee0b459fd",
+    "control_packet_generator": "05f8066f1995e6caca8c60ceeb5dbf205ad7ecde5c23a14ddf43a4a05d047539",
+    "rust_output_validator": "2e727fae146fda9de3b3047404df9b68f5e3b3e041aa214b060bec65c8d96b15",
+    "aggregator_policy": "49788bba671ab83a8225abb3fbd2e22f883aaf5b084331e26307c13a0111bdac",
+    "aggregator_implementation": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f",
+    "diagnostics_evaluator": "506d81e4541a5b80acf3f6692bb6ebb697782063d18168c5975ff1194107b0ea",
+    "strict_parser_contract": "ae5d8c8ccaa64dd6176527bd29c596d0787c020e69d8fa63365792630bea9da1",
+    "execution_adapter": "20fb7fe8030598dede7098c0090feb2e8ad92263e8d53e386d4e7b9e2456f30a",
+    "attempt_log_adapter": "71909e73c21cc8897a356b41abc48762d5b645b99b5a588f89c748bd24c239f5",
+    "prior_phase_a_manifest": "f120503db476381fbb05bdf47ac06b10d0a4185410a35f4f6ab094f9c77b7de4",
+    "prior_phase_a_report": "e2aa24485ef4e24eee2f8b94b66286fa85c681796852de0f13068bc1fa7152a0"
+  },
+  "strict_parser_contract": {
+    "required_top_fields": [
+      "case_id",
+      "claim_judgments"
+    ],
+    "required_judgment_fields": [
+      "claim_id",
+      "support_label",
+      "evidence_ids",
+      "reason_codes",
+      "rationale"
+    ],
+    "support_labels": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_assessable"
+    ],
+    "exactly_one_judgment_per_supplied_claim": true,
+    "supplied_claim_order_must_be_preserved": true,
+    "unknown_or_duplicate_claim_ids_forbidden": true,
+    "automatic_repair": false,
+    "unknown_top_fields_forbidden": true,
+    "unknown_judgment_fields_forbidden": true,
+    "missing_required_fields_forbidden": true,
+    "empty_reason_codes_list_allowed": true,
+    "empty_reason_code_string_forbidden": true,
+    "empty_rationale_forbidden": true,
+    "unknown_evidence_ids_forbidden": true
+  },
+  "authoritative_result_policy": {
+    "first_returned_provider_response_per_packet_is_authoritative": true,
+    "invalid_provider_envelope_json_or_schema_is_negative_result": true,
+    "automatic_repair_authorized": false,
+    "semantic_retry_after_returned_response_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_http_success_may_resume": true,
+    "failed_entry_criteria_requires_analysis_not_tuning": true
+  },
+  "post_execution_prohibitions": [
+    "no_prompt_modification",
+    "no_parser_modification",
+    "no_aggregation_modification",
+    "no_threshold_modification",
+    "no_control_packet_modification",
+    "no_result_replacement",
+    "no_design_case_execution_before_control_decision",
+    "no_held_out_access"
+  ],
+  "entry_criteria": {
+    "valid_output_count_required": 20,
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "all_four_candidate_labels_must_be_predicted": true
+  },
+  "data_handling": {
+    "api_key_recorded": false,
+    "raw_provider_responses_stored": false,
+    "response_sha256_recorded": true,
+    "parsed_valid_outputs_stored": true,
+    "gold_labels_sent_to_provider": false,
+    "held_out_loaded": false
+  },
+  "comparison_to_phase7_3_3_a": {
+    "prior_manifest_sha256": "f120503db476381fbb05bdf47ac06b10d0a4185410a35f4f6ab094f9c77b7de4",
+    "prior_report_sha256": "e2aa24485ef4e24eee2f8b94b66286fa85c681796852de0f13068bc1fa7152a0",
+    "provider_configuration_equal": {
+      "provider_base_url": true,
+      "judge_model": true,
+      "temperature": true,
+      "top_p": true,
+      "response_format": true,
+      "case_isolation": true
+    },
+    "all_provider_configuration_fields_equal": true,
+    "measurement_change_only": "protocol_owned_segmentation_replaces_judge_owned_segmentation",
+    "same_manifest_retry": false,
+    "prior_negative_result_overwritten": false
+  },
+  "guards": {
+    "prompt_frozen": true,
+    "parser_frozen": true,
+    "aggregator_frozen": true,
+    "thresholds_frozen": true,
+    "extractor_modified": false,
+    "design_cases_authorized": false,
+    "held_out_authorized": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "credential_fallback_authorized": false
+  }
+}

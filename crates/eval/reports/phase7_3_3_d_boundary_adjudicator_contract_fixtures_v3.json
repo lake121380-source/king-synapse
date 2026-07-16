@@ -1,0 +1,70 @@
+{
+  "schema_version": 3,
+  "report_id": "phase7.3.3-d1-a-boundary-adjudicator-contract-fixtures-v3",
+  "adapter_sha256": "ad77cfaa26118a48104e3411e618c44940aa5a15bcc7d45d3f379b05b77acdc1",
+  "prompt_sha256": "e1039550ffa56c2a5c07fa153129d39d65e848e8b4dfefb62c0fc306a46c11a5",
+  "adjudication_protocol_sha256": "be11ba0a3414a12e31d7baa7516ed02a61942e3dc16c156c9158c0da96f519bf",
+  "worklist_sha256": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+  "fixture_count": 8,
+  "passed_fixture_count": 8,
+  "all_fixtures_passed": true,
+  "fixtures": [
+    {
+      "fixture_id": "valid_exact_claim",
+      "expected": "pass",
+      "actual": "pass",
+      "claim_count": 1
+    },
+    {
+      "fixture_id": "repeated_excerpt_occurrence",
+      "expected": "pass",
+      "actual": "pass",
+      "start": 13
+    },
+    {
+      "fixture_id": "overlap_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "overlapping_claim_spans:fixture-3:2"
+    },
+    {
+      "fixture_id": "missing_anchor_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "anchors_without_final_claims:fixture-4b"
+    },
+    {
+      "fixture_id": "unknown_provenance_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "source_reviewer_claim_ids_unknown_or_cross_anchor:fixture-5:1:invented"
+    },
+    {
+      "fixture_id": "invalid_reason_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "reason_codes_invalid:fixture-6:1"
+    },
+    {
+      "fixture_id": "non_exact_excerpt_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "source_excerpt_not_found:fixture-7:1"
+    },
+    {
+      "fixture_id": "all_segmentation_categories",
+      "expected": "pass",
+      "actual": "pass",
+      "categories": {
+        "consensus_exact": "consensus_exact",
+        "keep_a_segmentation": "keep_a_segmentation",
+        "keep_e_segmentation": "keep_e_segmentation",
+        "merge_both": "merge_both",
+        "split_both": "split_both",
+        "new_segmentation": "new_segmentation"
+      }
+    }
+  ],
+  "provider_called": false,
+  "held_out_accessed": false
+}

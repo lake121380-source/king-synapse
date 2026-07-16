@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-026-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_10",
+  "adjudication_item_id": "support-adjudication-026",
+  "boundary_claim_id": "adjudicated-extract_10-claim-008",
+  "provider_envelope_sha256": "a4d757e6933b63d27874dc71eae17e6eaf921aec19945951c2a24d978325ab1d",
+  "provider_content_sha256": "19315207799b93e1779debf4a162d4e67edf749bb11af74d2c7ca46b8a793458",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "78bc81e97003b5c58d6db29bbc6c1bae7c1010cbccac0b17386358673ab032f7",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-026",
+    "case_id": "extract_10",
+    "boundary_claim_id": "adjudicated-extract_10-claim-008",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The evidence directly states carrying cost stayed within a declared limit. Interpreting that declared limit as the management-set target threshold is a reasonable bridging inference within the same case context, so option 1 is better supported than treating the management-threshold detail as unsupported scope expansion.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_10-claim-008",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_label": "supported",
+      "support_rationale": "Claim-008 requires carrying cost to remain under a 'target threshold set by management'. Evidence px_10_support_1 notes cost stayed within its 'declared limit'. In the context of the case, a 'declared limit' is reasonably inferred to be the management-set target threshold, making the claim supported by the evidence."
+    },
+    "selected_frozen_decision_sha256": "517e63268d1e7c6568035110b5efc359bedadb5efd269e6e9a29695c1430e5de",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

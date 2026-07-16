@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_rrl_022",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "e6f9e53dea087004ac0fd03bdbe34942d617d02e11855a792a64897b9d6d5f4b",
+  "provider_content_sha256": "1fdb6ad1f35361551a1bc143f6252690e8c3da24a2af00c05dc6a0a8450458d3",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "68a3b0cc1659cef710069e050609181f0f497a4d4d92a0b3d652c56d7e416e20",
+  "normalized_case": {
+    "case_id": "mi_validation_rrl_022",
+    "candidate_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrl_022-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "source_text_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrl_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that high-confidence confirmation should be preferred over a recent but weak observation. Evidence 06 directly states that 'high confidence confirmation remains authoritative,' which matches the selection rule described in the candidate. No evidence contradicts this, and the cited evidence is both highly confident and relevant, supporting the full scope and comparative certainty of the claim.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

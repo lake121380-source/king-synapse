@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-sampling-frame-protocol-v1",
+  "status": "frozen_with_sampling_frame",
+  "stage": "construct_multi_claim_successor_sampling_frame_v1",
+  "source_contract": {
+    "source_root": "crates/eval/datasets/cognitive_memory",
+    "record_collection": "cases",
+    "candidate_components": [
+      "expected_decision",
+      "expected_trace[*]",
+      "distractor_decision"
+    ],
+    "evidence_field": "relevant_memories",
+    "source_component_roles_are_not_reference_labels": true,
+    "source_component_roles_visible_to_reviewers": false,
+    "support_labels_available_during_sampling": false,
+    "all_candidate_component_roles_required": true
+  },
+  "candidate_serialization": {
+    "component_order": "sha256_rank(seed,source_identity,role,source_index,component_sha256)",
+    "joiner": "LF",
+    "normalization": "strip_outer_whitespace_per_component_only",
+    "semantic_rewrite_allowed": false,
+    "component_order_commitment_frozen_before_selected_content_open": true,
+    "deterministic_clause_count_is_gold_claim_count": false
+  },
+  "eligibility": {
+    "lineage_complete_required": true,
+    "minimum_deterministic_clause_count": 3,
+    "required_source_component_roles_present": true,
+    "component_texts_unique_within_candidate": true,
+    "candidate_id_unique": true,
+    "candidate_text_unique": true,
+    "route_a_candidate_or_evidence_overlap_allowed": false,
+    "predecessor_pilot_candidate_or_evidence_overlap_allowed": false
+  },
+  "selection": {
+    "method": "deterministic_stratified_hash_order",
+    "seed": 733051,
+    "target": 40,
+    "minimum": 32,
+    "strata": [
+      "source_family",
+      "evidence_item_count_bucket",
+      "deterministic_clause_count_bucket"
+    ],
+    "manual_backfill_allowed": false,
+    "shortfall_action": "freeze_shortfall_and_stop"
+  },
+  "blindness": {
+    "selected_candidate_content_emitted": false,
+    "selected_evidence_content_emitted": false,
+    "source_component_roles_emitted": false,
+    "old_gold_used_for_labels": false,
+    "provider_called": false,
+    "confirmatory_dataset_opened": false,
+    "runtime_integration_authorized": false
+  },
+  "next_gate_on_pass": "open_multi_claim_successor_selected_content_v1",
+  "next_gate_on_shortfall": "investigate_multi_claim_successor_sampling_shortfall_v1"
+}

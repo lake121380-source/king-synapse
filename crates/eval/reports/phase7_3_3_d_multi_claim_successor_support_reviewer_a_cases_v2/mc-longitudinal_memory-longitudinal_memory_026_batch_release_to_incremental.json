@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "eaba1e907a4361d03936d58ec8919182ca1a2245ad7863bb5ab05485fc0ac3dc",
+  "reviewer_id": "a",
+  "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+  "provider_envelope_sha256": "0e49a7df1285f55f58988afe2d978158a531605d8da7107802185f3e9a763d18",
+  "provider_content_sha256": "f725cce7b33ead9d699a7e9b83496c66c70a764834b7799dd3e674d2be0da5b1",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "c3c56e8b18adb99286f726aeae5f5294d8811e066de7ca8c1026f1440401fcdd",
+  "normalized_decisions_sha256": "9746b6b5fb7af033401956446d635c4f7811523a5e78f48db295ae1c3ee1b230",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 3 directly, establishing incremental release success on day 42.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 1 directly, establishing batch release preference on day 1.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 4 directly, establishing release strategy on day 60.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 2 directly, establishing large batch regression on day 26.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "1100",
+      "cited_evidence_indices": [
+        1,
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-001",
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-002"
+      ],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "Evidence items 1 and 2 reference batch release preference and regression, but do not establish that large batch release should be used as a strategy.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0011",
+      "cited_evidence_indices": [
+        3,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-003",
+        "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental-evidence-004"
+      ],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "Evidence items 3 and 4 reference incremental release success and release strategy, but do not establish that incremental release should be used as a strategy.",
+      "annotation_confidence": "medium"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-longitudinal_memory-longitudinal_memory_026_batch_release_to_incremental",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

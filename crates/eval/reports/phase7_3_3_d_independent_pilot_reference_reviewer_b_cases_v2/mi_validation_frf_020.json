@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_frf_020",
+  "manifest_sha256": "0f1b6fe0b37b4c8262ae682ecac72e8fcaf8842991d332bba3c427de8ebd6b97",
+  "provider_envelope_sha256": "755e6e254b8e520a999b05f218746f7157f49542c17d9a4f8ca7f42f248ddc27",
+  "provider_content_sha256": "61a61c713c678325d588551429aa19988e291f688d7e2284e92ec87d41f4d9da",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_case_sha256": "3c7366e0ff6196bb2436bf418d5c88a6ba7ce3aaa6d2a5396dad4962c008d43b",
+  "normalized_case": {
+    "case_id": "mi_validation_frf_020",
+    "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frf_020-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mi_validation_frf_020-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must beat a recently accessed unsafe playbook. However, the ground truth evidence (evidence-06) explicitly states that unresolved failure evidence remains authoritative 'despite not being recently accessed,' which contradicts the candidate's premise that the competing playbook was 'recently accessed' and establishes a different selection dynamic where recency is not the deciding factor for the failure evidence's authority. Evidence-01 notes the unsafe playbook was accessed recently, but evidence-06 clarifies the failure evidence's authority persists regardless of its own lack of recent access, failing to support the specific 'beat a recently accessed' comparative rule as framed.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "unsupported",
+    "material_error_spans": [
+      {
+        "reference_claim_id": "mi_validation_frf_020-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "support_label": "unsupported"
+      }
+    ],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

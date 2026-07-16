@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "taxonomy_id": "phase7.3.3-d-reviewer-failure-taxonomy-v1",
+  "status": "frozen_for_prospective_use",
+  "scope": "Phase 7.3.3-D Boundary reference construction and downstream gates",
+  "measurement_separation": {
+    "delivery_compliance": "Whether Provider content bytes were returned.",
+    "representation_compliance": "Whether returned content and Provider metadata satisfy the frozen executable representation contract.",
+    "boundary_compliance": "Whether a representation-valid submission satisfies exact Boundary semantics.",
+    "agreement_compliance": "Whether two completed independent Boundary submissions reach the frozen agreement requirements.",
+    "support_compliance": "Whether Support review satisfies its frozen protocol after Boundary Gold is frozen."
+  },
+  "classification_rule": {
+    "primary_failure_is_earliest_failed_level": true,
+    "downstream_levels_after_failure_are": "not_assessable",
+    "unreached_level_is_not_counted_as_failure": true,
+    "provider_content_required_for_authoritative_experimental_failure": true,
+    "transport_failure_before_content_may_resume_under_same_manifest": true,
+    "same_manifest_retry_after_content": false,
+    "raw_provider_content_repair": false
+  },
+  "levels": [
+    {
+      "level": 0,
+      "code": "delivery_transport",
+      "question": "Did the Provider return content bytes?",
+      "pass_examples": [
+        "provider_content_received"
+      ],
+      "failure_examples": [
+        "http_error",
+        "timeout",
+        "dns_failure",
+        "connection_failure_before_content"
+      ],
+      "authoritative_experimental_result": false,
+      "boundary_capability_assessable_on_failure": false
+    },
+    {
+      "level": 1,
+      "code": "provider_representation_contract",
+      "question": "Can the response be accepted as the frozen executable representation?",
+      "subclasses": [
+        {
+          "code": "identity_canonicalization",
+          "examples": [
+            "requested/reported model family mismatch",
+            "undeclared model alias or casing mismatch"
+          ]
+        },
+        {
+          "code": "serialization",
+          "examples": [
+            "non-JSON content",
+            "invalid JSON",
+            "unexpected content channel"
+          ]
+        },
+        {
+          "code": "schema",
+          "examples": [
+            "missing keys",
+            "invalid enum",
+            "invalid primitive type"
+          ]
+        }
+      ],
+      "authoritative_experimental_result": true,
+      "boundary_capability_assessable_on_failure": false
+    },
+    {
+      "level": 2,
+      "code": "boundary_semantic_contract",
+      "question": "Does a representation-valid submission satisfy frozen Boundary semantics?",
+      "subclasses": [
+        {
+          "code": "verbatim_span",
+          "examples": [
+            "source_excerpt_not_found",
+            "punctuation or whitespace mutation",
+            "paraphrase"
+          ]
+        },
+        {
+          "code": "occurrence_resolution",
+          "examples": [
+            "occurrence_index_out_of_range",
+            "ambiguous repeated excerpt"
+          ]
+        },
+        {
+          "code": "span_structure",
+          "examples": [
+            "overlap",
+            "cross-anchor claim",
+            "invalid coverage"
+          ]
+        },
+        {
+          "code": "claim_annotation",
+          "examples": [
+            "invalid claim type",
+            "invalid origin",
+            "invalid material or role mapping"
+          ]
+        }
+      ],
+      "authoritative_experimental_result": true,
+      "boundary_capability_assessable_on_failure": true
+    },
+    {
+      "level": 3,
+      "code": "inter_reviewer_agreement",
+      "question": "Do two completed independent Boundary submissions satisfy frozen Agreement requirements?",
+      "prerequisites": [
+        "two_completed_independent_boundary_submissions"
+      ],
+      "authoritative_experimental_result": true,
+      "boundary_capability_assessable_on_failure": true
+    },
+    {
+      "level": 4,
+      "code": "support_reference_contract",
+      "question": "After Boundary Gold freeze, does Support review satisfy the frozen Support protocol?",
+      "prerequisites": [
+        "boundary_agreement",
+        "boundary_adjudication",
+        "coverage_qa",
+        "boundary_gold_frozen"
+      ],
+      "authoritative_experimental_result": true,
+      "boundary_capability_assessable_on_failure": false
+    }
+  ],
+  "reporting_rules": {
+    "do_not_report_downstream_na_as_failure": true,
+    "do_not_infer_model_boundary_inability_from_level_0_or_1_failure": true,
+    "end_to_end_provider_compliance_includes_levels": [
+      0,
+      1,
+      2
+    ],
+    "boundary_extraction_capability_requires_level_0_and_1_pass": true,
+    "agreement_requires_two_level_2_pass_submissions": true
+  },
+  "experimental_discipline": {
+    "taxonomy_is_post_hoc_for_reviewers_a_through_d": true,
+    "taxonomy_is_prospectively_frozen_before_reviewer_e_or_later": true,
+    "reviewer_e_started": false,
+    "prompt_modified": false,
+    "protocol_modified": false,
+    "parser_modified": false,
+    "held_out_accessed": false
+  }
+}

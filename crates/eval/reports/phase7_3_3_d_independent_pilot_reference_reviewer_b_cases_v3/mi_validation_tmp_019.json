@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_tmp_019",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "70b1e24c027dd56c1570bf808ecbc68ffe7f6e6eadad251b7ff22af1e51d0456",
+  "provider_content_sha256": "e27b4f4e5d2f46807831cd2066dba7bcf7b74997034758c5b40ffba58df7a426",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "434a6aafcf525a315dcad2c4089e403d3f46c24e7bdaad74093f338fb590d4f8",
+  "normalized_case": {
+    "case_id": "mi_validation_tmp_019",
+    "candidate_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_tmp_019-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_tmp_019-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that the later confirmed state is active and replaces the earlier state, matching the candidate's claim that the later confirmed state supersedes the older semantically stronger state.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

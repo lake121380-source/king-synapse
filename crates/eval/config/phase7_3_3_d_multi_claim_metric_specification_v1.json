@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "metric_specification_id": "phase7.3.3-d-multi-claim-metric-specification-v1",
+  "status": "frozen_before_successor_content_open",
+  "primary_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "gold_material_error_mask": "Union of exact Reference claim character spans labeled partially_supported or unsupported.",
+  "candidate_arm_predicted_error_mask": "Empty when Candidate label is supported; otherwise the entire eligible Candidate span.",
+  "atomic_arm_predicted_error_mask": "Union of Atomic claim spans predicted partially_supported or unsupported.",
+  "per_candidate_material_error_span_iou": {
+    "formula": "intersection_characters / union_characters",
+    "empty_gold_empty_prediction": 1.0,
+    "one_empty_one_nonempty": 0.0
+  },
+  "paired_primary_effect": "mean(atomic_per_candidate_iou - candidate_per_candidate_iou)",
+  "candidate_reference_label_aggregation": {
+    "all_claims_supported": "supported",
+    "all_claims_unsupported": "unsupported",
+    "otherwise": "partially_supported"
+  },
+  "secondary_metrics": [
+    "unsupported_claim_detection_recall",
+    "material_error_localization_precision",
+    "material_error_localization_recall",
+    "material_error_localization_micro_f1",
+    "unsupported_masking_rate",
+    "exact_candidate_label_accuracy",
+    "atomic_exact_claim_label_accuracy",
+    "boundary_exact_span_rate",
+    "boundary_mean_matched_iou",
+    "diagnostic_span_compactness",
+    "transport_compliance",
+    "tokens_and_latency_by_arm"
+  ],
+  "uncertainty": {
+    "method": "unique_candidate_nonparametric_bootstrap",
+    "seed": 733061,
+    "replicates": 20000,
+    "interval": 0.95,
+    "confirmatory_p_value": null
+  },
+  "missingness": {
+    "no_silent_drop": true,
+    "all_selected_cases_in_denominator": true,
+    "transport_failure_reported_separately": true
+  },
+  "cost_policy": {
+    "token_and_latency_measurement_required": true,
+    "usd_cost_may_be_non_null_only_if_provider_price_was_frozen_before_execution": true
+  },
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-multi-claim-successor-support-agreement-report-v1",
+  "status": "completed_deterministic_agreement_analysis",
+  "claim_count": 240,
+  "label_agreement": {
+    "agreement_count": 212,
+    "disagreement_count": 28,
+    "raw_agreement_rate": 0.8833333333333333,
+    "observed_agreement": 0.8833333333333333,
+    "chance_expected_agreement": 0.5808506944444445,
+    "cohen_kappa": 0.7216584517251377,
+    "kappa_defined": true,
+    "reviewer_a_label_counts": {
+      "not_assessable": 6,
+      "partially_supported": 5,
+      "supported": 173,
+      "unsupported": 56
+    },
+    "reviewer_b_label_counts": {
+      "not_assessable": 7,
+      "partially_supported": 9,
+      "supported": 178,
+      "unsupported": 46
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 170,
+        "partially_supported": 2,
+        "unsupported": 1,
+        "not_assessable": 0
+      },
+      "partially_supported": {
+        "supported": 0,
+        "partially_supported": 3,
+        "unsupported": 2,
+        "not_assessable": 0
+      },
+      "unsupported": {
+        "supported": 8,
+        "partially_supported": 4,
+        "unsupported": 38,
+        "not_assessable": 6
+      },
+      "not_assessable": {
+        "supported": 0,
+        "partially_supported": 0,
+        "unsupported": 5,
+        "not_assessable": 1
+      }
+    }
+  },
+  "weighted_disagreement_severity": {
+    "sum": 24.0,
+    "normalized_mean": 0.1,
+    "maximum_per_claim": 1.0,
+    "severe_disagreement_count": 20,
+    "adjacent_disagreement_count": 8
+  },
+  "citation_agreement": {
+    "claim_count": 240,
+    "exact_set_agreement_count": 204,
+    "exact_set_agreement_rate": 0.85,
+    "mean_set_jaccard": 0.8729166666666667,
+    "conditional_on_label_agreement": {
+      "claim_count": 212,
+      "exact_set_agreement_count": 190,
+      "exact_set_agreement_rate": 0.8962264150943396,
+      "mean_set_jaccard": 0.9209905660377359
+    }
+  },
+  "reason_code_agreement": {
+    "claim_count": 240,
+    "exact_set_agreement_count": 177,
+    "exact_set_agreement_rate": 0.7375,
+    "mean_set_jaccard": 0.7534722222222222,
+    "conditional_on_label_agreement": {
+      "claim_count": 212,
+      "exact_set_agreement_count": 171,
+      "exact_set_agreement_rate": 0.8066037735849056,
+      "mean_set_jaccard": 0.824685534591195
+    }
+  },
+  "confidence_agreement": {
+    "agreement_count": 227,
+    "agreement_rate": 0.9458333333333333,
+    "observed_agreement": 0.9458333333333333,
+    "chance_expected_agreement": 0.893125,
+    "cohen_kappa": 0.49317738791423,
+    "kappa_defined": true,
+    "reviewer_a_counts": {
+      "high": 222,
+      "medium": 18
+    },
+    "reviewer_b_counts": {
+      "high": 231,
+      "medium": 9
+    }
+  },
+  "claim_type_diagnostics": {
+    "causal": {
+      "claim_count": 6,
+      "agreement_count": 6,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 0.7222222222222222,
+      "cohen_kappa": 1.0,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "supported": 5,
+        "unsupported": 1
+      },
+      "reviewer_b_label_counts": {
+        "supported": 5,
+        "unsupported": 1
+      }
+    },
+    "condition": {
+      "claim_count": 4,
+      "agreement_count": 4,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 0.375,
+      "cohen_kappa": 1.0,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "partially_supported": 1,
+        "supported": 2,
+        "unsupported": 1
+      },
+      "reviewer_b_label_counts": {
+        "partially_supported": 1,
+        "supported": 2,
+        "unsupported": 1
+      }
+    },
+    "exception": {
+      "claim_count": 9,
+      "agreement_count": 9,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 1.0,
+      "cohen_kappa": null,
+      "kappa_defined": false,
+      "reviewer_a_label_counts": {
+        "supported": 9
+      },
+      "reviewer_b_label_counts": {
+        "supported": 9
+      }
+    },
+    "limitation": {
+      "claim_count": 19,
+      "agreement_count": 19,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 1.0,
+      "cohen_kappa": null,
+      "kappa_defined": false,
+      "reviewer_a_label_counts": {
+        "supported": 19
+      },
+      "reviewer_b_label_counts": {
+        "supported": 19
+      }
+    },
+    "prediction": {
+      "claim_count": 1,
+      "agreement_count": 1,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 1.0,
+      "cohen_kappa": null,
+      "kappa_defined": false,
+      "reviewer_a_label_counts": {
+        "supported": 1
+      },
+      "reviewer_b_label_counts": {
+        "supported": 1
+      }
+    },
+    "proposition": {
+      "claim_count": 189,
+      "agreement_count": 161,
+      "disagreement_count": 28,
+      "observed_agreement": 0.8518518518518519,
+      "chance_expected_agreement": 0.5235015817026399,
+      "cohen_kappa": 0.6890899477116503,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "not_assessable": 6,
+        "partially_supported": 4,
+        "supported": 125,
+        "unsupported": 54
+      },
+      "reviewer_b_label_counts": {
+        "not_assessable": 7,
+        "partially_supported": 8,
+        "supported": 130,
+        "unsupported": 44
+      }
+    },
+    "scope": {
+      "claim_count": 12,
+      "agreement_count": 12,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 1.0,
+      "cohen_kappa": null,
+      "kappa_defined": false,
+      "reviewer_a_label_counts": {
+        "supported": 12
+      },
+      "reviewer_b_label_counts": {
+        "supported": 12
+      }
+    }
+  },
+  "claim_role_diagnostics": {
+    "anchor": {
+      "claim_count": 96,
+      "agreement_count": 75,
+      "disagreement_count": 21,
+      "observed_agreement": 0.78125,
+      "chance_expected_agreement": 0.3907335069444444,
+      "cohen_kappa": 0.6409617097061443,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "not_assessable": 6,
+        "partially_supported": 5,
+        "supported": 43,
+        "unsupported": 42
+      },
+      "reviewer_b_label_counts": {
+        "not_assessable": 6,
+        "partially_supported": 7,
+        "supported": 44,
+        "unsupported": 39
+      }
+    },
+    "boundary": {
+      "claim_count": 6,
+      "agreement_count": 6,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 1.0,
+      "cohen_kappa": null,
+      "kappa_defined": false,
+      "reviewer_a_label_counts": {
+        "supported": 6
+      },
+      "reviewer_b_label_counts": {
+        "supported": 6
+      }
+    },
+    "exception": {
+      "claim_count": 9,
+      "agreement_count": 8,
+      "disagreement_count": 1,
+      "observed_agreement": 0.8888888888888888,
+      "chance_expected_agreement": 0.5185185185185185,
+      "cohen_kappa": 0.7692307692307692,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "supported": 6,
+        "unsupported": 3
+      },
+      "reviewer_b_label_counts": {
+        "not_assessable": 1,
+        "supported": 6,
+        "unsupported": 2
+      }
+    },
+    "qualification": {
+      "claim_count": 15,
+      "agreement_count": 15,
+      "disagreement_count": 0,
+      "observed_agreement": 1.0,
+      "chance_expected_agreement": 0.7688888888888888,
+      "cohen_kappa": 1.0,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "supported": 13,
+        "unsupported": 2
+      },
+      "reviewer_b_label_counts": {
+        "supported": 13,
+        "unsupported": 2
+      }
+    },
+    "support": {
+      "claim_count": 114,
+      "agreement_count": 108,
+      "disagreement_count": 6,
+      "observed_agreement": 0.9473684210526315,
+      "chance_expected_agreement": 0.8827331486611265,
+      "cohen_kappa": 0.5511811023622042,
+      "kappa_defined": true,
+      "reviewer_a_label_counts": {
+        "supported": 105,
+        "unsupported": 9
+      },
+      "reviewer_b_label_counts": {
+        "partially_supported": 2,
+        "supported": 109,
+        "unsupported": 3
+      }
+    }
+  },
+  "adjudication_candidates": {
+    "label_adjudication_count": 28,
+    "diagnostic_followup_count": 47,
+    "worklists_disjoint": true
+  },
+  "representation_pair_finding": {
+    "v1_qwen_terminal_outcome": "authoritative_negative_result at 37/40 completed cases due cited_evidence_index_out_of_range",
+    "v2_qwen_terminal_outcome": "completed 40/40 cases under fixed-length evidence_citation_mask",
+    "supported_conclusion": "the paired execution supports that the positionwise mask removed the observed v1 sparse-index provenance failure under this protocol",
+    "general_capability_claim_authorized": false
+  },
+  "artifact_lineage": {
+    "protocol_sha256": "045a50265cecc04502b002803a3bf2ece063e0ffa587eecb888d70724b269e9c",
+    "manifest_sha256": "278d20a3a4d38a943e1c86290daa55ebd23915c4b274c1c8bf0bbbf05403b371",
+    "reviewer_a_submission_sha256": "5166ec57d44bc0adeb117f309f2e99349f70966078dc357f09035ff845b06d01",
+    "reviewer_b_submission_sha256": "8ea1f23a78a24bb29d8914a0c6beb95489e0637fa1ada2f3d678b595ed45634d",
+    "packet_sha256": "8015f72bee65b7a3ee42e6d070ae3a5a2b947c4123bbacc3b6a37715b11b4945",
+    "reference_seal_sha256": "d2c0d394cd11d47d5eed3352d1d74bcc16178e91049038968ccfc3c31bee1fd9",
+    "support_review_v2_execution_receipt_sha256": "1dbc8f3dbbf99ac157c135b0166b7d462b933a95196aa5ab1f5d823e7a827e34",
+    "support_review_v2_entry_receipt_sha256": "d25af961c4359160442d5b42aca12df11edb13d2914c0f814fa04d42a9085b2b",
+    "support_review_v1_negative_result_sha256": "7e0f646b498b23a6ab06ee572ed781f49107645217992911a13dfb8dab2c1a93"
+  },
+  "support_reference_candidate_created": false,
+  "support_gold_created": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

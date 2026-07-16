@@ -1,0 +1,164 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d-independent-pilot-analysis-report-v2",
+  "status": "frozen_exploratory_pilot_result_corrective_successor",
+  "manifest_sha256": "8ff1a6d342207050814a7dccb1036030d5fe769e4df7f920fc54edc959a3cddb",
+  "paired_cases_sha256": "47e3230ef7fc5bb9f81960368feba8a8d10e4369827ffd14e829c25893387336",
+  "reference_sha256": "ef2f4aa6e1ceb0a1a4a12dc67c4e8e37c41839d69a60425a197fef13ef1f00e9",
+  "predecessor_analysis_v1_negative_result_sha256": "db4339d36e276570e267d3ce0bba4eadb8189acbac3a3f71e60b22b4f2426261",
+  "predecessor_analysis_v1_outputs_used": false,
+  "predecessor_power_gate_v1_outputs_used": false,
+  "case_count": 40,
+  "unique_candidate_cluster_count": 10,
+  "reference_label_counts": {
+    "supported": 38,
+    "unsupported": 2
+  },
+  "arm_metrics": {
+    "candidate": {
+      "exact_correct_count": 22,
+      "exact_accuracy": 0.55,
+      "material_error_detection": {
+        "tp": 2,
+        "tn": 22,
+        "fp": 16,
+        "fn": 0,
+        "accuracy": 0.6,
+        "precision": 0.1111111111111111,
+        "recall": 1.0,
+        "f1": 0.19999999999999998
+      },
+      "diagnostic_localization_micro_characters": {
+        "tp": 148,
+        "fp": 1131,
+        "fn": 0,
+        "precision": 0.11571540265832682,
+        "recall": 1.0,
+        "f1": 0.20742817098808689
+      },
+      "ordinal_distance": {
+        "assessable_count": 40,
+        "not_assessable_count": 0,
+        "mean_absolute_distance": 0.45
+      },
+      "unsupported_masking_count": 0,
+      "not_assessable_count": 0
+    },
+    "atomic": {
+      "exact_correct_count": 22,
+      "exact_accuracy": 0.55,
+      "material_error_detection": {
+        "tp": 2,
+        "tn": 22,
+        "fp": 16,
+        "fn": 0,
+        "accuracy": 0.6,
+        "precision": 0.1111111111111111,
+        "recall": 1.0,
+        "f1": 0.19999999999999998
+      },
+      "diagnostic_localization_micro_characters": {
+        "tp": 148,
+        "fp": 1132,
+        "fn": 0,
+        "precision": 0.115625,
+        "recall": 1.0,
+        "f1": 0.2072829131652661
+      },
+      "ordinal_distance": {
+        "assessable_count": 40,
+        "not_assessable_count": 0,
+        "mean_absolute_distance": 0.45
+      },
+      "unsupported_masking_count": 0,
+      "not_assessable_count": 0
+    }
+  },
+  "paired_primary_effect": {
+    "estimand": "exact_accuracy_atomic_minus_candidate",
+    "estimate": 0.0,
+    "discordant_pairs": {
+      "both_correct": 19,
+      "candidate_only_correct": 3,
+      "atomic_only_correct": 3,
+      "both_wrong": 15
+    },
+    "cluster_bootstrap_95_interval": {
+      "method": "candidate_sha256_cluster_bootstrap",
+      "seed": 733041,
+      "replicates": 20000,
+      "lower_2_5": -0.075,
+      "upper_97_5": 0.075
+    },
+    "case_bootstrap_95_interval_secondary": {
+      "method": "case_bootstrap",
+      "seed": 733042,
+      "replicates": 20000,
+      "lower_2_5": -0.125,
+      "upper_97_5": 0.125
+    },
+    "confirmatory_p_value": null
+  },
+  "arm_label_agreement": {
+    "count": 34,
+    "rate": 0.85
+  },
+  "structural_diagnostics": {
+    "reference_claim_count": 40,
+    "atomic_claim_count": 40,
+    "all_atomic_operations_whole_candidate": true,
+    "general_atomic_localization_superiority_estimable": false,
+    "localization_estimand_status": "degenerate_representation_equivalent_single_claim_frame",
+    "partial_localization_estimable": false
+  },
+  "missingness_and_failures": {
+    "selected_cases": 40,
+    "candidate_final_missing": 0,
+    "atomic_final_missing": 0,
+    "paired_cases_dropped": 0,
+    "final_version_failure_rate": {
+      "candidate": 0.0,
+      "atomic": 0.0
+    },
+    "predecessor_dual_arm_partial_outputs_used": false,
+    "predecessor_analysis_v1_outputs_used": false
+  },
+  "resources": {
+    "candidate": {
+      "prompt_tokens": 42794,
+      "completion_tokens": 3595,
+      "total_tokens": 46389,
+      "latency_ms_total": 194173.10590000125,
+      "latency_ms_mean": 4854.327647500031,
+      "cost_usd": null,
+      "cost_status": "provider_billing_price_not_frozen"
+    },
+    "atomic": {
+      "prompt_tokens": 48274,
+      "completion_tokens": 4127,
+      "total_tokens": 52401,
+      "latency_ms_total": 282487.2925002128,
+      "latency_ms_mean": 7062.18231250532,
+      "cost_usd": null,
+      "cost_status": "provider_billing_price_not_frozen"
+    },
+    "differences_atomic_minus_candidate": {
+      "prompt_tokens": 5480,
+      "completion_tokens": 532,
+      "total_tokens": 6012,
+      "latency_ms_total": 88314.18660021154,
+      "latency_ms_mean": 2207.8546650052886,
+      "cost_usd": null
+    },
+    "cost_status": "provider_billing_price_not_frozen"
+  },
+  "reference_opening_audit": {
+    "prefreeze_raw_bytes_read_for_sha256": true,
+    "prefreeze_json_content_parsed": false,
+    "prefreeze_labels_or_claims_inspected": false,
+    "first_json_content_parse_stage": "score_after_execution_manifest_freeze"
+  },
+  "scientific_conclusion_scope": "Paired semantic and representation feasibility on a frozen single-proposition frame; no general Atomic localization superiority claim.",
+  "confirmatory_content_opened": false,
+  "runtime_integration_authorized": false
+}

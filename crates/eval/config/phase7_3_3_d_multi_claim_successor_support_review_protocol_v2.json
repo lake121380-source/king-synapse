@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-independent-support-review-v2",
+  "stage": "Multi-claim Successor Reference Construction / Support Review",
+  "research_object": "independent evidential support classification for sealed multi-claim reference candidates",
+  "predecessor_v1_result": "authoritative_negative_cited_evidence_index_out_of_range",
+  "entry_gate": {
+    "current_gate": "construct_multi_claim_successor_support_review_v2",
+    "case_count": 40,
+    "claim_count": 240,
+    "support_packets_frozen": true,
+    "reference_candidate_sealed": true,
+    "support_gold_created": false,
+    "confirmatory_dataset_opened": false,
+    "runtime_integration_authorized": false
+  },
+  "reviewers": {
+    "a": {
+      "model_requested": "gpt-4.1",
+      "independent": true
+    },
+    "b": {
+      "model_requested": "qwen3.5-plus",
+      "independent": true
+    }
+  },
+  "controlled_invariants": [
+    "selected_40_cases",
+    "sealed_240_claim_reference_candidate",
+    "support_packets",
+    "support_labels",
+    "reason_codes",
+    "support_semantics",
+    "provider",
+    "reviewer_models",
+    "temperature",
+    "top_p",
+    "max_tokens",
+    "blindness"
+  ],
+  "single_intended_experimental_change": "sparse cited_evidence_indices replaced by fixed-length binary evidence_citation_mask",
+  "representation": {
+    "type": "operation_index_plus_positionwise_binary_mask",
+    "model_outputs_claim_index_not_reference_claim_id": true,
+    "model_outputs_fixed_length_binary_evidence_mask": true,
+    "mask_length_equals_case_evidence_count": true,
+    "mask_position_one_maps_to_evidence_index_one": true,
+    "adapter_reconstructs_immutable_ids": true,
+    "claim_indices_one_based": true,
+    "claim_mutation_forbidden": true
+  },
+  "independence": {
+    "reviewer_packet_isolation": true,
+    "other_reviewer_submission_visible": false,
+    "old_gold_visible": false,
+    "arm_outputs_visible": false,
+    "boundary_adjudication_rationales_visible": false,
+    "external_tools_enabled": false,
+    "web_access_enabled": false,
+    "memory_enabled": false
+  },
+  "output_contract": {
+    "required_top_level_keys": [
+      "decisions"
+    ],
+    "required_decision_keys": [
+      "annotation_confidence",
+      "claim_index",
+      "evidence_citation_mask",
+      "reason_codes",
+      "support_label",
+      "support_rationale"
+    ],
+    "one_decision_per_reference_claim": true,
+    "claim_order_must_match_packet": true,
+    "support_label_enum": [
+      "not_assessable",
+      "partially_supported",
+      "supported",
+      "unsupported"
+    ],
+    "reason_code_enum": [
+      "causal_leap",
+      "central_proposition_unsupported",
+      "certainty_escalation",
+      "conservative_entailment",
+      "counterexample_ignored",
+      "counterexample_preserved",
+      "direct_evidence_match",
+      "insufficient_evidence",
+      "prediction_overcommitment",
+      "reasonable_bridging_inference",
+      "scope_expansion",
+      "scope_preserved",
+      "unsupported_detail"
+    ],
+    "confidence_enum": [
+      "high",
+      "low",
+      "medium"
+    ],
+    "evidence_citation_mask_binary_only": true,
+    "evidence_citation_mask_exact_case_length": true,
+    "same_case_citations_only_by_construction": true,
+    "citations_may_be_empty_via_all_zero_mask": true,
+    "reason_codes_may_be_empty": true,
+    "duplicates_forbidden": true,
+    "nonempty_rationale": true
+  },
+  "provider_contract": {
+    "provider": "api.gpt.ge",
+    "base_url": "https://api.gpt.ge/v1",
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 12000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "first_provider_content_authoritative": true,
+    "envelope_and_content_hashes_recorded": true,
+    "raw_provider_response_stored": false
+  },
+  "failure_policy": {
+    "pre_content_transport_failure_resumable_same_manifest": true,
+    "post_content_failure_authoritative_negative": true,
+    "post_content_same_version_retry_forbidden": true,
+    "other_reviewer_may_continue": true,
+    "agreement_requires_two_completed_submissions": true
+  },
+  "instrumentation": {
+    "post_parse_failure_hash_propagation_corrected": true,
+    "semantic_effect": false
+  },
+  "completion_gate": {
+    "completed_case_count": 40,
+    "support_decision_count": 240,
+    "both_reviewers_required_for_agreement": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-013-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-013",
+  "boundary_claim_id": "adjudicated-extract_01-claim-010",
+  "provider_envelope_sha256": "d9554cdcbf9b8d52ba1643333bbde248ede8f61bc401621beb83a941657c0eca",
+  "provider_content_sha256": "b2ae6f92c2895ddbe906ddbb3bc0f960974d2b28e6394b7e448a9a516fa32df0",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "dd7a8b39c35c2f2d16f064ff3b91c9f9d5d79d84388cce4c3ab310ecde33452e",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-013",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-010",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The cited evidence says only that after a canary regression, 'the old version remained available.' That supports availability in the observed canary incident, but does not directly establish that the old version was fully operational during the entire rollout phase, so the broader claim is only partially supported.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_01-claim-010",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "The old version remained available during the observed rollout, but 'fully operational during the entire rollout phase' is broader than the evidence, which covers only the observed period."
+    },
+    "selected_frozen_decision_sha256": "08cca04754390a3c0c6d4523648cc4b6ba597d5a07d2f0089db344e39e1f43f0",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

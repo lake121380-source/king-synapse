@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-adversarial-adversarial_001_keyword_overlap_no_causality-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "9ace1ed064a907755c38d2712a2238f12bce72238a2e846550b91499ae15cc44",
+  "reviewer_id": "b",
+  "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+  "provider_envelope_sha256": "77377fff5f62c969185525e33c401cea4b9ea9566f4266fa5ff9fc3650901297",
+  "provider_content_sha256": "bfc5f90ef600b826d0c3fe5c1c566ed86a723156aa0cb2320218d0fbea424596",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "da313c82de6c198f8557755635f46ecd7a11d2200ab50cb03dde3e9e2725344b",
+  "normalized_decisions_sha256": "cf98de9f634df37d2aabc1847e3dfd48873dd5271a9168254e6715fcd9e1337b",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "not_assessable",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "The claim is a procedural instruction ('do not infer') rather than a factual assertion about the case data; the provided evidence items are data labels that do not establish the validity of the instruction itself.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text 'no_shared_outcome' is an exact string match to the text of evidence item 3.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text 'same_keyword_memory_b' is an exact string match to the text of evidence item 2.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text 'same_keyword_memory_a' is an exact string match to the text of evidence item 1.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "unsupported",
+      "cited_evidence_indices": [
+        1,
+        2,
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-001",
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-002",
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-003"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "The claim asserts a strategy to 'infer' from keyword overlap, but evidence item 3 explicitly states 'no_shared_outcome', and the evidence set lacks any outcome data to support an inference strategy, contradicting the claim's premise.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text 'current_context_requires_evidence' is an exact string match to the text of evidence item 4.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

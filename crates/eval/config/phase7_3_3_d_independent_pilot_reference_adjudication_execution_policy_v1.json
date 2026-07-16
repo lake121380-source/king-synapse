@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-independent-pilot-reference-adjudication-execution-policy-v1",
+  "status": "frozen",
+  "provider": "api.gpt.ge",
+  "model": "gpt-5.4",
+  "temperature": 0,
+  "top_p": 1,
+  "max_tokens": 2500,
+  "timeout_seconds": 600,
+  "response_format": {
+    "type": "json_object"
+  },
+  "one_isolated_case_per_request": true,
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "failure_is_immutable": true,
+    "change_requires_successor_version": true
+  },
+  "data_handling": {
+    "raw_provider_response_stored": false,
+    "content_hash_before_parse": true,
+    "envelope_hash": true,
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "confirmatory_opened": false
+  }
+}

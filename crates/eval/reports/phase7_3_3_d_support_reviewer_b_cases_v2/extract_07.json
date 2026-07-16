@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_07-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_07",
+  "provider_envelope_sha256": "ea4dca4e83a8917e45b7797cd14ecb612905ee7f6ab3513228514791d47cc1c7",
+  "provider_content_sha256": "5d07a863d7dc32ff250c6145257a2f6cfc914e909aece9f4dbf9fcd982d13e1e",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "099ab77577f5b960f26b7ec3874fe52308ae93fa07737529616a2a84b87f73fb",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1",
+        "px_07_support_2",
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "All three provided experiences explicitly occur within the 'incident_response' domain, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "unsupported_detail",
+        "causal_leap"
+      ],
+      "support_rationale": "Evidence px_07_support_1 supports that error-rate ceilings prevent outages, but the evidence does not characterize the metric as 'low-noise' or explicitly state it prevents 'full incidents' rather than just a 'full outage', representing an unsupported detail and slight causal escalation.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_ignored",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "The claim implies that using low-noise metrics avoids false stops, but the counterexample (px_07_counter_3) shows that noisy metrics cause false stops; however, the claim is phrased as a general capability which is not fully proven as a guaranteed outcome in all cases, and the evidence primarily illustrates the negative case.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states that a rollout stopping on a 'noisy metric weakly related to harm' resulted in 'repeated false stops', directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states that repeated false stops 'delayed delivery', supporting the causal link to delivery delays.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states the outcome occurred 'without reducing incidents', directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Evidence px_07_support_1 describes a rollout with an error-rate ceiling that stopped at twenty percent traffic and prevented a full outage, directly matching the prediction's conditions and outcomes.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 explicitly states 'Traffic stopped at twenty percent', which satisfies the condition of pausing at or below 20%.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 explicitly states the action 'prevented a full outage', directly supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 confirms the rollout declared an 'error-rate ceiling and automatic pause', matching the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 confirms the system 'prevented a full outage', matching the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 describes an operations change with queue depth/recovery-time conditions that 'reversed before backlog recovery exceeded the overnight window', directly matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 explicitly states the change 'reversed before backlog recovery exceeded the overnight window', matching the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The evidence states the change 'reversed' based on defined stop conditions, implying the automatic stop mechanism triggered as required by the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 states the reversal happened before the window was exceeded, implying recovery occurred within the specified time constraints.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-016",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification statement defines conditions (false stops, no incident reduction) that are met by the counterexample px_07_counter_3, validating the logical structure of the falsification claim even though the specific metric type in the evidence ('noisy') differs slightly from the claim's hypothetical ('directly harmful, low-noise'), the logical form is supported by the existence of the counter-case structure.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-017",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly mentions 'Repeated false stops', supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-018",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states the outcome occurred 'without reducing incidents', supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-019",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "The falsification observable requires the metric to be 'directly harmful and low-noise', but the supporting evidence px_07_counter_3 explicitly describes the metric as 'noisy' and 'weakly related to harm', contradicting the specific detail required by the claim.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_07",
+    "status": "completed",
+    "decision_count": 19
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b2-q-extract_03-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "87a41757e49b0e9875edfc21c85f33ed892338889a113dd3ed1b07e7d97f2710",
+  "reviewer": "q",
+  "case_id": "extract_03",
+  "provider_envelope_sha256": "29e65fa696519199f6bead9a94bdd751683ee9b313067655fc5d6268bb5601fb",
+  "provider_content_sha256": "a54411d7f8906ed20dab6a56cf1bff1a949ef8fdbcc6213fdb269adbc75fdd02",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "bf169b4217011a58de4736e48a5071a511eaef6a6d671a6e698ea2e48916cf31",
+  "decisions": [
+    {
+      "case_id": "extract_03",
+      "gap_id": "coverage-gap-016",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a comma serving as a syntactic separator between clauses, carrying no independent assertive content."
+    },
+    {
+      "case_id": "extract_03",
+      "gap_id": "coverage-gap-017",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap consists of the conjunction ' and ' which connects two claim spans but asserts no independent proposition itself."
+    },
+    {
+      "case_id": "extract_03",
+      "gap_id": "coverage-gap-018",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap is a single period marking the end of the sentence, containing no semantic claim content."
+    },
+    {
+      "case_id": "extract_03",
+      "gap_id": "coverage-gap-019",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a comma separating the scope and prediction clauses, with no independent meaning."
+    },
+    {
+      "case_id": "extract_03",
+      "gap_id": "coverage-gap-020",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap is a single period terminating the statement, devoid of assertive semantic content."
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_03",
+    "status": "completed",
+    "decision_count": 5
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

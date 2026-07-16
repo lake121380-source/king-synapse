@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-reference-construction-policy-v1",
+  "phase": "Phase 7.3.3-D1 Reference Construction",
+  "research_question": "Whether protocol-owned Atomic Claims plus deterministic aggregation improve diagnostic visibility and attribution without materially degrading Candidate-level discrimination.",
+  "measurement_objects": {
+    "evidence_bundle": "frozen_assumed_correct_not_studied",
+    "candidate": "studied",
+    "boundary_reference": "constructed_then_frozen",
+    "support_reference": "constructed_only_after_boundary_freeze",
+    "historical_candidate_judge": "frozen_descriptive_comparator",
+    "extractor_prompt_provider": "frozen_not_studied"
+  },
+  "irreversible_stage_order": [
+    "d1_a_boundary_review",
+    "d1_a_boundary_agreement",
+    "d1_a_boundary_adjudication_and_freeze",
+    "d1_b_support_review",
+    "d1_b_support_agreement",
+    "d1_b_support_adjudication_and_freeze",
+    "d1_c_gold_compatibility_check_and_freeze",
+    "d2_model_execution",
+    "d3_comparison"
+  ],
+  "hard_gates": {
+    "support_before_boundary_gold": "forbidden",
+    "compatibility_before_support_gold": "forbidden",
+    "design_model_execution_before_compatibility_freeze": "forbidden",
+    "held_out_access": "forbidden",
+    "prompt_parser_aggregator_threshold_tuning_after_first_execution": "forbidden",
+    "automatic_repair": "forbidden",
+    "selective_semantic_retry": "forbidden",
+    "first_returned_provider_output_authoritative": true
+  },
+  "historical_reference_status": "model_adjudicated_silver_not_human_gold",
+  "source_artifact_sha256": {
+    "design_dataset": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "real_provider_execution": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+    "phase7_3_1_blind_packet": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8",
+    "model_adjudicated_silver_labels": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+    "historical_pipeline_a_execution": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67",
+    "frozen_aggregator_source": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f"
+  }
+}

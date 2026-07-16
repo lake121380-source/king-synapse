@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "audit_id": "phase7.3.3-d1-b-support-request-configuration-audit-v1",
+  "status": "confirmed_adapter_credential_routing_defect",
+  "scope": "Support Review execution v1 request configuration only",
+  "v1_artifacts_preserved": true,
+  "finding": {
+    "incorrect_v1_credential_env_name": "DEEPSEEK_API_KEY",
+    "verified_gateway_credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "request_error": "credential intended for a different provider route was sent to the frozen api.gpt.ge gateway route",
+    "provider_access_unavailable_conclusion_authorized": false,
+    "support_capability_conclusion_authorized": false,
+    "failure_attribution": "adapter_credential_routing",
+    "failure_level": "level_0_transport"
+  },
+  "evidence_checks": {
+    "v1_policy_used_deepseek_key": true,
+    "v1_manifest_a_used_deepseek_key": true,
+    "v1_manifest_b_used_deepseek_key": true,
+    "v1_gateway_was_api_gpt_ge": true,
+    "v1_failed_before_provider_content": true,
+    "v1_no_support_capability_conclusion": true,
+    "historical_gpt41_gateway_route_used_phase7_key": true,
+    "historical_qwen_gateway_route_used_phase7_key": true,
+    "phase7_key_present_in_windows_user_environment": true,
+    "v1_outcome_preserved": true
+  },
+  "lineage": {
+    "crates/eval/config/phase7_3_3_d_support_review_execution_policy_v1.json": "ad287e9542cb388aac8f716d11ba834994ce45c8d6024f1f3996ee3c241bd3bb",
+    "crates/eval/reports/phase7_3_3_d_support_reviewer_a_execution_manifest_v1.json": "2361a68ad1e3c5df24a556f353c18b8f966bbb4aad069ee4f967ade171595cac",
+    "crates/eval/reports/phase7_3_3_d_support_reviewer_b_execution_manifest_v1.json": "193c8d9c33b752cf3f69650c953882f9fc5b259e343bc88a99143d08eb559a77",
+    "crates/eval/reports/phase7_3_3_d_support_reviewer_a_negative_result_v1.json": "03f7cfc40ca42e556b3b1e690387669898db0ae6a178fc23481162805869c86a",
+    "crates/eval/reports/phase7_3_3_d_support_reviewer_b_negative_result_v1.json": "cc57af39adb90e0f5860ab18f8898ef3a88d88f471ba9270f732f0210e4b2f2a",
+    "crates/eval/reports/phase7_3_3_d_support_review_execution_outcome_v1.json": "2a8f9a029f425b066ea583817417816175e261287f7db95c398b80e0632d1d48",
+    "crates/eval/reports/phase7_3_3_d_boundary_reviewer_a_execution_manifest_v3.json": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+    "crates/eval/reports/phase7_3_3_d_boundary_reviewer_a_submission_v3.json": "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+    "crates/eval/reports/phase7_3_3_d_non_claim_accounting_reviewer_q_execution_manifest_v1.json": "87a41757e49b0e9875edfc21c85f33ed892338889a113dd3ed1b07e7d97f2710",
+    "crates/eval/reports/phase7_3_3_d_non_claim_accounting_reviewer_q_submission_v1.json": "dd56f851ae42305c0881ccccf370b039660fce1661e94fea16e44e582da6c12c"
+  },
+  "secret_values_read_into_artifact": false,
+  "secret_values_persisted": false,
+  "authorized_remediation": {
+    "new_execution_version": "v2",
+    "same_version_retry": false,
+    "only_request_semantic_change": "credential_env_name",
+    "from": "DEEPSEEK_API_KEY",
+    "to": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "boundary_gold_changed": false,
+    "support_packets_changed": false,
+    "prompt_changed": false,
+    "reviewer_models_changed": false,
+    "support_contract_changed": false
+  }
+}

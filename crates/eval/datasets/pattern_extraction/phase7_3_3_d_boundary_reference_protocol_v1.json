@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-a-boundary-reference-protocol-v1",
+  "purpose": "Independently identify Atomic Claim boundaries and structural metadata without support decisions.",
+  "unit_of_review": "one source anchor within one frozen real-provider Candidate",
+  "reviewer_visible": [
+    "frozen_evidence_bundle",
+    "candidate_source_anchor_text",
+    "source_field",
+    "source_index",
+    "boundary_annotation_rules"
+  ],
+  "reviewer_prohibited": [
+    "support_labels",
+    "candidate_gold_or_silver_labels",
+    "historical_or_new_judge_outputs",
+    "gold_evidence_attribution",
+    "other_reviewer_submission",
+    "phase7_3_aggregate_metrics",
+    "reference_candidate",
+    "held_out_cases"
+  ],
+  "required_claim_fields": [
+    "reviewer_claim_id",
+    "source_span",
+    "claim_text",
+    "claim_type",
+    "centrality",
+    "material",
+    "claim_origin",
+    "boundary_rationale",
+    "annotation_confidence"
+  ],
+  "claim_type_enum": [
+    "proposition",
+    "scope",
+    "prediction",
+    "causal",
+    "counterexample",
+    "limitation",
+    "falsifiability"
+  ],
+  "claim_origin_enum": [
+    "explicit",
+    "inferred",
+    "synthesized"
+  ],
+  "span_semantics": "UTF-8 decoded Python string code-point offsets [start,end) within exactly one source_text anchor.",
+  "boundary_rules": [
+    "Every independently truth-evaluable assertion must receive its own non-empty span.",
+    "Claims may not cross source-anchor boundaries.",
+    "Overlapping claims require an explicit split_or_overlap rationale.",
+    "Do not assign support labels or evidence IDs.",
+    "Claim origin is structural provenance only: explicit, inferred, or synthesized; it is not a support decision."
+  ],
+  "agreement_metrics": [
+    "claim_count_agreement",
+    "exact_span_agreement",
+    "span_iou",
+    "claim_type_agreement",
+    "centrality_agreement",
+    "material_agreement",
+    "claim_origin_agreement",
+    "split_merge_disagreement_count",
+    "fundamental_boundary_disagreement_count"
+  ],
+  "freeze_rule": "Boundary Gold may freeze only after two completed blind submissions, an immutable Agreement Report hash, and completed adjudication.",
+  "source_artifact_sha256": {
+    "design_dataset": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "real_provider_execution": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+    "phase7_3_1_blind_packet": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8",
+    "model_adjudicated_silver_labels": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+    "historical_pipeline_a_execution": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67",
+    "frozen_aggregator_source": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f"
+  }
+}

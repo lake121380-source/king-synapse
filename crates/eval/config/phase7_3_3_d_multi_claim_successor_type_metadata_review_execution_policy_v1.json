@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-type-metadata-review-execution-policy-v1",
+  "status": "frozen_before_any_type_metadata_provider_call",
+  "provider": "api.gpt.ge",
+  "provider_base_url": "https://api.gpt.ge/v1",
+  "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+  "temperature": 0,
+  "top_p": 1,
+  "max_tokens": 1600,
+  "response_format": {
+    "type": "json_object"
+  },
+  "case_isolation": true,
+  "first_provider_content_authoritative": true,
+  "same_version_retry_after_content_authorized": false,
+  "transport_retry_before_content_authorized": true,
+  "raw_provider_content_stored": false,
+  "hashes_stored": [
+    "provider_envelope_sha256",
+    "provider_content_sha256"
+  ]
+}

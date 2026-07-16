@@ -1,0 +1,53 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_frf_022",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "1b40db9fabaa4a9081d331ab80bd2fc52c7c886d03ae7a536862bf043c2ed04e",
+  "provider_content_sha256": "5426370a54fd2677d3264fed5a6328720a482893705f617bb7ab27395a059d55",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "cf4f4d25c232c75899d0b3a3f7c1883ea940230ac943574224566e1c973a322d",
+  "normalized_case": {
+    "case_id": "mi_validation_frf_022",
+    "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frf_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mi_validation_frf_022-evidence-01",
+          "mi_validation_frf_022-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate claims that unresolved failure evidence must beat a recently accessed unsafe playbook. Evidence 1 shows an unsafe playbook was recently accessed but still repeats the failed approach, implying it is not beaten. Evidence 6 states unresolved failure evidence remains authoritative despite not being recently accessed, contradicting the requirement that it must beat a recently accessed playbook. Thus, the claim is unsupported.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "unsupported",
+    "material_error_spans": [
+      {
+        "reference_claim_id": "mi_validation_frf_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "support_label": "unsupported"
+      }
+    ],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

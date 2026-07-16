@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_rel_022",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "e93664d300dcada333fd631debc09b90c6c1f5d54a07208d3c75a937bd2401ba",
+  "content_sha256": "d6fb3eb06ecf185276473868cfdb309e544bcd714e71c80e5f363fe8ea731335",
+  "latency_ms": 4096.300199977122,
+  "usage": {
+    "prompt_tokens": 1058,
+    "completion_tokens": 111,
+    "total_tokens": 1169,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 914,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1754,
+      "total_duration_ms": 1678,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rel_022",
+    "support_label": "partially_supported",
+    "rationale": "The evidence directly states that a direct user confirmation 'establishes the reliable fact' and separately that an unverified third-party report 'remains unreliable.' This supports the candidate's ranking that direct user confirmation should take precedence over an unverified report in a conflict. However, the evidence does not establish the specific qualifier 'lexically stronger'; it only says the competing report repeats the claim and is unreliable.",
+    "source_span": {
+      "start": 0,
+      "end": 72
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

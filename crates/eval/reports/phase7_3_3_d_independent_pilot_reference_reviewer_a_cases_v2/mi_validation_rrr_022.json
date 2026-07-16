@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_rrr_022",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "a0a0e1940f53945b6b4c67d3a65bd7e08e4c5ab3d57217f03d6958848f9237f9",
+  "provider_content_sha256": "f98bb0b769d6d658d51fed5886deaaf2d92922bd57199cf3e1c9e33500f82606",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "17d8a5c986ce33042af87ba237d97def5ec595748032345454baf0ff65a4e0ed",
+  "normalized_case": {
+    "case_id": "mi_validation_rrr_022",
+    "candidate_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrr_022-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "source_text_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrr_022-evidence-01",
+          "mi_validation_rrr_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that a current observed state supersedes a reliable but explicitly stale fact. Evidence 01 establishes that the older fact was highly reliable when recorded but is now explicitly stale. Evidence 06 directly states that the current observed state is active and the older reliable fact is stale, confirming the selection rule that the current state should take precedence. This is a direct match to the candidate's claim, with no conflicting evidence present.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_10-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_10",
+  "provider_envelope_sha256": "9c37fbce57d1f8ac3f45718b8f8ed9243ec713bb19750e29bb7221b9ad8503ec",
+  "provider_content_sha256": "042ed342072927916e194c021edd967fbc4206c6bb98ddf5fdc26df6b678e9a0",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "ec00235f5fa62b3cb8faa68c3601b01442d95f9b9f53133e74a342711352e3aa",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1",
+        "px_10_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "Claim-001 posits that buffering reduces interruptions under two specific conditions: (1) long lead time/volatile demand, and (2) predictable spikes/slow response. Evidence px_10_support_1 directly confirms condition 1 with observed reduction in interruptions. Evidence px_10_support_2 directly confirms condition 2 with observed reduction in stockouts. The scope and causal direction match the evidence exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Claim-002 states buffering is counterproductive when lead time is short and demand is stable. Evidence px_10_counter_3 describes exactly this scenario (daily replenishment, stable demand) and reports negative outcomes (inventory expiration, cost exceeding avoided stockouts), directly supporting the claim that the action is counterproductive in this context.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Claim-003 predicts that for products with long lead time and volatile demand, buffering reduces interruptions. Evidence px_10_support_1 observes exactly this outcome ('Interruptions fell') in a case matching these conditions. The prediction is fully supported by the observed outcome in the evidence bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-004 predicts keeping carrying cost within the declared limit. Evidence px_10_support_1 explicitly states the outcome was 'carrying cost stayed within its declared limit'. The prediction matches the observed evidence precisely.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-005 predicts 'Interruption events decrease'. Evidence px_10_support_1 reports 'Interruptions fell'. This is a direct semantic match between the predicted observable and the recorded outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Claim-006 predicts carrying cost as a percentage of product value does not exceed the planned budget. Evidence px_10_support_1 states carrying cost 'stayed within its declared limit'. While the evidence does not explicitly define the limit as a 'percentage of product value', staying within a declared limit in an inventory context reasonably entails not exceeding the budgeted threshold for that cost metric.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-007",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Claim-007 specifies a success criterion of stockout frequency dropping by 'at least 30%'. The available evidence (px_10_support_1, px_10_support_2) confirms that interruptions/stockouts 'fell' or 'decreased' but provides no quantitative data, percentages, or metrics to verify the specific '30%' threshold. The specific magnitude is unsupported.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Claim-008 requires carrying cost to remain under a 'target threshold set by management'. Evidence px_10_support_1 notes cost stayed within its 'declared limit'. In the context of the case, a 'declared limit' is reasonably inferred to be the management-set target threshold, making the claim supported by the evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-009 posits that for daily replenishment and stable demand, a large buffer leads to inventory expiration. Evidence px_10_counter_3 describes this exact scenario and outcome ('Most inventory expired'). The falsification condition is directly evidenced.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-010 posits that total cost exceeds the value of avoided stockouts in the counter-scenario. Evidence px_10_counter_3 explicitly states 'cost exceeded avoided stockouts'. This is a direct match.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-011 identifies 'Observed inventory write-offs due to expiration' as the falsification observable. Evidence px_10_counter_3 reports 'Most inventory expired', which necessitates write-offs. The observable is confirmed by the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-012 defines the falsification observable as total holding cost being greater than the cost of stockouts without buffering. Evidence px_10_counter_3 states 'cost exceeded avoided stockouts', which is semantically equivalent to the claim's condition. The evidence directly supports the observable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_10",
+    "status": "completed",
+    "decision_count": 12
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,1521 @@
+{
+  "schema_version": 2,
+  "submission_id": "phase7.3.3-d1-b-support-reviewer-b-submission-v2",
+  "reviewer_id": "reviewer_b",
+  "reviewer_role": "independent_support_reviewer",
+  "protocol_id": "phase7.3.3-d1-b-support-reference-protocol-v1",
+  "packet_id": "phase7.3.3-d1-b-support-b-packet-v1",
+  "packet_sha256": "22c5c572f19e453249c62eb1c7c4cb088b3e5bf71238ac5e5f1353fd64e29d61",
+  "status": "completed_independent_support_review",
+  "blocked_reason": null,
+  "boundary_gold_sha256": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0",
+  "completed": true,
+  "blind_to_other_reviewer": true,
+  "blind_to_candidate_gold_or_silver": true,
+  "held_out_accessed": false,
+  "claims": [
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All three experiences explicitly occur within the software delivery domain, confirming the scope.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both support cases demonstrate that exposing a small subset of traffic (canary/cohorts) led to the early detection of specific defects (regression/language defect).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The payments canary experience explicitly states the outcome that the old version remained available after the rollback of the canary cohort.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The counterexample (atomic_schema) confirms that lack of coexistence (backward compatibility) causes failure, while support cases imply compatibility allowed the old version to remain operational.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence describes scenarios matching the condition: incremental rollout (5% traffic, cohorts) where backward compatibility was maintained (old version available).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In both support cases, the first exposed group (canary/cohort two) successfully revealed a critical defect (regression/language defect).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence shows that in both successful cases, the rest of the system (non-canary traffic, remaining tenants) was not affected or moved due to the defect found in the subset.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The payments canary outcome explicitly states that only the canary cohort needed rollback and the old version remained available, supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence explicitly states 'Only the canary cohort needed rollback', directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcome 'the old version remained available' in the payments canary case supports the criterion that the old version remains operational.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The atomic_schema counterexample describes a partial rollout (incremental) without compatibility that created incompatible records and required more recovery work, representing a system-wide issue/outage scenario.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The counterexample notes 'more recovery work' was needed due to incompatible records; while 'rollback of old version' isn't explicitly stated, the incompatibility implies the old state could not be simply retained without significant remediation, fitting the falsification condition of forced major rollback/recovery.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-013",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "certainty_escalation"
+      ],
+      "support_rationale": "The evidence states 'more recovery work' and 'incompatible records' but does not explicitly confirm the entire system became 'unavailable'; the severity is implied but not strictly proven as total unavailability.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-014",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "The evidence mentions 'more recovery work' but does not explicitly state that the 'old version is rolled back'; the specific action of rolling back the old version is an inference not directly supported by the text.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-001",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "reason_codes": [
+        "causal_leap",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence shows labeling by impact/sensitivity helped specific cases (outages, deadlines) reach responders or avoid being hidden, but does not support the universal causal claim that it 'ensures' all high-impact issues are addressed promptly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample experience explicitly documents a widespread login failure waiting behind low-impact VIP requests due to ranking solely by requester status, directly supporting the claim that critical issues can be overlooked.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence observes that outages reached responders quickly under this labeling scheme, but does not support the absolute predictive claim that high-impact issues 'will be addressed before' all lower-impact ones in every instance.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-004",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence in the bundle describes a 'combined score' mechanism or confirms that resolution order strictly reflects such a calculated metric; evidence only notes labeling and general outcomes.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-005",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "The specific quantitative success criterion of 'At least 90%' is entirely absent from the qualitative observational evidence provided in the bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The supplied counterexample (px_02_counter_3) exactly matches the falsification condition described: a critical outage delayed behind low-impact VIP requests, validating the logical structure of the falsification statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence explicitly states that a widespread login failure (critical outage) waited behind low-impact VIP requests, directly confirming the observable event described in the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "All three experiences explicitly describe product experiments where quantitative thresholds (activation, stop criteria, guardrails, success metrics) were fixed before launch, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Supported by px_03_support_1 and px_03_support_2 where teams adhered to thresholds, but contradicted by px_03_counter_3 where the team discarded unexpected themes due to rigid thresholds, implying a failure to adhere to the spirit of outcome evaluation in exploratory contexts.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Directly supported by px_03_support_1 (accepted neutral result) and px_03_support_2 (stopped on guardrail), but the claim implies a universal behavior which is challenged by px_03_counter_3 where the rigid application of pre-defined thresholds led to discarding valid insights, suggesting the metric adherence was problematic rather than purely positive.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "The scope condition 'product experiment with predefined quantitative thresholds' is met by all three provided experiences, establishing the context for the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-005",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "counterexample_ignored"
+      ],
+      "support_rationale": "The prediction that teams 'will accept the outcome' is supported in two cases but fails in px_03_counter_3 where the outcome (unexpected themes) was discarded rather than accepted, indicating the prediction is not universally true for all such experiments.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Evidence shows the team did not alter criteria in support cases, but px_03_counter_3 demonstrates a scenario where rigid adherence to pre-set thresholds caused the team to ignore relevant outcomes, effectively falsifying the reliability of this observable as a universal rule.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "In support cases, decisions matched triggers. However, in px_03_counter_3, the decision (discarding themes) was driven by the thresholds but resulted in a negative outcome (missing pain points), suggesting the 'match' does not guarantee the intended success or validity of the decision process.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification condition is clearly defined. While px_03_counter_3 shows rigid adherence rather than redefinition, the logical structure holds: if redefinition occurred, the pattern of 'adherence' would be falsified. The evidence bundle contains a counterexample to the *pattern's benefit*, but the falsification statement itself is logically sound and assessable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'post-hoc modification' is the precise negation of the behavior seen in px_03_support_1 and px_03_support_2, and serves as the hypothetical failure mode. The evidence bundle clearly defines what constitutes the metrics (guardrails, stop criteria) in all cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "All three experiences (px_04_support_1, px_04_support_2, px_04_counter_3) explicitly belong to the 'service_operations' domain, matching the claim scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Both support cases (px_04_support_1, px_04_support_2) describe examining logs, memory, configuration, permissions, and network evidence, which successfully isolated specific root causes (memory limit, permission change).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcomes in px_04_support_1 and px_04_support_2 explicitly state that unrelated components were not replaced ('without replacing unrelated components', 'before a risky restore' implying avoidance).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample px_04_counter_3 demonstrates that when active corruption was present, routine diagnosis failed to prevent further damage, supporting the limitation that the pattern requires no active corruption.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "scope_preserved",
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The evidence covers 'service_operations' failures (cache, database), providing a grounded basis for predicting outcomes for new failures within the same defined scope.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "While two cases show success, predicting that the method 'will' isolate a root cause for any new failure overcommits certainty given the small sample size and existence of a counterexample scenario.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence shows this occurred in two instances, but projecting it as a guaranteed outcome ('without needing') for future cases exceeds the statistical weight of two positive examples.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The failure in px_04_counter_3 due to active corruption logically supports the predictive limitation that success is contingent on the absence of such corruption.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In both support cases, the root cause was identified directly from the specified evidence classes (logs, memory, config, permissions, network).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcomes confirm that no unnecessary restarts or replacements occurred; specific fixes were applied instead.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The identified root causes (memory limit, filesystem permission) match the findings from the examined evidence classes in the support cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly states unrelated components were not replaced in the successful diagnosis scenarios.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The support cases serve as negative examples for this falsification condition; they followed the process and did NOT replace unrelated components, thus the falsification condition did not occur, validating the pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The support cases successfully identified root causes, meaning the falsification condition (failing to identify) did not manifest, supporting the claim's validity.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample shows that if active corruption is present, the standard process fails, reinforcing the falsification boundary that failure should not happen if corruption is absent.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-016",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The evidence shows resolutions were achieved by targeting indicated components, not by replacing unrelated ones, thus the falsification observable did not occur.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-017",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "In the support cases, the root cause was found within the evidence classes, meaning the falsification observable (root cause not found) did not occur.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "Evidence explicitly confirms the comparison occurred within the same audience and month for AI tool posts.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "causal_leap"
+      ],
+      "support_rationale": "Evidence shows association/recurrence of features with success, but does not establish the causal mechanism implied by 'is associated with' in a predictive sense beyond correlation.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Directly supported by the counterexample where a celebrity repost drove virality, rendering content structure copying ineffective.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence supports a general trend/association, but the deterministic prediction 'it will have' overcommits given the observed variance and counterexamples.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "The scope limitation aligns perfectly with the evidence showing failure when external virality sources are present.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly identifies saves and qualified comments as the observed outcomes within the specified audience and month.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-007",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence states features recurred in winners but provides no quantitative data to support the specific '50% more' threshold.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The existence of 'failed AI posts' in the evidence bundle implies that posts with these features can fail to achieve higher engagement, satisfying falsifiability.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Directly supported by the celebrity repost case where a post without the specific content structure achieved high engagement via an external source.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Engagement metrics (saves, comments) are the primary observables recorded in the evidence bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly identifies an external source (unrelated celebrity repost) driving traffic, confirming this is an observable factor.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2",
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "All three evidence instances (px_06_support_1, px_06_support_2, px_06_counter_3) explicitly occur within the software_delivery domain, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "px_06_support_1 confirms exposing a risky feature to one internal group revealed a dependency assumption failure. px_06_support_2 confirms migrating one representative tenant revealed an undocumented data shape. Both align with the claim that representative subsets reveal hidden issues before full rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "px_06_counter_3 explicitly documents that testing only the smallest tenant (simplest subset) failed to detect data shapes present in complex tenants, causing full rollout failure. This directly supports the counterexample claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "certainty_escalation"
+      ],
+      "support_rationale": "While evidence shows issues were found in two specific cases, the claim predicts that 'at least one hidden issue... will be discovered' as a universal certainty for any risky change exposed to a representative subset. The evidence supports the possibility and occurrence, but not the guaranteed universal prediction implied by 'will'.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In px_06_support_1, the dependency failure was found during the internal group exposure. In px_06_support_2, the data shape issue was found during the single tenant migration. Both constitute detection during the limited exposure phase.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The outcomes in px_06_support_1 and px_06_support_2 describe findings occurring before the 'full fleet' or 'full rollout' commitment, satisfying the condition of being documented before full rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both supporting cases (px_06_support_1, px_06_support_2) resulted in the identification of at least one specific issue (dependency failure, undocumented data shape), meeting the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-008",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence confirms issues were identified before rollout. px_06_support_1 notes reversal required a configuration change, implying addressability. However, the evidence does not explicitly confirm that the issues were successfully 'addressed' (fixed/resolved) before rollout, only that they were found and reversible/detected.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "px_06_counter_3 serves as the falsification instance: a subset was tested (smallest tenant), no issues were found in that specific probe relative to its scope, yet full rollout failed due to issues (data shapes) that existed in the broader population complexity which the subset failed to reflect. This matches the falsification logic.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "px_06_counter_3 explicitly states the full rollout failed on data shapes absent from the probe (smallest tenant), which aligns with the observable of failure due to assumptions/shapes existing in the complexity but not detected in the subset.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1",
+        "px_07_support_2",
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "All three provided experiences explicitly occur within the 'incident_response' domain, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "unsupported_detail",
+        "causal_leap"
+      ],
+      "support_rationale": "Evidence px_07_support_1 supports that error-rate ceilings prevent outages, but the evidence does not characterize the metric as 'low-noise' or explicitly state it prevents 'full incidents' rather than just a 'full outage', representing an unsupported detail and slight causal escalation.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_ignored",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "The claim implies that using low-noise metrics avoids false stops, but the counterexample (px_07_counter_3) shows that noisy metrics cause false stops; however, the claim is phrased as a general capability which is not fully proven as a guaranteed outcome in all cases, and the evidence primarily illustrates the negative case.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states that a rollout stopping on a 'noisy metric weakly related to harm' resulted in 'repeated false stops', directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states that repeated false stops 'delayed delivery', supporting the causal link to delivery delays.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states the outcome occurred 'without reducing incidents', directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Evidence px_07_support_1 describes a rollout with an error-rate ceiling that stopped at twenty percent traffic and prevented a full outage, directly matching the prediction's conditions and outcomes.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 explicitly states 'Traffic stopped at twenty percent', which satisfies the condition of pausing at or below 20%.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 explicitly states the action 'prevented a full outage', directly supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 confirms the rollout declared an 'error-rate ceiling and automatic pause', matching the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_1 confirms the system 'prevented a full outage', matching the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 describes an operations change with queue depth/recovery-time conditions that 'reversed before backlog recovery exceeded the overnight window', directly matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 explicitly states the change 'reversed before backlog recovery exceeded the overnight window', matching the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The evidence states the change 'reversed' based on defined stop conditions, implying the automatic stop mechanism triggered as required by the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_support_2 states the reversal happened before the window was exceeded, implying recovery occurred within the specified time constraints.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-016",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification statement defines conditions (false stops, no incident reduction) that are met by the counterexample px_07_counter_3, validating the logical structure of the falsification claim even though the specific metric type in the evidence ('noisy') differs slightly from the claim's hypothetical ('directly harmful, low-noise'), the logical form is supported by the existence of the counter-case structure.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-017",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly mentions 'Repeated false stops', supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-018",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_07_counter_3 explicitly states the outcome occurred 'without reducing incidents', supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-019",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "The falsification observable requires the metric to be 'directly harmful and low-noise', but the supporting evidence px_07_counter_3 explicitly describes the metric as 'noisy' and 'weakly related to harm', contradicting the specific detail required by the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Claim-001 synthesizes the actions and outcomes of px_08_support_1 (reversible intervention leading to stabilization/avoidance) and px_08_support_2 (escalation protocol linked to confirmation/worsening). The causal language 'is associated with' is supported by the observed outcomes in these independent sources without overclaiming universal causality.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Claim-002 explicitly defines the failure mode where vital signs worsen rapidly. This is directly supported by px_08_counter_3, which documents a team waiting for complete evidence despite worsening signs, resulting in increased harm due to the need for a lower evidence threshold.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "certainty_escalation"
+      ],
+      "support_rationale": "While the evidence shows stabilization and avoidance occurred in specific instances (px_08_support_1), the claim uses definitive predictive language ('will stabilize', 'will be avoided'). The single-case evidence supports a correlation or possibility, not a guaranteed future outcome for all such cases, representing an escalation in certainty.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'Patient condition stabilizes' is explicitly stated as the outcome in px_08_support_1 ('The condition stabilized').",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'later evidence rules out the need for the initially considered invasive action' matches the outcome in px_08_support_1 ('later evidence ruled out the invasive action').",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim asserts the outcome matches px_08_support_1. Since the predicted observables (stabilization, ruling out invasive action) align perfectly with the recorded outcome in px_08_support_1, the criterion is met.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification statement posits that applying the staged approach during rapid worsening leads to harm. px_08_counter_3 confirms this: waiting for evidence (staged approach) despite worsening signs led to increased harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'Delay in emergency action leads to measurable worsening of patient outcome' is supported by px_08_counter_3, which states 'The delay increased harm'.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim states consistency with counterexample px_08_counter_3. The details of the falsification observables (delay causing harm in worsening conditions) are identical to the narrative in px_08_counter_3.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1",
+        "px_09_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Two independent cases (px_09_support_1, px_09_support_2) demonstrate convergence of estimates or conclusions from different instruments/methods/sources, directly supporting the claim that such results are robust.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample case (px_09_counter_3) explicitly shows five reports repeating a single unverified source, creating an apparent consensus that was later found to be fragile, directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_09_counter_3 states the apparent consensus disappeared when the source was corrected, directly supporting the causal claim that such consensus collapses upon correction of the original source.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The experience in px_09_support_1 describes two laboratories using different instruments and samples to estimate a material property, with outcomes converging within a preregistered tolerance, exactly matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcome in px_09_support_1 explicitly states estimates converged within a preregistered tolerance, which entails the observable that the difference between estimates is within the tolerance range.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The concept of 'converged within a preregistered tolerance' in px_09_support_1 logically entails the mathematical falsifiability criterion abs(estimate_1 - estimate_2) <= tolerance.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The claim defines the failure condition (non-convergence) for the pattern established in px_09_support_1; while the negative outcome wasn't observed, the logical structure of the falsification statement is supported by the defined success criteria in the evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "This observable describes the specific condition (difference exceeds tolerance) that would constitute the failure mode for the pattern observed in px_09_support_1, logically derived from the success criterion.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The case px_09_counter_3 demonstrates that when multiple reports trace to a single unverified source, the pattern of apparent consensus does not hold (it disappeared), directly supporting this falsification statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_09_counter_3 explicitly states the outcome: 'The apparent consensus disappeared when the source was corrected,' which directly matches the falsification observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1",
+        "px_10_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "Claim-001 posits that buffering reduces interruptions under two specific conditions: (1) long lead time/volatile demand, and (2) predictable spikes/slow response. Evidence px_10_support_1 directly confirms condition 1 with observed reduction in interruptions. Evidence px_10_support_2 directly confirms condition 2 with observed reduction in stockouts. The scope and causal direction match the evidence exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Claim-002 states buffering is counterproductive when lead time is short and demand is stable. Evidence px_10_counter_3 describes exactly this scenario (daily replenishment, stable demand) and reports negative outcomes (inventory expiration, cost exceeding avoided stockouts), directly supporting the claim that the action is counterproductive in this context.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Claim-003 predicts that for products with long lead time and volatile demand, buffering reduces interruptions. Evidence px_10_support_1 observes exactly this outcome ('Interruptions fell') in a case matching these conditions. The prediction is fully supported by the observed outcome in the evidence bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-004 predicts keeping carrying cost within the declared limit. Evidence px_10_support_1 explicitly states the outcome was 'carrying cost stayed within its declared limit'. The prediction matches the observed evidence precisely.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-005 predicts 'Interruption events decrease'. Evidence px_10_support_1 reports 'Interruptions fell'. This is a direct semantic match between the predicted observable and the recorded outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Claim-006 predicts carrying cost as a percentage of product value does not exceed the planned budget. Evidence px_10_support_1 states carrying cost 'stayed within its declared limit'. While the evidence does not explicitly define the limit as a 'percentage of product value', staying within a declared limit in an inventory context reasonably entails not exceeding the budgeted threshold for that cost metric.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-007",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Claim-007 specifies a success criterion of stockout frequency dropping by 'at least 30%'. The available evidence (px_10_support_1, px_10_support_2) confirms that interruptions/stockouts 'fell' or 'decreased' but provides no quantitative data, percentages, or metrics to verify the specific '30%' threshold. The specific magnitude is unsupported.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Claim-008 requires carrying cost to remain under a 'target threshold set by management'. Evidence px_10_support_1 notes cost stayed within its 'declared limit'. In the context of the case, a 'declared limit' is reasonably inferred to be the management-set target threshold, making the claim supported by the evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-009 posits that for daily replenishment and stable demand, a large buffer leads to inventory expiration. Evidence px_10_counter_3 describes this exact scenario and outcome ('Most inventory expired'). The falsification condition is directly evidenced.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-010 posits that total cost exceeds the value of avoided stockouts in the counter-scenario. Evidence px_10_counter_3 explicitly states 'cost exceeded avoided stockouts'. This is a direct match.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-011 identifies 'Observed inventory write-offs due to expiration' as the falsification observable. Evidence px_10_counter_3 reports 'Most inventory expired', which necessitates write-offs. The observable is confirmed by the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_10-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_10_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim-012 defines the falsification observable as total holding cost being greater than the cost of stockouts without buffering. Evidence px_10_counter_3 states 'cost exceeded avoided stockouts', which is semantically equivalent to the claim's condition. The evidence directly supports the observable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "expected_claim_count": 118,
+  "immutable_boundary_fields_attested": false,
+  "source_artifact_sha256": {
+    "boundary_gold": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0",
+    "support_packet": "22c5c572f19e453249c62eb1c7c4cb088b3e5bf71238ac5e5f1353fd64e29d61",
+    "evidence_source": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8",
+    "support_reference_protocol": "d5cb2570d80a1e72f9d747130518a1859042be8ac130903ab562ee137b2d9d52"
+  },
+  "execution_manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer_model_requested": "qwen3.5-plus",
+  "completed_case_count": 10,
+  "support_decision_count": 118
+}

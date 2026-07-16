@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-contradiction-contradiction_001_fast_vs_stable-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "eaba1e907a4361d03936d58ec8919182ca1a2245ad7863bb5ab05485fc0ac3dc",
+  "reviewer_id": "a",
+  "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+  "provider_envelope_sha256": "57086e1bb95c9ffbc84b7822be86eb07a2169a1c63b960a8a9336dadb6e6754e",
+  "provider_content_sha256": "7459a0ec55a15ea73cbf0e56fc6a73f7caeaaf464af5effead90dc981f244656",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "1eccf79f1dc781ed31c79c9bcde02416c7acb6918341ac7fbfe03a04e65dbf97",
+  "normalized_decisions_sha256": "d2e07a7efd515eba3b5b8340773009863257b75bad6c42e1f47333878341aa71",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "0011",
+      "cited_evidence_indices": [
+        3,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-003",
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-004"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_preserved"
+      ],
+      "support_rationale": "Evidence of a new stability policy and high-risk context together support the preference for stability in the current context.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim directly matches the evidence for the new stability policy.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "Evidence of old fast delivery preference does not establish current preference for fast delivery, especially given new stability policy and high-risk context.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim directly matches the evidence for a fast delivery incident.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim directly matches the evidence for old fast delivery preference.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_001_fast_vs_stable-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim directly matches the evidence for current context being high risk.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

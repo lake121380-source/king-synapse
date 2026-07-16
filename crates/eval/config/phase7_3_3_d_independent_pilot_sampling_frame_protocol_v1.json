@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-sampling-frame-protocol-v1",
+  "status": "frozen_by_sampling_adapter",
+  "stage": "construct_independent_pilot_sampling_frame_v1",
+  "entry_gate": {
+    "independent_replication_protocol_frozen": true,
+    "next_authorized_stage": "construct_independent_pilot_sampling_frame_v1",
+    "pilot_dataset_content_opened": false,
+    "confirmatory_dataset_opened": false
+  },
+  "source": {
+    "dataset_path": "crates/eval/datasets/memory_intelligence/agent_memory_benchmark.toml",
+    "dataset_split": "validation",
+    "candidate_field": "expected_reason",
+    "evidence_field": "memory",
+    "context_fields_not_scored_as_evidence": [
+      "query"
+    ],
+    "source_family": "agent_memory_benchmark_expected_reason",
+    "pre_existing_frozen_dataset": true
+  },
+  "sealed_mechanical_processing": {
+    "candidate_and_evidence_bytes_read_only_for_hash_length_and_count": true,
+    "candidate_text_emitted": false,
+    "evidence_content_emitted": false,
+    "human_semantic_content_access": false,
+    "provider_content_access": false
+  },
+  "eligibility": {
+    "required_split": "validation",
+    "candidate_nonempty": true,
+    "evidence_bundle_nonempty": true,
+    "candidate_id_unique": true,
+    "lineage_complete": true,
+    "route_a_design_case_overlap_excluded": true,
+    "candidate_hash_overlap_excluded": true,
+    "evidence_hash_overlap_excluded": true,
+    "source_identity_overlap_excluded_when_available": true,
+    "calibration_fixture_excluded": true
+  },
+  "strata": {
+    "domain": "scenario.category",
+    "source_family": "agent_memory_benchmark_expected_reason",
+    "candidate_length_band": {
+      "short_lt_80": [
+        0,
+        79
+      ],
+      "medium_80_159": [
+        80,
+        159
+      ],
+      "long_ge_160": [
+        160,
+        null
+      ]
+    },
+    "evidence_count_band": {
+      "small_1_3": [
+        1,
+        3
+      ],
+      "medium_4_6": [
+        4,
+        6
+      ],
+      "large_ge_7": [
+        7,
+        null
+      ]
+    }
+  },
+  "selection": {
+    "target": 40,
+    "minimum": 30,
+    "maximum": 50,
+    "method": "sha256_ranked_stratified",
+    "allocation": "proportional_largest_remainder_over_composite_strata",
+    "allocation_tie_breaker": "composite_stratum_key",
+    "rank_material": "seed|composite_stratum_key|candidate_id|candidate_sha256|evidence_bundle_sha256",
+    "rank_tie_breaker": "candidate_id",
+    "seed": "phase7.3.3-d-pilot-v1-20260715"
+  },
+  "opening": {
+    "selected_ids_and_hashes_frozen_before_content_open": true,
+    "selected_content_open_authorized_by_successor_gate_only": true,
+    "unselected_content_remains_sealed": true
+  },
+  "failure": {
+    "minimum_shortfall_is_immutable_failure": true,
+    "silent_replacement": false,
+    "post_opening_replacement": false,
+    "outcome_dependent_selection": false
+  },
+  "runtime": {
+    "provider_called": false,
+    "runtime_integration": false,
+    "memory_write": false
+  }
+}

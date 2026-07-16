@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d1-b2-non-claim-accounting-execution-policy-v1",
+  "authoritative_result_policy": {
+    "first_returned_provider_content_per_case_is_authoritative": true,
+    "invalid_json_schema_or_semantics_is_experimental_negative_result": true,
+    "automatic_repair_authorized": false,
+    "semantic_retry_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_provider_content_may_resume_same_manifest": true
+  },
+  "execution_controls": {
+    "case_isolation": true,
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 10000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "web_tools_enabled": false,
+    "external_memory_enabled": false
+  },
+  "data_handling": {
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "credential_recorded": false,
+    "raw_provider_envelope_recorded": false,
+    "raw_provider_content_recorded": false,
+    "provider_envelope_sha256_recorded": true,
+    "provider_content_sha256_recorded": true,
+    "normalized_decisions_recorded": true,
+    "held_out_loaded": false
+  },
+  "prohibitions": [
+    "no_gap_span_modification",
+    "no_new_gap_creation",
+    "no_prompt_or_parser_modification_after_manifest_freeze",
+    "no_result_replacement",
+    "no_semantic_retry",
+    "no_automatic_adjudication",
+    "no_coverage_rerun_in_this_stage",
+    "no_boundary_gold_freeze",
+    "no_support_review",
+    "no_held_out_access"
+  ]
+}

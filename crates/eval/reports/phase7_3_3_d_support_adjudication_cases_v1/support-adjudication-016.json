@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-016-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_03",
+  "adjudication_item_id": "support-adjudication-016",
+  "boundary_claim_id": "adjudicated-extract_03-claim-002",
+  "provider_envelope_sha256": "1fb46eb1828162009bbb77b6774723844d5a0da439a29f666d86a3abbc0db129",
+  "provider_content_sha256": "837ccea4f5d71e6f65b591524dde69f016f221e1c086023a57a1ffe605e79b29",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "d6c68a1cc3f6b541d0b2f49a8b7f539bb8f7f3e5963d3a1ede43d8ce8c0929bf",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-016",
+    "case_id": "extract_03",
+    "boundary_claim_id": "adjudicated-extract_03-claim-002",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The claim is directly supported by two observed cases where the team followed pre-set thresholds in evaluating outcomes: accepting a neutral result and stopping when a guardrail was crossed. The cited counterexample concerns exploratory interviews with poorly chosen thresholds, but it still describes use of thresholds rather than evidence that the team failed to adhere to thresholds in outcome evaluation for the claimed pattern.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_03-claim-002",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_label": "supported",
+      "support_rationale": "Evidence shows teams adhered to predefined thresholds in both cases: onboarding test accepted a neutral result, pricing test stopped at the guardrail, supporting the claim."
+    },
+    "selected_frozen_decision_sha256": "e90d85eabc01477da2284f2b2380d0fb0c8aa7beacf02c0edff3499db4079706",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

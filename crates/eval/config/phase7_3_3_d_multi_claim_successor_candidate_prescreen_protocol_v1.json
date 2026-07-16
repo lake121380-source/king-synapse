@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-candidate-prescreen-protocol-v1",
+  "status": "frozen_after_selected_content_open_before_boundary_review",
+  "purpose": "Apply a deterministic structural proxy that detects obvious single-unit or non-heterogeneous Candidate degeneration before independent Boundary Review.",
+  "scope": "selected_40_reference_construction_cases_only",
+  "unitization": {
+    "method": "exact_lf_split_without_normalization",
+    "semantic_rewrite_allowed": false,
+    "deterministic_unit_count_is_reference_claim_count": false,
+    "coordination_or_component_count_is_gold": false
+  },
+  "structural_proxies": {
+    "multi_unit": "at least two unique non-empty exact LF units",
+    "mixed_exact_overlap": "at least one exact Candidate unit appears in Evidence and at least one does not",
+    "exact_overlap_is_support_label": false,
+    "nonoverlap_is_unsupported_label": false
+  },
+  "threshold_provenance": {
+    "minimum_count_and_rates_inherited_from_pre_content_open_identifiability_policy_v1": true,
+    "prescreen_is_not_structural_identifiability_gate": true,
+    "final_multi_claim_and_label_heterogeneity_require_frozen_reference": true
+  },
+  "outputs_forbidden": [
+    "atomic_claim_boundary",
+    "claim_type",
+    "support_label",
+    "material_error",
+    "cited_evidence_ids",
+    "old_gold",
+    "arm_output"
+  ],
+  "governance": {
+    "selected_cases_may_be_dropped": false,
+    "provider_call_authorized": false,
+    "same_version_repair_after_freeze": false,
+    "silent_repair_allowed": false,
+    "confirmatory_opening_authorized": false,
+    "runtime_integration_authorized": false
+  },
+  "on_pass": "construct_multi_claim_successor_independent_boundary_review_a_v1",
+  "on_failure": "freeze_prescreen_negative_result_and_stop_before_boundary_review"
+}

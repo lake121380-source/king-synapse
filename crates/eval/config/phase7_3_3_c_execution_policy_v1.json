@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-c-segmentation-controlled-execution-policy-v1",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "purpose": "Execute the classification-only Judge after protocol-owned Claim segmentation removed the Phase 7.3.3-A source-span confound.",
+  "authoritative_result_policy": {
+    "first_returned_provider_response_per_packet_is_authoritative": true,
+    "invalid_provider_envelope_json_or_schema_is_negative_result": true,
+    "automatic_repair_authorized": false,
+    "semantic_retry_after_returned_response_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_http_success_may_resume": true,
+    "failed_entry_criteria_requires_analysis_not_tuning": true
+  },
+  "comparison_freeze": {
+    "same_provider_endpoint_as_phase7_3_3_a": true,
+    "same_requested_model_as_phase7_3_3_a": true,
+    "same_temperature_as_phase7_3_3_a": true,
+    "same_top_p_as_phase7_3_3_a": true,
+    "measurement_change_only": "judge_no_longer_segments_or_calculates_source_spans"
+  },
+  "candidate_gate_scope": "original_16_balanced_candidate_controls_only",
+  "local_claim_diagnostics_scope": "original_controls_plus_partial_claim_supplement",
+  "entry_criteria": {
+    "valid_output_count_required": 20,
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "all_four_candidate_labels_must_be_predicted": true
+  },
+  "post_execution_prohibitions": [
+    "no_prompt_modification",
+    "no_parser_modification",
+    "no_aggregation_modification",
+    "no_threshold_modification",
+    "no_control_packet_modification",
+    "no_result_replacement",
+    "no_design_case_execution_before_control_decision",
+    "no_held_out_access"
+  ],
+  "data_handling": {
+    "api_key_recorded": false,
+    "raw_provider_responses_stored": false,
+    "response_sha256_recorded": true,
+    "parsed_valid_outputs_stored": true,
+    "gold_labels_sent_to_provider": false,
+    "held_out_loaded": false
+  }
+}

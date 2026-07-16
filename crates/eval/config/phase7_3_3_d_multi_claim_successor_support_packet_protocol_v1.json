@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-packet-protocol-v1",
+  "status": "frozen_before_construction",
+  "research_object": "independent support classification for sealed immutable multi-claim successor claims",
+  "input_hashes": {
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v50.json": "abeeb0c3cfd0cbded57cd340bbfa2219629ebed372a3580391e6a2263b424668",
+    "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v61.json": "7f68770bb7a7f4f1f9538463f2924d9fad32cfb1222805614fe8abbbb0e5cecb",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_selected_dataset_v1.json": "858c60201f25a97e9787e96ef0554c05b3bf36b80c76f86406b520ecb203d3ca",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_type_metadata_reference_candidate_v1.json": "3f8814ec03ad64b9b0767f4198de79ad449b099e5d4ce95e3f85c0f11b5e5915",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_type_metadata_reference_candidate_seal_v1.json": "d2c0d394cd11d47d5eed3352d1d74bcc16178e91049038968ccfc3c31bee1fd9"
+  },
+  "claim_count": 240,
+  "case_count": 40,
+  "packet_isolation": true,
+  "other_reviewer_visible": false,
+  "old_gold_visible": false,
+  "arm_outputs_visible": false,
+  "boundary_adjudication_rationales_visible": false,
+  "provider_calls": 0,
+  "immutable_claim_fields": [
+    "reference_claim_id",
+    "case_id",
+    "claim_index",
+    "source_span",
+    "source_excerpt",
+    "claim_role",
+    "claim_type",
+    "claim_origin"
+  ],
+  "support_label_enum": [
+    "supported",
+    "partially_supported",
+    "unsupported",
+    "not_assessable"
+  ],
+  "reason_code_enum": [
+    "direct_evidence_match",
+    "conservative_entailment",
+    "reasonable_bridging_inference",
+    "scope_preserved",
+    "counterexample_preserved",
+    "scope_expansion",
+    "certainty_escalation",
+    "causal_leap",
+    "prediction_overcommitment",
+    "unsupported_detail",
+    "counterexample_ignored",
+    "central_proposition_unsupported",
+    "insufficient_evidence"
+  ],
+  "confidence_enum": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "same_case_citations_only": true,
+  "support_labels_prepoulated": false,
+  "coverage_qa_completed": false,
+  "final_reference_frozen": false,
+  "passing_next_stage": "execute_multi_claim_successor_independent_support_review_v1",
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "support_label_definitions": {
+    "supported": "Claim strength, scope, certainty, causal language, prediction, and material details are established by the frozen evidence.",
+    "partially_supported": "The core direction is established, but one or more material details, scope, certainty, causality, prediction, or qualification exceed the evidence.",
+    "unsupported": "The material claim cannot be established from the frozen evidence or conflicts with it.",
+    "not_assessable": "The frozen evidence or immutable claim boundary is insufficient for a stable support judgment."
+  },
+  "reason_code_definitions": {
+    "direct_evidence_match": "Evidence directly states the material claim at matching scope and strength.",
+    "conservative_entailment": "The claim follows conservatively without material escalation.",
+    "reasonable_bridging_inference": "A finite traceable combination of supplied evidence supports the claim without outside knowledge.",
+    "scope_preserved": "Claim scope is bounded by evidence.",
+    "counterexample_preserved": "Relevant supplied counterexample is represented or accounted for.",
+    "scope_expansion": "Claim generalizes beyond evidence.",
+    "certainty_escalation": "Claim is more certain than evidence.",
+    "causal_leap": "Claim asserts unsupported causality.",
+    "prediction_overcommitment": "Prediction is stronger or more specific than evidence.",
+    "unsupported_detail": "A material detail is not established.",
+    "counterexample_ignored": "Relevant supplied counterexample is ignored or contradicted.",
+    "central_proposition_unsupported": "The core proposition is not established.",
+    "insufficient_evidence": "Evidence is insufficient for stable judgment."
+  }
+}

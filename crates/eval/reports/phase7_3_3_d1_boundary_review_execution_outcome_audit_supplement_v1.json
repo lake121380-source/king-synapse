@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "supplement_id": "phase7.3.3-d1-a-boundary-review-outcome-audit-supplement-v1",
+  "extends_outcome_sha256": "01b5f08c2a54f700d9951b43bc9f976423b121d2bbc5150a42fb9c93605e8351",
+  "finding": "rejected_provider_content_hash_not_persisted",
+  "severity": "auditability_gap_not_result_reversal",
+  "details": "The v1 policy required provider content SHA-256, but the failure path persisted only the provider envelope SHA-256 after strict-parser rejection. Raw content was correctly not stored, but the exact rejected message content hash is unavailable after process exit.",
+  "affected_events": [
+    2,
+    6
+  ],
+  "authoritative_negative_results_preserved": true,
+  "negative_result_reversal_authorized": false,
+  "retry_under_same_manifest_authorized": false,
+  "scientific_effect": "The cardinality rejection and response-received status remain auditable, but exact rejected content cannot be independently reconstructed or compared.",
+  "required_for_any_v2": "Compute and append provider_content_sha256 immediately after content extraction and before JSON/schema normalization.",
+  "attempt_log_sha256": "835156bc1b1def0a30d5953d4cab6be0aae9ea8d97bdda9045d72cf62902dc8f",
+  "api_key_recorded": false,
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

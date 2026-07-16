@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-preference-preference_005_verbose_to_concise_with_links-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "9ace1ed064a907755c38d2712a2238f12bce72238a2e846550b91499ae15cc44",
+  "reviewer_id": "b",
+  "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+  "provider_envelope_sha256": "5c0074a339e1b8c98ee1fe91d62d5b31af9f848af6535d5ed82ca67fe1f9689c",
+  "provider_content_sha256": "4812e91b78ce6623518d74df4fce9eeb88315a3f6f01e6c42e1fc2c73f7bd134",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "492ce89c59c589251ffabe31bcc2d126ba8f2d8b653c5c3b369c7af184a5b832",
+  "normalized_decisions_sha256": "8ff454056840bd2978cc1f5131a05f23499888d33b9cf92f6f9a8aecd25f69d9",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence index 2 explicitly states 'later_feedback_too_verbose', matching the claim text exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence index 1 explicitly states 'old_preference_full_explanations', matching the claim text exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence index 4 explicitly states 'current_request_status_update', matching the claim text exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-003"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Evidence index 3 states 'concise_reference_style_accepted', which directly supports the proposition to 'answer_concisely_with_references'.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "unsupported",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-002"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Evidence index 2 indicates 'later_feedback_too_verbose', which conflicts with the proposition to 'answer_with_full_exposition' in the current context.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-preference-preference_005_verbose_to_concise_with_links-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence index 3 explicitly states 'concise_reference_style_accepted', matching the claim text exactly.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

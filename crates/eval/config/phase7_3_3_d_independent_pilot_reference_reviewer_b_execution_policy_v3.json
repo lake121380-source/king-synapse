@@ -1,0 +1,33 @@
+{
+  "schema_version": 3,
+  "policy_id": "phase7.3.3-d-independent-pilot-reference-reviewer-b-execution-policy-v3",
+  "status": "frozen",
+  "case_count": 40,
+  "attempts_per_case": 1,
+  "provider": "https://api.deepseek.com",
+  "model": "deepseek-chat",
+  "temperature": 0,
+  "top_p": 1,
+  "max_tokens": 1600,
+  "timeout_seconds": 300,
+  "response_format": {
+    "type": "json_object"
+  },
+  "required_fields": [
+    "atomicity_status",
+    "case_id",
+    "cited_evidence_ids",
+    "claim_type",
+    "confidence",
+    "material",
+    "rationale",
+    "reason_codes",
+    "support_label"
+  ],
+  "atomicity_required_value": "single_atomic_claim",
+  "same_case_citations_only": true,
+  "semantic_retry": false,
+  "output_repair": false,
+  "raw_provider_response_stored": false,
+  "v2_partial_outputs_used": false
+}

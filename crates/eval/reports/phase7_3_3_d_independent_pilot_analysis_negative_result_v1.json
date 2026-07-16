@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "negative_result_id": "phase7.3.3-d-independent-pilot-analysis-negative-result-v1",
+  "status": "authoritative_implementation_negative_result",
+  "failure_level": "analysis_freeze_order_and_lineage_contract",
+  "failure_reason": "reference_content_loaded_during_pre_manifest_preflight",
+  "evidence": {
+    "preflight_load_reference_ast_detected": true,
+    "reference_load_source_lines": [
+      25
+    ],
+    "prepare_calls_preflight_before_freeze_creation": true
+  },
+  "artifact_sha256": {
+    "audit_adapter": "fc09b4501034c6138a330a8eb93f899c8a17c84def443e66054c663563f4c3f4",
+    "analysis_v1_adapter": "b468db6a673f060c9eb0647b4eaea91398694f7db61a34849b8776a8db91c85a",
+    "analysis_v1_protocol": "83ac651bf9032936b4202b9fa6be4756b0665f3a3747e0816b6ac53d131fe863",
+    "analysis_v1_freeze_manifest": "ba12f3a53198b7383f3d33ed6cefe4c2db961077070f312cf8ebb9949352f0ce",
+    "analysis_v1_execution_manifest": "9b13465be1d5f69f38d6236e8a7e7f420bd1cad5019690b6df29939658f2ffbb",
+    "analysis_v1_paired_cases": "5df4e22a3e37931ae0a09dde44b021b51968115658deee343c9ef35834ca0837",
+    "analysis_v1_report": "852c755bf46569cc400272d1c4f59ad232f79622b2dfccba3fa2aeaa88bb9453",
+    "analysis_v1_receipt": "57f18b3846c317686109775bafda860d320b2e3e81ee70d6efece182277168f4",
+    "power_gate_v1_report": "89f232020bfa83f27f82e09e9645e131b4a80929e6ed9fb2bafdfdfe614a70f4",
+    "power_gate_v1_sample_size_freeze": "d567b996034487535b8b083b4c20c762f0f547e52f27cc106e6d6538925be6d7"
+  },
+  "analysis_v1_scientific_conclusion_authorized": false,
+  "analysis_v1_outputs_retained_as_immutable_execution_evidence": true,
+  "analysis_v1_outputs_eligible_for_final_pilot_conclusion": false,
+  "power_gate_v1_inherited_lineage_eligible_for_final_conclusion": false,
+  "dual_arm_v4_outputs_invalidated": false,
+  "independent_reference_invalidated": false,
+  "same_version_retry_allowed": false,
+  "successor_analysis_v2_authorized": true,
+  "required_successor_change": "Before the scoring manifest is frozen, verify Reference only by file existence and SHA256 equality to the sealed hash; do not parse Reference content until scoring begins after manifest freeze.",
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

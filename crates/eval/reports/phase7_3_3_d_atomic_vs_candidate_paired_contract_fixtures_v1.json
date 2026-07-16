@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "fixture_suite_id": "phase7.3.3-d-atomic-vs-candidate-paired-contract-fixtures-v1",
+  "status": "passed",
+  "group_counts": {
+    "pairing": 8,
+    "aggregation": 10,
+    "metrics": 6
+  },
+  "total_count": 24,
+  "passed_count": 24,
+  "failed_count": 0,
+  "groups": {
+    "pairing": [
+      {
+        "fixture": "pairing_missing_case",
+        "passed": true,
+        "expected": "candidate_case_count_not_10",
+        "observed": "candidate_case_count_not_10"
+      },
+      {
+        "fixture": "pairing_duplicate_case",
+        "passed": true,
+        "expected": "duplicate_candidate_case",
+        "observed": "duplicate_candidate_case:extract_01"
+      },
+      {
+        "fixture": "pairing_candidate_sha_mismatch",
+        "passed": true,
+        "expected": "worklist_candidate_sha_mismatch",
+        "observed": "worklist_candidate_sha_mismatch:extract_01"
+      },
+      {
+        "fixture": "pairing_case_order_drift",
+        "passed": true,
+        "expected": "paired_case_order_mismatch",
+        "observed": "paired_case_order_mismatch"
+      },
+      {
+        "fixture": "pairing_duplicate_atomic_claim",
+        "passed": true,
+        "expected": "duplicate_boundary_claim",
+        "observed": "duplicate_boundary_claim:adjudicated-extract_01-claim-001"
+      },
+      {
+        "fixture": "pairing_missing_atomic_claim",
+        "passed": true,
+        "expected": "boundary_claim_count_not_118",
+        "observed": "boundary_claim_count_not_118"
+      },
+      {
+        "fixture": "pairing_illegal_support_label",
+        "passed": true,
+        "expected": "invalid_support_label",
+        "observed": "invalid_support_label:adjudicated-extract_01-claim-001"
+      },
+      {
+        "fixture": "pairing_boundary_support_claim_id_mismatch",
+        "passed": true,
+        "expected": "boundary_support_claim_id_or_order_mismatch",
+        "observed": "boundary_support_claim_id_or_order_mismatch"
+      }
+    ],
+    "aggregation": [
+      {
+        "fixture": "aggregation_all_supported",
+        "passed": true,
+        "expected": "supported",
+        "observed": "supported"
+      },
+      {
+        "fixture": "aggregation_anchor_partial",
+        "passed": true,
+        "expected": "partially_supported",
+        "observed": "partially_supported"
+      },
+      {
+        "fixture": "aggregation_anchor_unsupported",
+        "passed": true,
+        "expected": "unsupported",
+        "observed": "unsupported"
+      },
+      {
+        "fixture": "aggregation_secondary_partial",
+        "passed": true,
+        "expected": "partially_supported",
+        "observed": "partially_supported"
+      },
+      {
+        "fixture": "aggregation_secondary_unsupported",
+        "passed": true,
+        "expected": "partially_supported",
+        "observed": "partially_supported"
+      },
+      {
+        "fixture": "aggregation_not_assessable",
+        "passed": true,
+        "expected": "not_assessable",
+        "observed": "not_assessable"
+      },
+      {
+        "fixture": "aggregation_multi_anchor",
+        "passed": true,
+        "expected": "partially_supported",
+        "observed": "partially_supported"
+      },
+      {
+        "fixture": "aggregation_no_anchor",
+        "passed": true,
+        "expected": "aggregation_missing_anchor",
+        "observed": "aggregation_missing_anchor"
+      },
+      {
+        "fixture": "aggregation_empty_claim_set",
+        "passed": true,
+        "expected": "aggregation_empty_claim_set",
+        "observed": "aggregation_empty_claim_set"
+      },
+      {
+        "fixture": "aggregation_unknown_claim_role",
+        "passed": true,
+        "expected": "aggregation_unknown_claim_role",
+        "observed": "aggregation_unknown_claim_role:x"
+      }
+    ],
+    "metrics": [
+      {
+        "fixture": "metrics_exact_agreement",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      },
+      {
+        "fixture": "metrics_adjacent_disagreement",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      },
+      {
+        "fixture": "metrics_extreme_disagreement",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      },
+      {
+        "fixture": "metrics_single_label_collapse",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      },
+      {
+        "fixture": "metrics_mixed_support",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      },
+      {
+        "fixture": "metrics_unsupported_masking",
+        "passed": true,
+        "expected": true,
+        "observed": true
+      }
+    ]
+  },
+  "provider_called": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,261 @@
+{
+  "schema_version": 3,
+  "reviewer": "a",
+  "case_id": "extract_10",
+  "manifest_sha256": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "provider_envelope_sha256": "2dcc58c49dc84e2d462f38d3160c3036406142f2d0ad94682060d5ce1d90e57b",
+  "provider_content_sha256": "33114b65e737368e370a0c6cd67778335dadeb22de07efd1848b6dcc1d958c99",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-001",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "fa44cb50d9a84c159e313ef7bb2ed723d4a28d0fa35a2c2b4f8bb66fd53a9c7f",
+      "source_span": {
+        "start": 0,
+        "end": 202
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow.",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_10::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a single proposition about when buffering inventory reduces interruptions or stockouts, covering two distinct supply chain conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-002",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "fa44cb50d9a84c159e313ef7bb2ed723d4a28d0fa35a2c2b4f8bb66fd53a9c7f",
+      "source_span": {
+        "start": 203,
+        "end": 293
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Buffering is counterproductive when replenishment lead time is short and demand is stable.",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_10::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a distinct proposition about when buffering is counterproductive, separate from the previous positive claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-003",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "260b9a02bfe84251d10add893af105f03fe5c3fa0efbca05975162feca340cf9",
+      "source_span": {
+        "start": 0,
+        "end": 164
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_10::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Prediction statement contains two outcomes (reduces interruptions, keeps carrying cost within limit) but they are tightly coupled in context and not independently truth-evaluable without splitting the sentence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-004",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "d9e20099404b7c141a5bcf483cc50b2722c5de5bd1e6f5bf22e4a641d27fb3c6",
+      "source_span": {
+        "start": 0,
+        "end": 28
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Interruption events decrease",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_10::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as an independently observable prediction about interruption events decreasing.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-005",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "d9e20099404b7c141a5bcf483cc50b2722c5de5bd1e6f5bf22e4a641d27fb3c6",
+      "source_span": {
+        "start": 33,
+        "end": 115
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "carrying cost as a percentage of product value does not exceed the planned budget.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_10::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a separate prediction about carrying cost not exceeding budget, which could be true or false independently of interruption events.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-006",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc",
+      "source_span": {
+        "start": 0,
+        "end": 82
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30%",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_10::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a quantitative prediction about stockout frequency reduction, independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-007",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc",
+      "source_span": {
+        "start": 87,
+        "end": 154
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "carrying cost remains under the target threshold set by management.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_10::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a separate prediction about carrying cost, which could be true or false independently of stockout frequency.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-008",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "12323fcd79ec6d94840805758d5e6ef75ac5c948d25e559983fb70228cd2a40b",
+      "source_span": {
+        "start": 0,
+        "end": 118
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_10::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a falsifiability claim about inventory expiration resulting from large buffer under specific conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-009",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "12323fcd79ec6d94840805758d5e6ef75ac5c948d25e559983fb70228cd2a40b",
+      "source_span": {
+        "start": 123,
+        "end": 175
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "total cost exceeding the value of avoided stockouts.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_10::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a separate falsifiability claim about total cost, which could be true or false independently of inventory expiration.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-010",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "30e2b8a16c326181cb147a32cafdc14d1740fcc893dbf2a191468b630d56781a",
+      "source_span": {
+        "start": 0,
+        "end": 47
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Observed inventory write-offs due to expiration",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_10::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as an observable falsifiability claim about inventory write-offs due to expiration.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_10-claim-011",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "30e2b8a16c326181cb147a32cafdc14d1740fcc893dbf2a191468b630d56781a",
+      "source_span": {
+        "start": 52,
+        "end": 149
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "total holding cost greater than the cost of stockouts that would have occurred without buffering.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_10::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a separate falsifiability claim about holding cost, independently truth-evaluable from inventory write-offs.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_10",
+    "status": "completed",
+    "claim_count": 11
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

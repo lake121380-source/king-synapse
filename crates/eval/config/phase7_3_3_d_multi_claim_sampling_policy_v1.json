@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-sampling-policy-v1",
+  "status": "frozen_before_successor_inventory_open",
+  "target_selected_candidate_count": 40,
+  "minimum_selected_candidate_count": 32,
+  "sampling_unit": "unique_candidate_text",
+  "duplicate_candidate_hash_allowed": false,
+  "source_requirements": {
+    "new_inventory_required": true,
+    "route_a_overlap_excluded": true,
+    "predecessor_independent_pilot_overlap_excluded": true,
+    "evidence_overlap_excluded_when_identity_available": true
+  },
+  "selection": {
+    "method": "deterministic_stratified_hash_order",
+    "seed": 733051,
+    "prescreen_dimensions": [
+      "source_family",
+      "evidence_item_count_bucket",
+      "deterministic_clause_count_bucket"
+    ],
+    "support_labels_available_during_sampling": false,
+    "old_gold_available_during_sampling": false,
+    "clause_count_is_gold_claim_count": false,
+    "shortfall_action": "freeze_shortfall_and_stop_without_manual_backfill"
+  },
+  "content_opening": {
+    "entry_freeze_stage": false,
+    "sampling_frame_stage": "only_after_metadata_inventory_and_manifest_freeze",
+    "confirmatory_dataset_opened": false
+  },
+  "provider_call_authorized": false,
+  "runtime_integration_authorized": false
+}

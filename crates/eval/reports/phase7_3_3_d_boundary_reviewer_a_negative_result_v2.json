@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "reviewer": "a",
+  "manifest_sha256": "8765406d049719345480886272041d47fc9bd28d47ab33c9dbe27ae8b11712ef",
+  "status": "authoritative_negative_result_execution_finalization",
+  "failure_type": "resolved_model_identity_drift",
+  "failure_code": "resolved_model_drift:['gpt-4.1', 'gpt-4.1-2025-04-14']",
+  "returned_case_count": 10,
+  "strictly_valid_case_count": 10,
+  "claim_count": 92,
+  "resolved_models": [
+    "gpt-4.1",
+    "gpt-4.1-2025-04-14"
+  ],
+  "case_results": [
+    {
+      "case_id": "extract_01",
+      "resolved_model": "gpt-4.1",
+      "claim_count": 10,
+      "checkpoint_sha256": "b178ce9cf55416679426a0ddbb74591519f6e4c241fe2af5a92afcbbeed3da4e",
+      "provider_content_sha256": "aa8a90764c14f96fc1d3824fd2559b22f2d2c0d307b7ba8a4ec7d616e53a3433"
+    },
+    {
+      "case_id": "extract_02",
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "claim_count": 7,
+      "checkpoint_sha256": "dbebda6b334ffa0cc71abe2f8fa6406ae31a8668f5c029beb515bef6a195697b",
+      "provider_content_sha256": "7c24a600f9e54a54ca626e7232df9d70d4429fdea3e1007733c0de5ce6a82f93"
+    },
+    {
+      "case_id": "extract_03",
+      "resolved_model": "gpt-4.1",
+      "claim_count": 8,
+      "checkpoint_sha256": "92f2d86336c56a3c4d4aae7f309b9a54e2f06562ed0da72b9effd91fd108c363",
+      "provider_content_sha256": "081f974548dc949448ab3f1914445a2fdc405b5f309307937bb4c3580931141e"
+    },
+    {
+      "case_id": "extract_04",
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "claim_count": 13,
+      "checkpoint_sha256": "c548ec3e1fa96b1527efb56969b3fc1c78df6bf6443f476d1ed0d48d29589830",
+      "provider_content_sha256": "50d8181d1a6b40143413b48101e6f669aedb7e7379af3f61662c4ac9d198a068"
+    },
+    {
+      "case_id": "extract_05",
+      "resolved_model": "gpt-4.1",
+      "claim_count": 9,
+      "checkpoint_sha256": "fa5bcc235bca7534dd0363323bcbaa66876c43936c6b4a164bd56cc47e22e0ab",
+      "provider_content_sha256": "beb6b6b97a0215944e6785b1d3f385f3341ea910eb26874e502ced7a2baede33"
+    },
+    {
+      "case_id": "extract_06",
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "claim_count": 7,
+      "checkpoint_sha256": "e71723109705e65d42e557cddc0d5d2c2f6e7ab1061066856d92dea2587929b8",
+      "provider_content_sha256": "084116fb10300c3b2b71742e9d01e12b8bcffec9a8cedcc6ce0298d5c075a179"
+    },
+    {
+      "case_id": "extract_07",
+      "resolved_model": "gpt-4.1",
+      "claim_count": 10,
+      "checkpoint_sha256": "a0f20c783faff4ea6afed07f7c7700dd9ff37fc742a0eaff882081915d83c4ad",
+      "provider_content_sha256": "5109fbf0686614214aedf0a66c5a38f621610cffed2f1744ed3b4b754bc7bd80"
+    },
+    {
+      "case_id": "extract_08",
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "claim_count": 7,
+      "checkpoint_sha256": "93f22d0c0ff08b11cf3700b9049207531f823fd9f6239aff7891cc7e77a74ef3",
+      "provider_content_sha256": "cf26ca89d8a7a9e4d58b74f8469b1a4141a69271dd97ba08846ee3bbc96c7c6f"
+    },
+    {
+      "case_id": "extract_09",
+      "resolved_model": "gpt-4.1",
+      "claim_count": 9,
+      "checkpoint_sha256": "984773fc544444a8c6cec3ac351db3cd8055f3d5f9efe3f89daf16712d55647e",
+      "provider_content_sha256": "66fa12587bac64b39a80dceb3e38fda83623ec5c416fa7244ab5f2e6ccff25b9"
+    },
+    {
+      "case_id": "extract_10",
+      "resolved_model": "gpt-4.1-2025-04-14",
+      "claim_count": 12,
+      "checkpoint_sha256": "5bb0aa470b3f6d9b6a43cfe69a54e62ed2db8456435fab1573165e477467165c",
+      "provider_content_sha256": "b6460cf6ef9725ee51813ee66f14ed11336ebf5b3ee6846c6b860047184939a7"
+    }
+  ],
+  "boundary_content_capability_conclusion_authorized": false,
+  "provider_model_identity_stability_conclusion": "failed",
+  "submission_frozen": false,
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false,
+  "note": "All ten first responses passed JSON, schema, span, and protocol normalization. The frozen adapter then rejected finalization because the gateway alternated alias and dated-snapshot model identifiers. No retry or adapter modification occurred under this Manifest."
+}

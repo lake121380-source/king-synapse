@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-dual-arm-protocol-v1",
+  "status": "frozen_before_execution",
+  "research_question": "Under the frozen independent Pilot frame and equal resources, does Atomic-level measurement improve correctness or diagnostic localization relative to Candidate-level judgment?",
+  "pilot_role": "exploratory_not_confirmatory",
+  "case_count": 40,
+  "paired": true,
+  "arm_definitions": {
+    "candidate": {
+      "task": "one whole-Candidate Support judgment",
+      "segmentation_output": false,
+      "aggregation": "direct label"
+    },
+    "atomic": {
+      "task": "validate/segment Atomic Claims, judge each, then aggregate",
+      "segmentation_output": true,
+      "representation": "whole_candidate_claim operation or custom index spans",
+      "aggregation": {
+        "unsupported": "any material claim unsupported",
+        "partially_supported": "no material unsupported and any material partial",
+        "supported": "all material claims supported",
+        "not_assessable": "no assessable material claim"
+      }
+    }
+  },
+  "resource_equality": {
+    "provider": true,
+    "model": true,
+    "temperature": true,
+    "top_p": true,
+    "max_tokens": true,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "candidate_evidence_context": true,
+    "attempt_policy": true,
+    "failure_policy": true,
+    "case_isolation": true
+  },
+  "only_intended_difference": "Candidate-level direct judgment versus Atomic segmentation/judgment/aggregation",
+  "counterbalance": "odd Pilot indices Candidate-first; even Pilot indices Atomic-first",
+  "visibility": {
+    "reference_content": false,
+    "reference_labels": false,
+    "route_a_gold": false,
+    "other_arm": false,
+    "arm_metrics": false
+  },
+  "failure_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_cases_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  },
+  "outputs": [
+    "labels",
+    "material_error_spans",
+    "citations",
+    "reasons",
+    "confidence",
+    "tokens",
+    "latency",
+    "failure_status"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-adjudication-protocol-v1",
+  "status": "frozen_before_execution",
+  "purpose": "Resolve only the eight primary Independent Pilot reference disagreements after raw agreement, without access to either arm or Route A Gold.",
+  "item_count": 8,
+  "authorized_operations": [
+    "defer_for_human_review",
+    "select_option_1",
+    "select_option_2"
+  ],
+  "decision_rule": "select one complete frozen reviewer decision or defer; no synthesis",
+  "minimal_authorization": {
+    "resolve_only_disagreement_items": true,
+    "new_claim_creation": false,
+    "claim_deletion": false,
+    "boundary_mutation": false,
+    "candidate_mutation": false,
+    "evidence_mutation": false,
+    "reviewer_submission_mutation": false,
+    "diagnostic_followup_label_change": false
+  },
+  "visibility": {
+    "candidate": true,
+    "evidence": true,
+    "anonymized_options": true,
+    "reviewer_identity": false,
+    "route_a_gold": false,
+    "candidate_arm": false,
+    "atomic_arm": false,
+    "arm_metrics": false
+  },
+  "gold_policy": {
+    "selected_support_label": true,
+    "selected_materiality": true,
+    "selected_claim_type": true,
+    "selected_citations_reason_rationale_confidence": "diagnostic_only"
+  },
+  "defer_policy": "any deferral blocks Independent Reference freeze pending a separately frozen successor",
+  "failure_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "failure_is_immutable": true,
+    "change_requires_successor_version": true
+  }
+}

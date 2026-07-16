@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "analysis_plan_id": "phase7.3.3-d-independent-replication-analysis-plan-v1",
+  "status": "frozen",
+  "pilot": {
+    "confirmatory_p_values": false,
+    "effect_uncertainty": true,
+    "all_cases": true,
+    "failure_rates": true,
+    "mixed_support": true,
+    "cost": true,
+    "generalization": false
+  },
+  "primary_endpoints": [
+    "candidate_level_exact_correctness",
+    "material_error_detection",
+    "diagnostic_localization_precision_recall_f1"
+  ],
+  "secondary_endpoints": [
+    "ordinal_distance",
+    "unsupported_masking",
+    "partial_localization",
+    "failure_rates",
+    "agreement",
+    "cost"
+  ],
+  "power_sequence": [
+    "freeze_pilot",
+    "estimate_paired_effect_missingness",
+    "freeze_power_method",
+    "freeze_sample_size",
+    "open_confirmatory_dataset"
+  ],
+  "power_defaults": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "minimum_confirmatory_candidates": 100,
+    "multiplicity": "Holm_unless_successor_frozen"
+  },
+  "missingness": {
+    "all_selected_cases": true,
+    "failures_not_dropped": true,
+    "complete_case_not_primary": true,
+    "semantic_NA_after_prerequisite_failure": true
+  },
+  "reporting": {
+    "denominators": true,
+    "confidence_intervals": true,
+    "domain_and_claim_type_strata": true,
+    "pilot_confirmatory_not_pooled": true,
+    "cost_quality_tradeoff": true
+  },
+  "current_authorization": {
+    "pilot_metrics": false,
+    "power_analysis": false,
+    "confirmatory_opening": false,
+    "confirmatory_inference": false
+  }
+}

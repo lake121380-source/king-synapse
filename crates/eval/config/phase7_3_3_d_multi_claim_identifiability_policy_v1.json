@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-identifiability-policy-v1",
+  "status": "frozen_before_successor_content_open",
+  "target_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "all_checks_required": true,
+  "structural_reference_gate": {
+    "minimum_selected_candidate_count": 32,
+    "target_selected_candidate_count": 40,
+    "unique_candidate_rate_min": 1.0,
+    "median_reference_claims_per_candidate_min": 2.0,
+    "multi_claim_candidate_rate_min": 0.8,
+    "reference_claim_to_candidate_ratio_min": 1.8,
+    "within_candidate_label_heterogeneity_rate_min": 0.5,
+    "supported_plus_material_error_candidate_rate_min": 0.3,
+    "material_error_claim_rate_min": 0.25,
+    "unsupported_claim_rate_min": 0.1,
+    "partially_supported_claim_rate_min": 0.1,
+    "maximum_single_label_share": 0.7,
+    "eligible_gap_characters_required": 0,
+    "overlap_characters_required": 0
+  },
+  "realized_representation_gate": {
+    "candidate_decisions_per_selected_candidate": 1,
+    "atomic_unit_to_candidate_ratio_min": 1.8,
+    "atomic_multi_unit_candidate_rate_min": 0.8,
+    "atomic_whole_candidate_operation_rate_max": 0.2,
+    "atomic_local_span_operation_rate_min": 0.8,
+    "atomic_duplicate_span_rate_max": 0.05,
+    "missing_candidate_outputs_allowed": 0,
+    "duplicate_candidate_outputs_allowed": 0,
+    "reference_visible_during_arm_execution": false
+  },
+  "gate_actions": {
+    "on_pass": "authorize_exploratory_scoring_only",
+    "on_structural_failure": "freeze_negative_result_and_do_not_execute_arms",
+    "on_realized_representation_failure": "freeze_negative_result_and_do_not_score_localization_estimand",
+    "same_version_retry_allowed": false,
+    "confirmatory_opening_authorized": false
+  },
+  "threshold_rationale": "Structural anti-degeneracy requirements frozen before successor content opening; not effect-size or significance thresholds.",
+  "runtime_integration_authorized": false
+}

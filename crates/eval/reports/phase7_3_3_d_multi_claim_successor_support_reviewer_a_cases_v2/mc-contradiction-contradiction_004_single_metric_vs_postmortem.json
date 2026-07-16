@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-contradiction-contradiction_004_single_metric_vs_postmortem-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "eaba1e907a4361d03936d58ec8919182ca1a2245ad7863bb5ab05485fc0ac3dc",
+  "reviewer_id": "a",
+  "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+  "provider_envelope_sha256": "40ab68d7f3e68eb57fe40d9b93bcbc5f3d750d44c413d84269145ae880e81c12",
+  "provider_content_sha256": "2c68ebebbc05a23c3bfb48fd80306892f1697168229a0faf3ec6bfa29cafbf82",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "fa45cfd4f7def32026c5f542fea4d44b6389834d1f3b95fa2ef3531ec3029ce5",
+  "normalized_decisions_sha256": "70b02101e81217eebca6bf3f92466c037d22cc2844cf6bf07ccba21a7867f3d1",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_004_single_metric_vs_postmortem-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim is directly matched by evidence stating the metric improved after rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence directly supports or entails a requirement for a user harm check.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_004_single_metric_vs_postmortem-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim is directly matched by evidence that users reported harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_004_single_metric_vs_postmortem-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim is directly matched by evidence that a harm check was added to rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence supports trusting a single metric; some evidence suggests incompleteness.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+      "reference_claim_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-contradiction-contradiction_004_single_metric_vs_postmortem-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim is directly matched by evidence that the postmortem metric was incomplete.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-contradiction-contradiction_004_single_metric_vs_postmortem",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

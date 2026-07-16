@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "12e7b5ebc33132e36193ff33d36d0c179c6c8c7951b688fa7dd9f04396e9b015",
+  "reviewer_id": "b",
+  "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+  "provider_envelope_sha256": "2ed1832ac76e613d678153abaf5a39ae8bdb7225048690f56761d161a44c09cc",
+  "provider_content_sha256": "73c7bc42e4eb1a9aa106488e1daef1478ce8693af730dd038f9136e453adbb5d",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "13a1cf2476f7f11e7cb8595607b67080b80522afa522b3348c368705626ccec3",
+  "normalized_decisions_sha256": "51abe33a606bdc69c446a7bf44e5fdaa3690474e38b8328a2c1c64b803d48eec",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "The claim assumes sufficiency of an old fix, but evidence explicitly indicates a new regression and a current need for investigation, contradicting the assumption that the old fix is still sufficient.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text matches evidence item 3 exactly, establishing the proposition of area overlap.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text matches evidence item 4 exactly, establishing the proposition of current investigation need.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text matches evidence item 1 exactly, establishing the proposition that the old incident was fixed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "0101",
+      "cited_evidence_indices": [
+        2,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-002",
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-004"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "Evidence of a new regression (item 2) and a stated need for current investigation (item 4) jointly establish the necessity to investigate the new regression.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim text matches evidence item 2 exactly, establishing the proposition of a new regression.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

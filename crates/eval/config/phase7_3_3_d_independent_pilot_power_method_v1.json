@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "method_id": "phase7.3.3-d-independent-pilot-power-method-v1",
+  "status": "frozen_before_sample_size_decision",
+  "target_confirmatory_estimand": "general_atomic_diagnostic_localization_superiority_over_candidate_level",
+  "target_endpoint": "diagnostic_localization_precision_recall_f1",
+  "decision_sequence": [
+    "verify_frozen_pilot_effect_and_missingness",
+    "verify_target_estimand_identifiability_on_pilot_frame",
+    "verify_non_equivalent_candidate_and_atomic_representations",
+    "only_if_identifiable_compute_finite_confirmatory_sample_size",
+    "otherwise_freeze_null_sample_size_and_keep_confirmatory_closed"
+  ],
+  "identifiability_requirements": {
+    "reference_contains_multi_claim_or_localizable_within_candidate_structure": true,
+    "atomic_arm_contains_finer_than_whole_candidate_operations": true,
+    "target_localization_endpoint_non_degenerate": true,
+    "paired_candidate_clusters_available": true
+  },
+  "finite_sample_size_authorized_only_if_all_identifiability_requirements_pass": true,
+  "numeric_defaults_if_future_successor_frame_is_identifiable": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "minimum_confirmatory_candidates": 100,
+    "multiplicity": "Holm_unless_successor_frozen"
+  },
+  "current_pilot_not_used_to_impute_unidentified_localization_effect": true,
+  "paired_exact_accuracy_effect_is_not_a_substitute_for_the_target_localization_estimand": true,
+  "confirmatory_content_opened": false,
+  "runtime_integration_authorized": false
+}

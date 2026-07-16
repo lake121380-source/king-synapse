@@ -1,0 +1,60 @@
+{
+  "schema_version": 3,
+  "manifest_id": "phase7.3.3-d-independent-pilot-dual-arm-execution-manifest-v3",
+  "status": "frozen_before_first_provider_call",
+  "decision_environment": {
+    "provider": "api.gpt.ge",
+    "base_url": "https://api.gpt.ge/v1",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "timeout_seconds": 600,
+    "response_format": {
+      "type": "json_object"
+    },
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY"
+  },
+  "artifact_lineage": {
+    "adapter_sha256": "bd1e9210747c1441cff2c30b7a5814518381cc57a1c2a7ec943bad7fe148bf34",
+    "freeze_manifest_sha256": "5cb7c38de49761eda8181bf3504a18c3c6425e4339c18b544e37d3117f45ecf5",
+    "protocol_sha256": "7264047b1b172bc35a821203abaed8aba678526f00a36da10cf0b3f04b469c13",
+    "policy_sha256": "0c9e82b87edcfcca024dbd542a9d15e3719857fce2f66d68b0e61cca08e342d3",
+    "candidate_prompt_sha256": "e492127c7b60290c1cceafa00a7fe73dfaabf7511eeffa9bfa09ee8626cd74ec",
+    "atomic_prompt_sha256": "632882fb1e47c6ccc8addbfd2cf525d4719e89b6079c90ec2a6d1ea96b694869",
+    "candidate_schema_sha256": "dfb7f4d0d7a3bace5fe592fbb90647a331267bb79a7d258e0d8692be32694f0e",
+    "atomic_schema_sha256": "10699a2eb954a6714775630af8dfc5ceb0736c9b87cbecf3301a66d52a2f7b00",
+    "worklist_sha256": "4d322adeacce550b662aa7a15d225abbda89019f5a3eb8f3950fd822eec0c801",
+    "reference_seal_sha256": "1ef49224a86fefd9881f2c7aed6c020d9a4b49ae58df707f9fec3314aad9fcbe",
+    "frame_audit_sha256": "5a6ab2b0c2e33de55f3e2902b1b85464a96d52a54d178a7d8522f4bf8e1e0ded",
+    "v1_negative_sha256": "a56788e98ed746d68286b29a48aed22c08bc79d6f789191a74f33bd822b1e4fd",
+    "v2_negative_sha256": "859fe46097fcc7499c611e84c007833a20ea648753f3f049a694aab3311a36e9"
+  },
+  "case_count": 40,
+  "expected_requests": 80,
+  "resource_equality": {
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "same_payload": true,
+    "same_failure_policy": true
+  },
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  },
+  "reference_content_loaded": false,
+  "reference_labels_loaded": false,
+  "execution_started": false,
+  "provider_called": false,
+  "confirmatory_content_opened": false
+}

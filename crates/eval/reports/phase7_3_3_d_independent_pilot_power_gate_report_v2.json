@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d-independent-pilot-power-gate-report-v2",
+  "status": "power_infeasible_current_single_claim_frame",
+  "manifest_sha256": "adc75945cab1d7986ceb57ad366e824f45c1ed252ff367fde2384dcfc485f88a",
+  "power_method_sha256": "1b7eda82d5b8e4ab15fe955eb2e21c8962aa19cb0fa59558ef0f9128ee7b09f2",
+  "analysis_report_sha256": "2e641f82f11c4543a4b86418c4255c6397cef15da11d8d717acd289f81611406",
+  "analysis_v1_negative_result_sha256": "db4339d36e276570e267d3ce0bba4eadb8189acbac3a3f71e60b22b4f2426261",
+  "predecessor_analysis_v1_outputs_used": false,
+  "predecessor_power_gate_v1_outputs_used": false,
+  "target_confirmatory_estimand": "general_atomic_diagnostic_localization_superiority_over_candidate_level",
+  "identifiability_requirement_results": {
+    "reference_contains_multi_claim_or_localizable_within_candidate_structure": false,
+    "atomic_arm_contains_finer_than_whole_candidate_operations": false,
+    "target_localization_endpoint_non_degenerate": false,
+    "paired_candidate_clusters_available": true
+  },
+  "target_estimand_identifiable": false,
+  "observed_pilot_exact_effect_atomic_minus_candidate": 0.0,
+  "observed_exact_effect_used_for_target_power": false,
+  "reason": "The sealed Pilot has one full-Candidate reference claim per case and all Atomic-arm operations are whole_candidate_claim. Candidate and Atomic localization representations are therefore structurally equivalent for the intended general localization estimand.",
+  "scientific_interpretation": "The current frame supports semantic and representation feasibility analysis only. It cannot identify or power a confirmatory claim of general Atomic diagnostic-localization superiority.",
+  "required_successor_design": {
+    "new_frame_required": true,
+    "frame_properties": [
+      "multiple independently adjudicable claims within at least some Candidates",
+      "pre-frozen diagnostic heterogeneity including supported and material-error regions",
+      "Atomic operations capable of selecting claim-local spans rather than only whole_candidate_claim",
+      "independent Reference construction repeated without Route A Gold or arm visibility"
+    ],
+    "same_pilot_frame_reuse_for_target_power_authorized": false
+  },
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

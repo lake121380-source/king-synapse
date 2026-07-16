@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d-atomic-vs-candidate-paired-execution-manifest-v1",
+  "status": "frozen",
+  "authorized_operation": "offline_deterministic_retrospective_paired_diagnostic_execution_v1",
+  "study_type": "retrospective_design_case_diagnostic_comparison",
+  "reference_labels": [
+    "retrospective_design_case_diagnostic_comparison",
+    "not_human_gold_accuracy_validation",
+    "not_generalization_evidence"
+  ],
+  "frozen_inputs": {
+    "crates/eval/config/phase7_3_3_d_atomic_vs_candidate_paired_evaluation_protocol_v1.json": "4633fe608f7ea8ac29d50964d15e9344bd1a9eeac7416aec37720bc5ced90f68",
+    "crates/eval/config/phase7_3_3_d_atomic_vs_candidate_aggregation_policy_v1.json": "3696e335a7504cb5ab61769a6ce6c5a87d9b7a92399a9e924fef87328a79c457",
+    "crates/eval/config/phase7_3_3_d_atomic_vs_candidate_metric_specification_v1.json": "818079b893bb3aa6034e51cdaf10be0aad9578e0f9f86f079999daf44ead82ab",
+    "crates/eval/reports/phase7_3_2_semantic_judge_execution.json": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_boundary_gold_v1.json": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_gold_v1.json": "845b1fe97e9357d511f52f5e9d1b995bdcb8d3b1991c27a88c5656fdeae08cf5",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_atomic_vs_candidate_paired_worklist_v1.json": "4b70c31b0e5ba00841d32a6fb68db8b8d5be6547777fa384f82eb67dac12c259",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_boundary_blind_review_packet_v1.json": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_protocol_freeze_manifest_v1.json": "363678ded12dc74f5f869e8cd4f94b75e54dcca8ca96ea9caf52eb3b58faca53",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_protocol_freeze_receipt_v1.json": "b1a5bce30b035f9f0b050dfc8c67878bfe6b580fd14aab5785a938f671a9e674",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_protocol_freeze_outcome_v1.json": "4c398e64f8e5e280803b4a8d35cb66439ce0c46da7daa16ac0a64819f04ada0f",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_protocol_contract_fixtures_v1.json": "e2e77f9be8211729f119483b0ab509e49c2197b09644b451c17e017b483b3eb4",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_baseline_alignment_audit_v1.json": "a28adec44de6b0d05c6d7158dc3c38d152093b99bbf733b27c76a28238463b32",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_gold_compatibility_report_v1.json": "4d7507c72f187c785e17b2ef4f6c8f05191c7c032f1796fc415f77a863ac2009",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v11.json": "a551eee93f0a176dfa61c5faae7f78090aac2cbdd9f615a35e8642a90518f75a",
+    "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v22.json": "543fdd812aac50a74d9c332372493d0f9659d4133fbb4f471331455b4b3bf413"
+  },
+  "frozen_pre_execution_artifacts": {
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_evidence_lineage_audit_v1.json": "2ccc2c7941942c33727e005ab724da0ce96b407394a71e5ea102c873ae5fc448",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_contract_fixtures_v1.json": "3549b714a8d4364e104b1f7262a8186ec1426418ac19d4b1232f6e46b58bd2bd"
+  },
+  "adapter": {
+    "path": "scripts/eval/phase7_atomic_vs_candidate_paired_evaluation_v1.py",
+    "sha256": "d71a413c6d4a094c572fc8eed32708324c29f49f8308b7ccdcd02c6219d034c8"
+  },
+  "required_case_count": 10,
+  "required_claim_count": 118,
+  "execution_environment": {
+    "python_version": "3.13.12",
+    "python_implementation": "CPython",
+    "platform_system": "Windows",
+    "platform_release": "10",
+    "byte_order": "little",
+    "working_directory": "."
+  },
+  "expected_output_paths": [
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_execution_v1.json",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_metrics_v1.json",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_limitations_v1.json",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_result_v1.json",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_result_freeze_receipt_v1.json",
+    "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_result_freeze_outcome_v1.json",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v12.json",
+    "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v23.json"
+  ],
+  "negative_result_path": "crates/eval/reports/phase7_3_3_d_atomic_vs_candidate_paired_execution_negative_result_v1.json",
+  "provider_policy": {
+    "provider_calls_allowed": false,
+    "provider_called": false,
+    "no_provider_declaration": "all_labels_are_replayed_from_frozen_artifacts"
+  },
+  "held_out_policy": {
+    "held_out_access_allowed": false,
+    "held_out_accessed": false,
+    "no_held_out_declaration": "only_frozen_ten_design_cases_are_in_scope"
+  },
+  "mutation_policy": {
+    "candidate_mutation_allowed": false,
+    "boundary_mutation_allowed": false,
+    "support_label_mutation_allowed": false,
+    "evidence_mutation_allowed": false,
+    "semantic_regeneration_allowed": false,
+    "automatic_repair_allowed": false,
+    "selective_retry_allowed": false
+  },
+  "failure_policy": {
+    "contract_failure_is_first_class_outcome": true,
+    "same_version_retry_allowed": false,
+    "formal_result_allowed_after_failure": false
+  },
+  "runtime_integration_authorized": false
+}

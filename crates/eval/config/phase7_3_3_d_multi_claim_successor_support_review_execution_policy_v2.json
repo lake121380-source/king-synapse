@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-support-review-execution-policy-v2",
+  "execution_order": "independent reviewers; outputs never cross-exposed",
+  "case_order": "frozen packet order",
+  "checkpoint_policy": "successful case checkpoints immutable and resumable",
+  "transport_resume_policy": "pre-content failure may resume under identical frozen manifest",
+  "authoritative_failure_policy": "first Provider Content is authoritative; post-content failure permanently terminates reviewer version",
+  "raw_provider_response_storage": "forbidden; hashes only",
+  "adapter_representation": "claim index plus fixed-length binary evidence citation mask deterministically reconstruct immutable IDs",
+  "agreement_policy": "not computed here",
+  "support_gold_policy": "not created here",
+  "confirmatory_dataset_policy": "closed",
+  "runtime_integration_policy": "unauthorized",
+  "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+  "secret_persistence": "forbidden",
+  "v1_same_version_retry_performed": false
+}

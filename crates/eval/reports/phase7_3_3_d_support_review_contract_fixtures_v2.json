@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d1-b-support-review-contract-fixtures-v2",
+  "fixture_count": 14,
+  "fixtures_passed": 14,
+  "all_fixtures_passed": true,
+  "provider_called": false,
+  "held_out_accessed": false,
+  "results": [
+    {
+      "fixture": "valid",
+      "expected_pass": true,
+      "observed_pass": true,
+      "fixture_passed": true,
+      "observed_error": null
+    },
+    {
+      "fixture": "empty_reasons",
+      "expected_pass": true,
+      "observed_pass": true,
+      "fixture_passed": true,
+      "observed_error": null
+    },
+    {
+      "fixture": "extra_top",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "response_top_level_schema_invalid"
+    },
+    {
+      "fixture": "wrong_case",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "response_case_id_mismatch"
+    },
+    {
+      "fixture": "missing",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_count_mismatch"
+    },
+    {
+      "fixture": "reorder",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "claim_order_or_identity_mismatch:0"
+    },
+    {
+      "fixture": "bad_label",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "support_label_invalid:c1"
+    },
+    {
+      "fixture": "bad_citation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "citation_outside_case:c1:['e3']"
+    },
+    {
+      "fixture": "bad_reason",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "reason_code_unknown:c1:['x']"
+    },
+    {
+      "fixture": "blank",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "support_rationale_missing:c1"
+    },
+    {
+      "fixture": "bad_conf",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "annotation_confidence_invalid:c1"
+    },
+    {
+      "fixture": "extra_field",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_schema_invalid:0"
+    },
+    {
+      "fixture": "dup_citation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "duplicate_cited_evidence_id:c1"
+    },
+    {
+      "fixture": "dup_reason",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "duplicate_reason_code:c1"
+    }
+  ]
+}

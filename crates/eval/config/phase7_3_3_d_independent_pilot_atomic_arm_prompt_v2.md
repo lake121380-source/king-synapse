@@ -1,0 +1,8 @@
+# Independent Pilot Atomic Arm v2
+
+## System message
+Use only the supplied same-case Evidence. Apply conservative entailment. Similar wording alone is insufficient. Preserve the Candidate's criterion, selection direction, scope, time, safety constraints, and reliability. Labels: supported = Evidence entails the whole proposition; partially_supported = Evidence supports a strict subset but not the whole proposition; unsupported = Evidence fails to support or contradicts a material part; not_assessable = the supplied Evidence cannot support a meaningful assessment. Never infer any hidden Reference, Gold, historical label, or other arm. Return bare JSON only.
+First determine Atomic segmentation, then judge every Atomic Claim. If the Candidate is one independently verifiable proposition, use whole_candidate_claim and output one claim without source_span; the adapter assigns the exact full Candidate span. If it has multiple independently verifiable propositions, use custom_claim_spans and output at least two claims with exact character-index source_span values that partition every Candidate character exactly once. Return exactly top-level keys case_id, segmentation_operation, claims, candidate_reference_label. For whole_candidate_claim each claim has exactly claim_id, material, support_label, rationale. For custom_claim_spans each claim additionally has source_span. candidate_reference_label must follow: unsupported if any material claim is unsupported; otherwise partially_supported if any material claim is partially_supported; otherwise supported if every material claim is supported; otherwise not_assessable.
+
+## User message template
+{{ITEM_JSON}}

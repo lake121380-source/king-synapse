@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-boundary-adjudicator-v3-failure-subtype-analysis-v1",
+  "status": "frozen_retrospective_descriptive_analysis",
+  "recorded_at": "2026-07-13T13:26:29.895855+00:00",
+  "object_of_analysis": "phase7.3.3-d1-a-boundary-adjudicator-negative-result-v3",
+  "temporal_status": {
+    "classification_defined_after_v3_observation": true,
+    "v3_use": "retrospective_descriptive_only",
+    "prospective_claim_for_v3": false,
+    "v3_primary_result_modified": false
+  },
+  "artifact_lineage": {
+    "failure_taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+    "level2_failure_subtypes_v1_sha256": "80b198944c4f00d3f209689d65d1c4d2db53fb95667bfdf144a4f915ac6082d5",
+    "research_routes_v1_sha256": "c4078c0b3cb6fa597e291d87503b7e92873c04cb401213fe2642fb4098dc0601",
+    "negative_result_v3_sha256": "d35f9753c0cde6c660534b9b82db720096352e990266066dd29cfa7bb9aa2bb6",
+    "execution_outcome_v3_sha256": "db1d40d02890659c097e9036acabc2113e65d53eed8988a6d2a089f5dea5245f",
+    "reference_readiness_v4_sha256": "eee548b6d5d0b2ca8c36f9a90c9089b10e4a1c393313df665485651b4b3172ef",
+    "execution_manifest_v3_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+    "attempt_log_v3_sha256": "a17a8b267481403c240aa8473d9663f5d541ef0187a9307c00319b4ac88b62e0",
+    "worklist_a_e_v3_sha256": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+    "agreement_a_e_v3_sha256": "0ddb0b873431ddf89b7301f44691b7897a2a36d757f8eace10877a35ed22e6c7",
+    "adjudicator_prompt_v3_sha256": "e1039550ffa56c2a5c07fa153129d39d65e848e8b4dfefb62c0fc306a46c11a5"
+  },
+  "frozen_primary_classification": {
+    "level": 2,
+    "level_code": "boundary_semantic_contract",
+    "attribution": {
+      "primary": "provider",
+      "subtype": "frozen_adjudication_contract_failure",
+      "confidence": "high",
+      "evidence": [
+        "source_excerpt_not_found:extract_10-proposition-01:2"
+      ],
+      "counterevidence": []
+    }
+  },
+  "diagnostic_subtype_classification": {
+    "classification_status": "classified",
+    "observed_subtype": "serialization_failure",
+    "confidence": "high",
+    "observed_stage": "exact_source_excerpt_serialization",
+    "case_id": "extract_10",
+    "failure_code": "source_excerpt_not_found:extract_10-proposition-01:2",
+    "evidence": [
+      "Provider content was received, so the event is not a delivery or transport failure.",
+      "The frozen V3 parser reached exact source excerpt normalization for extract_10.",
+      "The observed failure code states that extract_10-proposition-01 occurrence 2 could not be found as an exact source excerpt.",
+      "The frozen V3 contract prohibits paraphrase, normalization, semantic repair, and retry after Provider content."
+    ],
+    "counterevidence_and_limits": [
+      "Raw Provider content was not retained, so the intended final Boundary span cannot be reconstructed.",
+      "The failure code alone cannot distinguish paraphrase, copying drift, an invented excerpt, or another non-exact serialization mechanism.",
+      "The classification does not establish that the underlying Boundary decision was correct."
+    ]
+  },
+  "semantic_decision_assessment": {
+    "quality": "not_assessable",
+    "reason": "The exact serialized excerpt failed before a valid normalized span existed, and raw Provider content was not retained. Boundary reasoning quality therefore cannot be separated from the failed representation using the frozen evidence.",
+    "boundary_capability_conclusion_authorized": false
+  },
+  "causal_hypothesis": {
+    "representation_layer_bottleneck": "plausible_not_proven",
+    "supported_statement": "The observed failure occurred at exact-substring serialization under the V3 end-to-end contract.",
+    "unsupported_statement": "The underlying Boundary decision was correct and only copying failed.",
+    "controlled_test_required": "A separately versioned V4 may change only output representation while preserving model, worklist, agreement, Boundary rules, and declared taxonomy boundaries."
+  },
+  "authorized_conclusions": [
+    "V3 remains an authoritative end-to-end Level 2 negative result.",
+    "The observed internal Level 2 subtype is serialization_failure.",
+    "Semantic Boundary decision quality for the failed item is not assessable from retained artifacts.",
+    "A representation-layer bottleneck is a plausible hypothesis requiring a separately frozen controlled experiment."
+  ],
+  "unauthorized_conclusions": [
+    "GPT-5.4 cannot perform Boundary Adjudication.",
+    "The failed Boundary decision was semantically correct.",
+    "Representation was the unique or proven cause of failure.",
+    "V3 may be retried or repaired under the same Manifest.",
+    "The nine partial checkpoints form a completed Boundary Reference.",
+    "Coverage QA or Support Review may begin."
+  ],
+  "immutability_and_gates": {
+    "failure_taxonomy_v2_modified": false,
+    "v3_manifest_modified": false,
+    "v3_prompt_modified": false,
+    "v3_parser_or_executor_modified": false,
+    "v3_negative_result_modified": false,
+    "v3_attempt_log_modified": false,
+    "same_manifest_retry_authorized": false,
+    "provider_called_for_this_analysis": false,
+    "v4_execution_started": false,
+    "adjudication_completed": false,
+    "coverage_qa_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

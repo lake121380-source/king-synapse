@@ -1,0 +1,329 @@
+{
+  "schema_version": 3,
+  "case_id": "extract_06",
+  "status": "completed",
+  "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+  "provider_envelope_sha256": "d591c9460a8416a3fdd1e7d49fe6bb9c4eb5c1d92b1d536866203e0ed56b6186",
+  "provider_content_sha256": "53b3284050954e726cbff1e11d34e0c02295f8ef74e2a8cf907299508d6bf2db",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "36cefac739d433ef3e70e712a1af71d16e4883ea66308389b71a1ece4c4512e0",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-001",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "e02e3184bb68cbe04fcf789bbe629413e685091302c6c91188db33d0efbe50c9",
+      "source_span": {
+        "start": 0,
+        "end": 20
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In software delivery",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_06::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as a separate non-overlapping span because it sets the application domain and is independently evaluable from the subsequent assertion.",
+      "type_decision_rationale": "This span specifies the domain or context in which the following assertion applies, so it is a scope claim.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_06-claim-001"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-002",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "e02e3184bb68cbe04fcf789bbe629413e685091302c6c91188db33d0efbe50c9",
+      "source_span": {
+        "start": 22,
+        "end": 286
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_06::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Shifted to exclude the standalone scope phrase and kept as one atomic assertion because it expresses a single causal relationship between the exposure strategy and the outcome.",
+      "type_decision_rationale": "The clause links an action or condition to an outcome in cause-effect form, so causal is the best fit.",
+      "reason_codes": [
+        "scope_modifier",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-001",
+        "reviewer-e-extract_06-claim-002"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-003",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "e02e3184bb68cbe04fcf789bbe629413e685091302c6c91188db33d0efbe50c9",
+      "source_span": {
+        "start": 296,
+        "end": 419
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_06::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate non-overlapping clause because it asserts its own complete relationship and can take a different truth value from the preceding clause.",
+      "type_decision_rationale": "This clause states that a particular testing choice leads to a failure outcome, which is a causal relation.",
+      "reason_codes": [
+        "coordination",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-002",
+        "reviewer-e-extract_06-claim-003"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-004",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "c0af661dc5ff0d952d220ab2f1f1df0da341c10722acc4a2a97e251099e78e9c",
+      "source_span": {
+        "start": 0,
+        "end": 255
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a risky change is first exposed to a representative subset (e.g., a typical tenant or internal group) before full rollout, then at least one hidden issue (dependency assumption failure or undocumented data shape) will be discovered before full rollout.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_06::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as one atomic span because the conditional antecedent and predicted consequence together form a single testable assertion.",
+      "type_decision_rationale": "The statement forecasts an outcome under a specified condition, making it a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-003",
+        "reviewer-e-extract_06-claim-004"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-005",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "88c0facf0e10324293c7c937eb6b330db58f9e81c59bfb938249b137177b7675",
+      "source_span": {
+        "start": 0,
+        "end": 58
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Hidden issue is detected during the limited exposure phase",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_06::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the coordinated predicate because detection can be evaluated independently from later documentation.",
+      "type_decision_rationale": "This span states an observable state of affairs rather than a conditional, causal, or falsification structure, so it is a proposition.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-004",
+        "reviewer-e-extract_06-claim-005"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-006",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "88c0facf0e10324293c7c937eb6b330db58f9e81c59bfb938249b137177b7675",
+      "source_span": {
+        "start": 63,
+        "end": 93
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "documented before full rollout",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_06::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split as a separate coordinated assertion because documentation can be true or false independently of detection.",
+      "type_decision_rationale": "This is an asserted observable condition rather than a prediction clause itself, so proposition is the best fit.",
+      "reason_codes": [
+        "coordination",
+        "temporal_qualifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-004",
+        "reviewer-e-extract_06-claim-006"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-007",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "7fc06eb483a3814006a9db7e2d5afc9b0bd52d5f17b3596346f1c18a91b1f6ba",
+      "source_span": {
+        "start": 0,
+        "end": 32
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "At least one issue is identified",
+      "claim_type": "proposition",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_06::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the coordinated predicate because identification is independently truth-evaluable apart from whether the issue can be addressed.",
+      "type_decision_rationale": "The span asserts a standalone condition or state of affairs, so it is a proposition.",
+      "reason_codes": [
+        "coordination",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-005",
+        "reviewer-e-extract_06-claim-007"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-008",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "7fc06eb483a3814006a9db7e2d5afc9b0bd52d5f17b3596346f1c18a91b1f6ba",
+      "source_span": {
+        "start": 37,
+        "end": 73
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "can be addressed before full rollout",
+      "claim_type": "proposition",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_06::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split as a separate coordinated assertion because addressability can differ in truth value from identification.",
+      "type_decision_rationale": "This span states a standalone evaluable condition, so proposition is the appropriate type.",
+      "reason_codes": [
+        "coordination",
+        "temporal_qualifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-005",
+        "reviewer-e-extract_06-claim-008"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-009",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "02932a8a70bf2b6137bffad0d43534b76163664977bf7cf41953c8b017a5bcfe",
+      "source_span": {
+        "start": 0,
+        "end": 184
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a change is exposed to a representative subset and no issues are found, but full rollout fails due to issues that were present in that subset's complexity, the pattern is falsified.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_06::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as one atomic span because the combined conditions and falsification result together define a single falsification criterion.",
+      "type_decision_rationale": "The statement specifies the condition under which the pattern would be shown false, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-006",
+        "reviewer-e-extract_06-claim-009"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_06-claim-010",
+      "case_id": "extract_06",
+      "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "anchor_id": "extract_06-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "79607fdd19809dd63d74497a529fb16bce726ebce49a968e366debec97fdd438",
+      "source_span": {
+        "start": 0,
+        "end": 119
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Full rollout failure due to data shapes or assumptions that existed in the representative subset but were not detected.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_06::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as one span because the failure event is defined by the full linked description and functions as a single observable falsification-related assertion.",
+      "type_decision_rationale": "This observable is framed as the event whose occurrence would count toward falsifying the pattern, so falsifiability is the best type.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_06-claim-007",
+        "reviewer-e-extract_06-claim-010"
+      ]
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_06",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 10,
+    "provider_content_sha256": "53b3284050954e726cbff1e11d34e0c02295f8ef74e2a8cf907299508d6bf2db"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

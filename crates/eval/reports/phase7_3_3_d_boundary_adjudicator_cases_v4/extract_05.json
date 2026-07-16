@@ -1,0 +1,366 @@
+{
+  "schema_version": 4,
+  "case_id": "extract_05",
+  "status": "completed",
+  "manifest_sha256": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+  "provider_envelope_sha256": "5ec2f4dc7a73212d06cd0f963f31ff105d5137798975031f15e977c1bde8f1b6",
+  "provider_content_sha256": "78df46c4ea6c611a40054c542c6a79c9985fc6fabee80ed80df262c62f62e26a",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "35a77c2e62167ed807609f9c1224fb51676e0e1bfc0039a779cfb17fdc4aad34",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-001",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "92f39b61e7968dfa8701b567d3e5074becc8389deac062a1bdd974634f746c32",
+      "source_span": {
+        "start": 0,
+        "end": 60
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In AI tool category posts within the same audience and month",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_05::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This introductory clause sets the population/time context for the neighboring assertion and is independently truth-evaluable as scope, so the reviewer span is reused as-is.",
+      "type_decision_rationale": "The clause restricts where and when the associated assertion applies rather than asserting the main relationship itself.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_05-claim-001"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-002",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "92f39b61e7968dfa8701b567d3e5074becc8389deac062a1bdd974634f746c32",
+      "source_span": {
+        "start": 62,
+        "end": 183
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments)",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_05::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers marked the same non-overlapping span for the core association, which forms one atomic assertion and should be kept unchanged.",
+      "type_decision_rationale": "The span expresses a relationship between content features and engagement outcome, so it is classified as causal.",
+      "reason_codes": [
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-001",
+        "reviewer-e-extract_05-claim-002"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-003",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "92f39b61e7968dfa8701b567d3e5074becc8389deac062a1bdd974634f746c32",
+      "source_span": {
+        "start": 185,
+        "end": 283
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "except when success is driven by an external virality source such as an unrelated celebrity repost",
+      "claim_type": "limitation",
+      "claim_role": "anchor",
+      "anchor_group": "extract_05::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This exception clause can be evaluated separately from the main association and the identical reviewer span cleanly isolates that limiting condition.",
+      "type_decision_rationale": "The clause states an explicit exception under which the preceding assertion does not hold, making it a limitation.",
+      "reason_codes": [
+        "limitation_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-002",
+        "reviewer-e-extract_05-claim-003"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-004",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "4d7aadc22823bb41c6afc37ce2830db69c44ae4b5f15ab3ab98f21592a8aa162",
+      "source_span": {
+        "start": 0,
+        "end": 171
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_05::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The conditional statement forms one complete testable assertion and both reviewers selected the same exact span, so reuse preserves the atomic prediction.",
+      "type_decision_rationale": "It forecasts an outcome for posts with specified features relative to posts without them, which is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-003",
+        "reviewer-e-extract_05-claim-004"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-005",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "4d7aadc22823bb41c6afc37ce2830db69c44ae4b5f15ab3ab98f21592a8aa162",
+      "source_span": {
+        "start": 173,
+        "end": 228
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "assuming organic distribution without external virality",
+      "claim_type": "scope",
+      "claim_role": "prediction",
+      "anchor_group": "extract_05::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The assumption phrase is a separate qualifying condition on the prediction and the shared reviewer span isolates it without overlap.",
+      "type_decision_rationale": "This clause narrows the circumstances under which the prediction is intended to apply, so it is scope.",
+      "reason_codes": [
+        "scope_modifier",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-004",
+        "reviewer-e-extract_05-claim-005"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-006",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "0394fe9413845ceb9ac1858dbadb6a24b81617c07be618ca9e62a7f3664aae2a",
+      "source_span": {
+        "start": 0,
+        "end": 83
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Number of saves and qualified comments per post within the same audience and month.",
+      "claim_type": "scope",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_05::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The entire anchor is one self-contained measurement specification, and the identical reviewer span should be retained as a single atomic boundary.",
+      "type_decision_rationale": "The text specifies what observable metric and context are used for measurement rather than making the substantive predicted outcome itself, so it is scope.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-005",
+        "reviewer-e-extract_05-claim-006"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-007",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "5ead6913f7a8293386acc20dca683ad603e5e76f00dcfef3d6bb3b51de2d4ff5",
+      "source_span": {
+        "start": 0,
+        "end": 190
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_05::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This full sentence states one quantifiable success threshold and both reviewers agree on the exact span, so reuse captures the single atomic assertion.",
+      "type_decision_rationale": "It specifies a measurable expected outcome with a threshold, which is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-006",
+        "reviewer-e-extract_05-claim-007"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-008",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "d697a349b85ba2d94f69149840ea9ce82ea134e1af70ef3a544c582cbc33ccfb",
+      "source_span": {
+        "start": 0,
+        "end": 90
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "A post with concrete examples and early problem framing fails to achieve higher engagement",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_05::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This is the first disjunct in an 'or' structure and can receive a truth value independently from the second, so the shared span is kept as one atomic claim.",
+      "type_decision_rationale": "The clause presents one explicit condition that would falsify the target assertion, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-007",
+        "reviewer-e-extract_05-claim-008"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-009",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "d697a349b85ba2d94f69149840ea9ce82ea134e1af70ef3a544c582cbc33ccfb",
+      "source_span": {
+        "start": 95,
+        "end": 222
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost)",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_05::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The second disjunct is separately truth-evaluable from the first and the agreed span cleanly isolates that independent clause.",
+      "type_decision_rationale": "This clause provides an additional explicit condition under which the assertion would be falsified, so it is classified as falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_05-claim-008",
+        "reviewer-e-extract_05-claim-009"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-010",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "d7f905784abd9342f9c6bfdaed78336fb322c2c431384266ca82e5fd143cee41",
+      "source_span": {
+        "start": 0,
+        "end": 18
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Engagement metrics",
+      "claim_type": "proposition",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_05::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The coordinated list contains two distinct observable items that can stand independently; this first item is a complete non-overlapping assertion and is reused directly.",
+      "type_decision_rationale": "This span names one observable item rather than a modifier or prediction, so proposition is the best fit.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_05-claim-010"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_05-claim-011",
+      "case_id": "extract_05",
+      "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "anchor_id": "extract_05-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "d7f905784abd9342f9c6bfdaed78336fb322c2c431384266ca82e5fd143cee41",
+      "source_span": {
+        "start": 23,
+        "end": 77
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "identification of any external sources driving traffic",
+      "claim_type": "proposition",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_05::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This second coordinated item is independently truth-evaluable from the first and the reviewer span isolates it without including the connector.",
+      "type_decision_rationale": "The span identifies a second observable item, making it a proposition rather than a scope or prediction.",
+      "reason_codes": [
+        "coordination",
+        "non_assertive_connector",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_05-claim-011"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_05",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 11,
+    "provider_content_sha256": "78df46c4ea6c611a40054c542c6a79c9985fc6fabee80ed80df262c62f62e26a"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

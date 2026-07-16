@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_frf_019",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "bfc56f5495f6a478e47a8f25b6c834ebfdbc494b097c426433e8b30f4bfd3e2e",
+  "provider_content_sha256": "e4b44994d77795527c29206a99c72c7b6bab812c4f3ae2adfa3814c3b77ed07f",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "27241ccef7440be1be31a8c70161b67c4b7e0df25bd952c7a2e8e8e2e05cb69f",
+  "normalized_case": {
+    "case_id": "mi_validation_frf_019",
+    "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frf_019-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_frf_019-evidence-06",
+          "mi_validation_frf_019-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that unresolved failure evidence remains authoritative despite not being recently accessed, which supports the claim that such evidence must beat a recently accessed unsafe playbook. Evidence 01 confirms the unsafe playbook was recently accessed but still repeats the failed approach, reinforcing the comparative selection. The claim is fully supported by the cited evidence.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

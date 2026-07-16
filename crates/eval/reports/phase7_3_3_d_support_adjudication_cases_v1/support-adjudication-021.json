@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-021-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_07",
+  "adjudication_item_id": "support-adjudication-021",
+  "boundary_claim_id": "adjudicated-extract_07-claim-003",
+  "provider_envelope_sha256": "0d830e53049d7f013bffd3c606ce8ed96c160a18d1d4fba6f4cf9c35800842ec",
+  "provider_content_sha256": "125cca51b5324a410355414d7b5ff134ce20bf71cd5fe2fcdf5c85f14cf0e703",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "eaa3ff7fd265950342eb560455cd43a6ab7f7ac2ff765806fc310d3199a39ad5",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-021",
+    "case_id": "extract_07",
+    "boundary_claim_id": "adjudicated-extract_07-claim-003",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The only directly relevant evidence is a counterexample showing false stops happened under a noisy metric. That supports concern about false stops but does not fully establish the general causal claim 'avoid false stops' as achieved; it more narrowly shows a failure mode, so partial support is better grounded than full support.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_07-claim-003",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_ignored",
+        "prediction_overcommitment"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "The claim implies that using low-noise metrics avoids false stops, but the counterexample (px_07_counter_3) shows that noisy metrics cause false stops; however, the claim is phrased as a general capability which is not fully proven as a guaranteed outcome in all cases, and the evidence primarily illustrates the negative case."
+    },
+    "selected_frozen_decision_sha256": "0fd9cd7757b27a29455314021ff74926b47132c4a176a959ac0776a968bc0169",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

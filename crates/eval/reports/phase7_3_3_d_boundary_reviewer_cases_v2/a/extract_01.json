@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "reviewer": "a",
+  "case_id": "extract_01",
+  "manifest_sha256": "8765406d049719345480886272041d47fc9bd28d47ab33c9dbe27ae8b11712ef",
+  "resolved_model": "gpt-4.1",
+  "provider_envelope_sha256": "fac79ba18fe5efaf19ce4bdc34acc15aac33e70774200646c94d640a902c858c",
+  "provider_content_sha256": "aa8a90764c14f96fc1d3824fd2559b22f2d2c0d307b7ba8a4ec7d616e53a3433",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-001",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 22,
+        "end": 117
+      },
+      "claim_text": "deploying changes incrementally to a small subset of traffic enables early detection of defects",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a causal assertion linking incremental deployment to early defect detection; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-002",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 124,
+        "end": 216
+      },
+      "claim_text": "keeping the old version available, provided the new and old versions are backward compatible",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This sets a conditional scope for the proposition, specifying backward compatibility as a requirement for keeping the old version available.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-003",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "source_span": {
+        "start": 78,
+        "end": 171
+      },
+      "claim_text": "the first cohort will expose any critical regression without affecting the rest of the system",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_01::prediction_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a prediction about the outcome of incremental rollout with backward compatibility; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-004",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "source_span": {
+        "start": 0,
+        "end": 80
+      },
+      "claim_text": "A defect found in the first cohort does not require rolling back the old version",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_01::prediction_observable",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a proposition about the effect of a defect found in the first cohort; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-005",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "source_span": {
+        "start": 82,
+        "end": 112
+      },
+      "claim_text": "only the cohort is rolled back",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_01::prediction_observable",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a separate proposition about rollback scope; it could be true or false independently of the previous claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-006",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "a743b533b84b7d73f25e02c887deb510dfa71492b47653344cddf1d19ed80f07",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "claim_text": "The old version remains fully operational during the entire rollout phase.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_01::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a prediction about the operational status of the old version during rollout; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-007",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "source_span": {
+        "start": 0,
+        "end": 87
+      },
+      "claim_text": "If an incremental rollout with backward compatibility still causes a system-wide outage",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_01::falsification_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a falsifiability condition specifying a system-wide outage as a criterion for pattern falsification.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-008",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "source_span": {
+        "start": 91,
+        "end": 151
+      },
+      "claim_text": "forces rollback of the old version, the pattern is falsified",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_01::falsification_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a separate falsifiability condition about rollback of the old version; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-009",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "source_span": {
+        "start": 0,
+        "end": 37
+      },
+      "claim_text": "The entire system becomes unavailable",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_01::falsification_observable",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a falsifiability observable specifying system unavailability as a criterion; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_01-claim-010",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "source_span": {
+        "start": 41,
+        "end": 114
+      },
+      "claim_text": "the old version is rolled back due to issues from the incremental rollout",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_01::falsification_observable",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a falsifiability observable about rollback of the old version due to incremental rollout issues; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "claim_count": 10
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

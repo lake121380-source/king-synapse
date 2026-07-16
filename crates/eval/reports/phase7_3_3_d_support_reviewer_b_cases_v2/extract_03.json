@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_03-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_03",
+  "provider_envelope_sha256": "a286a61a7b0fc7c1025e8086ff08671a92513405ba380ad1394b957c5ff10e9e",
+  "provider_content_sha256": "4c6dbd618a78c6cae5981b90dbb1a14e4eb1f1f45af19710515159059b892d11",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "cd2e877ba7001db1e34e632fa1a5ccf685d5fd8b429be026767736716fbcdfa3",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "All three experiences explicitly describe product experiments where quantitative thresholds (activation, stop criteria, guardrails, success metrics) were fixed before launch, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Supported by px_03_support_1 and px_03_support_2 where teams adhered to thresholds, but contradicted by px_03_counter_3 where the team discarded unexpected themes due to rigid thresholds, implying a failure to adhere to the spirit of outcome evaluation in exploratory contexts.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Directly supported by px_03_support_1 (accepted neutral result) and px_03_support_2 (stopped on guardrail), but the claim implies a universal behavior which is challenged by px_03_counter_3 where the rigid application of pre-defined thresholds led to discarding valid insights, suggesting the metric adherence was problematic rather than purely positive.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "The scope condition 'product experiment with predefined quantitative thresholds' is met by all three provided experiences, establishing the context for the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-005",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "counterexample_ignored"
+      ],
+      "support_rationale": "The prediction that teams 'will accept the outcome' is supported in two cases but fails in px_03_counter_3 where the outcome (unexpected themes) was discarded rather than accepted, indicating the prediction is not universally true for all such experiments.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Evidence shows the team did not alter criteria in support cases, but px_03_counter_3 demonstrates a scenario where rigid adherence to pre-set thresholds caused the team to ignore relevant outcomes, effectively falsifying the reliability of this observable as a universal rule.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "In support cases, decisions matched triggers. However, in px_03_counter_3, the decision (discarding themes) was driven by the thresholds but resulted in a negative outcome (missing pain points), suggesting the 'match' does not guarantee the intended success or validity of the decision process.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification condition is clearly defined. While px_03_counter_3 shows rigid adherence rather than redefinition, the logical structure holds: if redefinition occurred, the pattern of 'adherence' would be falsified. The evidence bundle contains a counterexample to the *pattern's benefit*, but the falsification statement itself is logically sound and assessable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'post-hoc modification' is the precise negation of the behavior seen in px_03_support_1 and px_03_support_2, and serves as the hypothetical failure mode. The evidence bundle clearly defines what constitutes the metrics (guardrails, stop criteria) in all cases.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_03",
+    "status": "completed",
+    "decision_count": 9
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,722 @@
+{
+  "schema_version": 1,
+  "metrics_id": "phase7.3.3-d-atomic-vs-candidate-paired-metrics-v1",
+  "status": "completed_mechanical_metrics_frozen_candidate",
+  "study_type": "retrospective_design_case_diagnostic_comparison",
+  "execution_sha256": "49edc8e9232b542b7176af2c78e41f5c03fd89e06650740241e33739da40b500",
+  "case_count": 10,
+  "claim_count": 118,
+  "candidate_label_distribution": {
+    "supported": 0,
+    "partially_supported": 10,
+    "unsupported": 0,
+    "not_assessable": 0
+  },
+  "candidate_unique_label_count": 1,
+  "candidate_single_class_prediction_rate": {
+    "numerator": 10,
+    "denominator": 10,
+    "value": 1.0
+  },
+  "primary_atomic_aggregate_distribution": {
+    "supported": 0,
+    "partially_supported": 10,
+    "unsupported": 0,
+    "not_assessable": 0
+  },
+  "atomic_support_vector_per_case": [
+    {
+      "case_id": "extract_01",
+      "supported_count": 9,
+      "partially_supported_count": 5,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_02",
+      "supported_count": 3,
+      "partially_supported_count": 3,
+      "unsupported_count": 1,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_03",
+      "supported_count": 6,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_04",
+      "supported_count": 11,
+      "partially_supported_count": 3,
+      "unsupported_count": 3,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_05",
+      "supported_count": 8,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_06",
+      "supported_count": 7,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_07",
+      "supported_count": 15,
+      "partially_supported_count": 2,
+      "unsupported_count": 2,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_08",
+      "supported_count": 8,
+      "partially_supported_count": 1,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_09",
+      "supported_count": 8,
+      "partially_supported_count": 2,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "case_id": "extract_10",
+      "supported_count": 11,
+      "partially_supported_count": 1,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    }
+  ],
+  "mixed_support_case_rate": {
+    "numerator": 10,
+    "denominator": 10,
+    "value": 1.0
+  },
+  "mixed_support_case_ids": [
+    "extract_01",
+    "extract_02",
+    "extract_03",
+    "extract_04",
+    "extract_05",
+    "extract_06",
+    "extract_07",
+    "extract_08",
+    "extract_09",
+    "extract_10"
+  ],
+  "unsupported_masking_case_rate": {
+    "numerator": 3,
+    "denominator": 10,
+    "value": 0.3
+  },
+  "unsupported_masking_case_ids": [
+    "extract_02",
+    "extract_04",
+    "extract_07"
+  ],
+  "supported_content_masking_claim_count": 86,
+  "supported_content_masking_claim_ids": [
+    "adjudicated-extract_01-claim-001",
+    "adjudicated-extract_01-claim-002",
+    "adjudicated-extract_01-claim-003",
+    "adjudicated-extract_01-claim-005",
+    "adjudicated-extract_01-claim-007",
+    "adjudicated-extract_01-claim-008",
+    "adjudicated-extract_01-claim-009",
+    "adjudicated-extract_01-claim-011",
+    "adjudicated-extract_01-claim-012",
+    "adjudicated-extract_02-claim-002",
+    "adjudicated-extract_02-claim-006",
+    "adjudicated-extract_02-claim-007",
+    "adjudicated-extract_03-claim-001",
+    "adjudicated-extract_03-claim-002",
+    "adjudicated-extract_03-claim-003",
+    "adjudicated-extract_03-claim-004",
+    "adjudicated-extract_03-claim-008",
+    "adjudicated-extract_03-claim-009",
+    "adjudicated-extract_04-claim-001",
+    "adjudicated-extract_04-claim-003",
+    "adjudicated-extract_04-claim-004",
+    "adjudicated-extract_04-claim-005",
+    "adjudicated-extract_04-claim-008",
+    "adjudicated-extract_04-claim-009",
+    "adjudicated-extract_04-claim-010",
+    "adjudicated-extract_04-claim-011",
+    "adjudicated-extract_04-claim-012",
+    "adjudicated-extract_04-claim-015",
+    "adjudicated-extract_04-claim-017",
+    "adjudicated-extract_05-claim-001",
+    "adjudicated-extract_05-claim-003",
+    "adjudicated-extract_05-claim-005",
+    "adjudicated-extract_05-claim-006",
+    "adjudicated-extract_05-claim-008",
+    "adjudicated-extract_05-claim-009",
+    "adjudicated-extract_05-claim-010",
+    "adjudicated-extract_05-claim-011",
+    "adjudicated-extract_06-claim-001",
+    "adjudicated-extract_06-claim-003",
+    "adjudicated-extract_06-claim-005",
+    "adjudicated-extract_06-claim-006",
+    "adjudicated-extract_06-claim-007",
+    "adjudicated-extract_06-claim-009",
+    "adjudicated-extract_06-claim-010",
+    "adjudicated-extract_07-claim-001",
+    "adjudicated-extract_07-claim-004",
+    "adjudicated-extract_07-claim-005",
+    "adjudicated-extract_07-claim-006",
+    "adjudicated-extract_07-claim-007",
+    "adjudicated-extract_07-claim-008",
+    "adjudicated-extract_07-claim-009",
+    "adjudicated-extract_07-claim-010",
+    "adjudicated-extract_07-claim-011",
+    "adjudicated-extract_07-claim-012",
+    "adjudicated-extract_07-claim-013",
+    "adjudicated-extract_07-claim-014",
+    "adjudicated-extract_07-claim-015",
+    "adjudicated-extract_07-claim-017",
+    "adjudicated-extract_07-claim-018",
+    "adjudicated-extract_08-claim-001",
+    "adjudicated-extract_08-claim-002",
+    "adjudicated-extract_08-claim-004",
+    "adjudicated-extract_08-claim-005",
+    "adjudicated-extract_08-claim-006",
+    "adjudicated-extract_08-claim-007",
+    "adjudicated-extract_08-claim-008",
+    "adjudicated-extract_08-claim-009",
+    "adjudicated-extract_09-claim-002",
+    "adjudicated-extract_09-claim-003",
+    "adjudicated-extract_09-claim-004",
+    "adjudicated-extract_09-claim-005",
+    "adjudicated-extract_09-claim-006",
+    "adjudicated-extract_09-claim-008",
+    "adjudicated-extract_09-claim-009",
+    "adjudicated-extract_09-claim-010",
+    "adjudicated-extract_10-claim-001",
+    "adjudicated-extract_10-claim-002",
+    "adjudicated-extract_10-claim-003",
+    "adjudicated-extract_10-claim-004",
+    "adjudicated-extract_10-claim-005",
+    "adjudicated-extract_10-claim-006",
+    "adjudicated-extract_10-claim-008",
+    "adjudicated-extract_10-claim-009",
+    "adjudicated-extract_10-claim-010",
+    "adjudicated-extract_10-claim-011",
+    "adjudicated-extract_10-claim-012"
+  ],
+  "non_supported_claim_localization_coverage": {
+    "numerator": 32,
+    "denominator": 32,
+    "value": 1.0
+  },
+  "non_supported_claim_count": 32,
+  "partially_supported_claim_count": 26,
+  "unsupported_claim_count": 6,
+  "not_assessable_claim_count": 0,
+  "candidate_to_primary_aggregate_exact_agreement": {
+    "numerator": 10,
+    "denominator": 10,
+    "value": 1.0
+  },
+  "candidate_to_primary_aggregate_exact_case_ids": [
+    "extract_01",
+    "extract_02",
+    "extract_03",
+    "extract_04",
+    "extract_05",
+    "extract_06",
+    "extract_07",
+    "extract_08",
+    "extract_09",
+    "extract_10"
+  ],
+  "candidate_to_primary_aggregate_ordinal_severity": {
+    "distance_sum": 0,
+    "assessable_pair_count": 10,
+    "maximum_possible_distance_sum": 20,
+    "value": 0.0
+  },
+  "candidate_to_primary_aggregate_adjacent_disagreement_count": 0,
+  "candidate_to_primary_aggregate_extreme_disagreement_count": 0,
+  "candidate_to_primary_aggregate_not_assessable_pair_count": 0,
+  "atomic_vector_unique_state_count": 10,
+  "atomic_vector_unique_states": [
+    {
+      "supported_count": 3,
+      "partially_supported_count": 3,
+      "unsupported_count": 1,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 6,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 7,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 8,
+      "partially_supported_count": 1,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 8,
+      "partially_supported_count": 2,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 8,
+      "partially_supported_count": 3,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 9,
+      "partially_supported_count": 5,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 11,
+      "partially_supported_count": 1,
+      "unsupported_count": 0,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 11,
+      "partially_supported_count": 3,
+      "unsupported_count": 3,
+      "not_assessable_count": 0
+    },
+    {
+      "supported_count": 15,
+      "partially_supported_count": 2,
+      "unsupported_count": 2,
+      "not_assessable_count": 0
+    }
+  ],
+  "traceability_completeness": {
+    "numerator": 118,
+    "denominator": 118,
+    "value": 1.0
+  },
+  "diagnostic_resolution": {
+    "candidate_output_unique_state_count": 1,
+    "atomic_vector_unique_state_count": 10,
+    "total_locatable_non_supported_claim_count": 32,
+    "total_claim_type_count": 7,
+    "total_support_state_categories_lost_by_candidate_compression": 13
+  },
+  "per_case_full_paired_table": [
+    {
+      "case_id": "extract_01",
+      "candidate_response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 9,
+        "partially_supported_count": 5,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 5,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_01-claim-004",
+        "adjudicated-extract_01-claim-006",
+        "adjudicated-extract_01-claim-010",
+        "adjudicated-extract_01-claim-013",
+        "adjudicated-extract_01-claim-014"
+      ],
+      "claim_type_count": 5,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_02",
+      "candidate_response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 3,
+        "partially_supported_count": 3,
+        "unsupported_count": 1,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 1,
+      "non_supported_claim_count": 4,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_02-claim-001",
+        "adjudicated-extract_02-claim-003",
+        "adjudicated-extract_02-claim-004",
+        "adjudicated-extract_02-claim-005"
+      ],
+      "claim_type_count": 3,
+      "support_state_categories_lost_by_candidate_compression": 2
+    },
+    {
+      "case_id": "extract_03",
+      "candidate_response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 6,
+        "partially_supported_count": 3,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 3,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_03-claim-005",
+        "adjudicated-extract_03-claim-006",
+        "adjudicated-extract_03-claim-007"
+      ],
+      "claim_type_count": 4,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_04",
+      "candidate_response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 11,
+        "partially_supported_count": 3,
+        "unsupported_count": 3,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 3,
+      "non_supported_claim_count": 6,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_04-claim-002",
+        "adjudicated-extract_04-claim-006",
+        "adjudicated-extract_04-claim-007",
+        "adjudicated-extract_04-claim-013",
+        "adjudicated-extract_04-claim-014",
+        "adjudicated-extract_04-claim-016"
+      ],
+      "claim_type_count": 6,
+      "support_state_categories_lost_by_candidate_compression": 2
+    },
+    {
+      "case_id": "extract_05",
+      "candidate_response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 8,
+        "partially_supported_count": 3,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 3,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_05-claim-002",
+        "adjudicated-extract_05-claim-004",
+        "adjudicated-extract_05-claim-007"
+      ],
+      "claim_type_count": 6,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_06",
+      "candidate_response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 7,
+        "partially_supported_count": 3,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 3,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_06-claim-002",
+        "adjudicated-extract_06-claim-004",
+        "adjudicated-extract_06-claim-008"
+      ],
+      "claim_type_count": 6,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_07",
+      "candidate_response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 15,
+        "partially_supported_count": 2,
+        "unsupported_count": 2,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 2,
+      "non_supported_claim_count": 4,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_07-claim-002",
+        "adjudicated-extract_07-claim-003",
+        "adjudicated-extract_07-claim-016",
+        "adjudicated-extract_07-claim-019"
+      ],
+      "claim_type_count": 5,
+      "support_state_categories_lost_by_candidate_compression": 2
+    },
+    {
+      "case_id": "extract_08",
+      "candidate_response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 8,
+        "partially_supported_count": 1,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 1,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_08-claim-003"
+      ],
+      "claim_type_count": 6,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_09",
+      "candidate_response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 8,
+        "partially_supported_count": 2,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 2,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_09-claim-001",
+        "adjudicated-extract_09-claim-007"
+      ],
+      "claim_type_count": 4,
+      "support_state_categories_lost_by_candidate_compression": 1
+    },
+    {
+      "case_id": "extract_10",
+      "candidate_response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "candidate_level_label": "partially_supported",
+      "atomic_support_vector": {
+        "supported_count": 11,
+        "partially_supported_count": 1,
+        "unsupported_count": 0,
+        "not_assessable_count": 0
+      },
+      "primary_atomic_aggregate_label": "partially_supported",
+      "mixed_support": true,
+      "unsupported_claim_count": 0,
+      "non_supported_claim_count": 1,
+      "non_supported_claim_ids": [
+        "adjudicated-extract_10-claim-007"
+      ],
+      "claim_type_count": 3,
+      "support_state_categories_lost_by_candidate_compression": 1
+    }
+  ],
+  "support_label_by_claim_type": {
+    "causal": {
+      "supported": 8,
+      "partially_supported": 7,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "counterexample": {
+      "supported": 2,
+      "partially_supported": 0,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "falsifiability": {
+      "supported": 20,
+      "partially_supported": 3,
+      "unsupported": 4,
+      "not_assessable": 0
+    },
+    "limitation": {
+      "supported": 5,
+      "partially_supported": 0,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "prediction": {
+      "supported": 15,
+      "partially_supported": 14,
+      "unsupported": 1,
+      "not_assessable": 0
+    },
+    "proposition": {
+      "supported": 25,
+      "partially_supported": 1,
+      "unsupported": 1,
+      "not_assessable": 0
+    },
+    "scope": {
+      "supported": 11,
+      "partially_supported": 1,
+      "unsupported": 0,
+      "not_assessable": 0
+    }
+  },
+  "support_label_by_claim_role": {
+    "anchor": {
+      "supported": 24,
+      "partially_supported": 8,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "falsification": {
+      "supported": 12,
+      "partially_supported": 1,
+      "unsupported": 3,
+      "not_assessable": 0
+    },
+    "falsification_observable": {
+      "supported": 14,
+      "partially_supported": 2,
+      "unsupported": 2,
+      "not_assessable": 0
+    },
+    "prediction": {
+      "supported": 11,
+      "partially_supported": 8,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "prediction_criterion": {
+      "supported": 10,
+      "partially_supported": 5,
+      "unsupported": 1,
+      "not_assessable": 0
+    },
+    "prediction_observable": {
+      "supported": 15,
+      "partially_supported": 2,
+      "unsupported": 0,
+      "not_assessable": 0
+    }
+  },
+  "non_supported_claims_by_claim_type": {
+    "causal": 7,
+    "falsifiability": 7,
+    "prediction": 15,
+    "proposition": 2,
+    "scope": 1
+  },
+  "non_supported_claims_by_claim_role": {
+    "anchor": 8,
+    "falsification": 4,
+    "falsification_observable": 4,
+    "prediction": 8,
+    "prediction_criterion": 6,
+    "prediction_observable": 2
+  },
+  "primary_vs_secondary_aggregation_sensitivity": [
+    {
+      "case_id": "extract_01",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_02",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "unsupported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_03",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "supported"
+    },
+    {
+      "case_id": "extract_04",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "unsupported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_05",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_06",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_07",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "unsupported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_08",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "supported"
+    },
+    {
+      "case_id": "extract_09",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "partially_supported"
+    },
+    {
+      "case_id": "extract_10",
+      "candidate_level_label": "partially_supported",
+      "primary_multi_anchor_material_gate": "partially_supported",
+      "strict_weakest_material_claim": "partially_supported",
+      "anchor_only": "supported"
+    }
+  ],
+  "provider_called": false,
+  "held_out_accessed": false,
+  "confirmatory_statistics_computed": false,
+  "accuracy_superiority_computed": false
+}

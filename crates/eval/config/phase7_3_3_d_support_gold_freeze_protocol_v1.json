@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d4-support-gold-freeze-protocol-v1",
+  "phase": "Phase 7.3.3-D4 Support Gold Freeze",
+  "status": "frozen_before_execution",
+  "object_of_study": "deterministic_freeze_of_support_labels_for_118_frozen_boundary_claims",
+  "execution_mode": "offline_deterministic",
+  "reference_status": "project_support_gold_model_adjudicated_not_human_gold",
+  "authoritative_claim_order": "boundary_gold_order",
+  "gold_measurement_fields": [
+    "support_label"
+  ],
+  "diagnostic_fields_gold_status": {
+    "cited_evidence_ids": "not_gold_raw_reviewer_or_adjudication_provenance_only",
+    "reason_codes": "not_gold_raw_reviewer_or_adjudication_provenance_only",
+    "support_rationale": "not_gold_raw_reviewer_or_adjudication_provenance_only",
+    "annotation_confidence": "not_gold_raw_reviewer_or_adjudication_provenance_only",
+    "adjudicator_rationale": "not_gold_adjudication_provenance_only"
+  },
+  "merge_rule": {
+    "exact_reviewer_agreement": "When Reviewer A and Reviewer B support_label values are identical, freeze that label without processing diagnostic differences.",
+    "reviewer_disagreement": "Require exactly one completed D3 adjudication, replay its selected frozen decision against the selected source reviewer submission, and freeze only the selected support_label.",
+    "new_or_third_label_allowed": false,
+    "majority_or_averaging_allowed": false,
+    "diagnostic_followup_processing_allowed": false,
+    "defer_allowed_for_freeze": false
+  },
+  "entry_gate": {
+    "expected_case_count": 10,
+    "expected_claim_count": 118,
+    "expected_exact_reviewer_agreement_count": 92,
+    "expected_reviewer_disagreement_count": 26,
+    "expected_adjudication_selected_count": 26,
+    "expected_adjudication_deferred_count": 0,
+    "require_exact_partition": true,
+    "require_boundary_order_exact": true,
+    "require_selected_decision_replay": true,
+    "require_no_duplicate_or_missing_claim_ids": true,
+    "require_support_gold_not_previously_frozen": true
+  },
+  "immutability": {
+    "boundary_mutation_allowed": false,
+    "reviewer_submission_mutation_allowed": false,
+    "adjudication_submission_mutation_allowed": false,
+    "historical_artifact_overwrite_allowed": false
+  },
+  "execution_guards": {
+    "provider_call_allowed": false,
+    "held_out_access_allowed": false,
+    "semantic_retry_allowed": false,
+    "new_support_judgment_allowed": false,
+    "diagnostic_followup_items_processed": 0
+  },
+  "next_stage_policy": {
+    "on_success": "freeze_atomic_vs_candidate_paired_evaluation_protocol_v1",
+    "paired_evaluation_execution_authorized_in_same_step": false
+  }
+}

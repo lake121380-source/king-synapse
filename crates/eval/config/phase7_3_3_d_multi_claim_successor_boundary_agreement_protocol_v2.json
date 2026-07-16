@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-boundary-agreement-protocol-v2",
+  "status": "frozen_before_agreement_computation",
+  "object_of_measurement": "independent_atomic_claim_boundary_agreement",
+  "inputs": {
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v35.json": "1fa5f2a875a989d4de2df54d3eaf47b2f25d75d3d14e82a694ce764267c149ba",
+    "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v46.json": "3bc9230b944a27a1f8e5139177bf5c03176e0072632f4e5a1e6b4908a8dc27dd",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_boundary_blind_worklist_v1.json": "13656be468d8c48c36967c689de4d0fdad09cd7f9ba9efe619682863659a2405",
+    "crates/eval/config/phase7_3_3_d_multi_claim_successor_boundary_review_protocol_v2.json": "7eb640a72db08f4357cf02dfa27924e436a4f45b478f1d1e870c6a22981261da",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_boundary_reviewer_a_submission_v2.json": "a0dc02a1323942171c407055b86b8dde928b04a548f93c97051258ec27a0763a",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_boundary_reviewer_b_submission_v2.json": "786dfb38557b9f7772d4165a05f793c62d9aec20aa6d9b48fdf0daa004a706e3"
+  },
+  "alignment_policy": {
+    "grouping_key": "case_id",
+    "pair_score": "character_span_intersection_over_union",
+    "candidate_pair_rule": "positive_character_overlap",
+    "matching": "deterministic_greedy_descending_iou_then_spans_then_claim_ids",
+    "exact_agreement": "identical_zero_based_end_exclusive_source_span",
+    "split_merge_detection": "overlap_graph_degree_at_least_two"
+  },
+  "disagreement_worklist_policy": "any_count_span_unmatched_or_split_merge_disagreement",
+  "no_adjudication_during_agreement": true,
+  "no_gold_freeze_during_agreement": true,
+  "evidence_visible": false,
+  "support_labels_visible": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

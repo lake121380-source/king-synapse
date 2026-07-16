@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "d7aeca51f485edf6ffe4adf5d612c7a9d84fe0a5b680f3500648c419117c92e7",
+  "reviewer_id": "a",
+  "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+  "provider_envelope_sha256": "f43d9738d95a1356ce0102ee724db05f6107b12f3bd27f44b5aea447e30a1f1b",
+  "provider_content_sha256": "c3d52b4d3de8192ccbd7f6978b998f9af8e1b085262510db588b707f851dcd5c",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "a25b326580597ebb007a58c7905ff759f7bec0ad1570d22da634b084fc56d5db",
+  "normalized_decisions_sha256": "3b94df902b346c3b03079d48ce79697171fecadd8f0a906bf248ecfa621c5c30",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim directly matches evidence 1, which states the same stack project failed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence 2, which identifies budget as the root cause.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence 3, which states stack is not the root cause.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence 4, which states the current stack choice.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2,
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-002",
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_preserved"
+      ],
+      "support_rationale": "Evidence 2 and 3 together support not blaming the stack for budget failure, as budget is root cause and stack is not.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "unsupported",
+      "cited_evidence_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-001",
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-002",
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003",
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-004"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence shows stack is not the root cause and current stack is chosen, so avoiding stack due to failure is not supported.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

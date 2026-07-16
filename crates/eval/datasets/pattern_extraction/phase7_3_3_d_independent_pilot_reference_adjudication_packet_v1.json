@@ -1,0 +1,907 @@
+{
+  "schema_version": 1,
+  "packet_id": "phase7.3.3-d-independent-pilot-reference-adjudication-packet-v1",
+  "status": "frozen_blind_packet",
+  "item_count": 8,
+  "reviewer_identity_visible": false,
+  "route_a_gold_visible": false,
+  "arm_outputs_visible": false,
+  "items": [
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-001",
+      "case_id": "mi_validation_fail_018",
+      "domain": "failure_override",
+      "candidate": "verified failure evidence must override the previously successful playbook",
+      "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+      "context": "mora050 sela050 navi050",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-01",
+          "source_index": 0,
+          "content": "mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050: working note: older successful playbook recommends repeating the approach.",
+          "kind": "playbook",
+          "confidence": 0.93,
+          "importance": 0.97,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-02",
+          "source_index": 1,
+          "content": "mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-03",
+          "source_index": 2,
+          "content": "mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050: archived observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-04",
+          "source_index": 3,
+          "content": "mora050 sela050 navi050 mora050 sela050 navi050: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-05",
+          "source_index": 4,
+          "content": "mora050 sela050 navi050: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_fail_018-evidence-06",
+          "source_index": 5,
+          "content": "mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050 mora050 sela050 navi050: conversation turn: verified failure evidence says this approach caused harm and must not be repeated.",
+          "kind": "failure",
+          "confidence": 0.96,
+          "importance": 0.84,
+          "recently_accessed": false,
+          "relevant": true,
+          "turn": 7,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_fail_018-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that verified failure evidence says the approach caused harm and must not be repeated, which overrides the previously successful playbook recommendation. This provides clear, authoritative support for the selection rule that verified failure evidence must override prior success.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_fail_018-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate asserts that verified failure evidence must override the previously successful playbook. Evidence 06 directly contradicts this by stating that the approach caused harm and must not be repeated, which aligns with the Candidate's claim. However, the Candidate's claim is about overriding a previously successful playbook, but the evidence indicates the approach caused harm, implying the playbook was not successful. The Candidate's wording 'verified failure evidence must override' is not directly supported; the evidence says 'must not be repeated' but does not explicitly state an override. Moreover, the Candidate's claim is a general rule, while the evidence is specific to this case. Thus, the claim is unsupported.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-002",
+      "case_id": "mi_validation_frf_024",
+      "domain": "failure_vs_recency_failure_wins",
+      "candidate": "unresolved failure evidence must beat a recently accessed unsafe playbook",
+      "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+      "context": "mora184 sela184 navi184",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-01",
+          "source_index": 0,
+          "content": "mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184: review note: unsafe playbook was accessed recently but still repeats the failed approach.",
+          "kind": "playbook",
+          "confidence": 0.92,
+          "importance": 0.97,
+          "recently_accessed": true,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-02",
+          "source_index": 1,
+          "content": "mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-03",
+          "source_index": 2,
+          "content": "mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184: historical observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-04",
+          "source_index": 3,
+          "content": "mora184 sela184 navi184 mora184 sela184 navi184: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-05",
+          "source_index": 4,
+          "content": "mora184 sela184 navi184: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_frf_024-evidence-06",
+          "source_index": 5,
+          "content": "mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184 mora184 sela184 navi184: long horizon turn: unresolved failure evidence remains authoritative despite not being recently accessed.",
+          "kind": "failure",
+          "confidence": 0.97,
+          "importance": 0.84,
+          "recently_accessed": false,
+          "relevant": true,
+          "turn": 9,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_024-evidence-01",
+          "mi_validation_frf_024-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate claims that unresolved failure evidence must beat a recently accessed unsafe playbook. Evidence 1 shows that the unsafe playbook was accessed recently but still repeats the failed approach, implying it is not beaten. Evidence 6 states that unresolved failure evidence remains authoritative despite not being recently accessed, but does not indicate it beats the playbook. No evidence supports the claim that unresolved failure evidence must beat the playbook; instead, evidence 1 contradicts it.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_024-evidence-06",
+          "mi_validation_frf_024-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even though it is not recently accessed, which supports the claim that it should 'beat' a recently accessed unsafe playbook. Evidence 01 confirms the unsafe playbook was recently accessed but still repeats the failed approach, reinforcing the need for the failure evidence to take precedence. The comparative and selection relationship is directly supported by these pieces of evidence.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-003",
+      "case_id": "mi_validation_frf_020",
+      "domain": "failure_vs_recency_failure_wins",
+      "candidate": "unresolved failure evidence must beat a recently accessed unsafe playbook",
+      "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+      "context": "mora180 sela180 navi180",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-01",
+          "source_index": 0,
+          "content": "mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180: review note: unsafe playbook was accessed recently but still repeats the failed approach.",
+          "kind": "playbook",
+          "confidence": 0.92,
+          "importance": 0.97,
+          "recently_accessed": true,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-02",
+          "source_index": 1,
+          "content": "mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-03",
+          "source_index": 2,
+          "content": "mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180: historical observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-04",
+          "source_index": 3,
+          "content": "mora180 sela180 navi180 mora180 sela180 navi180: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-05",
+          "source_index": 4,
+          "content": "mora180 sela180 navi180: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_frf_020-evidence-06",
+          "source_index": 5,
+          "content": "mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180 mora180 sela180 navi180: long horizon turn: unresolved failure evidence remains authoritative despite not being recently accessed.",
+          "kind": "failure",
+          "confidence": 0.97,
+          "importance": 0.84,
+          "recently_accessed": false,
+          "relevant": true,
+          "turn": 9,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_020-evidence-06",
+          "mi_validation_frf_020-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even though it is not recently accessed, establishing its priority. Evidence 01 confirms that the unsafe playbook was recently accessed but continues to repeat the failed approach, supporting the comparative context. Together, these show that unresolved failure evidence is the selection rule over a recently accessed unsafe playbook, fully supporting the claim.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_020-evidence-01",
+          "mi_validation_frf_020-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate claims that unresolved failure evidence must beat a recently accessed unsafe playbook. Evidence 1 shows an unsafe playbook was recently accessed but still repeats the failed approach, implying it is not beaten. Evidence 6 states unresolved failure evidence remains authoritative despite not being recently accessed, contradicting the requirement that it must beat a recently accessed playbook. Thus, the candidate is unsupported.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-004",
+      "case_id": "mi_validation_frf_019",
+      "domain": "failure_vs_recency_failure_wins",
+      "candidate": "unresolved failure evidence must beat a recently accessed unsafe playbook",
+      "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+      "context": "mora179 sela179 navi179",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-01",
+          "source_index": 0,
+          "content": "mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179: task note: unsafe playbook was accessed recently but still repeats the failed approach.",
+          "kind": "playbook",
+          "confidence": 0.92,
+          "importance": 0.97,
+          "recently_accessed": true,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-02",
+          "source_index": 1,
+          "content": "mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-03",
+          "source_index": 2,
+          "content": "mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179: neutral observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-04",
+          "source_index": 3,
+          "content": "mora179 sela179 navi179 mora179 sela179 navi179: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-05",
+          "source_index": 4,
+          "content": "mora179 sela179 navi179: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_frf_019-evidence-06",
+          "source_index": 5,
+          "content": "mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179 mora179 sela179 navi179: agent episode: unresolved failure evidence remains authoritative despite not being recently accessed.",
+          "kind": "failure",
+          "confidence": 0.97,
+          "importance": 0.84,
+          "recently_accessed": false,
+          "relevant": true,
+          "turn": 8,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_019-evidence-01",
+          "mi_validation_frf_019-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate states that unresolved failure evidence must beat a recently accessed unsafe playbook. Evidence 1 indicates the unsafe playbook was recently accessed but still repeats the failed approach, implying it is not beaten. Evidence 6 states unresolved failure evidence remains authoritative despite not being recently accessed, but does not show it beats the playbook. Thus, the claim is contradicted by evidence 1 and not supported by evidence 6.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_019-evidence-06",
+          "mi_validation_frf_019-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that unresolved failure evidence remains authoritative despite not being recently accessed, which supports the claim that such evidence must beat a recently accessed unsafe playbook. Evidence 01 confirms the unsafe playbook was recently accessed but still repeats the failed approach, reinforcing the comparative selection. The claim is fully supported by the cited evidence.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-005",
+      "case_id": "mi_validation_frf_022",
+      "domain": "failure_vs_recency_failure_wins",
+      "candidate": "unresolved failure evidence must beat a recently accessed unsafe playbook",
+      "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+      "context": "mora182 sela182 navi182",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-01",
+          "source_index": 0,
+          "content": "mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182: working note: unsafe playbook was accessed recently but still repeats the failed approach.",
+          "kind": "playbook",
+          "confidence": 0.92,
+          "importance": 0.97,
+          "recently_accessed": true,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-02",
+          "source_index": 1,
+          "content": "mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-03",
+          "source_index": 2,
+          "content": "mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182: archived observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-04",
+          "source_index": 3,
+          "content": "mora182 sela182 navi182 mora182 sela182 navi182: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-05",
+          "source_index": 4,
+          "content": "mora182 sela182 navi182: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_frf_022-evidence-06",
+          "source_index": 5,
+          "content": "mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182 mora182 sela182 navi182: conversation turn: unresolved failure evidence remains authoritative despite not being recently accessed.",
+          "kind": "failure",
+          "confidence": 0.97,
+          "importance": 0.84,
+          "recently_accessed": false,
+          "relevant": true,
+          "turn": 7,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_022-evidence-06",
+          "mi_validation_frf_022-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even if not recently accessed, supporting its primacy. Evidence 01 confirms the unsafe playbook was recently accessed but continues to repeat a failed approach, implying it is less reliable. Together, these show that unresolved failure evidence should override a recently accessed unsafe playbook, fully supporting the selection rule.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_022-evidence-01",
+          "mi_validation_frf_022-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The candidate claims that unresolved failure evidence must beat a recently accessed unsafe playbook. Evidence 1 shows an unsafe playbook was recently accessed but still repeats the failed approach, implying it is not beaten. Evidence 6 states unresolved failure evidence remains authoritative despite not being recently accessed, contradicting the requirement that it must beat a recently accessed playbook. Thus, the claim is unsupported.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-006",
+      "case_id": "mi_validation_safe_022",
+      "domain": "no_intervention",
+      "candidate": "baseline evidence is already clear and no cognitive intervention is needed",
+      "candidate_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+      "context": "mora310 sela310 navi310",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-01",
+          "source_index": 0,
+          "content": "mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310: working note: secondary state is related but clearly weaker.",
+          "kind": "state",
+          "confidence": 0.7,
+          "importance": 0.88,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-02",
+          "source_index": 1,
+          "content": "mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-03",
+          "source_index": 2,
+          "content": "mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310: archived observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-04",
+          "source_index": 3,
+          "content": "mora310 sela310 navi310 mora310 sela310 navi310: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-05",
+          "source_index": 4,
+          "content": "mora310 sela310 navi310: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_safe_022-evidence-06",
+          "source_index": 5,
+          "content": "mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310 mora310 sela310 navi310: conversation turn: clear current confirmed answer should remain first.",
+          "kind": "fact",
+          "confidence": 0.98,
+          "importance": 0.98,
+          "recently_accessed": true,
+          "relevant": true,
+          "turn": 7,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_022-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that a clear current confirmed answer should remain first, implying that there is a clear answer but does not address whether cognitive intervention is needed. The other evidence items are either irrelevant or weak. No evidence supports the claim that no cognitive intervention is needed; in fact, the context involves competing signals and conflict evaluation, suggesting intervention may be required. Therefore, the claim is unsupported.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the baseline evidence is clear and no cognitive intervention is needed. Evidence 06 directly states that the 'clear current confirmed answer should remain first,' which confirms both the clarity of the baseline evidence and the lack of need for further intervention. No other evidence contradicts this, and the cited evidence is highly confident and relevant.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-007",
+      "case_id": "mi_validation_safe_024",
+      "domain": "no_intervention",
+      "candidate": "baseline evidence is already clear and no cognitive intervention is needed",
+      "candidate_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+      "context": "mora312 sela312 navi312",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-01",
+          "source_index": 0,
+          "content": "mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312: review note: secondary state is related but clearly weaker.",
+          "kind": "state",
+          "confidence": 0.7,
+          "importance": 0.88,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-02",
+          "source_index": 1,
+          "content": "mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-03",
+          "source_index": 2,
+          "content": "mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312: historical observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-04",
+          "source_index": 3,
+          "content": "mora312 sela312 navi312 mora312 sela312 navi312: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-05",
+          "source_index": 4,
+          "content": "mora312 sela312 navi312: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_safe_024-evidence-06",
+          "source_index": 5,
+          "content": "mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312 mora312 sela312 navi312: long horizon turn: clear current confirmed answer should remain first.",
+          "kind": "fact",
+          "confidence": 0.98,
+          "importance": 0.98,
+          "recently_accessed": true,
+          "relevant": true,
+          "turn": 9,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_024-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the baseline evidence is clear and no cognitive intervention is needed. Evidence 06 directly states that the current confirmed answer should remain first, indicating clarity and sufficiency of the baseline evidence, with no need for further intervention. This matches the candidate's claim in both certainty and selection, and no evidence contradicts this position.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_024-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that the current confirmed answer should remain first, implying that a selection has been made and intervention is not needed, but the Candidate's phrasing 'baseline evidence is already clear' is not directly supported; the evidence does not explicitly state that baseline evidence is clear or that no intervention is needed. The evidence is about a confirmed answer remaining first, which is a different proposition. Thus, the Candidate is unsupported.",
+        "confidence": "high"
+      }
+    },
+    {
+      "adjudication_item_id": "independent-pilot-reference-adjudication-008",
+      "case_id": "mi_validation_safe_023",
+      "domain": "no_intervention",
+      "candidate": "baseline evidence is already clear and no cognitive intervention is needed",
+      "candidate_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+      "context": "mora311 sela311 navi311",
+      "evidence": [
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-01",
+          "source_index": 0,
+          "content": "mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311: task note: secondary state is related but clearly weaker.",
+          "kind": "state",
+          "confidence": 0.7,
+          "importance": 0.88,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 1,
+          "role": "competing_prior"
+        },
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-02",
+          "source_index": 1,
+          "content": "mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311: competing signal record for controlled long-term memory conflict evaluation.",
+          "kind": "state",
+          "confidence": 0.8,
+          "importance": 0.82,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 2,
+          "role": "secondary_competitor"
+        },
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-03",
+          "source_index": 2,
+          "content": "mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311: neutral observation retained for provenance without a current decision.",
+          "kind": "fact",
+          "confidence": 0.82,
+          "importance": 0.78,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 3,
+          "role": "provenance_only"
+        },
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-04",
+          "source_index": 3,
+          "content": "mora311 sela311 navi311 mora311 sela311 navi311: generic state with no verified authority.",
+          "kind": "state",
+          "confidence": 0.76,
+          "importance": 0.77,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 4,
+          "role": "background_state"
+        },
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-05",
+          "source_index": 4,
+          "content": "mora311 sela311 navi311: tentative preference with weak evidence.",
+          "kind": "preference",
+          "confidence": 0.68,
+          "importance": 0.74,
+          "recently_accessed": false,
+          "relevant": false,
+          "turn": 5,
+          "role": "weak_signal"
+        },
+        {
+          "evidence_id": "mi_validation_safe_023-evidence-06",
+          "source_index": 5,
+          "content": "mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311 mora311 sela311 navi311: agent episode: clear current confirmed answer should remain first.",
+          "kind": "fact",
+          "confidence": 0.98,
+          "importance": 0.98,
+          "recently_accessed": true,
+          "relevant": true,
+          "turn": 8,
+          "role": "ground_truth"
+        }
+      ],
+      "disagreement_fields": [
+        "support_label"
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_023-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that the current confirmed answer should remain first, implying that a cognitive intervention (selection) is indeed needed to maintain that answer. This contradicts the Candidate's claim that no intervention is needed. Other evidence is either irrelevant or too weak to support the Candidate.",
+        "confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the baseline evidence is already clear and no cognitive intervention is needed. Evidence 06 directly states that the current confirmed answer should remain first, indicating clarity and sufficiency of the baseline evidence, and implying no further intervention is required. No other evidence contradicts this, and the cited evidence is highly confident and relevant. Thus, the claim is fully supported.",
+        "confidence": "high"
+      }
+    }
+  ]
+}

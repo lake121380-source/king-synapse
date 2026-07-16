@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-011-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-011",
+  "boundary_claim_id": "adjudicated-extract_01-claim-006",
+  "provider_envelope_sha256": "70ebd4851d91ec324b6d3ca267d417082ed61e0b495b527d5d59a78c843cb325",
+  "provider_content_sha256": "ffaaea1bec09f264335f33c32343062f3db1c76888c91375507aa64c93747313",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "243723a61368ed89bf7488bcf5eabf70f9aedd6f0bdb485f266984e48d0aab8c",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-011",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-006",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The claim says the first cohort will expose any critical regression. Supplied evidence shows one issue exposed at 5% canary and another only at cohort two, so the evidence supports early-cohort detection but not the stronger universal claim about the first cohort exposing any critical regression.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_01-claim-006",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "prediction_overcommitment"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Defects were found in early cohorts, but the claim overcommits by asserting any critical regression will always be exposed in the first cohort; evidence only shows some defects were caught early."
+    },
+    "selected_frozen_decision_sha256": "980b672e31787b3e5cfaafdf7ca622a1031b65c00cfff934386fca09c673f40a",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

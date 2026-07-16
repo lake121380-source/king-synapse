@@ -1,0 +1,330 @@
+{
+  "schema_version": 3,
+  "case_id": "extract_03",
+  "status": "completed",
+  "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+  "provider_envelope_sha256": "a6608ab72f3bbb84d258f2f2e3787a0ce5eeed487814b1ece28dbd7a996230b5",
+  "provider_content_sha256": "37b1e44f093520f2953e8434684cb9bac4fd9c64825616eb423bea540775ab15",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "69b41d53e2d341a3ec335c0a29a39b202a47bf8f1e53a94f036d64e1119fe741",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-001",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef",
+      "source_span": {
+        "start": 0,
+        "end": 117
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_03::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a standalone contextual condition because it is an exact contiguous clause that sets the applicability of the following assertions and is independently truth-evaluable as scope.",
+      "type_decision_rationale": "This clause specifies the condition or context under which the subsequent assertions apply, so it is a scope claim.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-001",
+        "reviewer-e-extract_03-claim-001"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-002",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef",
+      "source_span": {
+        "start": 119,
+        "end": 177
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the team adheres to those thresholds in outcome evaluation",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_03::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one atomic assertion because it states a complete outcome behavior and is properly split from the coordinated clause that follows, which can take a different truth value.",
+      "type_decision_rationale": "This is a direct assertion about team behavior rather than a prediction or conditional relation, so proposition is the best fit.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-002",
+        "reviewer-e-extract_03-claim-002"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-003",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef",
+      "source_span": {
+        "start": 182,
+        "end": 224
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "does not redefine success metrics post-hoc",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_03::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate coordinated predicate because it expresses a distinct behavior that can be evaluated independently from adherence to thresholds.",
+      "type_decision_rationale": "This is a direct asserted behavior, so it is classified as a proposition.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-003",
+        "reviewer-e-extract_03-claim-003"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-004",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "6fb3f4252c53a2ce15b2161aeec8cf1b414c18693e4ea5ad38f012f0c9eb8027",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In a product experiment with predefined quantitative thresholds",
+      "claim_type": "scope",
+      "claim_role": "prediction",
+      "anchor_group": "extract_03::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate scope clause because it establishes the context for the predicted behavior and is an exact non-overlapping contextual unit.",
+      "type_decision_rationale": "The clause frames the context in which the prediction applies, making scope the appropriate type.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-004",
+        "reviewer-e-extract_03-claim-004"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-005",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "6fb3f4252c53a2ce15b2161aeec8cf1b414c18693e4ea5ad38f012f0c9eb8027",
+      "source_span": {
+        "start": 65,
+        "end": 123
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the team will accept the outcome based on those thresholds",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_03::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as the main predicted action, separated from the trailing qualifier because the latter can vary independently as an additional behavioral constraint.",
+      "type_decision_rationale": "The clause forecasts future or expected team behavior, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-005",
+        "reviewer-e-extract_03-claim-005"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-006",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "6fb3f4252c53a2ce15b2161aeec8cf1b414c18693e4ea5ad38f012f0c9eb8027",
+      "source_span": {
+        "start": 124,
+        "end": 150
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "without redefining success",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_03::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as a separate non-overlapping clause because it adds a distinct predicted behavioral constraint that can be assessed separately from acceptance of the outcome.",
+      "type_decision_rationale": "Although phrased as a qualifier, it predicts a specific absence of behavior, so prediction is the best type.",
+      "reason_codes": [
+        "prediction_clause",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-006",
+        "reviewer-e-extract_03-claim-006"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-007",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "3d2b0dca7ae1a2db950afbe67cda44b497d1783b1c1ed3fd28bf53f96fb230a8",
+      "source_span": {
+        "start": 0,
+        "end": 68
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The team does not alter success criteria after observing the result.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_03::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept intact because the full sentence expresses one indivisible predicted behavior with a temporal qualifier and no separable sub-assertions requiring split.",
+      "type_decision_rationale": "The sentence states an expected observable behavior, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "temporal_qualifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-007",
+        "reviewer-e-extract_03-claim-007"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-008",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "d49e39aedefad953e5e338712968d27f6c9045891667b2269fb06ed7e1ff047c",
+      "source_span": {
+        "start": 0,
+        "end": 92
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The team's final decision (e.g., launch, abandon) matches the predefined threshold triggers.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_03::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one complete assertion because the parenthetical examples do not create separate truth-evaluable claims and the sentence states a single predicted matching relation.",
+      "type_decision_rationale": "This sentence specifies an expected outcome/criterion in predictive form, so prediction is appropriate.",
+      "reason_codes": [
+        "prediction_clause",
+        "non_assertive_connector",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-008",
+        "reviewer-e-extract_03-claim-008"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-009",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "238acd1ccbc7083cbea3384f5f61b8bddc2f33a4d4ee0da118ae86fb2b653659",
+      "source_span": {
+        "start": 0,
+        "end": 162
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a product experiment with predefined quantitative thresholds results in the team redefining success metrics after seeing the outcome, the pattern is falsified.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_03::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Merged into a single conditional statement because the antecedent and consequent together form one falsification criterion; splitting would break the atomic logical relation that is evaluated as a unit.",
+      "type_decision_rationale": "The sentence explicitly states what observation would falsify the pattern, so it is a falsifiability claim.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-009",
+        "reviewer-a-extract_03-claim-010",
+        "reviewer-a-extract_03-claim-011",
+        "reviewer-e-extract_03-claim-009"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_03-claim-010",
+      "case_id": "extract_03",
+      "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+      "anchor_id": "extract_03-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "91b37641532d0159a3dcb582ee42f625a275d07838e126ae77ec137752e78c87",
+      "source_span": {
+        "start": 0,
+        "end": 71
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Post-hoc modification of guardrails, stop criteria, or success metrics.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_03::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one atomic observable because the listed items are coordinated alternatives within a single falsifying event type rather than separate standalone assertions.",
+      "type_decision_rationale": "This phrase names the observable condition that would count toward falsification, so falsifiability is the appropriate type.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_03-claim-012",
+        "reviewer-e-extract_03-claim-010"
+      ]
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_03",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 10,
+    "provider_content_sha256": "37b1e44f093520f2953e8434684cb9bac4fd9c64825616eb423bea540775ab15"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

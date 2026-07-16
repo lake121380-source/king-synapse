@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-multi-claim-successor-confirmatory-paired-analysis-report-v1",
+  "status": "CONFIRMATORY_SUCCESS",
+  "manifest_sha256": "3181a7d8a73e8c453d81caa4a9379c09c363fea7720049e0cd1306c950b98ca5",
+  "preregistration_sha256": "d9e69bf221d8db0898551bbfaec91d28d14acb62403a1a467e1d195edcefab33",
+  "case_count": 40,
+  "paired_primary_effect": {
+    "estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+    "estimate": 0.17614982872616325,
+    "paired_sd": 0.10843653748766992,
+    "bootstrap_interval_95": [
+      0.14225986500380236,
+      0.20844585597781998
+    ],
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 733072,
+    "one_sided_p_value": 4.9999750001249995e-06,
+    "one_sided_alpha": 0.05,
+    "randomization_method": "one_sided_paired_sign_flip_randomization_monte_carlo",
+    "randomization_replicates": 200000,
+    "randomization_seed": 733071,
+    "randomization_extreme_count": 0
+  },
+  "confirmatory_success_checks": {
+    "structural_identifiability_pass": true,
+    "realized_identifiability_pass": true,
+    "paired_cases_dropped": true,
+    "estimate_gt_zero": true,
+    "one_sided_p_value_lt_alpha": true
+  },
+  "confirmatory_success": true,
+  "arm_metrics": {
+    "candidate": {
+      "mean_material_error_span_iou": 0.7315300560657578,
+      "exact_candidate_label_accuracy": 1.0,
+      "localization_micro_precision": 0.7312930718101375,
+      "localization_micro_recall": 1.0,
+      "localization_micro_f1": 0.8447940833559056
+    },
+    "atomic": {
+      "mean_material_error_span_iou": 0.9076798847919211,
+      "exact_claim_label_accuracy": 0.8125,
+      "boundary_exact_span_rate": 1.0,
+      "localization_micro_precision": 1.0,
+      "localization_micro_recall": 0.9064042155742047,
+      "localization_micro_f1": 0.950904543925589
+    }
+  },
+  "missingness_and_failures": {
+    "selected_cases": 40,
+    "paired_cases_scored": 40,
+    "paired_cases_dropped": 0,
+    "missing_candidate_outputs": 0,
+    "missing_atomic_outputs": 0
+  },
+  "resources": {
+    "candidate": {
+      "request_count": 40,
+      "total_tokens": 51558,
+      "token_usage_complete": true,
+      "mean_latency_ms": 6059.136425,
+      "cost_usd": null,
+      "cost_status": "provider_price_not_frozen"
+    },
+    "atomic": {
+      "request_count": 40,
+      "total_tokens": 52358,
+      "token_usage_complete": true,
+      "mean_latency_ms": 6702.6736,
+      "cost_usd": null,
+      "cost_status": "provider_price_not_frozen"
+    }
+  },
+  "reference_visible_during_arm_execution": false,
+  "confirmatory_dataset_opened": true,
+  "unselected_content_opened": false,
+  "provider_calls_during_analysis": 0,
+  "runtime_integration_authorized": false
+}

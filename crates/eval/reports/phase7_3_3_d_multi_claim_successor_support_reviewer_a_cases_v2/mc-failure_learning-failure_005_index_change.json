@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-failure_learning-failure_005_index_change-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "eaba1e907a4361d03936d58ec8919182ca1a2245ad7863bb5ab05485fc0ac3dc",
+  "reviewer_id": "a",
+  "case_id": "mc-failure_learning-failure_005_index_change",
+  "provider_envelope_sha256": "f1ce9c1434eb1fec881df7c54e5a02f62f04a6f438900190811d1aa2108fc2fc",
+  "provider_content_sha256": "fbc3588f9934ce9a15f41006d52dbc6f2904f1e05a19a9d136c73d9d3d7e823c",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "65a84da8727d32019bfc5d392a39d13abda50d9d49d47152c86d07057c3b9612",
+  "normalized_decisions_sha256": "0fb5f1061cf87d7ab7bb679328356a433ceffef52b84c93d8177eceb0f92c81c",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-failure_learning-failure_005_index_change-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim directly matches evidence stating benchmark_balanced_tradeoff.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence directly supports applying the index change directly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-failure_learning-failure_005_index_change-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly states benchmark_balanced_tradeoff, which entails a read/write tradeoff.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-failure_learning-failure_005_index_change-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence that current_table_has_write_load.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-failure_learning-failure_005_index_change-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence that index_change_improved_reads.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-failure_learning-failure_005_index_change-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim matches evidence that write_latency_regressed.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-failure_learning-failure_005_index_change",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

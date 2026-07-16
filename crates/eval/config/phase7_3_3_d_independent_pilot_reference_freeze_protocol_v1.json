@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-freeze-protocol-v1",
+  "status": "frozen_before_reference_construction",
+  "reference_label": "model_adjudicated_independent_pilot_reference_not_human_gold_not_route_a_gold",
+  "construction": {
+    "raw_agreement_cases": "use common gold fields only",
+    "disagreement_cases": "use adjudicator-selected complete frozen reviewer decision",
+    "diagnostic_fields": "not promoted to Gold",
+    "claim_representation": "one exact full-Candidate claim per frozen Pilot frame",
+    "explicit_non_claim_spans": [],
+    "material_error_spans": "whole claim iff final material claim label is partially_supported or unsupported; empty for supported/not_assessable"
+  },
+  "gold_fields": [
+    "claim_span",
+    "claim_type",
+    "materiality",
+    "support_label",
+    "candidate_reference_label",
+    "material_error_span"
+  ],
+  "quality_gates": [
+    "40_case_completeness",
+    "exact_candidate_hash",
+    "one_claim_each",
+    "character_coverage_exactly_once",
+    "zero_overlap",
+    "zero_unaccounted_eligible_characters",
+    "valid_labels",
+    "adjudication_replay",
+    "artifact_lineage",
+    "freeze_replay"
+  ],
+  "sealing": {
+    "arms_may_execute_only_after_reference_sha256_sealed": true,
+    "arm_visibility": false,
+    "route_a_gold_visibility": false,
+    "confirmatory_content_opened": false
+  },
+  "failure_policy": {
+    "any_gate_failure_blocks_reference_freeze": true,
+    "silent_repair": false,
+    "change_requires_successor": true,
+    "provider_calls": 0
+  }
+}

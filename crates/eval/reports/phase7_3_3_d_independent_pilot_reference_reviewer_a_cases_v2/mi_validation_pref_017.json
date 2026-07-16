@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_pref_017",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "8d646a612ed30bc48a043dac0ad7894ce8f2b6d7c14eee39c34ae11ed945e3e5",
+  "provider_content_sha256": "290d19ac8eef1b97c7501a6b4142cd2e3c355cc26239f3582384dcf769f518ab",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "7df188c32250886f3843e9ebd1ffadd6d344c42fde47e408863f7c022e0d2a40",
+  "normalized_case": {
+    "case_id": "mi_validation_pref_017",
+    "candidate_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_pref_017-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 63
+        },
+        "source_text_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_pref_017-evidence-01",
+          "mi_validation_pref_017-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the current explicit preference supersedes the older preference. Evidence 01 directly states that the older preference has been superseded, and Evidence 06 explicitly confirms that the current explicit preference replaces the earlier choice. Both pieces of evidence directly support the claim, with high confidence and no contradicting evidence present.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

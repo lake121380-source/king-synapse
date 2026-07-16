@@ -1,0 +1,1807 @@
+{
+  "schema_version": 1,
+  "packet_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-packet-v1",
+  "status": "frozen_blinded_minimal_authorization_packet",
+  "item_count": 28,
+  "source_reviewer_identity_visible": false,
+  "aggregate_agreement_metrics_visible": false,
+  "diagnostic_followup_items_included": false,
+  "support_gold_visible": false,
+  "items": [
+    {
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "work_item_id": "support-label-disagreement-001",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-005",
+      "claim_index": 5,
+      "source_span": {
+        "start": 84,
+        "end": 119
+      },
+      "source_excerpt": "infer_strategy_from_keyword_overlap",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-001",
+          "source_index": 0,
+          "content": "same_keyword_memory_a"
+        },
+        {
+          "evidence_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-002",
+          "source_index": 1,
+          "content": "same_keyword_memory_b"
+        },
+        {
+          "evidence_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-003",
+          "source_index": 2,
+          "content": "no_shared_outcome"
+        },
+        {
+          "evidence_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-evidence-004",
+          "source_index": 3,
+          "content": "current_context_requires_evidence"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "counterexample_ignored"
+        ],
+        "support_rationale": "Evidence item 3 explicitly states 'no_shared_outcome', contradicting the inference of strategy from keyword overlap.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence establishes or refutes inference of strategy from keyword overlap; claim is a hypothetical or directive, not a factual assertion.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-causal-causal_expanded_005",
+      "work_item_id": "support-label-disagreement-002",
+      "reference_claim_id": "mc-causal-causal_expanded_005-boundary-reference-claim-005",
+      "claim_index": 5,
+      "source_span": {
+        "start": 121,
+        "end": 142
+      },
+      "source_excerpt": "include_rollback_plan",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-causal-causal_expanded_005-evidence-001",
+          "source_index": 0,
+          "content": "migration_without_rollback"
+        },
+        {
+          "evidence_id": "mc-causal-causal_expanded_005-evidence-002",
+          "source_index": 1,
+          "content": "migration_blocked_release"
+        },
+        {
+          "evidence_id": "mc-causal-causal_expanded_005-evidence-003",
+          "source_index": 2,
+          "content": "rollback_plan_unblocked_next_release"
+        },
+        {
+          "evidence_id": "mc-causal-causal_expanded_005-evidence-004",
+          "source_index": 3,
+          "content": "current_migration_is_customer_visible"
+        }
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-causal-causal_expanded_005-evidence-003"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence item 3 explicitly mentions a 'rollback_plan' that unblocked the release, entailing the inclusion of such a plan.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence supports including the rollback plan; evidence only describes its status, not a decision to include.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "work_item_id": "support-label-disagreement-003",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 58,
+        "end": 78
+      },
+      "source_excerpt": "prefer_fast_delivery",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001",
+          "source_index": 0,
+          "content": "old_fast_delivery_preference"
+        },
+        {
+          "evidence_id": "mc-contradiction-contradiction_001_fast_vs_stable-evidence-002",
+          "source_index": 1,
+          "content": "fast_delivery_incident"
+        },
+        {
+          "evidence_id": "mc-contradiction-contradiction_001_fast_vs_stable-evidence-003",
+          "source_index": 2,
+          "content": "new_stability_policy"
+        },
+        {
+          "evidence_id": "mc-contradiction-contradiction_001_fast_vs_stable-evidence-004",
+          "source_index": 3,
+          "content": "current_context_high_risk"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001"
+        ],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "Evidence of old fast delivery preference does not establish current preference for fast delivery, especially given new stability policy and high-risk context.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "The claim text corresponds directly to the preference for fast delivery recorded in evidence item 1.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "work_item_id": "support-label-disagreement-004",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 56,
+        "end": 85
+      },
+      "source_excerpt": "benchmark_read_write_tradeoff",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-failure_learning-failure_005_index_change-evidence-001",
+          "source_index": 0,
+          "content": "index_change_improved_reads"
+        },
+        {
+          "evidence_id": "mc-failure_learning-failure_005_index_change-evidence-002",
+          "source_index": 1,
+          "content": "write_latency_regressed"
+        },
+        {
+          "evidence_id": "mc-failure_learning-failure_005_index_change-evidence-003",
+          "source_index": 2,
+          "content": "benchmark_balanced_tradeoff"
+        },
+        {
+          "evidence_id": "mc-failure_learning-failure_005_index_change-evidence-004",
+          "source_index": 3,
+          "content": "current_table_has_write_load"
+        }
+      ],
+      "option_1": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-failure_learning-failure_005_index_change-evidence-003"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference"
+        ],
+        "support_rationale": "Evidence 3 states balanced tradeoff, implying a read-write tradeoff exists, but specific read/write balance details are not explicit.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-failure_learning-failure_005_index_change-evidence-003"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Evidence explicitly states benchmark_balanced_tradeoff, which entails a read/write tradeoff.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure",
+      "work_item_id": "support-label-disagreement-005",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 58,
+        "end": 85
+      },
+      "source_excerpt": "choose_guarded_architecture",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-001",
+          "source_index": 0,
+          "content": "lm_001_day1_fast_preference"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-002",
+          "source_index": 1,
+          "content": "lm_001_day30_fast_path_outage"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-003",
+          "source_index": 2,
+          "content": "lm_001_day45_guarded_strategy_update"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-004",
+          "source_index": 3,
+          "content": "lm_001_day60_architecture_context"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'choose_guarded_architecture' or establishes this specific proposition.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-003",
+          "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-004"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence 3 and 4 together suggest guarded strategy and architecture context, but do not explicitly confirm the choice of guarded architecture.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design",
+      "work_item_id": "support-label-disagreement-006",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 96,
+        "end": 116
+      },
+      "source_excerpt": "keep_single_database",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-evidence-001",
+          "source_index": 0,
+          "content": "lm_008_day1_single_database_preference"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-evidence-002",
+          "source_index": 1,
+          "content": "lm_008_day32_scale_test_failed"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-evidence-003",
+          "source_index": 2,
+          "content": "lm_008_day48_partitioned_design_success"
+        },
+        {
+          "evidence_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-evidence-004",
+          "source_index": 3,
+          "content": "lm_008_day60_architecture_request"
+        }
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-evidence-001"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference"
+        ],
+        "support_rationale": "Evidence item 1 records a preference for a single database, supporting the proposition to keep it.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports the proposition to keep a single database; only a preference is noted, not a decision or action.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted",
+      "work_item_id": "support-label-disagreement-007",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-boundary-reference-claim-002",
+      "claim_index": 2,
+      "source_span": {
+        "start": 22,
+        "end": 66
+      },
+      "source_excerpt": "preserve_preference_with_updated_constraints",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-001",
+          "source_index": 0,
+          "content": "mc_030_old_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-002",
+          "source_index": 1,
+          "content": "mc_030_new_failure_evidence"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-003",
+          "source_index": 2,
+          "content": "mc_030_updated_constraints"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-004",
+          "source_index": 3,
+          "content": "mc_030_current_decision"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence items are opaque identifiers; no semantic content establishes the proposition of preserving preference.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-003",
+          "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-004"
+        ],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence explicitly supports preserving the old preference under updated constraints; available evidence only references constraints and a new decision, not the preservation of preference.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted",
+      "work_item_id": "support-label-disagreement-008",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 67,
+        "end": 107
+      },
+      "source_excerpt": "apply_old_preference_without_constraints",
+      "claim_role": "exception",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-001",
+          "source_index": 0,
+          "content": "mc_030_old_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-002",
+          "source_index": 1,
+          "content": "mc_030_new_failure_evidence"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-003",
+          "source_index": 2,
+          "content": "mc_030_updated_constraints"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-evidence-004",
+          "source_index": 3,
+          "content": "mc_030_current_decision"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence addresses applying the old preference without constraints; the evidence does not mention this scenario.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence items are opaque identifiers; no semantic content establishes the exception proposition.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "work_item_id": "support-label-disagreement-009",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 65,
+        "end": 95
+      },
+      "source_excerpt": "prioritize_region_localization",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-001",
+          "source_index": 0,
+          "content": "mc_026_old_localization_low_priority"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-002",
+          "source_index": 1,
+          "content": "mc_026_new_region_launch"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-003",
+          "source_index": 2,
+          "content": "mc_026_localization_required_for_region"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-004",
+          "source_index": 3,
+          "content": "mc_026_current_release_plan"
+        }
+      ],
+      "option_1": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-002",
+          "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-003"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence shows new region launch and localization requirement, implying prioritization, but does not explicitly state prioritization is necessary.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains text regarding prioritizing region localization.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "work_item_id": "support-label-disagreement-010",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-005",
+      "claim_index": 5,
+      "source_span": {
+        "start": 112,
+        "end": 138
+      },
+      "source_excerpt": "investigate_new_regression",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-001",
+          "source_index": 0,
+          "content": "mc_029_old_incident_fixed"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-002",
+          "source_index": 1,
+          "content": "mc_029_new_regression"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-003",
+          "source_index": 2,
+          "content": "mc_029_area_overlap"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-004",
+          "source_index": 3,
+          "content": "mc_029_current_investigation_need"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports the need to investigate the new regression; only the existence of a new regression and investigation need for mc_029 are mentioned.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-002",
+          "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-004"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence of a new regression (item 2) and a stated need for current investigation (item 4) jointly establish the necessity to investigate the new regression.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike",
+      "work_item_id": "support-label-disagreement-011",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 53,
+        "end": 71
+      },
+      "source_excerpt": "use_modal_workflow",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-001",
+          "source_index": 0,
+          "content": "mc_004_old_modal_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-002",
+          "source_index": 1,
+          "content": "mc_004_later_modal_complaint"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-003",
+          "source_index": 2,
+          "content": "mc_004_inline_flow_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-004",
+          "source_index": 3,
+          "content": "mc_004_current_ui_request"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence establishes or addresses this claim.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'use_modal_workflow' or establishes this proposition.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike",
+      "work_item_id": "support-label-disagreement-012",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 72,
+        "end": 92
+      },
+      "source_excerpt": "avoid_modal_workflow",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-001",
+          "source_index": 0,
+          "content": "mc_004_old_modal_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-002",
+          "source_index": 1,
+          "content": "mc_004_later_modal_complaint"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-003",
+          "source_index": 2,
+          "content": "mc_004_inline_flow_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-evidence-004",
+          "source_index": 3,
+          "content": "mc_004_current_ui_request"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'avoid_modal_workflow' or establishes this proposition.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence establishes or addresses this claim.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success",
+      "work_item_id": "support-label-disagreement-013",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-boundary-reference-claim-001",
+      "claim_index": 1,
+      "source_span": {
+        "start": 0,
+        "end": 19
+      },
+      "source_excerpt": "build_diy_component",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-001",
+          "source_index": 0,
+          "content": "mc_022_old_diy_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-002",
+          "source_index": 1,
+          "content": "mc_022_diy_incidents"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-003",
+          "source_index": 2,
+          "content": "mc_022_vendor_managed_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-004",
+          "source_index": 3,
+          "content": "mc_022_current_component_choice"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "The evidence items are opaque identifiers without descriptive text, making it impossible to verify the proposition 'build_diy_component'.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes a DIY component build; claim cannot be established.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success",
+      "work_item_id": "support-label-disagreement-014",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-boundary-reference-claim-006",
+      "claim_index": 6,
+      "source_span": {
+        "start": 129,
+        "end": 157
+      },
+      "source_excerpt": "use_vendor_managed_component",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-001",
+          "source_index": 0,
+          "content": "mc_022_old_diy_preference"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-002",
+          "source_index": 1,
+          "content": "mc_022_diy_incidents"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-003",
+          "source_index": 2,
+          "content": "mc_022_vendor_managed_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-evidence-004",
+          "source_index": 3,
+          "content": "mc_022_current_component_choice"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes use of a vendor-managed component; claim cannot be established.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "The evidence items are opaque identifiers without descriptive text, making it impossible to verify the proposition 'use_vendor_managed_component'.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support",
+      "work_item_id": "support-label-disagreement-015",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 95,
+        "end": 116
+      },
+      "source_excerpt": "reuse_fast_onboarding",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-001",
+          "source_index": 0,
+          "content": "mc_013_old_fast_onboarding_win"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-002",
+          "source_index": 1,
+          "content": "mc_013_support_missing_context"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-003",
+          "source_index": 2,
+          "content": "mc_013_guided_onboarding_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-004",
+          "source_index": 3,
+          "content": "mc_013_current_onboarding_plan"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly addresses or supports the reuse of fast onboarding.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'reuse_fast_onboarding' or supports this specific proposition.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support",
+      "work_item_id": "support-label-disagreement-016",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-boundary-reference-claim-006",
+      "claim_index": 6,
+      "source_span": {
+        "start": 148,
+        "end": 169
+      },
+      "source_excerpt": "use_guided_onboarding",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-001",
+          "source_index": 0,
+          "content": "mc_013_old_fast_onboarding_win"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-002",
+          "source_index": 1,
+          "content": "mc_013_support_missing_context"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-003",
+          "source_index": 2,
+          "content": "mc_013_guided_onboarding_success"
+        },
+        {
+          "evidence_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-evidence-004",
+          "source_index": 3,
+          "content": "mc_013_current_onboarding_plan"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly addresses or supports the use of guided onboarding.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'use_guided_onboarding' or supports this specific proposition.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team",
+      "work_item_id": "support-label-disagreement-017",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 95,
+        "end": 120
+      },
+      "source_excerpt": "use_managed_audit_logging",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-001",
+          "source_index": 0,
+          "content": "me_002_user_simplicity_preference"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-002",
+          "source_index": 1,
+          "content": "me_002_enterprise_audit_policy"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-003",
+          "source_index": 2,
+          "content": "me_002_small_team_constraint"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-004",
+          "source_index": 3,
+          "content": "me_002_custom_compliance_cost"
+        }
+      ],
+      "option_1": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item explicitly contains or establishes the proposition 'use_managed_audit_logging'.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports the proposition to use managed audit logging.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team",
+      "work_item_id": "support-label-disagreement-018",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-boundary-reference-claim-005",
+      "claim_index": 5,
+      "source_span": {
+        "start": 121,
+        "end": 149
+      },
+      "source_excerpt": "build_custom_minimal_logging",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-001",
+          "source_index": 0,
+          "content": "me_002_user_simplicity_preference"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-002",
+          "source_index": 1,
+          "content": "me_002_enterprise_audit_policy"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-003",
+          "source_index": 2,
+          "content": "me_002_small_team_constraint"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-evidence-004",
+          "source_index": 3,
+          "content": "me_002_custom_compliance_cost"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports the proposition to build custom minimal logging.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item explicitly contains or establishes the proposition 'build_custom_minimal_logging'.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "work_item_id": "support-label-disagreement-019",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-006",
+      "claim_index": 6,
+      "source_span": {
+        "start": 132,
+        "end": 163
+      },
+      "source_excerpt": "choose_low_ops_incremental_plan",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-001",
+          "source_index": 0,
+          "content": "me_001_user_speed_preference"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002",
+          "source_index": 1,
+          "content": "me_001_team_ops_capacity_low"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003",
+          "source_index": 2,
+          "content": "me_001_budget_tight"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004",
+          "source_index": 3,
+          "content": "me_001_fast_rollout_failed"
+        }
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence of low ops capacity, tight budget, and failed fast rollout reasonably supports choosing a low-ops incremental plan.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference"
+        ],
+        "support_rationale": "While no evidence explicitly names the 'low_ops_incremental_plan', the combination of low ops capacity (Evidence 2), tight budget (Evidence 3), and the failure of the fast rollout (Evidence 4) logically supports the direction of choosing a lower-ops, incremental approach, though the specific label is an inference.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture",
+      "work_item_id": "support-label-disagreement-020",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-boundary-reference-claim-002",
+      "claim_index": 2,
+      "source_span": {
+        "start": 30,
+        "end": 66
+      },
+      "source_excerpt": "choose_teachable_simple_architecture",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-001",
+          "source_index": 0,
+          "content": "me_006_advanced_architecture_preference"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-002",
+          "source_index": 1,
+          "content": "me_006_junior_team_constraint"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-003",
+          "source_index": 2,
+          "content": "me_006_complex_design_stalled"
+        },
+        {
+          "evidence_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-004",
+          "source_index": 3,
+          "content": "me_006_teachable_design_success"
+        }
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-004"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "The claim text exactly matches the content of evidence item 4, which describes the successful outcome of the teachable design.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes the choice of a teachable simple architecture.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "work_item_id": "support-label-disagreement-021",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 90,
+        "end": 122
+      },
+      "source_excerpt": "answer_concisely_with_references",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-preference-preference_005_verbose_to_concise_with_links-evidence-001",
+          "source_index": 0,
+          "content": "old_preference_full_explanations"
+        },
+        {
+          "evidence_id": "mc-preference-preference_005_verbose_to_concise_with_links-evidence-002",
+          "source_index": 1,
+          "content": "later_feedback_too_verbose"
+        },
+        {
+          "evidence_id": "mc-preference-preference_005_verbose_to_concise_with_links-evidence-003",
+          "source_index": 2,
+          "content": "concise_reference_style_accepted"
+        },
+        {
+          "evidence_id": "mc-preference-preference_005_verbose_to_concise_with_links-evidence-004",
+          "source_index": 3,
+          "content": "current_request_status_update"
+        }
+      ],
+      "option_1": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-preference-preference_005_verbose_to_concise_with_links-evidence-003"
+        ],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence confirms concise reference style is accepted but does not explicitly mandate it as the required answer format.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or references a requirement to answer concisely with references.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training",
+      "work_item_id": "support-label-disagreement-022",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-boundary-reference-claim-002",
+      "claim_index": 2,
+      "source_span": {
+        "start": 35,
+        "end": 71
+      },
+      "source_excerpt": "credit_training_as_primary_candidate",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-001",
+          "source_index": 0,
+          "content": "tc_012_ui_tweak"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-002",
+          "source_index": 1,
+          "content": "tc_012_training_before_team_drop"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-003",
+          "source_index": 2,
+          "content": "tc_012_ticket_drop_by_trained_team"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-004",
+          "source_index": 3,
+          "content": "tc_012_current_cause_review"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence text establishes training as the primary candidate for credit.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-004"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Current cause review credits training as primary candidate, directly supporting the claim.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support",
+      "work_item_id": "support-label-disagreement-023",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-boundary-reference-claim-001",
+      "claim_index": 1,
+      "source_span": {
+        "start": 0,
+        "end": 30
+      },
+      "source_excerpt": "expand_based_on_early_adoption",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-001",
+          "source_index": 0,
+          "content": "tc_009_early_adoption_high"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-002",
+          "source_index": 1,
+          "content": "tc_009_two_week_support_rise"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-003",
+          "source_index": 2,
+          "content": "tc_009_support_burden_identified"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-004",
+          "source_index": 3,
+          "content": "tc_009_current_iteration"
+        }
+      ],
+      "option_1": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-001"
+        ],
+        "reason_codes": [
+          "causal_leap"
+        ],
+        "support_rationale": "Evidence confirms high early adoption, but does not explicitly establish the causal link or directive to expand based solely on this metric.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-001"
+        ],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence confirms high early adoption but does not establish expansion based on it.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement",
+      "work_item_id": "support-label-disagreement-024",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 66,
+        "end": 97
+      },
+      "source_excerpt": "follow_pre_enforcement_behavior",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-001",
+          "source_index": 0,
+          "content": "tc_017_policy_announced"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-002",
+          "source_index": 1,
+          "content": "tc_017_pre_enforcement_grace"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-003",
+          "source_index": 2,
+          "content": "tc_017_enforcement_started"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-004",
+          "source_index": 3,
+          "content": "tc_017_current_decision_after_enforcement"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item describes following pre-enforcement behavior; evidence only notes a grace period, not behavior adherence.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-002"
+        ],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence item 2 confirms a pre-enforcement grace period but does not explicitly establish the specific behavior of 'following' during that time.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement",
+      "work_item_id": "support-label-disagreement-025",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 98,
+        "end": 120
+      },
+      "source_excerpt": "follow_enforced_policy",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-001",
+          "source_index": 0,
+          "content": "tc_017_policy_announced"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-002",
+          "source_index": 1,
+          "content": "tc_017_pre_enforcement_grace"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-003",
+          "source_index": 2,
+          "content": "tc_017_enforcement_started"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-004",
+          "source_index": 3,
+          "content": "tc_017_current_decision_after_enforcement"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item confirms following the enforced policy; evidence only notes enforcement started, not compliance.",
+        "annotation_confidence": "medium"
+      },
+      "option_2": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-evidence-003"
+        ],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence item 3 confirms enforcement started but does not explicitly verify the outcome that the policy was followed.",
+        "annotation_confidence": "medium"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal",
+      "work_item_id": "support-label-disagreement-026",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-boundary-reference-claim-002",
+      "claim_index": 2,
+      "source_span": {
+        "start": 24,
+        "end": 46
+      },
+      "source_excerpt": "trust_initial_feedback",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-001",
+          "source_index": 0,
+          "content": "tc_013_initial_feedback_positive"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-002",
+          "source_index": 1,
+          "content": "tc_013_full_month_usage"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-003",
+          "source_index": 2,
+          "content": "tc_013_later_feedback_negative"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-004",
+          "source_index": 3,
+          "content": "tc_013_current_planning"
+        }
+      ],
+      "option_1": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-001"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Claim text corresponds directly to the positive initial feedback in evidence item 1.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes trust in initial feedback.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal",
+      "work_item_id": "support-label-disagreement-027",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-boundary-reference-claim-003",
+      "claim_index": 3,
+      "source_span": {
+        "start": 47,
+        "end": 72
+      },
+      "source_excerpt": "trust_full_month_feedback",
+      "claim_role": "support",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-001",
+          "source_index": 0,
+          "content": "tc_013_initial_feedback_positive"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-002",
+          "source_index": 1,
+          "content": "tc_013_full_month_usage"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-003",
+          "source_index": 2,
+          "content": "tc_013_later_feedback_negative"
+        },
+        {
+          "evidence_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-004",
+          "source_index": 3,
+          "content": "tc_013_current_planning"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes trust in full month feedback.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-002"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Claim text corresponds directly to the full month usage evidence in item 2.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    },
+    {
+      "case_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap",
+      "work_item_id": "support-label-disagreement-028",
+      "reference_claim_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-boundary-reference-claim-004",
+      "claim_index": 4,
+      "source_span": {
+        "start": 87,
+        "end": 114
+      },
+      "source_excerpt": "request_current_measurement",
+      "claim_role": "anchor",
+      "claim_type": "proposition",
+      "claim_origin": "explicit",
+      "evidence_bundle": [
+        {
+          "evidence_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-001",
+          "source_index": 0,
+          "content": "ub_006_stale_metric"
+        },
+        {
+          "evidence_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-002",
+          "source_index": 1,
+          "content": "ub_006_current_measurement_missing"
+        },
+        {
+          "evidence_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-003",
+          "source_index": 2,
+          "content": "ub_006_context_changed"
+        },
+        {
+          "evidence_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-004",
+          "source_index": 3,
+          "content": "ub_006_current_recommendation_need"
+        }
+      ],
+      "option_1": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-001",
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-002",
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-003",
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-004"
+        ],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports a request for current measurement; only the absence of current measurement is noted.",
+        "annotation_confidence": "high"
+      },
+      "option_2": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-002"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence stating current measurement is missing logically entails the need to request it.",
+        "annotation_confidence": "high"
+      },
+      "authorization": {
+        "select_immutable_option_only": true,
+        "defer_allowed": true,
+        "replacement_label_allowed": false,
+        "boundary_change_allowed": false,
+        "claim_change_allowed": false,
+        "reviewer_submission_mutation_allowed": false
+      }
+    }
+  ]
+}

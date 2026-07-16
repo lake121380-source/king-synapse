@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-type-metadata-review-protocol-v2",
+  "status": "frozen_before_any_v2_provider_call",
+  "predecessor_entry_protocol_sha256": "c93b79f02a14f595941369aa9b40acceac6cb4f70cf1385d54e0c16e288bb65e",
+  "predecessor_failure_classification_sha256": "ff06ec52418a0c39e7d42fefc670dfbd3b881369f54907842fefeeca6a064b0f",
+  "object_of_study": "claim_role_and_claim_type_on_frozen_atomic_boundaries",
+  "semantic_rules_unchanged_from_v1": true,
+  "boundary_reference_candidate_sha256": "e93abf01b54a6276a4f5ae2e370fd891548218a96022129a20030280e034b2ac",
+  "reviewed_fields": [
+    "claim_role",
+    "claim_type"
+  ],
+  "claim_role_enum": [
+    "anchor",
+    "boundary",
+    "exception",
+    "prediction",
+    "qualification",
+    "support"
+  ],
+  "claim_type_enum": [
+    "causal",
+    "condition",
+    "exception",
+    "falsifiability",
+    "limitation",
+    "prediction",
+    "proposition",
+    "scope"
+  ],
+  "review_design": {
+    "independent_reviewers": 2,
+    "models": {
+      "a": "gpt-4.1",
+      "b": "gemini-2.5-pro"
+    },
+    "case_isolation": true,
+    "both_manifests_frozen_before_reviewer_a": true,
+    "reviewer_a_v1_reused": false
+  },
+  "representation": {
+    "model_returns_claim_index": true,
+    "adapter_maps_index_to_frozen_claim_id": true,
+    "model_copies_claim_id": false,
+    "model_copies_excerpt": false,
+    "each_index_exactly_once": true
+  },
+  "controlled_change_from_v1": "output_representation_only",
+  "next_stage": "construct_multi_claim_successor_type_metadata_agreement_v2"
+}

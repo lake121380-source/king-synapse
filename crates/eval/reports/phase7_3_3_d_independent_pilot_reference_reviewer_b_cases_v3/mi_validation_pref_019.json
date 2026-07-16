@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_pref_019",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "3f2af617aef2852483e167ce97a863fecdef416ac3d4c9c71238eb9019f11f8e",
+  "provider_content_sha256": "999d4df21f7a763d16c100aabf8a134d69332b8142358f1e2e89574b88d9ee77",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "41bdc7424f0a44987a2a6862abcd5b48a7fb1aba8332cc7c7d44bdbbefb923d0",
+  "normalized_case": {
+    "case_id": "mi_validation_pref_019",
+    "candidate_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_pref_019-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 63
+        },
+        "source_text_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_pref_019-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate states that the current explicit preference supersedes the older preference. Evidence 06 directly states 'current explicit preference replaces the earlier choice', which matches the candidate's claim. Other evidence does not contradict this. Therefore, the claim is supported.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

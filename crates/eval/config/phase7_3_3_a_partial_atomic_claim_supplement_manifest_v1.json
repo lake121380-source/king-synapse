@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-a-partial-atomic-claim-supplement-v1",
+  "supplement_dataset_id": "phase7.3.3-a-partial-atomic-claim-diagnostics-supplement-v1",
+  "purpose": "Freeze a diagnostics-only supplement before any real Atomic Judge execution so all four local support labels are observable without modifying the original balanced Candidate controls.",
+  "scope": "local_atomic_claim_calibration_only",
+  "changes_gate_decision": false,
+  "candidate_collapse_gate_uses_original_balanced_controls_only": true,
+  "supplement_may_change_candidate_readiness_metrics": false,
+  "guards": {
+    "atomic_protocol_modified": false,
+    "atomic_prompt_modified": false,
+    "balanced_controls_modified": false,
+    "aggregation_policy_modified": false,
+    "readiness_thresholds_modified": false,
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-protocol-v1",
+  "phase": "Phase 7.3.3-D Multi-claim Successor Support Label Adjudication",
+  "status": "frozen_before_first_provider_execution",
+  "research_object": "adjudication of exactly 28 frozen Support-label disagreements without changing Claim boundaries or reviewer submissions",
+  "entry_gate": {
+    "agreement_completed": true,
+    "claim_count": 240,
+    "label_disagreement_count": 28,
+    "diagnostic_followup_count": 47,
+    "next_authorized_stage": "adjudicate_multi_claim_successor_support_label_disagreements_v1"
+  },
+  "allowed_operations": [
+    "defer_for_human_review",
+    "select_option_1",
+    "select_option_2"
+  ],
+  "selection_semantics": "select one immutable blinded reviewer option or defer; never generate a replacement label",
+  "selected_decision_reconstruction": "adapter deterministically copies the complete selected frozen reviewer decision through the private mapping",
+  "immutable_fields": [
+    "case_id",
+    "reference_claim_id",
+    "claim_index",
+    "source_span",
+    "source_excerpt",
+    "claim_role",
+    "claim_type",
+    "claim_origin",
+    "evidence_bundle",
+    "reviewer_a_submission",
+    "reviewer_b_submission"
+  ],
+  "forbidden_actions": [
+    "create_claim",
+    "delete_claim",
+    "split_claim",
+    "merge_claim",
+    "modify_boundary",
+    "rewrite_claim_text",
+    "emit_new_support_label",
+    "rewrite_reviewer_submission",
+    "adjudicate_diagnostic_followup_label",
+    "access_support_gold",
+    "access_confirmatory_dataset",
+    "access_runtime_integration"
+  ],
+  "adjudicator_visibility": {
+    "visible": [
+      "immutable_claim_metadata",
+      "same_case_evidence_bundle",
+      "option_1",
+      "option_2"
+    ],
+    "prohibited": [
+      "source_reviewer_identity",
+      "private_option_mapping",
+      "aggregate_agreement_metrics",
+      "diagnostic_followup_items",
+      "historical_gold_or_silver",
+      "held_out_cases"
+    ]
+  },
+  "completion_gate": {
+    "all_28_items_require_terminal_results": true,
+    "any_defer_blocks_reference_candidate_construction": true,
+    "adapter_replay_required": true,
+    "support_reference_candidate_created_in_this_stage": false,
+    "support_gold_created_in_this_stage": false
+  },
+  "guards": {
+    "boundary_mutation_allowed": false,
+    "new_claim_creation_allowed": false,
+    "claim_deletion_allowed": false,
+    "reviewer_submission_mutation_allowed": false,
+    "diagnostic_followup_label_change_allowed": false,
+    "support_reference_candidate_creation_allowed": false,
+    "support_gold_creation_allowed": false,
+    "confirmatory_dataset_opened": false,
+    "runtime_integration_authorized": false
+  },
+  "next_authorized_stage": "execute_multi_claim_successor_support_label_adjudication_v1"
+}

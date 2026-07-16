@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-boundary-coverage-rerun-protocol-v1",
+  "stage": "Phase 7.3.3-D1 Coverage QA Rerun",
+  "purpose": "Recompute character-level Boundary Reference accounting after frozen explicit non-claim review, adjudication, omission resolution, and the no-op Boundary Correction Gate.",
+  "execution_mode": "offline_deterministic",
+  "accounting_categories": [
+    "claim",
+    "explicit_non_claim",
+    "protocol_excluded"
+  ],
+  "eligible_character_definition": "Every non-whitespace Python string code point in each frozen source anchor.",
+  "protocol_excluded_definition": "An uncovered whitespace-only character; protocol-excluded characters may not contain any eligible non-whitespace character.",
+  "explicit_non_claim_construction": {
+    "exact_agreement": "Use the shared frozen reason code and preserve both independent reviewer rationales.",
+    "adjudicated_disagreement": "Use the frozen B3 final classification, reason code, and rationale.",
+    "b4_resolved_as_non_claim": "Use the frozen B4 resolution and rationale; because B4 does not emit a non-claim reason code, deterministically assign other_explained_non_claim.",
+    "semantic_inference_during_rerun": "forbidden"
+  },
+  "required_lineage_checks": [
+    "initial_gap_worklist_contains_84_unique_gaps",
+    "agreement_contains_same_84_gap_ids",
+    "b3_decisions_equal_the_16_non_exact_agreement_gap_ids",
+    "pre_b4_boundary_omission_candidates_equal_the_4_b4_decision_gap_ids",
+    "b4_resolves_all_4_candidates_as_non_claim",
+    "boundary_correction_submission_is_verified_no_op",
+    "readiness_v11_authorizes_coverage_qa_rerun"
+  ],
+  "pass_gates": {
+    "invalid_claim_span_count": 0,
+    "claim_text_mismatch_count": 0,
+    "claim_overlap_characters": 0,
+    "invalid_non_claim_span_count": 0,
+    "invalid_non_claim_metadata_count": 0,
+    "invalid_non_claim_reason_code_count": 0,
+    "non_claim_overlap_characters": 0,
+    "claim_non_claim_conflict_characters": 0,
+    "eligible_gap_characters": 0,
+    "unclassified_characters": 0,
+    "lineage_failure_count": 0
+  },
+  "forbidden_actions": [
+    "call_provider",
+    "change_claim_boundary",
+    "change_gap_span",
+    "create_or_delete_gap",
+    "perform_new_semantic_classification",
+    "freeze_boundary_gold",
+    "label_support",
+    "access_held_out_data"
+  ],
+  "success_effect": "Authorize a separately versioned Boundary Gold Freeze stage; do not freeze Boundary Gold inside this rerun."
+}

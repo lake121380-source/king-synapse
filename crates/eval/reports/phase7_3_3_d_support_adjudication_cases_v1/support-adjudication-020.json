@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-020-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_06",
+  "adjudication_item_id": "support-adjudication-020",
+  "boundary_claim_id": "adjudicated-extract_06-claim-002",
+  "provider_envelope_sha256": "f2ad62e5470712ee60e63567f94a5140733e01159da4965b570db1390d03444c",
+  "provider_content_sha256": "db9ff73a9dd3155469f7307460f31e989d761512fcb8b6cbc7149c4f574ac767",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "1511710fb931b7997c48bf7c9cb4941478ca4814558dca7b5dfccb8ddd30794a",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-020",
+    "case_id": "extract_06",
+    "boundary_claim_id": "adjudicated-extract_06-claim-002",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "Two experiences support the claim in representative-subset contexts, but the supplied counterexample shows that when the subset is not representative, the hidden issues are not revealed before rollout. This supports a narrower reading and makes the stronger unconditional claim less stable than partial support.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_06-claim-002",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2",
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_expansion"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence supports that exposing risky changes to a representative subset can reveal hidden issues before rollout, but the claim's generality and certainty exceed the limited number of cases. The counterexample supports the necessity of representativeness but does not fully establish causality for all cases."
+    },
+    "selected_frozen_decision_sha256": "65b9ad42033eeeaa367bdd800689dfd624cff99f6d547bc6d15481a68b43430f",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

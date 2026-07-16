@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-014-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-014",
+  "boundary_claim_id": "adjudicated-extract_01-claim-013",
+  "provider_envelope_sha256": "7e14569a6873b96270e8029994640a1e7fce5a74b9fade644312ca8402ee188d",
+  "provider_content_sha256": "7f3b231886eef249208769efae466a181f7d1c0665a456b64b2a0f0acee330e1",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "01b9a1749d4f97ea86e49ae77139ebfa869937e4de271fef31ff08478726794c",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-014",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-013",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The cited evidence for the counterexample reports incompatible records and more recovery work, but it does not explicitly show that the entire system became unavailable. Option 1 overstates the evidence; option 2 more closely matches the observed outcome.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_01-claim-013",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "certainty_escalation"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "The evidence states 'more recovery work' and 'incompatible records' but does not explicitly confirm the entire system became 'unavailable'; the severity is implied but not strictly proven as total unavailability."
+    },
+    "selected_frozen_decision_sha256": "5c7160ad3d744a51b26f9298bd12d1ecf6ff0b2f95d23a486f79cafd753f9828",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

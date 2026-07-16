@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b4-boundary-omission-resolution-v2",
+  "research_object": "resolution of the four frozen Boundary Omission Candidates remaining after D1-B3",
+  "input_candidate_count": 4,
+  "change_from_v1": "Only provider model identity canonicalization changes: a dated snapshot whose leaf identifier begins with gpt-5.4- is accepted as canonical family gpt-5.4.",
+  "allowed_resolutions": {
+    "resolved_as_non_claim": {
+      "definition": "The frozen Gap does not require a Claim Boundary correction under the current Atomic Claim policy.",
+      "severity_must_be_null": true
+    },
+    "confirmed_boundary_omission": {
+      "definition": "The frozen Gap contains content that must be represented by a Boundary Claim or incorporated into a corrected Claim span.",
+      "severity_required": true,
+      "allowed_severity_codes": [
+        "cosmetic",
+        "independent_claim_missing",
+        "semantic_modifier"
+      ]
+    }
+  },
+  "allowed_changes": [
+    "resolution",
+    "severity",
+    "rationale"
+  ],
+  "forbidden_changes": [
+    "change_gap_id",
+    "change_gap_span",
+    "change_gap_text",
+    "create_gap",
+    "delete_gap",
+    "split_gap",
+    "merge_gap",
+    "edit_existing_claim",
+    "create_corrected_claim",
+    "freeze_boundary_gold",
+    "run_coverage_qa",
+    "label_support"
+  ],
+  "output_contract": {
+    "one_isolated_case_per_request": true,
+    "bare_json_only": true,
+    "exact_gap_order_required": true,
+    "top_level_keys": [
+      "case_id",
+      "decisions"
+    ],
+    "decision_keys": [
+      "gap_id",
+      "resolution",
+      "severity",
+      "rationale"
+    ]
+  },
+  "severity_policy": {
+    "cosmetic": "lexical or form-boundary issue without a separately asserted proposition",
+    "semantic_modifier": "condition, limitation, relation, or other semantic modifier that must be represented",
+    "independent_claim_missing": "a separately verifiable proposition is absent"
+  },
+  "post_resolution": {
+    "automatic_correction": false,
+    "coverage_qa_rerun": false,
+    "boundary_gold_freeze": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

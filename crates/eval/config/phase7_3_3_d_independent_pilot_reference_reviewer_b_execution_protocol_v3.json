@@ -1,0 +1,28 @@
+{
+  "schema_version": 3,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-reviewer-b-execution-protocol-v3",
+  "status": "frozen_successor_after_v2_transport_negative",
+  "predecessor_negative_sha256": "b6dd9340519cbf8153531f6dd4372922f7fa1475dc62f4ed277f43e2cdf06e3d",
+  "predecessor_failure": {
+    "level": "level_0_transport",
+    "response_received": false,
+    "completed_cases_preserved_as_partial_execution_evidence": 11,
+    "same_version_retry": false
+  },
+  "controlled_change": "new Reviewer B execution version using direct DeepSeek transport and model; no reuse of v2 partial semantic outputs",
+  "unchanged": [
+    "selected_dataset",
+    "whole_candidate_reference_representation",
+    "support_semantics",
+    "output_schema",
+    "case_isolation",
+    "blinding",
+    "no_repair",
+    "first_content_authoritative"
+  ],
+  "reviewer": "b",
+  "model": "deepseek-chat",
+  "provider": "api.deepseek.com",
+  "independence_note": "Reviewer A v2 remains frozen; Reviewer B v3 uses a different model/provider and cannot see A",
+  "reference_combination_authorized_if_b_v3_completes": true
+}

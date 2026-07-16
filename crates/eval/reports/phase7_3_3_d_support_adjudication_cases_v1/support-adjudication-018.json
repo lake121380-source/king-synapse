@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-018-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_04",
+  "adjudication_item_id": "support-adjudication-018",
+  "boundary_claim_id": "adjudicated-extract_04-claim-002",
+  "provider_envelope_sha256": "099c4b195f50811cfefbe97372d51bde93e9e827cc75bc561ab2f0e9f8550819",
+  "provider_content_sha256": "44ddbda439fc97c7cc292c13b87e0f3e742df1f62a524b11c6b6b50316a3b016",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "9a8e9ffe09080c9f1e2157d810eaa848dadc26af0e013dcf0ae2244100cdeedc",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-018",
+    "case_id": "extract_04",
+    "boundary_claim_id": "adjudicated-extract_04-claim-002",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The evidence supports that this diagnostic approach isolated specific root causes in two observed service failures, but the claim is framed generally as a causal statement about diagnosing service failure by this method. With only two positive cases and a supplied counterexample showing limits of routine diagnosis under active corruption, the narrower partially supported judgment is better grounded than full support.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_04-claim-002",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_expansion"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence shows systematic diagnosis isolated root causes, but only for two cases; claim generalizes to all service failures and asserts causality for any such diagnosis, which is broader than evidence."
+    },
+    "selected_frozen_decision_sha256": "ec7fcfcca2dd25d5b2ddd09f725f7ad046e595b774b55a1faa4921851cf12bfe",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

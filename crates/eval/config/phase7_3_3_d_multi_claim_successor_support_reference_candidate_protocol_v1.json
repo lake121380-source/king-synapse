@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-reference-candidate-protocol-v1",
+  "status": "frozen_before_reference_candidate_construction",
+  "object_of_study": "deterministic construction of a Support Label Reference Candidate from frozen independent reviews and frozen label adjudication",
+  "authorized_scope": [
+    "copy immutable Claim metadata from the frozen Support review packet",
+    "resolve exact Reviewer label agreements by their common label",
+    "resolve Reviewer label disagreements only by the selected immutable adjudicated option",
+    "mark frozen diagnostic follow-up membership without changing Support labels"
+  ],
+  "resolution_rules": {
+    "exact_label_agreement": {
+      "support_label": "common Reviewer A and Reviewer B label",
+      "label_resolution_basis": "independent_reviewer_exact_label_agreement"
+    },
+    "label_disagreement": {
+      "support_label": "selected_decision.support_label from the completed blinded adjudication",
+      "label_resolution_basis": "blinded_adjudication_selected_immutable_option",
+      "deferral_allowed_at_construction": false
+    }
+  },
+  "accounting_contract": {
+    "case_count": 40,
+    "claim_count": 240,
+    "exact_label_agreement_count": 212,
+    "adjudicated_label_count": 28,
+    "diagnostic_followup_count": 47,
+    "every_claim_resolved_exactly_once": true
+  },
+  "diagnostic_isolation_contract": {
+    "diagnostic_followup_may_change_label": false,
+    "diagnostic_fields_authoritative": false,
+    "citations_authoritative": false,
+    "reason_codes_authoritative": false,
+    "rationales_authoritative": false,
+    "confidence_authoritative": false
+  },
+  "immutability_contract": {
+    "boundary_mutation_authorized": false,
+    "claim_creation_authorized": false,
+    "claim_deletion_authorized": false,
+    "claim_split_merge_authorized": false,
+    "claim_type_or_role_mutation_authorized": false,
+    "reviewer_submission_mutation_authorized": false
+  },
+  "gates": {
+    "current_gate": "construct_multi_claim_successor_support_reference_candidate_v1",
+    "success_next_gate": "verify_and_seal_multi_claim_successor_support_reference_candidate_v1",
+    "support_gold_creation_authorized": false,
+    "confirmatory_dataset_opening_authorized": false,
+    "runtime_integration_authorized": false
+  },
+  "frozen_inputs": {
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_support_reviewer_a_packet_v1.json": "8015f72bee65b7a3ee42e6d070ae3a5a2b947c4123bbacc3b6a37715b11b4945",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_reviewer_a_completed_submission_v2.json": "5166ec57d44bc0adeb117f309f2e99349f70966078dc357f09035ff845b06d01",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_reviewer_b_completed_submission_v2.json": "8ea1f23a78a24bb29d8914a0c6beb95489e0637fa1ada2f3d678b595ed45634d",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_agreement_report_v1.json": "7a4795d268f6b00659451f2323ce30c8145810d948037764cbf4f4ae4e9c4a91",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_support_label_disagreement_worklist_v1.json": "6f67ad3c848034f692eb881a6aac62bef55b3264bafe7e36df83b5603b6abc36",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_support_diagnostic_followup_worklist_v1.json": "6f57fd74618999fff13d7677e632717762744e5c0ff5740e9a49756d35d9d289",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_label_adjudication_completed_submission_v1.json": "73f25674029d97de93aa2728545b506366971aeefe4f65a18b398fe4b95f4b81",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_label_adjudication_result_v1.json": "b12eccbd4c168e70696a5f6a2415a77086fe836abf5e2316b4d7015dfd9399b0",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_label_adjudication_receipt_v1.json": "0b58576af8683d019e82961170c49190820d85290382d19ef087036c5f31a43e",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v56.json": "90951234db3ec6e9406eab02bca9025a0a2806f812f19b4cf9dcf7799e85a600",
+    "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v67.json": "7cb2672215814f28336021c281b136f385009e2abff3c696dc114864a9a2a9f9"
+  }
+}

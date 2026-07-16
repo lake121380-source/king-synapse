@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "reviewer": "a",
+  "case_id": "extract_09",
+  "manifest_sha256": "8765406d049719345480886272041d47fc9bd28d47ab33c9dbe27ae8b11712ef",
+  "resolved_model": "gpt-4.1",
+  "provider_envelope_sha256": "83e0fadb2614ba78bf1307294c397b3288bf50c981f39cb844a6f601967f886b",
+  "provider_content_sha256": "66fa12587bac64b39a80dceb3e38fda83623ec5c416fa7244ab5f2e6ccff25b9",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-001",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "source_span": {
+        "start": 0,
+        "end": 154
+      },
+      "claim_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_09::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a causal assertion linking convergence of independent sources to robustness; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-002",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "source_span": {
+        "start": 168,
+        "end": 318
+      },
+      "claim_text": "apparent consensus from multiple reports that merely repeat a single unverified source is fragile and collapses when the original source is corrected.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_09::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a causal assertion about consensus based on repeated unverified sources being fragile and collapsing upon correction; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-003",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "6a061da0fee71793b9c36f4ab735f18094d984a7244f73b44db2ae00b37ab745",
+      "source_span": {
+        "start": 0,
+        "end": 171
+      },
+      "claim_text": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_09::prediction_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a prediction about the outcome of measurements by independent laboratories; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-004",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "0c80332aba9662f9222c2e86bc2f8bc7943a905e260b77438f654640ab7516eb",
+      "source_span": {
+        "start": 0,
+        "end": 71
+      },
+      "claim_text": "The difference between the two estimates is within the tolerance range.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_09::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is an observable prediction about the difference between estimates; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-005",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "6080eafc39ffd90a8e0fa2f8895ef3a2b9663a9fde118e84b559276041d59b05",
+      "source_span": {
+        "start": 0,
+        "end": 41
+      },
+      "claim_text": "abs(estimate_1 - estimate_2) <= tolerance",
+      "claim_type": "scope",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_09::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a scope-defining criterion for prediction success; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-006",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "3331b01decfa30e489b97d0348533c00385c2c1b5f4a864c9f9d67e63b9e1a81",
+      "source_span": {
+        "start": 0,
+        "end": 148
+      },
+      "claim_text": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_09::falsification_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a falsifiability statement about the failure of the pattern if estimates do not converge; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-007",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "4562df562094c3c2483cd29f81946abc1e76cfed6cbe1a2f9315a7427b704fee",
+      "source_span": {
+        "start": 0,
+        "end": 55
+      },
+      "claim_text": "The difference between estimates exceeds the tolerance.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_09::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is an observable falsifiability criterion; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-008",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-02",
+      "source_field": "falsification_statement",
+      "source_index": 1,
+      "source_text_sha256": "ea7b347a9bcc955ee4212721f848cde7e94c0768a705f0f79ec51db6abf9e2d4",
+      "source_span": {
+        "start": 0,
+        "end": 142
+      },
+      "claim_text": "If multiple reports supporting a claim are all traced to a single unverified original source, the pattern of apparent consensus does not hold.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_09::falsification_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a falsifiability statement about consensus not holding if all reports trace to one unverified source; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_09-claim-009",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-02",
+      "source_field": "falsification_observable",
+      "source_index": 1,
+      "source_text_sha256": "360e319517e2197858d3fc33e23429e593c1c58db4a4d832c4e1fc91a1009c9f",
+      "source_span": {
+        "start": 0,
+        "end": 68
+      },
+      "claim_text": "Correction of the original source causes the consensus to disappear.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_09::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is an observable falsifiability criterion about consensus disappearing upon correction; it is independently truth-evaluable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_09",
+    "status": "completed",
+    "claim_count": 9
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

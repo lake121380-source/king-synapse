@@ -1,0 +1,2150 @@
+{
+  "schema_version": 1,
+  "packet_id": "phase7.3.3-d1-b2-non-claim-accounting-review-packet-v1",
+  "protocol_id": "phase7.3.3-d1-b2-explicit-non-claim-accounting-v1",
+  "packet_role": "dual_blind_gap_semantic_accounting",
+  "case_count": 10,
+  "anchor_count": 38,
+  "gap_count": 84,
+  "eligible_non_whitespace_character_count": 206,
+  "blind_to_support_labels": true,
+  "blind_to_candidate_gold_or_silver": true,
+  "blind_to_evidence": true,
+  "blind_to_historical_judge": true,
+  "blind_to_other_reviewer": true,
+  "held_out_accessed": false,
+  "artifact_lineage": {
+    "source_boundary_packet_sha256": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "v4_submission_sha256": "308e54406a3aa8d0ba8b8526d57497ca4ca7f4c9a776e2831e7e60b4f0e40298",
+    "coverage_manifest_sha256": "0955ea334f4ed3e94a3ee710643f433b702f225541418e1b4929330089afb1b9",
+    "coverage_report_sha256": "76368978155530feb112ec3b1717f9fb426eeff10af2d4b262430ead6012113b",
+    "gap_worklist_sha256": "8e39e5267d1a3e818c2d04a92f3cc70377af4baa0331c2a52ce18382176e4dc8",
+    "coverage_policy_sha256": "e3d78c1ba231b6ed097e2e1ed580aef209e29080bd43b73f24016511dc6227b4"
+  },
+  "cases": [
+    {
+      "case_id": "extract_01",
+      "anchors": [
+        {
+          "anchor_id": "extract_01-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-013",
+              "source_span": {
+                "start": 0,
+                "end": 37
+              },
+              "claim_text": "The entire system becomes unavailable",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-014",
+              "source_span": {
+                "start": 41,
+                "end": 114
+              },
+              "claim_text": "the old version is rolled back due to issues from the incremental rollout",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_01-falsification_statement-01",
+          "source_field": "falsification_statement",
+          "source_index": 0,
+          "source_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-011",
+              "source_span": {
+                "start": 3,
+                "end": 87
+              },
+              "claim_text": "an incremental rollout with backward compatibility still causes a system-wide outage",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-012",
+              "source_span": {
+                "start": 91,
+                "end": 125
+              },
+              "claim_text": "forces rollback of the old version",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_01-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-008",
+              "source_span": {
+                "start": 0,
+                "end": 80
+              },
+              "claim_text": "A defect found in the first cohort does not require rolling back the old version",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-009",
+              "source_span": {
+                "start": 82,
+                "end": 112
+              },
+              "claim_text": "only the cohort is rolled back",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_01-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-005",
+              "source_span": {
+                "start": 5,
+                "end": 76
+              },
+              "claim_text": "an incremental rollout with backward compatibility is used for a change",
+              "claim_type": "scope",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-006",
+              "source_span": {
+                "start": 78,
+                "end": 130
+              },
+              "claim_text": "the first cohort will expose any critical regression",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-007",
+              "source_span": {
+                "start": 131,
+                "end": 171
+              },
+              "claim_text": "without affecting the rest of the system",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_01-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects while keeping the old version available, provided the new and old versions are backward compatible.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 20
+              },
+              "claim_text": "In software delivery",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-002",
+              "source_span": {
+                "start": 22,
+                "end": 117
+              },
+              "claim_text": "deploying changes incrementally to a small subset of traffic enables early detection of defects",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-003",
+              "source_span": {
+                "start": 124,
+                "end": 157
+              },
+              "claim_text": "keeping the old version available",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_01-claim-004",
+              "source_span": {
+                "start": 159,
+                "end": 216
+              },
+              "claim_text": "provided the new and old versions are backward compatible",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-001",
+          "anchor_id": "extract_01-proposition-01",
+          "source_span": {
+            "start": 20,
+            "end": 22
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-002",
+          "anchor_id": "extract_01-proposition-01",
+          "source_span": {
+            "start": 117,
+            "end": 124
+          },
+          "gap_text": " while ",
+          "eligible_non_whitespace_count": 5
+        },
+        {
+          "gap_id": "coverage-gap-003",
+          "anchor_id": "extract_01-proposition-01",
+          "source_span": {
+            "start": 157,
+            "end": 159
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-004",
+          "anchor_id": "extract_01-proposition-01",
+          "source_span": {
+            "start": 216,
+            "end": 217
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-005",
+          "anchor_id": "extract_01-prediction_statement-01",
+          "source_span": {
+            "start": 0,
+            "end": 5
+          },
+          "gap_text": "When ",
+          "eligible_non_whitespace_count": 4
+        },
+        {
+          "gap_id": "coverage-gap-006",
+          "anchor_id": "extract_01-prediction_statement-01",
+          "source_span": {
+            "start": 76,
+            "end": 78
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-007",
+          "anchor_id": "extract_01-prediction_statement-01",
+          "source_span": {
+            "start": 171,
+            "end": 172
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-008",
+          "anchor_id": "extract_01-prediction_observable-01",
+          "source_span": {
+            "start": 80,
+            "end": 82
+          },
+          "gap_text": "; ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-009",
+          "anchor_id": "extract_01-prediction_observable-01",
+          "source_span": {
+            "start": 112,
+            "end": 113
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-010",
+          "anchor_id": "extract_01-falsification_statement-01",
+          "source_span": {
+            "start": 0,
+            "end": 3
+          },
+          "gap_text": "If ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-011",
+          "anchor_id": "extract_01-falsification_statement-01",
+          "source_span": {
+            "start": 87,
+            "end": 91
+          },
+          "gap_text": " or ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-012",
+          "anchor_id": "extract_01-falsification_statement-01",
+          "source_span": {
+            "start": 125,
+            "end": 152
+          },
+          "gap_text": ", the pattern is falsified.",
+          "eligible_non_whitespace_count": 23
+        },
+        {
+          "gap_id": "coverage-gap-013",
+          "anchor_id": "extract_01-falsification_observable-01",
+          "source_span": {
+            "start": 37,
+            "end": 41
+          },
+          "gap_text": " or ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-014",
+          "anchor_id": "extract_01-falsification_observable-01",
+          "source_span": {
+            "start": 114,
+            "end": 115
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchors": [
+        {
+          "anchor_id": "extract_02-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In customer support queues, labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly, while labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_02-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 170
+              },
+              "claim_text": "In customer support queues, labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_02-claim-002",
+              "source_span": {
+                "start": 178,
+                "end": 269
+              },
+              "claim_text": "labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-015",
+          "anchor_id": "extract_02-proposition-01",
+          "source_span": {
+            "start": 170,
+            "end": 178
+          },
+          "gap_text": ", while ",
+          "eligible_non_whitespace_count": 6
+        }
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchors": [
+        {
+          "anchor_id": "extract_03-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "In a product experiment with predefined quantitative thresholds, the team will accept the outcome based on those thresholds without redefining success.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_03-claim-004",
+              "source_span": {
+                "start": 0,
+                "end": 63
+              },
+              "claim_text": "In a product experiment with predefined quantitative thresholds",
+              "claim_type": "scope",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_03-claim-005",
+              "source_span": {
+                "start": 65,
+                "end": 150
+              },
+              "claim_text": "the team will accept the outcome based on those thresholds without redefining success",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_03-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch, the team adheres to those thresholds in outcome evaluation and does not redefine success metrics post-hoc.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_03-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 117
+              },
+              "claim_text": "When a product experiment fixes quantitative success thresholds (activation, stop criteria, guardrails) before launch",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_03-claim-002",
+              "source_span": {
+                "start": 119,
+                "end": 177
+              },
+              "claim_text": "the team adheres to those thresholds in outcome evaluation",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_03-claim-003",
+              "source_span": {
+                "start": 182,
+                "end": 224
+              },
+              "claim_text": "does not redefine success metrics post-hoc",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-016",
+          "anchor_id": "extract_03-proposition-01",
+          "source_span": {
+            "start": 117,
+            "end": 119
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-017",
+          "anchor_id": "extract_03-proposition-01",
+          "source_span": {
+            "start": 177,
+            "end": 182
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-018",
+          "anchor_id": "extract_03-proposition-01",
+          "source_span": {
+            "start": 224,
+            "end": 225
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-019",
+          "anchor_id": "extract_03-prediction_statement-01",
+          "source_span": {
+            "start": 63,
+            "end": 65
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-020",
+          "anchor_id": "extract_03-prediction_statement-01",
+          "source_span": {
+            "start": 150,
+            "end": 151
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchors": [
+        {
+          "anchor_id": "extract_04-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence, or the root cause is not found within those evidence classes.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-016",
+              "source_span": {
+                "start": 0,
+                "end": 133
+              },
+              "claim_text": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-017",
+              "source_span": {
+                "start": 138,
+                "end": 195
+              },
+              "claim_text": "the root cause is not found within those evidence classes",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_04-falsification_statement-01",
+          "source_field": "falsification_statement",
+          "source_index": 0,
+          "source_text": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-013",
+              "source_span": {
+                "start": 0,
+                "end": 71
+              },
+              "claim_text": "Following the diagnosis process leads to replacing unrelated components",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-014",
+              "source_span": {
+                "start": 75,
+                "end": 123
+              },
+              "claim_text": "fails to identify a root cause from the evidence",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-015",
+              "source_span": {
+                "start": 125,
+                "end": 168
+              },
+              "claim_text": "even though no active corruption is present",
+              "claim_type": "limitation",
+              "claim_role": "falsification"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_04-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-009",
+              "source_span": {
+                "start": 0,
+                "end": 91
+              },
+              "claim_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-010",
+              "source_span": {
+                "start": 93,
+                "end": 138
+              },
+              "claim_text": "no unnecessary restarts or replacements occur",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_04-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-005",
+              "source_span": {
+                "start": 0,
+                "end": 47
+              },
+              "claim_text": "For a new service failure in service_operations",
+              "claim_type": "scope",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-006",
+              "source_span": {
+                "start": 49,
+                "end": 144
+              },
+              "claim_text": "applying the same evidence-based diagnosis will isolate a root cause from the examined evidence",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-007",
+              "source_span": {
+                "start": 145,
+                "end": 192
+              },
+              "claim_text": "without needing to replace unrelated components",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-008",
+              "source_span": {
+                "start": 194,
+                "end": 238
+              },
+              "claim_text": "as long as no active corruption is happening",
+              "claim_type": "limitation",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_04-prediction_success_criterion-01",
+          "source_field": "prediction_success_criterion",
+          "source_index": 0,
+          "source_text": "The root cause matches one of the evidence findings and no unrelated components were replaced during recovery.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-011",
+              "source_span": {
+                "start": 0,
+                "end": 51
+              },
+              "claim_text": "The root cause matches one of the evidence findings",
+              "claim_type": "prediction",
+              "claim_role": "prediction_criterion"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-012",
+              "source_span": {
+                "start": 56,
+                "end": 109
+              },
+              "claim_text": "no unrelated components were replaced during recovery",
+              "claim_type": "prediction",
+              "claim_role": "prediction_criterion"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_04-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 21
+              },
+              "claim_text": "In service_operations",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-002",
+              "source_span": {
+                "start": 23,
+                "end": 173
+              },
+              "claim_text": "diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-003",
+              "source_span": {
+                "start": 174,
+                "end": 212
+              },
+              "claim_text": "without replacing unrelated components",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_04-claim-004",
+              "source_span": {
+                "start": 214,
+                "end": 282
+              },
+              "claim_text": "provided no active corruption or ongoing damaging writes are present",
+              "claim_type": "limitation",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-021",
+          "anchor_id": "extract_04-proposition-01",
+          "source_span": {
+            "start": 21,
+            "end": 23
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-022",
+          "anchor_id": "extract_04-proposition-01",
+          "source_span": {
+            "start": 212,
+            "end": 214
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-023",
+          "anchor_id": "extract_04-proposition-01",
+          "source_span": {
+            "start": 282,
+            "end": 283
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-024",
+          "anchor_id": "extract_04-prediction_statement-01",
+          "source_span": {
+            "start": 47,
+            "end": 49
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-025",
+          "anchor_id": "extract_04-prediction_statement-01",
+          "source_span": {
+            "start": 192,
+            "end": 194
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-026",
+          "anchor_id": "extract_04-prediction_statement-01",
+          "source_span": {
+            "start": 238,
+            "end": 239
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-027",
+          "anchor_id": "extract_04-prediction_observable-01",
+          "source_span": {
+            "start": 91,
+            "end": 93
+          },
+          "gap_text": "; ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-028",
+          "anchor_id": "extract_04-prediction_observable-01",
+          "source_span": {
+            "start": 138,
+            "end": 139
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-029",
+          "anchor_id": "extract_04-prediction_success_criterion-01",
+          "source_span": {
+            "start": 51,
+            "end": 56
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-030",
+          "anchor_id": "extract_04-prediction_success_criterion-01",
+          "source_span": {
+            "start": 109,
+            "end": 110
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-031",
+          "anchor_id": "extract_04-falsification_statement-01",
+          "source_span": {
+            "start": 71,
+            "end": 75
+          },
+          "gap_text": " or ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-032",
+          "anchor_id": "extract_04-falsification_statement-01",
+          "source_span": {
+            "start": 123,
+            "end": 125
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-033",
+          "anchor_id": "extract_04-falsification_statement-01",
+          "source_span": {
+            "start": 168,
+            "end": 169
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-034",
+          "anchor_id": "extract_04-falsification_observable-01",
+          "source_span": {
+            "start": 133,
+            "end": 138
+          },
+          "gap_text": ", or ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-035",
+          "anchor_id": "extract_04-falsification_observable-01",
+          "source_span": {
+            "start": 195,
+            "end": 196
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchors": [
+        {
+          "anchor_id": "extract_05-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "Engagement metrics and identification of any external sources driving traffic.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-010",
+              "source_span": {
+                "start": 0,
+                "end": 18
+              },
+              "claim_text": "Engagement metrics",
+              "claim_type": "proposition",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-011",
+              "source_span": {
+                "start": 23,
+                "end": 77
+              },
+              "claim_text": "identification of any external sources driving traffic",
+              "claim_type": "proposition",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_05-falsification_statement-01",
+          "source_field": "falsification_statement",
+          "source_index": 0,
+          "source_text": "A post with concrete examples and early problem framing fails to achieve higher engagement, or a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost).",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-008",
+              "source_span": {
+                "start": 0,
+                "end": 90
+              },
+              "claim_text": "A post with concrete examples and early problem framing fails to achieve higher engagement",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-009",
+              "source_span": {
+                "start": 95,
+                "end": 222
+              },
+              "claim_text": "a post without these features achieves higher engagement due to an identified external virality source (e.g., celebrity repost)",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_05-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features, assuming organic distribution without external virality.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-004",
+              "source_span": {
+                "start": 0,
+                "end": 171
+              },
+              "claim_text": "If an AI tool category post includes concrete examples and early problem framing, it will have higher saves and qualified comments compared to posts without these features",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-005",
+              "source_span": {
+                "start": 173,
+                "end": 228
+              },
+              "claim_text": "assuming organic distribution without external virality",
+              "claim_type": "scope",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_05-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In AI tool category posts within the same audience and month, including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments), except when success is driven by an external virality source such as an unrelated celebrity repost.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 60
+              },
+              "claim_text": "In AI tool category posts within the same audience and month",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-002",
+              "source_span": {
+                "start": 62,
+                "end": 183
+              },
+              "claim_text": "including concrete examples and early problem framing is associated with higher engagement (saves and qualified comments)",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_05-claim-003",
+              "source_span": {
+                "start": 185,
+                "end": 283
+              },
+              "claim_text": "except when success is driven by an external virality source such as an unrelated celebrity repost",
+              "claim_type": "limitation",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-036",
+          "anchor_id": "extract_05-proposition-01",
+          "source_span": {
+            "start": 60,
+            "end": 62
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-037",
+          "anchor_id": "extract_05-proposition-01",
+          "source_span": {
+            "start": 183,
+            "end": 185
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-038",
+          "anchor_id": "extract_05-proposition-01",
+          "source_span": {
+            "start": 283,
+            "end": 284
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-039",
+          "anchor_id": "extract_05-prediction_statement-01",
+          "source_span": {
+            "start": 171,
+            "end": 173
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-040",
+          "anchor_id": "extract_05-prediction_statement-01",
+          "source_span": {
+            "start": 228,
+            "end": 229
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-041",
+          "anchor_id": "extract_05-falsification_statement-01",
+          "source_span": {
+            "start": 90,
+            "end": 95
+          },
+          "gap_text": ", or ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-042",
+          "anchor_id": "extract_05-falsification_statement-01",
+          "source_span": {
+            "start": 222,
+            "end": 223
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-043",
+          "anchor_id": "extract_05-falsification_observable-01",
+          "source_span": {
+            "start": 18,
+            "end": 23
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-044",
+          "anchor_id": "extract_05-falsification_observable-01",
+          "source_span": {
+            "start": 77,
+            "end": 78
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchors": [
+        {
+          "anchor_id": "extract_06-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "Hidden issue is detected during the limited exposure phase and documented before full rollout.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-005",
+              "source_span": {
+                "start": 0,
+                "end": 58
+              },
+              "claim_text": "Hidden issue is detected during the limited exposure phase",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-006",
+              "source_span": {
+                "start": 63,
+                "end": 93
+              },
+              "claim_text": "documented before full rollout",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_06-prediction_success_criterion-01",
+          "source_field": "prediction_success_criterion",
+          "source_index": 0,
+          "source_text": "At least one issue is identified and can be addressed before full rollout.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-007",
+              "source_span": {
+                "start": 0,
+                "end": 32
+              },
+              "claim_text": "At least one issue is identified",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-008",
+              "source_span": {
+                "start": 37,
+                "end": 73
+              },
+              "claim_text": "can be addressed before full rollout",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_06-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In software delivery, exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout, whereas testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 20
+              },
+              "claim_text": "In software delivery",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-002",
+              "source_span": {
+                "start": 22,
+                "end": 286
+              },
+              "claim_text": "exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_06-claim-003",
+              "source_span": {
+                "start": 296,
+                "end": 419
+              },
+              "claim_text": "testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases",
+              "claim_type": "counterexample",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-045",
+          "anchor_id": "extract_06-proposition-01",
+          "source_span": {
+            "start": 20,
+            "end": 22
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-046",
+          "anchor_id": "extract_06-proposition-01",
+          "source_span": {
+            "start": 286,
+            "end": 296
+          },
+          "gap_text": ", whereas ",
+          "eligible_non_whitespace_count": 8
+        },
+        {
+          "gap_id": "coverage-gap-047",
+          "anchor_id": "extract_06-proposition-01",
+          "source_span": {
+            "start": 419,
+            "end": 420
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-048",
+          "anchor_id": "extract_06-prediction_observable-01",
+          "source_span": {
+            "start": 58,
+            "end": 63
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-049",
+          "anchor_id": "extract_06-prediction_observable-01",
+          "source_span": {
+            "start": 93,
+            "end": 94
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-050",
+          "anchor_id": "extract_06-prediction_success_criterion-01",
+          "source_span": {
+            "start": 32,
+            "end": 37
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-051",
+          "anchor_id": "extract_06-prediction_success_criterion-01",
+          "source_span": {
+            "start": 73,
+            "end": 74
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchors": [
+        {
+          "anchor_id": "extract_07-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-017",
+              "source_span": {
+                "start": 0,
+                "end": 17
+              },
+              "claim_text": "False stops occur",
+              "claim_type": "proposition",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-018",
+              "source_span": {
+                "start": 22,
+                "end": 59
+              },
+              "claim_text": "no reduction in incidents is observed",
+              "claim_type": "proposition",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-019",
+              "source_span": {
+                "start": 69,
+                "end": 116
+              },
+              "claim_text": "the metric being directly harmful and low-noise",
+              "claim_type": "proposition",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_07-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "Traffic pauses at or below 20% and no full outage occurs.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-008",
+              "source_span": {
+                "start": 0,
+                "end": 30
+              },
+              "claim_text": "Traffic pauses at or below 20%",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-009",
+              "source_span": {
+                "start": 35,
+                "end": 56
+              },
+              "claim_text": "no full outage occurs",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_07-prediction_success_criterion-01",
+          "source_field": "prediction_success_criterion",
+          "source_index": 0,
+          "source_text": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-010",
+              "source_span": {
+                "start": 0,
+                "end": 69
+              },
+              "claim_text": "The rollout pauses automatically at the predefined error-rate ceiling",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-011",
+              "source_span": {
+                "start": 75,
+                "end": 106
+              },
+              "claim_text": "the system avoids a full outage",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_07-prediction_success_criterion-02",
+          "source_field": "prediction_success_criterion",
+          "source_index": 1,
+          "source_text": "The automatic stop triggers and the system recovers within the specified time.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-014",
+              "source_span": {
+                "start": 0,
+                "end": 27
+              },
+              "claim_text": "The automatic stop triggers",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-015",
+              "source_span": {
+                "start": 32,
+                "end": 77
+              },
+              "claim_text": "the system recovers within the specified time",
+              "claim_type": "proposition",
+              "claim_role": "prediction_criterion"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_07-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops, whereas noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 20
+              },
+              "claim_text": "In incident response",
+              "claim_type": "scope",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-002",
+              "source_span": {
+                "start": 22,
+                "end": 147
+              },
+              "claim_text": "automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-003",
+              "source_span": {
+                "start": 152,
+                "end": 169
+              },
+              "claim_text": "avoid false stops",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-004",
+              "source_span": {
+                "start": 179,
+                "end": 242
+              },
+              "claim_text": "noisy metrics weakly related to harm cause repeated false stops",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-005",
+              "source_span": {
+                "start": 247,
+                "end": 262
+              },
+              "claim_text": "delivery delays",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_07-claim-006",
+              "source_span": {
+                "start": 263,
+                "end": 289
+              },
+              "claim_text": "without incident reduction",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-052",
+          "anchor_id": "extract_07-proposition-01",
+          "source_span": {
+            "start": 20,
+            "end": 22
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-053",
+          "anchor_id": "extract_07-proposition-01",
+          "source_span": {
+            "start": 147,
+            "end": 152
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-054",
+          "anchor_id": "extract_07-proposition-01",
+          "source_span": {
+            "start": 169,
+            "end": 179
+          },
+          "gap_text": ", whereas ",
+          "eligible_non_whitespace_count": 8
+        },
+        {
+          "gap_id": "coverage-gap-055",
+          "anchor_id": "extract_07-proposition-01",
+          "source_span": {
+            "start": 242,
+            "end": 247
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-056",
+          "anchor_id": "extract_07-proposition-01",
+          "source_span": {
+            "start": 289,
+            "end": 290
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-057",
+          "anchor_id": "extract_07-prediction_observable-01",
+          "source_span": {
+            "start": 30,
+            "end": 35
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-058",
+          "anchor_id": "extract_07-prediction_observable-01",
+          "source_span": {
+            "start": 56,
+            "end": 57
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-059",
+          "anchor_id": "extract_07-prediction_success_criterion-01",
+          "source_span": {
+            "start": 69,
+            "end": 75
+          },
+          "gap_text": ", and ",
+          "eligible_non_whitespace_count": 4
+        },
+        {
+          "gap_id": "coverage-gap-060",
+          "anchor_id": "extract_07-prediction_success_criterion-01",
+          "source_span": {
+            "start": 106,
+            "end": 107
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-061",
+          "anchor_id": "extract_07-prediction_success_criterion-02",
+          "source_span": {
+            "start": 27,
+            "end": 32
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-062",
+          "anchor_id": "extract_07-prediction_success_criterion-02",
+          "source_span": {
+            "start": 77,
+            "end": 78
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-063",
+          "anchor_id": "extract_07-falsification_observable-01",
+          "source_span": {
+            "start": 17,
+            "end": 22
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-064",
+          "anchor_id": "extract_07-falsification_observable-01",
+          "source_span": {
+            "start": 59,
+            "end": 69
+          },
+          "gap_text": ", despite ",
+          "eligible_non_whitespace_count": 8
+        },
+        {
+          "gap_id": "coverage-gap-065",
+          "anchor_id": "extract_07-falsification_observable-01",
+          "source_span": {
+            "start": 116,
+            "end": 117
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchors": [
+        {
+          "anchor_id": "extract_08-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-008",
+              "source_span": {
+                "start": 0,
+                "end": 74
+              },
+              "claim_text": "Delay in emergency action leads to measurable worsening of patient outcome",
+              "claim_type": "causal",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-009",
+              "source_span": {
+                "start": 76,
+                "end": 123
+              },
+              "claim_text": "consistent with counterexample px_08_counter_3.",
+              "claim_type": "counterexample",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_08-falsification_statement-01",
+          "source_field": "falsification_statement",
+          "source_index": 0,
+          "source_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-007",
+              "source_span": {
+                "start": 3,
+                "end": 173
+              },
+              "claim_text": "vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_08-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-004",
+              "source_span": {
+                "start": 0,
+                "end": 28
+              },
+              "claim_text": "Patient condition stabilizes",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-005",
+              "source_span": {
+                "start": 33,
+                "end": 112
+              },
+              "claim_text": "later evidence rules out the need for the initially considered invasive action.",
+              "claim_type": "proposition",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_08-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-003",
+              "source_span": {
+                "start": 3,
+                "end": 266
+              },
+              "claim_text": "a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_08-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action. However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 303
+              },
+              "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_08-claim-002",
+              "source_span": {
+                "start": 313,
+                "end": 431
+              },
+              "claim_text": "this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+              "claim_type": "limitation",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-066",
+          "anchor_id": "extract_08-proposition-01",
+          "source_span": {
+            "start": 303,
+            "end": 313
+          },
+          "gap_text": " However, ",
+          "eligible_non_whitespace_count": 8
+        },
+        {
+          "gap_id": "coverage-gap-067",
+          "anchor_id": "extract_08-prediction_statement-01",
+          "source_span": {
+            "start": 0,
+            "end": 3
+          },
+          "gap_text": "If ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-068",
+          "anchor_id": "extract_08-prediction_observable-01",
+          "source_span": {
+            "start": 28,
+            "end": 33
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-069",
+          "anchor_id": "extract_08-falsification_statement-01",
+          "source_span": {
+            "start": 0,
+            "end": 3
+          },
+          "gap_text": "If ",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-070",
+          "anchor_id": "extract_08-falsification_observable-01",
+          "source_span": {
+            "start": 74,
+            "end": 76
+          },
+          "gap_text": ", ",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchors": [
+        {
+          "anchor_id": "extract_09-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust. In contrast, apparent consensus from multiple reports that merely repeat a single unverified source is fragile and collapses when the original source is corrected.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_09-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 154
+              },
+              "claim_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust.",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_09-claim-002",
+              "source_span": {
+                "start": 168,
+                "end": 265
+              },
+              "claim_text": "apparent consensus from multiple reports that merely repeat a single unverified source is fragile",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_09-claim-003",
+              "source_span": {
+                "start": 270,
+                "end": 317
+              },
+              "claim_text": "collapses when the original source is corrected",
+              "claim_type": "causal",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-071",
+          "anchor_id": "extract_09-proposition-01",
+          "source_span": {
+            "start": 154,
+            "end": 168
+          },
+          "gap_text": " In contrast, ",
+          "eligible_non_whitespace_count": 11
+        },
+        {
+          "gap_id": "coverage-gap-072",
+          "anchor_id": "extract_09-proposition-01",
+          "source_span": {
+            "start": 265,
+            "end": 270
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-073",
+          "anchor_id": "extract_09-proposition-01",
+          "source_span": {
+            "start": 317,
+            "end": 318
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchors": [
+        {
+          "anchor_id": "extract_10-falsification_observable-01",
+          "source_field": "falsification_observable",
+          "source_index": 0,
+          "source_text": "Observed inventory write-offs due to expiration and total holding cost greater than the cost of stockouts that would have occurred without buffering.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-011",
+              "source_span": {
+                "start": 0,
+                "end": 47
+              },
+              "claim_text": "Observed inventory write-offs due to expiration",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-012",
+              "source_span": {
+                "start": 52,
+                "end": 148
+              },
+              "claim_text": "total holding cost greater than the cost of stockouts that would have occurred without buffering",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_10-falsification_statement-01",
+          "source_field": "falsification_statement",
+          "source_index": 0,
+          "source_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-009",
+              "source_span": {
+                "start": 0,
+                "end": 118
+              },
+              "claim_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-010",
+              "source_span": {
+                "start": 123,
+                "end": 173
+              },
+              "claim_text": "total cost exceeding the value of avoided stockout",
+              "claim_type": "falsifiability",
+              "claim_role": "falsification"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_10-prediction_observable-01",
+          "source_field": "prediction_observable",
+          "source_index": 0,
+          "source_text": "Interruption events decrease and carrying cost as a percentage of product value does not exceed the planned budget.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-005",
+              "source_span": {
+                "start": 0,
+                "end": 28
+              },
+              "claim_text": "Interruption events decrease",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-006",
+              "source_span": {
+                "start": 33,
+                "end": 114
+              },
+              "claim_text": "carrying cost as a percentage of product value does not exceed the planned budget",
+              "claim_type": "prediction",
+              "claim_role": "prediction_observable"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_10-prediction_statement-01",
+          "source_field": "prediction_statement",
+          "source_index": 0,
+          "source_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions while keeping carrying cost within the declared limit.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-003",
+              "source_span": {
+                "start": 0,
+                "end": 109
+              },
+              "claim_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-004",
+              "source_span": {
+                "start": 116,
+                "end": 163
+              },
+              "claim_text": "keeping carrying cost within the declared limit",
+              "claim_type": "prediction",
+              "claim_role": "prediction"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_10-prediction_success_criterion-01",
+          "source_field": "prediction_success_criterion",
+          "source_index": 0,
+          "source_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30% and carrying cost remains under the target threshold set by management.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-007",
+              "source_span": {
+                "start": 0,
+                "end": 82
+              },
+              "claim_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30%",
+              "claim_type": "prediction",
+              "claim_role": "prediction_criterion"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-008",
+              "source_span": {
+                "start": 87,
+                "end": 153
+              },
+              "claim_text": "carrying cost remains under the target threshold set by management",
+              "claim_type": "prediction",
+              "claim_role": "prediction_criterion"
+            }
+          ]
+        },
+        {
+          "anchor_id": "extract_10-proposition-01",
+          "source_field": "proposition",
+          "source_index": 0,
+          "source_text": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow. Buffering is counterproductive when replenishment lead time is short and demand is stable.",
+          "current_claims": [
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-001",
+              "source_span": {
+                "start": 0,
+                "end": 202
+              },
+              "claim_text": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow.",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            },
+            {
+              "adjudicated_claim_id": "adjudicated-extract_10-claim-002",
+              "source_span": {
+                "start": 203,
+                "end": 292
+              },
+              "claim_text": "Buffering is counterproductive when replenishment lead time is short and demand is stable",
+              "claim_type": "proposition",
+              "claim_role": "anchor"
+            }
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "coverage-gap-074",
+          "anchor_id": "extract_10-proposition-01",
+          "source_span": {
+            "start": 292,
+            "end": 293
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-075",
+          "anchor_id": "extract_10-prediction_statement-01",
+          "source_span": {
+            "start": 109,
+            "end": 116
+          },
+          "gap_text": " while ",
+          "eligible_non_whitespace_count": 5
+        },
+        {
+          "gap_id": "coverage-gap-076",
+          "anchor_id": "extract_10-prediction_statement-01",
+          "source_span": {
+            "start": 163,
+            "end": 164
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-077",
+          "anchor_id": "extract_10-prediction_observable-01",
+          "source_span": {
+            "start": 28,
+            "end": 33
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-078",
+          "anchor_id": "extract_10-prediction_observable-01",
+          "source_span": {
+            "start": 114,
+            "end": 115
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-079",
+          "anchor_id": "extract_10-prediction_success_criterion-01",
+          "source_span": {
+            "start": 82,
+            "end": 87
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-080",
+          "anchor_id": "extract_10-prediction_success_criterion-01",
+          "source_span": {
+            "start": 153,
+            "end": 154
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        },
+        {
+          "gap_id": "coverage-gap-081",
+          "anchor_id": "extract_10-falsification_statement-01",
+          "source_span": {
+            "start": 118,
+            "end": 123
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-082",
+          "anchor_id": "extract_10-falsification_statement-01",
+          "source_span": {
+            "start": 173,
+            "end": 175
+          },
+          "gap_text": "s.",
+          "eligible_non_whitespace_count": 2
+        },
+        {
+          "gap_id": "coverage-gap-083",
+          "anchor_id": "extract_10-falsification_observable-01",
+          "source_span": {
+            "start": 47,
+            "end": 52
+          },
+          "gap_text": " and ",
+          "eligible_non_whitespace_count": 3
+        },
+        {
+          "gap_id": "coverage-gap-084",
+          "anchor_id": "extract_10-falsification_observable-01",
+          "source_span": {
+            "start": 148,
+            "end": 149
+          },
+          "gap_text": ".",
+          "eligible_non_whitespace_count": 1
+        }
+      ]
+    }
+  ]
+}

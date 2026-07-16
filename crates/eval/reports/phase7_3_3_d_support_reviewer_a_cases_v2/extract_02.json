@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_02-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_02",
+  "provider_envelope_sha256": "fb752192014940129465b39241d3e31bf8ae84505445e4853e930d8f2fe80dd5",
+  "provider_content_sha256": "9c77cdb9881a3a9a15e9f24995092ba0d8571aff1ec66203392411cc003a8c02",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "5953bda04a24768263db4dd57edad7b66695b25cd99cdc833f8548680b148b2e",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-001",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "certainty_escalation"
+      ],
+      "support_rationale": "Evidence shows that labeling by impact and time sensitivity led to outages reaching responders quickly and ordinary questions staying visible, supporting the direction but not fully justifying the strong causal claim that this labeling 'ensures' all high-impact, time-sensitive issues are addressed promptly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Direct evidence shows that prioritizing solely by requester status (VIP) resulted in a critical issue being delayed, supporting the claim that this approach can cause critical issues to be overlooked.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence supports that high-impact, time-sensitive issues can be addressed before lower-impact ones, but does not guarantee this will always occur as predicted; the claim's certainty and scope exceed the evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence supports that labeling by impact and time sensitivity influences resolution order, but does not confirm that the highest combined score is always resolved first as claimed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-005",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence provides quantitative support for the 90% threshold or directly compares high-impact/high-sensitivity cases to low-impact/low-sensitivity cases within a time window.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample directly describes a critical outage delayed behind low-impact VIP requests, matching the falsification scenario described.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample provides direct evidence of a critical outage being resolved after a low-impact VIP case, supporting the observable falsification claim.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_02",
+    "status": "completed",
+    "decision_count": 7
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

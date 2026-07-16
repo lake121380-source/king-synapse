@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-independent-reference-policy-v1",
+  "status": "frozen",
+  "label": "independent_replication_reference_not_route_a_project_gold",
+  "reviewers": 2,
+  "adjudicators": 1,
+  "blinding": {
+    "no_arm_outputs": true,
+    "no_route_a_boundary_gold": true,
+    "no_route_a_support_gold": true,
+    "no_historical_labels": true,
+    "independent_submissions": true
+  },
+  "outputs": [
+    "claim_inventory",
+    "claim_spans",
+    "materiality",
+    "support_labels",
+    "candidate_reference_label",
+    "material_error_spans",
+    "non_claim_accounting"
+  ],
+  "quality_gates": [
+    "boundary_agreement",
+    "support_agreement",
+    "adjudication",
+    "coverage_accounting",
+    "lineage",
+    "freeze_replay"
+  ],
+  "gold_fields": [
+    "claim_span",
+    "materiality",
+    "support_label",
+    "candidate_reference_label",
+    "material_error_span"
+  ],
+  "diagnostic_only": [
+    "reason",
+    "rationale",
+    "confidence",
+    "citation_explanation"
+  ],
+  "prohibited_sources": [
+    "route_a_boundary_gold",
+    "route_a_support_gold",
+    "candidate_arm",
+    "atomic_arm",
+    "arm_metrics"
+  ],
+  "freeze_order": "reference_frozen_and_sealed_before_arm_scoring",
+  "human_gold_name_only_if_all_decisions_human": true
+}

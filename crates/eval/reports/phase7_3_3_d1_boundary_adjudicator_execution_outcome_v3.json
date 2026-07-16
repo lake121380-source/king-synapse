@@ -1,0 +1,89 @@
+{
+  "schema_version": 3,
+  "report_id": "phase7.3.3-d1-a-boundary-adjudicator-execution-outcome-v3",
+  "recorded_at": "2026-07-13T10:56:04.829725+00:00",
+  "status": "authoritative_negative_result_adjudication_incomplete",
+  "model_requested": "gpt-5.4",
+  "artifact_lineage": {
+    "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+    "attempt_log_sha256": "a17a8b267481403c240aa8473d9663f5d541ef0187a9307c00319b4ac88b62e0",
+    "negative_result_sha256": "d35f9753c0cde6c660534b9b82db720096352e990266066dd29cfa7bb9aa2bb6",
+    "worklist_sha256": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+    "agreement_report_sha256": "0ddb0b873431ddf89b7301f44691b7897a2a36d757f8eace10877a35ed22e6c7",
+    "failure_taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+    "completed_case_checkpoint_sha256": {
+      "extract_01": "9d2a7e1358aa71777522275f3de6ea85ca278b0356eb3a1d0a48fa25f5db61cd",
+      "extract_02": "2d059e87868b440ef4419636df5294ee9c68d6852f5a240af51497b99c74beda",
+      "extract_03": "49164a720f389c8b6e6997cbc379fcd66a171f8db07ef9701440840bed53a93c",
+      "extract_04": "0ea673d0e5a2efbb6218d4fae8dc9a6ad0bdba508eeffb47a60511afb7b3bb47",
+      "extract_05": "88e04803db1e64a4668ab05af1346534d1abe31e1ca2aaddf445bae39201917c",
+      "extract_06": "522459dea43477823dcadf8d0ad27cef4f94666fa84eaaba747c76cdaf3e42a4",
+      "extract_07": "3c3e5dcd7fcc0a61787c3fa2be9ef54d1aee82d7054303eb7f209f1d043101e2",
+      "extract_08": "13b8a3a7c779e27a36d1805961b5ef54595b514fce76e345b2d1565f1cbc2e92",
+      "extract_09": "043243d57bb2919d2f2cdbd5254354d92cbe24f25d24dacb733ecea81b8af8ca"
+    }
+  },
+  "execution_summary": {
+    "expected_case_count": 10,
+    "completed_case_count": 9,
+    "completed_case_ids": [
+      "extract_01",
+      "extract_02",
+      "extract_03",
+      "extract_04",
+      "extract_05",
+      "extract_06",
+      "extract_07",
+      "extract_08",
+      "extract_09"
+    ],
+    "completed_claim_count": 116,
+    "failed_case_id": "extract_10",
+    "failure_code": "source_excerpt_not_found:extract_10-proposition-01:2",
+    "response_received_for_failed_case": true,
+    "provider_content_received_for_failed_case": true,
+    "raw_provider_content_stored": false,
+    "held_out_accessed": false
+  },
+  "frozen_taxonomy_classification": {
+    "level": 2,
+    "level_code": "boundary_semantic_contract",
+    "attribution": {
+      "primary": "provider",
+      "subtype": "frozen_adjudication_contract_failure",
+      "confidence": "high",
+      "evidence": [
+        "source_excerpt_not_found:extract_10-proposition-01:2"
+      ],
+      "counterevidence": []
+    }
+  },
+  "classification_note": "Failure attribution is copied unchanged from the frozen execution artifact; no post-hoc reclassification was applied.",
+  "scientific_interpretation": "The frozen v3 adjudicator completed nine cases but failed the Level 2 Boundary semantic contract on extract_10 because one returned source_excerpt was not an exact substring of the frozen source anchor. The full adjudication is therefore incomplete. Partial checkpoints are preserved as execution evidence but are not an adjudicated Boundary reference and cannot authorize Coverage QA.",
+  "authorized_conclusions": [
+    "The frozen end-to-end adjudication execution did not complete.",
+    "The failure occurred after Provider content and is an experimental failure, not a transport failure.",
+    "The exact-substring Boundary contract failed on extract_10.",
+    "The nine completed checkpoints are auditable partial execution artifacts only."
+  ],
+  "unauthorized_conclusions": [
+    "Boundary Gold is frozen.",
+    "Coverage QA may begin.",
+    "Support Review may begin.",
+    "The same Manifest may retry extract_10.",
+    "Partial checkpoints constitute a completed reference."
+  ],
+  "immutability_policy": {
+    "same_manifest_retry_authorized": false,
+    "semantic_repair_authorized": false,
+    "result_replacement_authorized": false,
+    "prompt_or_parser_modified_after_execution": false
+  },
+  "gates": {
+    "adjudication_completed": false,
+    "coverage_qa_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

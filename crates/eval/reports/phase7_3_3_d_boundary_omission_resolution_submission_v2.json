@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "submission_id": "phase7.3.3-d1-b4-boundary-omission-resolution-submission-v2",
+  "status": "completed_boundary_omission_resolution",
+  "label_status": "boundary_omission_resolution_frozen_correction_pending",
+  "manifest_sha256": "d91f93193dcd6bbb87c57ab1aa7a36fcc8d9ec3435d30c7d99d892f1475089f3",
+  "protocol_sha256": "c94863ecfd006a95a11d9d442919062374af027f24bc5fec2a6ac34eb19e01e8",
+  "worklist_sha256": "907b3f012697b5d6b321b46c519faba58626ead422269da6a909e20293026a28",
+  "b3_submission_sha256": "e41f5303dddd9f947091abd6f16e649e25d9f8ca79755ee550eb59920ca0047a",
+  "b4_v1_readiness_sha256": "94c2334a5e54fb7b98af941f36cdd3212e2fad276d7048b4db2aea4fc678d6ff",
+  "case_count": 4,
+  "decision_count": 4,
+  "decisions": [
+    {
+      "case_id": "b4-001-coverage-gap-012",
+      "gap_id": "coverage-gap-012",
+      "resolution": "resolved_as_non_claim",
+      "severity": null,
+      "rationale": "The gap text ', the pattern is falsified.' is a meta-level consequence stating the overall falsification status if either covered condition occurs. Under atomic claim policy, the substantive falsification conditions are already represented by the two existing claims, and this trailing phrase does not add a separate factual condition or semantic modifier that must be included in a claim boundary."
+    },
+    {
+      "case_id": "b4-002-coverage-gap-067",
+      "gap_id": "coverage-gap-067",
+      "resolution": "resolved_as_non_claim",
+      "severity": null,
+      "rationale": "The omitted text is only the introductory conditional marker 'If', while the existing claim already includes the full conditional substance ('...then...'). Under atomic claim policy, this standalone token does not add independent propositional content and does not require a separate or expanded claim boundary."
+    },
+    {
+      "case_id": "b4-003-coverage-gap-069",
+      "gap_id": "coverage-gap-069",
+      "resolution": "resolved_as_non_claim",
+      "severity": null,
+      "rationale": "The omitted text 'If ' is a standalone conditional introducer without independent propositional content. The existing claim already captures the conditional substance in 'vital signs are rapidly worsening...' and no Boundary correction is required under the current Atomic Claim policy."
+    },
+    {
+      "case_id": "b4-004-coverage-gap-082",
+      "gap_id": "coverage-gap-082",
+      "resolution": "resolved_as_non_claim",
+      "severity": null,
+      "rationale": "The frozen gap contains only the trailing characters \"s.\" after an already represented claim span. Under the current Atomic Claim policy, this pluralizing suffix and terminal punctuation do not introduce additional claim content requiring a separate boundary correction; the proposition that total cost exceeds the value of avoided stockouts is already captured by the existing claim."
+    }
+  ],
+  "raw_provider_responses_stored": false,
+  "held_out_accessed": false,
+  "boundary_correction_performed": false,
+  "coverage_qa_rerun": false,
+  "boundary_gold_frozen": false,
+  "support_review_allowed": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-reviewer-c-entry-frame-v5",
+  "status": "frozen_before_reviewer_c_provider_call",
+  "predecessor_negative_result_sha256": "be30b6ebabe61f730be897dea0863712d8cdde636d5c9337c4b9e701f62d8d77",
+  "failure_classification_sha256": "a534269aef195e915541dc1fc23cbba68b814fecfb7ca782257b284ea8a88b3e",
+  "reviewer_a_submission_sha256": "3a186b9a9be817f1e19a4c85f7c4865b07eab2b4f9ce6e5e88f14146f211e185",
+  "reviewer_b_same_version_retry_allowed": false,
+  "reviewer_c_role": "supplemental_independent_support_label_reviewer",
+  "reviewer_c_is_reviewer_b_retry": false,
+  "reviewer_c_model": "qwen3.5-plus",
+  "frozen_shared_inputs": {
+    "crates/eval/config/phase7_3_3_d_multi_claim_successor_support_review_protocol_frame_v5.json": "8fa87914929a97fcfbe3d6e3f2d4a51cbc4d7c235a315b0513d992b771429d7a",
+    "crates/eval/config/phase7_3_3_d_multi_claim_successor_support_review_schema_frame_v5.json": "269e096513d69048629a7c8c751e554f824c873a647a1955d20adcd8f0720c77",
+    "crates/eval/config/phase7_3_3_d_multi_claim_successor_support_review_policy_frame_v5.json": "b14225f3342d8b09a09f0d6b5ba6bd2d48e268e0d55b13c481268ad68b9d2b20",
+    "crates/eval/config/phase7_3_3_d_multi_claim_successor_support_reviewer_prompt_frame_v5.md": "54ff3f4ce65a1f3116c9703a3fe9ad868616467bbc3f5b744aa42b83e00cb104",
+    "crates/eval/datasets/pattern_extraction/phase7_3_3_d_multi_claim_successor_support_review_packet_frame_v5.json": "634759bd4840d0b7fca64727a5602bae487796d60dfb6bbd8ad597a632c518b6",
+    "crates/eval/reports/phase7_3_3_d_multi_claim_successor_support_review_fixtures_frame_v5.json": "35b74e16b6af3ebe6e6e7f2f2a6e239004d1337611377de5052f0b7375769c03",
+    "scripts/eval/phase7_multi_claim_successor_support_review_frame_v5.py": "6284b6ef1427693ca9d5bd5678df50c004a3df35745426b42e02521058cbe37b"
+  },
+  "invariants": [
+    "same v5 label-only support semantics",
+    "same v5 prompt/schema/policy/packet",
+    "same case isolation and first-content-authoritative policy",
+    "reviewer A and B outputs hidden",
+    "no claim, boundary, type, or metadata mutation"
+  ],
+  "agreement_if_completed": "Reviewer A v5 versus supplemental Reviewer C v5",
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "execute_multi_claim_successor_support_reviewer_c_frame_v5"
+}

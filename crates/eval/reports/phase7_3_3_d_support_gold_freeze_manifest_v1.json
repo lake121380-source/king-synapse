@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d4-support-gold-freeze-manifest-v1",
+  "status": "frozen_not_started",
+  "execution_mode": "offline_deterministic",
+  "artifact_lineage": {
+    "adapter_sha256": "fc9a52c9c00c982000edab51927d26d05469e1e86820a1ee43b9e3d07d150423",
+    "protocol_sha256": "461192b33636c5e8377d057e9c6792bb663abc9658066bdf6709a379ebe4d33c",
+    "contract_fixtures_sha256": "0901dbe7a9b637908c84c7a8d0f9df1b15f6c9aafde4567cc5c9c8d303bee3c5",
+    "boundary_gold_sha256": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0",
+    "reviewer_a_submission_sha256": "2449858a296e48bd761686263dddaf4f90afdcdbc874b588e68f92c4f141c896",
+    "reviewer_b_submission_sha256": "0e82057a80b67a7e0f7e389f6febd5d4f1379f7bbdc364eab344fb65d41c8db0",
+    "support_agreement_report_sha256": "973b09fc49c9492bd34e7413f3348b4c8e8310787aa4d59c5cdaef79da338372",
+    "support_adjudication_submission_sha256": "7601a264edace96a0483c3609beae723e9a54fbffdf2de32950e0ccdbcaba18a",
+    "support_adjudication_result_sha256": "b43ae045225bb0969f357d36f2cc84913d0c69e77d7047124ad517475e255dac",
+    "support_stage_state_v9_sha256": "8d58a459aade70ef135559a5a300de1a86c8c75465ea4201bcd17bb23c43049c",
+    "readiness_v20_sha256": "fdf2d191a3d666f578228be3f3ec1fe8f89e87cee4728bb0341b89b66c993833"
+  },
+  "validated_case_count": 10,
+  "validated_claim_count": 118,
+  "validated_exact_reviewer_agreement_count": 92,
+  "validated_adjudicated_disagreement_count": 26,
+  "validated_deferred_count": 0,
+  "reconstructed_label_counts": {
+    "partially_supported": 26,
+    "supported": 86,
+    "unsupported": 6
+  },
+  "entry_gate_checks": {
+    "protocol_is_frozen_offline_deterministic": true,
+    "protocol_freezes_only_support_label_as_gold": true,
+    "protocol_disallows_provider_and_held_out": true,
+    "fixtures_all_passed_and_current": true,
+    "boundary_gold_frozen_118": true,
+    "boundary_ids_unique_ordered": true,
+    "reviewer_a_completed_118": true,
+    "reviewer_b_completed_118": true,
+    "reviewer_boundary_hashes_match": true,
+    "reviewer_ids_and_order_match_boundary": true,
+    "reviewer_submissions_blind": true,
+    "agreement_completed_92_26": true,
+    "agreement_lineage_matches_inputs": true,
+    "agreement_guards_clean": true,
+    "adjudication_submission_complete_26_no_defer": true,
+    "adjudication_result_complete_and_authorizes_freeze": true,
+    "adjudication_result_submission_hash_matches": true,
+    "agreement_and_adjudication_exact_partition": true,
+    "selected_decisions_replay_exactly": true,
+    "no_boundary_or_reviewer_mutation": true,
+    "diagnostic_followups_not_processed": true,
+    "state_v9_authorizes_d4": true,
+    "state_v9_hashes_match": true,
+    "readiness_v20_authorizes_d4": true,
+    "readiness_v20_lineage_matches": true,
+    "reconstructed_partition_is_118": true,
+    "reconstructed_label_counts_match_cross_check": true,
+    "no_held_out_access": true
+  },
+  "expected_outputs": {
+    "support_gold": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_gold_v1.json",
+    "freeze_receipt": "crates/eval/reports/phase7_3_3_d_support_gold_freeze_receipt_v1.json",
+    "freeze_outcome": "crates/eval/reports/phase7_3_3_d_support_gold_freeze_outcome_v1.json",
+    "support_stage_state_v10": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v10.json",
+    "readiness_v21": "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v21.json"
+  },
+  "gold_fields": [
+    "support_label"
+  ],
+  "provider_call_allowed": false,
+  "semantic_mutation_allowed": false,
+  "diagnostic_followup_processing_allowed": false,
+  "held_out_access_allowed": false
+}

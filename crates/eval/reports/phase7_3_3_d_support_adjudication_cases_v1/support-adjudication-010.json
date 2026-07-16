@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-010-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-010",
+  "boundary_claim_id": "adjudicated-extract_01-claim-005",
+  "provider_envelope_sha256": "95d6c8c030a5a1d183ba6f71a10b42fdf24e4d64a36abfdc82d7bdd2dd25dfd1",
+  "provider_content_sha256": "93a272a9489e4cd4b61f1696768c0dc29da880c9816a91139b115f942a19c9f1",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "df5919932d6ffb1d32f76fa8470b06e1e5636c23806b484e97df1dae98408abb",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-010",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-005",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The positive evidence directly shows incremental rollout via 5% traffic and separate cohorts, and one cited outcome explicitly states the old version remained available, supporting backward compatibility. The counterexample concerns a different migration where coexistence was impossible, but it does not undercut the direct match in the positive cases.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_01-claim-005",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_label": "supported",
+      "support_rationale": "The evidence describes scenarios matching the condition: incremental rollout (5% traffic, cohorts) where backward compatibility was maintained (old version available)."
+    },
+    "selected_frozen_decision_sha256": "4b185b5fcfc84afee240557939d876d6036a0c7093bb0e4d8211efe992be0597",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-boundary-review-v2-entry-protocol-v1",
+  "status": "prospectively_frozen_successor_authorization",
+  "predecessor_result": "reviewer_b_v1_authoritative_level_1_serialization_failure",
+  "predecessor_negative_result_sha256": "c37e599bf0d006f90ca239dfdda7d2258fb630eceadcee811337689b3374e608",
+  "same_version_retry_authorized": false,
+  "successor_version": "boundary_review_v2",
+  "successor_hypothesis": "compact operation-only output can remove the v1 invalid-JSON serialization bottleneck without changing Boundary semantics",
+  "controlled_invariants": [
+    "selected_40_cases",
+    "frozen_v1_worklist",
+    "boundary_semantics",
+    "operation_based_exact_span_reconstruction",
+    "provider",
+    "reviewer_models",
+    "temperature",
+    "top_p",
+    "max_tokens",
+    "blindness"
+  ],
+  "single_intended_change": "output representation removes rationale and confidence and returns only compact boundary operations",
+  "reviewer_a_v1_reused_as_v2_submission": false,
+  "reviewer_a_and_b_v2_both_must_run_under_v2": true,
+  "v1_artifacts_modified": false,
+  "confirmatory_opening_authorized": false,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-025-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_09",
+  "adjudication_item_id": "support-adjudication-025",
+  "boundary_claim_id": "adjudicated-extract_09-claim-007",
+  "provider_envelope_sha256": "bcdcd745369414a1e3e3cb993c318531d2475f24e668ac0af894bf38b00403d1",
+  "provider_content_sha256": "1214ad702586f79b8644fb43386bdf9524e1640611b02cc903790c21570e75cc",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "4ec52ff925d1018ec912ad159629d4f977e47e5ac5fc6fd6a490756c7a76ff64",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-025",
+    "case_id": "extract_09",
+    "boundary_claim_id": "adjudicated-extract_09-claim-007",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The evidence bundle only shows a successful convergence case in px_09_support_1. It does not observe the claim’s stated falsification condition—non-convergence within preregistered tolerance leading to pattern failure—across such cases. Option 2 is better grounded because the claim overgeneralizes beyond the supplied evidence.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_09-claim-007",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "scope_expansion",
+        "prediction_overcommitment"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence shows one instance of convergence, but the claim generalizes to all such cases and asserts pattern failure if not converged, which is not fully established by the evidence."
+    },
+    "selected_frozen_decision_sha256": "244c5fef8bfddeb8336a8904c54540f3ee206a752e97b493257d5176cd27bdf2",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_pref_017",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "ed043272b588c4929002f3e707194d501ff4bf0e52c5d78111b1c973c25bccb3",
+  "content_sha256": "beec6b7bc209d6075545b1b3c96c7f8075f2e72be0e00cb950243a273c4834c1",
+  "latency_ms": 8580.010499979835,
+  "usage": {
+    "prompt_tokens": 1091,
+    "completion_tokens": 84,
+    "total_tokens": 1175,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 5442,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 6282,
+      "total_duration_ms": 6206,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_pref_017",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_pref_017-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 63
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "Evidence 06 directly states that the current explicit preference replaces the earlier choice, which entails that the current explicit preference supersedes the older preference. Evidence 01 also says the older preference has been superseded."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

@@ -1,0 +1,449 @@
+{
+  "schema_version": 3,
+  "case_id": "extract_01",
+  "status": "completed",
+  "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+  "provider_envelope_sha256": "b671f469d3a2b517043527469221794be6d36a57738d979c48f35579b511fa02",
+  "provider_content_sha256": "d369a9e2b474974bdfd97310a68a94a260fdacd957ee6782594cfbde3bfd7cdf",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "b196295607ec5cf218b4799706e3b98d846eba5f9ce67480d844f5b860422132",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-001",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 0,
+        "end": 20
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In software delivery",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate span because it is a standalone domain/applicability qualifier for the following assertion and can be evaluated independently from the substantive proposition.",
+      "type_decision_rationale": "This phrase sets the domain in which the assertion applies, so it is a scope claim.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_01-claim-001"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-002",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 22,
+        "end": 117
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "deploying changes incrementally to a small subset of traffic enables early detection of defects",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained this exact clause because it expresses one complete action-outcome assertion and is already atomic apart from neighboring qualifiers and coordinated material.",
+      "type_decision_rationale": "The clause links an intervention to an outcome using an enabling relation, so it is causal.",
+      "reason_codes": [
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-001",
+        "reviewer-e-extract_01-claim-002"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-003",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 124,
+        "end": 157
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "keeping the old version available",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as a separate non-overlapping clause because the 'while' coordination introduces an additional assertion that can take a different truth value from the defect-detection clause.",
+      "type_decision_rationale": "This span states a direct standalone assertion without causal or predictive framing, so it is a proposition.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-002",
+        "reviewer-e-extract_01-claim-003"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-004",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 168,
+        "end": 216
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the new and old versions are backward compatible",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_01::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Shifted to the narrower asserted content and excluded the connective 'provided' because the truth-evaluable atomic assertion is the compatibility condition itself.",
+      "type_decision_rationale": "The clause functions as a condition limiting when the surrounding proposition applies, so it is scope.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-003",
+        "reviewer-e-extract_01-claim-004"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-005",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "source_span": {
+        "start": 5,
+        "end": 76
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "an incremental rollout with backward compatibility is used for a change",
+      "claim_type": "scope",
+      "claim_role": "prediction",
+      "anchor_group": "extract_01::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate conditional applicability clause because it establishes the circumstance for the following prediction and can be segmented independently from the predicted outcomes.",
+      "type_decision_rationale": "This span provides the condition under which the prediction holds, making it a scope claim.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_01-claim-005"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-006",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "source_span": {
+        "start": 78,
+        "end": 130
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the first cohort will expose any critical regression",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_01::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the following coordinated phrase because exposure of a regression is an independently truth-evaluable predicted outcome distinct from downstream system impact.",
+      "type_decision_rationale": "The clause states a forecast about what the first cohort will reveal, so it is a prediction.",
+      "reason_codes": [
+        "coordination",
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-004",
+        "reviewer-e-extract_01-claim-006"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-007",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "source_span": {
+        "start": 131,
+        "end": 171
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "without affecting the rest of the system",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_01::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated from the preceding prediction because absence of broader system impact can be evaluated independently from whether the regression is exposed.",
+      "type_decision_rationale": "This clause predicts a specific outcome about system impact, so it is a prediction.",
+      "reason_codes": [
+        "coordination",
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-004",
+        "reviewer-e-extract_01-claim-007"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-008",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "source_span": {
+        "start": 0,
+        "end": 80
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "A defect found in the first cohort does not require rolling back the old version",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_01::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as one complete assertion because it expresses a single predicted rollback consequence and is cleanly separated from the semicolon-delimited follow-up clause.",
+      "type_decision_rationale": "The sentence states an expected observable outcome, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-005",
+        "reviewer-e-extract_01-claim-008"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-009",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "source_span": {
+        "start": 82,
+        "end": 112
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "only the cohort is rolled back",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_01::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as a separate semicolon-delimited assertion because rollback scope for the cohort can be evaluated independently from whether the old version needs rollback.",
+      "type_decision_rationale": "This clause predicts the specific rollback outcome, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-006",
+        "reviewer-e-extract_01-claim-009"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-010",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "a743b533b84b7d73f25e02c887deb510dfa71492b47653344cddf1d19ed80f07",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The old version remains fully operational during the entire rollout phase.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_01::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained the full sentence because it is a single indivisible assertion with no internal coordination requiring further split.",
+      "type_decision_rationale": "The sentence specifies an expected future/ongoing outcome, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-007",
+        "reviewer-e-extract_01-claim-010"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-011",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "source_span": {
+        "start": 3,
+        "end": 87
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "an incremental rollout with backward compatibility still causes a system-wide outage",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_01::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Shifted to exclude the non-assertive conditional marker 'If' and kept this as one atomic falsifying condition, distinct from the coordinated rollback condition.",
+      "type_decision_rationale": "This clause states an observable condition whose occurrence would count against the pattern, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "non_assertive_connector",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-008",
+        "reviewer-e-extract_01-claim-011"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-012",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "source_span": {
+        "start": 91,
+        "end": 125
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "forces rollback of the old version",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_01::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as a separate coordinated clause because forced rollback is a distinct falsifying condition that can hold independently of a system-wide outage.",
+      "type_decision_rationale": "This span names a separate observable condition that would falsify the pattern, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-009",
+        "reviewer-e-extract_01-claim-012"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-013",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "source_span": {
+        "start": 0,
+        "end": 37
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The entire system becomes unavailable",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_01::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as one atomic observable because it is the first coordinated falsifying outcome and can be evaluated independently from the rollback outcome.",
+      "type_decision_rationale": "This clause states a concrete observable event that would count as falsification, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-010",
+        "reviewer-e-extract_01-claim-013"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_01-claim-014",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "source_span": {
+        "start": 41,
+        "end": 114
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the old version is rolled back due to issues from the incremental rollout",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_01::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as the second coordinated observable because rollback of the old version is a separate falsifying event from total system unavailability.",
+      "type_decision_rationale": "This clause gives another concrete observable event that would falsify the pattern, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_01-claim-011",
+        "reviewer-e-extract_01-claim-014"
+      ]
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 14,
+    "provider_content_sha256": "d369a9e2b474974bdfd97310a68a94a260fdacd957ee6782594cfbde3bfd7cdf"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

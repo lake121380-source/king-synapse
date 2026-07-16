@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "support_labels",
+    "citation_masks"
+  ],
+  "properties": {
+    "support_labels": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "enum": [
+          "not_assessable",
+          "partially_supported",
+          "supported",
+          "unsupported"
+        ]
+      }
+    },
+    "citation_masks": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "pattern": "^[01]{6}$"
+      }
+    }
+  },
+  "additionalProperties": false
+}

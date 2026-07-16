@@ -1,0 +1,52 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_safe_022",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "2644d40e9657354f730fd85430aa1100300a8202d9261a831452049ba1a6b3db",
+  "provider_content_sha256": "44a9cdc016e646c3e47b377e12eeccb0e5bb9ff332c89e756325deb0fa9d5285",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "653d5bbc1ea62a34c3f97d336c35032092f38f30ca00a6d280b3e5f86e841c5a",
+  "normalized_case": {
+    "case_id": "mi_validation_safe_022",
+    "candidate_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_safe_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mi_validation_safe_022-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that a clear current confirmed answer should remain first, implying that there is a clear answer but does not address whether cognitive intervention is needed. The other evidence items are either irrelevant or weak. No evidence supports the claim that no cognitive intervention is needed; in fact, the context involves competing signals and conflict evaluation, suggesting intervention may be required. Therefore, the claim is unsupported.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "unsupported",
+    "material_error_spans": [
+      {
+        "reference_claim_id": "mi_validation_safe_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "unsupported"
+      }
+    ],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_fail_017",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "963bb9b657ba7e5c1d24dd1eef44943b6f6c8739cbece7ec4125ca00870f7a53",
+  "provider_content_sha256": "b8812c417c21cdea27d5799e54340b0ea1cec7851b3b3fffc371d764e2eaa3d6",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "0d0072b987f114c7f4921b116791d0f7c5c86ffe7f21f121a219773874e4f1f7",
+  "normalized_case": {
+    "case_id": "mi_validation_fail_017",
+    "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_fail_017-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_fail_017-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that verified failure evidence must override a previously successful playbook. Evidence 06 directly supports this by stating that verified failure evidence indicates the approach caused harm and must not be repeated, which overrides the prior recommendation to repeat the approach (as seen in Evidence 01). No evidence contradicts this rule, and the claim is fully supported by the ground truth failure evidence.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

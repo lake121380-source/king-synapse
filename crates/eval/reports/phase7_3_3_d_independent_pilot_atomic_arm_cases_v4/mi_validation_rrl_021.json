@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrl_021",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "a85ec784b4b6eca34d8caa114bc46701cd4894a65c4f5e8bae587040201d6acf",
+  "content_sha256": "284201a719bb7e6dba5e4d990583ec9fffb37f56289cacc72c5d7eabe75f6a21",
+  "latency_ms": 6656.997899990529,
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 86,
+    "total_tokens": 1286,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3605,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4445,
+      "total_duration_ms": 4369,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrl_021",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrl_021-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence directly states that a recent weak observation exists but is not verified, while a high-confidence confirmation remains authoritative. This entails the preference for the high-confidence confirmation over the recent weak observation."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

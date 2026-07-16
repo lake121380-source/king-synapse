@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-analysis-protocol-v1",
+  "status": "frozen_before_reference_opening_for_scoring",
+  "study_scope": "paired exploratory Pilot; no confirmatory p-values and no generalization claim",
+  "case_count": 40,
+  "cluster_unit": "candidate_sha256",
+  "unique_candidate_clusters": 10,
+  "structural_limitation": "one full-Candidate material claim per case; Atomic localization estimand is structurally degenerate if the Atomic arm also emits whole_candidate_claim",
+  "primary_endpoints": {
+    "candidate_level_exact_correctness": "arm aggregate label equals sealed Independent Reference label; not_assessable is incorrect unless Reference is not_assessable",
+    "material_error_detection": "binary presence of any material partially_supported or unsupported span; not_assessable is an abstention and predicts no localized material error",
+    "diagnostic_localization_precision_recall_f1": "micro character-level overlap of material error spans across all 40 cases"
+  },
+  "secondary_endpoints": [
+    "ordinal_distance",
+    "unsupported_masking",
+    "partial_localization",
+    "final_version_failure_rate",
+    "candidate_atomic_label_agreement",
+    "tokens",
+    "latency"
+  ],
+  "missingness": {
+    "all_40_cases_required": true,
+    "failures_not_dropped": true,
+    "final_submission_missing_is_incorrect_and_reported": true,
+    "predecessor_version_partial_outputs_excluded": true
+  },
+  "uncertainty": {
+    "primary": "candidate_sha256 cluster bootstrap percentile interval",
+    "secondary": "case bootstrap percentile interval",
+    "seed": 733041,
+    "replicates": 20000,
+    "interval": [
+      0.025,
+      0.975
+    ],
+    "confirmatory_p_values": false
+  },
+  "paired_effect_direction": "atomic_minus_candidate",
+  "cost_policy": {
+    "token_and_latency_measured": true,
+    "pricing_method_frozen": false,
+    "cost_usd": null
+  },
+  "reference_opening_authorized_only_after_manifest_freeze": true,
+  "confirmatory_content_opened": false
+}

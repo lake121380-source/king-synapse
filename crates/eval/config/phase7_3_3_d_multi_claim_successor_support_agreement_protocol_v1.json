@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-agreement-v1",
+  "status": "prospectively_frozen_before_deterministic_computation",
+  "research_object": "inter-reviewer Support agreement over 240 sealed multi-claim reference candidates",
+  "entry_gate": "compute_multi_claim_successor_support_agreement_v1",
+  "labels": [
+    "supported",
+    "partially_supported",
+    "unsupported",
+    "not_assessable"
+  ],
+  "primary_metrics": [
+    "raw_label_agreement",
+    "chance_expected_agreement",
+    "cohen_kappa",
+    "normalized_weighted_disagreement_severity"
+  ],
+  "confusion_matrix_orientation": "Reviewer A rows, Reviewer B columns",
+  "severity_matrix": {
+    "same": 0.0,
+    "supported_partially_supported": 0.5,
+    "partially_supported_unsupported": 0.5,
+    "supported_unsupported": 1.0,
+    "not_assessable_vs_any_assessable": 1.0
+  },
+  "severity_interpretation": "mean per-claim disagreement distance; complements rather than replaces kappa",
+  "diagnostic_metrics": [
+    "citation exact-set agreement and mean Jaccard",
+    "reason-code exact-set agreement and mean Jaccard",
+    "confidence agreement and kappa",
+    "claim-type stratification",
+    "claim-role stratification"
+  ],
+  "worklist_partition": {
+    "label_disagreement": "support labels differ; label adjudication required",
+    "diagnostic_followup": "support labels agree but citation, reason, or confidence differs; label change forbidden"
+  },
+  "isolation": {
+    "worklists_disjoint": true,
+    "label_worklist_cannot_modify_boundary_type_metadata": true,
+    "diagnostic_worklist_support_label_adjudication_required": false,
+    "diagnostic_worklist_label_change_authorized": false
+  },
+  "no_model_calls": true,
+  "support_gold_created": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

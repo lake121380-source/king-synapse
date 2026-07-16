@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-type-metadata-reviewer-c-entry-protocol-v1",
+  "status": "frozen_before_reviewer_c_provider_call",
+  "predecessor_negative_result_sha256": "90db03a405e0f03a88ac6c176cfc2f6c42bd0cab0df503da61c436e24e34eba8",
+  "failure_classification_sha256": "4e0c79f517ed73be25b256b7ac9c4afbe0172d6f77f8d2a51fef0e1de9c78992",
+  "reviewer_a_v2_submission_sha256": "2d8c7a21e04f1971becae4abc609d8da9f376f8f44c239d4a74f42abc838a53f",
+  "reviewer_b_v2_same_version_retry_authorized": false,
+  "reviewer_c_role": "supplemental_independent_type_metadata_reviewer",
+  "reviewer_c_is_reviewer_b_retry": false,
+  "reviewer_c_model": "qwen3.5-plus",
+  "frozen_shared_inputs": {
+    "protocol_sha256": "ab01248dde7c6c067ff6a292d95c8092dc6d0f22754a992bb4cde56bb64e351e",
+    "schema_sha256": "21f8e377324144d7bf28295d1a395aa9f6d7a2a7a14846722183b372048a0b98",
+    "policy_sha256": "727661b09da733dce1863636b3dbe9ba7d6d1f63603691700218ac689d950952",
+    "prompt_sha256": "b741c66243b407fa0427385d6326c119d4c340137bd5bbf0e3ab2c78782f6e24",
+    "worklist_sha256": "22256af0efe38d04502760c396f259dd2f4efaba4fb0e30073994bca7c0c1dfb",
+    "boundary_reference_candidate_sha256": "e93abf01b54a6276a4f5ae2e370fd891548218a96022129a20030280e034b2ac",
+    "frozen_v2_base_adapter_sha256": "87ad045270c57478bfedfea9830887c22aa8a0677414d45b774e925ca676d493"
+  },
+  "invariants": [
+    "same v2 prompt/schema/policy",
+    "same claim_index representation",
+    "same blind worklist",
+    "same case isolation and first-content-authoritative policy",
+    "no boundary mutation"
+  ],
+  "agreement_if_completed": "Reviewer A v2 versus supplemental Reviewer C v1",
+  "reviewer_a_b_agreement_name_authorized": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "execute_multi_claim_successor_independent_type_metadata_reviewer_c_v1"
+}

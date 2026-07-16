@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "submission_id": "phase7.3.3-d-independent-pilot-reference-adjudication-submission-v1",
+  "status": "completed",
+  "manifest_sha256": "9f3dbde7011894456bb73e71986a8d139e5d0c652cc7a049d5613e5becbea0bf",
+  "case_count": 8,
+  "adjudications": [
+    {
+      "case_id": "mi_validation_fail_018",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-001",
+      "operation": "select_option_1",
+      "adjudicator_rationale": "Evidence 01 states there is an older successful playbook recommending repeating the approach, and Evidence 06 states verified failure evidence says the approach caused harm and must not be repeated. In this conflict, the verified failure evidence directly supports overriding the prior successful playbook for this case.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_fail_018-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that verified failure evidence says the approach caused harm and must not be repeated, which overrides the previously successful playbook recommendation. This provides clear, authoritative support for the selection rule that verified failure evidence must override prior success.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "90cf44aa770ecb551725ac05c968048b90416aa4f55e83c983db7613a5ef0959"
+    },
+    {
+      "case_id": "mi_validation_frf_024",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-002",
+      "operation": "select_option_2",
+      "adjudicator_rationale": "Evidence 06 says unresolved failure evidence remains authoritative despite not being recently accessed. Evidence 01 says the recently accessed playbook is unsafe and repeats the failed approach. Together, this supports the selection rule that unresolved failure evidence takes precedence over the recently accessed unsafe playbook.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_024-evidence-06",
+          "mi_validation_frf_024-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even though it is not recently accessed, which supports the claim that it should 'beat' a recently accessed unsafe playbook. Evidence 01 confirms the unsafe playbook was recently accessed but still repeats the failed approach, reinforcing the need for the failure evidence to take precedence. The comparative and selection relationship is directly supported by these pieces of evidence.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "5c26d05f0120f617ce76c6ee338cd63a3c50ec8e3873ffa33b57eb11eeeb8074"
+    },
+    {
+      "case_id": "mi_validation_frf_020",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-003",
+      "operation": "select_option_1",
+      "adjudicator_rationale": "Evidence 06 directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and Evidence 01 identifies a recently accessed unsafe playbook that repeats the failed approach. Under conservative entailment, this supports the selection rule that unresolved failure evidence takes precedence over the recently accessed unsafe playbook. Option 2 misreads Evidence 01; it does not imply the unsafe playbook prevails.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_020-evidence-06",
+          "mi_validation_frf_020-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even though it is not recently accessed, establishing its priority. Evidence 01 confirms that the unsafe playbook was recently accessed but continues to repeat the failed approach, supporting the comparative context. Together, these show that unresolved failure evidence is the selection rule over a recently accessed unsafe playbook, fully supporting the claim.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "3f5d9731789e984a13bccf0ea90c1b8c5a74028daaf5ed5152f7be08f7c21cba"
+    },
+    {
+      "case_id": "mi_validation_frf_019",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-004",
+      "operation": "select_option_2",
+      "adjudicator_rationale": "Evidence 06 states that unresolved failure evidence remains authoritative despite not being recently accessed, and Evidence 01 identifies a recently accessed unsafe playbook that still repeats the failed approach. Together, this supports the selection rule that unresolved failure evidence takes precedence over the recently accessed unsafe playbook.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_019-evidence-06",
+          "mi_validation_frf_019-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that unresolved failure evidence remains authoritative despite not being recently accessed, which supports the claim that such evidence must beat a recently accessed unsafe playbook. Evidence 01 confirms the unsafe playbook was recently accessed but still repeats the failed approach, reinforcing the comparative selection. The claim is fully supported by the cited evidence.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "7d9b06ffa7660fb796f6b38f41c49565c47e8741fba2703d69a5ba73b9a9cc74"
+    },
+    {
+      "case_id": "mi_validation_frf_022",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-005",
+      "operation": "select_option_1",
+      "adjudicator_rationale": "Evidence 06 directly says unresolved failure evidence remains authoritative despite not being recently accessed, and Evidence 01 says the recently accessed playbook is unsafe and repeats the failed approach. Under conservative entailment, this supports the rule that unresolved failure evidence takes precedence over the recently accessed unsafe playbook. Option 2 misreads the evidence and is not supported.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_frf_022-evidence-06",
+          "mi_validation_frf_022-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even if not recently accessed, supporting its primacy. Evidence 01 confirms the unsafe playbook was recently accessed but continues to repeat a failed approach, implying it is less reliable. Together, these show that unresolved failure evidence should override a recently accessed unsafe playbook, fully supporting the selection rule.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "749380c50463b29d3464d1673ad43102b28b8db708aed0c4c9caa2c9ad4c4b80"
+    },
+    {
+      "case_id": "mi_validation_safe_022",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-006",
+      "operation": "select_option_1",
+      "adjudicator_rationale": "Evidence 06 supports that there is a clear current confirmed answer that should remain first, but it does not explicitly entail the full candidate proposition that no cognitive intervention is needed. Under conservative entailment, the intervention-need portion is unsupported, so the candidate as a whole is not established.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_frozen_decision": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_022-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that a clear current confirmed answer should remain first, implying that there is a clear answer but does not address whether cognitive intervention is needed. The other evidence items are either irrelevant or weak. No evidence supports the claim that no cognitive intervention is needed; in fact, the context involves competing signals and conflict evaluation, suggesting intervention may be required. Therefore, the claim is unsupported.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "1247a4d75bfcf14da3ff1ed91272770826fb06de6ba1f338dca75b410e2055ed"
+    },
+    {
+      "case_id": "mi_validation_safe_024",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-007",
+      "operation": "select_option_2",
+      "adjudicator_rationale": "Evidence 06 supports a selection rule: the clear current confirmed answer should remain first. It does not explicitly entail the full candidate proposition that baseline evidence is already clear and that no cognitive intervention is needed. Under conservative entailment, that additional framing is not directly supported by the supplied evidence.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_frozen_decision": {
+        "support_label": "unsupported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_024-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that the current confirmed answer should remain first, implying that a selection has been made and intervention is not needed, but the Candidate's phrasing 'baseline evidence is already clear' is not directly supported; the evidence does not explicitly state that baseline evidence is clear or that no intervention is needed. The evidence is about a confirmed answer remaining first, which is a different proposition. Thus, the Candidate is unsupported.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "4603cc6011bfb36a421b45abb71eaa406a8ad6b983f393a3c540726af131eeb2"
+    },
+    {
+      "case_id": "mi_validation_safe_023",
+      "adjudication_item_id": "independent-pilot-reference-adjudication-008",
+      "operation": "select_option_2",
+      "adjudicator_rationale": "Evidence 06 says the clear current confirmed answer should remain first. Under conservative entailment, this supports the selection rule that the existing answer is already clear and should be maintained rather than changed by further cognitive intervention. The other evidence is marked irrelevant or weak and does not overturn this. Option 1 overreads 'should remain first' as requiring intervention, which reverses the no-intervention framing.",
+      "status": "selected_frozen_reviewer_decision",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_frozen_decision": {
+        "support_label": "supported",
+        "material": true,
+        "claim_type": "selection_rule",
+        "cited_evidence_ids": [
+          "mi_validation_safe_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the baseline evidence is already clear and no cognitive intervention is needed. Evidence 06 directly states that the current confirmed answer should remain first, indicating clarity and sufficiency of the baseline evidence, and implying no further intervention is required. No other evidence contradicts this, and the cited evidence is highly confident and relevant. Thus, the claim is fully supported.",
+        "confidence": "high"
+      },
+      "boundary_mutation_performed": false,
+      "candidate_mutation_performed": false,
+      "evidence_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "selected_frozen_decision_sha256": "d8085b425eb409d2c18eef4185a01670fcba245c076698d27fb15dd16236e70b"
+    }
+  ],
+  "operation_counts": {
+    "select_option_1": 4,
+    "select_option_2": 4
+  },
+  "selected_source_counts": {
+    "reviewer_a": 6,
+    "reviewer_b": 2
+  },
+  "deferred_count": 0,
+  "boundary_mutation_performed": false,
+  "candidate_mutation_performed": false,
+  "evidence_mutation_performed": false,
+  "reviewer_submission_mutation_performed": false,
+  "route_a_gold_visible": false,
+  "arm_outputs_visible": false,
+  "confirmatory_content_opened": false
+}

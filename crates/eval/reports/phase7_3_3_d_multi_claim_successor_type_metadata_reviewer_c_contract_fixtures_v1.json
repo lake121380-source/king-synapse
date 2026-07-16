@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "fixture_id": "phase7.3.3-d-multi-claim-successor-type-metadata-reviewer-c-contract-fixtures-v1",
+  "shared_v2_fixtures_sha256": "bc85b44a8fb53ac7536c8e828902a9d9f0d2fed14c928768aa135f954576f7c9",
+  "passed": 8,
+  "total": 8,
+  "status": "PASS",
+  "results": [
+    {
+      "name": "shared_v2_fixtures_pass",
+      "expected_pass": true,
+      "observed_pass": true,
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "valid_claim_index_reconstruction",
+      "expected_pass": true,
+      "observed_pass": true,
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "claim_id_copy_forbidden",
+      "expected_pass": false,
+      "observed_pass": false,
+      "status": "PASS",
+      "error": "annotation_fields_invalid:0"
+    },
+    {
+      "name": "canonical_exact_qwen",
+      "expected_pass": true,
+      "observed_pass": true,
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "canonical_versioned_qwen",
+      "expected_pass": true,
+      "observed_pass": true,
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "name": "canonical_foreign_rejected",
+      "expected_pass": false,
+      "observed_pass": false,
+      "status": "PASS",
+      "error": "provider_reported_model_outside_requested_family:qwen3.5-plus:gemini-2.5-pro"
+    },
+    {
+      "name": "duplicate_json_key_rejected",
+      "expected_pass": false,
+      "observed_pass": false,
+      "status": "PASS",
+      "error": "duplicate_json_key:annotations"
+    },
+    {
+      "name": "reviewer_b_content_empty",
+      "expected_pass": true,
+      "observed_pass": true,
+      "status": "PASS",
+      "error": null
+    }
+  ]
+}

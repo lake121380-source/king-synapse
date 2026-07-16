@@ -1,0 +1,239 @@
+{
+  "schema_version": 3,
+  "reviewer": "a",
+  "case_id": "extract_07",
+  "manifest_sha256": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "provider_envelope_sha256": "0046365d92fb5eb4c977f6b9fe3a8d47c02959fcba86912ada0d187cc71c6300",
+  "provider_content_sha256": "acfe63cb7430307bff3f26ae47ce542fcc34005b91c1babca252f3c1dd7511d7",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-001",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 22,
+        "end": 169
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a causal assertion linking the use of certain metrics to prevention of incidents and avoidance of false stops.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-002",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 179,
+        "end": 289
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a separate causal assertion about the negative effects of using noisy, weakly related metrics.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-003",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "833ba94949c4c355fb81ce6f89a460e2f6063c560d2e566f468023f2244a2ef9",
+      "source_span": {
+        "start": 0,
+        "end": 199
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases, then the rollout will stop at a low traffic percentage and prevent a full outage.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a conditional prediction about the outcome of a specific rollout configuration.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-004",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "eb1521e73e1d8f36508edcaa91499e2183fa61839129ade487489c4bd25ad402",
+      "source_span": {
+        "start": 0,
+        "end": 57
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Traffic pauses at or below 20% and no full outage occurs.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_07::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a directly observable prediction about system behavior.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-005",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "2631a746526b616d1d52048208c462e7ec3eb6b8de28d958ad457038d664de24",
+      "source_span": {
+        "start": 0,
+        "end": 107
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The rollout pauses automatically at the predefined error-rate ceiling, and the system avoids a full outage.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a compound prediction success criterion; both parts are required for success.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-006",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-02",
+      "source_field": "prediction_statement",
+      "source_index": 1,
+      "source_text_sha256": "be98bef0f7930a4c6ab1e6792dee52794efa6ffb8011472037e88b424af68822",
+      "source_span": {
+        "start": 0,
+        "end": 188
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines, then the change will reverse before backlog recovery exceeds the allowed window.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a conditional prediction about the effect of certain stop conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-007",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-02",
+      "source_field": "prediction_observable",
+      "source_index": 1,
+      "source_text_sha256": "0d55598d9e23ab4c06489219708d3e7480b6cdf0b93b8bea3faeea3b33e07dbf",
+      "source_span": {
+        "start": 0,
+        "end": 77
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The change is reversed before the recovery time exceeds the overnight window.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_07::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is an observable prediction about the timing of a change reversal.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-008",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "source_field": "prediction_success_criterion",
+      "source_index": 1,
+      "source_text_sha256": "364cfde1c9e894a0a9e7a0995dc2dd097b4ab95579732f0d6150763fdae62e5e",
+      "source_span": {
+        "start": 0,
+        "end": 78
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The automatic stop triggers and the system recovers within the specified time.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a compound prediction success criterion; both conditions must be met.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-009",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 0,
+        "end": 224
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a falsifiability statement specifying what would disprove the pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_07-claim-010",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "source_span": {
+        "start": 0,
+        "end": 117
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_07::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is an observable falsification criterion, matching the falsification statement.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_07",
+    "status": "completed",
+    "claim_count": 10
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

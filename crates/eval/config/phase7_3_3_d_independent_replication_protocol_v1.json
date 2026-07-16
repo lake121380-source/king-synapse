@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-replication-protocol-v1",
+  "status": "frozen",
+  "study_family": "prospective_independent_replication",
+  "current_gate_scope": "protocol_design_only_no_dataset_opening",
+  "research_question": "Does Atomic-level measurement improve correctness or diagnostic localization under an independent dataset, independent reference, and equal resources?",
+  "stages": [
+    "protocol_freeze",
+    "pilot_sampling_frame_freeze",
+    "pilot_reference_construction",
+    "equal_resource_pilot",
+    "pilot_effect_cost_estimation",
+    "power_and_sample_size_freeze",
+    "confirmatory_dataset_open",
+    "confirmatory_reference",
+    "confirmatory_equal_resource_execution",
+    "result_freeze"
+  ],
+  "pilot_role": "exploratory_not_confirmatory",
+  "confirmatory_role": "prospective_after_power_freeze",
+  "independence": {
+    "exclude_ten_design_cases": true,
+    "exclude_candidate_hash_overlap": true,
+    "exclude_evidence_hash_overlap": true,
+    "exclude_source_identity_overlap_when_available": true,
+    "reference_blind_to_both_arms": true,
+    "arms_blind_to_reference": true,
+    "arms_blind_to_each_other": true,
+    "confirmatory_closed_until_power_freeze": true
+  },
+  "anti_circularity": {
+    "route_a_boundary_gold_for_accuracy": false,
+    "route_a_support_gold_for_accuracy": false,
+    "arm_output_may_modify_reference": false,
+    "reference_independent_from_both_arms": true
+  },
+  "primary_estimands": [
+    "candidate_level_correctness_difference",
+    "material_error_detection_difference",
+    "diagnostic_localization_difference"
+  ],
+  "failure_governance": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "output_repair": false,
+    "infrastructure_retry_only_before_content": true,
+    "change_requires_successor_version": true,
+    "outcome_dependent_replacement": false,
+    "failure_is_immutable_outcome": true
+  },
+  "pilot_allowed_claims": [
+    "feasibility",
+    "effect_size_estimate",
+    "mixed_support_rate",
+    "failure_rate",
+    "cost_latency",
+    "power_inputs"
+  ],
+  "pilot_forbidden_claims": [
+    "generalization",
+    "universal_superiority",
+    "confirmatory_accuracy_superiority",
+    "production_readiness"
+  ],
+  "runtime": {
+    "integration": false,
+    "shadow_mode": false,
+    "memory_write": false,
+    "pattern_promotion": false
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_frf_024",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "cc24296cf6b19c054dc006311055c0f36b348a77529fa9e68c79b3517e1aadbc",
+  "content_sha256": "ae80caf590864fb3d96ae49b66af32926d8347da07dcfbc60c2da4a6681871ff",
+  "latency_ms": 4608.070499962196,
+  "usage": {
+    "prompt_tokens": 1116,
+    "completion_tokens": 91,
+    "total_tokens": 1207,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1627,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2467,
+      "total_duration_ms": 2391,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_frf_024",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_frf_024-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and that the recently accessed playbook is unsafe and repeats the failed approach. This entails that unresolved failure evidence takes precedence over the recently accessed unsafe playbook."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

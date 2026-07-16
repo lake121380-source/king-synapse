@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-atomic-vs-candidate-paired-evaluation-v1",
+  "phase": "Phase 7.3.3-D Atomic-vs-Candidate Paired Diagnostic Evaluation",
+  "status": "frozen",
+  "study_design": "retrospective_frozen_ten_case_paired_diagnostic_analysis",
+  "research_object": "measurement_diagnostic_resolution_and_error_localization",
+  "primary_research_question": "On the same ten frozen design Candidates, how much support heterogeneity and error localization is exposed by Atomic-level measurement compared with one Candidate-level label?",
+  "not_primary_research_questions": [
+    "which protocol is intrinsically more accurate",
+    "which model has greater boundary or support capability",
+    "whether the result generalizes beyond the frozen ten design cases",
+    "whether runtime integration is safe or authorized"
+  ],
+  "paired_unit": {
+    "unit": "frozen_design_candidate",
+    "required_case_count": 10,
+    "required_atomic_claim_count": 118,
+    "identity_fields": [
+      "case_id",
+      "candidate_response_sha256"
+    ],
+    "exact_identity_required": true,
+    "approximate_or_semantic_pairing_forbidden": true
+  },
+  "lanes": {
+    "candidate_level": {
+      "source": "crates/eval/reports/phase7_3_2_semantic_judge_execution.json",
+      "status": "frozen_historical_descriptive_comparator",
+      "measurement": "one support_label per Candidate",
+      "provider_reexecution_allowed": false,
+      "causal_protocol_attribution_allowed": false,
+      "known_asymmetries": [
+        "historical single Judge output versus later dual-review adjudicated Atomic reference",
+        "model version and execution window are not contemporaneously controlled",
+        "Candidate-level label semantics refer to the Candidate as a whole"
+      ]
+    },
+    "atomic_level": {
+      "boundary_source": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_boundary_gold_v1.json",
+      "support_source": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_gold_v1.json",
+      "status": "frozen_project_reference_model_adjudicated_not_human_gold",
+      "measurement": "one frozen support_label per Atomic Claim plus deterministic Candidate aggregation",
+      "gold_fields": [
+        "support_label"
+      ],
+      "diagnostic_fields_not_gold": [
+        "cited_evidence_ids",
+        "reason_codes",
+        "support_rationale",
+        "annotation_confidence",
+        "adjudicator_rationale"
+      ],
+      "provider_reexecution_allowed": false
+    }
+  },
+  "anti_circularity_guard": {
+    "statement": "Because the Atomic reference was constructed through an Atomic Claim pipeline, it may measure accounting, localization, aggregation, traceability, and diagnostic information loss, but it must not be used circularly to establish intrinsic Atomic accuracy superiority.",
+    "allowed_uses": [
+      "atomic support accounting",
+      "deterministic aggregation replay",
+      "support heterogeneity analysis",
+      "non-supported Claim localization",
+      "Candidate-level masking analysis",
+      "Claim type and role descriptive analysis",
+      "artifact traceability analysis"
+    ],
+    "forbidden_claims": [
+      "Atomic-level measurement is proven more accurate",
+      "Atomic-level measurement is universally superior",
+      "the result generalizes beyond the ten frozen design cases",
+      "the Project Support Gold is Human Gold",
+      "runtime or memory-write readiness has been established"
+    ],
+    "independent_reference_required_for_accuracy_claims": true
+  },
+  "primary_atomic_representation": {
+    "name": "atomic_support_vector",
+    "fields": [
+      "supported_count",
+      "partially_supported_count",
+      "unsupported_count",
+      "not_assessable_count"
+    ],
+    "candidate_aggregate_is_secondary_to_vector": true
+  },
+  "primary_aggregation_policy": "phase7.3.3-d-multi-anchor-material-gate-v1",
+  "metric_specification": "phase7.3.3-d-atomic-vs-candidate-metrics-v1",
+  "execution_policy": {
+    "offline_deterministic_only": true,
+    "provider_calls_allowed": false,
+    "held_out_access_allowed": false,
+    "semantic_regeneration_allowed": false,
+    "label_mutation_allowed": false,
+    "boundary_mutation_allowed": false,
+    "candidate_mutation_allowed": false,
+    "evidence_mutation_allowed": false,
+    "automatic_repair_allowed": false,
+    "selective_retry_allowed": false,
+    "post_manifest_protocol_change_allowed": false,
+    "post_manifest_metric_change_allowed": false,
+    "post_manifest_aggregation_change_allowed": false
+  },
+  "entry_gates": [
+    "Boundary Gold hash and frozen status match",
+    "Support Gold hash and frozen status match",
+    "Support Gold contains exactly 118 unique Boundary Claim IDs",
+    "Candidate baseline contains exactly 10 unique completed decisions",
+    "all ten case_id and candidate_response_sha256 pairs align exactly",
+    "protocol, aggregation policy, metric specification, adapter, fixtures, worklist, and manifest are frozen",
+    "current state authorizes paired protocol freeze",
+    "held-out data has not been accessed"
+  ],
+  "stop_conditions": [
+    "artifact hash or lineage mismatch",
+    "case identity or Candidate response hash drift",
+    "missing or duplicate paired case",
+    "missing or duplicate Atomic Claim",
+    "invalid support label",
+    "Boundary Gold and Support Gold claim-order mismatch",
+    "aggregation ambiguity or missing anchor",
+    "Provider call or held-out access",
+    "any protocol, metric, aggregation, Candidate, evidence, Boundary, or label mutation after manifest freeze"
+  ],
+  "failure_policy": {
+    "failure_is_first_class_outcome": true,
+    "silent_retry_forbidden": true,
+    "partial_result_must_not_be_promoted": true,
+    "successor_version_required_after_frozen_contract_change": true
+  },
+  "reporting_policy": {
+    "all_ten_cases_must_be_reported_individually": true,
+    "aggregate_only_reporting_forbidden": true,
+    "descriptive_statistics_only": true,
+    "confirmatory_p_values_authorized": false,
+    "generalization_claim_authorized": false,
+    "accuracy_superiority_claim_authorized": false,
+    "reference_label": "retrospective_design_case_diagnostic_comparison_not_human_accuracy_gold"
+  },
+  "exit_gate": {
+    "protocol_frozen": true,
+    "aggregation_policy_frozen": true,
+    "metric_specification_frozen": true,
+    "alignment_audit_passed": true,
+    "contract_fixtures_all_passed": true,
+    "paired_worklist_frozen": true,
+    "execution_manifest_frozen": true,
+    "paired_evaluation_started": false,
+    "next_authorized_stage": "execute_atomic_vs_candidate_paired_evaluation_v1"
+  },
+  "guards": {
+    "human_gold_claimed": false,
+    "held_out_accessed": false,
+    "provider_call_authorized": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  }
+}

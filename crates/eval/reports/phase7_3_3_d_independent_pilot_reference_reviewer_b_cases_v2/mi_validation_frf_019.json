@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_frf_019",
+  "manifest_sha256": "0f1b6fe0b37b4c8262ae682ecac72e8fcaf8842991d332bba3c427de8ebd6b97",
+  "provider_envelope_sha256": "fef38360e88e304f88e23876c10eff9119ff3711eb9f4e4a72700d448379ede9",
+  "provider_content_sha256": "c1bc7211749509c0928d0d4812c0a4da8eb51f0eb96c1675504842a99a0e4aae",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_case_sha256": "cbe77bc33fd4817e81fff700cfd1fa54d26012f293b0a44c96652ac261941013",
+  "normalized_case": {
+    "case_id": "mi_validation_frf_019",
+    "candidate_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frf_019-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "138a2bfd6779c05da572cab073901720a35032596f1f7f0e66be1dbe3053e605",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_frf_019-evidence-06",
+          "mi_validation_frf_019-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts a selection rule where unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence-06 explicitly states that 'unresolved failure evidence remains authoritative despite not being recently accessed,' establishing the priority of failure evidence. Evidence-01 confirms the existence of an 'unsafe playbook' that was 'accessed recently' but repeats a failed approach. Together, these pieces of evidence directly support the comparative selection rule described in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

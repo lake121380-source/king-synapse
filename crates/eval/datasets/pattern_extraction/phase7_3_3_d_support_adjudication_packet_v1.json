@@ -1,0 +1,2946 @@
+{
+  "schema_version": 1,
+  "packet_id": "phase7.3.3-d3-support-adjudication-packet-v1",
+  "status": "frozen_reviewer_blind_packet_execution_not_started",
+  "source_worklist_sha256": "1f5809cde1d15fec96be19ba7bbf6626e379da212ac0ba57605f9e0f9277ff81",
+  "item_count": 26,
+  "one_isolated_claim_per_request": true,
+  "reviewer_identity_visible": false,
+  "priority_rank_visible": false,
+  "aggregate_agreement_metrics_visible": false,
+  "diagnostic_followup_visible": false,
+  "support_gold_visible": false,
+  "held_out_accessed": false,
+  "allowed_output_operations": [
+    "select_option_1",
+    "select_option_2",
+    "defer_for_human_review"
+  ],
+  "items": [
+    {
+      "adjudication_item_id": "support-adjudication-001",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-013",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::falsification_statement",
+        "anchor_id": "extract_04-falsification_statement-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-013",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "falsification",
+        "claim_text": "Following the diagnosis process leads to replacing unrelated components",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 71,
+          "start": 0
+        },
+        "source_text_sha256": "8723a5a8aef279271d0e46df9b31dcf9a7e2430a2172380fe2d1ae59c3f5acea"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-013",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence shows that following the diagnosis process leads to replacing unrelated components; all observed cases avoided this outcome."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-013",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_preserved"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The support cases serve as negative examples for this falsification condition; they followed the process and did NOT replace unrelated components, thus the falsification condition did not occur, validating the pattern."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-002",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-014",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::falsification_statement",
+        "anchor_id": "extract_04-falsification_statement-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-014",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "falsification",
+        "claim_text": "fails to identify a root cause from the evidence",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 123,
+          "start": 75
+        },
+        "source_text_sha256": "8723a5a8aef279271d0e46df9b31dcf9a7e2430a2172380fe2d1ae59c3f5acea"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-014",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_preserved"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The support cases successfully identified root causes, meaning the falsification condition (failing to identify) did not manifest, supporting the claim's validity."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-014",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence shows failure to identify a root cause from the evidence when no active corruption is present; all observed cases succeeded."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-003",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-016",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::falsification_observable",
+        "anchor_id": "extract_04-falsification_observable-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-016",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "falsification_observable",
+        "claim_text": "A service failure is resolved by replacing a component not indicated by logs, memory, configuration, permissions, or network evidence",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 133,
+          "start": 0
+        },
+        "source_text_sha256": "863331910be8dcfbfc39d9bb9537b1e7e8034142cf81c0e87d2b09cae8e10254"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-016",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_preserved"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The evidence shows resolutions were achieved by targeting indicated components, not by replacing unrelated ones, thus the falsification observable did not occur."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-016",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence shows a service failure resolved by replacing a component not indicated by the evidence; all cases matched evidence to resolution."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-004",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-017",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::falsification_observable",
+        "anchor_id": "extract_04-falsification_observable-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-017",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "falsification_observable",
+        "claim_text": "the root cause is not found within those evidence classes",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 195,
+          "start": 138
+        },
+        "source_text_sha256": "863331910be8dcfbfc39d9bb9537b1e7e8034142cf81c0e87d2b09cae8e10254"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-017",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence shows root cause not found within the evidence classes; all cases found root cause within examined evidence."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-017",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_preserved"
+        ],
+        "support_label": "supported",
+        "support_rationale": "In the support cases, the root cause was found within the evidence classes, meaning the falsification observable (root cause not found) did not occur."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-005",
+      "case_id": "extract_07",
+      "boundary_claim_id": "adjudicated-extract_07-claim-016",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_07::falsification_statement",
+        "anchor_id": "extract_07-falsification_statement-01",
+        "boundary_claim_id": "adjudicated-extract_07-claim-016",
+        "case_id": "extract_07",
+        "claim_origin": "explicit",
+        "claim_role": "falsification",
+        "claim_text": "If an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold, but the rollout experiences false stops that delay delivery without any incident reduction, then the pattern is falsified.",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 224,
+          "start": 0
+        },
+        "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_07",
+        "experiences": [
+          {
+            "action_or_observation": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "counterexample": false,
+            "domain": "incident_response",
+            "experience_id": "error_ceiling",
+            "independent_source": true,
+            "memory_id": "px_07_support_1",
+            "outcome": "Traffic stopped at twenty percent and prevented a full outage.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "An operations change defined queue depth and recovery-time stop conditions.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "An operations change defined queue depth and recovery-time stop conditions.",
+            "counterexample": false,
+            "domain": "incident_response",
+            "experience_id": "queue_stop",
+            "independent_source": true,
+            "memory_id": "px_07_support_2",
+            "outcome": "It reversed before backlog recovery exceeded the overnight window.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "counterexample": true,
+            "domain": "incident_response",
+            "experience_id": "noisy_alert",
+            "independent_source": true,
+            "memory_id": "px_07_counter_3",
+            "outcome": "Repeated false stops delayed delivery without reducing incidents.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "incident_response",
+        "supplied_counterexample_ids": [
+          "px_07_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_07-claim-016",
+        "cited_evidence_ids": [
+          "px_07_counter_3"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The falsification statement defines conditions (false stops, no incident reduction) that are met by the counterexample px_07_counter_3, validating the logical structure of the falsification claim even though the specific metric type in the evidence ('noisy') differs slightly from the claim's hypothetical ('directly harmful, low-noise'), the logical form is supported by the existence of the counter-case structure."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_07-claim-016",
+        "cited_evidence_ids": [
+          "px_07_counter_3"
+        ],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence shows false stops occurred when using directly harmful, low-noise metrics; the counterexample involves noisy metrics weakly related to harm."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-006",
+      "case_id": "extract_02",
+      "boundary_claim_id": "adjudicated-extract_02-claim-004",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_02::prediction_observable",
+        "anchor_id": "extract_02-prediction_observable-01",
+        "boundary_claim_id": "adjudicated-extract_02-claim-004",
+        "case_id": "extract_02",
+        "claim_origin": "explicit",
+        "claim_role": "prediction_observable",
+        "claim_text": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first.",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+        "source_field": "prediction_observable",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 147,
+          "start": 0
+        },
+        "source_text_sha256": "4b8921a381974effdf86eafce37c7b50dcfce708eee5c132d669ee8fad7ef7ef"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_02",
+        "experiences": [
+          {
+            "action_or_observation": "A support queue labeled cases by customer impact and time sensitivity before assignment.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A support queue labeled cases by customer impact and time sensitivity before assignment.",
+            "counterexample": false,
+            "domain": "customer_support",
+            "experience_id": "mixed_queue",
+            "independent_source": true,
+            "memory_id": "px_02_support_1",
+            "outcome": "Outages reached incident responders quickly while ordinary questions stayed visible.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A billing backlog added severity and regulatory deadline labels.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A billing backlog added severity and regulatory deadline labels.",
+            "counterexample": false,
+            "domain": "customer_support",
+            "experience_id": "billing_deadlines",
+            "independent_source": true,
+            "memory_id": "px_02_support_2",
+            "outcome": "Deadline cases stopped being hidden behind newer low-impact tickets.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "All VIP messages were ranked above other cases regardless of impact.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "All VIP messages were ranked above other cases regardless of impact.",
+            "counterexample": true,
+            "domain": "customer_support",
+            "experience_id": "vip_proxy",
+            "independent_source": true,
+            "memory_id": "px_02_counter_3",
+            "outcome": "A widespread login failure waited behind low-impact VIP requests.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "customer_support",
+        "supplied_counterexample_ids": [
+          "px_02_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_02-claim-004",
+        "cited_evidence_ids": [
+          "px_02_support_1",
+          "px_02_support_2"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence supports that labeling by impact and time sensitivity influences resolution order, but does not confirm that the highest combined score is always resolved first as claimed."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_02-claim-004",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "unsupported_detail",
+          "insufficient_evidence"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "No evidence in the bundle describes a 'combined score' mechanism or confirms that resolution order strictly reflects such a calculated metric; evidence only notes labeling and general outcomes."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-007",
+      "case_id": "extract_05",
+      "boundary_claim_id": "adjudicated-extract_05-claim-007",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_05::prediction_success_criterion",
+        "anchor_id": "extract_05-prediction_success_criterion-01",
+        "boundary_claim_id": "adjudicated-extract_05-claim-007",
+        "case_id": "extract_05",
+        "claim_origin": "explicit",
+        "claim_role": "prediction_criterion",
+        "claim_text": "Posts with concrete examples and early problem framing achieve at least 50% more saves and qualified comments than the average of posts without these features in the same audience and month.",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "73a527caff16ff14ff82ce476a9246ac1cc82b25d3aabbcaf0f47c138579afc6",
+        "source_field": "prediction_success_criterion",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 190,
+          "start": 0
+        },
+        "source_text_sha256": "5ead6913f7a8293386acc20dca683ad603e5e76f00dcfef3d6bb3b51de2d4ff5"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_05",
+        "experiences": [
+          {
+            "action_or_observation": "Twenty successful and twenty failed AI posts from the same audience and month were compared.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Twenty successful and twenty failed AI posts from the same audience and month were compared.",
+            "counterexample": false,
+            "domain": "content_operations",
+            "experience_id": "matched_posts",
+            "independent_source": true,
+            "memory_id": "px_05_support_1",
+            "outcome": "Concrete examples and early problem framing recurred in winners but not controls.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A second account repeated the comparison in another tool category including failed posts.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A second account repeated the comparison in another tool category including failed posts.",
+            "counterexample": false,
+            "domain": "content_operations",
+            "experience_id": "replication_sample",
+            "independent_source": true,
+            "memory_id": "px_05_support_2",
+            "outcome": "The same features remained associated with saves and qualified comments.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "One post went viral only after an unrelated celebrity repost.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "One post went viral only after an unrelated celebrity repost.",
+            "counterexample": true,
+            "domain": "content_operations",
+            "experience_id": "celebrity_spike",
+            "independent_source": true,
+            "memory_id": "px_05_counter_3",
+            "outcome": "Copying its content structure failed on later ordinary posts.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "content_operations",
+        "supplied_counterexample_ids": [
+          "px_05_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_05-claim-007",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "Evidence states features recurred in winners but provides no quantitative data to support the specific '50% more' threshold."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_05-claim-007",
+        "cited_evidence_ids": [
+          "px_05_support_1",
+          "px_05_support_2"
+        ],
+        "reason_codes": [
+          "unsupported_detail",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence supports higher engagement but does not quantify a 50% threshold; the specific magnitude is not established."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-008",
+      "case_id": "extract_10",
+      "boundary_claim_id": "adjudicated-extract_10-claim-007",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_10::prediction_success_criterion",
+        "anchor_id": "extract_10-prediction_success_criterion-01",
+        "boundary_claim_id": "adjudicated-extract_10-claim-007",
+        "case_id": "extract_10",
+        "claim_origin": "explicit",
+        "claim_role": "prediction_criterion",
+        "claim_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30%",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+        "source_field": "prediction_success_criterion",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 82,
+          "start": 0
+        },
+        "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_10",
+        "experiences": [
+          {
+            "action_or_observation": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "counterexample": false,
+            "domain": "supply_chain",
+            "experience_id": "long_lead_parts",
+            "independent_source": true,
+            "memory_id": "px_10_support_1",
+            "outcome": "Interruptions fell while carrying cost stayed within its declared limit.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "counterexample": false,
+            "domain": "supply_chain",
+            "experience_id": "seasonal_inventory",
+            "independent_source": true,
+            "memory_id": "px_10_support_2",
+            "outcome": "Stockouts fell during peak demand and inventory returned to baseline later.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "The same large buffer was held for an item replenished daily with stable demand.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "The same large buffer was held for an item replenished daily with stable demand.",
+            "counterexample": true,
+            "domain": "supply_chain",
+            "experience_id": "fast_replenishment",
+            "independent_source": true,
+            "memory_id": "px_10_counter_3",
+            "outcome": "Most inventory expired and cost exceeded avoided stockouts.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "supply_chain",
+        "supplied_counterexample_ids": [
+          "px_10_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_10-claim-007",
+        "cited_evidence_ids": [
+          "px_10_support_1",
+          "px_10_support_2"
+        ],
+        "reason_codes": [
+          "scope_expansion",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows stockout/interruption reduction but does not quantify a 30% drop or specify a typical planning horizon, making the claim's quantitative threshold and time scope overcommitted."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_10-claim-007",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "unsupported_detail",
+          "prediction_overcommitment"
+        ],
+        "support_label": "unsupported",
+        "support_rationale": "Claim-007 specifies a success criterion of stockout frequency dropping by 'at least 30%'. The available evidence (px_10_support_1, px_10_support_2) confirms that interruptions/stockouts 'fell' or 'decreased' but provides no quantitative data, percentages, or metrics to verify the specific '30%' threshold. The specific magnitude is unsupported."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-009",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-004",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::proposition",
+        "anchor_id": "extract_01-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-004",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "provided the new and old versions are backward compatible",
+        "claim_type": "scope",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 216,
+          "start": 159
+        },
+        "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-004",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2",
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The counterexample (atomic_schema) confirms that lack of coexistence (backward compatibility) causes failure, while support cases imply compatibility allowed the old version to remain operational."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-004",
+        "cited_evidence_ids": [
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The atomic schema counterexample shows failure when backward compatibility is absent, supporting the necessity of compatibility, but no direct evidence confirms that compatibility was present in the positive cases."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-010",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-005",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::prediction_statement",
+        "anchor_id": "extract_01-prediction_statement-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-005",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "prediction",
+        "claim_text": "an incremental rollout with backward compatibility is used for a change",
+        "claim_type": "scope",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 76,
+          "start": 5
+        },
+        "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-005",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The evidence describes scenarios matching the condition: incremental rollout (5% traffic, cohorts) where backward compatibility was maintained (old version available)."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-005",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2",
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Incremental rollout is evidenced, and the counterexample shows backward compatibility is important, but explicit confirmation of backward compatibility in the positive cases is missing."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-011",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-006",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::prediction_statement",
+        "anchor_id": "extract_01-prediction_statement-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-006",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "prediction",
+        "claim_text": "the first cohort will expose any critical regression",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 130,
+          "start": 78
+        },
+        "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-006",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Defects were found in early cohorts, but the claim overcommits by asserting any critical regression will always be exposed in the first cohort; evidence only shows some defects were caught early."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-006",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "In both support cases, the first exposed group (canary/cohort two) successfully revealed a critical defect (regression/language defect)."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-012",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-007",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::prediction_statement",
+        "anchor_id": "extract_01-prediction_statement-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-007",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "prediction",
+        "claim_text": "without affecting the rest of the system",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 171,
+          "start": 131
+        },
+        "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-007",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Evidence shows that in both successful cases, the rest of the system (non-canary traffic, remaining tenants) was not affected or moved due to the defect found in the subset."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-007",
+        "cited_evidence_ids": [
+          "px_01_support_1",
+          "px_01_support_2"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "In both positive cases, only the cohort was affected, not the whole system, but the claim's certainty ('without affecting the rest') is stronger than the evidence, which does not rule out all possible side effects."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-013",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-010",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::prediction_success_criterion",
+        "anchor_id": "extract_01-prediction_success_criterion-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-010",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "prediction_criterion",
+        "claim_text": "The old version remains fully operational during the entire rollout phase.",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "prediction_success_criterion",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 74,
+          "start": 0
+        },
+        "source_text_sha256": "a743b533b84b7d73f25e02c887deb510dfa71492b47653344cddf1d19ed80f07"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-010",
+        "cited_evidence_ids": [
+          "px_01_support_1"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The outcome 'the old version remained available' in the payments canary case supports the criterion that the old version remains operational."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-010",
+        "cited_evidence_ids": [
+          "px_01_support_1"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The old version remained available during the observed rollout, but 'fully operational during the entire rollout phase' is broader than the evidence, which covers only the observed period."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-014",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-013",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::falsification_observable",
+        "anchor_id": "extract_01-falsification_observable-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-013",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "falsification_observable",
+        "claim_text": "The entire system becomes unavailable",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 37,
+          "start": 0
+        },
+        "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-013",
+        "cited_evidence_ids": [
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The atomic schema case resulted in the system becoming unavailable, directly supporting the claim."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-013",
+        "cited_evidence_ids": [
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "certainty_escalation"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The evidence states 'more recovery work' and 'incompatible records' but does not explicitly confirm the entire system became 'unavailable'; the severity is implied but not strictly proven as total unavailability."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-015",
+      "case_id": "extract_01",
+      "boundary_claim_id": "adjudicated-extract_01-claim-014",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_01::falsification_observable",
+        "anchor_id": "extract_01-falsification_observable-01",
+        "boundary_claim_id": "adjudicated-extract_01-claim-014",
+        "case_id": "extract_01",
+        "claim_origin": "explicit",
+        "claim_role": "falsification_observable",
+        "claim_text": "the old version is rolled back due to issues from the incremental rollout",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 114,
+          "start": 41
+        },
+        "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_01",
+        "experiences": [
+          {
+            "action_or_observation": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five percent of payment traffic exposed a connection-pool regression before full migration.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "payments_canary",
+            "independent_source": true,
+            "memory_id": "px_01_support_1",
+            "outcome": "Only the canary cohort needed rollback; the old version remained available.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Three search cohorts were audited separately during an index rollout.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Three search cohorts were audited separately during an index rollout.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "search_cohorts",
+            "independent_source": true,
+            "memory_id": "px_01_support_2",
+            "outcome": "A language defect was found at cohort two and the remaining tenants were not moved.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Old and new record formats could not coexist during a storage migration.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Old and new record formats could not coexist during a storage migration.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "atomic_schema",
+            "independent_source": true,
+            "memory_id": "px_01_counter_3",
+            "outcome": "Partial rollout created incompatible records and more recovery work.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_01_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_01-claim-014",
+        "cited_evidence_ids": [
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Rollback of the old version due to issues from the incremental rollout is directly evidenced in the atomic schema case."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_01-claim-014",
+        "cited_evidence_ids": [
+          "px_01_counter_3"
+        ],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The evidence mentions 'more recovery work' but does not explicitly state that the 'old version is rolled back'; the specific action of rolling back the old version is an inference not directly supported by the text."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-016",
+      "case_id": "extract_03",
+      "boundary_claim_id": "adjudicated-extract_03-claim-002",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_03::proposition",
+        "anchor_id": "extract_03-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_03-claim-002",
+        "case_id": "extract_03",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "the team adheres to those thresholds in outcome evaluation",
+        "claim_type": "proposition",
+        "material": true,
+        "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 177,
+          "start": 119
+        },
+        "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_03",
+        "experiences": [
+          {
+            "action_or_observation": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "counterexample": false,
+            "domain": "product_experiment",
+            "experience_id": "onboarding_test",
+            "independent_source": true,
+            "memory_id": "px_03_support_1",
+            "outcome": "The team accepted a neutral result instead of redefining success afterward.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "counterexample": false,
+            "domain": "product_experiment",
+            "experience_id": "pricing_test",
+            "independent_source": true,
+            "memory_id": "px_03_support_2",
+            "outcome": "It stopped when cancellations crossed the guardrail despite temporary revenue gain.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "counterexample": true,
+            "domain": "product_experiment",
+            "experience_id": "discovery_interviews",
+            "independent_source": true,
+            "memory_id": "px_03_counter_3",
+            "outcome": "Unexpected themes were discarded even though they later explained customer pain.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "product_experiment",
+        "supplied_counterexample_ids": [
+          "px_03_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_03-claim-002",
+        "cited_evidence_ids": [
+          "px_03_support_1",
+          "px_03_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Evidence shows teams adhered to predefined thresholds in both cases: onboarding test accepted a neutral result, pricing test stopped at the guardrail, supporting the claim."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_03-claim-002",
+        "cited_evidence_ids": [
+          "px_03_support_1",
+          "px_03_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_ignored"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Supported by px_03_support_1 and px_03_support_2 where teams adhered to thresholds, but contradicted by px_03_counter_3 where the team discarded unexpected themes due to rigid thresholds, implying a failure to adhere to the spirit of outcome evaluation in exploratory contexts."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-017",
+      "case_id": "extract_03",
+      "boundary_claim_id": "adjudicated-extract_03-claim-003",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_03::proposition",
+        "anchor_id": "extract_03-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_03-claim-003",
+        "case_id": "extract_03",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "does not redefine success metrics post-hoc",
+        "claim_type": "proposition",
+        "material": true,
+        "response_sha256": "6b186f21892c23dfbe4d884e7d61d3cb99c3f7f0a4e02cbf7829d04af3e83cae",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 224,
+          "start": 182
+        },
+        "source_text_sha256": "1cca0135c5a3f08c234feef7ca2fef1e7e2cdea2367c55f4783f0ce81c0b16ef"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_03",
+        "experiences": [
+          {
+            "action_or_observation": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "An onboarding test fixed activation, sample, guardrail, and stop criteria before launch.",
+            "counterexample": false,
+            "domain": "product_experiment",
+            "experience_id": "onboarding_test",
+            "independent_source": true,
+            "memory_id": "px_03_support_1",
+            "outcome": "The team accepted a neutral result instead of redefining success afterward.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A pricing test fixed revenue lift, cancellation guardrail, and downside budget.",
+            "counterexample": false,
+            "domain": "product_experiment",
+            "experience_id": "pricing_test",
+            "independent_source": true,
+            "memory_id": "px_03_support_2",
+            "outcome": "It stopped when cancellations crossed the guardrail despite temporary revenue gain.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Exploratory interviews used fixed numeric success thresholds before vocabulary was understood.",
+            "counterexample": true,
+            "domain": "product_experiment",
+            "experience_id": "discovery_interviews",
+            "independent_source": true,
+            "memory_id": "px_03_counter_3",
+            "outcome": "Unexpected themes were discarded even though they later explained customer pain.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "product_experiment",
+        "supplied_counterexample_ids": [
+          "px_03_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_03-claim-003",
+        "cited_evidence_ids": [
+          "px_03_support_1"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The onboarding test outcome states the team accepted a neutral result instead of redefining success, directly supporting the claim."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_03-claim-003",
+        "cited_evidence_ids": [
+          "px_03_support_1",
+          "px_03_support_2"
+        ],
+        "reason_codes": [
+          "counterexample_ignored"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Directly supported by px_03_support_1 (accepted neutral result) and px_03_support_2 (stopped on guardrail), but the claim implies a universal behavior which is challenged by px_03_counter_3 where the rigid application of pre-defined thresholds led to discarding valid insights, suggesting the metric adherence was problematic rather than purely positive."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-018",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-002",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::proposition",
+        "anchor_id": "extract_04-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-002",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause",
+        "claim_type": "causal",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 173,
+          "start": 23
+        },
+        "source_text_sha256": "ec74628571bf62bcae197619215cadb4eff09a71d23e9f67e39014de2865aa43"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_04-claim-002",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "conservative_entailment",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows systematic diagnosis isolated root causes, but only for two cases; claim generalizes to all service failures and asserts causality for any such diagnosis, which is broader than evidence."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-002",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match",
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Both support cases (px_04_support_1, px_04_support_2) describe examining logs, memory, configuration, permissions, and network evidence, which successfully isolated specific root causes (memory limit, permission change)."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-019",
+      "case_id": "extract_04",
+      "boundary_claim_id": "adjudicated-extract_04-claim-007",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_04::prediction_statement",
+        "anchor_id": "extract_04-prediction_statement-01",
+        "boundary_claim_id": "adjudicated-extract_04-claim-007",
+        "case_id": "extract_04",
+        "claim_origin": "explicit",
+        "claim_role": "prediction",
+        "claim_text": "without needing to replace unrelated components",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "617a6f138a75154d0cfa911bd489e186253d22634e5a6dbbb85fe78ed2d68387",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 192,
+          "start": 145
+        },
+        "source_text_sha256": "d14800450a0559b789fa9d0783a3110127c1a076d01466e5c39c4dda4451be46"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_04",
+        "experiences": [
+          {
+            "action_or_observation": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A cache outage was checked through logs, memory, configuration, permissions, and network evidence.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "redis_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_1",
+            "outcome": "A memory limit change was isolated without replacing unrelated components.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A database startup failure used the same evidence classes with service-specific commands.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A database startup failure used the same evidence classes with service-specific commands.",
+            "counterexample": false,
+            "domain": "service_operations",
+            "experience_id": "mysql_failure",
+            "independent_source": true,
+            "memory_id": "px_04_support_2",
+            "outcome": "A filesystem permission change was found before a risky restore.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Routine diagnosis continued while a writer actively corrupted customer records.",
+            "counterexample": true,
+            "domain": "service_operations",
+            "experience_id": "active_corruption",
+            "independent_source": true,
+            "memory_id": "px_04_counter_3",
+            "outcome": "More records were damaged before writes were isolated.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "service_operations",
+        "supplied_counterexample_ids": [
+          "px_04_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_04-claim-007",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Both cases resolved without replacing unrelated components, supporting the prediction."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_04-claim-007",
+        "cited_evidence_ids": [
+          "px_04_support_1",
+          "px_04_support_2"
+        ],
+        "reason_codes": [
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows this occurred in two instances, but projecting it as a guaranteed outcome ('without needing') for future cases exceeds the statistical weight of two positive examples."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-020",
+      "case_id": "extract_06",
+      "boundary_claim_id": "adjudicated-extract_06-claim-002",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_06::proposition",
+        "anchor_id": "extract_06-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_06-claim-002",
+        "case_id": "extract_06",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout",
+        "claim_type": "causal",
+        "material": true,
+        "response_sha256": "1471b89cbd351022ec1d8cbdb7c8952677350a8573aab39772e8d940bcc8433f",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 286,
+          "start": 22
+        },
+        "source_text_sha256": "e02e3184bb68cbe04fcf789bbe629413e685091302c6c91188db33d0efbe50c9"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_06",
+        "experiences": [
+          {
+            "action_or_observation": "A risky feature was exposed to one internal group behind a reversible flag.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A risky feature was exposed to one internal group behind a reversible flag.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "feature_flag",
+            "independent_source": true,
+            "memory_id": "px_06_support_1",
+            "outcome": "A dependency assumption failed while reversal still required one configuration change.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "One representative tenant was migrated before the full fleet.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "One representative tenant was migrated before the full fleet.",
+            "counterexample": false,
+            "domain": "software_delivery",
+            "experience_id": "migration_probe",
+            "independent_source": true,
+            "memory_id": "px_06_support_2",
+            "outcome": "An undocumented data shape was found before fleet-wide commitment.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Only the smallest tenant was tested before generalizing to complex tenants.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Only the smallest tenant was tested before generalizing to complex tenants.",
+            "counterexample": true,
+            "domain": "software_delivery",
+            "experience_id": "simple_probe",
+            "independent_source": true,
+            "memory_id": "px_06_counter_3",
+            "outcome": "The full rollout failed on data shapes absent from the probe.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "software_delivery",
+        "supplied_counterexample_ids": [
+          "px_06_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_06-claim-002",
+        "cited_evidence_ids": [
+          "px_06_support_1",
+          "px_06_support_2",
+          "px_06_counter_3"
+        ],
+        "reason_codes": [
+          "conservative_entailment",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence supports that exposing risky changes to a representative subset can reveal hidden issues before rollout, but the claim's generality and certainty exceed the limited number of cases. The counterexample supports the necessity of representativeness but does not fully establish causality for all cases."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_06-claim-002",
+        "cited_evidence_ids": [
+          "px_06_support_1",
+          "px_06_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match",
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "px_06_support_1 confirms exposing a risky feature to one internal group revealed a dependency assumption failure. px_06_support_2 confirms migrating one representative tenant revealed an undocumented data shape. Both align with the claim that representative subsets reveal hidden issues before full rollout."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-021",
+      "case_id": "extract_07",
+      "boundary_claim_id": "adjudicated-extract_07-claim-003",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_07::proposition",
+        "anchor_id": "extract_07-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_07-claim-003",
+        "case_id": "extract_07",
+        "claim_origin": "inferred",
+        "claim_role": "anchor",
+        "claim_text": "avoid false stops",
+        "claim_type": "causal",
+        "material": true,
+        "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 169,
+          "start": 152
+        },
+        "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_07",
+        "experiences": [
+          {
+            "action_or_observation": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A rollout declared an error-rate ceiling and automatic pause before traffic increased.",
+            "counterexample": false,
+            "domain": "incident_response",
+            "experience_id": "error_ceiling",
+            "independent_source": true,
+            "memory_id": "px_07_support_1",
+            "outcome": "Traffic stopped at twenty percent and prevented a full outage.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "An operations change defined queue depth and recovery-time stop conditions.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "An operations change defined queue depth and recovery-time stop conditions.",
+            "counterexample": false,
+            "domain": "incident_response",
+            "experience_id": "queue_stop",
+            "independent_source": true,
+            "memory_id": "px_07_support_2",
+            "outcome": "It reversed before backlog recovery exceeded the overnight window.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A rollout automatically stopped on a noisy metric weakly related to harm.",
+            "counterexample": true,
+            "domain": "incident_response",
+            "experience_id": "noisy_alert",
+            "independent_source": true,
+            "memory_id": "px_07_counter_3",
+            "outcome": "Repeated false stops delayed delivery without reducing incidents.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "incident_response",
+        "supplied_counterexample_ids": [
+          "px_07_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_07-claim-003",
+        "cited_evidence_ids": [
+          "px_07_counter_3"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Counterexample shows false stops occur when noisy metrics are used, supporting the need to avoid false stops."
+      },
+      "option_2": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_07-claim-003",
+        "cited_evidence_ids": [
+          "px_07_counter_3"
+        ],
+        "reason_codes": [
+          "counterexample_ignored",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The claim implies that using low-noise metrics avoids false stops, but the counterexample (px_07_counter_3) shows that noisy metrics cause false stops; however, the claim is phrased as a general capability which is not fully proven as a guaranteed outcome in all cases, and the evidence primarily illustrates the negative case."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-022",
+      "case_id": "extract_08",
+      "boundary_claim_id": "adjudicated-extract_08-claim-001",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_08::proposition",
+        "anchor_id": "extract_08-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_08-claim-001",
+        "case_id": "extract_08",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+        "claim_type": "causal",
+        "material": true,
+        "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 303,
+          "start": 0
+        },
+        "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_08",
+        "experiences": [
+          {
+            "action_or_observation": "A reversible lower-risk intervention was used while tests were collected before a high-risk procedure.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A reversible lower-risk intervention was used while tests were collected before a high-risk procedure.",
+            "counterexample": false,
+            "domain": "clinical_safety",
+            "experience_id": "staged_treatment",
+            "independent_source": true,
+            "memory_id": "px_08_support_1",
+            "outcome": "The condition stabilized and later evidence ruled out the invasive action.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A protocol linked stronger intervention to independent confirmation and worsening signs.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A protocol linked stronger intervention to independent confirmation and worsening signs.",
+            "counterexample": false,
+            "domain": "clinical_safety",
+            "experience_id": "escalation_trigger",
+            "independent_source": true,
+            "memory_id": "px_08_support_2",
+            "outcome": "Escalation remained fast when both confirmation and deterioration appeared.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A team waited for complete evidence despite rapidly worsening vital signs.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A team waited for complete evidence despite rapidly worsening vital signs.",
+            "counterexample": true,
+            "domain": "clinical_safety",
+            "experience_id": "critical_delay",
+            "independent_source": true,
+            "memory_id": "px_08_counter_3",
+            "outcome": "The delay increased harm because emergency action needed a lower evidence threshold.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "clinical_safety",
+        "supplied_counterexample_ids": [
+          "px_08_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_08-claim-001",
+        "cited_evidence_ids": [
+          "px_08_support_1",
+          "px_08_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match",
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Claim-001 synthesizes the actions and outcomes of px_08_support_1 (reversible intervention leading to stabilization/avoidance) and px_08_support_2 (escalation protocol linked to confirmation/worsening). The causal language 'is associated with' is supported by the observed outcomes in these independent sources without overclaiming universal causality."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_08-claim-001",
+        "cited_evidence_ids": [
+          "px_08_support_1",
+          "px_08_support_2"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "causal_leap",
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "The evidence supports that reversible lower-risk intervention and escalation conditioned on confirmation and worsening signs can be associated with stabilization and avoidance of unnecessary invasive action. However, the claim's broad scope and strong causal implication exceed the limited single-case evidence, which does not establish general causality or rule out confounding factors."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-023",
+      "case_id": "extract_09",
+      "boundary_claim_id": "adjudicated-extract_09-claim-001",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_09::proposition",
+        "anchor_id": "extract_09-proposition-01",
+        "boundary_claim_id": "adjudicated-extract_09-claim-001",
+        "case_id": "extract_09",
+        "claim_origin": "explicit",
+        "claim_role": "anchor",
+        "claim_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust.",
+        "claim_type": "causal",
+        "material": true,
+        "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 154,
+          "start": 0
+        },
+        "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_09",
+        "experiences": [
+          {
+            "action_or_observation": "Two laboratories used different instruments and samples to estimate one material property.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Two laboratories used different instruments and samples to estimate one material property.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "replicated_measurement",
+            "independent_source": true,
+            "memory_id": "px_09_support_1",
+            "outcome": "Their estimates converged within a preregistered tolerance.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "method_triangulation",
+            "independent_source": true,
+            "memory_id": "px_09_support_2",
+            "outcome": "All three sources supported the same behavioral change.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Five reports repeated a number originating from one unverified blog post.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five reports repeated a number originating from one unverified blog post.",
+            "counterexample": true,
+            "domain": "scientific_research",
+            "experience_id": "citation_echo",
+            "independent_source": true,
+            "memory_id": "px_09_counter_3",
+            "outcome": "The apparent consensus disappeared when the source was corrected.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "scientific_research",
+        "supplied_counterexample_ids": [
+          "px_09_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_09-claim-001",
+        "cited_evidence_ids": [
+          "px_09_support_1",
+          "px_09_support_2"
+        ],
+        "reason_codes": [
+          "direct_evidence_match",
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Two independent cases (px_09_support_1, px_09_support_2) demonstrate convergence of estimates or conclusions from different instruments/methods/sources, directly supporting the claim that such results are robust."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_09-claim-001",
+        "cited_evidence_ids": [
+          "px_09_support_1",
+          "px_09_support_2"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "causal_leap",
+          "certainty_escalation"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows independent sources (labs, methods) converging on the same estimate or conclusion, but does not directly establish that all such convergences are robust in general or causally; 'robustness' is inferred and causality is stronger than observed."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-024",
+      "case_id": "extract_09",
+      "boundary_claim_id": "adjudicated-extract_09-claim-004",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_09::prediction_statement",
+        "anchor_id": "extract_09-prediction_statement-01",
+        "boundary_claim_id": "adjudicated-extract_09-claim-004",
+        "case_id": "extract_09",
+        "claim_origin": "explicit",
+        "claim_role": "prediction",
+        "claim_text": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 171,
+          "start": 0
+        },
+        "source_text_sha256": "6a061da0fee71793b9c36f4ab735f18094d984a7244f73b44db2ae00b37ab745"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_09",
+        "experiences": [
+          {
+            "action_or_observation": "Two laboratories used different instruments and samples to estimate one material property.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Two laboratories used different instruments and samples to estimate one material property.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "replicated_measurement",
+            "independent_source": true,
+            "memory_id": "px_09_support_1",
+            "outcome": "Their estimates converged within a preregistered tolerance.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "method_triangulation",
+            "independent_source": true,
+            "memory_id": "px_09_support_2",
+            "outcome": "All three sources supported the same behavioral change.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Five reports repeated a number originating from one unverified blog post.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five reports repeated a number originating from one unverified blog post.",
+            "counterexample": true,
+            "domain": "scientific_research",
+            "experience_id": "citation_echo",
+            "independent_source": true,
+            "memory_id": "px_09_counter_3",
+            "outcome": "The apparent consensus disappeared when the source was corrected.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "scientific_research",
+        "supplied_counterexample_ids": [
+          "px_09_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_09-claim-004",
+        "cited_evidence_ids": [
+          "px_09_support_1"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The experience in px_09_support_1 describes two laboratories using different instruments and samples to estimate a material property, with outcomes converging within a preregistered tolerance, exactly matching the prediction."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_09-claim-004",
+        "cited_evidence_ids": [
+          "px_09_support_1"
+        ],
+        "reason_codes": [
+          "scope_expansion",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows two labs' estimates converged within tolerance in one case, but the claim predicts this will always occur for any such labs, which is broader than observed."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-025",
+      "case_id": "extract_09",
+      "boundary_claim_id": "adjudicated-extract_09-claim-007",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_09::falsification_statement",
+        "anchor_id": "extract_09-falsification_statement-01",
+        "boundary_claim_id": "adjudicated-extract_09-claim-007",
+        "case_id": "extract_09",
+        "claim_origin": "explicit",
+        "claim_role": "falsification",
+        "claim_text": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails.",
+        "claim_type": "falsifiability",
+        "material": true,
+        "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 148,
+          "start": 0
+        },
+        "source_text_sha256": "3331b01decfa30e489b97d0348533c00385c2c1b5f4a864c9f9d67e63b9e1a81"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_09",
+        "experiences": [
+          {
+            "action_or_observation": "Two laboratories used different instruments and samples to estimate one material property.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Two laboratories used different instruments and samples to estimate one material property.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "replicated_measurement",
+            "independent_source": true,
+            "memory_id": "px_09_support_1",
+            "outcome": "Their estimates converged within a preregistered tolerance.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Observation, transaction records, and independently collected interviews tested one claim.",
+            "counterexample": false,
+            "domain": "scientific_research",
+            "experience_id": "method_triangulation",
+            "independent_source": true,
+            "memory_id": "px_09_support_2",
+            "outcome": "All three sources supported the same behavioral change.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "Five reports repeated a number originating from one unverified blog post.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "Five reports repeated a number originating from one unverified blog post.",
+            "counterexample": true,
+            "domain": "scientific_research",
+            "experience_id": "citation_echo",
+            "independent_source": true,
+            "memory_id": "px_09_counter_3",
+            "outcome": "The apparent consensus disappeared when the source was corrected.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "scientific_research",
+        "supplied_counterexample_ids": [
+          "px_09_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_09-claim-007",
+        "cited_evidence_ids": [
+          "px_09_support_1"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_label": "supported",
+        "support_rationale": "The claim defines the failure condition (non-convergence) for the pattern established in px_09_support_1; while the negative outcome wasn't observed, the logical structure of the falsification statement is supported by the defined success criteria in the evidence."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_09-claim-007",
+        "cited_evidence_ids": [
+          "px_09_support_1"
+        ],
+        "reason_codes": [
+          "scope_expansion",
+          "prediction_overcommitment"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows one instance of convergence, but the claim generalizes to all such cases and asserts pattern failure if not converged, which is not fully established by the evidence."
+      }
+    },
+    {
+      "adjudication_item_id": "support-adjudication-026",
+      "case_id": "extract_10",
+      "boundary_claim_id": "adjudicated-extract_10-claim-008",
+      "immutable_claim_metadata": {
+        "anchor_group": "extract_10::prediction_success_criterion",
+        "anchor_id": "extract_10-prediction_success_criterion-01",
+        "boundary_claim_id": "adjudicated-extract_10-claim-008",
+        "case_id": "extract_10",
+        "claim_origin": "explicit",
+        "claim_role": "prediction_criterion",
+        "claim_text": "carrying cost remains under the target threshold set by management",
+        "claim_type": "prediction",
+        "material": true,
+        "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+        "source_field": "prediction_success_criterion",
+        "source_index": 0,
+        "source_occurrence_index": 0,
+        "source_span": {
+          "end": 153,
+          "start": 87
+        },
+        "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc"
+      },
+      "same_case_evidence_bundle": {
+        "case_id": "extract_10",
+        "experiences": [
+          {
+            "action_or_observation": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A manufacturer buffered a component with twelve-week replenishment and volatile demand.",
+            "counterexample": false,
+            "domain": "supply_chain",
+            "experience_id": "long_lead_parts",
+            "independent_source": true,
+            "memory_id": "px_10_support_1",
+            "outcome": "Interruptions fell while carrying cost stayed within its declared limit.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "A distributor buffered only products with predictable spikes and slow supplier response.",
+            "counterexample": false,
+            "domain": "supply_chain",
+            "experience_id": "seasonal_inventory",
+            "independent_source": true,
+            "memory_id": "px_10_support_2",
+            "outcome": "Stockouts fell during peak demand and inventory returned to baseline later.",
+            "outcome_observed": true
+          },
+          {
+            "action_or_observation": "The same large buffer was held for an item replenished daily with stable demand.",
+            "constraints": [
+              "source evidence only",
+              "outcome observed"
+            ],
+            "context": "The same large buffer was held for an item replenished daily with stable demand.",
+            "counterexample": true,
+            "domain": "supply_chain",
+            "experience_id": "fast_replenishment",
+            "independent_source": true,
+            "memory_id": "px_10_counter_3",
+            "outcome": "Most inventory expired and cost exceeded avoided stockouts.",
+            "outcome_observed": true
+          }
+        ],
+        "max_pattern_candidates": 1,
+        "objective": "Extract one bounded, evidence-grounded Pattern Candidate from the supplied experiences.",
+        "prohibited_inputs": [
+          "target_problem",
+          "expected_transfer",
+          "held_out_cases",
+          "runtime_state"
+        ],
+        "source_domain": "supply_chain",
+        "supplied_counterexample_ids": [
+          "px_10_counter_3"
+        ]
+      },
+      "option_1": {
+        "annotation_confidence": "medium",
+        "boundary_claim_id": "adjudicated-extract_10-claim-008",
+        "cited_evidence_ids": [
+          "px_10_support_1"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference"
+        ],
+        "support_label": "supported",
+        "support_rationale": "Claim-008 requires carrying cost to remain under a 'target threshold set by management'. Evidence px_10_support_1 notes cost stayed within its 'declared limit'. In the context of the case, a 'declared limit' is reasonably inferred to be the management-set target threshold, making the claim supported by the evidence."
+      },
+      "option_2": {
+        "annotation_confidence": "high",
+        "boundary_claim_id": "adjudicated-extract_10-claim-008",
+        "cited_evidence_ids": [
+          "px_10_support_1"
+        ],
+        "reason_codes": [
+          "scope_expansion"
+        ],
+        "support_label": "partially_supported",
+        "support_rationale": "Evidence shows carrying cost stayed within a declared limit, but does not specify a 'target threshold set by management,' making the claim's detail slightly overcommitted."
+      }
+    }
+  ]
+}

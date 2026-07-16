@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_frr_023",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "acb173453e400103636f9fe787c8c4b3bd70bcb1bc1c07513f517e7b073110ba",
+  "provider_content_sha256": "8586ea4f442778760dc5e8ee36bca79440b8d334cddf214e1e98deb7b63a421e",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "8195994148571117d6063ed226c2d745236c16c0be4c877224c25f11cd157778",
+  "normalized_case": {
+    "case_id": "mi_validation_frr_023",
+    "candidate_sha256": "024bcc7a1e0e695a298e310b8c7a8dfb3ae437fbfe71882f0aa8d66aee48547c",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frr_023-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "024bcc7a1e0e695a298e310b8c7a8dfb3ae437fbfe71882f0aa8d66aee48547c",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_frr_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that a later verified recovery supersedes resolved historical failure evidence. Evidence 06 directly supports this by stating that a later verified recovery playbook is active after the historical failure was resolved, indicating that the recovery takes precedence over the prior failure. No evidence contradicts this, and the playbook is described as 'verified' and 'active,' confirming the selection rule's reliability and temporal update. Thus, the claim is fully supported.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

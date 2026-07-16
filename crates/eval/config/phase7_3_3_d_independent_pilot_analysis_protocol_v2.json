@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-independent-pilot-analysis-protocol-v2",
+  "status": "frozen_before_reference_json_content_parsing_for_scoring",
+  "successor_of": "phase7.3.3-d-independent-pilot-analysis-protocol-v1",
+  "controlled_change": "Before Manifest freeze, Reference is verified only by SHA256 equality to the frozen seal; Reference JSON content is not parsed.",
+  "predecessor_negative_result_sha256": "db4339d36e276570e267d3ce0bba4eadb8189acbac3a3f71e60b22b4f2426261",
+  "predecessor_analysis_v1_outputs_used": false,
+  "predecessor_power_gate_v1_outputs_used": false,
+  "case_count": 40,
+  "cluster_unit": "candidate_sha256",
+  "unique_candidate_clusters": 10,
+  "primary_endpoints": {
+    "candidate_level_exact_correctness": "arm aggregate label equals sealed Reference label",
+    "material_error_detection": "binary material-error-span presence",
+    "diagnostic_localization_precision_recall_f1": "micro character-level overlap across all cases"
+  },
+  "missingness": {
+    "all_40_cases_required": true,
+    "failures_not_dropped": true,
+    "predecessor_partial_outputs_excluded": true
+  },
+  "uncertainty": {
+    "primary": "candidate_sha256 cluster bootstrap percentile interval",
+    "secondary": "case bootstrap percentile interval",
+    "cluster_seed": 733041,
+    "case_seed": 733042,
+    "replicates": 20000,
+    "confirmatory_p_values": false
+  },
+  "cost_policy": {
+    "token_and_latency_measured": true,
+    "pricing_method_frozen": false,
+    "cost_usd": null
+  },
+  "reference_prefreeze_handling": {
+    "raw_bytes_read_for_sha256": true,
+    "json_content_parsed": false,
+    "labels_or_claims_inspected": false
+  },
+  "reference_json_parsing_authorized_only_after_execution_manifest_freeze": true,
+  "confirmatory_content_opened": false,
+  "runtime_integration_authorized": false
+}

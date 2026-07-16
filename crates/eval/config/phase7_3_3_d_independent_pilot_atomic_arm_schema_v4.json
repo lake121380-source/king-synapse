@@ -1,0 +1,50 @@
+{
+  "schema_version": 4,
+  "json_schema": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string"
+      },
+      "operation": {
+        "type": "string",
+        "const": "whole_candidate_claim"
+      },
+      "claim_material": {
+        "type": "boolean",
+        "const": true
+      },
+      "claim_support_label": {
+        "type": "string",
+        "enum": [
+          "not_assessable",
+          "partially_supported",
+          "supported",
+          "unsupported"
+        ]
+      },
+      "rationale": {
+        "type": "string",
+        "minLength": 1
+      },
+      "candidate_reference_label": {
+        "type": "string",
+        "enum": [
+          "not_assessable",
+          "partially_supported",
+          "supported",
+          "unsupported"
+        ]
+      }
+    },
+    "required": [
+      "case_id",
+      "operation",
+      "claim_material",
+      "claim_support_label",
+      "rationale",
+      "candidate_reference_label"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_rrr_020",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "f1dd3d65e49b4531173b22c453d5218dc80eab42bbc37381a033e9854cb34f1a",
+  "provider_content_sha256": "8897edac1406ba6cd6f4d6bc59759ea4d567323c0bc057fc45db172e551d493c",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "3c5fbf690d09baf62b5af3cd76066507a0e39f13a5b11ab127149ed0afd9b922",
+  "normalized_case": {
+    "case_id": "mi_validation_rrr_020",
+    "candidate_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrr_020-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "source_text_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrr_020-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that the current observed state is active and the older reliable fact is stale, matching the candidate's proposition that a current observed state supersedes a reliable but explicitly stale fact.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

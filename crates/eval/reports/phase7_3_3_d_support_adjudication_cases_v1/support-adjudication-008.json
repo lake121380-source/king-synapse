@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-008-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_10",
+  "adjudication_item_id": "support-adjudication-008",
+  "boundary_claim_id": "adjudicated-extract_10-claim-007",
+  "provider_envelope_sha256": "e04c1e8bcbe1510b650471a45d533f95f765248ea62dff31ca0fe8945272dfa7",
+  "provider_content_sha256": "c867725ab7e18a2d9200e82cb5d441be3c81ec983879abc2de93869a704e7a84",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "8c38ff514574a9f78773e2bfc26b4d026f31f4c1c8834d9352f9405f7ec7b6b5",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-008",
+    "case_id": "extract_10",
+    "boundary_claim_id": "adjudicated-extract_10-claim-007",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The evidence supports the directional core of the prediction because observed stockouts/interruptions fell in two supporting experiences, but it does not support the specific quantitative threshold of at least 30% or the stated planning-horizon scope. That makes partial support better grounded than full lack of support.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_10-claim-007",
+      "cited_evidence_ids": [
+        "px_10_support_1",
+        "px_10_support_2"
+      ],
+      "reason_codes": [
+        "scope_expansion",
+        "prediction_overcommitment"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence shows stockout/interruption reduction but does not quantify a 30% drop or specify a typical planning horizon, making the claim's quantitative threshold and time scope overcommitted."
+    },
+    "selected_frozen_decision_sha256": "09d38d2733e5e2047b69c705e14bb945d6512efecf206028cc03fe3d2c8d77a1",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

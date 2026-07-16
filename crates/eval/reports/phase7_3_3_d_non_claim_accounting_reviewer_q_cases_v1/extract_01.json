@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b2-q-extract_01-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "87a41757e49b0e9875edfc21c85f33ed892338889a113dd3ed1b07e7d97f2710",
+  "reviewer": "q",
+  "case_id": "extract_01",
+  "provider_envelope_sha256": "14c81350aa1c9ac66d07adf8ca004cfa4af73e1e1ad4ab3fc6b390ea4f12d84d",
+  "provider_content_sha256": "bf93b3ad72a1c5059cd5fd37778035659084809b66469a00a73ab3bef594afdc",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "aa0da0b291ad4cf2c8a7d5fe563a0c1ce23c171701c1f72e9e1c19ae72873fa8",
+  "decisions": [
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-001",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a comma, which serves as a syntactic separator without independent assertive content."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-002",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The word 'while' introduces a temporal or contrasting relationship that may qualify the connection between the two claimed propositions."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-003",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a comma, functioning purely as punctuation between clauses."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-004",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a period, marking the end of the sentence without semantic claim content."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-005",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The word 'When' establishes a conditional scope for the prediction that is not fully captured by the subsequent claim span alone."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-006",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a comma used to separate clauses within the statement."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-007",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a period terminating the sentence."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-008",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains a semicolon and space, acting as a delimiter between two independent clauses."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-009",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a period marking the end of the sentence."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-010",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The word 'If' initiates the conditional logic essential to the falsification statement, carrying significant semantic weight."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-011",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The phrase ' or ' acts as a logical disjunction connector between two already claimed alternatives without adding new assertive content."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-012",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The phrase ', the pattern is falsified.' contains the core consequential assertion of the falsification statement, which is missing from the current claims."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-013",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The phrase ' or ' serves as a logical connector between two claimed observables without independent assertive meaning."
+    },
+    {
+      "case_id": "extract_01",
+      "gap_id": "coverage-gap-014",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap contains only a period ending the sentence."
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "decision_count": 14
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

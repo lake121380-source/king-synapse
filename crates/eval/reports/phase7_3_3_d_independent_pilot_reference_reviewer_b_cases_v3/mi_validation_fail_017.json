@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_fail_017",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "059bdcfe41afbe495c47c366a0b3fc2612080f6fd0f48e9b3fc228466842a615",
+  "provider_content_sha256": "ff0a9e65ad82e89913ec3cc30fc8f70b6abba503512fba047347445cee4eae1f",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "5a1310e13493e4987e8248643a9578f900319d5d03e7f6c5709b3c39e639474c",
+  "normalized_case": {
+    "case_id": "mi_validation_fail_017",
+    "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_fail_017-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_fail_017-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The Candidate states that verified failure evidence must override the previously successful playbook. Evidence 06 directly supports this by stating that verified failure evidence says the approach caused harm and must not be repeated, which aligns with overriding the older successful playbook.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

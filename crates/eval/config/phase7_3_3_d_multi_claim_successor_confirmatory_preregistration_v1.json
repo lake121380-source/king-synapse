@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "phase7.3.3-d-multi-claim-successor-confirmatory-preregistration-v1",
+  "status": "frozen_before_confirmatory_content_opening_and_before_any_confirmatory_provider_call",
+  "study_role": "confirmatory_replication_limited_to_frozen_phase6_test_source_composites",
+  "source_lineage_limit": "Phase 6 test split was previously benchmarked; no general system-performance claim is authorized",
+  "primary_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "paired_unit": "unique_candidate",
+  "sample_size_candidates": 40,
+  "hypotheses": {
+    "null": "mean_atomic_minus_candidate_lte_0",
+    "alternative": "mean_atomic_minus_candidate_gt_0"
+  },
+  "alpha_one_sided": 0.05,
+  "primary_test": {
+    "method": "one_sided_paired_sign_flip_randomization_monte_carlo",
+    "replicates": 200000,
+    "seed": 733071,
+    "p_value": "(one_plus_count_permuted_mean_gte_observed_mean)/(replicates_plus_one)"
+  },
+  "uncertainty": {
+    "method": "unique_candidate_nonparametric_bootstrap",
+    "replicates": 20000,
+    "seed": 733072,
+    "interval": 0.95
+  },
+  "success_gate": {
+    "structural_identifiability_pass": true,
+    "realized_identifiability_pass": true,
+    "paired_cases_dropped": 0,
+    "estimate_gt_zero": true,
+    "one_sided_p_value_lt_alpha": true
+  },
+  "arms": {
+    "candidate": "one whole-Candidate support label",
+    "atomic": "six newline-delimited local atomic-unit support labels with adapter-derived immutable spans",
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 800,
+    "counterbalance": "20 candidate-first and 20 atomic-first",
+    "prompt_and_schema_hashes_inherited_exactly": {
+      "crates/eval/config/phase7_3_3_d_multi_claim_successor_candidate_arm_prompt_frame_v2.md": "3ec1194c697a8b01aec3f780fc332da60c057ef4bd2397cfe13b4fa79ba8b378",
+      "crates/eval/config/phase7_3_3_d_multi_claim_successor_atomic_arm_prompt_frame_v2.md": "7892e891f49c265ae5fec1dcc58c966f1bff337e4b027ca75a08ddc81cfb1b67",
+      "crates/eval/config/phase7_3_3_d_multi_claim_successor_candidate_arm_schema_frame_v2.json": "bbd8f1d21a40bdc130049e132523c2aa32e7f2bac4fb6c96c241db5f0c61d4b1",
+      "crates/eval/config/phase7_3_3_d_multi_claim_successor_atomic_arm_schema_frame_v2.json": "269e096513d69048629a7c8c751e554f824c873a647a1955d20adcd8f0720c77"
+    }
+  },
+  "missingness": {
+    "no_silent_drop": true,
+    "all_40_pairs_required": true,
+    "transport_failure_resume_same_manifest": true
+  },
+  "failure_discipline": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "same_version_retry_after_content_failure": false
+  },
+  "no_result_dependent_replanning": true,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_ctx_018",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "d267707fe06482c344122f603e691df85d4fd5e286252bd71e71f4c7f4dc56bb",
+  "provider_content_sha256": "e5081470341423135c24ada96cb82405e654507264b327aed2626e27a2d6c71d",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "4ed9103fe7466f5154663d6742517371faa5f730c2ef007078eef82bf3fe8fea",
+  "normalized_case": {
+    "case_id": "mi_validation_ctx_018",
+    "candidate_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_ctx_018-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "source_text_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_ctx_018-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that the playbook satisfies the active safety and scope constraint, which confirms that the active task constraint selects the context-compatible playbook. This is a direct match to the selection rule expressed in the candidate, and no evidence contradicts this claim. The support is clear, recent, and authoritative.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

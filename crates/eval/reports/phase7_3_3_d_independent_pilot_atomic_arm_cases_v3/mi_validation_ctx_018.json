@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_ctx_018",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "b414440400ad38c3a258b5a90c038d7d20c8ec239f64fea8ac66f29e00da2b3f",
+  "content_sha256": "5e605856faec36f7cd1f27de0ca186140068db36d1d02d82a8f49ecb4d9de49e",
+  "latency_ms": 8670.595599978697,
+  "usage": {
+    "prompt_tokens": 1101,
+    "completion_tokens": 116,
+    "total_tokens": 1217,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 4912,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 5752,
+      "total_duration_ms": 5676,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_ctx_018",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_ctx_018-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The Evidence supports that an active constraint rules out a generic playbook and that a playbook satisfies the active safety and scope constraint, which supports selection of a constraint-compatible playbook. However, it does not explicitly entail that the active task constraint itself selects the playbook or that the selected playbook is specifically context-compatible as stated in the claim."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_ctx_018-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

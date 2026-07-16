@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_05-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_05",
+  "provider_envelope_sha256": "108c76c241363a5ee8b46f4276d2b2588a66e7f83565069eb5e069021c2ea238",
+  "provider_content_sha256": "188c2778be2c3b05d2858124949cdc0823fe24d62f6edba5300476dd4a06b904",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "d069cf87ded023b0ac259c86ed9c7d49c1314ae571a2e94dd20f222189f1897c",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "Evidence explicitly confirms the comparison occurred within the same audience and month for AI tool posts.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "causal_leap"
+      ],
+      "support_rationale": "Evidence shows association/recurrence of features with success, but does not establish the causal mechanism implied by 'is associated with' in a predictive sense beyond correlation.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Directly supported by the counterexample where a celebrity repost drove virality, rendering content structure copying ineffective.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence supports a general trend/association, but the deterministic prediction 'it will have' overcommits given the observed variance and counterexamples.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "The scope limitation aligns perfectly with the evidence showing failure when external virality sources are present.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly identifies saves and qualified comments as the observed outcomes within the specified audience and month.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-007",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence states features recurred in winners but provides no quantitative data to support the specific '50% more' threshold.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The existence of 'failed AI posts' in the evidence bundle implies that posts with these features can fail to achieve higher engagement, satisfying falsifiability.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Directly supported by the celebrity repost case where a post without the specific content structure achieved high engagement via an external source.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_support_1",
+        "px_05_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Engagement metrics (saves, comments) are the primary observables recorded in the evidence bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_05-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_05_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly identifies an external source (unrelated celebrity repost) driving traffic, confirming this is an observable factor.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_05",
+    "status": "completed",
+    "decision_count": 11
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

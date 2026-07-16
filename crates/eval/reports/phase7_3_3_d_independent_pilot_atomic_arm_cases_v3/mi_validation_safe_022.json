@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_safe_022",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "6c305e61273205890357b3d670a923cd5de791b116a9564c136623143a1777ad",
+  "content_sha256": "eafdac296c3d8ed590325642540771d07aea7483b9c01baad0737164c98e8e0f",
+  "latency_ms": 5250.623000029009,
+  "usage": {
+    "prompt_tokens": 1080,
+    "completion_tokens": 102,
+    "total_tokens": 1182,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 2404,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3244,
+      "total_duration_ms": 3168,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_safe_022",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_safe_022-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence clearly supports that there is a clear current confirmed answer that should remain first. However, the candidate also asserts that no cognitive intervention is needed, and the supplied evidence does not directly state that no intervention is needed. Thus only part of the whole claim is entailed."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_safe_022-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

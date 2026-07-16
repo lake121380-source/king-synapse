@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b2-q-extract_08-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "87a41757e49b0e9875edfc21c85f33ed892338889a113dd3ed1b07e7d97f2710",
+  "reviewer": "q",
+  "case_id": "extract_08",
+  "provider_envelope_sha256": "655bd863c57d7f3692c66c745b3a095abffd40af762e1de3e3df292d75aaba87",
+  "provider_content_sha256": "ca0382c7a83544e62ad50f9219cbcadb9cae71abfb4cef8eb62a08a41d1b9668",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "90f69e44e045e0f707f5c99d9843fde3f66eaddc371ad710b1c4e2a746573dd1",
+  "decisions": [
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-066",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The gap contains the adversative connector 'However,' which signals a logical shift to a limiting condition. While the subsequent claim covers the limitation content, the connector itself carries semantic weight regarding the relationship between the two claims that may be omitted from the current boundary."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-067",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The gap contains 'If', a conditional marker essential to the logical structure of the prediction statement. Its exclusion from the claim span suggests a potential boundary omission of the conditional qualifier."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-068",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap consists solely of the coordinating conjunction ' and ', which links two proposition claims but possesses no independently assertive semantic content."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-069",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The gap contains 'If', a conditional marker essential to the logical structure of the falsification statement. Its exclusion from the claim span suggests a potential boundary omission of the conditional qualifier."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-070",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap consists entirely of a comma and a space, serving only as punctuation between two claim spans without any assertive meaning."
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "decision_count": 5
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

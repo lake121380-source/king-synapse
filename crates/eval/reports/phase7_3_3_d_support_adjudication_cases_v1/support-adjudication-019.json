@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-019-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_04",
+  "adjudication_item_id": "support-adjudication-019",
+  "boundary_claim_id": "adjudicated-extract_04-claim-007",
+  "provider_envelope_sha256": "c3290dc0e8c8459147d23a16139656b7ea0fb845f8b1845c6d285b300592f2fd",
+  "provider_content_sha256": "2abe49c0b6c2b14392a61a7a5fee0915738397ad45e42fc57b70db807702437d",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "675c3af91ddf8a88ad0aafe8467155107265560e15917876ec7bc2ee59aa7388",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-019",
+    "case_id": "extract_04",
+    "boundary_claim_id": "adjudicated-extract_04-claim-007",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The evidence shows two observed instances where unrelated components were not replaced, but the claim is a prediction phrased as an outcome expectation ('without needing') and the bundle also includes a counterexample context showing not all diagnostic situations cleanly avoid broader harm/intervention. The supplied evidence supports the possibility/pattern, but not a stable unconditional future outcome.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_04-claim-007",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence shows this occurred in two instances, but projecting it as a guaranteed outcome ('without needing') for future cases exceeds the statistical weight of two positive examples."
+    },
+    "selected_frozen_decision_sha256": "220e04b90db2c00140cccd89fed613b6cd812eec6fd09b30cf2e6bb27a11bde6",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

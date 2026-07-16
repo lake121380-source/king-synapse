@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_ctx_022",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "2b37673e65c136f1f8e03c4d7e3f8579ff134cb9df21b4ec4bb0359975c618c5",
+  "provider_content_sha256": "85341df1266d2d12de2e2e5baaecf8442044870da7245bc2f4dddf1a33e616a9",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "40448933cd9fe7b24bb921c60348cecc29f1b34f2713700150cd77e7a440a45d",
+  "normalized_case": {
+    "case_id": "mi_validation_ctx_022",
+    "candidate_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_ctx_022-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "source_text_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_ctx_022-evidence-01",
+          "mi_validation_ctx_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that the playbook satisfies the active safety and scope constraint, confirming that the active task constraint selects the context-compatible playbook. Evidence 01 further supports this by noting that the generic playbook, while having stronger overlap, violates the active constraint, implying that only the context-compatible playbook is selected under the active constraint. This provides direct and unambiguous support for the candidate's selection rule claim.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

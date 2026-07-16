@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "metrics_id": "phase7.3.3-d-multi-claim-successor-type-metadata-agreement-a-v2-c-v1-metrics-v1",
+  "agreement_pair": [
+    "reviewer_a_v2",
+    "reviewer_c_v1"
+  ],
+  "claim_count": 240,
+  "claim_role": {
+    "exact_agreement_count": 174,
+    "disagreement_count": 66,
+    "exact_agreement_rate": 0.725,
+    "kappa": {
+      "observed_agreement": 0.725,
+      "chance_expected_agreement": 0.36753472222222217,
+      "cohen_kappa": 0.5651935218226736
+    },
+    "reviewer_a_distribution": {
+      "anchor": 108,
+      "support": 88,
+      "qualification": 21,
+      "boundary": 14,
+      "exception": 9
+    },
+    "reviewer_c_distribution": {
+      "support": 114,
+      "anchor": 99,
+      "exception": 6,
+      "qualification": 14,
+      "boundary": 7
+    },
+    "confusion_matrix": {
+      "row_reviewer": "a_v2",
+      "column_reviewer": "c_v1",
+      "labels": [
+        "anchor",
+        "support",
+        "qualification",
+        "boundary",
+        "prediction",
+        "exception"
+      ],
+      "counts": {
+        "anchor": {
+          "anchor": 84,
+          "support": 19,
+          "qualification": 3,
+          "boundary": 1,
+          "prediction": 0,
+          "exception": 1
+        },
+        "support": {
+          "anchor": 12,
+          "support": 73,
+          "qualification": 0,
+          "boundary": 1,
+          "prediction": 0,
+          "exception": 2
+        },
+        "qualification": {
+          "anchor": 2,
+          "support": 9,
+          "qualification": 10,
+          "boundary": 0,
+          "prediction": 0,
+          "exception": 0
+        },
+        "boundary": {
+          "anchor": 0,
+          "support": 7,
+          "qualification": 1,
+          "boundary": 5,
+          "prediction": 0,
+          "exception": 1
+        },
+        "prediction": {
+          "anchor": 0,
+          "support": 0,
+          "qualification": 0,
+          "boundary": 0,
+          "prediction": 0,
+          "exception": 0
+        },
+        "exception": {
+          "anchor": 1,
+          "support": 6,
+          "qualification": 0,
+          "boundary": 0,
+          "prediction": 0,
+          "exception": 2
+        }
+      }
+    }
+  },
+  "claim_type": {
+    "exact_agreement_count": 187,
+    "disagreement_count": 53,
+    "exact_agreement_rate": 0.7791666666666667,
+    "kappa": {
+      "observed_agreement": 0.7791666666666667,
+      "chance_expected_agreement": 0.6308333333333334,
+      "cohen_kappa": 0.40180586907449206
+    },
+    "reviewer_a_distribution": {
+      "proposition": 171,
+      "causal": 6,
+      "exception": 11,
+      "limitation": 22,
+      "scope": 23,
+      "condition": 4,
+      "prediction": 2,
+      "falsifiability": 1
+    },
+    "reviewer_c_distribution": {
+      "proposition": 210,
+      "causal": 6,
+      "exception": 5,
+      "limitation": 7,
+      "condition": 5,
+      "scope": 7
+    },
+    "confusion_matrix": {
+      "row_reviewer": "a_v2",
+      "column_reviewer": "c_v1",
+      "labels": [
+        "proposition",
+        "causal",
+        "prediction",
+        "scope",
+        "falsifiability",
+        "limitation",
+        "condition",
+        "exception"
+      ],
+      "counts": {
+        "proposition": {
+          "proposition": 166,
+          "causal": 2,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 1,
+          "exception": 2
+        },
+        "causal": {
+          "proposition": 2,
+          "causal": 4,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 0,
+          "exception": 0
+        },
+        "prediction": {
+          "proposition": 2,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 0,
+          "exception": 0
+        },
+        "scope": {
+          "proposition": 17,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 6,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 0,
+          "exception": 0
+        },
+        "falsifiability": {
+          "proposition": 1,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 0,
+          "exception": 0
+        },
+        "limitation": {
+          "proposition": 11,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 1,
+          "falsifiability": 0,
+          "limitation": 7,
+          "condition": 1,
+          "exception": 2
+        },
+        "condition": {
+          "proposition": 1,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 3,
+          "exception": 0
+        },
+        "exception": {
+          "proposition": 10,
+          "causal": 0,
+          "prediction": 0,
+          "scope": 0,
+          "falsifiability": 0,
+          "limitation": 0,
+          "condition": 0,
+          "exception": 1
+        }
+      }
+    }
+  },
+  "joint": {
+    "exact_agreement_count": 151,
+    "disagreement_count": 89,
+    "exact_agreement_rate": 0.6291666666666667,
+    "both_fields_disagree_count": 30,
+    "role_only_disagree_count": 36,
+    "type_only_disagree_count": 23,
+    "kappa": {
+      "observed_agreement": 0.6291666666666667,
+      "chance_expected_agreement": 0.28881944444444446,
+      "cohen_kappa": 0.47856654623571915
+    }
+  },
+  "adjudication_case_count": 89,
+  "provider_called": false
+}

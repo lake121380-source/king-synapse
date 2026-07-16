@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrr_021",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "c40093b3dbde337dce20f1bffd1ffbce60707602b626492b7e362961b5bd314b",
+  "content_sha256": "665911efdecafbb37fd21b224ec698a60dae2ede8f5cc91b95c37cc7bdc206bd",
+  "latency_ms": 6345.52629996324,
+  "usage": {
+    "prompt_tokens": 1220,
+    "completion_tokens": 93,
+    "total_tokens": 1313,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3288,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4128,
+      "total_duration_ms": 4052,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrr_021",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrr_021-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence explicitly states that the older fact was highly reliable but is now stale, and that the current observed state is active. This directly supports the proposition that the current observed state takes precedence over a reliable but explicitly stale fact."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

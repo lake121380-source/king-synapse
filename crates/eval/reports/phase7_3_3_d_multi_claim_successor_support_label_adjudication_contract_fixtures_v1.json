@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "fixtures_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-contract-fixtures-v1",
+  "fixture_count": 8,
+  "fixtures_passed": 8,
+  "all_fixtures_passed": true,
+  "fixtures": [
+    {
+      "name": "valid_select_option_1",
+      "expected": "PASS",
+      "actual": "PASS",
+      "failure_code": null,
+      "passed": true
+    },
+    {
+      "name": "valid_select_option_2",
+      "expected": "PASS",
+      "actual": "PASS",
+      "failure_code": null,
+      "passed": true
+    },
+    {
+      "name": "valid_defer",
+      "expected": "PASS",
+      "actual": "PASS",
+      "failure_code": null,
+      "passed": true
+    },
+    {
+      "name": "reject_extra_replacement_label",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "failure_code": "adjudication_output_keys_invalid",
+      "passed": true
+    },
+    {
+      "name": "reject_work_item_mismatch",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "failure_code": "work_item_id_mismatch",
+      "passed": true
+    },
+    {
+      "name": "reject_invalid_operation",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "failure_code": "operation_invalid",
+      "passed": true
+    },
+    {
+      "name": "reject_empty_rationale",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "failure_code": "decision_rationale_invalid",
+      "passed": true
+    },
+    {
+      "name": "selected_option_reconstruction_exact",
+      "expected": "PASS",
+      "actual": "PASS",
+      "failure_code": null,
+      "passed": true
+    }
+  ]
+}

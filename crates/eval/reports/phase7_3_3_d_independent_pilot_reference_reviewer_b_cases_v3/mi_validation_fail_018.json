@@ -1,0 +1,52 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_fail_018",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "1e2092c39eccf58e2b4fadafc39ad30a241825ab427b7129a9493678745b5435",
+  "provider_content_sha256": "85f676d704a61780063bcacb4a328243e347e9d5251e9f017a8f9fa41b30a8d0",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "30b9aa559fae5409062e671245925a5c8350b092a28b363a2ac12b7377f17936",
+  "normalized_case": {
+    "case_id": "mi_validation_fail_018",
+    "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_fail_018-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mi_validation_fail_018-evidence-06"
+        ],
+        "reason_codes": [
+          "conflicting_evidence"
+        ],
+        "rationale": "The Candidate asserts that verified failure evidence must override the previously successful playbook. Evidence 06 directly contradicts this by stating that the approach caused harm and must not be repeated, which aligns with the Candidate's claim. However, the Candidate's claim is about overriding a previously successful playbook, but the evidence indicates the approach caused harm, implying the playbook was not successful. The Candidate's wording 'verified failure evidence must override' is not directly supported; the evidence says 'must not be repeated' but does not explicitly state an override. Moreover, the Candidate's claim is a general rule, while the evidence is specific to this case. Thus, the claim is unsupported.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "unsupported",
+    "material_error_spans": [
+      {
+        "reference_claim_id": "mi_validation_fail_018-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "unsupported"
+      }
+    ],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

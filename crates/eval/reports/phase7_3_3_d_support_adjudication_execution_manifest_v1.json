@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d3-support-adjudication-execution-manifest-v1",
+  "status": "frozen_before_first_provider_call",
+  "research_object": "operation-based adjudication of exactly 26 frozen Support-label disagreements",
+  "decision_environment": {
+    "provider": "api.gpt.ge",
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "model_requested": "gpt-5.4",
+    "canonical_model_family_expected": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "seed": null,
+    "seed_supported_by_adapter": false,
+    "max_tokens": 4000,
+    "stop_sequences": [],
+    "response_format": {
+      "type": "json_object"
+    },
+    "request_timeout_seconds": 600,
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "one_isolated_claim_per_request": true
+  },
+  "artifact_lineage": {
+    "adapter_sha256": "03c5a8f2f7224830c030ac9ec8315abb405e1b8885a11f91c630e0914aa09647",
+    "protocol_sha256": "53a139eb1a2f4b64ebe8cb6ffc1bc7508100c475277781d87de5e4d2f5779cf2",
+    "execution_policy_sha256": "8011e8858fd7a9236c75eeaeef228a74212d32e0ef7cdcbb98b0a5cb0551fdb5",
+    "prompt_sha256": "48c84a286e66d6b090cf28afc44325eb4db8b025a80791e94105af99d383401a",
+    "output_schema_sha256": "65e5ec90306bef4ebb88501778e8e1a867d00a4662ccf8a1a9ca2c4b32f3645f",
+    "packet_sha256": "7ffd6a19287edfce86669858ea7c5bf66e55d716bdff23971163527105ceb535",
+    "mapping_sha256": "b195c00ec85853b0779c61c2ea3a1b0fe26931a7e2f102a303e13aedcae789ed",
+    "fixtures_sha256": "dac9040580fc8a3ed645505d4411729e13202475a4f51bfbc034f4a2ad3a5096",
+    "freeze_manifest_sha256": "d979e4d4d4d3574ecc416f4272638dfa9d72225c5b6757977350f6f578595981",
+    "reviewer_a_submission_sha256": "2449858a296e48bd761686263dddaf4f90afdcdbc874b588e68f92c4f141c896",
+    "reviewer_b_submission_sha256": "0e82057a80b67a7e0f7e389f6febd5d4f1379f7bbdc364eab344fb65d41c8db0",
+    "state_v8_sha256": "b6fd7bdeaff9d5f74d2e11dbf7d1948f13724091fc65b4d8893df0e03219a453",
+    "readiness_v19_sha256": "21b40c440d6bccb9319f1b97b55cd8dda35ec3958a2a5dd4e678e7bc5ab808bd"
+  },
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "invalid_json_schema_or_semantics_authoritative_negative": true,
+    "semantic_retry": false,
+    "transport_failure_before_content_resume_same_manifest": true
+  },
+  "data_handling": {
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "raw_provider_response_stored": false,
+    "envelope_hash_recorded": true,
+    "content_hash_recorded_before_parse": true,
+    "held_out_loaded": false
+  },
+  "item_count": 26,
+  "allowed_operations": [
+    "defer_for_human_review",
+    "select_option_1",
+    "select_option_2"
+  ],
+  "execution_started": false,
+  "provider_called": false,
+  "support_gold_frozen": false,
+  "held_out_accessed": false
+}

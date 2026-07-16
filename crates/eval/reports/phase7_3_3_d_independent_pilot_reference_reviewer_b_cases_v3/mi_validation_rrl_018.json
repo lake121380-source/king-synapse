@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_rrl_018",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "35ab0c6a3f8f0a6704cba9cf615f9d28dc2d2ec0f2319929890d6289c8a47968",
+  "provider_content_sha256": "9d9c0588594144a5a211b43f653f7ade3bc8b279523a9313d65671ce0efbf818",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "e7efd8c29a0dc78262643f7ba95a377ad3822228ef56009f3dcba810d996f426",
+  "normalized_case": {
+    "case_id": "mi_validation_rrl_018",
+    "candidate_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrl_018-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "source_text_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrl_018-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The Candidate asserts that high-confidence confirmation beats a recent weak observation. Evidence 06 directly states that high confidence confirmation remains authoritative, supporting the selection rule that high-confidence confirmation is preferred over weak observations. No evidence contradicts this, and the other evidence does not provide a stronger counterclaim.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

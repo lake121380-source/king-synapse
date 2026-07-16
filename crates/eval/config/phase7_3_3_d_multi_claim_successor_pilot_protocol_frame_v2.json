@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-candidate-atomic-pilot-frame-v2",
+  "status": "frozen_before_any_arm_provider_call",
+  "study_role": "exploratory_identifiable_multi_claim_pilot",
+  "primary_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "paired_unit": "unique_candidate",
+  "case_count": 40,
+  "candidate_arm": "one whole-Candidate support label",
+  "atomic_arm": "six newline-delimited local atomic-unit support labels with adapter-derived immutable spans",
+  "resource_equality": {
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 800,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "same_case_payload": true
+  },
+  "counterbalance": "deterministic 20 candidate-first and 20 atomic-first",
+  "visibility": {
+    "reference_content": false,
+    "reference_labels": false,
+    "other_arm": false,
+    "confirmatory_content": false
+  },
+  "failure_policy": {
+    "first_provider_content_authoritative": true,
+    "transport_failure_resume_same_manifest": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "change_requires_successor": true
+  },
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

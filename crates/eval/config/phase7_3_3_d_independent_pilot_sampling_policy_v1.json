@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-independent-pilot-sampling-policy-v1",
+  "status": "frozen",
+  "target": 40,
+  "minimum": 30,
+  "maximum": 50,
+  "confirmatory_sample": false,
+  "unit": "candidate_with_frozen_evidence_bundle",
+  "sequence": [
+    "freeze_inventory_ids_hashes",
+    "apply_pre_outcome_eligibility",
+    "freeze_eligible_inventory",
+    "deterministic_select",
+    "freeze_selected_ids_hashes",
+    "open_selected_content"
+  ],
+  "selection": {
+    "method": "sha256_ranked_stratified",
+    "seed": "phase7.3.3-d-pilot-v1-20260715",
+    "tie_breaker": "candidate_id"
+  },
+  "pre_outcome_strata": [
+    "domain",
+    "source_family",
+    "candidate_length_band",
+    "evidence_count_band"
+  ],
+  "forbidden_outcome_strata": [
+    "support_label",
+    "mixed_support",
+    "arm_correctness",
+    "agreement",
+    "effect_size"
+  ],
+  "exclusions": {
+    "design_case_ids": [
+      "extract_01",
+      "extract_02",
+      "extract_03",
+      "extract_04",
+      "extract_05",
+      "extract_06",
+      "extract_07",
+      "extract_08",
+      "extract_09",
+      "extract_10"
+    ],
+    "candidate_hash_overlap": "exclude",
+    "evidence_hash_overlap": "exclude",
+    "source_identity_overlap": "exclude_when_available",
+    "calibration_fixture": "exclude"
+  },
+  "attrition": {
+    "post_opening_replacement": false,
+    "shortfall_reported": true,
+    "pre_opening_replacement": "next_deterministic_rank"
+  },
+  "current_gate": {
+    "inventory_accessed": false,
+    "candidate_content_accessed": false,
+    "evidence_content_accessed": false,
+    "selected_ids_frozen": false
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "submission_id": "phase7.3.3-d1-b3-non-claim-adjudication-submission-v1",
+  "status": "completed_non_claim_accounting_adjudication",
+  "label_status": "non_claim_accounting_frozen_boundary_omission_candidates_unresolved",
+  "manifest_sha256": "667c5c6bfd59e5e79be0e55c46fb9dd17e2937a3a44a0ebc99394e148fd73ab3",
+  "protocol_sha256": "ffc63aa9ed6212e151ffe4963d70417947982bc0aef7d5e7dd2bc296a9260002",
+  "worklist_sha256": "c8fc38afe17a33caafff41e36edda948c446e1fd21d68e9fd6f1f279315b902d",
+  "agreement_sha256": "daddd81e954d3d66a7da5b65f3b6b4c1af3b3939019bfbea43855f7699ec5b5a",
+  "case_count": 16,
+  "decision_count": 16,
+  "decisions": [
+    {
+      "case_id": "b3-001-coverage-gap-002",
+      "gap_id": "coverage-gap-002",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap text is only the connector 'while' with surrounding spaces. In this sentence it functions to link the two already captured propositions rather than to assert a standalone claim. Although it signals a relationship between clauses, the connector itself is non-assertive and does not warrant separate claim coverage within this frozen gap."
+    },
+    {
+      "case_id": "b3-002-coverage-gap-005",
+      "gap_id": "coverage-gap-005",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap text is only the standalone connector \"When \" at the start of the sentence. It functions as a conditional introducer linking the existing scope claim to the prediction claims, but by itself it does not add a separate claim beyond that connection. Since the substantive conditional content is already present in the captured scope span, this isolated token is best treated as a non-assertive connector rather than a boundary omission candidate."
+    },
+    {
+      "case_id": "b3-003-coverage-gap-010",
+      "gap_id": "coverage-gap-010",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap text is only the standalone conditional introducer 'If', which does not itself assert a claim. It functions as a non-assertive connector introducing the falsification conditions already represented by the two existing claims. Since the gap contains only the connector and not omitted substantive condition content, it is best classified as an explicit non-claim."
+    },
+    {
+      "case_id": "b3-004-coverage-gap-011",
+      "gap_id": "coverage-gap-011",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "This is a reason disagreement only, so classification remains explicit_non_claim. The gap text ' or ' is a logical connector expressing disjunction between two adjacent falsification conditions, not a substantive claim on its own. 'List_delimiter' better fits punctuation-like separators in enumerations; here the lexical item 'or' functions primarily as a non-assertive connector."
+    },
+    {
+      "case_id": "b3-005-coverage-gap-013",
+      "gap_id": "coverage-gap-013",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "This is a reason disagreement, so classification remains explicit_non_claim. The gap text ' or ' is a coordinating conjunction expressing alternation between two adjacent claims, not a punctuation-style delimiter. It has no standalone propositional content, so non_assertive_connector is the better fit than list_delimiter."
+    },
+    {
+      "case_id": "b3-006-coverage-gap-021",
+      "gap_id": "coverage-gap-021",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "This is a reason disagreement only, so classification remains explicit_non_claim. The gap text is exactly comma-plus-space between two already-extracted claims and contains no lexical item or list structure of its own. Although a comma can sometimes function within a list, here the gap is simply punctuation separating the scope phrase from the following proposition, so punctuation_only is the better fit."
+    },
+    {
+      "case_id": "b3-007-coverage-gap-022",
+      "gap_id": "coverage-gap-022",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "This is a reason-only disagreement. The immutable gap span is exactly ', ', which is only punctuation plus whitespace and does not function as a delimiter between list items. It merely punctuates the transition into the limitation clause, so it has no independent claim content."
+    },
+    {
+      "case_id": "b3-008-coverage-gap-024",
+      "gap_id": "coverage-gap-024",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "This is a reason_disagreement case, so classification remains explicit_non_claim. The gap text is only ', ' with no lexical content. Although the comma separates adjacent claim spans, it is ordinary punctuation rather than a list item separator, so punctuation_only is the best fit."
+    },
+    {
+      "case_id": "b3-009-coverage-gap-025",
+      "gap_id": "coverage-gap-025",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "The gap is exactly \", \", a comma followed by a space. It functions as ordinary punctuation separating the preceding prediction from the following limitation clause, not as a delimiter in a list of parallel items. It has no standalone assertive content."
+    },
+    {
+      "case_id": "b3-010-coverage-gap-027",
+      "gap_id": "coverage-gap-027",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "This is a reason disagreement, so classification remains explicit_non_claim. The gap text is only a semicolon plus space between two already captured claims. It functions as punctuation separating clauses, not as a list delimiter within a list itemization."
+    },
+    {
+      "case_id": "b3-011-coverage-gap-032",
+      "gap_id": "coverage-gap-032",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "punctuation_only",
+      "rationale": "This is a reason_disagreement case, so classification remains explicit_non_claim. The gap span is only ', ' with no lexical item; it functions purely as punctuation between two already extracted claims rather than a textual list marker like 'and' or a semicolon-delimited series. Therefore punctuation_only is the best-fit non-claim reason."
+    },
+    {
+      "case_id": "b3-012-coverage-gap-046",
+      "gap_id": "coverage-gap-046",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap text ', whereas ' functions as a contrastive connector between two already captured claims. It does not itself assert a separate proposition beyond linking the adjacent statements in opposition, so it is best treated as a non-assertive connector rather than a boundary omission candidate."
+    },
+    {
+      "case_id": "b3-013-coverage-gap-054",
+      "gap_id": "coverage-gap-054",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap text ', whereas ' is a contrastive connector linking two already-extracted propositions. It signals discourse relation but does not independently assert a separable factual claim within this span alone, so it is best treated as an explicit non-claim connector rather than a boundary omission candidate."
+    },
+    {
+      "case_id": "b3-014-coverage-gap-064",
+      "gap_id": "coverage-gap-064",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The span ', despite ' is a concessive connector linking two already extracted propositions. It does not by itself assert a standalone proposition; any relational meaning comes from the connected clauses, not from the connector token itself. Therefore this gap is best treated as an explicit non-claim."
+    },
+    {
+      "case_id": "b3-015-coverage-gap-066",
+      "gap_id": "coverage-gap-066",
+      "final_classification": "explicit_non_claim",
+      "final_reason_code": "non_assertive_connector",
+      "rationale": "The gap consists only of the discourse connector 'However,' plus surrounding spaces. It does not introduce an independent proposition beyond signaling contrast between the two already captured claims, so it is best treated as an explicit non-claim rather than a boundary omission candidate."
+    },
+    {
+      "case_id": "b3-016-coverage-gap-082",
+      "gap_id": "coverage-gap-082",
+      "final_classification": "boundary_omission_candidate",
+      "final_reason_code": null,
+      "rationale": "The gap \"s.\" is not purely punctuation: the \"s\" changes the extracted claim text from singular \"stockout\" to the source's plural \"stockouts.\" Because this is a lexical/morphological difference rather than only terminal punctuation, it is better treated as a possible boundary omission rather than an explicit non-claim."
+    }
+  ],
+  "raw_provider_responses_stored": false,
+  "held_out_accessed": false,
+  "boundary_repair_performed": false,
+  "coverage_qa_rerun": false,
+  "boundary_gold_frozen": false,
+  "support_review_allowed": false
+}

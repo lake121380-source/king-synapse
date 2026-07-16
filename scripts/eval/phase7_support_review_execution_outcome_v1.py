@@ -1,0 +1,34 @@
+﻿#!/usr/bin/env python3
+from __future__ import annotations
+import copy,hashlib,json,tempfile
+from pathlib import Path
+from phase7_execution_attempt_log import read_entries
+ROOT=Path(__file__).resolve().parents[2];DATA=ROOT/'crates/eval/datasets/pattern_extraction';REPORTS=ROOT/'crates/eval/reports';CONFIG=ROOT/'crates/eval/config'
+STATE4=DATA/'phase7_3_3_d_support_stage_state_v4.json';READY15=REPORTS/'phase7_3_3_d1_reference_construction_readiness_v15.json';PROTOCOL=CONFIG/'phase7_3_3_d_support_review_execution_protocol_v1.json';POLICY=CONFIG/'phase7_3_3_d_support_review_execution_policy_v1.json';PROMPT=CONFIG/'phase7_3_3_d_support_reviewer_prompt_v1.md';FIXTURES=REPORTS/'phase7_3_3_d_support_review_contract_fixtures_v1.json'
+OUTCOME=REPORTS/'phase7_3_3_d_support_review_execution_outcome_v1.json';STATE5=DATA/'phase7_3_3_d_support_stage_state_v5.json';READY16=REPORTS/'phase7_3_3_d1_reference_construction_readiness_v16.json'
+def manifest(r):return REPORTS/f'phase7_3_3_d_support_reviewer_{r}_execution_manifest_v1.json'
+def negative(r):return REPORTS/f'phase7_3_3_d_support_reviewer_{r}_negative_result_v1.json'
+def attempts(r):return REPORTS/f'phase7_3_3_d_support_reviewer_{r}_execution_attempts_v1.jsonl'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def load(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+def write_once(p,v):
+ b=(json.dumps(v,ensure_ascii=False,indent=2)+'\n').encode()
+ if p.exists():
+  if p.read_bytes()!=b:raise ValueError(f'immutable artifact differs: {p}')
+  return sha(p)
+ p.parent.mkdir(parents=True,exist_ok=True)
+ with tempfile.NamedTemporaryFile('wb',dir=p.parent,delete=False) as h:h.write(b);t=Path(h.name)
+ t.replace(p);return sha(p)
+def main():
+ req=[STATE4,READY15,PROTOCOL,POLICY,PROMPT,FIXTURES]+[x for r in 'ab' for x in [manifest(r),negative(r),attempts(r)]]
+ missing=[str(x.relative_to(ROOT)) for x in req if not x.exists()]
+ if missing:raise ValueError(f'missing:{missing}')
+ ns={r:load(negative(r)) for r in 'ab'};logs={r:read_entries(attempts(r)) for r in 'ab'}
+ checks={r:ns[r].get('status')=='authoritative_negative_result' and ns[r].get('failure_level')=='level_0_transport' and ns[r].get('failure_code')=='HTTP Error 401: Unauthorized' and ns[r].get('response_received') is False and ns[r].get('same_version_retry_allowed') is False and len(logs[r])==2 for r in 'ab'}
+ if not all(checks.values()):raise ValueError(f'outcome_gate_failed:{checks}')
+ outcome={'schema_version':1,'outcome_id':'phase7.3.3-d1-b-support-review-execution-outcome-v1','status':'completed_with_two_authoritative_transport_negative_results','protocol_sha256':sha(PROTOCOL),'execution_policy_sha256':sha(POLICY),'prompt_sha256':sha(PROMPT),'contract_fixtures_sha256':sha(FIXTURES),'reviewers':{r:{'manifest_sha256':sha(manifest(r)),'negative_result_sha256':sha(negative(r)),'attempt_log_sha256':sha(attempts(r)),'attempt_log_tail_sha256':logs[r][-1]['entry_sha256'],'terminal_outcome':'authoritative_negative_result','failure_level':'level_0_transport','failure_subtype':'transport_failure','failure_code':'HTTP Error 401: Unauthorized','response_received':False,'completed_case_count':0,'completed_decision_count':0,'same_version_retry_allowed':False,'support_capability_conclusion_authorized':False} for r in 'ab'},'two_completed_support_submissions':False,'support_agreement_allowed':False,'support_gold_frozen':False,'packet_or_boundary_content_changed':False,'held_out_accessed':False,'interpretation':'The frozen v1 execution was attempted for both independent reviewers, but the gateway rejected both requests before model content was received. This is a transport/credential result and does not evaluate Support classification capability.','next_required_stage':'freeze_new_support_execution_version_after_valid_gateway_credential_is_available'}
+ oh=write_once(OUTCOME,outcome)
+ s=copy.deepcopy(load(STATE4));s.update({'schema_version':5,'state_id':'phase7.3.3-d1-b-support-stage-state-v5','support_state':'independent_support_review_v1_authoritative_transport_failures','blocked_reason':'both_reviewer_v1_requests_http_401_before_provider_content','support_reviewer_a_completed':False,'support_reviewer_b_completed':False,'support_agreement_available':False,'support_adjudication_allowed':False,'support_gold_frozen':False,'support_review_allowed':False,'support_review_started':True,'next_authorized_stage':'new_support_execution_version_after_credential_remediation'});s['support_execution_v1']={'outcome_sha256':oh,'reviewer_a_negative_result_sha256':sha(negative('a')),'reviewer_b_negative_result_sha256':sha(negative('b')),'same_version_retry_allowed':False,'provider_content_received':False,'boundary_or_packet_changed':False};sh=write_once(STATE5,s)
+ rd=copy.deepcopy(load(READY15));rd.update({'schema_version':16,'readiness_id':'phase7.3.3-d1-reference-construction-readiness-v16','status':'support_review_execution_v1_blocked_by_authoritative_transport_failures','next_authorized_stage':'freeze_new_support_execution_version_after_valid_gateway_credential_is_available','support_review_allowed':False,'support_review_started':True,'support_gold_frozen':False});lin=rd['artifact_lineage'];lin.update({'readiness_v15_sha256':sha(READY15),'support_execution_protocol_v1_sha256':sha(PROTOCOL),'support_execution_policy_v1_sha256':sha(POLICY),'support_reviewer_prompt_v1_sha256':sha(PROMPT),'support_contract_fixtures_v1_sha256':sha(FIXTURES),'support_reviewer_a_execution_manifest_v1_sha256':sha(manifest('a')),'support_reviewer_b_execution_manifest_v1_sha256':sha(manifest('b')),'support_reviewer_a_negative_result_v1_sha256':sha(negative('a')),'support_reviewer_b_negative_result_v1_sha256':sha(negative('b')),'support_review_execution_outcome_v1_sha256':oh,'support_stage_state_v5_sha256':sh});g=rd['gates'];g.update({'support_reviewer_a_execution_allowed':False,'support_reviewer_b_execution_allowed':False,'support_reviewer_a_v1_attempted':True,'support_reviewer_b_v1_attempted':True,'support_reviewer_a_completed':False,'support_reviewer_b_completed':False,'two_completed_support_submissions':False,'support_agreement_allowed':False,'support_same_version_retry_allowed':False,'support_execution_v2_requires_valid_credential_and_new_frozen_manifests':True});rd['support_review'].update({'reviewer_a_completed':False,'reviewer_b_completed':False,'agreement_available':False,'support_gold_frozen':False,'execution_v1_outcome_sha256':oh,'blocked_reason':'http_401_before_provider_content_for_both_reviewers'});rh=write_once(READY16,rd)
+ print(json.dumps({'status':outcome['status'],'outcome_sha256':oh,'support_stage_state_v5_sha256':sh,'readiness_v16_sha256':rh,'reviewer_a':'level_0_transport_http_401','reviewer_b':'level_0_transport_http_401','support_capability_conclusion_authorized':False,'agreement_allowed':False,'same_version_retry_allowed':False,'next_required_stage':outcome['next_required_stage']},indent=2))
+if __name__=='__main__':main()

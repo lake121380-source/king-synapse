@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d1-a-boundary-coverage-policy-v1",
+  "extends_protocol_id": "phase7.3.3-d1-a-boundary-reference-protocol-v1",
+  "purpose": "Account for every Candidate source-anchor character after Boundary adjudication and before Boundary Gold freeze.",
+  "placement": "after_boundary_adjudication_before_boundary_gold_freeze",
+  "character_unit": "UTF-8 decoded Python string code point",
+  "span_semantics": "[start,end) relative to exactly one frozen source anchor",
+  "metrics": [
+    "total_anchor_characters",
+    "eligible_non_whitespace_characters",
+    "covered_characters",
+    "overlap_characters",
+    "gap_characters",
+    "eligible_gap_characters",
+    "declared_non_claim_characters",
+    "claim_non_claim_conflict_characters",
+    "raw_coverage_ratio",
+    "eligible_accounting_ratio"
+  ],
+  "accounting_rule": "Every non-whitespace character must be covered by exactly one adjudicated Claim or by an explicit non_claim_span with a reason code.",
+  "non_claim_reason_codes": [
+    "punctuation_only",
+    "formatting_only",
+    "list_delimiter",
+    "non_assertive_connector",
+    "metadata_not_a_claim",
+    "other_explained_non_claim"
+  ],
+  "freeze_gates": {
+    "invalid_span_count": 0,
+    "claim_text_mismatch_count": 0,
+    "eligible_gap_characters": 0,
+    "overlap_characters": 0,
+    "claim_non_claim_conflict_characters": 0,
+    "all_non_claim_spans_have_reason_and_rationale": true,
+    "coverage_report_sha256_required_by_boundary_gold": true
+  },
+  "failure_policy": "A failed gate leaves Boundary Gold unfrozen; it does not authorize changing Candidate, evidence, or support labels.",
+  "held_out_access": "forbidden",
+  "source_artifact_sha256": {
+    "boundary_packet": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "base_boundary_protocol": "e25a409bdd81de664cfdc59c43152d1498b4e7ada6aff75c5051d177c828cc87"
+  }
+}

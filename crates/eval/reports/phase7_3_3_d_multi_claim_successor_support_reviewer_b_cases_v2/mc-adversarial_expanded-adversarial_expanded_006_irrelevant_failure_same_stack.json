@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "12e7b5ebc33132e36193ff33d36d0c179c6c8c7951b688fa7dd9f04396e9b015",
+  "reviewer_id": "b",
+  "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+  "provider_envelope_sha256": "9240fb0d2234637c6e067b11e26be08284f839569c7f8f83430148a194f1cc6a",
+  "provider_content_sha256": "fdcdaef95293bc2c7e602028d718e4760ee0de1ceba4c08ef98b58ee0e239990",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "68e81c3653aa9ec5d2273d92f1c2ac53cc146477125d7730a47ef92442f17af0",
+  "normalized_decisions_sha256": "f26479c762613114992680ff9e665c5438e892a4aef6942b0002d64c4475409f",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text exactly matches evidence item 1, establishing the proposition directly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text exactly matches evidence item 2, establishing the causal root cause directly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text exactly matches evidence item 3, establishing the exception regarding the stack directly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text exactly matches evidence item 4, establishing the current choice proposition directly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "Evidence item 3 explicitly states the stack is not the root cause, which directly supports the proposition to not blame the stack for the failure.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+      "reference_claim_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "1010",
+      "cited_evidence_indices": [
+        1,
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-001",
+        "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack-evidence-003"
+      ],
+      "reason_codes": [
+        "causal_leap"
+      ],
+      "support_rationale": "While evidence shows a same-stack project failed (item 1) and the stack was not the root cause (item 3), the claim to avoid the stack due to failure contradicts the finding that the stack was not the cause of the failure.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-adversarial_expanded-adversarial_expanded_006_irrelevant_failure_same_stack",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

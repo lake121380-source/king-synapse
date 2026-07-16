@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-diagnostic-followup-protocol-v1",
+  "status": "frozen_before_first_provider_execution",
+  "research_object": "explain 47 diagnostic disagreements conditional on immutable equal Support labels",
+  "entry_gate": {
+    "support_label_reference_candidate_sealed": true,
+    "work_item_count": 47,
+    "next_authorized_stage": "execute_multi_claim_successor_support_diagnostic_followup_v1"
+  },
+  "output_scope": [
+    "difference classification",
+    "comparative citation adequacy",
+    "comparative reason adequacy",
+    "confidence calibration assessment",
+    "brief diagnostic explanation"
+  ],
+  "forbidden_actions": [
+    "change_support_label",
+    "create_replacement_label",
+    "modify_boundary",
+    "modify_claim_metadata",
+    "modify_reviewer_submission",
+    "create_support_gold",
+    "open_confirmatory_dataset",
+    "authorize_runtime_integration"
+  ],
+  "completion_gate": {
+    "all_47_items_require_valid_diagnostics": true,
+    "support_label_sha256_must_remain_unchanged": true
+  },
+  "next_authorized_stage": "freeze_multi_claim_successor_support_gold_v1"
+}

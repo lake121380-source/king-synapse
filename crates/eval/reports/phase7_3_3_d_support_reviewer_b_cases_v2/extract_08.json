@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_08-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_08",
+  "provider_envelope_sha256": "fd6fd43cd538ae54661d9d8e2dda56f0536506cc3c359c4fcf806073e9b08887",
+  "provider_content_sha256": "45dda7c0d0707dd5dd9368cb440942438eea9287b86943850b5c1b77cd26bf1f",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "36980df515ab4d72c234b311f52fed39a9668da715fdc4d922256280bbd79c04",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Claim-001 synthesizes the actions and outcomes of px_08_support_1 (reversible intervention leading to stabilization/avoidance) and px_08_support_2 (escalation protocol linked to confirmation/worsening). The causal language 'is associated with' is supported by the observed outcomes in these independent sources without overclaiming universal causality.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Claim-002 explicitly defines the failure mode where vital signs worsen rapidly. This is directly supported by px_08_counter_3, which documents a team waiting for complete evidence despite worsening signs, resulting in increased harm due to the need for a lower evidence threshold.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "certainty_escalation"
+      ],
+      "support_rationale": "While the evidence shows stabilization and avoidance occurred in specific instances (px_08_support_1), the claim uses definitive predictive language ('will stabilize', 'will be avoided'). The single-case evidence supports a correlation or possibility, not a guaranteed future outcome for all such cases, representing an escalation in certainty.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'Patient condition stabilizes' is explicitly stated as the outcome in px_08_support_1 ('The condition stabilized').",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'later evidence rules out the need for the initially considered invasive action' matches the outcome in px_08_support_1 ('later evidence ruled out the invasive action').",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim asserts the outcome matches px_08_support_1. Since the predicted observables (stabilization, ruling out invasive action) align perfectly with the recorded outcome in px_08_support_1, the criterion is met.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "The falsification statement posits that applying the staged approach during rapid worsening leads to harm. px_08_counter_3 confirms this: waiting for evidence (staged approach) despite worsening signs led to increased harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The observable 'Delay in emergency action leads to measurable worsening of patient outcome' is supported by px_08_counter_3, which states 'The delay increased harm'.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_08-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_08_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The claim states consistency with counterexample px_08_counter_3. The details of the falsification observables (delay causing harm in worsening conditions) are identical to the narrative in px_08_counter_3.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "decision_count": 9
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

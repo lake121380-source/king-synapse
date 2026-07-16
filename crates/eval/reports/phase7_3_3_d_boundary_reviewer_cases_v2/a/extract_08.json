@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "reviewer": "a",
+  "case_id": "extract_08",
+  "manifest_sha256": "8765406d049719345480886272041d47fc9bd28d47ab33c9dbe27ae8b11712ef",
+  "resolved_model": "gpt-4.1-2025-04-14",
+  "provider_envelope_sha256": "de89cb2888b97a6e77bfa05ab5c89b7f5496e40e93afb6c198024c414a202006",
+  "provider_content_sha256": "cf26ca89d8a7a9e4d58b74f8469b1a4141a69271dd97ba08846ee3bbc96c7c6f",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-001",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 0,
+        "end": 303
+      },
+      "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This excerpt asserts a causal relationship between a staged intervention/escalation protocol and positive patient outcomes; conjunctions are not split as the protocol is described as a unified pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-002",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 304,
+        "end": 431
+      },
+      "claim_text": "However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+      "claim_type": "limitation",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This excerpt introduces a limitation to the previously described pattern, specifying a context where it does not apply.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-003",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "c93de5ce8e8670d943efc2528aa15b0ff25f8e2979bfc31732a98c1ce7f43659",
+      "source_span": {
+        "start": 0,
+        "end": 266
+      },
+      "claim_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_08::prediction_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a conditional prediction about the outcome of a specific intervention/escalation protocol.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-004",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "8d6d9beb3e3efad7a0f506aceee63142c701f2fc0bbbfb4a6203dc78a19d9a58",
+      "source_span": {
+        "start": 0,
+        "end": 112
+      },
+      "claim_text": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_08::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a direct statement of observable outcomes, each independently truth-evaluable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-005",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "d5c396c28be9c796a7c0bb3094d70a101db78951dd52efe674d1b9a41f8b11ab",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "claim_text": "Outcome matches the observed outcome in memory px_08_support_1.",
+      "claim_type": "scope",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_08::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This excerpt defines the scope for prediction success by referencing a specific observed outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-006",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "29997b935ecc492914fdbe72989aa535eaa2c3e0938b5545fe3aa01f11e99f5a",
+      "source_span": {
+        "start": 0,
+        "end": 173
+      },
+      "claim_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_08::falsification_statement",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "This is a conditional falsification statement describing when the pattern leads to harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-007",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "6f56fffa2317e904dcaa7de7b325894f8a9d4a0cfff542fe0442e9434f00f019",
+      "source_span": {
+        "start": 0,
+        "end": 123
+      },
+      "claim_text": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3.",
+      "claim_type": "proposition",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_08::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This is a direct, independently truth-evaluable statement about observable outcomes in the falsification context.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "claim_count": 7
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

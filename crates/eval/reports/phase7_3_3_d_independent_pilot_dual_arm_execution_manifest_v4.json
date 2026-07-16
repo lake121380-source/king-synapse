@@ -1,0 +1,63 @@
+{
+  "schema_version": 4,
+  "manifest_id": "phase7.3.3-d-independent-pilot-dual-arm-execution-manifest-v4",
+  "status": "frozen_before_first_provider_call",
+  "decision_environment": {
+    "provider": "api.gpt.ge",
+    "base_url": "https://api.gpt.ge/v1",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "timeout_seconds": 600,
+    "response_format": {
+      "type": "json_schema",
+      "strict": true,
+      "schema_per_arm": true
+    },
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY"
+  },
+  "artifact_lineage": {
+    "adapter_sha256": "9e5b418b95610bbcc23051906785b40e01c47c8245b950f28eb5cb87bee9aafb",
+    "freeze_manifest_sha256": "b907f9bb95f11e3e5d2928be06ef558ea47a849c3a6d99be1e75cb3654d7e350",
+    "protocol_sha256": "baf0a5df5bf2964aba8a3946d4d7cda73650392342fd16501585744b01488237",
+    "policy_sha256": "e481b9365c644148f0c3a1d0ea076c83b2155c38814906a5978fc8ba813cd196",
+    "candidate_prompt_sha256": "9a354c329bcae947150f59dfb1a4d47e0223a4ab21bf259bdc155c76e477b494",
+    "atomic_prompt_sha256": "da527478c2dfd557ff73891ce915dfe7954e96210d268399f2131a9d8193f0b6",
+    "candidate_schema_sha256": "9bc2bcb2bc372a732545b1f9c29a5af45475072a0fec2a5ef0e09a26d9fcad64",
+    "atomic_schema_sha256": "f9d4221c758299e3493a74e4dd616c4ff8a27139a91b6616a9db631ee15c756c",
+    "worklist_sha256": "4d322adeacce550b662aa7a15d225abbda89019f5a3eb8f3950fd822eec0c801",
+    "reference_seal_sha256": "1ef49224a86fefd9881f2c7aed6c020d9a4b49ae58df707f9fec3314aad9fcbe",
+    "frame_audit_sha256": "5a6ab2b0c2e33de55f3e2902b1b85464a96d52a54d178a7d8522f4bf8e1e0ded",
+    "v1_negative_sha256": "a56788e98ed746d68286b29a48aed22c08bc79d6f789191a74f33bd822b1e4fd",
+    "v2_negative_sha256": "859fe46097fcc7499c611e84c007833a20ea648753f3f049a694aab3311a36e9",
+    "v3_negative_sha256": "30726ec348d3d5a57676d5af927eddd0234461804824428769091dda3adefdea"
+  },
+  "case_count": 40,
+  "expected_requests": 80,
+  "resource_equality": {
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "same_payload": true,
+    "same_failure_policy": true
+  },
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  },
+  "reference_content_loaded": false,
+  "reference_labels_loaded": false,
+  "execution_started": false,
+  "provider_called": false,
+  "confirmatory_content_opened": false
+}

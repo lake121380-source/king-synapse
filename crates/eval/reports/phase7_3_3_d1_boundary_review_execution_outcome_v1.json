@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d1-a-boundary-review-execution-outcome-v1",
+  "status": "authoritative_negative_result_boundary_agreement_unavailable",
+  "execution_scope": "10 frozen design cases; two isolated AI Boundary reviewers",
+  "reviewer_a": {
+    "manifest_sha256": "7e9a7592ddbb622dc24f3d0bd3622162ad7e9c20a5a1d68d781dc87d3d07e7b0",
+    "model_requested": "gpt-4.1",
+    "completed": false,
+    "completed_case_count": 0,
+    "authoritative_failure_case_id": "extract_01",
+    "failure_code": "exactly_one_central_claim_required:8",
+    "negative_result_sha256": "7cc26dc9746c562c68d0e3096253bae52604787be4748495f018954a7115ae77"
+  },
+  "reviewer_b": {
+    "manifest_sha256": "4215b4d434a2a8f5e4fbe76fe895377bf0d6fe4f5383b527f7a9ffd5fe201974",
+    "model_requested": "qwen3.5-plus",
+    "completed": false,
+    "completed_case_count": 1,
+    "authoritative_failure_case_id": "extract_02",
+    "failure_code": "exactly_one_central_claim_required:2",
+    "completed_case_checkpoint_sha256": "596c07ecb519e9a65e5c4cb50f0d24518eb9325ba17a237774a1adb67f92a530",
+    "negative_result_sha256": "b4c06aeccb2a85c8668e193457a3cd7de138981a9efc911f945e20ce04a739e9"
+  },
+  "failure_analysis": {
+    "failure_class": "protocol_parser_cardinality_mismatch",
+    "observed_behavior": "Both reviewers returned provider content, but normalized output violated the adapter requirement of exactly one central Claim per case.",
+    "hidden_contract_finding": "The frozen prompt defines central versus non-central but does not explicitly state the parser cardinality rule exactly_one_central_claim_per_case.",
+    "model_capability_conclusion_authorized": false,
+    "reason": "The failure cannot be cleanly attributed to reviewer capability because the rejected cardinality constraint was not explicitly exposed as an exact output contract.",
+    "retry_under_same_manifest_authorized": false,
+    "automatic_repair_authorized": false,
+    "result_replacement_authorized": false
+  },
+  "state_transition": {
+    "boundary_reviewer_a_completed": false,
+    "boundary_reviewer_b_completed": false,
+    "boundary_agreement_available": false,
+    "boundary_adjudication_allowed": false,
+    "boundary_coverage_available": false,
+    "boundary_gold_frozen": false,
+    "support_state": "blocked",
+    "compatibility_check_state": "blocked",
+    "design_model_execution_allowed": false
+  },
+  "audit": {
+    "attempt_log_sha256": "835156bc1b1def0a30d5953d4cab6be0aae9ea8d97bdda9045d72cf62902dc8f",
+    "attempt_log_entry_count": 6,
+    "attempt_log_tail_sha256": "a3f39a484a37f69e80a0255e5c25e3193f9e21c865d9e3af3dadb998f9828177",
+    "prompt_sha256": "40edb2ec7850347df2fc3eecefaf57f15074579f9411c392a0e256a784bba214",
+    "packet_sha256": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "protocol_sha256": "e25a409bdd81de664cfdc59c43152d1498b4e7ada6aff75c5051d177c828cc87",
+    "raw_provider_responses_stored": false,
+    "api_key_recorded": false,
+    "held_out_accessed": false
+  },
+  "next_action": "Preserve v1 as a negative execution result. Any corrected cardinality contract must be a separately versioned protocol/prompt/parser/Manifest and must not overwrite or retry v1."
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d-dual-lane-comparison-manifest-v1",
+  "status": "blocked_pending_d1_c_compatibility_freeze",
+  "design_case_count": 10,
+  "held_out_accessed": false,
+  "d2_a_historical_lane": {
+    "purpose": "descriptive_project_evolution_only",
+    "execution_sha256": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67",
+    "requested_model": "gpt-5.4",
+    "resolved_model": "gpt-5.4-2026-03-05",
+    "prompt_version": "PatternSemanticJudgePrompt-v1",
+    "prompt_sha256": "a50a43e6ff78c4191f2888c55178a30acc85b031a24fe1d02af267960a23399a",
+    "causal_protocol_attribution_authorized": false,
+    "model_version_confounded": true,
+    "rerun_allowed": false
+  },
+  "d2_b_contemporaneous_controlled_lane": {
+    "purpose": "causal_measurement_unit_comparison",
+    "status": "not_executable",
+    "entry_gate": "D1-C compatibility report frozen",
+    "same_provider_required": true,
+    "same_requested_model_required": true,
+    "same_resolved_model_required": true,
+    "same_temperature_top_p_required": true,
+    "same_evidence_and_design_cases_required": true,
+    "close_execution_window_required": true,
+    "separately_frozen_prompts_and_parsers_required": true,
+    "first_response_authoritative": true,
+    "resolved_model_hard_gate": "Pipeline A resolved_model must equal Pipeline B resolved_model or controlled_comparison_available=false",
+    "controlled_comparison_available": false
+  },
+  "source_artifact_sha256": {
+    "design_dataset": "334b74dbd2e8fce9f9de7e9087e909324fe4b34cc9c0f262a6ce3a6c9f193b2d",
+    "real_provider_execution": "59ca1865e770a1295def91b51248fadd2b5cff777e183fac9813abc28ca9f1e1",
+    "phase7_3_1_blind_packet": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8",
+    "model_adjudicated_silver_labels": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+    "historical_pipeline_a_execution": "19dba48a7666c7fbdd0002e2d86ccbdd888f5ea8f208c28feb41c1f1c2c27a67",
+    "frozen_aggregator_source": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f"
+  }
+}

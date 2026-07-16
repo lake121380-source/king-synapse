@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-boundary-gold-freeze-protocol-v1",
+  "stage": "Phase 7.3.3-D1 Boundary Gold Freeze",
+  "purpose": "Deterministically promote the coverage-validated Boundary Reference Candidate into immutable Project Boundary Gold.",
+  "execution_mode": "offline_deterministic",
+  "entry_gates": {
+    "coverage_qa_rerun_completed": true,
+    "coverage_qa_passed": true,
+    "boundary_gold_freeze_allowed": true,
+    "eligible_gap_characters": 0,
+    "unclassified_characters": 0,
+    "overlap_conflicts": 0,
+    "lineage_failures": 0,
+    "accounting_ratio": 1.0
+  },
+  "gold_contents": [
+    "immutable_boundary_claims",
+    "explicit_non_claim_accounting",
+    "protocol_excluded_spans",
+    "coverage_metrics",
+    "complete_artifact_lineage"
+  ],
+  "claim_identity_rule": "boundary_claim_id is copied byte-for-byte from the frozen adjudicated_claim_id; all other claim fields are copied without semantic transformation.",
+  "reference_status": "project_boundary_gold_model_adjudicated_not_human_gold",
+  "allowed_actions": [
+    "verify_frozen_input_hashes",
+    "verify_coverage_pass_gates",
+    "copy_boundary_claims_without_semantic_change",
+    "attach_frozen_non_claim_and_protocol_excluded_accounting",
+    "write_boundary_gold_once",
+    "authorize_support_review_packet_construction"
+  ],
+  "forbidden_actions": [
+    "call_provider",
+    "add_delete_split_merge_or_edit_claim",
+    "change_claim_type_role_material_or_origin",
+    "change_non_claim_classification_or_reason",
+    "change_coverage_result",
+    "add_support_label",
+    "generate_support_judgment",
+    "access_held_out_data"
+  ],
+  "success_effect": "Boundary Gold becomes immutable and Support Review packet construction becomes authorized, but Support Review is not executed in this stage."
+}

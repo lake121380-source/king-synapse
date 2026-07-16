@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_01-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_01",
+  "provider_envelope_sha256": "1e2f66de02086b2bcba80aec2ce1325a738fdf983c576a869c96cbd644c97db2",
+  "provider_content_sha256": "933358c0482ee60f1f3d68bee00fc3081b32d8e2c5d11ed66b04fc264804b7aa",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "e364d1605a1cb5fb69cc395bea8b887fb474aa1677a253478aea1f96d7106c37",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All experiences are in the software delivery domain, directly supporting the scope claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "Both supporting experiences show incremental deployment to a subset exposed defects early, matching the claim's causal direction and scope.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In the payment canary case, the old version remained available during the rollout, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_rationale": "The atomic schema counterexample shows failure when backward compatibility is absent, supporting the necessity of compatibility, but no direct evidence confirms that compatibility was present in the positive cases.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-005",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_rationale": "Incremental rollout is evidenced, and the counterexample shows backward compatibility is important, but explicit confirmation of backward compatibility in the positive cases is missing.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Defects were found in early cohorts, but the claim overcommits by asserting any critical regression will always be exposed in the first cohort; evidence only shows some defects were caught early.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "In both positive cases, only the cohort was affected, not the whole system, but the claim's certainty ('without affecting the rest') is stronger than the evidence, which does not rule out all possible side effects.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In the payment canary, a defect in the first cohort did not require rolling back the old version, directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Only the canary cohort was rolled back in the payment case, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-010",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_rationale": "The old version remained available during the observed rollout, but 'fully operational during the entire rollout phase' is broader than the evidence, which covers only the observed period.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The atomic schema case shows that lack of backward compatibility in an incremental rollout can cause a system-wide outage, directly supporting the falsification claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample required rollback of the old version due to incompatibility, directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The atomic schema case resulted in the system becoming unavailable, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Rollback of the old version due to issues from the incremental rollout is directly evidenced in the atomic schema case.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "decision_count": 14
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

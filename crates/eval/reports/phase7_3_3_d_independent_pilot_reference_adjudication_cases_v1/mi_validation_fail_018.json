@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "manifest_sha256": "9f3dbde7011894456bb73e71986a8d139e5d0c652cc7a049d5613e5becbea0bf",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "4a357ffa3a5a1314f9596bf8ba9a53daa5da158bc8b574ba06472365eba49e2f",
+  "content_sha256": "866b9975a22e3bf2a4920ce7b088f6dd959d5f1953476299ddeabe13e78cb4ad",
+  "usage": {
+    "prompt_tokens": 1478,
+    "completion_tokens": 102,
+    "total_tokens": 1580,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1428,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2268,
+      "total_duration_ms": 2192,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "result": {
+    "case_id": "mi_validation_fail_018",
+    "adjudication_item_id": "independent-pilot-reference-adjudication-001",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "Evidence 01 states there is an older successful playbook recommending repeating the approach, and Evidence 06 states verified failure evidence says the approach caused harm and must not be repeated. In this conflict, the verified failure evidence directly supports overriding the prior successful playbook for this case.",
+    "status": "selected_frozen_reviewer_decision",
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "support_label": "supported",
+      "material": true,
+      "claim_type": "selection_rule",
+      "cited_evidence_ids": [
+        "mi_validation_fail_018-evidence-06"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "rationale": "Evidence 06 directly states that verified failure evidence says the approach caused harm and must not be repeated, which overrides the previously successful playbook recommendation. This provides clear, authoritative support for the selection rule that verified failure evidence must override prior success.",
+      "confidence": "high"
+    },
+    "boundary_mutation_performed": false,
+    "candidate_mutation_performed": false,
+    "evidence_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_frozen_decision_sha256": "90cf44aa770ecb551725ac05c968048b90416aa4f55e83c983db7613a5ef0959"
+  }
+}

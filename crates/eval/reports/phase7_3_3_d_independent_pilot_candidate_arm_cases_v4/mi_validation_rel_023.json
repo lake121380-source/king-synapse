@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_rel_023",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "871629f30857a7c2deef4bbf85a3f22342eae9bd9796518682383c20f1852fae",
+  "content_sha256": "ff58cd95572ab7637c8dd67044d892a7406de16ce5feef5731f0666dca9704a9",
+  "latency_ms": 4140.203499991912,
+  "usage": {
+    "prompt_tokens": 1058,
+    "completion_tokens": 113,
+    "total_tokens": 1171,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 934,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1774,
+      "total_duration_ms": 1698,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rel_023",
+    "support_label": "partially_supported",
+    "rationale": "The evidence states that an unverified third-party report repeats the claim but remains unreliable, and separately that direct user confirmation establishes the reliable fact. This supports a preference for direct user confirmation over an unverified report in this conflict setting. However, the candidate also requires the competing report to be \"lexically stronger,\" and the supplied evidence does not establish any lexical-strength comparison, so the full proposition is not entailed.",
+    "source_span": {
+      "start": 0,
+      "end": 72
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

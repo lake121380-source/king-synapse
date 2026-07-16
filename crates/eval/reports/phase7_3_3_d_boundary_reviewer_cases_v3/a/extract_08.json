@@ -1,0 +1,173 @@
+{
+  "schema_version": 3,
+  "reviewer": "a",
+  "case_id": "extract_08",
+  "manifest_sha256": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "provider_envelope_sha256": "54ba62fd1f1df5ed17dcba33e7a8bd160f5a6c5f35c800376b643e6bbda04dda",
+  "provider_content_sha256": "bd0c5ccb0e4c5d563b1e679bab38424e17f2db55c62c0c81cf24e858acc53d6c",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-001",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 0,
+        "end": 303
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a causal claim linking specific interventions and escalation criteria to stabilization and avoidance of unnecessary invasive action.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-002",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 313,
+        "end": 431
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+      "claim_type": "limitation",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a limitation describing the failure of the pattern under specific conditions (rapidly worsening vital signs).",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-003",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "c93de5ce8e8670d943efc2528aa15b0ff25f8e2979bfc31732a98c1ce7f43659",
+      "source_span": {
+        "start": 0,
+        "end": 266
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_08::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a prediction statement with clear conditional structure and outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-004",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "8d6d9beb3e3efad7a0f506aceee63142c701f2fc0bbbfb4a6203dc78a19d9a58",
+      "source_span": {
+        "start": 0,
+        "end": 112
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Patient condition stabilizes and later evidence rules out the need for the initially considered invasive action.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_08::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a prediction of observable outcomes following the described intervention.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-005",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "d5c396c28be9c796a7c0bb3094d70a101db78951dd52efe674d1b9a41f8b11ab",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Outcome matches the observed outcome in memory px_08_support_1.",
+      "claim_type": "scope",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_08::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a scope claim specifying the criterion for prediction success.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-006",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "29997b935ecc492914fdbe72989aa535eaa2c3e0938b5545fe3aa01f11e99f5a",
+      "source_span": {
+        "start": 0,
+        "end": 173
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_08::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a falsifiability claim describing a scenario where the pattern leads to harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-a-extract_08-claim-007",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "6f56fffa2317e904dcaa7de7b325894f8a9d4a0cfff542fe0442e9434f00f019",
+      "source_span": {
+        "start": 0,
+        "end": 123
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Delay in emergency action leads to measurable worsening of patient outcome, consistent with counterexample px_08_counter_3.",
+      "claim_type": "counterexample",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_08::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Segmented as a counterexample claim describing observable harm due to delay.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "claim_count": 7
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

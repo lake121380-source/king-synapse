@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-confirmatory-power-compliance-v1",
+  "status": "audit_policy_inheriting_pre_result_sample_size_freeze",
+  "authoritative_sample_size_source": "crates/eval/reports/phase7_3_3_d_multi_claim_successor_sample_size_freeze_frame_v2.json",
+  "required_confirmatory_clusters": 40,
+  "preregistered_clusters": 40,
+  "required_alpha_one_sided": 0.05,
+  "compliance_checks": [
+    "authoritative_power_lineage",
+    "inventory_sufficient_before_opening",
+    "selected_exactly_40_before_opening",
+    "analyzed_exactly_40_without_drop",
+    "no_post_result_replanning",
+    "no_post_open_replacement",
+    "unselected_inventory_remains_closed"
+  ],
+  "observed_power_estimation_required": false,
+  "post_result_sample_size_change_allowed": false,
+  "provider_calls": 0,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage_on_pass": "run_confirmatory_final_audit_v1",
+  "next_authorized_stage_on_failure": "blocked_confirmatory_power_compliance_v1_authoritative_negative"
+}

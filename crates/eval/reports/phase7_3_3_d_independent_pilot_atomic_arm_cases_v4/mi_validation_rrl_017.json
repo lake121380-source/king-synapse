@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrl_017",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "462dfeba9c1abec740f89fa265838188219afb2e2eccd3eb4d614905e966fb80",
+  "content_sha256": "4e5a7d31e3429428e42ea3b2dfe2c1ea66d50048657f243c60986d2becbdded4",
+  "latency_ms": 6467.023400007747,
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 92,
+    "total_tokens": 1292,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3691,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4531,
+      "total_duration_ms": 4455,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrl_017",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrl_017-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence directly states both sides of the comparison: a recent weak observation exists but is unverified, while a high-confidence confirmation remains authoritative. This entails that the high-confidence confirmation takes precedence over the recent but weak observation."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

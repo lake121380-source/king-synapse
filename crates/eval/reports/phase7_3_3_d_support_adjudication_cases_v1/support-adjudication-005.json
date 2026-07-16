@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-005-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_07",
+  "adjudication_item_id": "support-adjudication-005",
+  "boundary_claim_id": "adjudicated-extract_07-claim-016",
+  "provider_envelope_sha256": "049d2c5dbb87ff2ab76f6c2d37c68d5337224f916d76068f28672a043e7072fa",
+  "provider_content_sha256": "0f20f9ffa977dc76e6fd80edb1c4e3992e0796cd449b9d53ede31e38d43e37fd",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "fd94a21986f4b4e3b52958a7faf993a85f4b4a740259c0a73fc1f5a6a1d2cdd3",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-005",
+    "case_id": "extract_07",
+    "boundary_claim_id": "adjudicated-extract_07-claim-016",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The claim’s falsification condition specifically requires an automated stop based on a directly harmful, low-noise metric with a predefined threshold. The only cited counterexample instead uses a noisy metric weakly related to harm, so the supplied evidence does not match the stated antecedent and does not stably support the claim as written.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_07-claim-016",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_label": "unsupported",
+      "support_rationale": "No evidence shows false stops occurred when using directly harmful, low-noise metrics; the counterexample involves noisy metrics weakly related to harm."
+    },
+    "selected_frozen_decision_sha256": "ca893e3da884b1b7dc198fd55f1a5009adbdcb1934b3427dcfbb08348e8f43de",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

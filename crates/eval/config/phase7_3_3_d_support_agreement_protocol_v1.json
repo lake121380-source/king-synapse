@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d2-support-agreement-protocol-v1",
+  "phase": "Phase 7.3.3-D2 Support Agreement Analysis",
+  "status": "frozen_before_agreement_computation",
+  "purpose": "Measure label and diagnostic agreement between the two raw independent Support submissions before adjudication; generate adjudication candidates without generating Support Gold.",
+  "expected_claim_count": 118,
+  "label_order": [
+    "supported",
+    "partially_supported",
+    "unsupported",
+    "not_assessable"
+  ],
+  "confidence_order": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "artifact_lineage": {
+    "reviewer_a_submission": {
+      "path": "crates/eval/reports/phase7_3_3_d_support_reviewer_a_completed_submission_v2.json",
+      "sha256": "2449858a296e48bd761686263dddaf4f90afdcdbc874b588e68f92c4f141c896"
+    },
+    "reviewer_b_submission": {
+      "path": "crates/eval/reports/phase7_3_3_d_support_reviewer_b_completed_submission_v2.json",
+      "sha256": "0e82057a80b67a7e0f7e389f6febd5d4f1379f7bbdc364eab344fb65d41c8db0"
+    },
+    "support_packet": {
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_reviewer_a_packet_v1.json",
+      "sha256": "8c19708ae8644ad42f503b626bb559ed51a83c3b0302708f2f79fe98ecd6b9e9"
+    },
+    "boundary_gold": {
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_boundary_gold_v1.json",
+      "sha256": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0"
+    },
+    "support_execution_outcome": {
+      "path": "crates/eval/reports/phase7_3_3_d_support_review_execution_outcome_v2.json",
+      "sha256": "33d8edf11bd1c202e999c3701a46c4d7df0cb13963d06b7e38c76ca393adc1f7"
+    },
+    "analyzer_source": {
+      "path": "crates/eval/src/phase7_support_agreement.rs",
+      "sha256": "5a67fb1eeed26d5e83cb3af6d0d76f82f817ff5146da924f4b3aaef095f45ebb"
+    },
+    "binary_source": {
+      "path": "crates/eval/src/bin/phase7_support_agreement.rs",
+      "sha256": "345601a14aac8c75a1177ec408e479a5d758b54c0a6f258c1d064c6c591d7d8d"
+    }
+  },
+  "reviewer_b_packet_sha256": "22c5c572f19e453249c62eb1c7c4cb088b3e5bf71238ac5e5f1353fd64e29d61",
+  "severity_policy": {
+    "same_label": 0,
+    "supported_vs_partially_supported": 1,
+    "partially_supported_vs_unsupported": 1,
+    "supported_vs_unsupported": 2,
+    "any_nonmatching_pair_involving_not_assessable": 3,
+    "maximum_per_claim": 3
+  },
+  "diagnostic_policy": {
+    "label_primary_metric": "unweighted_cohen_kappa_over_all_118_claims",
+    "not_assessable_exclusion_metric": "secondary_conditional_only",
+    "reason_codes": [
+      "exact_set_agreement",
+      "mean_set_jaccard",
+      "conditional_on_label_agreement",
+      "per_code_presence_jaccard"
+    ],
+    "citations": [
+      "exact_set_agreement",
+      "mean_set_jaccard",
+      "conditional_on_label_agreement",
+      "per_evidence_id_presence_jaccard"
+    ],
+    "confidence": [
+      "exact_agreement",
+      "unweighted_cohen_kappa",
+      "ordinal_distance"
+    ],
+    "confidence_distance": {
+      "low_medium": 1,
+      "medium_high": 1,
+      "low_high": 2
+    },
+    "concentration_dimensions": [
+      "case_id",
+      "claim_type"
+    ]
+  },
+  "worklist_policy": {
+    "label_items": "only_claims_with_different_support_labels",
+    "diagnostic_items": "same_label_claims_with_reason_citation_or_confidence_difference",
+    "diagnostic_items_authorize_label_change": false,
+    "priority_order": [
+      "not_assessable_mismatch",
+      "supported_vs_unsupported",
+      "partially_supported_vs_unsupported",
+      "supported_vs_partially_supported"
+    ],
+    "boundary_mutation_allowed": false,
+    "new_claim_creation_allowed": false,
+    "claim_deletion_allowed": false
+  },
+  "guards": {
+    "raw_independent_submissions_only": true,
+    "adjudication_used": false,
+    "support_gold_visible": false,
+    "held_out_accessed": false,
+    "support_gold_freeze_allowed": false
+  },
+  "interpretation_guard": "Reviewer A/B marginal label distributions must not be interpreted as evidence that either reviewer is stricter, more accurate, or closer to future Support Gold.",
+  "next_stage_if_label_disagreements_exist": "freeze_support_adjudication_protocol_v1"
+}

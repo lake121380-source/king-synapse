@@ -1,0 +1,44 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_rrr_019",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "ba583fc71701ea26c929d61b2875221f6311786b1f5b01ec0a3e12478266f431",
+  "provider_content_sha256": "1fdfa62637863bd1b493523556099efc6098088bdd8766abecf0726fa40b94a5",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "98ad3949e0a22a17f675f227304ff627d50958c8b744aa3f3627a1a72e8af35b",
+  "normalized_case": {
+    "case_id": "mi_validation_rrr_019",
+    "candidate_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrr_019-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "source_text_sha256": "6aa87164ce0b26c09cb66f6b2d68f1b6a42d1fa08f56185c7acdf68528023461",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrr_019-evidence-01",
+          "mi_validation_rrr_019-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate states that a current observed state supersedes a reliable but explicitly stale fact. Evidence 01 explicitly describes an older fact that was highly reliable when recorded but is now explicitly stale. Evidence 06 states that the current observed state is active and the older reliable fact is stale, directly supporting the supersession claim. No evidence contradicts this.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

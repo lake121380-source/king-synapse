@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_tmp_018",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "00f16816b437f213665ea54ffe6f9b0bb3fc5e804b8fc262833212485ad7b205",
+  "content_sha256": "f6f567233d4fdfa3e81cc5159dac2ae1e38f32e431df83c74801c6491b97ade1",
+  "latency_ms": 6051.044900028501,
+  "usage": {
+    "prompt_tokens": 1073,
+    "completion_tokens": 113,
+    "total_tokens": 1186,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3052,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3892,
+      "total_duration_ms": 3816,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_tmp_018",
+    "support_label": "partially_supported",
+    "rationale": "Evidence 06 directly states that a later confirmed state is active and replaces the earlier state, and Evidence 01 says the older state is no longer active. This supports temporal supersession by the later confirmed state. However, the candidate also specifies that the older state is 'semantically stronger,' while the evidence only says it has 'strong lexical overlap,' which is not the same and does not entail semantic strength.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

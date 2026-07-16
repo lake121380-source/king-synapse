@@ -1,0 +1,40 @@
+{
+  "schema_version": 4,
+  "policy_id": "phase7.3.3-d-independent-pilot-dual-arm-execution-policy-v4",
+  "status": "frozen",
+  "decision_environment": {
+    "provider": "api.gpt.ge",
+    "base_url": "https://api.gpt.ge/v1",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "timeout_seconds": 600,
+    "response_format": {
+      "type": "json_schema",
+      "strict": true,
+      "schema_per_arm": true
+    },
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY"
+  },
+  "request_parity": {
+    "candidate": 1,
+    "atomic": 1,
+    "reviewer_count": 1,
+    "adjudicator_count": 0
+  },
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  },
+  "cost_policy": {
+    "tokens": true,
+    "latency": true,
+    "price_not_frozen": true,
+    "cost_usd": null
+  }
+}

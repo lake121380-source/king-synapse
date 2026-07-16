@@ -1,0 +1,55 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_fail_024",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "0740af4704dc399df15bf396168f472c0e862b32eab0cd9c177edd0d156a6654",
+  "content_sha256": "04ebf86736941838fa69869527862860079b460b05ad2ef152193d30b2b5d8e5",
+  "latency_ms": 3746.0843000444584,
+  "usage": {
+    "prompt_tokens": 1015,
+    "completion_tokens": 108,
+    "total_tokens": 1123,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1003,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1843,
+      "total_duration_ms": 1767,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_fail_024",
+    "support_label": "partially_supported",
+    "rationale": "The evidence directly supports that there is verified failure evidence and that the approach must not be repeated (evidence-06), while also showing an older successful playbook recommending repetition (evidence-01). However, the candidate makes a stronger meta-level claim that the verified failure evidence must override the previously successful playbook. The supplied evidence implies conflict but does not explicitly state an override rule or decision policy.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

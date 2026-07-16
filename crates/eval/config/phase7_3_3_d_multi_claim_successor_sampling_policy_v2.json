@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-sampling-policy-v2",
+  "status": "frozen_before_v2_content_construction",
+  "target_candidate_count": 40,
+  "inventory_candidate_count": 48,
+  "sampling_unit": "unique_new_candidate_text",
+  "selection_method": "deterministic_hash_order",
+  "seed": 733052,
+  "new_source_family": "identifiability_enrichment_synthetic_v2",
+  "candidate_units_per_case": 6,
+  "generation_roles": [
+    "direct_support_a",
+    "direct_support_b",
+    "unsupported_contrast",
+    "unsupported_causal",
+    "partial_scope_pressure",
+    "partial_temporal_pressure"
+  ],
+  "generation_roles_are_gold_labels": false,
+  "reference_review_required": true,
+  "support_labels_available_during_sampling": false,
+  "v1_gold_available_to_reviewers": false,
+  "overlap_exclusions": [
+    "all_v1_successor_candidate_hashes",
+    "all_v1_successor_evidence_hashes",
+    "predecessor_pilot_hashes"
+  ],
+  "shortfall_action": "freeze_shortfall_without_manual_backfill",
+  "identifiability_thresholds_sha256": "4fdff3226798cb7c14c0b2cf053ae08700e4c2d03247468d42c71eb025268af6",
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

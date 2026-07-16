@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-temporal-temporal_003_fixed_bug_reopened-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "12e7b5ebc33132e36193ff33d36d0c179c6c8c7951b688fa7dd9f04396e9b015",
+  "reviewer_id": "b",
+  "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+  "provider_envelope_sha256": "e269d3ae9ec4574bcb8d99c2d1f118d3fee6d74b170794f34089390837423f83",
+  "provider_content_sha256": "c078309ecee9c08dcf9d49d8cff179e4d64c2da50907d269ea2097756f36f85d",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "afa7f9537061969f909343925693d9bc85f7fd842c0150cba65dbe74a9b0b64c",
+  "normalized_decisions_sha256": "a52f906cf0d8a18cbdf3a1ac5a693ca59cd3683417e6b6c573bff781ce33586d",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "Evidence indicates the bug was reopened and a new root cause identified, contradicting the proposition to reuse the old fix which previously failed to prevent recurrence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-temporal-temporal_003_fixed_bug_reopened-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text is an exact match to evidence item 4 stating the current symptom matches the reopened bug.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-temporal-temporal_003_fixed_bug_reopened-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text is an exact match to evidence item 1 stating the old bug fix worked.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-temporal-temporal_003_fixed_bug_reopened-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text is an exact match to evidence item 3 stating a new root cause was identified.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-temporal-temporal_003_fixed_bug_reopened-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text is an exact match to evidence item 2 stating the bug was reopened later.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+      "reference_claim_id": "mc-temporal-temporal_003_fixed_bug_reopened-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-temporal-temporal_003_fixed_bug_reopened-evidence-003"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "Evidence identifies a new root cause, which logically entails the need to investigate it as stated in the claim.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-temporal-temporal_003_fixed_bug_reopened",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

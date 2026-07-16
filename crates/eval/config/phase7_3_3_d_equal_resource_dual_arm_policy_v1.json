@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-equal-resource-dual-arm-policy-v1",
+  "status": "frozen",
+  "paired": true,
+  "must_match": [
+    "provider",
+    "model",
+    "temperature",
+    "top_p",
+    "seed_if_supported",
+    "max_output_tokens",
+    "candidate",
+    "evidence",
+    "reviewer_count",
+    "adjudicator_count",
+    "attempt_policy",
+    "failure_policy"
+  ],
+  "only_difference": {
+    "candidate_arm": "single_candidate_judgment",
+    "atomic_arm": "segment_claims_judge_and_aggregate"
+  },
+  "parity": {
+    "request_count": true,
+    "reviewers": true,
+    "adjudicators": true,
+    "max_output_tokens": true,
+    "evidence_visibility": true,
+    "case_isolation": true
+  },
+  "report_separately": [
+    "input_tokens",
+    "output_tokens",
+    "latency",
+    "human_minutes"
+  ],
+  "isolation": {
+    "separate_contexts": true,
+    "no_cross_arm_visibility": true,
+    "no_reference_visibility": true,
+    "counterbalanced_order": true
+  },
+  "failure": {
+    "transport_separate": true,
+    "schema_separate": true,
+    "semantic_NA_after_prerequisite_failure": true,
+    "first_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false
+  }
+}

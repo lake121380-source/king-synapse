@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-boundary-reviewer-execution-policy-v2",
+  "authoritative_result_policy": {
+    "first_returned_provider_content_per_case_authoritative": true,
+    "provider_response_sha256_before_envelope_parse": true,
+    "provider_content_sha256_before_content_parse": true,
+    "invalid_json_schema_or_semantics_is_negative_result": true,
+    "same_version_retry_after_content": false,
+    "transport_failure_before_content_may_resume": true
+  },
+  "execution_controls": {
+    "case_isolation": true,
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 2500,
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "single_intended_change_from_v1": "compact operation-only serialization",
+  "prohibitions": [
+    "no_rationale_output",
+    "no_confidence_output",
+    "no_support",
+    "no_type",
+    "no_metadata",
+    "no_repair",
+    "no_same_version_semantic_retry",
+    "no_confirmatory_open",
+    "no_runtime_integration"
+  ]
+}

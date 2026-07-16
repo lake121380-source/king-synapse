@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "classification_id": "phase7.3.3-d-multi-claim-successor-support-reviewer-b-failure-classification-v1",
+  "status": "frozen_authoritative_negative_result_classification",
+  "taxonomy_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+  "negative_result_sha256": "7e0f646b498b23a6ab06ee572ed781f49107645217992911a13dfb8dab2c1a93",
+  "primary_failure": {
+    "level": 2,
+    "code": "support_reference_contract",
+    "subclass": "provenance",
+    "subtype": "cited_evidence_index_out_of_range"
+  },
+  "failure_attribution": {
+    "primary": "provider",
+    "subtype": "returned_sparse_evidence_index_outside_public_frozen_case_domain",
+    "confidence": "high",
+    "evidence": [
+      "the public v1 prompt required one-based evidence_index values from the supplied case only",
+      "37 cases and 222 decisions completed before the first failing response",
+      "the parser rejected cited_evidence_index_out_of_range under the frozen v1 contract"
+    ],
+    "counterevidence": [
+      "v1 failure instrumentation did not propagate the parsed content hash into the negative artifact even though an envelope was received",
+      "the evidence does not distinguish model generation from an intermediary content transformation"
+    ]
+  },
+  "delivery_transport": "PASS after one resumable timeout",
+  "support_semantic_capability": "assessable_and_failed_for_frozen_provenance_contract_only",
+  "general_support_reasoning_capability_conclusion_authorized": false,
+  "agreement": "not_authorized",
+  "same_version_retry_authorized": false,
+  "observed_completed_case_count_before_failure": 37
+}

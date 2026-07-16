@@ -1,0 +1,404 @@
+{
+  "schema_version": 4,
+  "case_id": "extract_10",
+  "status": "completed",
+  "manifest_sha256": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+  "provider_envelope_sha256": "55eb595a5bf224548a0b1125686df5872a0101171ebf8c871c883378d4a5b519",
+  "provider_content_sha256": "94c440f0a4d04d4bc3a7d49bfc54f51ef0714117f2ee608cebf58b9f18bc4405",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "6825a7d65e77eeb38fcab35c618e702f000a1e0742524020f62b7c3efcf4f371",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-001",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "fa44cb50d9a84c159e313ef7bb2ed723d4a28d0fa35a2c2b4f8bb66fd53a9c7f",
+      "source_span": {
+        "start": 0,
+        "end": 202
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In supply chains, buffering inventory reduces interruptions or stockouts when replenishment lead time is long and demand is volatile, or when demand has predictable spikes and supplier response is slow.",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_10::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The full first sentence states one assertion about buffering reducing interruptions or stockouts under an alternative set of qualifying conditions; the coordinated conditions are part of the same assertion rather than separate outcomes, so reusing the full reviewer span preserves one atomic proposition.",
+      "type_decision_rationale": "This is an explicit substantive assertion about what holds under stated conditions, best typed as a proposition rather than isolating the embedded conditions as separate scope claims.",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-001"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-002",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "fa44cb50d9a84c159e313ef7bb2ed723d4a28d0fa35a2c2b4f8bb66fd53a9c7f",
+      "source_span": {
+        "start": 203,
+        "end": 292
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Buffering is counterproductive when replenishment lead time is short and demand is stable",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_10::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The second sentence is a separate independently truth-evaluable assertion. Slicing the reviewer span removes only the terminal period while keeping the full conditional proposition intact as one atomic claim.",
+      "type_decision_rationale": "This is an explicit assertion that buffering is counterproductive under stated conditions, so proposition is the appropriate type.",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-002"
+      ],
+      "boundary_operation_kind": "slice_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-003",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "260b9a02bfe84251d10add893af105f03fe5c3fa0efbca05975162feca340cf9",
+      "source_span": {
+        "start": 0,
+        "end": 109
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "For products with long replenishment lead time and volatile demand, inventory buffering reduces interruptions",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_10::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The scope phrase and the first predicted outcome form one atomic prediction. A new span is required because no supplied reviewer span matches exactly this combined assertion without also including the second coordinated outcome.",
+      "type_decision_rationale": "This clause predicts a specific outcome under stated conditions, so prediction is the best fit.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-003",
+        "reviewer-e-extract_10-claim-009",
+        "reviewer-e-extract_10-claim-010",
+        "reviewer-e-extract_10-claim-011"
+      ],
+      "boundary_operation_kind": "new_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-004",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "260b9a02bfe84251d10add893af105f03fe5c3fa0efbca05975162feca340cf9",
+      "source_span": {
+        "start": 116,
+        "end": 163
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "keeping carrying cost within the declared limit",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_10::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The second outcome introduced by 'while' is independently truth-evaluable from the first predicted outcome, so it is split as its own claim. A new span captures exactly that outcome and excludes the connector and final period.",
+      "type_decision_rationale": "This text states a separate predicted outcome, making prediction the appropriate type.",
+      "reason_codes": [
+        "prediction_clause",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-003",
+        "reviewer-e-extract_10-claim-012"
+      ],
+      "boundary_operation_kind": "new_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-005",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "d9e20099404b7c141a5bcf483cc50b2722c5de5bd1e6f5bf22e4a641d27fb3c6",
+      "source_span": {
+        "start": 0,
+        "end": 28
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Interruption events decrease",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_10::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers identify the same non-overlapping span for the first observable, which is already one atomic predicted observation.",
+      "type_decision_rationale": "This is a predicted observable outcome, so prediction is the correct type.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-004",
+        "reviewer-e-extract_10-claim-013"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-006",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "d9e20099404b7c141a5bcf483cc50b2722c5de5bd1e6f5bf22e4a641d27fb3c6",
+      "source_span": {
+        "start": 33,
+        "end": 114
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "carrying cost as a percentage of product value does not exceed the planned budget",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_10::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The second observable is independently truth-evaluable from the first. Slicing the reviewer span removes only the terminal period and preserves the full atomic observable prediction.",
+      "type_decision_rationale": "This is a separate predicted observable condition, so prediction is appropriate.",
+      "reason_codes": [
+        "prediction_clause",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-005"
+      ],
+      "boundary_operation_kind": "slice_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-007",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc",
+      "source_span": {
+        "start": 0,
+        "end": 82
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Measured over a typical planning horizon, stockout frequency drops by at least 30%",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_10::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The temporal qualifier and the quantitative outcome together form one complete success criterion. Reusing the full reviewer span preserves this single atomic prediction and avoids detaching the qualifier from the measured outcome.",
+      "type_decision_rationale": "This clause states a measurable expected outcome, so prediction is the best type.",
+      "reason_codes": [
+        "prediction_clause",
+        "temporal_qualifier",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-006"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-008",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "f4ef08d99932cbd38995fcd13391f959c2705c66f1cf4018507ec7ee36e190cc",
+      "source_span": {
+        "start": 87,
+        "end": 153
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "carrying cost remains under the target threshold set by management",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_10::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The carrying-cost criterion is a separate coordinated outcome and can be evaluated independently of the stockout criterion. Slicing removes only the final period while preserving the full atomic assertion.",
+      "type_decision_rationale": "This is a distinct measurable expected outcome, so prediction is the appropriate type.",
+      "reason_codes": [
+        "prediction_clause",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-007"
+      ],
+      "boundary_operation_kind": "slice_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-009",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "12323fcd79ec6d94840805758d5e6ef75ac5c948d25e559983fb70228cd2a40b",
+      "source_span": {
+        "start": 0,
+        "end": 118
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_10::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The initial conditional phrase and the first negative outcome together form one complete falsification assertion. Reusing the reviewer span captures that single atomic claim without the second coordinated outcome.",
+      "type_decision_rationale": "This text specifies a concrete scenario and outcome that would count against the target claim, fitting falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-008"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-010",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "12323fcd79ec6d94840805758d5e6ef75ac5c948d25e559983fb70228cd2a40b",
+      "source_span": {
+        "start": 123,
+        "end": 173
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "total cost exceeding the value of avoided stockout",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_10::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The total-cost outcome is coordinated with, but independently truth-evaluable from, the inventory-expiration outcome. Slicing removes only the terminal period and keeps one atomic falsification outcome.",
+      "type_decision_rationale": "This is a separate observable negative outcome presented as a falsifying condition, so falsifiability is the correct type.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-009"
+      ],
+      "boundary_operation_kind": "slice_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-011",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "30e2b8a16c326181cb147a32cafdc14d1740fcc893dbf2a191468b630d56781a",
+      "source_span": {
+        "start": 0,
+        "end": 47
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Observed inventory write-offs due to expiration",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_10::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers identify the same exact span for the first observable falsification indicator, which is already one atomic assertion.",
+      "type_decision_rationale": "This is an observable condition offered as falsifying evidence, so falsifiability is appropriate.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-010",
+        "reviewer-e-extract_10-claim-022"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_10-claim-012",
+      "case_id": "extract_10",
+      "response_sha256": "a3bbb3e41a5b18a9194e574d9d6322318240820c225a4509bfa2951a57e92911",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "30e2b8a16c326181cb147a32cafdc14d1740fcc893dbf2a191468b630d56781a",
+      "source_span": {
+        "start": 52,
+        "end": 148
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "total holding cost greater than the cost of stockouts that would have occurred without buffering",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_10::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The holding-cost observable is a separate coordinated assertion from the inventory write-off observable. Slicing removes only the final period and preserves one independently evaluable falsification observable.",
+      "type_decision_rationale": "This clause states a distinct observable that would count toward falsification, so falsifiability is the correct type.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_10-claim-011"
+      ],
+      "boundary_operation_kind": "slice_span"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_10",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 12,
+    "provider_content_sha256": "94c440f0a4d04d4bc3a7d49bfc54f51ef0714117f2ee608cebf58b9f18bc4405"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

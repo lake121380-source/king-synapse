@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_ctx_022",
+  "manifest_sha256": "0f1b6fe0b37b4c8262ae682ecac72e8fcaf8842991d332bba3c427de8ebd6b97",
+  "provider_envelope_sha256": "8c473e2fa9fbf418cae0ad93606291903a83b1f5af645a690f4b8ef57ab5cddd",
+  "provider_content_sha256": "ddaa753a80414a48fbd6d99e8b462425bc1909563ff53ed36b5e88795aca9be7",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_case_sha256": "2ad7d1113529e3564a77a483e6893df33b63385cfc6b832fa79658cf1fefa197",
+  "normalized_case": {
+    "case_id": "mi_validation_ctx_022",
+    "candidate_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_ctx_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "source_text_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_ctx_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the active task constraint selects the context-compatible playbook. Evidence-06 explicitly states that the 'playbook satisfies the active safety and scope constraint,' which directly confirms the selection mechanism described in the candidate. Evidence-01 further supports this by noting that a generic playbook violates the active constraint, reinforcing that the constraint drives the selection of the compatible option.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

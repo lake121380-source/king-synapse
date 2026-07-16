@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_rrl_022",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "230fe198758b5fc3e18acfd4cd122fd643d319fb3629a392cd19b5a6609266e2",
+  "content_sha256": "744866b8c80752ae099cf08ff1aa4f9566c0b2e89c0eacd0322edfe65d6f237a",
+  "latency_ms": 4509.295299998485,
+  "usage": {
+    "prompt_tokens": 1063,
+    "completion_tokens": 112,
+    "total_tokens": 1175,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1672,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2512,
+      "total_duration_ms": 2436,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrl_022",
+    "support_label": "partially_supported",
+    "rationale": "The evidence directly supports the reliability side: a relevant high-confidence fact states that \"high confidence confirmation remains authoritative.\" It also separately describes a \"recent weak observation\" as accessible but not verified. Taken together, this supports preferring high-confidence confirmation over a recent weak observation. However, the exact comparative claim \"beats\" is not explicitly stated as a decision outcome, so the support is conservative rather than complete.",
+    "source_span": {
+      "start": 0,
+      "end": 64
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

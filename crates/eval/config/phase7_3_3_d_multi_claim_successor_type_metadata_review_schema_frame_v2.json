@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "decisions"
+  ],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "reference_claim_id",
+          "claim_role",
+          "claim_type",
+          "claim_origin"
+        ],
+        "properties": {
+          "reference_claim_id": {
+            "type": "string"
+          },
+          "claim_role": {
+            "enum": [
+              "anchor",
+              "boundary",
+              "exception",
+              "prediction",
+              "qualification",
+              "support"
+            ]
+          },
+          "claim_type": {
+            "enum": [
+              "causal",
+              "condition",
+              "exception",
+              "falsifiability",
+              "limitation",
+              "prediction",
+              "proposition",
+              "scope"
+            ]
+          },
+          "claim_origin": {
+            "enum": [
+              "explicit"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

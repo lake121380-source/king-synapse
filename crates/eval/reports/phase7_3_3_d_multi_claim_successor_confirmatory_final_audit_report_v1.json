@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-multi-claim-successor-confirmatory-final-audit-report-v1",
+  "status": "PASS_CONFIRMATORY_SUCCESS_CHAIN_COMPLETE_RUNTIME_INTEGRATION_NOT_AUTHORIZED",
+  "manifest_sha256": "76e284554dfdbdc09ab2407dcb0e7593a9152850152ea448abc3606faa8f0f45",
+  "audit_groups": {
+    "opening_gate_sequence": {
+      "pre_gate_dataset_closed": true,
+      "pre_gate_opening_not_authorized": true,
+      "gate_passed_before_open": true,
+      "gate_report_lineage": true,
+      "selected_opened_after_gate": true,
+      "unselected_remained_closed": true
+    },
+    "inventory_and_source": {
+      "inventory_80_eligible_80": true,
+      "selected_40": true,
+      "four_per_category": true,
+      "zero_prior_phase7_overlap": true,
+      "commitments_40_40": true,
+      "phase6_usage_disclosed": true,
+      "generality_not_authorized": true,
+      "v2_signal_template_not_reused": true
+    },
+    "reference_and_structural": {
+      "gold_frozen_40_240": true,
+      "gold_label_balance": true,
+      "mechanical_not_model_gold": true,
+      "gold_seal_lineage": true,
+      "structural_pass": true,
+      "structural_receipt_lineage": true
+    },
+    "execution": {
+      "environment_frozen_before_calls": true,
+      "same_model_and_resources": true,
+      "counterbalanced_20_20": true,
+      "execution_80_pass": true,
+      "checkpoint_counts_40_40": true,
+      "attempt_log_80_started_80_completed": true,
+      "attempt_log_no_failure": true,
+      "authoritative_negative_absent": true,
+      "submissions_40_240": true,
+      "reference_invisible": true,
+      "execution_receipt_lineage": true
+    },
+    "realized_and_analysis": {
+      "realized_pass": true,
+      "realized_no_failed_checks": true,
+      "realized_receipt_lineage": true,
+      "paired_40_no_drop": true,
+      "preregistered_test_exact": true,
+      "bootstrap_exact": true,
+      "confirmatory_success": true,
+      "effect_positive": true,
+      "bootstrap_lower_positive": true,
+      "one_sided_significant": true,
+      "analysis_receipt_lineage": true
+    },
+    "power_compliance": {
+      "gate_pass": true,
+      "required_preregistered_selected_analyzed_40": true,
+      "no_replanning": true,
+      "no_replacement": true,
+      "observed_power_not_computed": true,
+      "power_receipt_lineage": true
+    },
+    "immutable_adapter_lineage": {
+      "inventory_adapter": true,
+      "reference_adapter": true,
+      "execution_adapter": true,
+      "analysis_adapter": true,
+      "power_adapter": true
+    },
+    "global_policy": {
+      "all_scoped_json_parsed": true,
+      "runtime_never_authorized": true,
+      "unselected_content_never_opened": true,
+      "usd_cost_not_imputed": true,
+      "runtime_currently_off": true
+    }
+  },
+  "audit_summary": {
+    "group_count": 8,
+    "check_count": 58,
+    "failed_check_count": 0,
+    "scoped_json_file_count": 64,
+    "candidate_checkpoint_count": 40,
+    "atomic_checkpoint_count": 40
+  },
+  "authoritative_scientific_result": {
+    "estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+    "estimate_atomic_minus_candidate": 0.17614982872616325,
+    "bootstrap_interval_95": [
+      0.14225986500380236,
+      0.20844585597781998
+    ],
+    "one_sided_p_value": 4.9999750001249995e-06,
+    "alpha_one_sided": 0.05,
+    "confirmatory_success": true,
+    "scope": "frozen_phase6_test_split_source_specific_multi_claim_composites",
+    "general_system_performance_claim_authorized": false
+  },
+  "power_and_sample_size_disposition": {
+    "status": "PASS_power_and_sample_size_compliance",
+    "required_clusters": 40,
+    "preregistered_clusters": 40,
+    "analyzed_clusters": 40,
+    "post_result_replanning": false
+  },
+  "policy_scan": {
+    "scoped_json_file_count": 64,
+    "runtime_authorized_true_occurrences": {},
+    "unselected_content_opened_true_occurrences": {},
+    "nonnull_usd_cost_occurrences": {}
+  },
+  "confirmatory_dataset_opened": true,
+  "unselected_content_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "confirmatory_success_frozen_runtime_integration_not_authorized"
+}

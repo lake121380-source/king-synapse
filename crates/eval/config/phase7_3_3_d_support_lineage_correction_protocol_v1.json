@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b-support-lineage-correction-protocol-v1",
+  "purpose": "Correct one mislabeled lineage hash in the frozen Support Stage State v3 without changing any Boundary Gold, Support packet, submission template, or semantic protocol content.",
+  "defect": {
+    "artifact": "phase7_3_3_d_support_stage_state_v3.json",
+    "field": "boundary_gold_freeze_receipt_sha256",
+    "observed_value_semantics": "boundary_gold_file_sha256",
+    "required_value_semantics": "boundary_gold_freeze_receipt_file_sha256",
+    "classification": "metadata_lineage_reference_error",
+    "semantic_packet_impact": false,
+    "provider_execution_impact": false
+  },
+  "immutability_policy": {
+    "preserve_v1_packet_construction_outputs": true,
+    "overwrite_existing_artifacts": false,
+    "allowed_successor_artifacts": [
+      "phase7_3_3_d_support_stage_state_v4.json",
+      "phase7_3_3_d1_reference_construction_readiness_v15.json",
+      "phase7_3_3_d_support_lineage_correction_receipt_v1.json"
+    ],
+    "allowed_data_change": [
+      "support_stage_state.boundary_gold_freeze_receipt_sha256"
+    ],
+    "required_unchanged_artifacts": [
+      "phase7_3_3_d_boundary_gold_v1.json",
+      "phase7_3_3_d_support_blind_review_packet_v1.json",
+      "phase7_3_3_d_support_reviewer_a_packet_v1.json",
+      "phase7_3_3_d_support_reviewer_b_packet_v1.json",
+      "phase7_3_3_d_support_reviewer_a_submission_v2.json",
+      "phase7_3_3_d_support_reviewer_b_submission_v2.json"
+    ]
+  },
+  "entry_gate": [
+    "support_stage_state_v3_exists_and_is_frozen",
+    "readiness_v14_exists_and_is_frozen",
+    "state_v3_field_equals_boundary_gold_sha256",
+    "state_v3_field_differs_from_actual_freeze_receipt_sha256",
+    "support_review_not_started",
+    "provider_not_called_for_packet_construction",
+    "support_gold_not_frozen"
+  ],
+  "exit_gate": [
+    "support_stage_state_v4_records_actual_freeze_receipt_file_sha256",
+    "all_packet_and_template_hashes_unchanged",
+    "readiness_v15_records_correction_lineage",
+    "independent_support_review_execution_authorization_preserved",
+    "provider_called_false",
+    "held_out_accessed_false"
+  ]
+}

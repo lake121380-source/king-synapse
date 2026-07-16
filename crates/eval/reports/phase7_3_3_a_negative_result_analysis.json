@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "analysis_id": "phase7.3.3-a-first-real-atomic-judge-negative-result-analysis-v1",
+  "phase": "Phase 7.3.3-A First Real Atomic Judge Negative Result Analysis",
+  "generated_at": "2026-07-12T14:18:54.098346+00:00",
+  "status": "frozen_negative_result",
+  "authoritative_execution": {
+    "execution_report_sha256": "e2aa24485ef4e24eee2f8b94b66286fa85c681796852de0f13068bc1fa7152a0",
+    "execution_manifest_sha256": "f120503db476381fbb05bdf47ac06b10d0a4185410a35f4f6ab094f9c77b7de4",
+    "attempt_log_completion_verified": true,
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "model_requested": "gpt-4.1",
+    "resolved_model": "gpt-4.1",
+    "temperature": 0,
+    "top_p": 1,
+    "first_returned_output_authoritative": true
+  },
+  "observations": {
+    "case_count": 20,
+    "provider_response_received_count": 20,
+    "valid_output_count": 0,
+    "invalid_output_count": 20,
+    "failure_code_counts": {
+      "source_span_text_mismatch": 20
+    },
+    "evaluation_lane_counts": {
+      "original_balanced_candidate_controls": 16,
+      "partial_atomic_claim_diagnostics_supplement": 4
+    },
+    "systematic_source_span_text_mismatch": true,
+    "transport_ready_for_this_execution": true
+  },
+  "measurement_validity": {
+    "segmentation_contract_passed": false,
+    "local_support_classification_assessable": false,
+    "candidate_aggregation_assessable": false,
+    "candidate_entry_criteria_assessable": false,
+    "macro_recall_reportable": false,
+    "prediction_collapse_reportable": false,
+    "failure_stage": "strict_source_span_validation_before_local_label_scoring"
+  },
+  "supported_conclusions": [
+    "The configured credential, relay transport, and requested gpt-4.1 model returned one authoritative response for every frozen control case.",
+    "The frozen end-to-end protocol failed systematically at exact source-span text validation.",
+    "The combined segmentation-and-classification task did not produce any scoreable Atomic Claim output.",
+    "The execution infrastructure distinguished this experimental failure from the earlier HTTP 401 transport failure."
+  ],
+  "prohibited_conclusions": [
+    "gpt-4.1 lacks Atomic Claim support-classification capability",
+    "Atomic Claim measurement does or does not improve four-label discrimination",
+    "the deterministic Aggregator is accurate or inaccurate on real model judgments",
+    "held-out or design-case generalization has been demonstrated"
+  ],
+  "identified_confound": {
+    "name": "segmentation_classification_entanglement",
+    "description": "The Judge was required to calculate exact UTF-8 source spans and classify evidence support in one response. Systematic span failure prevented observation of the semantic classification variable."
+  },
+  "next_stage_gate": {
+    "recommended_stage": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+    "required_change": "Freeze protocol-owned Atomic Claim boundaries and require the Judge to emit local support judgments only.",
+    "same_manifest_retry_authorized": false,
+    "original_negative_result_must_remain_immutable": true,
+    "prompt_or_parser_change_requires_new_manifest": true,
+    "design_cases_authorized": false,
+    "held_out_authorized": false
+  },
+  "guards": {
+    "raw_provider_responses_stored": false,
+    "api_key_recorded": false,
+    "original_execution_report_modified": false,
+    "original_manifest_modified": false,
+    "result_driven_retry_performed": false
+  },
+  "artifact_sha256": {
+    "execution_report": "e2aa24485ef4e24eee2f8b94b66286fa85c681796852de0f13068bc1fa7152a0",
+    "execution_manifest": "f120503db476381fbb05bdf47ac06b10d0a4185410a35f4f6ab094f9c77b7de4",
+    "execution_policy": "0c90c920cee2a49943837d47b9834a6d3d76c2b080e5d7020da0e67a5b60be92",
+    "atomic_protocol": "c2ac9692abca60693b33aeb829364ae97d9a22136f719d998ddd1fcc3f6e837d",
+    "atomic_prompt": "88ca6b3e232f0dadde2179932d4b229d8afee912ead773f31975e3f6cda98e23",
+    "original_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd"
+  }
+}

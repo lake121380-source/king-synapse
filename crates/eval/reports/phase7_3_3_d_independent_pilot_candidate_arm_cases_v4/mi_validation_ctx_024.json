@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_ctx_024",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "2001303c1050c80226685d36d0edbf6dce822cee8d7c0e9a5225d23f28c7187b",
+  "content_sha256": "8d144180ac07bd11f5e1da519c674813e3e78b4e5f6600a5d878449c5943de9b",
+  "latency_ms": 5699.350000009872,
+  "usage": {
+    "prompt_tokens": 1073,
+    "completion_tokens": 97,
+    "total_tokens": 1170,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 2580,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3420,
+      "total_duration_ms": 3344,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_ctx_024",
+    "support_label": "partially_supported",
+    "rationale": "The evidence supports that an active constraint rules out a generic playbook and that a playbook satisfies the active safety and scope constraint, implying compatibility with the active context/constraints. However, the evidence does not explicitly state the selection event or that the active task constraint itself selects the playbook; it only shows constraint-based compatibility/exclusion.",
+    "source_span": {
+      "start": 0,
+      "end": 66
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_01-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_01",
+  "provider_envelope_sha256": "82fecdcf74df0a1a5846f181fa004e5561277c5d7395bf1cde468c1163c40f92",
+  "provider_content_sha256": "5cd2bde90410f966af06040e7479d0b5d58e2407e53ef766cee47285985dc617",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "218b06acd6cf27ad1fc1585ed3f602ec10926d9de130db13a8a89d9456839c43",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All three experiences explicitly occur within the software delivery domain, confirming the scope.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both support cases demonstrate that exposing a small subset of traffic (canary/cohorts) led to the early detection of specific defects (regression/language defect).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The payments canary experience explicitly states the outcome that the old version remained available after the rollback of the canary cohort.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2",
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The counterexample (atomic_schema) confirms that lack of coexistence (backward compatibility) causes failure, while support cases imply compatibility allowed the old version to remain operational.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence describes scenarios matching the condition: incremental rollout (5% traffic, cohorts) where backward compatibility was maintained (old version available).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In both support cases, the first exposed group (canary/cohort two) successfully revealed a critical defect (regression/language defect).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1",
+        "px_01_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence shows that in both successful cases, the rest of the system (non-canary traffic, remaining tenants) was not affected or moved due to the defect found in the subset.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The payments canary outcome explicitly states that only the canary cohort needed rollback and the old version remained available, supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence explicitly states 'Only the canary cohort needed rollback', directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcome 'the old version remained available' in the payments canary case supports the criterion that the old version remains operational.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The atomic_schema counterexample describes a partial rollout (incremental) without compatibility that created incompatible records and required more recovery work, representing a system-wide issue/outage scenario.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The counterexample notes 'more recovery work' was needed due to incompatible records; while 'rollback of old version' isn't explicitly stated, the incompatibility implies the old state could not be simply retained without significant remediation, fitting the falsification condition of forced major rollback/recovery.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-013",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "certainty_escalation"
+      ],
+      "support_rationale": "The evidence states 'more recovery work' and 'incompatible records' but does not explicitly confirm the entire system became 'unavailable'; the severity is implied but not strictly proven as total unavailability.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_01-claim-014",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "The evidence mentions 'more recovery work' but does not explicitly state that the 'old version is rolled back'; the specific action of rolling back the old version is an inference not directly supported by the text.",
+      "annotation_confidence": "medium"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "decision_count": 14
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_04-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_04",
+  "provider_envelope_sha256": "7c11845fb2c89593f3903574749dc5d9646abf3a5f6a7edd4d5db4a2718ae022",
+  "provider_content_sha256": "3e37f7b7503c7cfb645ece432d02ea6f140e5ed8342f130f18f4f25fe82fc267",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "054817cfebe3e76224eb79d9b101c9abae30befe982f515e00468888f1ab3be1",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All experiences occur within the service_operations domain, directly matching the claim's scope.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence shows systematic diagnosis isolated root causes, but only for two cases; claim generalizes to all service failures and asserts causality for any such diagnosis, which is broader than evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both cases resolved without replacing unrelated components, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Counterexample shows ongoing corruption prevents successful isolation, supporting the limitation that the pattern holds only when no active corruption is present.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All evidence relates to new service failures in service_operations, matching the claim's scope.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence supports root cause isolation in two cases, but claim predicts this outcome for any new service failure, which overcommits beyond observed cases.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both cases resolved without replacing unrelated components, supporting the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Counterexample demonstrates the limitation: active corruption prevents successful diagnosis, supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Root causes were identified from logs, memory, configuration, or permissions in both cases, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "No unnecessary restarts or replacements occurred in either case, supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Root causes matched evidence findings in both cases, supporting the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "No unrelated components were replaced during recovery in either case, supporting the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-013",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence shows that following the diagnosis process leads to replacing unrelated components; all observed cases avoided this outcome.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-014",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence shows failure to identify a root cause from the evidence when no active corruption is present; all observed cases succeeded.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "Limitation is preserved: in cases without active corruption, root cause was identified, supporting the claim that failure would be counter to evidence.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-016",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence shows a service failure resolved by replacing a component not indicated by the evidence; all cases matched evidence to resolution.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-017",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence shows root cause not found within the evidence classes; all cases found root cause within examined evidence.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_04",
+    "status": "completed",
+    "decision_count": 17
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

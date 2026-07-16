@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_07-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_07",
+  "provider_envelope_sha256": "8877b326d126d069fb08690af23b5306c6ca1c7dc765c07861d5554692ed2194",
+  "provider_content_sha256": "75b858a538bf467b9f1c62ce6892f1c5984d918f0308a2e84132378ffc1225a6",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "ed9c80a37b8caa84af6dfd9f8ca26a4a3e9915912df3e6163582972aeb56522f",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1",
+        "px_07_support_2",
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All experiences occur in incident response, directly matching the scope claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_07_support_1",
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_expansion",
+        "causal_leap"
+      ],
+      "support_rationale": "Evidence supports that automated stop conditions using low-noise, directly harmful metrics with thresholds can prevent full incidents, but the claim generalizes causality and scope beyond observed cases.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Counterexample shows false stops occur when noisy metrics are used, supporting the need to avoid false stops.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Experience directly shows noisy metrics weakly related to harm cause repeated false stops.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Counterexample describes delivery delays as an outcome of false stops.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence shows delivery delays occurred without incident reduction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Experience shows rollout stopped at 20% traffic and prevented a full outage, matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Traffic stopped at twenty percent, directly supporting the observable.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "No full outage occurred, as observed in the experience.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Rollout paused automatically at the predefined error-rate ceiling, as described.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "System avoided a full outage, matching the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Operations change reversed before backlog recovery exceeded the window, matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Change reversed before recovery time exceeded overnight window, as observed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Automatic stop triggered, as described in the experience.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "System recovered within the specified time window, matching the criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-016",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence shows false stops occurred when using directly harmful, low-noise metrics; the counterexample involves noisy metrics weakly related to harm.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-017",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "False stops occurred in the counterexample experience.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-018",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "No reduction in incidents was observed in the counterexample.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_07-claim-019",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [
+        "px_07_counter_3"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "Counterexample describes a metric weakly related to harm and noisy, not directly harmful and low-noise; claim is unsupported by evidence.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_07",
+    "status": "completed",
+    "decision_count": 19
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

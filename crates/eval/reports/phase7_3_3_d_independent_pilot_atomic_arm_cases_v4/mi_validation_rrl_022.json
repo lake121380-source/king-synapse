@@ -1,0 +1,65 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrl_022",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "183d7b6ec06b8d9e0ab745f777437ffe46e5d8fd8b9d9f2bfcab2d76cb5b42c9",
+  "content_sha256": "6678421cecdf7fe9f4f5f71fecf3928e7976aa696514d2f01db5ca09c28e4742",
+  "latency_ms": 8283.700300031342,
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 122,
+    "total_tokens": 1322,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 4726,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 5566,
+      "total_duration_ms": 5490,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrl_022",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrl_022-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence directly supports that a high-confidence confirmation is authoritative. It also separately notes a recent weak observation that is accessible but not verified. However, the full comparative proposition that the high-confidence confirmation beats that recent weak observation is not explicitly stated as a decision between the two, so the evidence supports the components but not the entire preference relation with full certainty."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_rrl_022-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

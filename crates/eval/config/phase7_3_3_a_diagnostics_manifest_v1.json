@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-a-diagnostics-v1",
+  "phase": "Phase 7.3.3-A Balanced Control Diagnostics",
+  "purpose": "Add non-gating diagnostic decomposition without changing the frozen Atomic Claim prompt, control dataset, aggregation policy, or readiness thresholds.",
+  "changes_gate_decision": false,
+  "diagnostics": [
+    {
+      "id": "support_confusion_by_claim_type",
+      "description": "For each frozen Claim Type, record gold support label versus predicted support label. This is a support-label confusion matrix conditioned on Claim Type, not a Claim Type classification score."
+    },
+    {
+      "id": "centrality_split",
+      "description": "Record exact accuracy and observed-label macro recall separately for central and non-central material Claims."
+    },
+    {
+      "id": "candidate_error_attribution",
+      "description": "Attribute Candidate outcomes to correct, claim_classification_error, aggregation_rule_error, mixed_error, segmentation_failure, or masked_claim_error."
+    }
+  ],
+  "macro_recall_policy": {
+    "claim_subgroups": "macro_average_over_gold_labels_observed_in_that_subgroup",
+    "candidate_controls": "macro_average_over_all_four_balanced_candidate_labels",
+    "absent_gold_labels_must_be_reported": true
+  },
+  "attribution_policy": {
+    "correct": "Predicted Candidate equals expected Candidate and all matched Claim labels are correct.",
+    "masked_claim_error": "Predicted Candidate equals expected Candidate despite one or more Claim-label errors.",
+    "claim_classification_error": "Predicted Candidate is wrong, Claim labels contain errors, and gold Claim labels aggregate to the expected Candidate.",
+    "aggregation_rule_error": "All Claim labels are correct, but deterministic aggregation does not match the expected Candidate.",
+    "mixed_error": "Both Claim-label error and a gold-label aggregation mismatch are present.",
+    "segmentation_failure": "Required exact-span Claim alignment is unavailable, so attribution is not attempted."
+  },
+  "guards": {
+    "atomic_protocol_modified": false,
+    "atomic_prompt_modified": false,
+    "balanced_controls_modified": false,
+    "aggregation_policy_modified": false,
+    "readiness_thresholds_modified": false,
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false
+  }
+}

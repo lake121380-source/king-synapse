@@ -1,0 +1,177 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d-reviewer-failure-taxonomy-application-v2",
+  "recorded_at": "2026-07-13T09:34:38.650961+00:00",
+  "status": "frozen_retrospective_level_and_attribution_mapping_a_through_d",
+  "taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+  "preserved_taxonomy_v1_sha256": "4605a1dedcb0ad4432c67267220b82f3da23917ebe6b3726355fa8677accf4c2",
+  "preserved_application_v1_sha256": "b3e51629b058dbd5a52dbace49c664ac362c5a9d175eeb8c80722f55192c17a4",
+  "methodological_status": {
+    "a_through_d": "retrospective_descriptive_attribution",
+    "e_and_later": "prospective_frozen_level_and_attribution",
+    "causal_claim_strength": "component attribution supported by recorded artifacts, not randomized component intervention"
+  },
+  "reviewers": [
+    {
+      "reviewer": "a",
+      "model": "gpt-4.1",
+      "outcome": "completed",
+      "level_matrix": {
+        "delivery": "pass",
+        "representation": "pass",
+        "boundary": "pass",
+        "agreement": "not_reached",
+        "support": "blocked"
+      },
+      "primary_failure_level": null,
+      "failure_attribution": null,
+      "boundary_capability": "assessable_pass_for_frozen_v3_contract",
+      "artifact_sha256": "1fb21c296338cefd467fcc30c0122ee2a52b9b707fa430725838f77165711e0d"
+    },
+    {
+      "reviewer": "b",
+      "model": "qwen3.5-plus",
+      "outcome": "authoritative_negative_result",
+      "level_matrix": {
+        "delivery": "pass",
+        "representation": "pass",
+        "boundary": "fail",
+        "agreement": "not_assessable",
+        "support": "not_assessable"
+      },
+      "primary_failure_level": 2,
+      "primary_failure_class": "boundary_semantic_contract.verbatim_span",
+      "failure_attribution": {
+        "primary": "provider",
+        "subtype": "non_verbatim_reviewer_output",
+        "confidence": "high",
+        "evidence": [
+          "Provider content was received and passed JSON/representation checks.",
+          "Strict exact-substring validation failed with source_excerpt_not_found on extract_10."
+        ],
+        "counterevidence": [
+          "Raw Provider text is not stored, so the exact mutation form cannot be reconstructed."
+        ],
+        "secondary": null
+      },
+      "boundary_capability": "assessable_fail_for_frozen_v3_contract",
+      "artifact_sha256": "84315e13748b14bc0f235410d7d1e3d2fbae90afd7c929ffe315e6e77095b4a7"
+    },
+    {
+      "reviewer": "c",
+      "model": "DeepSeek-V3.2",
+      "outcome": "authoritative_negative_result",
+      "level_matrix": {
+        "delivery": "pass",
+        "representation": "fail",
+        "boundary": "not_assessable",
+        "agreement": "not_assessable",
+        "support": "not_assessable"
+      },
+      "primary_failure_level": 1,
+      "primary_failure_class": "provider_representation_contract.identity_canonicalization",
+      "failure_attribution": {
+        "primary": "implementation",
+        "subtype": "provider_interface_model_identity_case_normalization",
+        "confidence": "high",
+        "evidence": [
+          "Requested model was DeepSeek-V3.2 and Provider reported deepseek-v3.2.",
+          "JSON parsing and strict Boundary normalization completed before the case-sensitive canonical-family check rejected finalization."
+        ],
+        "counterevidence": [
+          "Provider metadata casing differed from the requested identifier, so the interface contributed to the mismatch."
+        ],
+        "secondary": {
+          "category": "provider",
+          "subtype": "reported_model_alias_casing"
+        }
+      },
+      "boundary_capability": "not_assessable",
+      "artifact_sha256": {
+        "negative_result": "cd92309d047c6f15875455a0ef1758bb15b963511527cee2c3dae4a379d53e79",
+        "outcome": "300632662a78946e9f456b0578f9710ab924fa2d93066d713e65c99392fa9340"
+      }
+    },
+    {
+      "reviewer": "d",
+      "model": "claude-sonnet-4-6",
+      "outcome": "authoritative_negative_result",
+      "level_matrix": {
+        "delivery": "pass",
+        "representation": "fail",
+        "boundary": "not_assessable",
+        "agreement": "not_assessable",
+        "support": "not_assessable"
+      },
+      "primary_failure_level": 1,
+      "primary_failure_class": "provider_representation_contract.serialization",
+      "failure_attribution": {
+        "primary": "provider",
+        "subtype": "non_json_content_under_json_object_request",
+        "confidence": "high",
+        "evidence": [
+          "Provider returned non-empty content.",
+          "Strict JSON parsing failed at line 1 column 1 before Boundary normalization."
+        ],
+        "counterevidence": [
+          "Raw Provider text is not stored, so gateway transformation, Markdown fencing, prose, or another representation cannot be distinguished."
+        ],
+        "secondary": {
+          "category": "unknown",
+          "subtype": "provider_vs_gateway_serialization_boundary"
+        }
+      },
+      "boundary_capability": "not_assessable",
+      "artifact_sha256": {
+        "negative_result": "60e2791f0610acf298938ca3446a8e46873d8b30e10e41d489374e819b1eff3d",
+        "outcome": "adfe8ab707fe8bf2421e1651a069eb6523ce85bacb299a6e2d5b3a22b97e92e3"
+      }
+    }
+  ],
+  "cross_tabulation": {
+    "protocol": {
+      "level_0": 0,
+      "level_1": 0,
+      "level_2": 0,
+      "level_3": 0,
+      "level_4": 0
+    },
+    "implementation": {
+      "level_0": 0,
+      "level_1": 1,
+      "level_2": 0,
+      "level_3": 0,
+      "level_4": 0
+    },
+    "provider": {
+      "level_0": 0,
+      "level_1": 1,
+      "level_2": 1,
+      "level_3": 0,
+      "level_4": 0
+    },
+    "reviewer": {
+      "level_0": 0,
+      "level_1": 0,
+      "level_2": 0,
+      "level_3": 0,
+      "level_4": 0
+    },
+    "unknown": {
+      "level_0": 0,
+      "level_1": 0,
+      "level_2": 0,
+      "level_3": 0,
+      "level_4": 0
+    }
+  },
+  "gates": {
+    "two_completed_blind_submissions": false,
+    "agreement_available": false,
+    "boundary_gold_frozen": false,
+    "support_allowed": false
+  },
+  "raw_provider_responses_stored": false,
+  "credential_recorded": false,
+  "held_out_accessed": false
+}

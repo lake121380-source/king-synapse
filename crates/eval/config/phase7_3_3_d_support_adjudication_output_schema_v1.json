@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.3.3-d3-support-adjudication-output-schema-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "adjudication_item_id",
+    "boundary_claim_id",
+    "decision"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adjudication_item_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boundary_claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "rationale"
+      ],
+      "properties": {
+        "operation": {
+          "enum": [
+            "select_option_1",
+            "select_option_2",
+            "defer_for_human_review"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

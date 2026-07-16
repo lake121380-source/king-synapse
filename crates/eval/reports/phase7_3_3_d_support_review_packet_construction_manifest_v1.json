@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d1-b-support-review-packet-construction-manifest-v1",
+  "status": "frozen_not_started",
+  "execution_mode": "offline_deterministic",
+  "artifact_lineage": {
+    "adapter_sha256": "8ee030059c797539cdea08879e104f52287fe9beea4801b13dabe139e371410e",
+    "packet_construction_protocol_sha256": "fc19727e0e90c413e70b7103a494c04c4bd5d7e57b126035d8d8a4bab92394e5",
+    "support_reference_protocol_sha256": "d5cb2570d80a1e72f9d747130518a1859042be8ac130903ab562ee137b2d9d52",
+    "evidence_source_sha256": "336bde7c24da19dff56471c9b634012e7b4fc66a4cf34c2ff2b07df10af659e8",
+    "boundary_gold_sha256": "233c51af2a3c537be57a8838a8697444affea5b5b80e0835f98bab4ea567f1a0",
+    "support_stage_state_v2_sha256": "13d3c4a13a8224a6a9a3050df8729741e3857ae25540c2485533b2f5911e301c",
+    "readiness_v13_sha256": "a46fb4b0db6ba513458d674480e1610d80b4a0b5cea3d183144ee05aa159bff3"
+  },
+  "validated_case_count": 10,
+  "validated_boundary_claim_count": 118,
+  "validated_evidence_item_count": 30,
+  "entry_gate_checks": {
+    "protocol_offline_deterministic": true,
+    "support_protocol_identity_valid": true,
+    "boundary_gold_frozen": true,
+    "boundary_gold_hash_matches_readiness": true,
+    "boundary_gold_counts_valid": true,
+    "boundary_gold_claim_ids_unique": true,
+    "boundary_gold_support_labels_absent": true,
+    "boundary_gold_coverage_passed": true,
+    "support_state_v2_authorizes_packet_construction": true,
+    "readiness_v13_authorizes_packet_construction": true,
+    "evidence_source_has_ten_cases": true,
+    "evidence_and_gold_cases_match": true,
+    "each_case_has_boundary_claims": true,
+    "claim_fields_available": true,
+    "claim_response_hashes_match_evidence": true,
+    "evidence_bundles_have_ids": true,
+    "source_evidence_has_no_support_decisions": true,
+    "held_out_not_accessed": true
+  },
+  "expected_outputs": {
+    "shared_packet": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_blind_review_packet_v1.json",
+    "reviewer_a_packet": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_reviewer_a_packet_v1.json",
+    "reviewer_b_packet": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_reviewer_b_packet_v1.json",
+    "reviewer_a_submission_template": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_reviewer_a_submission_v2.json",
+    "reviewer_b_submission_template": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_reviewer_b_submission_v2.json",
+    "construction_receipt": "crates\\eval\\reports\\phase7_3_3_d_support_review_packet_construction_receipt_v1.json",
+    "support_stage_state_v3": "crates\\eval\\datasets\\pattern_extraction\\phase7_3_3_d_support_stage_state_v3.json",
+    "readiness_v14": "crates\\eval\\reports\\phase7_3_3_d1_reference_construction_readiness_v14.json"
+  },
+  "provider_call_allowed": false,
+  "support_execution_allowed_in_this_stage": false,
+  "boundary_mutation_allowed": false,
+  "held_out_access_allowed": false
+}

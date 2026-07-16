@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "routes_id": "phase7.3.3-d-research-object-separation-v2",
+  "status": "route_b_design_frozen_execution_not_started",
+  "frozen_at": "2026-07-13T13:50:55.631768+00:00",
+  "supersedes": "phase7.3.3-d-research-object-separation-v1",
+  "preserves_v1_sha256": "c4078c0b3cb6fa597e291d87503b7e92873c04cb401213fe2642fb4098dc0601",
+  "failure_taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+  "level2_failure_subtypes_v1_sha256": "80b198944c4f00d3f209689d65d1c4d2db53fb95667bfdf144a4f915ac6082d5",
+  "route_a": {
+    "name": "End-to-End Provider Compliance",
+    "protocol": "V3",
+    "status": "completed_authoritative_negative_result",
+    "estimand": "Whether the Provider completes delivery, representation, and Boundary semantic contracts without repair under frozen V3.",
+    "result": "failed_level_2_serialization_failure",
+    "semantic_decision_quality": "not_assessable",
+    "result_sha256": "d35f9753c0cde6c660534b9b82db720096352e990266066dd29cfa7bb9aa2bb6",
+    "same_manifest_retry_authorized": false
+  },
+  "route_b": {
+    "name": "Boundary Adjudication Under Operation-Based Span Representation",
+    "protocol": "V4",
+    "status": "design_frozen_execution_not_started",
+    "hypothesis": "Replacing model-generated exact excerpts with operation references and numeric span selectors will reduce serialization failures while preserving the frozen Boundary decision task.",
+    "independent_variable": "output_representation_only",
+    "treatment": "operation-based reuse, merge, slice, or new-span selectors with deterministic source-text reconstruction",
+    "preserved_variables": [
+      "provider",
+      "requested_model",
+      "canonical_model_family",
+      "temperature",
+      "top_p",
+      "max_tokens",
+      "case_isolation",
+      "A/E agreement",
+      "worklist",
+      "Boundary semantic rules",
+      "Claim Type rules",
+      "structural metadata rules",
+      "reason-code enum",
+      "Failure Taxonomy",
+      "no-repair execution governance"
+    ],
+    "not_claimed": "The treatment isolates copying alone; operation structuring may also affect how the model expresses its decision.",
+    "comparison_policy": {
+      "paired_cases": true,
+      "pool_v3_and_v4_success_rates": false,
+      "v3_remains_authoritative": true,
+      "v4_requires_new_manifest": true
+    }
+  },
+  "prospective_classification": {
+    "level2_subtype_rules_frozen_before_v4_execution": true,
+    "artifact_sha256": "80b198944c4f00d3f209689d65d1c4d2db53fb95667bfdf144a4f915ac6082d5"
+  },
+  "shared_constraints": {
+    "no_held_out_access": true,
+    "no_support_review_before_boundary_gold": true,
+    "no_same_manifest_retry_after_provider_content": true,
+    "no_result_driven_tuning": true,
+    "first_provider_content_authoritative": true
+  },
+  "execution_state": {
+    "v4_prompt_created": true,
+    "v4_parser_created": false,
+    "v4_fixtures_completed": false,
+    "v4_manifest_created": false,
+    "v4_execution_started": false,
+    "provider_called": false,
+    "held_out_accessed": false
+  }
+}

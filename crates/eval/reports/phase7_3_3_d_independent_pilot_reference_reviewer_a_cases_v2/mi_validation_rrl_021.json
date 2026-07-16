@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_rrl_021",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "7fa4ca9b5e6b89811be93c479ec7567dfae3e6c6fb529a6db33b408230924502",
+  "provider_content_sha256": "5faf20f2fe2c9556bc55c7bd8a09184bf16a0a5e03f0db88ce43ceffddba0edf",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "9f185214420a503517326962468dba76fdc62ee039c977d8f0b3ecbfa7623239",
+  "normalized_case": {
+    "case_id": "mi_validation_rrl_021",
+    "candidate_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrl_021-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "source_text_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrl_021-evidence-06",
+          "mi_validation_rrl_021-evidence-01",
+          "mi_validation_rrl_021-evidence-05"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that a high-confidence confirmation should be preferred over a recent but weak observation. Evidence 06 directly states that 'high confidence confirmation remains authoritative,' which supports the selection rule. Evidence 01 and 05 further characterize the recent observation as weak and tentative, reinforcing the comparative weakness of the alternative. There is no evidence contradicting this selection rule, and the evidence is clear and directly relevant.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

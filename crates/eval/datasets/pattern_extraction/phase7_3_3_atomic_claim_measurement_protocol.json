@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-atomic-claim-measurement-v1",
+  "phase": "Phase 7.3.3 Atomic Claim Measurement Protocol",
+  "hypothesis": "Candidate-level many-to-one labeling creates a partially-supported attractor; separating segmentation, local support judgment, and deterministic aggregation will expose prediction collapse and may improve diagnostic discrimination.",
+  "hypothesis_status": "exploratory_not_yet_confirmed",
+  "measurement_objects": {
+    "evidence_bundle": "frozen_control",
+    "real_design_candidates": "frozen_control",
+    "extractor_provider_prompt_parser_repair": "frozen_control",
+    "phase7_3_2_candidate_level_judge": "frozen_comparison_baseline",
+    "atomic_claim_segmentation": "experimental_variable",
+    "claim_local_judgment": "experimental_variable",
+    "candidate_aggregation": "new_protocol_component_frozen_before_execution"
+  },
+  "evaluation_lanes": {
+    "balanced_controls": {
+      "purpose": "Verify four-label discrimination, source-span segmentation, and aggregation behavior on intentionally unambiguous protocol controls.",
+      "class_balance": "4_per_label_16_total",
+      "capability_claim_allowed": false
+    },
+    "frozen_real_design": {
+      "purpose": "Exploratory comparison on the same ten frozen design Candidates without opening held-out data.",
+      "candidate_count": 10,
+      "silver_status": "model_adjudicated_silver_not_human_gold",
+      "generalization_claim_allowed": false
+    }
+  },
+  "atomic_claim_schema": {
+    "required_fields": [
+      "claim_id",
+      "source_span",
+      "claim_text",
+      "claim_type",
+      "centrality",
+      "material",
+      "claim_origin",
+      "support_label",
+      "evidence_ids",
+      "reason_codes",
+      "rationale"
+    ],
+    "claim_types": [
+      "proposition",
+      "scope",
+      "prediction",
+      "causal",
+      "counterexample",
+      "limitation",
+      "falsifiability"
+    ],
+    "claim_origins": ["explicit", "inferred", "synthesized"],
+    "support_labels": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_assessable"
+    ],
+    "source_span_policy": "zero_based_utf8_byte_half_open_offsets_into_exact_candidate_text",
+    "paraphrase_alignment_forbidden": true
+  },
+  "separation_of_responsibility": {
+    "judge": "Segment exact source spans and decide support locally for each claim only.",
+    "protocol": "Validate segmentation and aggregate claim labels into one Candidate label deterministically.",
+    "judge_must_not_emit_candidate_label": true
+  },
+  "aggregation_policy": {
+    "version": "phase7.3.3-central-claim-gate-v1",
+    "numeric_weights": false,
+    "rationale": "Avoid introducing tunable hidden variables before atomic measurement validity is established.",
+    "rules_in_order": [
+      "Exactly one central claim is required.",
+      "If the central claim is unsupported, Candidate is unsupported.",
+      "If the central claim is not_assessable, Candidate is not_assessable.",
+      "If the central claim is partially_supported, Candidate is partially_supported.",
+      "If the central claim is supported but any material secondary claim is partially_supported, unsupported, or not_assessable, Candidate is partially_supported.",
+      "Otherwise Candidate is supported."
+    ]
+  },
+  "control_metrics": [
+    "segmentation_exact_span_precision",
+    "segmentation_exact_span_recall",
+    "claim_label_exact_accuracy",
+    "claim_label_macro_recall",
+    "candidate_label_exact_accuracy",
+    "candidate_label_macro_recall",
+    "prediction_entropy",
+    "single_class_prediction_rate"
+  ],
+  "collapse_controls": [
+    "always_supported",
+    "always_partially_supported",
+    "always_unsupported",
+    "always_not_assessable"
+  ],
+  "execution_freeze_requirements": [
+    "protocol_hash_frozen",
+    "control_dataset_hash_frozen",
+    "prompt_hash_frozen",
+    "parser_hash_frozen",
+    "aggregation_policy_hash_frozen",
+    "no_result_driven_threshold_or_rule_change"
+  ],
+  "success_criteria": {
+    "balanced_control_all_four_labels_predicted": true,
+    "balanced_control_macro_recall_above_single_class_baseline": true,
+    "single_class_prediction_rate_below_one": true,
+    "real_design_specificity_above_phase7_3_2": true,
+    "real_design_recall_must_not_collapse": true,
+    "held_out_claim_allowed": false
+  },
+  "guards": {
+    "held_out_accessed": false,
+    "extractor_modification_authorized": false,
+    "provider_modification_authorized": false,
+    "candidate_rewriting_authorized": false,
+    "prompt_optimization_authorized": false,
+    "aggregation_tuning_after_execution_authorized": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  }
+}

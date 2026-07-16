@@ -1,0 +1,64 @@
+{
+  "schema_version": 4,
+  "protocol_id": "phase7.3.3-d-independent-pilot-dual-arm-protocol-v4",
+  "status": "frozen_successor_after_v3_json_framing_negative",
+  "predecessor_negative_result_sha256": "30726ec348d3d5a57676d5af927eddd0234461804824428769091dda3adefdea",
+  "predecessor_versions_immutable": true,
+  "v3_same_version_retry": false,
+  "controlled_change": "apply Provider strict JSON Schema response constraints to both arms to eliminate the v3 multiple-JSON framing failure; semantics and flat whole_candidate_claim representation unchanged",
+  "estimand_scope": "semantic and representation feasibility on the frozen one-Claim Pilot frame; not general multi-claim Atomic localization superiority",
+  "structural_limitation_disclosed": true,
+  "unchanged": {
+    "selected_dataset": true,
+    "candidate_evidence_context": true,
+    "provider": true,
+    "model": true,
+    "temperature_top_p": true,
+    "counterbalance": true,
+    "one_request_per_case_per_arm": true,
+    "reviewer_count": true,
+    "adjudicator_count": true,
+    "support_label_semantics": true,
+    "aggregation": true,
+    "blindness": true,
+    "failure_policy": true,
+    "candidate_arm_minimal_schema": true
+  },
+  "case_count": 40,
+  "paired": true,
+  "candidate_arm": "one whole-Candidate support label plus rationale",
+  "atomic_arm": "one flat whole_candidate_claim operation with materiality, claim support, rationale, and deterministic Candidate aggregation",
+  "atomic_operations": {
+    "whole_candidate_claim": "the only authorized operation for this frozen single-proposition Pilot adapter; adapter assigns exact full Candidate span"
+  },
+  "aggregation": {
+    "candidate_reference_label": "claim_support_label because the sole claim is material"
+  },
+  "resource_equality": {
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "same_payload": true,
+    "same_failure_policy": true
+  },
+  "counterbalance": "reuse frozen v1 20/20 worklist order",
+  "visibility": {
+    "reference_content": false,
+    "reference_labels": false,
+    "route_a_gold": false,
+    "other_arm": false
+  },
+  "failure_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  }
+}

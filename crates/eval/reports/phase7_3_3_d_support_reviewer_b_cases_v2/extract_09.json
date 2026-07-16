@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_09-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_09",
+  "provider_envelope_sha256": "fe882993fe4b0a6e0c70bf8e9e23b9218ad3d9a784854ead3f950297130062ad",
+  "provider_content_sha256": "cf73957b45ac5a2c1e8722016d96119a863899f00b99b4068cce53f604e6bdbb",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "ee3e813fc5e0d0fb9ea979a02dbb1fba8d160d05298e8f8e16f69788437fcbbe",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1",
+        "px_09_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Two independent cases (px_09_support_1, px_09_support_2) demonstrate convergence of estimates or conclusions from different instruments/methods/sources, directly supporting the claim that such results are robust.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample case (px_09_counter_3) explicitly shows five reports repeating a single unverified source, creating an apparent consensus that was later found to be fragile, directly matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_09_counter_3 states the apparent consensus disappeared when the source was corrected, directly supporting the causal claim that such consensus collapses upon correction of the original source.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The experience in px_09_support_1 describes two laboratories using different instruments and samples to estimate a material property, with outcomes converging within a preregistered tolerance, exactly matching the prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcome in px_09_support_1 explicitly states estimates converged within a preregistered tolerance, which entails the observable that the difference between estimates is within the tolerance range.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The concept of 'converged within a preregistered tolerance' in px_09_support_1 logically entails the mathematical falsifiability criterion abs(estimate_1 - estimate_2) <= tolerance.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "The claim defines the failure condition (non-convergence) for the pattern established in px_09_support_1; while the negative outcome wasn't observed, the logical structure of the falsification statement is supported by the defined success criteria in the evidence.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_support_1"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "This observable describes the specific condition (difference exceeds tolerance) that would constitute the failure mode for the pattern observed in px_09_support_1, logically derived from the success criterion.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The case px_09_counter_3 demonstrates that when multiple reports trace to a single unverified source, the pattern of apparent consensus does not hold (it disappeared), directly supporting this falsification statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_09-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_09_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence px_09_counter_3 explicitly states the outcome: 'The apparent consensus disappeared when the source was corrected,' which directly matches the falsification observable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_09",
+    "status": "completed",
+    "decision_count": 10
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

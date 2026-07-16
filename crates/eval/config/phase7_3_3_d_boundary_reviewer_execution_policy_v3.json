@@ -1,0 +1,48 @@
+{
+  "schema_version": 3,
+  "policy_id": "phase7.3.3-d1-a-boundary-reviewer-execution-policy-v3",
+  "phase": "Phase 7.3.3-D1-A v3 Occurrence-Aware Protocol-Owned Claim Role Boundary Review",
+  "authoritative_result_policy": {
+    "first_returned_provider_response_per_case_is_authoritative": true,
+    "invalid_json_or_schema_is_negative_result": true,
+    "automatic_repair_authorized": false,
+    "semantic_retry_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_provider_content_may_resume": true
+  },
+  "independence_controls": {
+    "different_requested_models": true,
+    "same_frozen_prompt": true,
+    "same_frozen_packet": true,
+    "case_isolation": true,
+    "other_reviewer_output_visible": false,
+    "judge_output_visible": false,
+    "candidate_gold_or_silver_visible": false,
+    "support_labels_visible": false,
+    "web_tools_enabled": false,
+    "external_memory_enabled": false
+  },
+  "model_identity_handling": {
+    "provider_reported_model_recorded_per_case": true,
+    "canonical_model_family_derived_by_frozen_rule": true,
+    "byte_identical_provider_alias_required": false,
+    "outside_requested_family_is_negative_result": true
+  },
+  "data_handling": {
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "api_key_recorded": false,
+    "raw_provider_text_recorded": false,
+    "raw_provider_text_sha256_recorded": true,
+    "normalized_claims_recorded": true,
+    "held_out_loaded": false
+  },
+  "post_execution_prohibitions": [
+    "no_prompt_modification",
+    "no_parser_modification",
+    "no_packet_modification",
+    "no_result_replacement",
+    "no_semantic_retry",
+    "no_support_adjudication",
+    "no_held_out_access"
+  ]
+}

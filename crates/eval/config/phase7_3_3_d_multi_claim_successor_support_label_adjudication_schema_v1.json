@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-schema-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "adjudication_confidence",
+    "case_id",
+    "decision_rationale",
+    "operation",
+    "reference_claim_id",
+    "work_item_id"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "work_item_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reference_claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "enum": [
+        "defer_for_human_review",
+        "select_option_1",
+        "select_option_2"
+      ]
+    },
+    "decision_rationale": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "adjudication_confidence": {
+      "enum": [
+        "high",
+        "low",
+        "medium"
+      ]
+    }
+  }
+}

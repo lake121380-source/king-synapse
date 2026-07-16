@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "worklist_id": "phase7.3.3-d1-b4-boundary-omission-resolution-packet-v2",
+  "status": "frozen_input_worklist",
+  "case_count": 4,
+  "gap_count": 4,
+  "case_isolation": true,
+  "held_out_accessed": false,
+  "source_lineage": {
+    "b3_worklist_sha256": "6abc52224452636d4c122aa775b192afe057d49963b9851f1cff7c46ce80dcf5",
+    "b3_submission_sha256": "e41f5303dddd9f947091abd6f16e649e25d9f8ca79755ee550eb59920ca0047a",
+    "b3_readiness_sha256": "e426a1b996d590ee4a05ffd1023d2565ee45c84721d8534d1a5ea1c539569629",
+    "b4_v1_readiness_sha256": "94c2334a5e54fb7b98af941f36cdd3212e2fad276d7048b4db2aea4fc678d6ff",
+    "b2_packet_sha256": "7c3ba1c94579b60318b1f85cbe317e4a898b471fb0f8370bcd4337100117b637"
+  },
+  "cases": [
+    {
+      "case_id": "b4-001-coverage-gap-012",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-012",
+      "anchor": {
+        "anchor_id": "extract_01-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-011",
+            "source_span": {
+              "start": 3,
+              "end": 87
+            },
+            "claim_text": "an incremental rollout with backward compatibility still causes a system-wide outage",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-012",
+            "source_span": {
+              "start": 91,
+              "end": 125
+            },
+            "claim_text": "forces rollback of the old version",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-012",
+        "source_span": {
+          "start": 125,
+          "end": 152
+        },
+        "gap_text": ", the pattern is falsified.",
+        "eligible_non_whitespace_count": 23
+      },
+      "b3_context": {
+        "final_classification": "boundary_omission_candidate",
+        "rationale": null,
+        "source_stage": "D1-B3 non-claim accounting adjudication"
+      }
+    },
+    {
+      "case_id": "b4-002-coverage-gap-067",
+      "source_case_id": "extract_08",
+      "gap_id": "coverage-gap-067",
+      "anchor": {
+        "anchor_id": "extract_08-prediction_statement-01",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_text": "If a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_08-claim-003",
+            "source_span": {
+              "start": 3,
+              "end": 266
+            },
+            "claim_text": "a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-067",
+        "source_span": {
+          "start": 0,
+          "end": 3
+        },
+        "gap_text": "If ",
+        "eligible_non_whitespace_count": 2
+      },
+      "b3_context": {
+        "final_classification": "boundary_omission_candidate",
+        "rationale": null,
+        "source_stage": "D1-B3 non-claim accounting adjudication"
+      }
+    },
+    {
+      "case_id": "b4-003-coverage-gap-069",
+      "source_case_id": "extract_08",
+      "gap_id": "coverage-gap-069",
+      "anchor": {
+        "anchor_id": "extract_08-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "If vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_08-claim-007",
+            "source_span": {
+              "start": 3,
+              "end": 173
+            },
+            "claim_text": "vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-069",
+        "source_span": {
+          "start": 0,
+          "end": 3
+        },
+        "gap_text": "If ",
+        "eligible_non_whitespace_count": 2
+      },
+      "b3_context": {
+        "final_classification": "boundary_omission_candidate",
+        "rationale": null,
+        "source_stage": "D1-B3 non-claim accounting adjudication"
+      }
+    },
+    {
+      "case_id": "b4-004-coverage-gap-082",
+      "source_case_id": "extract_10",
+      "gap_id": "coverage-gap-082",
+      "anchor": {
+        "anchor_id": "extract_10-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_10-claim-009",
+            "source_span": {
+              "start": 0,
+              "end": 118
+            },
+            "claim_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_10-claim-010",
+            "source_span": {
+              "start": 123,
+              "end": 173
+            },
+            "claim_text": "total cost exceeding the value of avoided stockout",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-082",
+        "source_span": {
+          "start": 173,
+          "end": 175
+        },
+        "gap_text": "s.",
+        "eligible_non_whitespace_count": 2
+      },
+      "b3_context": {
+        "final_classification": "boundary_omission_candidate",
+        "rationale": "The gap \"s.\" is not purely punctuation: the \"s\" changes the extracted claim text from singular \"stockout\" to the source's plural \"stockouts.\" Because this is a lexical/morphological difference rather than only terminal punctuation, it is better treated as a possible boundary omission rather than an explicit non-claim.",
+        "source_stage": "D1-B3 non-claim accounting adjudication"
+      }
+    }
+  ]
+}

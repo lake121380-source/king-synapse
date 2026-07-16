@@ -1,0 +1,55 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_fail_023",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "e010e14fb85b8eff6dc0aa1a33baaa8560c74e4bb58afe9d9b0e95315771827e",
+  "content_sha256": "35f2d164349f1aea9a666f1cf4bd2165896467a8a1d1d98617ae5f81b5f96d5d",
+  "latency_ms": 4686.1129000317305,
+  "usage": {
+    "prompt_tokens": 1007,
+    "completion_tokens": 122,
+    "total_tokens": 1129,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1609,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2449,
+      "total_duration_ms": 2373,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_fail_023",
+    "support_label": "partially_supported",
+    "rationale": "The evidence includes a verified failure record stating the approach caused harm and must not be repeated, and also notes an older successful playbook recommending repeating the approach. This supports rejecting or superseding the prior successful playbook. However, the specific normative rule that verified failure evidence 'must override' the previous playbook is not explicitly stated as an override policy; the evidence supports the conflict and the do-not-repeat conclusion, but not the full general override criterion in those exact terms.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

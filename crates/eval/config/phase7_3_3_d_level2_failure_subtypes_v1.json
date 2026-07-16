@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "subtype_rules_id": "phase7.3.3-d-level2-failure-subtypes-v1",
+  "status": "frozen_for_prospective_v4_plus_use_with_retrospective_v3_mapping",
+  "frozen_at": "2026-07-13T13:26:29.891002+00:00",
+  "parent_failure_taxonomy": {
+    "taxonomy_id": "phase7.3.3-d-reviewer-failure-taxonomy-v2",
+    "sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+    "level": 2,
+    "level_code": "boundary_semantic_contract"
+  },
+  "purpose": "Refine observed Level 2 failure location without changing the frozen primary Failure Taxonomy level or Failure Attribution.",
+  "scope": {
+    "applies_only_after_levels_0_and_1_pass": true,
+    "primary_taxonomy_level_changed": false,
+    "failure_attribution_changed": false,
+    "boundary_semantics_changed": false,
+    "representation_contract_changed": false,
+    "parser_or_verifier_changed": false
+  },
+  "classification_dimensions": {
+    "observed_subtype": "The earliest evidenced failure mechanism inside Level 2.",
+    "semantic_decision_quality": "Whether the underlying Boundary decision can be evaluated independently of serialization, provenance, and verification.",
+    "causal_attribution": "A separate evidential claim that must not be inferred from subtype alone."
+  },
+  "subtypes": [
+    {
+      "code": "semantic_decision_failure",
+      "definition": "The output passes the frozen serialization, source-location, provenance, and verification prerequisites, but the resulting Boundary decision violates a frozen substantive Boundary rule.",
+      "examples": [
+        "overlapping final claims",
+        "uncovered required source anchor",
+        "semantically invalid split or merge under the frozen Boundary rules"
+      ],
+      "default_semantic_decision_quality": "assessable_and_failed"
+    },
+    {
+      "code": "serialization_failure",
+      "definition": "Provider content reaches Level 2, but a Boundary decision cannot be losslessly instantiated because a generated source excerpt or equivalent serialized locator does not satisfy the frozen exact-source representation contract.",
+      "examples": [
+        "source_excerpt is not an exact contiguous substring",
+        "source_excerpt contains paraphrase, normalization, omission, or regenerated wording not allowed by the frozen contract"
+      ],
+      "default_semantic_decision_quality": "not_assessable"
+    },
+    {
+      "code": "provenance_failure",
+      "definition": "The serialized source text is locatable, but the output cannot be uniquely or validly connected to the frozen source occurrence, source anchor, or allowed Reviewer claim provenance.",
+      "examples": [
+        "occurrence_index does not identify an existing exact occurrence",
+        "source_reviewer_claim_ids are unknown or belong to a different anchor",
+        "source anchor identity is missing or contradictory"
+      ],
+      "default_semantic_decision_quality": "not_assessable"
+    },
+    {
+      "code": "verification_failure",
+      "definition": "Level 2 validity cannot be determined because the frozen verification machinery or artifact integrity fails, rather than because the returned judgment is evidenced to violate a public contract.",
+      "examples": [
+        "parser or verifier raises an internal implementation error",
+        "required frozen verification artifact is missing or hash-invalid",
+        "verification terminates before it can classify an otherwise available Level 2 result"
+      ],
+      "default_semantic_decision_quality": "not_assessable"
+    }
+  ],
+  "classification_precedence": [
+    "verification_failure when verification machinery or artifact integrity prevents a valid determination",
+    "serialization_failure when exact source representation fails before source occurrence or provenance can be validated",
+    "provenance_failure when representation is locatable but occurrence, anchor, or Reviewer provenance is invalid",
+    "semantic_decision_failure only after serialization, source location, provenance, and verification prerequisites pass"
+  ],
+  "insufficient_evidence_policy": {
+    "force_one_of_four_subtypes": false,
+    "classification_status_when_unresolved": "insufficient_evidence",
+    "semantic_decision_quality_when_raw_decision_cannot_be_reconstructed": "not_assessable",
+    "do_not_infer_correct_semantic_decision_from_serialization_failure": true,
+    "do_not_infer_model_inability_from_serialization_failure": true
+  },
+  "temporal_use": {
+    "v3": "retrospective_descriptive_only",
+    "v4_plus": "prospective_only_if_this_exact_artifact_is_frozen_before_execution",
+    "v3_artifacts_must_not_be_rewritten": true,
+    "same_manifest_retry_authorized": false
+  },
+  "parent_taxonomy_interpretation": "Level 2 remains failed for the complete frozen Boundary contract. A subtype may show that the underlying semantic Boundary decision itself is not assessable; this is a diagnostic refinement, not a reclassification of the primary level.",
+  "experimental_boundaries": {
+    "provider_called": false,
+    "v4_execution_started": false,
+    "coverage_qa_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

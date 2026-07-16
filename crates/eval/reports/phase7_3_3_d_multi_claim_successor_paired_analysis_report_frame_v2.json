@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d-multi-claim-successor-paired-analysis-report-frame-v2",
+  "status": "completed_authoritative_exploratory_paired_analysis",
+  "manifest_sha256": "30e6abcdec5633ec668b924b9f64a376a1a0d13ac123ffeca09a494a508f41a7",
+  "case_count": 40,
+  "paired_primary_effect": {
+    "estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+    "estimate": 0.2722324389508592,
+    "paired_sd": 0.015311426153545752,
+    "bootstrap_interval_95": [
+      0.2670296955079891,
+      0.2757009345794392
+    ],
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 733061,
+    "confirmatory_p_value": null
+  },
+  "arm_metrics": {
+    "candidate": {
+      "mean_material_error_span_iou": 0.7151869158878504,
+      "exact_candidate_label_accuracy": 0.225,
+      "localization_micro_precision": 0.7151869158878504,
+      "localization_micro_recall": 1.0,
+      "localization_micro_f1": 0.8339463288380329
+    },
+    "atomic": {
+      "mean_material_error_span_iou": 0.9874193548387097,
+      "exact_claim_label_accuracy": 0.7916666666666666,
+      "boundary_exact_span_rate": 1.0,
+      "localization_micro_precision": 0.9874193548387097,
+      "localization_micro_recall": 1.0,
+      "localization_micro_f1": 0.9936698587891577
+    }
+  },
+  "missingness_and_failures": {
+    "selected_cases": 40,
+    "paired_cases_scored": 40,
+    "paired_cases_dropped": 0,
+    "missing_candidate_outputs": 0,
+    "missing_atomic_outputs": 0
+  },
+  "resources": {
+    "candidate": {
+      "request_count": 40,
+      "total_tokens": 21858,
+      "token_usage_complete": true,
+      "mean_latency_ms": 3885.37805,
+      "cost_usd": null,
+      "cost_status": "provider_price_not_frozen"
+    },
+    "atomic": {
+      "request_count": 40,
+      "total_tokens": 21120,
+      "token_usage_complete": true,
+      "mean_latency_ms": 10103.323225,
+      "cost_usd": null,
+      "cost_status": "provider_price_not_frozen"
+    }
+  },
+  "reference_visible_during_arm_execution": false,
+  "confirmatory_dataset_opened": false,
+  "confirmatory_opening_authorized": false,
+  "runtime_integration_authorized": false
+}

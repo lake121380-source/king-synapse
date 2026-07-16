@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d1-b4-boundary-omission-resolution-contract-fixtures-v1",
+  "fixture_count": 8,
+  "fixtures_passed": 8,
+  "all_fixtures_passed": true,
+  "provider_called": false,
+  "held_out_accessed": false,
+  "results": [
+    {
+      "fixture": "valid",
+      "expected_pass": true,
+      "observed_pass": true,
+      "fixture_passed": true,
+      "observed_error": null
+    },
+    {
+      "fixture": "unknown_resolution",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_identity_resolution_or_rationale_invalid"
+    },
+    {
+      "fixture": "non_claim_with_severity",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "non_claim_severity_must_be_null"
+    },
+    {
+      "fixture": "non_claim_bad_severity",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "non_claim_severity_must_be_null"
+    },
+    {
+      "fixture": "omission_missing_severity",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "omission_severity_invalid"
+    },
+    {
+      "fixture": "wrong_gap",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_identity_resolution_or_rationale_invalid"
+    },
+    {
+      "fixture": "extra_field",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_fields_invalid"
+    },
+    {
+      "fixture": "blank_rationale",
+      "expected_pass": false,
+      "observed_pass": false,
+      "fixture_passed": true,
+      "observed_error": "decision_identity_resolution_or_rationale_invalid"
+    }
+  ]
+}

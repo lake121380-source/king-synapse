@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d-independent-pilot-reference-adjudication-execution-manifest-v1",
+  "status": "frozen_before_first_provider_call",
+  "decision_environment": {
+    "provider": "api.gpt.ge",
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "model_requested": "gpt-5.4",
+    "canonical_model_family_expected": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 2500,
+    "timeout_seconds": 600,
+    "response_format": {
+      "type": "json_object"
+    },
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "one_isolated_case_per_request": true
+  },
+  "artifact_lineage": {
+    "adapter_sha256": "1e913d6e246bf7b2d1bd76104c4eb0bb89bfe414d98dadaef1f95ca2939f0e01",
+    "freeze_manifest_sha256": "d0a946f479481c0912d67193e8ee437a8e69e9a0a710ed41f4f4a6acbd60da26",
+    "protocol_sha256": "eb7df4facd72e7cefd551645e77a90b6f117f888731fc4fab58d358b39eb5927",
+    "policy_sha256": "2f2ecb1ec411b4efc185dcd0183f8085d0eea678ab8cc916e70edc68504caf5a",
+    "prompt_sha256": "438f321417328294b5057476f54f1e8e02f37957e3c662aee204b0dc4b1933dd",
+    "schema_sha256": "f71f928df8e9fe6e50c50f589fe279e348b0edc23308c648622d0e9db73a7072",
+    "packet_sha256": "f8702790ce5433ae03caadabebc2df5b07255cdaa2f55e6c2a71999e7ca60b0e",
+    "mapping_sha256": "394a9402cbfc001585378f8eeaf3a6b98273db59c4cfb5ba19be34b70c833dc0",
+    "agreement_receipt_sha256": "518a1a910c6c9483fe75a6e093016d50496fce815b3e3b5a21865c22c1aa462b"
+  },
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "failure_is_immutable": true,
+    "change_requires_successor_version": true
+  },
+  "item_count": 8,
+  "execution_started": false,
+  "provider_called": false,
+  "reference_frozen": false,
+  "confirmatory_content_opened": false
+}

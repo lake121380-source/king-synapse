@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d1-b-support-review-execution-policy-v1",
+  "execution_order": "independent reviewers; sequential invocation exposes no outputs",
+  "case_order": "frozen_packet_order",
+  "attempt_policy": "one authoritative provider attempt per case; any failure freezes reviewer version",
+  "checkpoint_policy": "successful case checkpoints immutable",
+  "raw_content_storage": "disabled; hashes retained",
+  "agreement_policy": "not computed here",
+  "support_gold_policy": "remains unfrozen",
+  "credential_env_name": "DEEPSEEK_API_KEY",
+  "secret_persistence": "forbidden"
+}

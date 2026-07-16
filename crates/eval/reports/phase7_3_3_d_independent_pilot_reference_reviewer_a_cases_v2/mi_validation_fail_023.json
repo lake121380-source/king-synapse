@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_fail_023",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "a1f307a1dcff2534dbcb1dd22ef462b6fd15cfcde41b0a3f4c1817979345e311",
+  "provider_content_sha256": "a381f00e50cedd9d2c109572b86a26e2deb27a710125883c1c03ccef225fc30e",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "04e3bd38cc035175819afe0148b733c7fd2ce0283db3d673045e6fb08fd95990",
+  "normalized_case": {
+    "case_id": "mi_validation_fail_023",
+    "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_fail_023-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_fail_023-evidence-01",
+          "mi_validation_fail_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that verified failure evidence must override a previously successful playbook. Evidence 06 directly states that verified failure evidence indicates the approach caused harm and must not be repeated, which overrides the recommendation in the older successful playbook (evidence 01). This provides direct support for the selection rule described in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

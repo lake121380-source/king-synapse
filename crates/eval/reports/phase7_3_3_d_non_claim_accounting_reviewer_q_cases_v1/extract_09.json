@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b2-q-extract_09-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "87a41757e49b0e9875edfc21c85f33ed892338889a113dd3ed1b07e7d97f2710",
+  "reviewer": "q",
+  "case_id": "extract_09",
+  "provider_envelope_sha256": "2d7f344e0de1dc517702f5e5ae1e8e009a7eba37da19ad7336061273df46eb60",
+  "provider_content_sha256": "0ed310a34a88f296f05e675b1b80d5dd427e7e676164d800475350a408c01c3d",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "dc8c5ef0fcd0e2e1413c463720cd17027041aae2a75a1795e3542f9fcc440704",
+  "decisions": [
+    {
+      "case_id": "extract_09",
+      "gap_id": "coverage-gap-071",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap text ' In contrast, ' functions solely as a transitional phrase indicating opposition between two propositions, containing no independent assertive semantic content."
+    },
+    {
+      "case_id": "extract_09",
+      "gap_id": "coverage-gap-072",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap text ' and ' is a coordinating conjunction linking two predicates within the second claim, carrying no independent assertive meaning."
+    },
+    {
+      "case_id": "extract_09",
+      "gap_id": "coverage-gap-073",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap text consists entirely of a terminal period, which is punctuation marking the end of the sentence without assertive content."
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_09",
+    "status": "completed",
+    "decision_count": 3
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

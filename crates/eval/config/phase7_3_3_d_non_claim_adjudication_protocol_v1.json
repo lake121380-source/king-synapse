@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b3-non-claim-accounting-adjudication-v1",
+  "research_object": "adjudication of the 16 non-exact-agreement decisions from frozen D1-B2 Gap review",
+  "input_gap_count": 16,
+  "classification_disagreement_count": 8,
+  "reason_disagreement_count": 8,
+  "allowed_changes": [
+    "final_classification",
+    "final_reason_code",
+    "rationale"
+  ],
+  "forbidden_changes": [
+    "create_gap",
+    "delete_gap",
+    "split_gap",
+    "merge_gap",
+    "change_gap_id",
+    "change_gap_span",
+    "change_gap_text",
+    "change_case",
+    "change_anchor",
+    "boundary_repair",
+    "support_labeling"
+  ],
+  "output_contract": {
+    "one_isolated_case_per_request": true,
+    "bare_json_only": true,
+    "exact_gap_order_required": true,
+    "top_level_keys": [
+      "case_id",
+      "decisions"
+    ],
+    "decision_keys": [
+      "gap_id",
+      "final_classification",
+      "final_reason_code",
+      "rationale"
+    ]
+  },
+  "reason_codes": [
+    "formatting_only",
+    "list_delimiter",
+    "metadata_not_a_claim",
+    "non_assertive_connector",
+    "other_explained_non_claim",
+    "punctuation_only"
+  ],
+  "post_adjudication": {
+    "automatic_boundary_repair": false,
+    "coverage_qa_rerun": false,
+    "boundary_gold_freeze": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-d1-b-boundary-coverage-execution-v4",
+  "status": "frozen_not_started",
+  "object_of_study": "character_level_boundary_reference_accounting_under_frozen_policy_v1",
+  "adapter_sha256": "2c58c25092445f554c2bf6e328d007eb939c1b0895cd316be8b014900c35ce8e",
+  "artifact_lineage": {
+    "boundary_packet": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "coverage_policy": "e3d78c1ba231b6ed097e2e1ed580aef209e29080bd43b73f24016511dc6227b4",
+    "worklist": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+    "v4_manifest": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+    "v4_submission": "308e54406a3aa8d0ba8b8526d57497ca4ca7f4c9a776e2831e7e60b4f0e40298",
+    "v4_decision_log": "b045970c97230a2f95efa9af8f22a27cf9e4f507821571948aa7c2f087ab6dad",
+    "v4_execution_result": "016ec926a646e19358b90a71c0d016d9e9e64390b95cc30a50ca5ce64f0f8208",
+    "readiness_v5": "52e5c078a9df77569c21f463d1a38fbf6a4bba4664699f88b8f387e8d5f8c520"
+  },
+  "execution_contract": {
+    "provider_called": false,
+    "held_out_accessed": false,
+    "semantic_gap_classification": "forbidden",
+    "automatic_non_claim_labeling": "forbidden",
+    "submission_mutation": "forbidden",
+    "decision_log_deterministic_replay_required": true,
+    "write_once_outputs": true
+  },
+  "required_checks": [
+    "all_anchors_have_claims",
+    "span_validity",
+    "claim_text_exactness",
+    "same_anchor_non_overlap",
+    "nonblank_nonzero_claims",
+    "source_occurrence_replay",
+    "same_anchor_reviewer_provenance",
+    "unique_sequential_claim_ids",
+    "decision_log_replay",
+    "frozen_input_lineage",
+    "character_level_coverage",
+    "explicit_non_claim_accounting"
+  ],
+  "expected_output_paths": {
+    "coverage_report": "crates/eval/reports/phase7_3_3_d_boundary_coverage_report_v4.json",
+    "gap_worklist": "crates/eval/reports/phase7_3_3_d_boundary_coverage_gap_worklist_v1.json",
+    "readiness_v6": "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v6.json"
+  },
+  "coverage_qa_started": false,
+  "boundary_gold_frozen": false,
+  "support_review_allowed": false
+}

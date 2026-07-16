@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "result_id": "phase7.3.3-d-atomic-vs-candidate-paired-result-v1",
+  "status": "frozen_exploratory_design_case_diagnostic_result",
+  "study_type": "retrospective_design_case_diagnostic_comparison",
+  "reference_labels": [
+    "retrospective_design_case_diagnostic_comparison",
+    "not_human_gold_accuracy_validation",
+    "not_generalization_evidence"
+  ],
+  "artifact_sha256": {
+    "execution": "49edc8e9232b542b7176af2c78e41f5c03fd89e06650740241e33739da40b500",
+    "metrics": "51b5de6a3a6559643429bc97fafe6d06bd4a225bf9a0d79457f27c7fedb975e6",
+    "limitations": "c4505f5272db8ad615b605b7e4bf4c202ce9532182363fa93fbb59cd135cb172",
+    "execution_manifest": "1ef7fffb924b4ca14e941f090bdd3caab6d1b1f59c4801d937d71758c7aac34c"
+  },
+  "case_count": 10,
+  "claim_count": 118,
+  "primary_findings": {
+    "candidate_label_distribution": {
+      "supported": 0,
+      "partially_supported": 10,
+      "unsupported": 0,
+      "not_assessable": 0
+    },
+    "candidate_unique_label_count": 1,
+    "candidate_single_class_prediction_rate": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+    },
+    "atomic_vector_unique_state_count": 10,
+    "mixed_support_case_rate": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+    },
+    "unsupported_masking_case_rate": {
+      "numerator": 3,
+      "denominator": 10,
+      "value": 0.3
+    },
+    "non_supported_claim_localization_coverage": {
+      "numerator": 32,
+      "denominator": 32,
+      "value": 1.0
+    },
+    "non_supported_claim_count": 32,
+    "candidate_to_primary_aggregate_exact_agreement": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+    },
+    "candidate_to_primary_aggregate_ordinal_severity": {
+      "distance_sum": 0,
+      "assessable_pair_count": 10,
+      "maximum_possible_distance_sum": 20,
+      "value": 0.0
+    },
+    "traceability_completeness": {
+      "numerator": 118,
+      "denominator": 118,
+      "value": 1.0
+    }
+  },
+  "authorized_conclusions": [
+    "Atomic representation exposed claim-level support heterogeneity on the frozen design cases.",
+    "Atomic representation localized non-supported claims on the frozen design cases.",
+    "Candidate labels compressed multiple Atomic support states into one label on the frozen design cases."
+  ],
+  "forbidden_conclusions": [
+    "Atomic-level measurement is more accurate.",
+    "Atomic-level measurement is universally superior.",
+    "The findings generalize beyond the ten frozen design cases.",
+    "The Project Support Gold is Human Gold.",
+    "Runtime integration is ready or authorized."
+  ],
+  "sensitivity_analysis_is_secondary": true,
+  "accuracy_superiority_claim_authorized": false,
+  "generalization_claim_authorized": false,
+  "human_gold_claim_authorized": false,
+  "runtime_integration_authorized": false,
+  "provider_called": false,
+  "held_out_accessed": false
+}

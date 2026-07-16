@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_04-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_04",
+  "provider_envelope_sha256": "a65b6eb93494de24cc21566520acc346c8e3825726c54a42da95be52a53764e0",
+  "provider_content_sha256": "838a38b449b0c12a144eb17d575c22a820d0335367df46eec2a00c296b4a395c",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "dfc7ef6458b7a4cd09f7b1663383842f6953c709fd98b9d345e8ad49136e9f7c",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2",
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "All three experiences (px_04_support_1, px_04_support_2, px_04_counter_3) explicitly belong to the 'service_operations' domain, matching the claim scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "Both support cases (px_04_support_1, px_04_support_2) describe examining logs, memory, configuration, permissions, and network evidence, which successfully isolated specific root causes (memory limit, permission change).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcomes in px_04_support_1 and px_04_support_2 explicitly state that unrelated components were not replaced ('without replacing unrelated components', 'before a risky restore' implying avoidance).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample px_04_counter_3 demonstrates that when active corruption was present, routine diagnosis failed to prevent further damage, supporting the limitation that the pattern requires no active corruption.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "scope_preserved",
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The evidence covers 'service_operations' failures (cache, database), providing a grounded basis for predicting outcomes for new failures within the same defined scope.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "While two cases show success, predicting that the method 'will' isolate a root cause for any new failure overcommits certainty given the small sample size and existence of a counterexample scenario.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence shows this occurred in two instances, but projecting it as a guaranteed outcome ('without needing') for future cases exceeds the statistical weight of two positive examples.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved",
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The failure in px_04_counter_3 due to active corruption logically supports the predictive limitation that success is contingent on the absence of such corruption.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In both support cases, the root cause was identified directly from the specified evidence classes (logs, memory, config, permissions, network).",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The outcomes confirm that no unnecessary restarts or replacements occurred; specific fixes were applied instead.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-011",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The identified root causes (memory limit, filesystem permission) match the findings from the examined evidence classes in the support cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-012",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence explicitly states unrelated components were not replaced in the successful diagnosis scenarios.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-013",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The support cases serve as negative examples for this falsification condition; they followed the process and did NOT replace unrelated components, thus the falsification condition did not occur, validating the pattern.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-014",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The support cases successfully identified root causes, meaning the falsification condition (failing to identify) did not manifest, supporting the claim's validity.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-015",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_counter_3"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample shows that if active corruption is present, the standard process fails, reinforcing the falsification boundary that failure should not happen if corruption is absent.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-016",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The evidence shows resolutions were achieved by targeting indicated components, not by replacing unrelated ones, thus the falsification observable did not occur.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_04-claim-017",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_rationale": "In the support cases, the root cause was found within the evidence classes, meaning the falsification observable (root cause not found) did not occur.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_04",
+    "status": "completed",
+    "decision_count": 17
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_frr_017",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "c2cba74f9e976958762fb6b8cb6e66641f6520f5aeae887d7b17cbf4f5ad383e",
+  "content_sha256": "c546276d9983c6d41bcf5459ea169e9d52dbd3b728b77f3967f31438269c7b74",
+  "latency_ms": 6976.91060003126,
+  "usage": {
+    "prompt_tokens": 1214,
+    "completion_tokens": 94,
+    "total_tokens": 1308,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 2922,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3762,
+      "total_duration_ms": 3686,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_frr_017",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_frr_017-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence directly states that a later verified recovery is active after the historical failure was resolved, and separately notes that the historical failure record was explicitly resolved. Together this entails that the later verified recovery takes precedence over resolved historical failure evidence."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

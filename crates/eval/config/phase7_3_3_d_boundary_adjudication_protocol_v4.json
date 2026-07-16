@@ -1,0 +1,185 @@
+{
+  "schema_version": 4,
+  "protocol_id": "phase7.3.3-d1-a-boundary-adjudication-protocol-v4",
+  "status": "frozen_before_v4_contract_fixtures_and_execution",
+  "frozen_at": "2026-07-13T13:50:55.633819+00:00",
+  "supersedes_for_new_execution": "phase7.3.3-d1-a-boundary-adjudication-protocol-v3",
+  "preserves_v3_sha256": "be11ba0a3414a12e31d7baa7516ed02a61942e3dc16c156c9158c0da96f519bf",
+  "research_route": "route_b_operation_based_span_representation",
+  "research_routes_v2_sha256": "f42d12df44142902228153d94d8adee7501d312a6c3e5880acfd439a63084394",
+  "level2_failure_subtypes_v1_sha256": "80b198944c4f00d3f209689d65d1c4d2db53fb95667bfdf144a4f915ac6082d5",
+  "controlled_hypothesis": "Changing only adjudicator output representation from exact excerpt reproduction to deterministic operation-based span reconstruction may reduce serialization failure without changing Boundary semantics.",
+  "variable_control": {
+    "changed": [
+      "Provider output replaces source_excerpt and occurrence_index with boundary_operation.",
+      "The adapter deterministically reconstructs source_span, claim_text, and source_occurrence_index from frozen source and Reviewer spans."
+    ],
+    "preserved": [
+      "source anchors",
+      "Reviewer A submission",
+      "Reviewer E submission",
+      "frozen A/E Agreement",
+      "adjudication worklist",
+      "independent truth-evaluable assertion rule",
+      "non-overlap rule",
+      "anchor coverage rule",
+      "coordination split rule",
+      "Claim Type enum",
+      "material and claim_origin semantics",
+      "Boundary and Type rationale separation",
+      "reason-code enum",
+      "provider and model configuration",
+      "case isolation",
+      "first-content authority",
+      "no repair or retry after content"
+    ],
+    "explicit_limit": "Operation structuring is the treatment. A successful V4 would support representation sensitivity, not prove that V3 semantic decisions were correct."
+  },
+  "entry_gate": {
+    "v3_negative_result_frozen": true,
+    "v3_same_manifest_retry_forbidden": true,
+    "agreement_frozen_before_v4": true,
+    "worklist_byte_identical_to_v3": true,
+    "failure_subtypes_frozen_prospectively": true
+  },
+  "boundary_operation_contract": {
+    "offset_unit": "zero-based Unicode code-point offsets over the exact supplied source_text; end is exclusive",
+    "operations": [
+      {
+        "kind": "reuse_span",
+        "required_fields": [
+          "kind",
+          "reviewer_claim_ids"
+        ],
+        "rule": "One or more supplied same-anchor Reviewer Claim IDs whose source spans are byte-for-byte identical; the final span is that shared span."
+      },
+      {
+        "kind": "merge_spans",
+        "required_fields": [
+          "kind",
+          "reviewer_claim_ids"
+        ],
+        "rule": "Two or more supplied same-anchor Reviewer Claim IDs containing at least two distinct spans; the final span is [minimum start, maximum end)."
+      },
+      {
+        "kind": "slice_span",
+        "required_fields": [
+          "kind",
+          "reviewer_claim_ids",
+          "relative_start",
+          "relative_end"
+        ],
+        "rule": "One or more supplied same-anchor Reviewer Claim IDs with one identical base span; relative offsets select a non-empty proper subspan within that base span."
+      },
+      {
+        "kind": "new_span",
+        "required_fields": [
+          "kind",
+          "start",
+          "end",
+          "informed_by_reviewer_claim_ids"
+        ],
+        "rule": "A non-empty absolute source span used only when reuse, merge, or slice cannot express the decision; informed-by IDs must be supplied from the same anchor."
+      }
+    ],
+    "model_must_not_return": [
+      "source_excerpt",
+      "occurrence_index",
+      "source_span",
+      "claim_text"
+    ],
+    "adapter_derives": [
+      "source_span",
+      "claim_text",
+      "source_occurrence_index",
+      "source_reviewer_claim_ids",
+      "boundary_operation_kind"
+    ],
+    "no_excerpt_repair": true,
+    "no_offset_clamping": true,
+    "no_unknown_or_cross_anchor_ids": true,
+    "no_overlapping_final_spans": true,
+    "every_anchor_requires_final_claim": true
+  },
+  "final_claim_model_fields": [
+    "anchor_id",
+    "boundary_operation",
+    "claim_type",
+    "material",
+    "claim_origin",
+    "boundary_decision_rationale",
+    "type_decision_rationale",
+    "reason_codes"
+  ],
+  "normalized_claim_compatibility": {
+    "retains_v3_fields": true,
+    "adds_audit_field": "boundary_operation_kind",
+    "exact_claim_text_sliced_by_adapter": true
+  },
+  "claim_type_enum": [
+    "proposition",
+    "scope",
+    "prediction",
+    "causal",
+    "counterexample",
+    "limitation",
+    "falsifiability"
+  ],
+  "claim_origin_enum": [
+    "explicit",
+    "inferred",
+    "synthesized"
+  ],
+  "reason_code_enum": [
+    "coordination",
+    "nested_proposition",
+    "scope_modifier",
+    "temporal_qualifier",
+    "prediction_clause",
+    "evidence_attribution",
+    "causal_relation",
+    "counterexample_clause",
+    "limitation_clause",
+    "falsifiability_clause",
+    "quantifier_or_threshold",
+    "condition_or_exception",
+    "independent_truth_value",
+    "non_assertive_connector",
+    "other_explained"
+  ],
+  "adjudication_visibility": {
+    "source_anchor_text": true,
+    "reviewer_a_boundary_submission": true,
+    "reviewer_e_boundary_submission": true,
+    "agreement_component_diagnostics": true,
+    "evidence_bundle": false,
+    "support_labels": false,
+    "candidate_gold_or_silver": false,
+    "historical_judge": false,
+    "external_knowledge": false,
+    "held_out": false
+  },
+  "execution_governance": {
+    "first_returned_provider_content_per_case_authoritative": true,
+    "provider_content_sha256_before_parse": true,
+    "raw_provider_content_stored": false,
+    "automatic_representation_repair": false,
+    "automatic_semantic_repair": false,
+    "semantic_retry_after_content": false,
+    "transport_failure_before_content_may_resume_same_manifest": true,
+    "write_once_artifacts": true
+  },
+  "comparison_policy": {
+    "v3_route": "end_to_end_exact_excerpt",
+    "v4_route": "operation_based_representation",
+    "paired_case_comparison_allowed": true,
+    "pooled_success_rate_forbidden": true
+  },
+  "gates": {
+    "v4_execution_started": false,
+    "coverage_qa_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false,
+    "held_out_accessed": false
+  }
+}

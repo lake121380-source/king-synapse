@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "confirmatory-v1-atomic-mc-confirmatory-mi_test_frf_032",
+  "manifest_sha256": "5645d9f55edacf6fa0135bccce06f1d8c6384aa796e9e0120da9a46a957aaa98",
+  "arm": "atomic",
+  "case_id": "mc-confirmatory-mi_test_frf_032",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "provider_envelope_sha256": "95bf270106032789138dd5dc50cf77f29094ab76902398f555be049db6c28fa7",
+  "provider_content_sha256": "078363b3305ab94e630e0c773ff9651e766d882f59d0c145bba748f293e8a16f",
+  "decision": [
+    {
+      "unit_index": 1,
+      "start": 0,
+      "end": 85,
+      "source_excerpt": "An evidence item explicitly identifies the scenario category as reliability_conflict.",
+      "operation": "local_line_claim",
+      "label_code": 2,
+      "support_label": "unsupported"
+    },
+    {
+      "unit_index": 2,
+      "start": 86,
+      "end": 220,
+      "source_excerpt": "A source-specific background memory states: mora192 sela192 navi192 mora192 sela192 navi192: generic state with no verified authority.",
+      "operation": "local_line_claim",
+      "label_code": 0,
+      "support_label": "supported"
+    },
+    {
+      "unit_index": 3,
+      "start": 221,
+      "end": 515,
+      "source_excerpt": "No evidence item records the following source-specific observation: mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192: long horizon turn: unresolved failure evidence remains authoritative despite not being recently accessed.",
+      "operation": "local_line_claim",
+      "label_code": 0,
+      "support_label": "supported"
+    },
+    {
+      "unit_index": 4,
+      "start": 516,
+      "end": 890,
+      "source_excerpt": "The evidence includes mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192: review note: unsafe playbook was accessed recently but still repeats the failed approach.; therefore this one item conclusively determines the answer regardless of all other memories.",
+      "operation": "local_line_claim",
+      "label_code": 1,
+      "support_label": "partially_supported"
+    },
+    {
+      "unit_index": 5,
+      "start": 891,
+      "end": 1150,
+      "source_excerpt": "At turn 9, the evidence records: mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192: long horizon turn: unresolved failure evidence remains authoritative despite not being recently accessed.",
+      "operation": "local_line_claim",
+      "label_code": 0,
+      "support_label": "supported"
+    },
+    {
+      "unit_index": 6,
+      "start": 1151,
+      "end": 1479,
+      "source_excerpt": "The evidence records mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192 mora192 sela192 navi192: long horizon turn: unresolved failure evidence remains authoritative despite not being recently accessed.; this alone establishes the same result for every context and every future time.",
+      "operation": "local_line_claim",
+      "label_code": 1,
+      "support_label": "partially_supported"
+    }
+  ],
+  "resources": {
+    "latency_ms": 9112.349,
+    "prompt_tokens": 1304,
+    "completion_tokens": 23,
+    "total_tokens": 1327,
+    "cost_usd": null
+  },
+  "reference_visible": false,
+  "other_arm_visible": false,
+  "raw_provider_content_stored": false
+}

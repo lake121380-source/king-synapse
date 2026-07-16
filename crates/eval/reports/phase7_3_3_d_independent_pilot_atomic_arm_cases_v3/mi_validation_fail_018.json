@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_fail_018",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "8f41ab2b8232a153c52257f51a474e666a90970372fb21c7afd31cbe7d214f8e",
+  "content_sha256": "6e6be2ace7c12a2129615c16e4cc39b78979ac640d4734886e888c6e3b0a52f3",
+  "latency_ms": 8026.9330000155605,
+  "usage": {
+    "prompt_tokens": 1100,
+    "completion_tokens": 116,
+    "total_tokens": 1216,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 4681,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 5521,
+      "total_duration_ms": 5445,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_fail_018",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_fail_018-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence directly supports that there is verified failure evidence stating the approach caused harm and must not be repeated, and it also shows an older successful playbook recommending repetition. However, it does not explicitly establish the normative override rule that the failure evidence must override the prior successful playbook; that override is implied at most, not entailed as stated."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_fail_018-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

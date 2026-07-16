@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-022-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_08",
+  "adjudication_item_id": "support-adjudication-022",
+  "boundary_claim_id": "adjudicated-extract_08-claim-001",
+  "provider_envelope_sha256": "f5e4e0f4f43daf8d59bb922142c9d7f4bb41c2488902aacf4ea6b0f5ed575a27",
+  "provider_content_sha256": "8ec1dda15a8e9d39883e968dc821c12631d0f5121d2f81ed95f17f20a9235e4b",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "104f358ae17c8d7de37d5dce082713adf762b17f85a44d5c7e845034467ea6b8",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-022",
+    "case_id": "extract_08",
+    "boundary_claim_id": "adjudicated-extract_08-claim-001",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "The claim is narrowly framed as 'is associated with,' and the supplied evidence directly matches both components: staged reversible intervention with evidence collection before high-risk action led to stabilization and ruled out invasive action, and escalation was tied to independent confirmation plus worsening signs. This is a conservative synthesis of the observed outcomes rather than an unsupported universal causal claim.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_08-claim-001",
+      "cited_evidence_ids": [
+        "px_08_support_1",
+        "px_08_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_label": "supported",
+      "support_rationale": "Claim-001 synthesizes the actions and outcomes of px_08_support_1 (reversible intervention leading to stabilization/avoidance) and px_08_support_2 (escalation protocol linked to confirmation/worsening). The causal language 'is associated with' is supported by the observed outcomes in these independent sources without overclaiming universal causality."
+    },
+    "selected_frozen_decision_sha256": "2cfd4dc22ae10c6cb9af05afb2f7091fc7b6cd6472b38a81c5528a886a019034",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

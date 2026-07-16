@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-type-metadata-review-protocol-v1",
+  "status": "frozen_before_any_type_metadata_provider_call",
+  "object_of_study": "claim_role_and_claim_type_on_frozen_atomic_boundaries",
+  "boundary_reference_candidate_sha256": "e93abf01b54a6276a4f5ae2e370fd891548218a96022129a20030280e034b2ac",
+  "reviewed_fields": [
+    "claim_role",
+    "claim_type"
+  ],
+  "claim_role_enum": [
+    "anchor",
+    "boundary",
+    "exception",
+    "prediction",
+    "qualification",
+    "support"
+  ],
+  "claim_type_enum": [
+    "causal",
+    "condition",
+    "exception",
+    "falsifiability",
+    "limitation",
+    "prediction",
+    "proposition",
+    "scope"
+  ],
+  "review_design": {
+    "independent_reviewers": 2,
+    "models": {
+      "a": "gpt-4.1",
+      "b": "gemini-2.5-pro"
+    },
+    "case_isolation": true,
+    "both_manifests_frozen_before_reviewer_a": true
+  },
+  "representation": {
+    "model_copies_excerpt": false,
+    "model_references_frozen_claim_id": true,
+    "each_claim_exactly_once": true
+  },
+  "next_stage": "construct_multi_claim_successor_type_metadata_agreement_v1"
+}

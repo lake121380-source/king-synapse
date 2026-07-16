@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d-realized-identifiability-report-frame-v2",
+  "status": "PASS",
+  "manifest_sha256": "8315e9078313c0ae1cce86425031d528cd252db6d928bb9cfc6861f4f0009c26",
+  "metrics": {
+    "selected_candidate_count": 40,
+    "candidate_output_count": 40,
+    "candidate_decisions_per_selected_candidate": 1.0,
+    "atomic_unit_count": 240,
+    "atomic_unit_to_candidate_ratio": 6.0,
+    "atomic_multi_unit_candidate_rate": 1.0,
+    "atomic_whole_candidate_operation_rate": 0.0,
+    "atomic_local_span_operation_rate": 1.0,
+    "atomic_duplicate_span_rate": 0.0,
+    "missing_candidate_outputs": 0,
+    "duplicate_candidate_outputs": 0,
+    "missing_atomic_outputs": 0,
+    "duplicate_atomic_outputs": 0,
+    "reference_visible_during_arm_execution": false
+  },
+  "thresholds": {
+    "candidate_decisions_per_selected_candidate": 1,
+    "atomic_unit_to_candidate_ratio_min": 1.8,
+    "atomic_multi_unit_candidate_rate_min": 0.8,
+    "atomic_whole_candidate_operation_rate_max": 0.2,
+    "atomic_local_span_operation_rate_min": 0.8,
+    "atomic_duplicate_span_rate_max": 0.05,
+    "missing_candidate_outputs_allowed": 0,
+    "duplicate_candidate_outputs_allowed": 0,
+    "reference_visible_during_arm_execution": false
+  },
+  "checks": {
+    "candidate_decisions_per_selected_candidate": true,
+    "atomic_unit_to_candidate_ratio_min": true,
+    "atomic_multi_unit_candidate_rate_min": true,
+    "atomic_whole_candidate_operation_rate_max": true,
+    "atomic_local_span_operation_rate_min": true,
+    "atomic_duplicate_span_rate_max": true,
+    "missing_candidate_outputs_allowed": true,
+    "duplicate_candidate_outputs_allowed": true,
+    "reference_not_visible": true
+  },
+  "failed_checks": [],
+  "realized_representation_identifiable": true,
+  "localization_scoring_authorized": true,
+  "provider_calls": 0,
+  "confirmatory_opening_authorized": false
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-execution-protocol-v1",
+  "status": "frozen",
+  "stage": "pilot_reference_construction",
+  "research_object": "independent token-partition Atomic Claim and Support Reference",
+  "entry_gate": {
+    "selected_content_opened": true,
+    "reference_packets_frozen": true,
+    "arm_execution_started": false,
+    "confirmatory_dataset_opened": false
+  },
+  "reviewers": {
+    "a": {
+      "model_requested": "gpt-4.1"
+    },
+    "b": {
+      "model_requested": "qwen3.5-plus"
+    }
+  },
+  "representation": {
+    "candidate_tokenization": "unicode_regex_non_whitespace_tokens",
+    "segments_half_open_token_indices": true,
+    "all_tokens_partitioned_exactly_once": true,
+    "claim_text_reconstructed_deterministically": true,
+    "inter_segment_whitespace_accounted_by_adapter": true
+  },
+  "review_scope": {
+    "boundary": true,
+    "claim_type": true,
+    "materiality": true,
+    "support": true,
+    "citations": true,
+    "non_claim_accounting": true,
+    "candidate_reference_label_computed_by_adapter": true,
+    "material_error_spans_computed_by_adapter": true
+  },
+  "blinding": {
+    "other_reviewer_visible": false,
+    "route_a_gold_visible": false,
+    "historical_labels_visible": false,
+    "candidate_arm_visible": false,
+    "atomic_arm_visible": false
+  },
+  "failure": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "partial_success_not_reference": true
+  },
+  "provider": {
+    "base_url": "https://api.gpt.ge/v1",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "case_isolation": true
+  },
+  "runtime": {
+    "integration": false,
+    "memory_write": false
+  }
+}

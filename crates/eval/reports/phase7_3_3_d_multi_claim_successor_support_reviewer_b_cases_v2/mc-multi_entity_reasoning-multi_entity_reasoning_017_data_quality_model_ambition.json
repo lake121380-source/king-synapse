@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "12e7b5ebc33132e36193ff33d36d0c179c6c8c7951b688fa7dd9f04396e9b015",
+  "reviewer_id": "b",
+  "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+  "provider_envelope_sha256": "17296f6422e33dd33a89f2d7680a69e24a3d2dbceb17a86ad44ef4b2e349e250",
+  "provider_content_sha256": "c158b918c2003660a59ecdd2c764631f4c93b954e2c9deef6bb64957b66cc8a4",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "7ff2fc6301760c52b0bb7949e9d77187879a709bcdec317ed263047302db6471",
+  "normalized_decisions_sha256": "e99861ff6203a74a2fe03134fc1529598c00c9f6cfa882f02125fb2a70dfe7f6",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 2 exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0000",
+      "cited_evidence_indices": [],
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "No evidence establishes the imperative to upgrade the model immediately.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 4 exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "partially_supported",
+      "evidence_citation_mask": "0101",
+      "cited_evidence_indices": [
+        2,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-002",
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-004"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Evidence shows weak data quality and successful fix, implying a fix is beneficial, but does not explicitly establish the conditional requirement to fix before upgrading.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 1 exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim text matches evidence item 3 exactly, which asserts the causal link.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_017_data_quality_model_ambition",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

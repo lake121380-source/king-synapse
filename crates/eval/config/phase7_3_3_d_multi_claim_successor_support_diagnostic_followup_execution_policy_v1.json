@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-support-diagnostic-followup-execution-policy-v1",
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "invalid_content_authoritative_negative": true,
+    "post_content_same_version_retry_allowed": false,
+    "transport_failure_before_content_resume_same_manifest": true
+  },
+  "execution_controls": {
+    "one_isolated_claim_per_request": true,
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 3000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "timeout_seconds": 600
+  },
+  "minimal_authorization": {
+    "support_label_change_allowed": false,
+    "diagnostic_classification_only": true
+  },
+  "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY"
+}

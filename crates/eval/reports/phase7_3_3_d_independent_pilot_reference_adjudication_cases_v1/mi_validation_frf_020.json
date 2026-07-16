@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "manifest_sha256": "9f3dbde7011894456bb73e71986a8d139e5d0c652cc7a049d5613e5becbea0bf",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "ca4cbe6e3313632486aa6d40f778e12b63b4b22a0dc02a0507df4453b72403d2",
+  "content_sha256": "a2357a4e55fe347f96a7c4ec6dfcf692868a1d564407a5db87d1ea3501c5527c",
+  "usage": {
+    "prompt_tokens": 1503,
+    "completion_tokens": 126,
+    "total_tokens": 1629,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1373,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2213,
+      "total_duration_ms": 2137,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "result": {
+    "case_id": "mi_validation_frf_020",
+    "adjudication_item_id": "independent-pilot-reference-adjudication-003",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "Evidence 06 directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and Evidence 01 identifies a recently accessed unsafe playbook that repeats the failed approach. Under conservative entailment, this supports the selection rule that unresolved failure evidence takes precedence over the recently accessed unsafe playbook. Option 2 misreads Evidence 01; it does not imply the unsafe playbook prevails.",
+    "status": "selected_frozen_reviewer_decision",
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "support_label": "supported",
+      "material": true,
+      "claim_type": "selection_rule",
+      "cited_evidence_ids": [
+        "mi_validation_frf_020-evidence-06",
+        "mi_validation_frf_020-evidence-01"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "rationale": "The candidate asserts that unresolved failure evidence must take precedence over a recently accessed unsafe playbook. Evidence 06 directly states that unresolved failure evidence remains authoritative even though it is not recently accessed, establishing its priority. Evidence 01 confirms that the unsafe playbook was recently accessed but continues to repeat the failed approach, supporting the comparative context. Together, these show that unresolved failure evidence is the selection rule over a recently accessed unsafe playbook, fully supporting the claim.",
+      "confidence": "high"
+    },
+    "boundary_mutation_performed": false,
+    "candidate_mutation_performed": false,
+    "evidence_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_frozen_decision_sha256": "3f5d9731789e984a13bccf0ea90c1b8c5a74028daaf5ed5152f7be08f7c21cba"
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "schema_version": 3,
+  "case_id": "extract_02",
+  "status": "completed",
+  "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+  "provider_envelope_sha256": "b5c3aa2599798031de1df90ebef6a2549bb3711eebbc638faceaa9cbe78ea800",
+  "provider_content_sha256": "d3183807238261d4a4c0a38f4bcc0c082db6dc580ac2a848bb48aed5deaefc79",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "5036aac6abbc7d4fa2625f55a74694a6ea3fb7e6c4245ef021559004872c658c",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-001",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "source_span": {
+        "start": 0,
+        "end": 26
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In customer support queues",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_02::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate span because it states the domain context independently from the causal assertions that follow.",
+      "type_decision_rationale": "This functions as a contextual domain restriction rather than asserting an outcome or relation by itself.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_02-claim-001"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-002",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "source_span": {
+        "start": 28,
+        "end": 170
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_02::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated from the introductory context and from the contrasting while-clause because this is one complete causal assertion with its own truth value.",
+      "type_decision_rationale": "The span asserts that one practice ensures an outcome, which is a causal relation.",
+      "reason_codes": [
+        "causal_relation",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-001",
+        "reviewer-e-extract_02-claim-002"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-003",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "source_span": {
+        "start": 178,
+        "end": 269
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_02::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a distinct span because the while-linked clause expresses a separate causal assertion that can be evaluated independently from the prior clause.",
+      "type_decision_rationale": "The span states that a labeling practice can cause an adverse outcome, making it causal.",
+      "reason_codes": [
+        "coordination",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-002",
+        "reviewer-e-extract_02-claim-003"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-004",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "a62889cbc587254fc226c9ee61c318cd5e3c992c8356346ec3210592a0ddf7ee",
+      "source_span": {
+        "start": 0,
+        "end": 199
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "When a customer support queue labels cases by customer impact and time sensitivity before assignment, high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_02::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one span because the when-clause supplies the condition for a single predictive outcome, and the full conditional statement is one atomic prediction.",
+      "type_decision_rationale": "This states what will occur under a specified condition, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-003",
+        "reviewer-e-extract_02-claim-004",
+        "reviewer-e-extract_02-claim-005"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-005",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "4b8921a381974effdf86eafce37c7b50dcfce708eee5c132d669ee8fad7ef7ef",
+      "source_span": {
+        "start": 0,
+        "end": 147
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels, with the highest combined score resolved first.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_02::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one span because the second phrase operationalizes the first rather than introducing a separate independently evaluable assertion.",
+      "type_decision_rationale": "The sentence describes the expected observable ordering outcome, which is predictive in form.",
+      "reason_codes": [
+        "prediction_clause",
+        "nested_proposition",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-004",
+        "reviewer-e-extract_02-claim-006"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-006",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "499b3ca8791efee3092716545d886ae4e14ca9eb3246162c6a54502f0bae67fc",
+      "source_span": {
+        "start": 0,
+        "end": 172
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_02::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one span because the quantitative threshold and ordering condition jointly form a single success criterion rather than separable assertions.",
+      "type_decision_rationale": "This sets an expected measurable outcome threshold, which is best treated as a prediction statement.",
+      "reason_codes": [
+        "prediction_clause",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-005",
+        "reviewer-e-extract_02-claim-007"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-007",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "2f2aef78a6c49326802d7299a873959f091e84aedba7a822f1356ff6b65f3599",
+      "source_span": {
+        "start": 0,
+        "end": 171
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_02::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one span because the if-clause and consequent together define one complete falsification condition, not separate standalone assertions.",
+      "type_decision_rationale": "The statement specifies what observation would falsify the pattern, which is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-006",
+        "reviewer-e-extract_02-claim-008"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_02-claim-008",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "39637bdb0ca74786044f092df64ee8b41077ff6576b598488a531cca1d7c1a15",
+      "source_span": {
+        "start": 0,
+        "end": 98
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_02::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Merged as one span because the later resolution predicate depends on the same subject and together the coordinated parts describe a single falsifying observable event.",
+      "type_decision_rationale": "This gives the observable event that would count against the pattern, so it is a falsifiability claim.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_02-claim-007",
+        "reviewer-e-extract_02-claim-009",
+        "reviewer-e-extract_02-claim-010"
+      ]
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_02",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 8,
+    "provider_content_sha256": "d3183807238261d4a4c0a38f4bcc0c082db6dc580ac2a848bb48aed5deaefc79"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

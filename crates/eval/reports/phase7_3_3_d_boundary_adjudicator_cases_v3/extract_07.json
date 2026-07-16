@@ -1,0 +1,858 @@
+{
+  "schema_version": 3,
+  "case_id": "extract_07",
+  "status": "completed",
+  "manifest_sha256": "7f4656e140f66f461612d638a27a18d8eb3d3dbf545a62cd5f7da53369aa788f",
+  "provider_envelope_sha256": "518d8315aa6ecbc76e375a0b7eb5de8bce457961d035850379e55ed2bff87d3c",
+  "provider_content_sha256": "531c973d72c50b6f51de0b5b4e6e5bae2a0b18a89dddb89674c1680342040855",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "b8fcc259627ba8908c0813d0ed0a0168ba519eda18f52bc5bcead0bcf2964f68",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-001",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 0,
+        "end": 20
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In incident response",
+      "claim_type": "scope",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate non-overlapping span because it sets the domain for the following assertions and is independently evaluable as applicability scope.",
+      "type_decision_rationale": "This span specifies the context in which the subsequent assertions apply, so it is a scope claim.",
+      "reason_codes": [
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_07-claim-001"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-002",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 22,
+        "end": 147
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split at the coordination because prevention of full incidents and avoidance of false stops are separable outcomes that can take different truth values.",
+      "type_decision_rationale": "The span asserts that a specified kind of stop condition brings about an outcome, which is causal.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "causal_relation"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-001",
+        "reviewer-e-extract_07-claim-002"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-003",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 152,
+        "end": 169
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "avoid false stops",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "inferred",
+      "boundary_decision_rationale": "Kept as a separate coordinated outcome because it is an independently testable assertion distinct from prevention of full incidents.",
+      "type_decision_rationale": "Although the subject is elided, this span functions as the second caused outcome in the sentence, so it is causal.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "causal_relation"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-001",
+        "reviewer-e-extract_07-claim-003"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-004",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 179,
+        "end": 242
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "noisy metrics weakly related to harm cause repeated false stops",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the later coordinated effects because causing repeated false stops is independently evaluable from causing delivery delays and lacking incident reduction.",
+      "type_decision_rationale": "The span states that one kind of metric causes a particular negative outcome, which is causal.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "causal_relation"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-002",
+        "reviewer-e-extract_07-claim-004"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-005",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 247,
+        "end": 262
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "delivery delays",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "inferred",
+      "boundary_decision_rationale": "Retained as its own coordinated outcome because it can be true or false independently of the adjacent effects in the clause.",
+      "type_decision_rationale": "This span is presented as an additional outcome of the same cause, so it is causal.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "causal_relation"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-002",
+        "reviewer-e-extract_07-claim-005"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-006",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "b215435ea3981281c25ab2b71ee2dabf774ed7c14090e3c487ebc69610f7af5a",
+      "source_span": {
+        "start": 263,
+        "end": 289
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "without incident reduction",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_07::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept separate because absence of incident reduction is a distinct outcome qualifier that can differ in truth from the other listed outcomes.",
+      "type_decision_rationale": "This span expresses an outcome associated with the stated cause, framed as lack of a beneficial effect, so it is causal.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "causal_relation"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-002",
+        "reviewer-e-extract_07-claim-006"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-007",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "833ba94949c4c355fb81ce6f89a460e2f6063c560d2e566f468023f2244a2ef9",
+      "source_span": {
+        "start": 3,
+        "end": 116
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "a rollout in incident_response defines an automatic pause based on an error-rate ceiling before traffic increases",
+      "claim_type": "scope",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated from the predicted outcomes because the if-clause states the condition under which the later predictions are evaluated.",
+      "type_decision_rationale": "This span provides the conditional setup governing the prediction, so it is scope.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-003",
+        "reviewer-e-extract_07-claim-007"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-008",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "833ba94949c4c355fb81ce6f89a460e2f6063c560d2e566f468023f2244a2ef9",
+      "source_span": {
+        "start": 123,
+        "end": 172
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the rollout will stop at a low traffic percentage",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split at the conjunction because stopping at a low traffic percentage and preventing a full outage are distinct predicted outcomes with separate truth values.",
+      "type_decision_rationale": "The span states a future/expected outcome under the given condition, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-003",
+        "reviewer-e-extract_07-claim-008"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-009",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "833ba94949c4c355fb81ce6f89a460e2f6063c560d2e566f468023f2244a2ef9",
+      "source_span": {
+        "start": 177,
+        "end": 198
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "prevent a full outage",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "inferred",
+      "boundary_decision_rationale": "Kept as a separate coordinated predicted outcome because it can be assessed independently from the rollout stopping at low traffic.",
+      "type_decision_rationale": "This span expresses an additional expected outcome of the conditional statement, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-003",
+        "reviewer-e-extract_07-claim-009"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-010",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "eb1521e73e1d8f36508edcaa91499e2183fa61839129ade487489c4bd25ad402",
+      "source_span": {
+        "start": 0,
+        "end": 30
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Traffic pauses at or below 20%",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_07::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the conjunction because the traffic pause threshold and the absence of a full outage are separately truth-evaluable observables.",
+      "type_decision_rationale": "Within a prediction observable field, this span states an expected observable outcome, so prediction is the best type.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause",
+        "quantifier_or_threshold"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-004",
+        "reviewer-e-extract_07-claim-010"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-011",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "eb1521e73e1d8f36508edcaa91499e2183fa61839129ade487489c4bd25ad402",
+      "source_span": {
+        "start": 35,
+        "end": 56
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "no full outage occurs",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_07::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept separate because it is the second conjunct and can differ in truth from the traffic-pause observation.",
+      "type_decision_rationale": "This span states an expected observable outcome, so it is a prediction claim.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-004",
+        "reviewer-e-extract_07-claim-011"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-012",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "2631a746526b616d1d52048208c462e7ec3eb6b8de28d958ad457038d664de24",
+      "source_span": {
+        "start": 0,
+        "end": 69
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The rollout pauses automatically at the predefined error-rate ceiling",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the conjunction because the automatic pause and avoidance of outage are distinct success conditions that can be independently checked.",
+      "type_decision_rationale": "This is a stated criterion expected to hold for predictive success, so it is typed as prediction.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-005",
+        "reviewer-e-extract_07-claim-012"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-013",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "2631a746526b616d1d52048208c462e7ec3eb6b8de28d958ad457038d664de24",
+      "source_span": {
+        "start": 75,
+        "end": 106
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the system avoids a full outage",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate conjunct because outage avoidance is independently truth-evaluable from whether the rollout pauses automatically.",
+      "type_decision_rationale": "This span states the second expected success criterion, so prediction is the appropriate type.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-005",
+        "reviewer-e-extract_07-claim-013"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-014",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-02",
+      "source_field": "prediction_statement",
+      "source_index": 1,
+      "source_text_sha256": "be98bef0f7930a4c6ab1e6792dee52794efa6ffb8011472037e88b424af68822",
+      "source_span": {
+        "start": 3,
+        "end": 106
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "an operations change defines automatic stop conditions based on queue depth and recovery-time deadlines",
+      "claim_type": "scope",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated from the outcome clause because it is the if-condition establishing when the prediction applies.",
+      "type_decision_rationale": "The span defines the condition governing the predicted result, so it is scope.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-006",
+        "reviewer-e-extract_07-claim-014"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-015",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_statement-02",
+      "source_field": "prediction_statement",
+      "source_index": 1,
+      "source_text_sha256": "be98bef0f7930a4c6ab1e6792dee52794efa6ffb8011472037e88b424af68822",
+      "source_span": {
+        "start": 113,
+        "end": 187
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the change will reverse before backlog recovery exceeds the allowed window",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_07::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one atomic assertion because the temporal qualifier is integral to the single predicted reversal event rather than a separable claim.",
+      "type_decision_rationale": "This span expresses the predicted outcome under the stated condition, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "temporal_qualifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-006",
+        "reviewer-e-extract_07-claim-015"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-016",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_observable-02",
+      "source_field": "prediction_observable",
+      "source_index": 1,
+      "source_text_sha256": "0d55598d9e23ab4c06489219708d3e7480b6cdf0b93b8bea3faeea3b33e07dbf",
+      "source_span": {
+        "start": 0,
+        "end": 77
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The change is reversed before the recovery time exceeds the overnight window.",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_07::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as one span because the reversal and its before-deadline qualifier form one atomic assertion and there is no coordination requiring a split.",
+      "type_decision_rationale": "Although phrased observably, it states the expected outcome of a prediction, so it is typed as prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "temporal_qualifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-007",
+        "reviewer-e-extract_07-claim-016"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-017",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "source_field": "prediction_success_criterion",
+      "source_index": 1,
+      "source_text_sha256": "364cfde1c9e894a0a9e7a0995dc2dd097b4ab95579732f0d6150763fdae62e5e",
+      "source_span": {
+        "start": 0,
+        "end": 27
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The automatic stop triggers",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the conjunction because triggering the stop and recovering within time are separate success criteria with independent truth values.",
+      "type_decision_rationale": "This is one expected success condition for the prediction, so it is typed as prediction.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-008",
+        "reviewer-e-extract_07-claim-017"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-018",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "source_field": "prediction_success_criterion",
+      "source_index": 1,
+      "source_text_sha256": "364cfde1c9e894a0a9e7a0995dc2dd097b4ab95579732f0d6150763fdae62e5e",
+      "source_span": {
+        "start": 32,
+        "end": 77
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the system recovers within the specified time",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_07::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as a separate conjunct because timely recovery can be evaluated independently from whether the stop triggers.",
+      "type_decision_rationale": "This span states the second expected success condition, so prediction is the appropriate type.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause",
+        "temporal_qualifier"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-008",
+        "reviewer-e-extract_07-claim-018"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-019",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 3,
+        "end": 100
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "an automated stop condition uses a directly harmful, low-noise metric with a predefined threshold",
+      "claim_type": "scope",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated because this if-clause condition sets the circumstances under which the falsification outcome is considered, distinct from the observable failure conditions and conclusion.",
+      "type_decision_rationale": "This span provides the governing condition for the falsification statement, so it is scope.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-019"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-020",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 106,
+        "end": 141
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the rollout experiences false stops",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the longer but-clause because false stops are one distinct observable component of the falsifying condition and can be separately assessed from delivery delay and lack of incident reduction.",
+      "type_decision_rationale": "This is an observable condition whose occurrence contributes to falsifying the pattern, so it is typed as falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-020"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-021",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 147,
+        "end": 161
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "delay delivery",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "inferred",
+      "boundary_decision_rationale": "Kept separate because delivery delay is a distinct component within the falsifying observation and can vary independently from false stops and incident reduction.",
+      "type_decision_rationale": "This span states another observable condition that contributes to falsification, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-021"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-022",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 162,
+        "end": 192
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "without any incident reduction",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Retained as its own component because lack of incident reduction is an independently testable part of the falsifying condition.",
+      "type_decision_rationale": "The span specifies an additional condition required for falsification, so it is typed as falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-022"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-023",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "03ebe3393fc8a779168a684106b1116fe9a8e274168067a7b8f39bd9231405d3",
+      "source_span": {
+        "start": 199,
+        "end": 223
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the pattern is falsified",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_07::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept as the standalone conclusion of the conditional because it is the atomic falsification result, distinct from the preceding conditions.",
+      "type_decision_rationale": "This span directly states the falsification outcome, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-023"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-024",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "source_span": {
+        "start": 0,
+        "end": 17
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "False stops occur",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_07::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Split from the conjunction because occurrence of false stops is independently evaluable from whether incidents are reduced and from the despite-condition about the metric.",
+      "type_decision_rationale": "This is an observable event presented as part of a falsification criterion, so it is typed as falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-010",
+        "reviewer-e-extract_07-claim-024"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-025",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "source_span": {
+        "start": 22,
+        "end": 59
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "no reduction in incidents is observed",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_07::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Kept separate because it is the second independently testable observable in the falsification criterion.",
+      "type_decision_rationale": "This span states another observable condition relevant to falsifying the pattern, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-010",
+        "reviewer-e-extract_07-claim-025"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-026",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "source_span": {
+        "start": 69,
+        "end": 102
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "the metric being directly harmful",
+      "claim_type": "scope",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_07::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Separated from the observables because the despite-clause provides a qualifying condition for relevance rather than another event outcome.",
+      "type_decision_rationale": "This span sets a qualifying condition under which the falsification observable is interpreted, so it is scope.",
+      "reason_codes": [
+        "condition_or_exception",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-010",
+        "reviewer-e-extract_07-claim-026"
+      ]
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_07-claim-027",
+      "case_id": "extract_07",
+      "response_sha256": "826a301eb9ed89b0ea3df006a2c042b546a37419a4255c984fba586c6b24b113",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "71be521ad8ce67c6528c5fba6e62c63aab2ff7843a1bf70aca28558d6321c99e",
+      "source_span": {
+        "start": 107,
+        "end": 116
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "low-noise",
+      "claim_type": "scope",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_07::falsification_observable",
+      "material": true,
+      "claim_origin": "inferred",
+      "boundary_decision_rationale": "Kept as a separate coordinated property because it is an additional qualifying condition that can be evaluated independently from direct harmfulness.",
+      "type_decision_rationale": "This span contributes a second qualifier to the despite-condition, so it is best treated as scope.",
+      "reason_codes": [
+        "coordination",
+        "scope_modifier",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_07-claim-010",
+        "reviewer-e-extract_07-claim-027"
+      ]
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_07",
+    "status": "completed",
+    "anchor_count": 9,
+    "claim_count": 27,
+    "provider_content_sha256": "531c973d72c50b6f51de0b5b4e6e5bae2a0b18a89dddb89674c1680342040855"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

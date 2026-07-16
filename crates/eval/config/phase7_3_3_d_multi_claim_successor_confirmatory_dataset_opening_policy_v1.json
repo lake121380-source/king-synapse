@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-confirmatory-dataset-opening-policy-v1",
+  "status": "frozen_before_opening_gate_evaluation",
+  "required_checks": [
+    "inventory_80",
+    "eligible_at_least_40",
+    "selected_exactly_40",
+    "four_per_category",
+    "zero_prior_phase7_overlap",
+    "selection_content_sealed",
+    "preregistration_frozen",
+    "same_arms_and_model",
+    "authoritative_power_gate_lineage"
+  ],
+  "on_pass": "open_selected_confirmatory_dataset_v1",
+  "on_failure": "blocked_confirmatory_inventory_opening_gate_v1_authoritative_negative",
+  "opening_scope_on_pass": "selected_40_only",
+  "unselected_content_opening": false,
+  "post_open_replacement": false,
+  "provider_call_before_open_and_reference_freeze": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

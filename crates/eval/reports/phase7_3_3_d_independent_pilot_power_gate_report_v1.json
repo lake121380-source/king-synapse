@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-independent-pilot-power-gate-report-v1",
+  "status": "power_infeasible_current_single_claim_frame",
+  "manifest_sha256": "3ad02c8ae45d8e9b8f4da8070d85558436851a3f1a7db8852fa9d43f85fcd814",
+  "power_method_sha256": "cdc7335873d285d110d36c33c213e8316a62ef002a0e4f0ec0964b7a9d9596e8",
+  "analysis_report_sha256": "852c755bf46569cc400272d1c4f59ad232f79622b2dfccba3fa2aeaa88bb9453",
+  "target_confirmatory_estimand": "general_atomic_diagnostic_localization_superiority_over_candidate_level",
+  "identifiability_requirement_results": {
+    "reference_contains_multi_claim_or_localizable_within_candidate_structure": false,
+    "atomic_arm_contains_finer_than_whole_candidate_operations": false,
+    "target_localization_endpoint_non_degenerate": false,
+    "paired_candidate_clusters_available": true
+  },
+  "target_estimand_identifiable": false,
+  "observed_pilot_exact_effect_atomic_minus_candidate": 0.0,
+  "observed_exact_effect_used_for_target_power": false,
+  "reason": "The sealed Pilot has one full-Candidate reference claim per case and all Atomic-arm operations are whole_candidate_claim. Candidate and Atomic localization representations are therefore structurally equivalent for the intended general localization estimand.",
+  "scientific_interpretation": "The current frame supports semantic and representation feasibility analysis only. It cannot identify or power a confirmatory claim of general Atomic diagnostic-localization superiority.",
+  "required_successor_design": {
+    "new_frame_required": true,
+    "frame_properties": [
+      "multiple independently adjudicable claims within at least some Candidates",
+      "pre-frozen diagnostic heterogeneity including supported and material-error regions",
+      "Atomic operations capable of selecting claim-local spans rather than only whole_candidate_claim",
+      "independent Reference construction repeated without Route A Gold or arm visibility"
+    ],
+    "same_pilot_frame_reuse_for_target_power_authorized": false
+  },
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "fixture_suite_id": "phase7.3.3-d4-support-gold-freeze-contract-fixtures-v1",
+  "status": "all_contract_fixtures_passed",
+  "protocol_sha256": "461192b33636c5e8377d057e9c6792bb663abc9658066bdf6709a379ebe4d33c",
+  "adapter_sha256": "fc9a52c9c00c982000edab51927d26d05469e1e86820a1ee43b9e3d07d150423",
+  "fixture_count": 11,
+  "passed_count": 11,
+  "failed_count": 0,
+  "fixtures": [
+    {
+      "fixture_id": "exact_agreement_accepted",
+      "expected": "accept",
+      "actual": "accept",
+      "observed_error": null,
+      "passed": true
+    },
+    {
+      "fixture_id": "diagnostic_only_disagreement_with_same_label_accepted",
+      "expected": "accept",
+      "actual": "accept",
+      "observed_error": null,
+      "passed": true
+    },
+    {
+      "fixture_id": "valid_adjudicated_selection_accepted",
+      "expected": "accept",
+      "actual": "accept",
+      "observed_error": null,
+      "passed": true
+    },
+    {
+      "fixture_id": "missing_adjudication_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "agreement_adjudication_partition_mismatch:missing=['c1']:unexpected=[]",
+      "passed": true
+    },
+    {
+      "fixture_id": "defer_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "defer_or_nonselected_adjudication_rejected:c1",
+      "passed": true
+    },
+    {
+      "fixture_id": "third_or_new_label_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "new_or_third_label_not_allowed:c1",
+      "passed": true
+    },
+    {
+      "fixture_id": "duplicate_claim_id_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "duplicate_boundary_claim_id",
+      "passed": true
+    },
+    {
+      "fixture_id": "boundary_order_drift_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "reviewer_a_boundary_order_drift",
+      "passed": true
+    },
+    {
+      "fixture_id": "selected_decision_replay_mismatch_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "selected_decision_replay_mismatch:c1",
+      "passed": true
+    },
+    {
+      "fixture_id": "held_out_flag_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "observed_error": "held_out_access_rejected",
+      "passed": true
+    },
+    {
+      "fixture_id": "complete_partition_accepted",
+      "expected": "accept",
+      "actual": "accept",
+      "observed_error": null,
+      "passed": true
+    }
+  ],
+  "provider_called": false,
+  "held_out_accessed": false
+}

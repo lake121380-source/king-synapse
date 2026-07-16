@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b-independent-support-review-execution-v2",
+  "stage": "Phase 7.3.3-D1 Independent Support Review Execution",
+  "research_object": "independent evidence support classification for immutable Boundary Gold Claims",
+  "entry_gate": {
+    "boundary_gold_frozen": true,
+    "boundary_claim_count": 118,
+    "support_packets_frozen": true,
+    "lineage_correction_completed": true,
+    "support_review_execution_authorized": true,
+    "support_gold_frozen": false,
+    "held_out_accessed": false
+  },
+  "reviewers": {
+    "a": {
+      "model_requested": "gpt-4.1"
+    },
+    "b": {
+      "model_requested": "qwen3.5-plus"
+    }
+  },
+  "independence": {
+    "case_isolation": true,
+    "reviewer_packet_isolation": true,
+    "other_reviewer_submission_visible": false,
+    "candidate_gold_or_silver_visible": false,
+    "judge_outputs_visible": false,
+    "boundary_adjudication_rationales_visible": false,
+    "held_out_visible": false
+  },
+  "output_contract": {
+    "one_decision_per_frozen_boundary_claim": true,
+    "claim_order_must_match_packet": true,
+    "required_top_level_keys": [
+      "case_id",
+      "decisions"
+    ],
+    "required_decision_keys": [
+      "annotation_confidence",
+      "boundary_claim_id",
+      "cited_evidence_ids",
+      "reason_codes",
+      "support_label",
+      "support_rationale"
+    ],
+    "support_label_enum": [
+      "not_assessable",
+      "partially_supported",
+      "supported",
+      "unsupported"
+    ],
+    "reason_code_enum": [
+      "causal_leap",
+      "central_proposition_unsupported",
+      "certainty_escalation",
+      "conservative_entailment",
+      "counterexample_ignored",
+      "counterexample_preserved",
+      "direct_evidence_match",
+      "insufficient_evidence",
+      "prediction_overcommitment",
+      "reasonable_bridging_inference",
+      "scope_expansion",
+      "scope_preserved",
+      "unsupported_detail"
+    ],
+    "confidence_enum": [
+      "high",
+      "low",
+      "medium"
+    ],
+    "same_case_citations_only": true,
+    "citations_may_be_empty": true,
+    "reason_codes_may_be_empty": true,
+    "duplicates_forbidden": true,
+    "nonempty_rationale": true,
+    "boundary_mutation_forbidden": true
+  },
+  "provider_contract": {
+    "provider": "api.gpt.ge",
+    "base_url": "https://api.gpt.ge/v1",
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "request_configuration_change_from_v1": "credential_env_name_only",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 16000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "first_provider_content_authoritative": true,
+    "no_silent_retry_after_any_failure": true,
+    "envelope_and_content_hashes_recorded_before_content_validation": true,
+    "raw_provider_response_stored": false
+  },
+  "model_identity_canonicalization": {
+    "provider_prefix_allowed": true,
+    "gpt_4_1_dated_snapshot_allowed": true,
+    "canonical_family_must_equal_requested_model": true
+  },
+  "completion_gate": {
+    "case_count": 10,
+    "decision_count": 118,
+    "no_missing_duplicate_unknown_ids": true,
+    "all_fields_valid": true
+  },
+  "failure_policy": {
+    "all_transport_identity_parse_schema_citation_accounting_failures_first_class": true,
+    "same_frozen_version_retry_forbidden": true,
+    "other_reviewer_may_still_execute": true,
+    "agreement_requires_two_completed_submissions": true
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": 4,
+  "report_id": "phase7.3.3-d1-a-boundary-adjudicator-contract-fixtures-v4",
+  "status": "completed_offline_before_manifest_and_execution",
+  "adapter_sha256": "09f37c7e3b0d65451c62882bf35daeaa789ae17f0041ddecaaaae4408d79c12e",
+  "prompt_sha256": "7d3eaec78cb95399eb8de71802c89e8845eeb7be006d41962c8db072e9781eca",
+  "adjudication_protocol_v4_sha256": "c9da31ce95ee0cbdbe640bb4320bb67c4746f484eed881f19c048e1cb7818041",
+  "level2_failure_subtypes_v1_sha256": "80b198944c4f00d3f209689d65d1c4d2db53fb95667bfdf144a4f915ac6082d5",
+  "worklist_sha256": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+  "fixture_count": 14,
+  "passed_fixture_count": 14,
+  "all_fixtures_passed": true,
+  "fixtures": [
+    {
+      "fixture_id": "reuse_span_derives_exact_text",
+      "expected": "pass",
+      "actual": "pass"
+    },
+    {
+      "fixture_id": "merge_spans_derives_envelope",
+      "expected": "pass",
+      "actual": "pass"
+    },
+    {
+      "fixture_id": "slice_span_derives_proper_subspan",
+      "expected": "pass",
+      "actual": "pass"
+    },
+    {
+      "fixture_id": "new_span_derives_exact_source_slice",
+      "expected": "pass",
+      "actual": "pass"
+    },
+    {
+      "fixture_id": "model_provided_source_excerpt_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "claim_fields_invalid:1"
+    },
+    {
+      "fixture_id": "unknown_reviewer_id_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "reviewer_claim_ids_unknown_or_cross_anchor:fixture-reuse:1:invented-reviewer-id"
+    },
+    {
+      "fixture_id": "cross_anchor_reviewer_id_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "reviewer_claim_ids_unknown_or_cross_anchor:fixture-cross-a:1:reviewer-a-fixture-1-0"
+    },
+    {
+      "fixture_id": "merge_identical_spans_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "merge_spans_requires_two_distinct_spans:fixture-reuse:1"
+    },
+    {
+      "fixture_id": "slice_out_of_range_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "slice_span_offsets_out_of_range:fixture-slice:1"
+    },
+    {
+      "fixture_id": "slice_full_span_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "slice_span_must_be_proper_subspan:fixture-slice:1"
+    },
+    {
+      "fixture_id": "new_span_out_of_range_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "new_span_offsets_out_of_range:fixture-new:1"
+    },
+    {
+      "fixture_id": "overlapping_final_spans_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "overlapping_claim_spans:fixture-overlap:2"
+    },
+    {
+      "fixture_id": "missing_anchor_rejected",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "anchors_without_final_claims:fixture-missing-b"
+    },
+    {
+      "fixture_id": "all_six_deterministic_segmentation_categories",
+      "expected": "pass",
+      "actual": "pass",
+      "categories": {
+        "consensus_exact": "consensus_exact",
+        "keep_a_segmentation": "keep_a_segmentation",
+        "keep_e_segmentation": "keep_e_segmentation",
+        "merge_both": "merge_both",
+        "split_both": "split_both",
+        "new_segmentation": "new_segmentation"
+      }
+    }
+  ],
+  "provider_called": false,
+  "v4_execution_started": false,
+  "held_out_accessed": false
+}

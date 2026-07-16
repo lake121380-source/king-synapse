@@ -1,0 +1,49 @@
+﻿{
+  "schema_version": 3,
+  "protocol_id": "phase7.3.3-d1-a-boundary-reference-protocol-v3",
+  "supersedes": "phase7.3.3-d1-a-boundary-reference-protocol-v2",
+  "version_reason": "Add explicit occurrence disambiguation and separate provider-reported model identity from canonical requested-model family.",
+  "reviewer_output_fields": [
+    "anchor_id", "source_excerpt", "occurrence_index", "claim_type", "material",
+    "claim_origin", "boundary_rationale", "annotation_confidence"
+  ],
+  "location_contract": {
+    "occurrence_index_semantics": "Zero-based occurrence of exact source_excerpt in source_text, ordered by start position.",
+    "excerpt_not_found": "reject",
+    "occurrence_out_of_range": "reject",
+    "cross_anchor_claim": "reject",
+    "overlap_within_anchor": "reject"
+  },
+  "protocol_owned_fields": [
+    "reviewer_claim_id", "case_id", "response_sha256", "source_field", "source_index",
+    "source_text_sha256", "source_span", "claim_text", "claim_role", "anchor_group"
+  ],
+  "claim_role_by_source_field": {
+    "proposition": "anchor",
+    "prediction_statement": "prediction",
+    "prediction_observable": "prediction_observable",
+    "prediction_success_criterion": "prediction_criterion",
+    "falsification_statement": "falsification",
+    "falsification_observable": "falsification_observable"
+  },
+  "anchor_group_rule": "case_id + '::' + source_field",
+  "model_identity_contract": {
+    "model_requested": "frozen in Manifest",
+    "provider_reported_model": "recorded per response without requiring byte-identical aliases across cases",
+    "canonical_model_family": "derived only by frozen exact-or-dated-snapshot rules",
+    "finalization_rule": "all cases must map to the single requested canonical model family",
+    "unrecognized_provider_model": "authoritative experimental failure"
+  },
+  "cardinality_rules": [
+    "Every source anchor must contain at least one Claim.",
+    "One source anchor may contain multiple non-overlapping Claims.",
+    "No exactly-one-central or exactly-one-anchor-claim constraint exists."
+  ],
+  "audit_order": [
+    "hash_provider_envelope_bytes", "extract_and_hash_provider_content_bytes",
+    "append_attempt_log_hashes", "parse_json", "validate_schema",
+    "normalize_protocol_owned_fields", "hash_normalized_output"
+  ],
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

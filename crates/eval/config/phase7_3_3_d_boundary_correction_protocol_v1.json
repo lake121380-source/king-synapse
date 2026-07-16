@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-boundary-correction-protocol-v1",
+  "stage": "Phase 7.3.3-D1 Boundary Correction Gate",
+  "purpose": "Deterministically apply the frozen Boundary Omission Resolution output, including an auditable no-op when no correction candidates remain.",
+  "execution_mode": "offline_deterministic",
+  "provider_call_allowed": false,
+  "input_contract": {
+    "boundary_omission_resolution_submission_decision_count": 4,
+    "confirmed_boundary_omission_count": 0,
+    "boundary_correction_worklist_candidate_count": 0,
+    "boundary_correction_worklist_candidates_must_equal": [],
+    "worklist_source_submission_hash_must_match": true,
+    "readiness_worklist_hash_must_match": true
+  },
+  "no_op_contract": {
+    "gate_must_execute_when_candidate_count_is_zero": true,
+    "submission_candidate_count": 0,
+    "corrected_candidate_count": 0,
+    "corrections_must_equal": [],
+    "boundary_changes_performed": false
+  },
+  "allowed_actions": [
+    "verify_frozen_input_hashes",
+    "verify_zero_candidate_lineage",
+    "emit_no_op_boundary_correction_submission",
+    "authorize_separately_versioned_coverage_qa_rerun"
+  ],
+  "forbidden_actions": [
+    "call_provider",
+    "change_boundary_span",
+    "create_claim",
+    "delete_claim",
+    "change_claim_type",
+    "change_structural_metadata",
+    "run_coverage_qa",
+    "freeze_boundary_gold",
+    "label_support",
+    "access_held_out_data"
+  ],
+  "success_condition": "All zero-candidate lineage checks pass and a write-once no-op correction submission is frozen.",
+  "failure_policy": "Any lineage or cardinality mismatch blocks Coverage QA Rerun and leaves Boundary Gold and Support Review unavailable."
+}

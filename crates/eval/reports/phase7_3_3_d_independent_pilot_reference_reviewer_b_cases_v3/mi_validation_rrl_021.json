@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_rrl_021",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "f286bd1a3a1bfeb4f54fe7b02fc7acb5fde7e1d4350b35bb7aaa3ad3902ef8b8",
+  "provider_content_sha256": "e983fc61bed61d88169a3888c76d23e8fc3c6d46fcfc7f3147c1de0609937766",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "0cea22b0a4954e66b9f22a820a7e13754ef9d58664d6d61f780ed40683c54a58",
+  "normalized_case": {
+    "case_id": "mi_validation_rrl_021",
+    "candidate_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrl_021-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "source_text_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrl_021-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The Candidate states that high-confidence confirmation beats a recent but weak observation. Evidence 06 directly supports that high confidence confirmation remains authoritative, matching the selection rule. No evidence contradicts or undermines this.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

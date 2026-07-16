@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-multi-claim-successor-structural-identifiability-report-v1",
+  "status": "FAIL",
+  "manifest_sha256": "2ee83bdb4e20579f90cb608478e1c0d039408babe0420f790b8c21075a464199",
+  "target_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "metrics": {
+    "selected_candidate_count": 40,
+    "unique_candidate_rate": 1.0,
+    "median_reference_claims_per_candidate": 6.0,
+    "multi_claim_candidate_rate": 1.0,
+    "reference_claim_to_candidate_ratio": 6.0,
+    "within_candidate_label_heterogeneity_rate": 0.975,
+    "supported_plus_material_error_candidate_rate": 0.875,
+    "material_error_claim_rate": 0.22083333333333333,
+    "unsupported_claim_rate": 0.19166666666666668,
+    "partially_supported_claim_rate": 0.029166666666666667,
+    "maximum_single_label_share": 0.7375,
+    "eligible_gap_characters": 0,
+    "overlap_characters": 0,
+    "case_count": 40,
+    "claim_count": 240,
+    "label_counts": {
+      "not_assessable": 10,
+      "partially_supported": 7,
+      "supported": 177,
+      "unsupported": 46
+    }
+  },
+  "thresholds": {
+    "minimum_selected_candidate_count": 32,
+    "target_selected_candidate_count": 40,
+    "unique_candidate_rate_min": 1.0,
+    "median_reference_claims_per_candidate_min": 2.0,
+    "multi_claim_candidate_rate_min": 0.8,
+    "reference_claim_to_candidate_ratio_min": 1.8,
+    "within_candidate_label_heterogeneity_rate_min": 0.5,
+    "supported_plus_material_error_candidate_rate_min": 0.3,
+    "material_error_claim_rate_min": 0.25,
+    "unsupported_claim_rate_min": 0.1,
+    "partially_supported_claim_rate_min": 0.1,
+    "maximum_single_label_share": 0.7,
+    "eligible_gap_characters_required": 0,
+    "overlap_characters_required": 0
+  },
+  "checks": {
+    "minimum_selected_candidate_count": true,
+    "target_selected_candidate_count": true,
+    "unique_candidate_rate_min": true,
+    "median_reference_claims_per_candidate_min": true,
+    "multi_claim_candidate_rate_min": true,
+    "reference_claim_to_candidate_ratio_min": true,
+    "within_candidate_label_heterogeneity_rate_min": true,
+    "supported_plus_material_error_candidate_rate_min": true,
+    "material_error_claim_rate_min": false,
+    "unsupported_claim_rate_min": true,
+    "partially_supported_claim_rate_min": false,
+    "maximum_single_label_share": false,
+    "eligible_gap_characters_required": true,
+    "overlap_characters_required": true
+  },
+  "failed_checks": [
+    "material_error_claim_rate_min",
+    "partially_supported_claim_rate_min",
+    "maximum_single_label_share"
+  ],
+  "all_checks_required": true,
+  "structural_estimand_identifiable": false,
+  "arm_execution_authorized": false,
+  "confirmatory_opening_authorized": false,
+  "provider_calls": 0
+}

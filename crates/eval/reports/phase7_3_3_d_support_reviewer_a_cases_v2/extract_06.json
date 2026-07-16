@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_06-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_06",
+  "provider_envelope_sha256": "6a2b64d1bf07489b2d8656ada6d28f85b31f733f1d4714e868ccd2ba0185a139",
+  "provider_content_sha256": "cd69e11bc16c18b8bd5216e3b417ae595f54abad363e9e2ccf0e94c8f9d43a91",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "c543edddc2f10f0b2acba500ae3cf236ba98428b27e6bf34407273fb467d4e68",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2",
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "All experiences occur in software delivery, directly matching the scope claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-002",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2",
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence supports that exposing risky changes to a representative subset can reveal hidden issues before rollout, but the claim's generality and certainty exceed the limited number of cases. The counterexample supports the necessity of representativeness but does not fully establish causality for all cases.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample directly shows that testing only the simplest subset failed to detect issues present in more complex cases.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence shows that exposing a risky change to a representative subset revealed at least one hidden issue before rollout in two cases, but the prediction's certainty and generality are stronger than the evidence base.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both supporting experiences report hidden issues detected during limited exposure.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In both supporting cases, the hidden issue was discovered and thus documented before full rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "At least one issue was identified in each supporting experience.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-008",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "conservative_entailment",
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence shows issues were identified before rollout, but does not confirm they were addressed before rollout; the claim overstates what is shown.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample describes a scenario where the pattern would be falsified, matching the claim's logic.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample directly describes a full rollout failure due to issues present in the tested subset but not detected, matching the falsification observable.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_06",
+    "status": "completed",
+    "decision_count": 10
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

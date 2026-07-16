@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_tmp_019",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "713078efa21d5425b5662e32849a9787b9bce7b03ac594ca6fa2b80f86256b52",
+  "provider_content_sha256": "aaf32eea33f03d3b59d7912cd53de320e26d0506dd1eac652dd0983ea8e8188b",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "72b3c7ea73b8129144228ab348da423a1e6badd732389f585b25c5f7b8947b21",
+  "normalized_case": {
+    "case_id": "mi_validation_tmp_019",
+    "candidate_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_tmp_019-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_tmp_019-evidence-06",
+          "mi_validation_tmp_019-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the later confirmed state supersedes the older, semantically stronger state. Evidence 06 directly states that the later confirmed state is active and replaces the earlier state, which matches the candidate's claim. Evidence 01 notes that the older state is no longer active, further supporting the supersession. The evidence is clear, recent, and directly addresses the selection rule described in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

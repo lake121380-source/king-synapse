@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_ctx_018",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "bb8f4f19eaa4d6bef22cc1ce8d0e36f17d422206ac88b3a80e0657c7af167335",
+  "content_sha256": "815cbda65d8aee68c6d4b21f86c17225616710bac9d73b048c8e8299a1cbb94e",
+  "latency_ms": 4471.635100024287,
+  "usage": {
+    "prompt_tokens": 1072,
+    "completion_tokens": 119,
+    "total_tokens": 1191,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1444,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2284,
+      "total_duration_ms": 2208,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_ctx_018",
+    "support_label": "partially_supported",
+    "rationale": "Evidence states that a generic playbook has stronger overlap but violates the active constraint, and that a playbook satisfies the active safety and scope constraint. This supports that the active task/constraint filters out a better-overlap generic option in favor of a context-compatible/scope-compatible playbook. However, the evidence does not explicitly state a selection mechanism or that this is the selected playbook, only that one candidate violates the constraint and another satisfies it.",
+    "source_span": {
+      "start": 0,
+      "end": 66
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

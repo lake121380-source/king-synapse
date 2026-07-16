@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_safe_019",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "8e0f6a16816a3e4d017d095ee4ed3031e0714fffdd6c189c53dfe50f23ab3562",
+  "provider_content_sha256": "bff4d091d05c17705f5ad9e6629e3c890e610df91fa8e7dcbf78a9b1c785c4e1",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "9ebbba9988103451f39229bb3b0d30dea91c09194f5043866332e81031f63e2d",
+  "normalized_case": {
+    "case_id": "mi_validation_safe_019",
+    "candidate_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_safe_019-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "0e72fdc3df2be4e93b7ff40fd308cc53d84354a4da61357fa91b9d30efbcc5ad",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_safe_019-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that baseline evidence is clear and no cognitive intervention is needed. Evidence 06 directly states 'clear current confirmed answer should remain first', which supports the claim that the baseline is clear and no change (intervention) is needed. Other evidence is either irrelevant or weaker, but evidence 06 provides strong direct support.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

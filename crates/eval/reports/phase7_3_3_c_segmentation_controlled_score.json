@@ -1,0 +1,945 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-c-segmentation-controlled-score-v1",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "generated_at": "2026-07-12T14:40:23.153218+00:00",
+  "status": "control_entry_gate_passed",
+  "decision": "segmentation_controlled_atomic_claim_classification_is_control_ready",
+  "execution_manifest_sha256": "36af44456cf3c06bd0553302121f92af8d605227420a11f71ce7a8797b52f82e",
+  "execution_report_sha256": "1e0d1e8ade4862b442121c7d060b23811370f8e9fd7edd3fee49532b0c413b28",
+  "resolved_model": "gpt-4.1-2025-04-14",
+  "valid_output_count": 20,
+  "invalid_output_count": 0,
+  "original_candidate_gate_diagnostics": {
+    "probe_id": "phase7_3_3_c_original_candidate_gate",
+    "segmentation_exact_span_precision": 1.0,
+    "segmentation_exact_span_recall": 1.0,
+    "overall_claim_support": {
+      "item_count": 24,
+      "exact_match_count": 23,
+      "exact_accuracy": 0.9583333333333334,
+      "observed_gold_labels": [
+        "supported",
+        "unsupported",
+        "not_assessable"
+      ],
+      "absent_gold_labels": [
+        "partially_supported"
+      ],
+      "macro_recall_over_observed_gold_labels": 0.9583333333333334,
+      "confusion": {
+        "not_assessable": {
+          "not_assessable": 4
+        },
+        "supported": {
+          "supported": 12
+        },
+        "unsupported": {
+          "partially_supported": 1,
+          "unsupported": 7
+        }
+      }
+    },
+    "support_confusion_by_claim_type": [
+      {
+        "claim_type": "proposition",
+        "support_classification": {
+          "item_count": 11,
+          "exact_match_count": 11,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [
+            "partially_supported"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 2
+            },
+            "supported": {
+              "supported": 7
+            },
+            "unsupported": {
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "scope",
+        "support_classification": {
+          "item_count": 3,
+          "exact_match_count": 3,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported",
+            "unsupported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            },
+            "unsupported": {
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "prediction",
+        "support_classification": {
+          "item_count": 2,
+          "exact_match_count": 2,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [
+            "supported",
+            "partially_supported"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 1
+            },
+            "unsupported": {
+              "unsupported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "causal",
+        "support_classification": {
+          "item_count": 5,
+          "exact_match_count": 4,
+          "exact_accuracy": 0.8,
+          "observed_gold_labels": [
+            "supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [
+            "partially_supported"
+          ],
+          "macro_recall_over_observed_gold_labels": 0.8888888888888888,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 1
+            },
+            "supported": {
+              "supported": 1
+            },
+            "unsupported": {
+              "partially_supported": 1,
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "counterexample",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "limitation",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "falsifiability",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      }
+    ],
+    "centrality_split": {
+      "central_claims": {
+        "item_count": 16,
+        "exact_match_count": 16,
+        "exact_accuracy": 1.0,
+        "observed_gold_labels": [
+          "supported",
+          "unsupported",
+          "not_assessable"
+        ],
+        "absent_gold_labels": [
+          "partially_supported"
+        ],
+        "macro_recall_over_observed_gold_labels": 1.0,
+        "confusion": {
+          "not_assessable": {
+            "not_assessable": 4
+          },
+          "supported": {
+            "supported": 8
+          },
+          "unsupported": {
+            "unsupported": 4
+          }
+        }
+      },
+      "non_central_material_claims": {
+        "item_count": 8,
+        "exact_match_count": 7,
+        "exact_accuracy": 0.875,
+        "observed_gold_labels": [
+          "supported",
+          "unsupported"
+        ],
+        "absent_gold_labels": [
+          "partially_supported",
+          "not_assessable"
+        ],
+        "macro_recall_over_observed_gold_labels": 0.875,
+        "confusion": {
+          "supported": {
+            "supported": 4
+          },
+          "unsupported": {
+            "partially_supported": 1,
+            "unsupported": 3
+          }
+        }
+      }
+    },
+    "aggregation_error_attribution": {
+      "candidate_classification": {
+        "item_count": 16,
+        "exact_match_count": 16,
+        "exact_accuracy": 1.0,
+        "observed_gold_labels": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "not_assessable"
+        ],
+        "absent_gold_labels": [],
+        "macro_recall_over_observed_gold_labels": 1.0,
+        "confusion": {
+          "not_assessable": {
+            "not_assessable": 4
+          },
+          "partially_supported": {
+            "partially_supported": 4
+          },
+          "supported": {
+            "supported": 4
+          },
+          "unsupported": {
+            "unsupported": 4
+          }
+        }
+      },
+      "attribution_counts": {
+        "correct": 15,
+        "masked_claim_error": 1
+      },
+      "rows": [
+        {
+          "control_id": "ctrl_supported_01",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_02",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_03",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_04",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_01",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_02",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": false,
+          "attribution": "masked_claim_error"
+        },
+        {
+          "control_id": "ctrl_partial_03",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_04",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_01",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_02",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_03",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_04",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_01",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_02",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_03",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_04",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        }
+      ]
+    }
+  },
+  "combined_local_claim_diagnostics": {
+    "probe_id": "phase7_3_3_c_combined_local_claim_diagnostics",
+    "segmentation_exact_span_precision": 1.0,
+    "segmentation_exact_span_recall": 1.0,
+    "overall_claim_support": {
+      "item_count": 28,
+      "exact_match_count": 26,
+      "exact_accuracy": 0.9285714285714286,
+      "observed_gold_labels": [
+        "supported",
+        "partially_supported",
+        "unsupported",
+        "not_assessable"
+      ],
+      "absent_gold_labels": [],
+      "macro_recall_over_observed_gold_labels": 0.90625,
+      "confusion": {
+        "not_assessable": {
+          "not_assessable": 4
+        },
+        "partially_supported": {
+          "partially_supported": 3,
+          "unsupported": 1
+        },
+        "supported": {
+          "supported": 12
+        },
+        "unsupported": {
+          "partially_supported": 1,
+          "unsupported": 7
+        }
+      }
+    },
+    "support_confusion_by_claim_type": [
+      {
+        "claim_type": "proposition",
+        "support_classification": {
+          "item_count": 12,
+          "exact_match_count": 12,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 2
+            },
+            "partially_supported": {
+              "partially_supported": 1
+            },
+            "supported": {
+              "supported": 7
+            },
+            "unsupported": {
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "scope",
+        "support_classification": {
+          "item_count": 4,
+          "exact_match_count": 4,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported",
+            "partially_supported",
+            "unsupported"
+          ],
+          "absent_gold_labels": [
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 1
+            },
+            "supported": {
+              "supported": 1
+            },
+            "unsupported": {
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "prediction",
+        "support_classification": {
+          "item_count": 3,
+          "exact_match_count": 2,
+          "exact_accuracy": 0.6666666666666666,
+          "observed_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [
+            "supported"
+          ],
+          "macro_recall_over_observed_gold_labels": 0.6666666666666666,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 1
+            },
+            "partially_supported": {
+              "unsupported": 1
+            },
+            "unsupported": {
+              "unsupported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "causal",
+        "support_classification": {
+          "item_count": 6,
+          "exact_match_count": 5,
+          "exact_accuracy": 0.8333333333333334,
+          "observed_gold_labels": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "absent_gold_labels": [],
+          "macro_recall_over_observed_gold_labels": 0.9166666666666666,
+          "confusion": {
+            "not_assessable": {
+              "not_assessable": 1
+            },
+            "partially_supported": {
+              "partially_supported": 1
+            },
+            "supported": {
+              "supported": 1
+            },
+            "unsupported": {
+              "partially_supported": 1,
+              "unsupported": 2
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "counterexample",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "limitation",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      },
+      {
+        "claim_type": "falsifiability",
+        "support_classification": {
+          "item_count": 1,
+          "exact_match_count": 1,
+          "exact_accuracy": 1.0,
+          "observed_gold_labels": [
+            "supported"
+          ],
+          "absent_gold_labels": [
+            "partially_supported",
+            "unsupported",
+            "not_assessable"
+          ],
+          "macro_recall_over_observed_gold_labels": 1.0,
+          "confusion": {
+            "supported": {
+              "supported": 1
+            }
+          }
+        }
+      }
+    ],
+    "centrality_split": {
+      "central_claims": {
+        "item_count": 20,
+        "exact_match_count": 19,
+        "exact_accuracy": 0.95,
+        "observed_gold_labels": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "not_assessable"
+        ],
+        "absent_gold_labels": [],
+        "macro_recall_over_observed_gold_labels": 0.9375,
+        "confusion": {
+          "not_assessable": {
+            "not_assessable": 4
+          },
+          "partially_supported": {
+            "partially_supported": 3,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 8
+          },
+          "unsupported": {
+            "unsupported": 4
+          }
+        }
+      },
+      "non_central_material_claims": {
+        "item_count": 8,
+        "exact_match_count": 7,
+        "exact_accuracy": 0.875,
+        "observed_gold_labels": [
+          "supported",
+          "unsupported"
+        ],
+        "absent_gold_labels": [
+          "partially_supported",
+          "not_assessable"
+        ],
+        "macro_recall_over_observed_gold_labels": 0.875,
+        "confusion": {
+          "supported": {
+            "supported": 4
+          },
+          "unsupported": {
+            "partially_supported": 1,
+            "unsupported": 3
+          }
+        }
+      }
+    },
+    "aggregation_error_attribution": {
+      "candidate_classification": {
+        "item_count": 20,
+        "exact_match_count": 19,
+        "exact_accuracy": 0.95,
+        "observed_gold_labels": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "not_assessable"
+        ],
+        "absent_gold_labels": [],
+        "macro_recall_over_observed_gold_labels": 0.96875,
+        "confusion": {
+          "not_assessable": {
+            "not_assessable": 4
+          },
+          "partially_supported": {
+            "partially_supported": 7,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 4
+          },
+          "unsupported": {
+            "unsupported": 4
+          }
+        }
+      },
+      "attribution_counts": {
+        "claim_classification_error": 1,
+        "correct": 18,
+        "masked_claim_error": 1
+      },
+      "rows": [
+        {
+          "control_id": "ctrl_supported_01",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_02",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_03",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_supported_04",
+          "expected_candidate_label": "supported",
+          "predicted_candidate_label": "supported",
+          "gold_claim_aggregation": "supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_01",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_02",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": false,
+          "attribution": "masked_claim_error"
+        },
+        {
+          "control_id": "ctrl_partial_03",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_partial_04",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_01",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_02",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_03",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_unsupported_04",
+          "expected_candidate_label": "unsupported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "unsupported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_01",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_02",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_03",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "ctrl_not_assessable_04",
+          "expected_candidate_label": "not_assessable",
+          "predicted_candidate_label": "not_assessable",
+          "gold_claim_aggregation": "not_assessable",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "diag_partial_01_proposition",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "diag_partial_02_scope",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "diag_partial_03_causal",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "partially_supported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": true,
+          "attribution": "correct"
+        },
+        {
+          "control_id": "diag_partial_04_prediction",
+          "expected_candidate_label": "partially_supported",
+          "predicted_candidate_label": "unsupported",
+          "gold_claim_aggregation": "partially_supported",
+          "all_claim_labels_correct": false,
+          "attribution": "claim_classification_error"
+        }
+      ]
+    }
+  },
+  "candidate_prediction_distribution": {
+    "counts": {
+      "not_assessable": 4,
+      "partially_supported": 4,
+      "supported": 4,
+      "unsupported": 4
+    },
+    "prediction_entropy_bits": 2.0,
+    "single_class_prediction_rate": 0.25
+  },
+  "entry_gate": {
+    "valid_output_count_required": 20,
+    "valid_output_count_observed": 20,
+    "all_outputs_valid": true,
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_macro_recall_observed": 1.0,
+    "candidate_macro_recall_passed": true,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "candidate_single_class_prediction_rate_observed": 0.25,
+    "candidate_single_class_prediction_rate_passed": true,
+    "all_four_candidate_labels_must_be_predicted": true,
+    "predicted_candidate_labels": [
+      "not_assessable",
+      "partially_supported",
+      "supported",
+      "unsupported"
+    ],
+    "all_four_candidate_labels_predicted": true,
+    "overall_passed": true
+  },
+  "interpretation": [
+    "Segmentation and structural annotations were protocol-owned, so this run measures local support classification without the prior source-span confound.",
+    "The original sixteen balanced controls alone own the Candidate-level entry gate; the four Partial Claim supplements affect local diagnostics only.",
+    "Passing the control gate authorizes design-case preparation under the same frozen protocol; it does not establish design or held-out generalization."
+  ],
+  "guards": {
+    "aggregator_modified_after_execution": false,
+    "design_cases_accessed": false,
+    "held_out_accessed": false,
+    "memory_write_authorized": false,
+    "parser_modified_after_execution": false,
+    "prompt_modified_after_execution": false,
+    "runtime_authorized": false
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "manifest_sha256": "9f3dbde7011894456bb73e71986a8d139e5d0c652cc7a049d5613e5becbea0bf",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "d8cfab21b38df064c3e3942360a2053b81ec4ff6c6b9ec5247148e7ab61e449a",
+  "content_sha256": "44cebda37b067a66d5e74576637466e2c4986228a48da4891af25fe8c212e45f",
+  "usage": {
+    "prompt_tokens": 1426,
+    "completion_tokens": 126,
+    "total_tokens": 1552,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1870,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2710,
+      "total_duration_ms": 2634,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "result": {
+    "case_id": "mi_validation_safe_023",
+    "adjudication_item_id": "independent-pilot-reference-adjudication-008",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "Evidence 06 says the clear current confirmed answer should remain first. Under conservative entailment, this supports the selection rule that the existing answer is already clear and should be maintained rather than changed by further cognitive intervention. The other evidence is marked irrelevant or weak and does not overturn this. Option 1 overreads 'should remain first' as requiring intervention, which reverses the no-intervention framing.",
+    "status": "selected_frozen_reviewer_decision",
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "support_label": "supported",
+      "material": true,
+      "claim_type": "selection_rule",
+      "cited_evidence_ids": [
+        "mi_validation_safe_023-evidence-06"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "rationale": "The candidate asserts that the baseline evidence is already clear and no cognitive intervention is needed. Evidence 06 directly states that the current confirmed answer should remain first, indicating clarity and sufficiency of the baseline evidence, and implying no further intervention is required. No other evidence contradicts this, and the cited evidence is highly confident and relevant. Thus, the claim is fully supported.",
+      "confidence": "high"
+    },
+    "boundary_mutation_performed": false,
+    "candidate_mutation_performed": false,
+    "evidence_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_frozen_decision_sha256": "d8085b425eb409d2c18eef4185a01670fcba245c076698d27fb15dd16236e70b"
+  }
+}

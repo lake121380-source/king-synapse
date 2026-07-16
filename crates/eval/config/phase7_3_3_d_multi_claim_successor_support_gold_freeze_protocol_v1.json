@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-gold-freeze-protocol-v1",
+  "status": "frozen_before_offline_execution",
+  "execution_mode": "offline_deterministic",
+  "gold_object": "Support labels for the frozen 240-Claim Multi-claim Successor frame",
+  "gold_fields": [
+    "support_label"
+  ],
+  "non_gold_fields": [
+    "evidence citations",
+    "reason codes",
+    "rationales",
+    "confidence",
+    "diagnostic difference classifications"
+  ],
+  "entry_gate": {
+    "reference_candidate_sealed": true,
+    "diagnostic_followup_completed": true,
+    "claim_count": 240,
+    "next_authorized_stage": "freeze_multi_claim_successor_support_gold_v1"
+  },
+  "immutability": {
+    "claim_boundary_mutation_allowed": false,
+    "claim_metadata_mutation_allowed": false,
+    "support_label_recomputation_allowed": false,
+    "diagnostic_promotion_to_gold_allowed": false
+  },
+  "guards": {
+    "provider_call_allowed": false,
+    "confirmatory_dataset_opening_allowed": false,
+    "runtime_integration_allowed": false
+  },
+  "passing_next_stage": "evaluate_multi_claim_successor_structural_identifiability_v1"
+}

@@ -1,0 +1,135 @@
+{
+    "schema_version":  3,
+    "protocol_id":  "phase7.3.3-d1-a-boundary-adjudication-protocol-v3",
+    "status":  "frozen_before_adjudication",
+    "frozen_at":  "2026-07-13T10:20:56.2494792Z",
+    "purpose":  "Construct a transparent model-adjudicated Boundary reference candidate after immutable A/E Agreement and before Coverage QA.",
+    "entry_gate":  {
+                       "two_completed_blind_submissions":  true,
+                       "agreement_frozen_before_adjudication":  true,
+                       "agreement_report_sha256_required":  true
+                   },
+    "artifact_lineage":  {
+                             "boundary_packet_sha256":  "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+                             "boundary_reference_protocol_v3_sha256":  "859438f8610eb5c1018b7f35181785fb83d4fa8483156d93eb128268349e5964",
+                             "reviewer_a_submission_sha256":  "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+                             "reviewer_e_submission_sha256":  "368972c417fd79818f19beacc4745fbb6e363237e8e0ac7f67f2230222357663",
+                             "agreement_protocol_sha256":  "8af77821fc4ab50f71dd63ea1f7ac2de6768b15e01e4627992095a5d55ac4597",
+                             "agreement_report_sha256":  "0ddb0b873431ddf89b7301f44691b7897a2a36d757f8eace10877a35ed22e6c7",
+                             "worklist_script_sha256":  "0453b987d7106b6cf41a83f5333d125961312fb1ee83c885fb6061ff627e3580"
+                         },
+    "adjudication_visibility":  {
+                                    "source_anchor_text":  true,
+                                    "reviewer_a_boundary_submission":  true,
+                                    "reviewer_e_boundary_submission":  true,
+                                    "agreement_component_diagnostics":  true,
+                                    "evidence_bundle":  false,
+                                    "support_labels":  false,
+                                    "candidate_gold_or_silver":  false,
+                                    "historical_judge":  false,
+                                    "held_out":  false
+                                },
+    "decision_layers":  [
+                            {
+                                "layer":  "boundary_decision",
+                                "required":  true,
+                                "definition":  "Final non-overlapping exact source spans representing independently truth-evaluable assertions."
+                            },
+                            {
+                                "layer":  "claim_type_decision",
+                                "required":  true,
+                                "definition":  "Final Claim Type decided separately from the accepted Boundary span."
+                            },
+                            {
+                                "layer":  "structural_metadata_decision",
+                                "required":  true,
+                                "definition":  "Final material and claim_origin values; they must not be interpreted as support decisions."
+                            }
+                        ],
+    "final_claim_required_fields":  [
+                                        "anchor_id",
+                                        "source_excerpt",
+                                        "occurrence_index",
+                                        "claim_type",
+                                        "material",
+                                        "claim_origin",
+                                        "boundary_decision_rationale",
+                                        "type_decision_rationale",
+                                        "reason_codes",
+                                        "source_reviewer_claim_ids"
+                                    ],
+    "claim_type_enum":  [
+                            "proposition",
+                            "scope",
+                            "prediction",
+                            "causal",
+                            "counterexample",
+                            "limitation",
+                            "falsifiability"
+                        ],
+    "claim_origin_enum":  [
+                              "explicit",
+                              "inferred",
+                              "synthesized"
+                          ],
+    "reason_code_enum":  [
+                             "coordination",
+                             "nested_proposition",
+                             "scope_modifier",
+                             "temporal_qualifier",
+                             "prediction_clause",
+                             "evidence_attribution",
+                             "causal_relation",
+                             "counterexample_clause",
+                             "limitation_clause",
+                             "falsifiability_clause",
+                             "quantifier_or_threshold",
+                             "condition_or_exception",
+                             "independent_truth_value",
+                             "non_assertive_connector",
+                             "other_explained"
+                         ],
+    "boundary_rules":  [
+                           "Every independently truth-evaluable assertion receives one non-empty exact contiguous span.",
+                           "Split conjunctions only when components can receive different truth values.",
+                           "Claims stay within one source anchor and do not overlap.",
+                           "Punctuation and non-assertive connectors need not be included when they carry no truth-evaluable content.",
+                           "Adjudication may retain A, retain E, merge, split, or create a new segmentation.",
+                           "Claim Type is adjudicated separately and cannot silently determine Boundary."
+                       ],
+    "segmentation_decision_log":  {
+                                      "generated_from":  "Final adjudicated spans compared deterministically with A/E span sets",
+                                      "decision_categories":  [
+                                                                  "consensus_exact",
+                                                                  "keep_a_segmentation",
+                                                                  "keep_e_segmentation",
+                                                                  "merge_both",
+                                                                  "split_both",
+                                                                  "new_segmentation"
+                                                              ],
+                                      "classification_rules":  [
+                                                                   "If final span set equals both A and E: consensus_exact.",
+                                                                   "Else if final span set equals A: keep_a_segmentation.",
+                                                                   "Else if final span set equals E: keep_e_segmentation.",
+                                                                   "Else if final Claim count is lower than both A and E: merge_both.",
+                                                                   "Else if final Claim count is higher than both A and E: split_both.",
+                                                                   "Else: new_segmentation."
+                                                               ],
+                                      "required_summary":  [
+                                                               "decision_count_by_category",
+                                                               "reason_code_counts",
+                                                               "per_case_counts",
+                                                               "representative_decisions"
+                                                           ]
+                                  },
+    "gold_status":  "model_adjudicated_boundary_reference_candidate_not_human_gold",
+    "immutability":  {
+                         "agreement_may_be_modified":  false,
+                         "same_manifest_semantic_retry_after_content":  false,
+                         "result_replacement":  false,
+                         "coverage_qa_before_adjudication":  false,
+                         "boundary_gold_freeze_before_coverage_pass":  false,
+                         "support_review_before_boundary_gold":  false
+                     },
+    "held_out_accessed":  false
+}

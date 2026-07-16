@@ -1,0 +1,1093 @@
+{
+  "schema_version": 1,
+  "worklist_id": "phase7.3.3-d1-b3-non-claim-adjudication-worklist-v1",
+  "status": "frozen_input_worklist",
+  "case_count": 16,
+  "gap_count": 16,
+  "case_isolation": true,
+  "held_out_accessed": false,
+  "artifact_lineage": {
+    "b2_protocol_sha256": "688710afd13d185fff2331932cf069f8b203463740b1d7d8c7402c28c041778d",
+    "b2_packet_sha256": "7c3ba1c94579b60318b1f85cbe317e4a898b471fb0f8370bcd4337100117b637",
+    "b2_agreement_sha256": "daddd81e954d3d66a7da5b65f3b6b4c1af3b3939019bfbea43855f7699ec5b5a",
+    "b2_readiness_sha256": "28f006ef3f5b67c5a4417322cfcb65d24bbf12356ba117efd701ffc1ff2ac1ed"
+  },
+  "cases": [
+    {
+      "case_id": "b3-001-coverage-gap-002",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-002",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "contrastive_or_concessive_connector",
+      "anchor": {
+        "anchor_id": "extract_01-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects while keeping the old version available, provided the new and old versions are backward compatible.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 20
+            },
+            "claim_text": "In software delivery",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-002",
+            "source_span": {
+              "start": 22,
+              "end": 117
+            },
+            "claim_text": "deploying changes incrementally to a small subset of traffic enables early detection of defects",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-003",
+            "source_span": {
+              "start": 124,
+              "end": 157
+            },
+            "claim_text": "keeping the old version available",
+            "claim_type": "proposition",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-004",
+            "source_span": {
+              "start": 159,
+              "end": 216
+            },
+            "claim_text": "provided the new and old versions are backward compatible",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-002",
+        "source_span": {
+          "start": 117,
+          "end": 124
+        },
+        "gap_text": " while ",
+        "eligible_non_whitespace_count": 5
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The word 'while' introduces a temporal or contrasting relationship that may qualify the connection between the two claimed propositions."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The word \"while\" is a non-assertive connector that links two clauses without adding independent semantic content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-002-coverage-gap-005",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-005",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "conditional_operator",
+      "anchor": {
+        "anchor_id": "extract_01-prediction_statement-01",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_text": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-005",
+            "source_span": {
+              "start": 5,
+              "end": 76
+            },
+            "claim_text": "an incremental rollout with backward compatibility is used for a change",
+            "claim_type": "scope",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-006",
+            "source_span": {
+              "start": 78,
+              "end": 130
+            },
+            "claim_text": "the first cohort will expose any critical regression",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-007",
+            "source_span": {
+              "start": 131,
+              "end": 171
+            },
+            "claim_text": "without affecting the rest of the system",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-005",
+        "source_span": {
+          "start": 0,
+          "end": 5
+        },
+        "gap_text": "When ",
+        "eligible_non_whitespace_count": 4
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The word 'When' establishes a conditional scope for the prediction that is not fully captured by the subsequent claim span alone."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The word \"When\" is a non-assertive connector that introduces a conditional clause, and its semantic role is fully captured by the relationship between the existing claims."
+        }
+      }
+    },
+    {
+      "case_id": "b3-003-coverage-gap-010",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-010",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "conditional_operator",
+      "anchor": {
+        "anchor_id": "extract_01-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-011",
+            "source_span": {
+              "start": 3,
+              "end": 87
+            },
+            "claim_text": "an incremental rollout with backward compatibility still causes a system-wide outage",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-012",
+            "source_span": {
+              "start": 91,
+              "end": 125
+            },
+            "claim_text": "forces rollback of the old version",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-010",
+        "source_span": {
+          "start": 0,
+          "end": 3
+        },
+        "gap_text": "If ",
+        "eligible_non_whitespace_count": 2
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The word 'If' initiates the conditional logic essential to the falsification statement, carrying significant semantic weight."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The word \"If\" is a non-assertive connector that introduces a conditional clause, and its semantic role is fully captured by the relationship between the existing claims."
+        }
+      }
+    },
+    {
+      "case_id": "b3-004-coverage-gap-011",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-011",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "connector_vs_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_01-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-011",
+            "source_span": {
+              "start": 3,
+              "end": 87
+            },
+            "claim_text": "an incremental rollout with backward compatibility still causes a system-wide outage",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-012",
+            "source_span": {
+              "start": 91,
+              "end": 125
+            },
+            "claim_text": "forces rollback of the old version",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-011",
+        "source_span": {
+          "start": 87,
+          "end": 91
+        },
+        "gap_text": " or ",
+        "eligible_non_whitespace_count": 2
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The phrase ' or ' acts as a logical disjunction connector between two already claimed alternatives without adding new assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The word \"or\" serves as a list delimiter connecting two alternative conditions, and its function is fully represented by the relationship between the two adjacent claims."
+        }
+      }
+    },
+    {
+      "case_id": "b3-005-coverage-gap-013",
+      "source_case_id": "extract_01",
+      "gap_id": "coverage-gap-013",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "connector_vs_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_01-falsification_observable-01",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_text": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-013",
+            "source_span": {
+              "start": 0,
+              "end": 37
+            },
+            "claim_text": "The entire system becomes unavailable",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification_observable"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_01-claim-014",
+            "source_span": {
+              "start": 41,
+              "end": 114
+            },
+            "claim_text": "the old version is rolled back due to issues from the incremental rollout",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification_observable"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-013",
+        "source_span": {
+          "start": 37,
+          "end": 41
+        },
+        "gap_text": " or ",
+        "eligible_non_whitespace_count": 2
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The phrase ' or ' serves as a logical connector between two claimed observables without independent assertive meaning."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The word \"or\" serves as a list delimiter connecting two alternative observables, and its function is fully represented by the relationship between the two adjacent claims."
+        }
+      }
+    },
+    {
+      "case_id": "b3-006-coverage-gap-021",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-021",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 21
+            },
+            "claim_text": "In service_operations",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-002",
+            "source_span": {
+              "start": 23,
+              "end": 173
+            },
+            "claim_text": "diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-003",
+            "source_span": {
+              "start": 174,
+              "end": 212
+            },
+            "claim_text": "without replacing unrelated components",
+            "claim_type": "proposition",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-004",
+            "source_span": {
+              "start": 214,
+              "end": 282
+            },
+            "claim_text": "provided no active corruption or ongoing damaging writes are present",
+            "claim_type": "limitation",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-021",
+        "source_span": {
+          "start": 21,
+          "end": 23
+        },
+        "gap_text": ", ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a comma and space, serving as a syntactic separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a comma and a space, which serves as a grammatical separator between the scope claim and the causal claim. It does not contain any assertive meaning."
+        }
+      }
+    },
+    {
+      "case_id": "b3-007-coverage-gap-022",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-022",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In service_operations, diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause without replacing unrelated components, provided no active corruption or ongoing damaging writes are present.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 21
+            },
+            "claim_text": "In service_operations",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-002",
+            "source_span": {
+              "start": 23,
+              "end": 173
+            },
+            "claim_text": "diagnosing a service failure by systematically examining logs, memory, configuration, permissions, and network evidence isolates a specific root cause",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-003",
+            "source_span": {
+              "start": 174,
+              "end": 212
+            },
+            "claim_text": "without replacing unrelated components",
+            "claim_type": "proposition",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-004",
+            "source_span": {
+              "start": 214,
+              "end": 282
+            },
+            "claim_text": "provided no active corruption or ongoing damaging writes are present",
+            "claim_type": "limitation",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-022",
+        "source_span": {
+          "start": 212,
+          "end": 214
+        },
+        "gap_text": ", ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a comma and space, serving as a syntactic separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a comma and a space, which grammatically separates a proposition from a limiting condition. It has no independent assertive content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-008-coverage-gap-024",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-024",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-prediction_statement-01",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_text": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-005",
+            "source_span": {
+              "start": 0,
+              "end": 47
+            },
+            "claim_text": "For a new service failure in service_operations",
+            "claim_type": "scope",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-006",
+            "source_span": {
+              "start": 49,
+              "end": 144
+            },
+            "claim_text": "applying the same evidence-based diagnosis will isolate a root cause from the examined evidence",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-007",
+            "source_span": {
+              "start": 145,
+              "end": 192
+            },
+            "claim_text": "without needing to replace unrelated components",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-008",
+            "source_span": {
+              "start": 194,
+              "end": 238
+            },
+            "claim_text": "as long as no active corruption is happening",
+            "claim_type": "limitation",
+            "claim_role": "prediction"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-024",
+        "source_span": {
+          "start": 47,
+          "end": 49
+        },
+        "gap_text": ", ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a comma and space, serving as a syntactic separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a comma and a space, which grammatically separates the scope claim from the main prediction claim. It has no independent assertive content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-009-coverage-gap-025",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-025",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-prediction_statement-01",
+        "source_field": "prediction_statement",
+        "source_index": 0,
+        "source_text": "For a new service failure in service_operations, applying the same evidence-based diagnosis will isolate a root cause from the examined evidence without needing to replace unrelated components, as long as no active corruption is happening.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-005",
+            "source_span": {
+              "start": 0,
+              "end": 47
+            },
+            "claim_text": "For a new service failure in service_operations",
+            "claim_type": "scope",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-006",
+            "source_span": {
+              "start": 49,
+              "end": 144
+            },
+            "claim_text": "applying the same evidence-based diagnosis will isolate a root cause from the examined evidence",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-007",
+            "source_span": {
+              "start": 145,
+              "end": 192
+            },
+            "claim_text": "without needing to replace unrelated components",
+            "claim_type": "prediction",
+            "claim_role": "prediction"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-008",
+            "source_span": {
+              "start": 194,
+              "end": 238
+            },
+            "claim_text": "as long as no active corruption is happening",
+            "claim_type": "limitation",
+            "claim_role": "prediction"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-025",
+        "source_span": {
+          "start": 192,
+          "end": 194
+        },
+        "gap_text": ", ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a comma and space, serving as a syntactic separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a comma and a space, which grammatically separates a prediction claim from a limiting condition. It has no independent assertive content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-010-coverage-gap-027",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-027",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-prediction_observable-01",
+        "source_field": "prediction_observable",
+        "source_index": 0,
+        "source_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence; no unnecessary restarts or replacements occur.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-009",
+            "source_span": {
+              "start": 0,
+              "end": 91
+            },
+            "claim_text": "Root cause is identified from logs, memory, configuration, permissions, or network evidence",
+            "claim_type": "prediction",
+            "claim_role": "prediction_observable"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-010",
+            "source_span": {
+              "start": 93,
+              "end": 138
+            },
+            "claim_text": "no unnecessary restarts or replacements occur",
+            "claim_type": "prediction",
+            "claim_role": "prediction_observable"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-027",
+        "source_span": {
+          "start": 91,
+          "end": 93
+        },
+        "gap_text": "; ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a semicolon and space, serving as a clause separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a semicolon and a space, which serves as a grammatical separator between two independent clauses that are both captured as claims. It has no independent assertive content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-011-coverage-gap-032",
+      "source_case_id": "extract_04",
+      "gap_id": "coverage-gap-032",
+      "disagreement_kind": "reason_disagreement",
+      "phenomenon_group": "punctuation_vs_list_delimiter_taxonomy",
+      "anchor": {
+        "anchor_id": "extract_04-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "Following the diagnosis process leads to replacing unrelated components or fails to identify a root cause from the evidence, even though no active corruption is present.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-013",
+            "source_span": {
+              "start": 0,
+              "end": 71
+            },
+            "claim_text": "Following the diagnosis process leads to replacing unrelated components",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-014",
+            "source_span": {
+              "start": 75,
+              "end": 123
+            },
+            "claim_text": "fails to identify a root cause from the evidence",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_04-claim-015",
+            "source_span": {
+              "start": 125,
+              "end": 168
+            },
+            "claim_text": "even though no active corruption is present",
+            "claim_type": "limitation",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-032",
+        "source_span": {
+          "start": 123,
+          "end": 125
+        },
+        "gap_text": ", ",
+        "eligible_non_whitespace_count": 1
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains only a comma and space, serving as a syntactic separator without independent assertive content."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "list_delimiter",
+          "rationale": "The gap consists of a comma and a space, which grammatically separates a falsification claim from a limiting condition. It has no independent assertive content."
+        }
+      }
+    },
+    {
+      "case_id": "b3-012-coverage-gap-046",
+      "source_case_id": "extract_06",
+      "gap_id": "coverage-gap-046",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "contrastive_or_concessive_connector",
+      "anchor": {
+        "anchor_id": "extract_06-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In software delivery, exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout, whereas testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_06-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 20
+            },
+            "claim_text": "In software delivery",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_06-claim-002",
+            "source_span": {
+              "start": 22,
+              "end": 286
+            },
+            "claim_text": "exposing a risky change to a representative subset that reflects the complexity of the full population (e.g., one internal group or a representative tenant) reveals hidden issues (like dependency assumption failures or undocumented data shapes) before full rollout",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_06-claim-003",
+            "source_span": {
+              "start": 296,
+              "end": 419
+            },
+            "claim_text": "testing only the simplest subset (e.g., only the smallest tenant) fails to detect issues present only in more complex cases",
+            "claim_type": "counterexample",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-046",
+        "source_span": {
+          "start": 286,
+          "end": 296
+        },
+        "gap_text": ", whereas ",
+        "eligible_non_whitespace_count": 8
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The phrase ', whereas ' introduces a contrastive clause that may carry qualifying or limiting semantic weight regarding the relationship between the two propositions."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The text \", whereas \" is a conjunction that connects two contrasting clauses. The contrast itself is captured by the content of the two adjacent claims. The connector does not add independent assertive meaning."
+        }
+      }
+    },
+    {
+      "case_id": "b3-013-coverage-gap-054",
+      "source_case_id": "extract_07",
+      "gap_id": "coverage-gap-054",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "contrastive_or_concessive_connector",
+      "anchor": {
+        "anchor_id": "extract_07-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In incident response, automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents and avoid false stops, whereas noisy metrics weakly related to harm cause repeated false stops and delivery delays without incident reduction.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 20
+            },
+            "claim_text": "In incident response",
+            "claim_type": "scope",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-002",
+            "source_span": {
+              "start": 22,
+              "end": 147
+            },
+            "claim_text": "automated rollout stop conditions using directly harmful, low-noise metrics with predefined thresholds prevent full incidents",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-003",
+            "source_span": {
+              "start": 152,
+              "end": 169
+            },
+            "claim_text": "avoid false stops",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-004",
+            "source_span": {
+              "start": 179,
+              "end": 242
+            },
+            "claim_text": "noisy metrics weakly related to harm cause repeated false stops",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-005",
+            "source_span": {
+              "start": 247,
+              "end": 262
+            },
+            "claim_text": "delivery delays",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-006",
+            "source_span": {
+              "start": 263,
+              "end": 289
+            },
+            "claim_text": "without incident reduction",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-054",
+        "source_span": {
+          "start": 169,
+          "end": 179
+        },
+        "gap_text": ", whereas ",
+        "eligible_non_whitespace_count": 8
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The gap contains ', whereas ', which acts as a contrastive connector between clauses but does not itself constitute an independent claim."
+        },
+        "reviewer_g": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The gap contains \", whereas \", which establishes a strong contrastive relationship between the preceding and following clauses. This relationship itself may carry assertive meaning that is not fully captured by the adjacent claims alone."
+        }
+      }
+    },
+    {
+      "case_id": "b3-014-coverage-gap-064",
+      "source_case_id": "extract_07",
+      "gap_id": "coverage-gap-064",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "contrastive_or_concessive_connector",
+      "anchor": {
+        "anchor_id": "extract_07-falsification_observable-01",
+        "source_field": "falsification_observable",
+        "source_index": 0,
+        "source_text": "False stops occur and no reduction in incidents is observed, despite the metric being directly harmful and low-noise.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-017",
+            "source_span": {
+              "start": 0,
+              "end": 17
+            },
+            "claim_text": "False stops occur",
+            "claim_type": "proposition",
+            "claim_role": "falsification_observable"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-018",
+            "source_span": {
+              "start": 22,
+              "end": 59
+            },
+            "claim_text": "no reduction in incidents is observed",
+            "claim_type": "proposition",
+            "claim_role": "falsification_observable"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_07-claim-019",
+            "source_span": {
+              "start": 69,
+              "end": 116
+            },
+            "claim_text": "the metric being directly harmful and low-noise",
+            "claim_type": "proposition",
+            "claim_role": "falsification_observable"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-064",
+        "source_span": {
+          "start": 59,
+          "end": 69
+        },
+        "gap_text": ", despite ",
+        "eligible_non_whitespace_count": 8
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The gap contains ', despite ', which introduces a concessive clause but is itself a connector rather than an independent claim."
+        },
+        "reviewer_g": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The gap contains \", despite \", which establishes a concessive relationship, indicating that the first clause occurred in spite of the condition in the second clause. This relationship carries assertive meaning that may not be captured by the adjacent claims alone."
+        }
+      }
+    },
+    {
+      "case_id": "b3-015-coverage-gap-066",
+      "source_case_id": "extract_08",
+      "gap_id": "coverage-gap-066",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "contrastive_or_concessive_connector",
+      "anchor": {
+        "anchor_id": "extract_08-proposition-01",
+        "source_field": "proposition",
+        "source_index": 0,
+        "source_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action. However, this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_08-claim-001",
+            "source_span": {
+              "start": 0,
+              "end": 303
+            },
+            "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+            "claim_type": "causal",
+            "claim_role": "anchor"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_08-claim-002",
+            "source_span": {
+              "start": 313,
+              "end": 431
+            },
+            "claim_text": "this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+            "claim_type": "limitation",
+            "claim_role": "anchor"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-066",
+        "source_span": {
+          "start": 303,
+          "end": 313
+        },
+        "gap_text": " However, ",
+        "eligible_non_whitespace_count": 8
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The gap contains the adversative connector 'However,' which signals a logical shift to a limiting condition. While the subsequent claim covers the limitation content, the connector itself carries semantic weight regarding the relationship between the two claims that may be omitted from the current boundary."
+        },
+        "reviewer_g": {
+          "classification": "explicit_non_claim",
+          "reason_code": "non_assertive_connector",
+          "rationale": "The gap text \" However, \" is a non-assertive adversative conjunction that connects two contrasting claims. Its semantic function is captured by the relationship between the two adjacent claims."
+        }
+      }
+    },
+    {
+      "case_id": "b3-016-coverage-gap-082",
+      "source_case_id": "extract_10",
+      "gap_id": "coverage-gap-082",
+      "disagreement_kind": "classification_disagreement",
+      "phenomenon_group": "lexical_boundary_integrity",
+      "anchor": {
+        "anchor_id": "extract_10-falsification_statement-01",
+        "source_field": "falsification_statement",
+        "source_index": 0,
+        "source_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration and total cost exceeding the value of avoided stockouts.",
+        "current_claims": [
+          {
+            "adjudicated_claim_id": "adjudicated-extract_10-claim-009",
+            "source_span": {
+              "start": 0,
+              "end": 118
+            },
+            "claim_text": "For a product with daily replenishment and stable demand, applying the same large buffer leads to inventory expiration",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          },
+          {
+            "adjudicated_claim_id": "adjudicated-extract_10-claim-010",
+            "source_span": {
+              "start": 123,
+              "end": 173
+            },
+            "claim_text": "total cost exceeding the value of avoided stockout",
+            "claim_type": "falsifiability",
+            "claim_role": "falsification"
+          }
+        ]
+      },
+      "gap": {
+        "gap_id": "coverage-gap-082",
+        "source_span": {
+          "start": 173,
+          "end": 175
+        },
+        "gap_text": "s.",
+        "eligible_non_whitespace_count": 2
+      },
+      "blind_reviewer_decisions": {
+        "reviewer_q": {
+          "classification": "explicit_non_claim",
+          "reason_code": "punctuation_only",
+          "rationale": "The gap contains a period and the letter 's' forming the end of a word or abbreviation, lacking independent assertive meaning separate from the preceding claim span."
+        },
+        "reviewer_g": {
+          "classification": "boundary_omission_candidate",
+          "reason_code": null,
+          "rationale": "The gap contains \"s.\", which pluralizes the preceding word \"stockout\" and terminates the sentence. The change from singular \"stockout\" in the claim to plural \"stockouts\" in the source text could be semantically meaningful, representing a potential omission of assertive content."
+        }
+      }
+    }
+  ]
+}

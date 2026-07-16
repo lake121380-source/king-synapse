@@ -1,0 +1,655 @@
+{
+  "schema_version": 1,
+  "dataset_id": "phase7.3.3-c-segmentation-controlled-claim-controls-v1",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "purpose": "Provider-visible control packets with protocol-owned exact Claim boundaries and no gold support labels.",
+  "source_artifact_sha256": {
+    "original_balanced_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_claim_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd"
+  },
+  "packet_count": 20,
+  "original_candidate_gate_packet_count": 16,
+  "diagnostics_only_supplement_packet_count": 4,
+  "provider_packets": [
+    {
+      "case_id": "ctrl_supported_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "The deployment used a canary cohort. Only that cohort required rollback; the stable version remained available."
+        }
+      ],
+      "candidate_text": "A canary rollout limited rollback to the affected cohort. This result does not establish behavior outside canary deployments.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_supported_01_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 57
+          },
+          "claim_text": "A canary rollout limited rollback to the affected cohort.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_supported_01_claim_02",
+          "source_span": {
+            "start": 58,
+            "end": 125
+          },
+          "claim_text": "This result does not establish behavior outside canary deployments.",
+          "claim_type": "limitation",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_supported_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Pilot team A used batches of 10 and received feedback the same day."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "Pilot team B used batches of 12 and received feedback before the weekly review."
+        }
+      ],
+      "candidate_text": "In the two pilot teams, smaller batches produced earlier feedback. This observation is limited to the tested pilot teams.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_supported_02_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 66
+          },
+          "claim_text": "In the two pilot teams, smaller batches produced earlier feedback.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        },
+        {
+          "claim_id": "ctrl_supported_02_claim_02",
+          "source_span": {
+            "start": 67,
+            "end": 121
+          },
+          "claim_text": "This observation is limited to the tested pilot teams.",
+          "claim_type": "scope",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "explicit"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_supported_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "A controlled test changed only the cache setting. Median latency fell from 180 ms to 95 ms when caching was enabled."
+        }
+      ],
+      "candidate_text": "In this controlled test, enabling caching reduced median latency.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_supported_03_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 65
+          },
+          "claim_text": "In this controlled test, enabling caching reduced median latency.",
+          "claim_type": "causal",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_supported_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two backward-compatible schema migrations completed with localized rollback and low recovery work."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "An incompatible migration produced unreadable records and extensive recovery work."
+        },
+        {
+          "evidence_id": "e3",
+          "text": "The review protocol states that an incompatible migration with equally low recovery work would falsify the proposed compatibility pattern."
+        }
+      ],
+      "candidate_text": "Backward-compatible schemas reduced recovery work in these migrations. The incompatible migration is a counterexample to the low-recovery pattern. A successful incompatible migration with equally low recovery work would falsify this pattern.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_supported_04_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 70
+          },
+          "claim_text": "Backward-compatible schemas reduced recovery work in these migrations.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        },
+        {
+          "claim_id": "ctrl_supported_04_claim_02",
+          "source_span": {
+            "start": 71,
+            "end": 146
+          },
+          "claim_text": "The incompatible migration is a counterexample to the low-recovery pattern.",
+          "claim_type": "counterexample",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_supported_04_claim_03",
+          "source_span": {
+            "start": 147,
+            "end": 241
+          },
+          "claim_text": "A successful incompatible migration with equally low recovery work would falsify this pattern.",
+          "claim_type": "falsifiability",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "explicit"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_partial_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two early-stage pilot teams obtained feedback faster after reducing batch size."
+        }
+      ],
+      "candidate_text": "Smaller batches produced faster feedback in the two pilot teams. Smaller batches always improve feedback speed for every organization.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_partial_01_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 64
+          },
+          "claim_text": "Smaller batches produced faster feedback in the two pilot teams.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_partial_01_claim_02",
+          "source_span": {
+            "start": 65,
+            "end": 134
+          },
+          "claim_text": "Smaller batches always improve feedback speed for every organization.",
+          "claim_type": "scope",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_partial_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "High queue depth accompanied three observed latency spikes."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "One latency spike occurred while queue depth was normal because a database lock stalled requests."
+        }
+      ],
+      "candidate_text": "High queue depth accompanied several observed latency spikes. High queue depth caused every latency spike.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_partial_02_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 61
+          },
+          "claim_text": "High queue depth accompanied several observed latency spikes.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_partial_02_claim_02",
+          "source_span": {
+            "start": 62,
+            "end": 106
+          },
+          "claim_text": "High queue depth caused every latency spike.",
+          "claim_type": "causal",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_partial_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "In two releases, a compatibility check detected schema conflicts before deployment."
+        }
+      ],
+      "candidate_text": "Compatibility checks detected conflicts in the two observed releases. The same check will prevent all future deployment failures.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_partial_03_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 69
+          },
+          "claim_text": "Compatibility checks detected conflicts in the two observed releases.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_partial_03_claim_02",
+          "source_span": {
+            "start": 70,
+            "end": 129
+          },
+          "claim_text": "The same check will prevent all future deployment failures.",
+          "claim_type": "prediction",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_partial_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Three support cases were resolved faster when logs included request identifiers."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "The evidence does not record staffing levels or customer satisfaction."
+        }
+      ],
+      "candidate_text": "Request identifiers accompanied faster resolution in three support cases. The improvement occurred because staffing doubled and customers became more satisfied.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_partial_04_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 73
+          },
+          "claim_text": "Request identifiers accompanied faster resolution in three support cases.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "explicit"
+        },
+        {
+          "claim_id": "ctrl_partial_04_claim_02",
+          "source_span": {
+            "start": 74,
+            "end": 160
+          },
+          "claim_text": "The improvement occurred because staffing doubled and customers became more satisfied.",
+          "claim_type": "causal",
+          "centrality": "material",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_unsupported_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "The large-batch release required a full rollback."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "The small-batch release required only a localized rollback."
+        }
+      ],
+      "candidate_text": "Larger release batches reduced rollback risk.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_unsupported_01_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 45
+          },
+          "claim_text": "Larger release batches reduced rollback risk.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_unsupported_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "The experiment found no measurable relationship between reminder color and task completion."
+        }
+      ],
+      "candidate_text": "Blue reminders increased task completion.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_unsupported_02_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 41
+          },
+          "claim_text": "Blue reminders increased task completion.",
+          "claim_type": "causal",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_unsupported_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two teams improved after daily stand-ups."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "A third team adopted daily stand-ups and its delivery time worsened."
+        }
+      ],
+      "candidate_text": "Daily stand-ups improve delivery time in every team.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_unsupported_03_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 52
+          },
+          "claim_text": "Daily stand-ups improve delivery time in every team.",
+          "claim_type": "scope",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_unsupported_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "The records describe database backup duration and restore success."
+        }
+      ],
+      "candidate_text": "Remote work increases product creativity.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_unsupported_04_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 41
+          },
+          "claim_text": "Remote work increases product creativity.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_not_assessable_01",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "One query completed in 40 ms after the new index was enabled. No baseline or other query type was measured."
+        }
+      ],
+      "candidate_text": "The new index improves all query types.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_not_assessable_01_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 39
+          },
+          "claim_text": "The new index improves all query types.",
+          "claim_type": "prediction",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_not_assessable_02",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "A team adopted a new planning template, but the outcome field was not recorded."
+        }
+      ],
+      "candidate_text": "The planning template reduced delivery time.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_not_assessable_02_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 44
+          },
+          "claim_text": "The planning template reduced delivery time.",
+          "claim_type": "causal",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_not_assessable_03",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two team members reported higher productivity at night."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "Two other team members reported higher productivity in the morning."
+        }
+      ],
+      "candidate_text": "Night work is more productive for this team.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_not_assessable_03_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 44
+          },
+          "claim_text": "Night work is more productive for this team.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "ctrl_not_assessable_04",
+      "evaluation_lane": "original_balanced_candidate_controls",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "The evidence records the server operating-system version but contains no energy measurements."
+        }
+      ],
+      "candidate_text": "The server configuration reduces energy use.",
+      "atomic_claims": [
+        {
+          "claim_id": "ctrl_not_assessable_04_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 44
+          },
+          "claim_text": "The server configuration reduces energy use.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "diag_partial_01_proposition",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Pilot teams A, B, and C completed the task faster after the workflow change."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "Pilot team D showed no measurable change in completion time."
+        }
+      ],
+      "candidate_text": "The pilot teams completed the task faster after the workflow change.",
+      "atomic_claims": [
+        {
+          "claim_id": "diag_partial_01_proposition_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 68
+          },
+          "claim_text": "The pilot teams completed the task faster after the workflow change.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "diag_partial_02_scope",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two early-stage startups in one accelerator reduced rework after weekly customer interviews."
+        }
+      ],
+      "candidate_text": "Early-stage startups generally reduce rework through weekly customer interviews.",
+      "atomic_claims": [
+        {
+          "claim_id": "diag_partial_02_scope_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 80
+          },
+          "claim_text": "Early-stage startups generally reduce rework through weekly customer interviews.",
+          "claim_type": "scope",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    },
+    {
+      "case_id": "diag_partial_03_causal",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Teams using smaller batches received feedback sooner, but those teams also had dedicated reviewers."
+        }
+      ],
+      "candidate_text": "Smaller batch size caused the teams to receive feedback sooner.",
+      "atomic_claims": [
+        {
+          "claim_id": "diag_partial_03_causal_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 63
+          },
+          "claim_text": "Smaller batch size caused the teams to receive feedback sooner.",
+          "claim_type": "causal",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred"
+        }
+      ]
+    },
+    {
+      "case_id": "diag_partial_04_prediction",
+      "evaluation_lane": "partial_atomic_claim_diagnostics_supplement",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "In two prior canary deployments, rollback remained isolated to the canary cohort."
+        }
+      ],
+      "candidate_text": "The next canary deployment will keep any rollback isolated to the canary cohort.",
+      "atomic_claims": [
+        {
+          "claim_id": "diag_partial_04_prediction_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 80
+          },
+          "claim_text": "The next canary deployment will keep any rollback isolated to the canary cohort.",
+          "claim_type": "prediction",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized"
+        }
+      ]
+    }
+  ],
+  "guards": {
+    "expected_claim_labels_included": false,
+    "expected_candidate_labels_included": false,
+    "gold_evidence_attributions_included": false,
+    "claim_boundaries_provider_mutable": false,
+    "design_cases_included": false,
+    "held_out_included": false
+  }
+}

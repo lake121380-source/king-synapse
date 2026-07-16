@@ -1,0 +1,53 @@
+{
+  "schema_version": 3,
+  "outcome_id": "phase7.3.3-d1-a-boundary-review-execution-outcome-v3",
+  "status": "authoritative_negative_result_boundary_agreement_unavailable",
+  "protocol_version": "phase7.3.3-d1-a-boundary-reference-protocol-v3",
+  "v1_and_v2_preserved": true,
+  "reviewer_a": {
+    "status": "completed",
+    "manifest_sha256": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+    "submission_sha256": "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+    "execution_result_sha256": "1fb21c296338cefd467fcc30c0122ee2a52b9b707fa430725838f77165711e0d",
+    "case_count": 10,
+    "claim_count": 96,
+    "canonical_model_family": "gpt-4.1",
+    "provider_reported_models": [
+      "gpt-4.1",
+      "gpt-4.1-2025-04-14"
+    ]
+  },
+  "reviewer_b": {
+    "status": "authoritative_semantic_contract_failure",
+    "manifest_sha256": "4b04e76bdde537166fd827fd43585d1104febc2c662b00a18f05dd1f85c401bf",
+    "completed_case_count": 9,
+    "failed_case_id": "extract_10",
+    "failure_code": "source_excerpt_not_found:extract_10-proposition-01:2",
+    "negative_result_sha256": "84315e13748b14bc0f235410d7d1e3d2fbae90afd7c929ffe315e6e77095b4a7"
+  },
+  "v3_hypothesis_assessment": {
+    "provider_model_alias_normalization": "supported_for_reviewer_a",
+    "occurrence_index_disambiguation": "offline_contract_validated",
+    "reviewer_b_failure_kind": "non_verbatim_excerpt_not_occurrence_ambiguity",
+    "hidden_protocol_contract_detected": false,
+    "reviewer_b_strict_boundary_contract_capability": "failed_on_1_of_10_cases"
+  },
+  "audit": {
+    "attempt_log_sha256": "38b983e233941bb71395f3dc76cbd98286fe4f255afbc86947edfa51b05d82b3",
+    "attempt_log_event_count": 60,
+    "attempt_log_tail_sha256": "d40e73a95c49c73fd9502074ab5a648faa3167025cf8bf15685046a3e8946adb",
+    "provider_content_hashed_before_parse_or_schema_rejection": true,
+    "raw_provider_responses_stored": false
+  },
+  "gates": {
+    "two_completed_blind_submissions": false,
+    "boundary_agreement_available": false,
+    "boundary_adjudication_allowed": false,
+    "boundary_coverage_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_stage_allowed": false,
+    "design_model_execution_allowed": false
+  },
+  "retry_under_same_manifest_authorized": false,
+  "held_out_accessed": false
+}

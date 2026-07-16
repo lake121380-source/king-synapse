@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-execution-protocol-v2",
+  "status": "frozen_successor_after_v1_negative",
+  "predecessor": {
+    "protocol": "phase7.3.3-d-independent-pilot-reference-execution-protocol-v1",
+    "reviewer_a_negative_result_sha256": "23348b54b6c0e288e28a2f18ab32ae51a01eddbd0f8f02bd160fa859d09dfd2c",
+    "v1_failure": "token_partition_incomplete",
+    "v1_same_version_retry": false
+  },
+  "controlled_change": "replace mandatory token partition serialization with whole_candidate_claim operation plus explicit atomicity validation",
+  "unchanged": {
+    "dataset": true,
+    "evidence": true,
+    "reviewers": true,
+    "models": true,
+    "support_semantics": true,
+    "blinding": true,
+    "failure_policy": true
+  },
+  "frame_hypothesis": "selected Candidates are each representable as one comparative or selection proposition",
+  "reviewer_task": {
+    "validate_single_atomic_claim": true,
+    "judge_materiality": true,
+    "judge_support": true,
+    "cite_same_case_evidence": true
+  },
+  "adapter_outputs": {
+    "claim_span": "entire_candidate",
+    "non_claim_spans": [],
+    "candidate_reference_label": "support_label",
+    "material_error_span": "entire_candidate_if_material_and_not_supported"
+  },
+  "failure": {
+    "atomicity_not_single_blocks_v2_reference": true,
+    "first_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false
+  },
+  "provider": {
+    "base_url": "https://api.gpt.ge/v1",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "response_format": {
+      "type": "json_object"
+    },
+    "case_isolation": true
+  },
+  "blinding": {
+    "other_reviewer_visible": false,
+    "route_a_gold_visible": false,
+    "historical_labels_visible": false,
+    "arms_visible": false
+  },
+  "runtime": {
+    "integration": false,
+    "memory_write": false
+  }
+}

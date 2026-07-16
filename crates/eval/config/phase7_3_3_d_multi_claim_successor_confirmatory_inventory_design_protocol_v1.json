@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-confirmatory-inventory-design-v1",
+  "status": "frozen_before_metadata_inventory_construction",
+  "entry_gate": "design_sealed_confirmatory_inventory_successor_after_authoritative_shortfall",
+  "study_role": "independent_confirmatory_successor_after_authoritative_exploratory_inventory_shortfall",
+  "source_lineage": {
+    "dataset_path": "crates/eval/datasets/memory_intelligence/agent_memory_benchmark.toml",
+    "dataset_sha256": "592e9f8cd5c893bc1b88e141fe6963a810ad70919bcd40b53203d642629a4cc3",
+    "split": "test",
+    "phase7_multi_claim_pilot_usage": false,
+    "phase7_independent_pilot_split": "validation",
+    "prior_phase6_benchmark_usage_disclosed": true,
+    "generality_claim_beyond_this_confirmatory_replication_allowed": false
+  },
+  "sealed_processing": {
+    "permitted_before_opening_gate": [
+      "id",
+      "sha256",
+      "length",
+      "count",
+      "category",
+      "template_variant",
+      "stratum",
+      "overlap_boolean"
+    ],
+    "candidate_content_serialization": false,
+    "evidence_content_serialization": false,
+    "selected_content_opening": "explicit_successor_gate_only",
+    "unselected_content_opening": false
+  },
+  "required_sequence": [
+    "freeze_inventory_design",
+    "construct_metadata_only_inventory",
+    "audit_eligibility_and_overlap",
+    "freeze_selected_ids_and_hashes",
+    "freeze_confirmatory_preregistration",
+    "evaluate_opening_gate",
+    "open_selected_content_only_if_gate_passes"
+  ],
+  "failure_discipline": {
+    "inventory_shortfall": "authoritative_negative_no_manual_backfill",
+    "post_selection_replacement": false,
+    "outcome_dependent_selection": false,
+    "frozen_artifact_mutation": false
+  },
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "construct_metadata_only_confirmatory_inventory_v1"
+}

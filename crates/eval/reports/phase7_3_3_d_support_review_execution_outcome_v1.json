@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "outcome_id": "phase7.3.3-d1-b-support-review-execution-outcome-v1",
+  "status": "completed_with_two_authoritative_transport_negative_results",
+  "protocol_sha256": "014cf77a7bd71cf58e974eb274615ec06cffa6c073ecf21bbd8e62bf429db0f1",
+  "execution_policy_sha256": "ad287e9542cb388aac8f716d11ba834994ce45c8d6024f1f3996ee3c241bd3bb",
+  "prompt_sha256": "d659c31bbe2180420102f1134f7d414800740b587e2b7b7a2407802a4684a912",
+  "contract_fixtures_sha256": "e789a97b0e6379c9e752ac5510b1d036cabba8d39015a445f0a7cd84c9b3b7d8",
+  "reviewers": {
+    "a": {
+      "manifest_sha256": "2361a68ad1e3c5df24a556f353c18b8f966bbb4aad069ee4f967ade171595cac",
+      "negative_result_sha256": "03f7cfc40ca42e556b3b1e690387669898db0ae6a178fc23481162805869c86a",
+      "attempt_log_sha256": "3f3f97c4822c4642fcf9a360a57ff99b553b25fb7cdb1e7ad8adcb3d739f10a4",
+      "attempt_log_tail_sha256": "940b6abbbeed9bd884b4ee02cab348fad043e2e464c80c065bd80c0a9be805ab",
+      "terminal_outcome": "authoritative_negative_result",
+      "failure_level": "level_0_transport",
+      "failure_subtype": "transport_failure",
+      "failure_code": "HTTP Error 401: Unauthorized",
+      "response_received": false,
+      "completed_case_count": 0,
+      "completed_decision_count": 0,
+      "same_version_retry_allowed": false,
+      "support_capability_conclusion_authorized": false
+    },
+    "b": {
+      "manifest_sha256": "193c8d9c33b752cf3f69650c953882f9fc5b259e343bc88a99143d08eb559a77",
+      "negative_result_sha256": "cc57af39adb90e0f5860ab18f8898ef3a88d88f471ba9270f732f0210e4b2f2a",
+      "attempt_log_sha256": "ac41669d2d585349e21de03cf87554acd5adc20debdba34db383c7723c2745f8",
+      "attempt_log_tail_sha256": "50f8c6a1578dd1903d33375601ef999f5690340cec4bcc450958c7ed7eb1b980",
+      "terminal_outcome": "authoritative_negative_result",
+      "failure_level": "level_0_transport",
+      "failure_subtype": "transport_failure",
+      "failure_code": "HTTP Error 401: Unauthorized",
+      "response_received": false,
+      "completed_case_count": 0,
+      "completed_decision_count": 0,
+      "same_version_retry_allowed": false,
+      "support_capability_conclusion_authorized": false
+    }
+  },
+  "two_completed_support_submissions": false,
+  "support_agreement_allowed": false,
+  "support_gold_frozen": false,
+  "packet_or_boundary_content_changed": false,
+  "held_out_accessed": false,
+  "interpretation": "The frozen v1 execution was attempted for both independent reviewers, but the gateway rejected both requests before model content was received. This is a transport/credential result and does not evaluate Support classification capability.",
+  "next_required_stage": "freeze_new_support_execution_version_after_valid_gateway_credential_is_available"
+}

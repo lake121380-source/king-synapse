@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-c-segmentation-controlled-readiness-v1",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "evaluation_version": "phase7.3.3-c-segmentation-controlled-atomic-claim-classification-v1",
+  "generated_at": "2026-07-12T14:41:32.361625400+00:00",
+  "status": "offline_protocol_ready_real_execution_not_started",
+  "decision": "segmentation_controlled_classifier_manifest_may_be_prepared",
+  "originating_negative_result": "systematic_source_span_text_mismatch_20_of_20",
+  "measurement_change": "protocol_supplies_claim_structure_judge_classifies_support_only",
+  "validation": {
+    "provider_packet_count": 20,
+    "original_candidate_gate_packet_count": 16,
+    "diagnostics_supplement_packet_count": 4,
+    "atomic_claim_count": 28,
+    "all_packet_ids_unique": true,
+    "all_claim_ids_unique": true,
+    "all_protocol_owned_spans_exact": true,
+    "provider_packets_match_frozen_gold_structure": true,
+    "provider_packets_contain_no_gold_labels": true,
+    "perfect_probe_accepted": true,
+    "perfect_probe_candidate_aggregation_correct": true,
+    "missing_claim_rejected": true,
+    "duplicate_claim_rejected": true,
+    "unknown_claim_rejected": true,
+    "reordered_claim_rejected": true
+  },
+  "artifact_sha256": {
+    "protocol_sha256": "3ca2f705ff4ae10f9275bb7da6f10f81bd9e872814f95a9906a936ae79cc0a44",
+    "provider_controls_sha256": "ba8cc5843177e400d74cea2e014cea15223ff24cdbb085f29a79f9fe8a7c5d37",
+    "classifier_prompt_sha256": "bd9300d38e19cbd1df115ccff8ccb87d9b9fe9068f5bfd6dc8a519bef845eaeb",
+    "original_controls_sha256": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_supplement_sha256": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd",
+    "originating_negative_analysis_sha256": "90a5c8c944496c705ac0db3f5611b79178d16acc6b617b14633cc18587ba4fbf"
+  },
+  "next_execution_requirements": [
+    "freeze provider model and execution adapter in a new immutable manifest",
+    "use the same relay model temperature and top_p for controlled comparison",
+    "record first returned output per packet as authoritative",
+    "do not execute design or held-out cases before control decision"
+  ],
+  "guards": {
+    "prior_negative_result_modified": false,
+    "prior_manifest_retry_performed": false,
+    "prompt_tuned_after_real_execution": false,
+    "parser_tuned_after_real_execution": false,
+    "aggregator_modified": false,
+    "real_model_executed": false,
+    "design_cases_accessed": false,
+    "held_out_accessed": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false
+  }
+}

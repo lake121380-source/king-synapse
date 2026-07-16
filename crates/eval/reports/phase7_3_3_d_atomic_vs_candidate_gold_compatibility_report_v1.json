@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-atomic-vs-candidate-gold-compatibility-report-v1",
+  "status": "frozen",
+  "conclusion": "compatible_for_retrospective_diagnostic_pairing_only",
+  "study_object": "diagnostic_resolution_support_heterogeneity_error_localization_and_information_masking",
+  "compatible_uses": [
+    "exact case pairing",
+    "diagnostic resolution analysis",
+    "deterministic aggregation replay",
+    "information masking analysis"
+  ],
+  "incompatible_uses": [
+    "causal measurement-protocol attribution",
+    "intrinsic accuracy superiority",
+    "model capability ranking",
+    "generalization claims"
+  ],
+  "candidate_lane": {
+    "status": "frozen_historical_descriptive_comparator",
+    "case_count": 10,
+    "measurement_unit": "candidate",
+    "provider_rerun_authorized": false,
+    "causal_protocol_attribution_authorized": false
+  },
+  "atomic_lane": {
+    "status": "frozen_project_reference_model_adjudicated_not_human_gold",
+    "case_count": 10,
+    "claim_count": 118,
+    "measurement_unit": "atomic_claim",
+    "gold_fields": [
+      "support_label"
+    ],
+    "provider_rerun_authorized": false
+  },
+  "known_asymmetries": [
+    "historical single Judge output versus later dual-review adjudicated Atomic reference",
+    "model version and execution window are not contemporaneously controlled",
+    "Candidate-level label semantics refer to the Candidate as a whole"
+  ],
+  "anti_circularity_guard_applied": true,
+  "independent_reference_required_for_accuracy_claims": true,
+  "baseline_alignment_audit_sha256": "a28adec44de6b0d05c6d7158dc3c38d152093b99bbf733b27c76a28238463b32",
+  "provider_called": false,
+  "held_out_accessed": false
+}

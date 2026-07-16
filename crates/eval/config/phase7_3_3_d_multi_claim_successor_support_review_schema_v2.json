@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.3.3-d-multi-claim-successor-support-review-schema-v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decisions"
+  ],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "annotation_confidence",
+          "claim_index",
+          "evidence_citation_mask",
+          "reason_codes",
+          "support_label",
+          "support_rationale"
+        ],
+        "properties": {
+          "claim_index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "support_label": {
+            "type": "string",
+            "enum": [
+              "not_assessable",
+              "partially_supported",
+              "supported",
+              "unsupported"
+            ]
+          },
+          "evidence_citation_mask": {
+            "type": "string",
+            "pattern": "^[01]+$"
+          },
+          "reason_codes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "causal_leap",
+                "central_proposition_unsupported",
+                "certainty_escalation",
+                "conservative_entailment",
+                "counterexample_ignored",
+                "counterexample_preserved",
+                "direct_evidence_match",
+                "insufficient_evidence",
+                "prediction_overcommitment",
+                "reasonable_bridging_inference",
+                "scope_expansion",
+                "scope_preserved",
+                "unsupported_detail"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "support_rationale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "annotation_confidence": {
+            "type": "string",
+            "enum": [
+              "high",
+              "low",
+              "medium"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

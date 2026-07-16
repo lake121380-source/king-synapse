@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-content-open-protocol-v1",
+  "status": "frozen_by_adapter",
+  "entry_gate": {
+    "sampling_frame_frozen": true,
+    "selected_ids_hashes_frozen": true,
+    "next_authorized_stage": "open_independent_pilot_selected_content_v1"
+  },
+  "scope": {
+    "open_selected_count": 40,
+    "unselected_content_opened": false,
+    "confirmatory_content_opened": false
+  },
+  "source_mapping": {
+    "candidate_text": "scenario.expected_reason",
+    "query_context": "scenario.query",
+    "evidence_bundle": "scenario.memory",
+    "forbidden_fields": [
+      "expected_top",
+      "intervention_required",
+      "expected_reason_as_reference",
+      "historical_outcomes",
+      "route_a_gold",
+      "arm_outputs"
+    ]
+  },
+  "reference_blinding": {
+    "reviewer_packets_identical_except_reviewer_identity": true,
+    "other_reviewer_visible": false,
+    "route_a_gold_visible": false,
+    "arm_outputs_visible": false,
+    "historical_labels_visible": false
+  },
+  "lineage": {
+    "candidate_hash_replay": true,
+    "evidence_hash_replay": true,
+    "source_identity_replay": true
+  },
+  "provider_called": false,
+  "runtime_integration_authorized": false
+}

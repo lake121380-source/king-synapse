@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "outcome_id": "phase7.3.3-d1-a-boundary-review-execution-outcome-v2",
+  "status": "authoritative_negative_result_boundary_agreement_unavailable",
+  "v1_preserved": true,
+  "protocol_version": "phase7.3.3-d1-a-boundary-reference-protocol-v2",
+  "reviewer_a": {
+    "manifest_sha256": "8765406d049719345480886272041d47fc9bd28d47ab33c9dbe27ae8b11712ef",
+    "status": "failed_finalization_resolved_model_identity_drift",
+    "returned_case_count": 10,
+    "strictly_valid_case_count": 10,
+    "claim_count": 92,
+    "negative_result_sha256": "e3f1e9dec8242a608c5d7671147c2c05ee7aaaf3de9dab7585bf0c1db4237fb4"
+  },
+  "reviewer_b": {
+    "manifest_sha256": "2539753cb619b74c31e178ce02533b6c64331c64cc79d5972660b7d0f8feaec4",
+    "status": "authoritative_semantic_contract_failure",
+    "completed_case_count": 9,
+    "failed_case_id": "extract_10",
+    "failure_code": "source_excerpt_not_exact_unique:extract_10-proposition-01:2",
+    "negative_result_sha256": "6d8978238281f1d3655e335bd616bbc9eb7f2b2691a8e0503386f9170cce9422"
+  },
+  "audit": {
+    "attempt_log_sha256": "37098e87b88b42215c823a964b1829556e089030abd1c13022b32b8ed4217d9e",
+    "attempt_log_event_count": 60,
+    "attempt_log_tail_sha256": "db9c07dd123a72e6a76855b21956ee31b9cf4bec56dc3a6acdb7fa57306d5925",
+    "provider_content_hashed_before_parse_or_schema_rejection": true,
+    "raw_provider_responses_stored": false
+  },
+  "gates": {
+    "boundary_agreement_available": false,
+    "boundary_adjudication_allowed": false,
+    "boundary_coverage_allowed": false,
+    "boundary_gold_frozen": false,
+    "support_stage_allowed": false,
+    "design_model_execution_allowed": false
+  },
+  "causal_assessment": {
+    "v1_hidden_centrality_contract_removed": true,
+    "v2_primary_blockers": [
+      "provider_resolved_model_identity_instability",
+      "ambiguous_or_nonexact_excerpt_location_without_occurrence_disambiguation"
+    ],
+    "model_boundary_capability_conclusion_authorized": false
+  },
+  "retry_under_same_manifest_authorized": false,
+  "held_out_accessed": false
+}

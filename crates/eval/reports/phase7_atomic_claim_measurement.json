@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-atomic-claim-measurement-protocol-freeze",
+  "phase": "Phase 7.3.3 Atomic Claim Measurement Protocol",
+  "evaluation_version": "phase7.3.3-atomic-claim-measurement-v1",
+  "generated_at": "2026-07-12T12:26:51.261043400+00:00",
+  "status": "protocol_frozen_model_execution_pending",
+  "hypothesis": "Candidate-level many-to-one labeling creates a partially-supported attractor; atomic local judgments plus deterministic aggregation may improve diagnostic discrimination.",
+  "hypothesis_status": "exploratory_not_yet_confirmed",
+  "protocol_id": "phase7.3.3-atomic-claim-measurement-v1",
+  "protocol_validation": {
+    "control_case_count": 16,
+    "atomic_claim_count": 24,
+    "exact_source_span_count": 24,
+    "unique_control_ids": true,
+    "unique_claim_ids": true,
+    "exactly_one_central_claim_per_case": true,
+    "evidence_references_valid": true,
+    "expected_aggregation_consistent": true,
+    "balanced_four_class_controls": true,
+    "all_claim_types_covered": true,
+    "candidate_label_counts": {
+      "not_assessable": 4,
+      "partially_supported": 4,
+      "supported": 4,
+      "unsupported": 4
+    },
+    "claim_type_counts": {
+      "causal": 5,
+      "counterexample": 1,
+      "falsifiability": 1,
+      "limitation": 1,
+      "prediction": 2,
+      "proposition": 11,
+      "scope": 3
+    }
+  },
+  "legacy_design_distribution": {
+    "case_count": 10,
+    "label_counts": {
+      "partially_supported": 7,
+      "supported": 1,
+      "unsupported": 2
+    },
+    "majority_label": "partially_supported",
+    "majority_class_accuracy": 0.7,
+    "phase7_3_2_collapsed_prediction": "partially_supported",
+    "phase7_3_2_exact_agreement": 0.7
+  },
+  "collapse_probes": [
+    {
+      "predicted_label": "supported",
+      "case_count": 16,
+      "exact_match_count": 4,
+      "exact_accuracy": 0.25,
+      "macro_recall": 0.25,
+      "prediction_entropy_bits": 0.0,
+      "single_class_prediction_rate": 1.0
+    },
+    {
+      "predicted_label": "partially_supported",
+      "case_count": 16,
+      "exact_match_count": 4,
+      "exact_accuracy": 0.25,
+      "macro_recall": 0.25,
+      "prediction_entropy_bits": 0.0,
+      "single_class_prediction_rate": 1.0
+    },
+    {
+      "predicted_label": "unsupported",
+      "case_count": 16,
+      "exact_match_count": 4,
+      "exact_accuracy": 0.25,
+      "macro_recall": 0.25,
+      "prediction_entropy_bits": 0.0,
+      "single_class_prediction_rate": 1.0
+    },
+    {
+      "predicted_label": "not_assessable",
+      "case_count": 16,
+      "exact_match_count": 4,
+      "exact_accuracy": 0.25,
+      "macro_recall": 0.25,
+      "prediction_entropy_bits": 0.0,
+      "single_class_prediction_rate": 1.0
+    }
+  ],
+  "aggregation_policy": "phase7.3.3-central-claim-gate-v1",
+  "aggregation_uses_numeric_weights": false,
+  "decision": "atomic_claim_protocol_ready_not_yet_capability_validated",
+  "interpretation": [
+    "The Phase 7.3.2 exact agreement of 0.70 is compatible with majority-class collapse because seven of ten Silver Candidate labels are partially_supported.",
+    "Balanced controls reduce every single-class predictor to 0.25 exact accuracy and 0.25 macro recall, so collapse cannot masquerade as strong agreement.",
+    "The controls validate measurement mechanics only; no atomic Judge capability result exists until a frozen model execution is completed.",
+    "Rule-based central-claim aggregation is frozen without numeric weights to avoid result-driven tuning."
+  ],
+  "next_gate": [
+    "Run the frozen atomic Judge on all sixteen balanced controls without prompt, parser, or aggregation changes.",
+    "Require all four labels to be predicted and macro recall to exceed the 0.25 single-class baseline before applying the protocol to the ten real design Candidates.",
+    "After control readiness, execute the same frozen protocol on the ten real design Candidates and compare discrimination with Phase 7.3.2.",
+    "Keep held-out data closed until control readiness and design-only diagnostic improvement are both established."
+  ],
+  "artifact_hashes": {
+    "protocol_sha256": "c2ac9692abca60693b33aeb829364ae97d9a22136f719d998ddd1fcc3f6e837d",
+    "balanced_controls_sha256": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "prompt_sha256": "88ca6b3e232f0dadde2179932d4b229d8afee912ead773f31975e3f6cda98e23",
+    "model_adjudicated_silver_sha256": "18bbcf53b4c67bb8d9eeec14543b9d3ab1480c9b1ece04adbf6fb3c80b80192c",
+    "phase7_3_2_report_sha256": "8a1bd198cf15f713bbc7a919b7177280c3391359204b0783073cd4a00082f6ae"
+  },
+  "guards": {
+    "controls_are_protocol_diagnostics_not_capability_evidence": true,
+    "real_design_candidates_frozen": true,
+    "extractor_frozen": true,
+    "provider_frozen": true,
+    "prompt_optimization_authorized": false,
+    "aggregation_tuning_after_execution_authorized": false,
+    "model_execution_completed": false,
+    "held_out_cases_untouched": true,
+    "human_gold_claimed": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false,
+    "runtime_authorized": false,
+    "hermes_authorized": false
+  }
+}

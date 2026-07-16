@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_safe_019",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "4ec6c858bb73fffefc8afcd8a6257455a01a20254c8d962692a9e59f01be655d",
+  "content_sha256": "5b51ab70ff3b3c2eae07e5fe2c7954965059ccdb125c031bee5b4ac090b3b375",
+  "latency_ms": 8461.943399976008,
+  "usage": {
+    "prompt_tokens": 1080,
+    "completion_tokens": 113,
+    "total_tokens": 1193,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 5086,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 5926,
+      "total_duration_ms": 5850,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_safe_019",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_safe_019-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence clearly supports that there is a clear current confirmed answer that should remain first. However, the candidate also claims that no cognitive intervention is needed, and the supplied evidence does not explicitly establish that broader no-intervention conclusion. Other evidence is weak, neutral, or competing, so only the clarity/baseline portion is supported."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_safe_019-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

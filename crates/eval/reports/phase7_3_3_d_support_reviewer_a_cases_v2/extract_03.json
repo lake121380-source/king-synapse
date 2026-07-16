@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-a-extract_03-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+  "reviewer": "a",
+  "case_id": "extract_03",
+  "provider_envelope_sha256": "392aed6f784cf2a4a388cc74b24569f7062f0ae9846dca611fbff99ba0d76bf2",
+  "provider_content_sha256": "2da05b3072a6cdfbaa83a0627235db3266223b741df8873aad8b1273a057150f",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_decisions_sha256": "39b91155ab4215d2fa9379b084a9ec799e321c1eaff140da16a0fcaeb775eabb",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "scope_preserved"
+      ],
+      "support_rationale": "Both onboarding and pricing test experiences directly describe fixing quantitative thresholds (activation, stop criteria, guardrails) before launch, matching the claim's scope and content.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence shows teams adhered to predefined thresholds in both cases: onboarding test accepted a neutral result, pricing test stopped at the guardrail, supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The onboarding test outcome states the team accepted a neutral result instead of redefining success, directly supporting the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-004",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both cited experiments involved predefined quantitative thresholds, matching the scope statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-005",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Evidence supports teams accepting outcomes based on thresholds without redefining success in these cases, but the claim's predictive certainty ('will accept') is stronger than the evidence allows.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-006",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_1",
+        "px_03_support_2",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "counterexample_preserved",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Support cases show teams did not alter criteria post-result, but the supplied counterexample (px_03_counter_3) demonstrates post-hoc modification is possible, so the claim is overgeneralized.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-007",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_03_support_2",
+        "px_03_support_1",
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "counterexample_preserved",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "Support cases show final decisions matched predefined triggers, but the counterexample shows a case where unexpected themes were discarded, so the claim's certainty is too strong.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-008",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample provides direct evidence that post-hoc redefinition of success metrics falsifies the pattern, matching the claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_03-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_03_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The counterexample describes post-hoc modification of success metrics, directly matching the falsification observable claim.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_03",
+    "status": "completed",
+    "decision_count": 9
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

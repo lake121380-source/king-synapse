@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-anchor-material-gate-v1",
+  "status": "frozen",
+  "purpose": "Deterministically summarize frozen Atomic Claim support labels at Candidate level while preserving the Atomic support vector as the primary diagnostic representation.",
+  "input_contract": {
+    "support_label_enum": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_assessable"
+    ],
+    "anchor_definition": "claim_role equals anchor",
+    "secondary_definition": "claim_role does not equal anchor",
+    "material_definition": "material equals true",
+    "at_least_one_anchor_required_per_case": true,
+    "all_anchor_claims_must_be_material": true,
+    "duplicate_claim_ids_forbidden": true
+  },
+  "primary_representation": {
+    "name": "atomic_support_vector",
+    "preserved_without_collapse": true,
+    "fields": [
+      "supported_count",
+      "partially_supported_count",
+      "unsupported_count",
+      "not_assessable_count"
+    ]
+  },
+  "primary_candidate_aggregation": {
+    "name": "multi_anchor_material_gate",
+    "rules_in_order": [
+      "If any anchor Claim is unsupported, Candidate is unsupported.",
+      "Else if any anchor Claim is not_assessable, Candidate is not_assessable.",
+      "Else if any anchor Claim is partially_supported, Candidate is partially_supported.",
+      "Else if any material secondary Claim is partially_supported, unsupported, or not_assessable, Candidate is partially_supported.",
+      "Else Candidate is supported."
+    ],
+    "numeric_weights_used": false,
+    "thresholds_used": false,
+    "post_execution_tuning_allowed": false
+  },
+  "secondary_sensitivity_analyses": [
+    {
+      "name": "strict_weakest_material_claim",
+      "purpose": "Describe sensitivity to treating any material unsupported Claim as Candidate unsupported.",
+      "primary_outcome_authorized": false
+    },
+    {
+      "name": "anchor_only",
+      "purpose": "Describe the Candidate state implied only by anchor Claims.",
+      "primary_outcome_authorized": false
+    }
+  ],
+  "precedence_notes": [
+    "Unsupported anchor takes precedence over not_assessable, partially_supported, and supported anchors.",
+    "Not-assessable anchor takes precedence over partially_supported and supported anchors.",
+    "A non-anchor unsupported Claim does not make the whole Candidate unsupported under the primary policy; it makes the Candidate partially_supported when all anchors remain supported.",
+    "Sensitivity analyses must never replace or overwrite the frozen primary aggregation."
+  ],
+  "historical_relation": {
+    "historical_aggregator_sha256": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f",
+    "historical_contract": "exactly_one_central_claim",
+    "current_change": "replace obsolete single-central cardinality with frozen multi-anchor structural roles",
+    "historical_artifact_mutated": false
+  },
+  "guards": {
+    "semantic_label_generation": false,
+    "provider_call_required": false,
+    "boundary_mutation_authorized": false,
+    "support_label_mutation_authorized": false,
+    "held_out_access_authorized": false
+  }
+}

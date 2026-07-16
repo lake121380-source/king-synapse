@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_pref_020",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "ec77767c3f34a5aaceb54c7149e55a669ee46834a6f2026658526b25512ce8ff",
+  "provider_content_sha256": "f3e8dd8855cb686507d5ab972359fca64f21f1e1a5c07e16d1847b43db58b0ea",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "1f57bfdea9514d12156f5ebd79f5c371fd09df62cbc99e046297b946f396bb72",
+  "normalized_case": {
+    "case_id": "mi_validation_pref_020",
+    "candidate_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_pref_020-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 63
+        },
+        "source_text_sha256": "4628dc7797153f1ead21cea6e475eaffd40823ef019e7bc45de05139eb003414",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_pref_020-evidence-01",
+          "mi_validation_pref_020-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the current explicit preference supersedes the older preference. Evidence 01 directly states that the older preference has been superseded, and Evidence 06 explicitly confirms that the current explicit preference replaces the earlier choice. These two pieces of evidence directly support the claim, confirming both the temporal update and the selection relation between the preferences.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

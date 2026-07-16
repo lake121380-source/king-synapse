@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "citation_assessment",
+    "confidence_assessment",
+    "diagnostic_confidence",
+    "diagnostic_explanation",
+    "fixed_support_label",
+    "primary_difference_class",
+    "reason_assessment",
+    "reference_claim_id",
+    "work_item_id"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "work_item_id": {
+      "type": "string"
+    },
+    "reference_claim_id": {
+      "type": "string"
+    },
+    "fixed_support_label": {
+      "enum": [
+        "supported",
+        "partially_supported",
+        "unsupported",
+        "not_assessable"
+      ]
+    },
+    "primary_difference_class": {
+      "enum": [
+        "complementary_evidence",
+        "confidence_calibration",
+        "equivalent_evidence_subset",
+        "evidence_interpretation",
+        "mixed",
+        "possible_protocol_ambiguity",
+        "rationale_wording_only",
+        "reason_code_granularity",
+        "redundant_citation"
+      ]
+    },
+    "citation_assessment": {
+      "enum": [
+        "complementary",
+        "equivalent",
+        "neither_adequate",
+        "not_different",
+        "option_1_more_adequate",
+        "option_2_more_adequate"
+      ]
+    },
+    "reason_assessment": {
+      "enum": [
+        "complementary",
+        "equivalent",
+        "neither_adequate",
+        "not_different",
+        "option_1_more_adequate",
+        "option_2_more_adequate"
+      ]
+    },
+    "confidence_assessment": {
+      "enum": [
+        "complementary",
+        "equivalent",
+        "neither_adequate",
+        "not_different",
+        "option_1_more_adequate",
+        "option_2_more_adequate"
+      ]
+    },
+    "diagnostic_explanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "diagnostic_confidence": {
+      "enum": [
+        "high",
+        "low",
+        "medium"
+      ]
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "fixture_report_id": "phase7.3.3-d3-support-adjudication-contract-fixtures-v1",
+  "status": "all_pass",
+  "protocol_sha256": "53a139eb1a2f4b64ebe8cb6ffc1bc7508100c475277781d87de5e4d2f5779cf2",
+  "output_schema_sha256": "65e5ec90306bef4ebb88501778e8e1a867d00a4662ccf8a1a9ca2c4b32f3645f",
+  "fixture_count": 12,
+  "passed_count": 12,
+  "failed_count": 0,
+  "fixtures": [
+    {
+      "fixture_id": "valid_select_option_1",
+      "expected_valid": true,
+      "expected_reason": "pass",
+      "actual_valid": true,
+      "actual_reason": "pass",
+      "pass": true
+    },
+    {
+      "fixture_id": "valid_select_option_2",
+      "expected_valid": true,
+      "expected_reason": "pass",
+      "actual_valid": true,
+      "actual_reason": "pass",
+      "pass": true
+    },
+    {
+      "fixture_id": "valid_defer",
+      "expected_valid": true,
+      "expected_reason": "pass",
+      "actual_valid": true,
+      "actual_reason": "pass",
+      "pass": true
+    },
+    {
+      "fixture_id": "wrong_case",
+      "expected_valid": false,
+      "expected_reason": "case_id_mismatch",
+      "actual_valid": false,
+      "actual_reason": "case_id_mismatch",
+      "pass": true
+    },
+    {
+      "fixture_id": "wrong_item",
+      "expected_valid": false,
+      "expected_reason": "adjudication_item_id_mismatch",
+      "actual_valid": false,
+      "actual_reason": "adjudication_item_id_mismatch",
+      "pass": true
+    },
+    {
+      "fixture_id": "wrong_claim",
+      "expected_valid": false,
+      "expected_reason": "boundary_claim_id_mismatch",
+      "actual_valid": false,
+      "actual_reason": "boundary_claim_id_mismatch",
+      "pass": true
+    },
+    {
+      "fixture_id": "new_label_as_operation",
+      "expected_valid": false,
+      "expected_reason": "operation_invalid",
+      "actual_valid": false,
+      "actual_reason": "operation_invalid",
+      "pass": true
+    },
+    {
+      "fixture_id": "empty_rationale",
+      "expected_valid": false,
+      "expected_reason": "rationale_invalid",
+      "actual_valid": false,
+      "actual_reason": "rationale_invalid",
+      "pass": true
+    },
+    {
+      "fixture_id": "extra_support_label",
+      "expected_valid": false,
+      "expected_reason": "top_level_keys_invalid",
+      "actual_valid": false,
+      "actual_reason": "top_level_keys_invalid",
+      "pass": true
+    },
+    {
+      "fixture_id": "decision_rewrite_field",
+      "expected_valid": false,
+      "expected_reason": "decision_keys_invalid",
+      "actual_valid": false,
+      "actual_reason": "decision_keys_invalid",
+      "pass": true
+    },
+    {
+      "fixture_id": "boundary_mutation_field",
+      "expected_valid": false,
+      "expected_reason": "top_level_keys_invalid",
+      "actual_valid": false,
+      "actual_reason": "top_level_keys_invalid",
+      "pass": true
+    },
+    {
+      "fixture_id": "markdown_fence_rejected",
+      "expected_valid": false,
+      "expected_reason": "invalid_json",
+      "actual_valid": false,
+      "actual_reason": "invalid_json",
+      "pass": true
+    }
+  ],
+  "execution_authorized_after_fixtures": true,
+  "provider_called": false,
+  "held_out_accessed": false
+}

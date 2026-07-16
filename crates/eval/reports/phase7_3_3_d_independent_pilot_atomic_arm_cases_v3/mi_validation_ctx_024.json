@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_ctx_024",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "e71d1dada5978afebbca95731c88340efc8ba943137dcec9454ce3c736a91ffa",
+  "content_sha256": "434030d27f51d24600053aecfdbabb5c6126e24d5806efcbef7ba4f7e0288688",
+  "latency_ms": 6909.527400042862,
+  "usage": {
+    "prompt_tokens": 1102,
+    "completion_tokens": 101,
+    "total_tokens": 1203,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3905,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4745,
+      "total_duration_ms": 4669,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_ctx_024",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_ctx_024-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence supports that a playbook satisfies the active safety and scope constraint and that a generic playbook violates the active constraint despite stronger overlap. This indicates constraint-based compatibility matters, but it does not explicitly state that the active task constraint itself selects the context-compatible playbook."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_ctx_024-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

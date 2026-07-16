@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase7.3.3-d-multi-claim-successor-confirmatory-composition-contract-v1",
+  "status": "frozen_before_test_split_parameter_instantiation",
+  "source_specific": true,
+  "source_fields_used": [
+    "scenario.id",
+    "scenario.category",
+    "scenario.template_variant",
+    "scenario.timeline_length",
+    "scenario.expected_top",
+    "scenario.memory"
+  ],
+  "source_fields_not_emitted_before_gate": [
+    "query",
+    "expected_reason",
+    "expected_top",
+    "memory.content"
+  ],
+  "candidate_unit_count": 6,
+  "candidate_serialization": "six LF-delimited natural-language claims",
+  "evidence_serialization": "canonical JSON of six normalized source memories",
+  "claim_families": [
+    "direct_top_memory",
+    "direct_background_memory",
+    "scope_overclaim",
+    "contradicted_absence",
+    "priority_overclaim",
+    "invented_category_assertion"
+  ],
+  "position_permutation": "frozen_by_source_template_variant_0_to_3",
+  "not_v2_signal_template_family": true,
+  "mechanical_reference_labels": {
+    "supported": 2,
+    "partially_supported": 2,
+    "unsupported": 2,
+    "not_assessable": 0
+  },
+  "reference_labels_are_not_serialized_in_inventory": true,
+  "semantic_rewrite_or_manual_backfill_allowed": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

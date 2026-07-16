@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-a-mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "eaba1e907a4361d03936d58ec8919182ca1a2245ad7863bb5ab05485fc0ac3dc",
+  "reviewer_id": "a",
+  "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+  "provider_envelope_sha256": "e907ab17bc730a6cf2e51bc860210b274e1dc0cd3c6c1fe9bf9dd08e157e57d0",
+  "provider_content_sha256": "9d543200fd3d13cae76888d9f3c36306d31278d7180d78103c8296f2baa802d7",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "operation_packet_sha256": "34a8757ebb84baa4127f4460ecb0c9c546a3ca2e99a8772cfeedcedb1ca2ac3c",
+  "normalized_decisions_sha256": "736f4cecb8ef4de85881173726f7352947be308f1634fe89363e242d6e0cda1b",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim directly matches evidence indicating a new region launch.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim is directly established by evidence stating localization is required for the region.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "partially_supported",
+      "evidence_citation_mask": "0110",
+      "cited_evidence_indices": [
+        2,
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-002",
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-003"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence shows new region launch and localization requirement, implying prioritization, but does not explicitly state prioritization is necessary.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-001"
+      ],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "Evidence only shows old localization was low priority; current context suggests prioritization may be needed, so keeping it low priority is not established.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim directly matches evidence about the current release plan.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim directly matches evidence about old localization being low priority.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

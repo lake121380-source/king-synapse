@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "metric_specification_id": "phase7.3.3-d-atomic-vs-candidate-metrics-v1",
+  "status": "frozen",
+  "study_type": "retrospective_descriptive_paired_diagnostic_analysis",
+  "label_order": [
+    "supported",
+    "partially_supported",
+    "unsupported"
+  ],
+  "not_assessable_policy": "reported_separately_and_not_forced_into_the_three_level_ordinal_distance",
+  "primary_metrics": [
+    {
+      "name": "candidate_label_distribution",
+      "formula": "count each frozen Candidate-level support_label",
+      "interpretation": "Detect Candidate-level concentration or single-class collapse."
+    },
+    {
+      "name": "candidate_single_class_prediction_rate",
+      "formula": "maximum Candidate label count divided by paired case count",
+      "range": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "atomic_support_vector_per_case",
+      "formula": "for each case count frozen Atomic support labels in supported, partially_supported, unsupported, and not_assessable",
+      "aggregate_only_reporting_allowed": false
+    },
+    {
+      "name": "mixed_support_case_rate",
+      "formula": "cases with at least two nonzero Atomic support-label categories divided by paired case count"
+    },
+    {
+      "name": "unsupported_masking_case_rate",
+      "formula": "cases whose Candidate-level label is not unsupported and that contain at least one unsupported Atomic Claim divided by paired case count"
+    },
+    {
+      "name": "supported_content_masking_claim_count",
+      "formula": "supported Atomic Claims contained in Candidates whose Candidate-level label is not supported"
+    },
+    {
+      "name": "non_supported_claim_localization_coverage",
+      "formula": "non-supported Atomic Claims with unique Claim ID, exact Boundary span, case identity, and frozen support label divided by all non-supported Atomic Claims"
+    },
+    {
+      "name": "candidate_to_primary_aggregate_exact_agreement",
+      "formula": "cases where frozen Candidate-level label equals primary Atomic aggregate divided by paired case count"
+    },
+    {
+      "name": "candidate_to_primary_aggregate_ordinal_severity",
+      "formula": "sum absolute ordinal distance for assessable three-level label pairs divided by two times the number of assessable pairs",
+      "range": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "atomic_vector_unique_state_count",
+      "formula": "number of distinct four-count Atomic support vectors across paired cases"
+    },
+    {
+      "name": "traceability_completeness",
+      "formula": "Atomic Claims traceable through case_id, Candidate SHA, Boundary Claim ID, exact span, and frozen support_label divided by all Atomic Claims"
+    }
+  ],
+  "required_stratified_tables": [
+    "per_case_full_paired_table",
+    "support_label_by_claim_type",
+    "support_label_by_claim_role",
+    "non_supported_claims_by_claim_type",
+    "non_supported_claims_by_claim_role",
+    "primary_vs_secondary_aggregation_sensitivity"
+  ],
+  "required_case_fields": [
+    "case_id",
+    "candidate_response_sha256",
+    "candidate_level_label",
+    "atomic_support_vector",
+    "primary_atomic_aggregate_label",
+    "mixed_support",
+    "unsupported_claim_count",
+    "non_supported_claim_ids"
+  ],
+  "forbidden_metrics_or_interpretations": [
+    "Atomic accuracy superiority against the Atomic-derived Project Support Gold",
+    "generalization beyond the ten design cases",
+    "model capability ranking",
+    "confirmatory significance claims",
+    "promotion of diagnostic rationale or citation fields to Gold"
+  ],
+  "reporting_constraints": {
+    "show_all_ten_cases": true,
+    "report_denominators": true,
+    "report_zero_counts": true,
+    "separate_primary_from_sensitivity_analysis": true,
+    "raw_accuracy_language_forbidden": true,
+    "generalization_language_forbidden": true
+  }
+}

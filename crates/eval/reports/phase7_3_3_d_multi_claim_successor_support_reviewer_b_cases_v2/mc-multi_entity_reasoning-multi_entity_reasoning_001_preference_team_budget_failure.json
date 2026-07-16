@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "12e7b5ebc33132e36193ff33d36d0c179c6c8c7951b688fa7dd9f04396e9b015",
+  "reviewer_id": "b",
+  "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+  "provider_envelope_sha256": "3d7052466adf1de2133848e10cf032652108fcaa547f50b1c7026aa3a2c33e13",
+  "provider_content_sha256": "29df23cd54c249768efd04ff2ac5f363775ef2f754d02117a7e7b92cbacd3e4e",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "fbc0799962e8c16e2071db51e3a2e0b7916395e514cd3743f5325e42b69a45a2",
+  "normalized_decisions_sha256": "c43f0a85f11cd247aece93a8eb702c4f06b1f1a997cbb3ccb34f51f51e5a1a8e",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "unsupported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+      ],
+      "reason_codes": [
+        "counterexample_ignored",
+        "central_proposition_unsupported"
+      ],
+      "support_rationale": "Evidence 4 explicitly states the fast rollout failed, directly contradicting the proposition to choose a fast ops-heavy plan, while other evidence suggests constraints (low capacity, tight budget) that further undermine this choice.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "evidence_citation_mask": "0010",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim 2 is an exact textual match to Evidence 3, establishing the proposition that the budget is tight.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "evidence_citation_mask": "1000",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim 3 is an exact textual match to Evidence 1, establishing the proposition regarding user speed preference.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "evidence_citation_mask": "0100",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim 4 is an exact textual match to Evidence 2, establishing the proposition that team ops capacity is low.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "evidence_citation_mask": "0001",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Claim 5 is an exact textual match to Evidence 4, establishing the exception that the fast rollout failed.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "partially_supported",
+      "evidence_citation_mask": "0111",
+      "cited_evidence_indices": [
+        2,
+        3,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002",
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003",
+        "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "While no evidence explicitly names the 'low_ops_incremental_plan', the combination of low ops capacity (Evidence 2), tight budget (Evidence 3), and the failure of the fast rollout (Evidence 4) logically supports the direction of choosing a lower-ops, incremental approach, though the specific label is an inference.",
+      "annotation_confidence": "medium"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

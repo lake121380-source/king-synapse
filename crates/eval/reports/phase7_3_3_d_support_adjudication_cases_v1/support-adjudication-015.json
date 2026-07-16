@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-015-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-015",
+  "boundary_claim_id": "adjudicated-extract_01-claim-014",
+  "provider_envelope_sha256": "3f257675543f28584b81adb123ac69a1373f81a8ec5caa8e7ffa4d62e65a2c04",
+  "provider_content_sha256": "24f79558492e68d7b09a6779b113138c3d562ed7c75f09da54e2ffae9d1bfe85",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "4f7641c585abd7fe4def39a0e062cd2cb617b89439b468ca9aa5daca3d91cea7",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-015",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-014",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The cited evidence says old and new formats could not coexist and that partial rollout created incompatible records and more recovery work, but it does not state that the old version was rolled back. The claim adds a specific rollback action not directly supported by the supplied text.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_01-claim-014",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "The evidence mentions 'more recovery work' but does not explicitly state that the 'old version is rolled back'; the specific action of rolling back the old version is an inference not directly supported by the text."
+    },
+    "selected_frozen_decision_sha256": "cef35ff1499379d16ef6eaf6ad87fabea513be303308901cccbee29eb1f14e0e",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

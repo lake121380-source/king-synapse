@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-multi-claim-successor-boundary-reviewer-contract-fixtures-v1",
+  "status": "PASS",
+  "passed": 12,
+  "total": 12,
+  "fixtures": [
+    {
+      "fixture_id": "reuse_unit_reconstructs_exact_text",
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "merge_consecutive_units_includes_exact_joiner",
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "slice_unit_reconstructs_proper_subspan",
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "new_span_reconstructs_absolute_subspan",
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "unknown_unit_rejected",
+      "status": "PASS",
+      "observed": "unknown_unit_id:0:unit-999"
+    },
+    {
+      "fixture_id": "nonconsecutive_merge_rejected",
+      "status": "PASS",
+      "observed": "merge_units_not_consecutive_source_order:0"
+    },
+    {
+      "fixture_id": "full_unit_slice_rejected",
+      "status": "PASS",
+      "observed": "slice_offsets_invalid_or_not_proper:0"
+    },
+    {
+      "fixture_id": "overlapping_spans_rejected",
+      "status": "PASS",
+      "observed": "overlapping_final_spans:1"
+    },
+    {
+      "fixture_id": "empty_claim_list_rejected",
+      "status": "PASS",
+      "observed": "root_schema_invalid_or_empty_claims"
+    },
+    {
+      "fixture_id": "support_field_rejected",
+      "status": "PASS",
+      "observed": "claim_fields_mismatch:0"
+    },
+    {
+      "fixture_id": "valid_provider_envelope_decodes",
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "invalid_provider_envelope_rejected_after_response_capture",
+      "status": "PASS",
+      "observed": "provider_envelope_invalid_json"
+    }
+  ],
+  "provider_called": false,
+  "confirmatory_dataset_opened": false
+}

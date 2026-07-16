@@ -1,0 +1,56 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrr_022",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "3437df68331ccf985d2131ef233432035ff2bc1523fe5db5d13aad907afd9b05",
+  "content_sha256": "cd58600820d85e6ece2c1f3c1db2f9ff0188ad9e8e0b567fbf6746a9a2a34162",
+  "latency_ms": 9521.968699991703,
+  "usage": {
+    "prompt_tokens": 1227,
+    "completion_tokens": 90,
+    "total_tokens": 1317,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 6178,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 7018,
+      "total_duration_ms": 6942,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrr_022",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrr_022-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "material": true,
+        "support_label": "supported",
+        "rationale": "The evidence explicitly states that the older fact was highly reliable but is now stale, and that the current observed state is active. This entails the recency-over-stale-reliability criterion asserted by the candidate."
+      }
+    ],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  }
+}

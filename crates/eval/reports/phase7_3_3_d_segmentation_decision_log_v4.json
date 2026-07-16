@@ -1,0 +1,3171 @@
+{
+  "schema_version": 4,
+  "log_id": "phase7.3.3-d1-a-segmentation-decision-log-v4",
+  "status": "deterministically_generated_from_frozen_adjudication",
+  "manifest_sha256": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+  "submission_sha256": "308e54406a3aa8d0ba8b8526d57497ca4ca7f4c9a776e2831e7e60b4f0e40298",
+  "adjudication_protocol_sha256": "c9da31ce95ee0cbdbe640bb4320bb67c4746f484eed881f19c048e1cb7818041",
+  "agreement_report_sha256": "0ddb0b873431ddf89b7301f44691b7897a2a36d757f8eace10877a35ed22e6c7",
+  "worklist_sha256": "56132cc9977ec579c4a668f30dcdaa3818c94a528f7feb16dfd5920cda67afaf",
+  "classification_unit": "source_anchor",
+  "decision_count_by_category": {
+    "consensus_exact": 28,
+    "keep_a_segmentation": 6,
+    "keep_e_segmentation": 21,
+    "merge_both": 1,
+    "new_segmentation": 9
+  },
+  "reason_code_counts": {
+    "causal_relation": 15,
+    "condition_or_exception": 29,
+    "coordination": 60,
+    "counterexample_clause": 2,
+    "evidence_attribution": 2,
+    "falsifiability_clause": 27,
+    "independent_truth_value": 118,
+    "limitation_clause": 5,
+    "non_assertive_connector": 11,
+    "prediction_clause": 30,
+    "quantifier_or_threshold": 8,
+    "scope_modifier": 13,
+    "temporal_qualifier": 6
+  },
+  "per_case_counts": {
+    "extract_01": {
+      "consensus_exact": 3,
+      "keep_e_segmentation": 2,
+      "new_segmentation": 1
+    },
+    "extract_02": {
+      "consensus_exact": 3,
+      "keep_a_segmentation": 2,
+      "new_segmentation": 1
+    },
+    "extract_03": {
+      "consensus_exact": 4,
+      "keep_e_segmentation": 1,
+      "merge_both": 1
+    },
+    "extract_04": {
+      "consensus_exact": 2,
+      "keep_e_segmentation": 4
+    },
+    "extract_05": {
+      "consensus_exact": 4,
+      "keep_e_segmentation": 2
+    },
+    "extract_06": {
+      "consensus_exact": 3,
+      "keep_e_segmentation": 3
+    },
+    "extract_07": {
+      "consensus_exact": 1,
+      "keep_a_segmentation": 3,
+      "keep_e_segmentation": 4,
+      "new_segmentation": 1
+    },
+    "extract_08": {
+      "consensus_exact": 1,
+      "keep_a_segmentation": 1,
+      "keep_e_segmentation": 2,
+      "new_segmentation": 2
+    },
+    "extract_09": {
+      "consensus_exact": 7,
+      "keep_e_segmentation": 1
+    },
+    "extract_10": {
+      "keep_e_segmentation": 2,
+      "new_segmentation": 4
+    }
+  },
+  "representative_decisions": {
+    "consensus_exact": [
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-prediction_observable-01"
+      },
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-prediction_success_criterion-01"
+      },
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-falsification_observable-01"
+      }
+    ],
+    "keep_a_segmentation": [
+      {
+        "case_id": "extract_02",
+        "anchor_id": "extract_02-prediction_statement-01"
+      },
+      {
+        "case_id": "extract_02",
+        "anchor_id": "extract_02-falsification_observable-01"
+      },
+      {
+        "case_id": "extract_07",
+        "anchor_id": "extract_07-prediction_statement-01"
+      }
+    ],
+    "keep_e_segmentation": [
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-prediction_statement-01"
+      },
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-falsification_statement-01"
+      },
+      {
+        "case_id": "extract_03",
+        "anchor_id": "extract_03-falsification_statement-01"
+      }
+    ],
+    "merge_both": [
+      {
+        "case_id": "extract_03",
+        "anchor_id": "extract_03-prediction_statement-01"
+      }
+    ],
+    "new_segmentation": [
+      {
+        "case_id": "extract_01",
+        "anchor_id": "extract_01-proposition-01"
+      },
+      {
+        "case_id": "extract_02",
+        "anchor_id": "extract_02-proposition-01"
+      },
+      {
+        "case_id": "extract_07",
+        "anchor_id": "extract_07-falsification_observable-01"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 3,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 4,
+      "reviewer_a_span_set": [
+        {
+          "start": 22,
+          "end": 117
+        },
+        {
+          "start": 124,
+          "end": 157
+        },
+        {
+          "start": 159,
+          "end": 216
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 117
+        },
+        {
+          "start": 124,
+          "end": 157
+        },
+        {
+          "start": 168,
+          "end": 216
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 117
+        },
+        {
+          "start": 124,
+          "end": 157
+        },
+        {
+          "start": 159,
+          "end": 216
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-001",
+        "adjudicated-extract_01-claim-002",
+        "adjudicated-extract_01-claim-003",
+        "adjudicated-extract_01-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 78,
+          "end": 171
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 5,
+          "end": 76
+        },
+        {
+          "start": 78,
+          "end": 130
+        },
+        {
+          "start": 131,
+          "end": 171
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 5,
+          "end": 76
+        },
+        {
+          "start": 78,
+          "end": 130
+        },
+        {
+          "start": 131,
+          "end": 171
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-005",
+        "adjudicated-extract_01-claim-006",
+        "adjudicated-extract_01-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 80
+        },
+        {
+          "start": 82,
+          "end": 112
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 80
+        },
+        {
+          "start": 82,
+          "end": 112
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 80
+        },
+        {
+          "start": 82,
+          "end": 112
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-008",
+        "adjudicated-extract_01-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-010"
+      ]
+    },
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 87
+        },
+        {
+          "start": 91,
+          "end": 125
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 87
+        },
+        {
+          "start": 91,
+          "end": 125
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 3,
+          "end": 87
+        },
+        {
+          "start": 91,
+          "end": 125
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-011",
+        "adjudicated-extract_01-claim-012"
+      ]
+    },
+    {
+      "case_id": "extract_01",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 37
+        },
+        {
+          "start": 41,
+          "end": 114
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 37
+        },
+        {
+          "start": 41,
+          "end": 114
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 37
+        },
+        {
+          "start": 41,
+          "end": 114
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_01-claim-013",
+        "adjudicated-extract_01-claim-014"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 170
+        },
+        {
+          "start": 178,
+          "end": 268
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 26
+        },
+        {
+          "start": 28,
+          "end": 170
+        },
+        {
+          "start": 178,
+          "end": 269
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 170
+        },
+        {
+          "start": 178,
+          "end": 269
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-001",
+        "adjudicated-extract_02-claim-002"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 199
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 100
+        },
+        {
+          "start": 102,
+          "end": 199
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 199
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 147
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 147
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 147
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 172
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 172
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 172
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-005"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_id": "extract_02-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 98
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 75
+        },
+        {
+          "start": 80,
+          "end": 98
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 98
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_02-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 3,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 117
+        },
+        {
+          "start": 119,
+          "end": 177
+        },
+        {
+          "start": 182,
+          "end": 224
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 117
+        },
+        {
+          "start": 119,
+          "end": 177
+        },
+        {
+          "start": 182,
+          "end": 224
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 117
+        },
+        {
+          "start": 119,
+          "end": 177
+        },
+        {
+          "start": 182,
+          "end": 224
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-001",
+        "adjudicated-extract_03-claim-002",
+        "adjudicated-extract_03-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 3,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        },
+        {
+          "start": 65,
+          "end": 123
+        },
+        {
+          "start": 124,
+          "end": 150
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        },
+        {
+          "start": 65,
+          "end": 123
+        },
+        {
+          "start": 124,
+          "end": 150
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        },
+        {
+          "start": 65,
+          "end": 150
+        }
+      ],
+      "decision_category": "merge_both",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-004",
+        "adjudicated-extract_03-claim-005"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 92
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 92
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 92
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 3,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        },
+        {
+          "start": 75,
+          "end": 135
+        },
+        {
+          "start": 137,
+          "end": 161
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 162
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 162
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-008"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_id": "extract_03-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_03-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 4,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 212
+        },
+        {
+          "start": 214,
+          "end": 282
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 21
+        },
+        {
+          "start": 23,
+          "end": 173
+        },
+        {
+          "start": 174,
+          "end": 212
+        },
+        {
+          "start": 214,
+          "end": 282
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 21
+        },
+        {
+          "start": 23,
+          "end": 173
+        },
+        {
+          "start": 174,
+          "end": 212
+        },
+        {
+          "start": 214,
+          "end": 282
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "limitation_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-001",
+        "adjudicated-extract_04-claim-002",
+        "adjudicated-extract_04-claim-003",
+        "adjudicated-extract_04-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 4,
+      "reviewer_a_span_set": [
+        {
+          "start": 49,
+          "end": 192
+        },
+        {
+          "start": 194,
+          "end": 238
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 47
+        },
+        {
+          "start": 49,
+          "end": 144
+        },
+        {
+          "start": 145,
+          "end": 192
+        },
+        {
+          "start": 194,
+          "end": 238
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 47
+        },
+        {
+          "start": 49,
+          "end": 144
+        },
+        {
+          "start": 145,
+          "end": 192
+        },
+        {
+          "start": 194,
+          "end": 238
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "limitation_clause",
+        "prediction_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-005",
+        "adjudicated-extract_04-claim-006",
+        "adjudicated-extract_04-claim-007",
+        "adjudicated-extract_04-claim-008"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 91
+        },
+        {
+          "start": 93,
+          "end": 138
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 91
+        },
+        {
+          "start": 93,
+          "end": 138
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 91
+        },
+        {
+          "start": 93,
+          "end": 138
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-009",
+        "adjudicated-extract_04-claim-010"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 51
+        },
+        {
+          "start": 56,
+          "end": 109
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 51
+        },
+        {
+          "start": 56,
+          "end": 109
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 51
+        },
+        {
+          "start": 56,
+          "end": 109
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-011",
+        "adjudicated-extract_04-claim-012"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 3,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        },
+        {
+          "start": 72,
+          "end": 123
+        },
+        {
+          "start": 125,
+          "end": 168
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        },
+        {
+          "start": 75,
+          "end": 123
+        },
+        {
+          "start": 125,
+          "end": 168
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        },
+        {
+          "start": 75,
+          "end": 123
+        },
+        {
+          "start": 125,
+          "end": 168
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value",
+        "limitation_clause",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-013",
+        "adjudicated-extract_04-claim-014",
+        "adjudicated-extract_04-claim-015"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_id": "extract_04-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 133
+        },
+        {
+          "start": 135,
+          "end": 195
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 133
+        },
+        {
+          "start": 138,
+          "end": 195
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 133
+        },
+        {
+          "start": 138,
+          "end": 195
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_04-claim-016",
+        "adjudicated-extract_04-claim-017"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 62,
+          "end": 183
+        },
+        {
+          "start": 185,
+          "end": 283
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 60
+        },
+        {
+          "start": 62,
+          "end": 183
+        },
+        {
+          "start": 185,
+          "end": 283
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 60
+        },
+        {
+          "start": 62,
+          "end": 183
+        },
+        {
+          "start": 185,
+          "end": 283
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "limitation_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-001",
+        "adjudicated-extract_05-claim-002",
+        "adjudicated-extract_05-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        },
+        {
+          "start": 173,
+          "end": 228
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        },
+        {
+          "start": 173,
+          "end": 228
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        },
+        {
+          "start": 173,
+          "end": 228
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-004",
+        "adjudicated-extract_05-claim-005"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 83
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 190
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 190
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 190
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "prediction_clause",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 90
+        },
+        {
+          "start": 95,
+          "end": 222
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 90
+        },
+        {
+          "start": 95,
+          "end": 222
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 90
+        },
+        {
+          "start": 95,
+          "end": 222
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-008",
+        "adjudicated-extract_05-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_id": "extract_05-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 78
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 18
+        },
+        {
+          "start": 23,
+          "end": 77
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 18
+        },
+        {
+          "start": 23,
+          "end": 77
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_05-claim-010",
+        "adjudicated-extract_05-claim-011"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 286
+        },
+        {
+          "start": 296,
+          "end": 419
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 286
+        },
+        {
+          "start": 296,
+          "end": 419
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 286
+        },
+        {
+          "start": 296,
+          "end": 419
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "coordination",
+        "counterexample_clause",
+        "independent_truth_value",
+        "scope_modifier",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-001",
+        "adjudicated-extract_06-claim-002",
+        "adjudicated-extract_06-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 255
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 255
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 255
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 94
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 58
+        },
+        {
+          "start": 63,
+          "end": 93
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 58
+        },
+        {
+          "start": 63,
+          "end": 93
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-005",
+        "adjudicated-extract_06-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 32
+        },
+        {
+          "start": 37,
+          "end": 73
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 32
+        },
+        {
+          "start": 37,
+          "end": 73
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "quantifier_or_threshold",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-007",
+        "adjudicated-extract_06-claim-008"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 184
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 184
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 184
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_id": "extract_06-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 119
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 119
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 119
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "causal_relation",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_06-claim-010"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 6,
+      "final_claim_count": 6,
+      "reviewer_a_span_set": [
+        {
+          "start": 22,
+          "end": 169
+        },
+        {
+          "start": 179,
+          "end": 289
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 147
+        },
+        {
+          "start": 152,
+          "end": 169
+        },
+        {
+          "start": 179,
+          "end": 242
+        },
+        {
+          "start": 247,
+          "end": 262
+        },
+        {
+          "start": 263,
+          "end": 289
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 20
+        },
+        {
+          "start": 22,
+          "end": 147
+        },
+        {
+          "start": 152,
+          "end": 169
+        },
+        {
+          "start": 179,
+          "end": 242
+        },
+        {
+          "start": 247,
+          "end": 262
+        },
+        {
+          "start": 263,
+          "end": 289
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "coordination",
+        "independent_truth_value",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-001",
+        "adjudicated-extract_07-claim-002",
+        "adjudicated-extract_07-claim-003",
+        "adjudicated-extract_07-claim-004",
+        "adjudicated-extract_07-claim-005",
+        "adjudicated-extract_07-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 199
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 116
+        },
+        {
+          "start": 123,
+          "end": 172
+        },
+        {
+          "start": 177,
+          "end": 198
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 199
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 57
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 30
+        },
+        {
+          "start": 35,
+          "end": 56
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 30
+        },
+        {
+          "start": 35,
+          "end": 56
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-008",
+        "adjudicated-extract_07-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 107
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 69
+        },
+        {
+          "start": 75,
+          "end": 106
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 69
+        },
+        {
+          "start": 75,
+          "end": 106
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-010",
+        "adjudicated-extract_07-claim-011"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_statement-02",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 188
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 106
+        },
+        {
+          "start": 113,
+          "end": 187
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 188
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-012"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_observable-02",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 77
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 77
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 77
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-013"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-prediction_success_criterion-02",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 78
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 27
+        },
+        {
+          "start": 32,
+          "end": 77
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 27
+        },
+        {
+          "start": 32,
+          "end": 77
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-014",
+        "adjudicated-extract_07-claim-015"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 5,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 224
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 100
+        },
+        {
+          "start": 106,
+          "end": 141
+        },
+        {
+          "start": 147,
+          "end": 161
+        },
+        {
+          "start": 162,
+          "end": 192
+        },
+        {
+          "start": 199,
+          "end": 223
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 224
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-016"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_id": "extract_07-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 117
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 17
+        },
+        {
+          "start": 22,
+          "end": 59
+        },
+        {
+          "start": 69,
+          "end": 102
+        },
+        {
+          "start": 107,
+          "end": 116
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 17
+        },
+        {
+          "start": 22,
+          "end": 59
+        },
+        {
+          "start": 69,
+          "end": 116
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_07-claim-017",
+        "adjudicated-extract_07-claim-018",
+        "adjudicated-extract_07-claim-019"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 303
+        },
+        {
+          "start": 313,
+          "end": 431
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 72
+        },
+        {
+          "start": 74,
+          "end": 303
+        },
+        {
+          "start": 313,
+          "end": 370
+        },
+        {
+          "start": 372,
+          "end": 431
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 303
+        },
+        {
+          "start": 313,
+          "end": 431
+        }
+      ],
+      "decision_category": "keep_a_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "condition_or_exception",
+        "independent_truth_value",
+        "limitation_clause",
+        "scope_modifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-001",
+        "adjudicated-extract_08-claim-002"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 266
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 100
+        },
+        {
+          "start": 106,
+          "end": 184
+        },
+        {
+          "start": 191,
+          "end": 229
+        },
+        {
+          "start": 234,
+          "end": 266
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 3,
+          "end": 266
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 112
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 28
+        },
+        {
+          "start": 33,
+          "end": 112
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 28
+        },
+        {
+          "start": 33,
+          "end": 112
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "evidence_attribution",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-004",
+        "adjudicated-extract_08-claim-005"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 63
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 173
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 3,
+          "end": 36
+        },
+        {
+          "start": 38,
+          "end": 173
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 3,
+          "end": 173
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 123
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        },
+        {
+          "start": 76,
+          "end": 123
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 74
+        },
+        {
+          "start": 76,
+          "end": 123
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "coordination",
+        "counterexample_clause",
+        "evidence_attribution",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_08-claim-008",
+        "adjudicated-extract_08-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 3,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 154
+        },
+        {
+          "start": 168,
+          "end": 317
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 154
+        },
+        {
+          "start": 168,
+          "end": 265
+        },
+        {
+          "start": 270,
+          "end": 317
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 154
+        },
+        {
+          "start": 168,
+          "end": 265
+        },
+        {
+          "start": 270,
+          "end": 317
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "causal_relation",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-001",
+        "adjudicated-extract_09-claim-002",
+        "adjudicated-extract_09-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 171
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "independent_truth_value",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 71
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "independent_truth_value",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-005"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 41
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 41
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 41
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "falsifiability_clause",
+        "independent_truth_value",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 148
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 148
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 148
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-007"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 55
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 55
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 55
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "falsifiability_clause",
+        "independent_truth_value",
+        "quantifier_or_threshold"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-008"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-falsification_statement-02",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 142
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 142
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 142
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "condition_or_exception",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_id": "extract_09-falsification_observable-02",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 1,
+      "final_claim_count": 1,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 68
+        }
+      ],
+      "decision_category": "consensus_exact",
+      "reason_codes": [
+        "causal_relation",
+        "falsifiability_clause",
+        "independent_truth_value"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_09-claim-010"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-proposition-01",
+      "source_field": "proposition",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 8,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 202
+        },
+        {
+          "start": 203,
+          "end": 293
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 18,
+          "end": 72
+        },
+        {
+          "start": 73,
+          "end": 109
+        },
+        {
+          "start": 114,
+          "end": 132
+        },
+        {
+          "start": 137,
+          "end": 171
+        },
+        {
+          "start": 176,
+          "end": 201
+        },
+        {
+          "start": 203,
+          "end": 233
+        },
+        {
+          "start": 234,
+          "end": 271
+        },
+        {
+          "start": 276,
+          "end": 292
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 202
+        },
+        {
+          "start": 203,
+          "end": 292
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-001",
+        "adjudicated-extract_10-claim-002"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "reviewer_a_claim_count": 1,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 164
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 46
+        },
+        {
+          "start": 51,
+          "end": 66
+        },
+        {
+          "start": 68,
+          "end": 109
+        },
+        {
+          "start": 116,
+          "end": 163
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 109
+        },
+        {
+          "start": 116,
+          "end": 163
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-003",
+        "adjudicated-extract_10-claim-004"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 28
+        },
+        {
+          "start": 33,
+          "end": 115
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 28
+        },
+        {
+          "start": 33,
+          "end": 114
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 28
+        },
+        {
+          "start": 33,
+          "end": 114
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "independent_truth_value",
+        "non_assertive_connector",
+        "prediction_clause"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-005",
+        "adjudicated-extract_10-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 3,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 82
+        },
+        {
+          "start": 87,
+          "end": 154
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 40
+        },
+        {
+          "start": 42,
+          "end": 82
+        },
+        {
+          "start": 87,
+          "end": 153
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 82
+        },
+        {
+          "start": 87,
+          "end": 153
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "non_assertive_connector",
+        "prediction_clause",
+        "quantifier_or_threshold",
+        "temporal_qualifier"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-007",
+        "adjudicated-extract_10-claim-008"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 4,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 118
+        },
+        {
+          "start": 123,
+          "end": 175
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 38
+        },
+        {
+          "start": 43,
+          "end": 56
+        },
+        {
+          "start": 58,
+          "end": 118
+        },
+        {
+          "start": 123,
+          "end": 174
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 118
+        },
+        {
+          "start": 123,
+          "end": 173
+        }
+      ],
+      "decision_category": "new_segmentation",
+      "reason_codes": [
+        "condition_or_exception",
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-009",
+        "adjudicated-extract_10-claim-010"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_id": "extract_10-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "reviewer_a_claim_count": 2,
+      "reviewer_e_claim_count": 2,
+      "final_claim_count": 2,
+      "reviewer_a_span_set": [
+        {
+          "start": 0,
+          "end": 47
+        },
+        {
+          "start": 52,
+          "end": 149
+        }
+      ],
+      "reviewer_e_span_set": [
+        {
+          "start": 0,
+          "end": 47
+        },
+        {
+          "start": 52,
+          "end": 148
+        }
+      ],
+      "final_span_set": [
+        {
+          "start": 0,
+          "end": 47
+        },
+        {
+          "start": 52,
+          "end": 148
+        }
+      ],
+      "decision_category": "keep_e_segmentation",
+      "reason_codes": [
+        "coordination",
+        "falsifiability_clause",
+        "independent_truth_value",
+        "non_assertive_connector"
+      ],
+      "final_claim_ids": [
+        "adjudicated-extract_10-claim-011",
+        "adjudicated-extract_10-claim-012"
+      ]
+    }
+  ],
+  "entry_count": 65,
+  "provider_called_for_log_generation": false,
+  "held_out_accessed": false
+}

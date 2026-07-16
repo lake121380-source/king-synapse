@@ -1,0 +1,65 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_tmp_019",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "b443bcd514d1aa17919f88da6b03e9bdbfc73a489f6112bee8d05a3700c19cb6",
+  "content_sha256": "6ddf5e54f5b6a0adca185bd0b3bcc990774436cd05b9c1f9866952c0a73b3d7a",
+  "latency_ms": 5835.370599990711,
+  "usage": {
+    "prompt_tokens": 1203,
+    "completion_tokens": 125,
+    "total_tokens": 1328,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 2781,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3621,
+      "total_duration_ms": 3545,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_tmp_019",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_tmp_019-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence supports that a later confirmed state is active and replaces the earlier state, and that the older state is no longer active. However, it does not establish the stronger semantic comparison asserted in the claim, namely that the older state is semantically stronger and that supersession occurs on that specific basis. The note mentions lexical overlap, not a confirmed semantically stronger status."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_tmp_019-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

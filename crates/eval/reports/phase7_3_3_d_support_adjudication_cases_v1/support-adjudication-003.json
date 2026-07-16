@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-003-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_04",
+  "adjudication_item_id": "support-adjudication-003",
+  "boundary_claim_id": "adjudicated-extract_04-claim-016",
+  "provider_envelope_sha256": "1417d1be23c7ab02b657e4e4b0915a78f9cea3798c4d904adb2758560715abda",
+  "provider_content_sha256": "9d3798b8e7108afce5a8ca75fddde569e2f576f2249f507ed30141069ec12551",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "56dbcf8be6abf30effbff86ae3bc7075443b533678d5383c60892cc3e6963eb3",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-003",
+    "case_id": "extract_04",
+    "boundary_claim_id": "adjudicated-extract_04-claim-016",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The supplied evidence contains no instance where resolution occurred by replacing an unindicated component; instead both support experiences report evidence-led fixes without unrelated replacement. This makes the claim unsupported rather than supported by a preserved counterexample.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_04-claim-016",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_label": "unsupported",
+      "support_rationale": "No evidence shows a service failure resolved by replacing a component not indicated by the evidence; all cases matched evidence to resolution."
+    },
+    "selected_frozen_decision_sha256": "d0168122235e42b304a570fcd5afb67c294f8d53af27214184282ad6214db016",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

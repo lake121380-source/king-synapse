@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-a-first-real-atomic-judge-execution-policy-v1",
+  "phase": "Phase 7.3.3-A First Real Atomic Judge Control Execution",
+  "purpose": "Freeze the first real Atomic Judge execution as an auditable experiment without modifying the already frozen measurement protocol.",
+  "protocol_relationship": {
+    "atomic_measurement_protocol_modified": false,
+    "policy_is_separately_versioned": true,
+    "policy_may_override_measurement_protocol": false
+  },
+  "authoritative_result_policy": {
+    "first_returned_model_output_per_case_is_authoritative": true,
+    "invalid_json_or_schema_is_recorded_as_negative_result": true,
+    "semantic_retry_after_returned_output_authorized": false,
+    "automatic_repair_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_model_output_may_resume": true,
+    "failed_entry_criteria_requires_analysis_not_tuning": true,
+    "failed_entry_criteria_result_name": "negative_result"
+  },
+  "post_execution_prohibitions": [
+    "no_prompt_modification",
+    "no_parser_modification",
+    "no_aggregation_modification",
+    "no_threshold_modification",
+    "no_control_or_supplement_modification",
+    "no_result_replacement",
+    "no_held_out_access",
+    "no_design_case_execution_before_control_decision"
+  ],
+  "candidate_gate_scope": "original_16_balanced_candidate_controls_only",
+  "local_claim_calibration_scope": "original_controls_plus_diagnostics_only_partial_supplement",
+  "entry_criteria": {
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "source_spans_must_be_valid": true,
+    "all_four_candidate_labels_must_be_predicted": true
+  },
+  "frozen_core_artifact_sha256": {
+    "protocol": "c2ac9692abca60693b33aeb829364ae97d9a22136f719d998ddd1fcc3f6e837d",
+    "prompt": "88ca6b3e232f0dadde2179932d4b229d8afee912ead773f31975e3f6cda98e23",
+    "original_balanced_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_claim_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd",
+    "partial_claim_supplement_manifest": "083d3f21350ff61a83a52b61400411f2eae5d2c04762d2ee599778f748ccf047"
+  },
+  "data_handling": {
+    "api_key_recorded": false,
+    "raw_provider_responses_stored": false,
+    "response_sha256_recorded": true,
+    "parsed_outputs_stored": true,
+    "gold_labels_sent_to_provider": false,
+    "held_out_loaded": false
+  }
+}

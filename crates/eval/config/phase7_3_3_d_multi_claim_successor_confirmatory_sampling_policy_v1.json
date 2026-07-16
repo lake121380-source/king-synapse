@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-confirmatory-sampling-policy-v1",
+  "status": "frozen_before_inventory_construction",
+  "inventory_target": 80,
+  "selected_target": 40,
+  "required_confirmatory_clusters": 40,
+  "selection_unit": "unique_source_specific_composite_candidate",
+  "eligibility": {
+    "source_split": "test",
+    "unique_candidate_id": true,
+    "six_claim_lines": true,
+    "six_evidence_items": true,
+    "candidate_hash_unique": true,
+    "evidence_hash_unique": true,
+    "prior_phase7_candidate_hash_overlap": false,
+    "prior_phase7_evidence_hash_overlap": false,
+    "prior_phase7_source_identity_overlap": false
+  },
+  "stratification": "exactly_four_selected_per_each_of_ten_source_categories",
+  "within_stratum_rank": "sha256(seed|category|candidate_id|candidate_sha256|evidence_bundle_sha256)",
+  "rank_seed": "phase7.3.3-d-multi-claim-confirmatory-v1-20260716",
+  "selection_before_content_open": true,
+  "selection_before_outcomes": true,
+  "shortfall_action": "freeze_authoritative_negative_and_do_not_open",
+  "unselected_content_opened": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "result_id": "phase7.3.3-d1-b4-boundary-omission-resolution-negative-result-v1",
+  "status": "authoritative_negative_result",
+  "manifest_sha256": "4243fbddb869227245099d6cd5959747c731294b87415f00a2544107ae22c9bc",
+  "execution_result_sha256": "f2902f275b2a65066f63eef888e97cfbffe74c161179ef8210e3c4fe12713927",
+  "failed_case_count": 4,
+  "failures": [
+    {
+      "case_id": "b4-001-coverage-gap-012",
+      "gap_id": "coverage-gap-012",
+      "failure_code": "provider_model_outside_requested_family:gpt-5.4-2026-03-05",
+      "provider_envelope_sha256": "8e5218c6aef5f6be51b1a2cb1ff4f35fc0a35d48363798519cd1e8b071404a9c",
+      "provider_content_sha256": null
+    },
+    {
+      "case_id": "b4-002-coverage-gap-067",
+      "gap_id": "coverage-gap-067",
+      "failure_code": "provider_model_outside_requested_family:gpt-5.4-2026-03-05",
+      "provider_envelope_sha256": "1ab3561cac24401124bdc1573f5890af935be080e159738bf091bbc589bfc7d6",
+      "provider_content_sha256": null
+    },
+    {
+      "case_id": "b4-003-coverage-gap-069",
+      "gap_id": "coverage-gap-069",
+      "failure_code": "provider_model_outside_requested_family:gpt-5.4-2026-03-05",
+      "provider_envelope_sha256": "2c34675b1ebc8a2712a2b016336bfff9b11977cd34ae5581dc4f12e53a480f70",
+      "provider_content_sha256": null
+    },
+    {
+      "case_id": "b4-004-coverage-gap-082",
+      "gap_id": "coverage-gap-082",
+      "failure_code": "provider_model_outside_requested_family:gpt-5.4-2026-03-05",
+      "provider_envelope_sha256": "f6f6874b63f3b6f225d7dc5a3e1196eb6cd31cc52aab9722ee6263c0b15890cc",
+      "provider_content_sha256": null
+    }
+  ],
+  "common_failure_code": "provider_model_outside_requested_family:gpt-5.4-2026-03-05",
+  "failure_taxonomy": {
+    "level": 1,
+    "level_code": "provider_representation_contract",
+    "attribution": {
+      "primary": "implementation",
+      "subtype": "provider_model_identity_canonicalization_rejected_versioned_family_member",
+      "confidence": "high",
+      "evidence": [
+        "All four provider envelopes reported gpt-5.4-2026-03-05.",
+        "The frozen adapter accepted only exact gpt-5.4 or a namespace ending in /gpt-5.4.",
+        "Failure occurred before provider content normalization and Boundary decision validation."
+      ],
+      "counterevidence": []
+    }
+  },
+  "raw_provider_content_stored": false,
+  "same_manifest_retry_authorized": false,
+  "boundary_capability_conclusion_authorized": false,
+  "boundary_correction_performed": false,
+  "coverage_qa_rerun": false,
+  "boundary_gold_frozen": false,
+  "support_review_allowed": false,
+  "held_out_accessed": false
+}

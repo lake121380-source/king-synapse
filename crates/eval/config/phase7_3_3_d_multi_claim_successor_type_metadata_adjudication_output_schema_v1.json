@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TypeMetadataAdjudicationOperationsV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decisions"
+  ],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_index",
+          "claim_role_choice",
+          "claim_type_choice"
+        ],
+        "properties": {
+          "claim_index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "claim_role_choice": {
+            "enum": [
+              "submission_a",
+              "submission_c"
+            ]
+          },
+          "claim_type_choice": {
+            "enum": [
+              "submission_a",
+              "submission_c"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

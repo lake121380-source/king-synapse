@@ -1,0 +1,36 @@
+{
+  "schema_version": 3,
+  "supplement_id": "phase7.3.3-d1-a-boundary-contract-interpretation-supplement-v3",
+  "supplement_type": "non_normative_interpretation_only",
+  "changes_prompt_parser_protocol_or_thresholds": false,
+  "frozen_artifact_sha256": {
+    "prompt_v3": "d1028000eea26327f24d996e046fb89f55fc66f079f74c4bffdcdbdba054937f",
+    "protocol_v3": "859438f8610eb5c1018b7f35181785fb83d4fa8483156d93eb128268349e5964",
+    "adapter_v3": "80b9200fb26ea942d2a18a492e7f8e047f9b3658dfcb42c75d3cbc9d942477f9",
+    "reviewer_a_manifest_v3": "09896a6d5aa3aa104803b4c1eff32f250da992cba5f77579633935e02a212402",
+    "reviewer_b_manifest_v3": "4b04e76bdde537166fd827fd43585d1104febc2c662b00a18f05dd1f85c401bf",
+    "v3_outcome": "665c46c5aa874e090577ce513470805ad7e5eadb968997e28c74547abb41118a"
+  },
+  "boundary_extraction_contract_interpretation": [
+    "source_excerpt must be an exact contiguous substring of the frozen source_text in the identified anchor.",
+    "Paraphrase, summarization, regeneration, token substitution, punctuation change, whitespace change, or undeclared Unicode normalization is invalid.",
+    "occurrence_index is evaluated only after at least one exact substring match exists.",
+    "occurrence_index disambiguates repeated exact substrings and does not authorize approximate matching.",
+    "A source_excerpt_not_found result proves non-verbatim output but does not by itself distinguish paraphrase from punctuation, whitespace, omission, insertion, or other mutation because raw provider text is not retained."
+  ],
+  "reviewer_b_v3_interpretation": {
+    "failure_code": "source_excerpt_not_found:extract_10-proposition-01:2",
+    "classification": "non_verbatim_boundary_extraction",
+    "hidden_contract_failure": false,
+    "model_protocol_compliance_failure": true,
+    "fine_grained_mutation_type_identifiable": false
+  },
+  "reviewer_c_policy": {
+    "new_independent_reviewer": true,
+    "retry_of_reviewer_b": false,
+    "same_v3_prompt_protocol_packet_and_parser_semantics_required": true,
+    "reviewer_a_or_b_outputs_visible": false,
+    "first_returned_response_authoritative": true
+  },
+  "held_out_accessed": false
+}

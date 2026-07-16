@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-boundary-review-protocol-v2",
+  "status": "frozen_before_any_v2_provider_call",
+  "predecessor_protocol_sha256": "c1fc720a6b156652822754937a8ec36e4a76d97cd7980a26812327c9a51a3a21",
+  "entry_protocol_sha256": "f3a9c401978f96d45c628214e65b9b0fabbbab3f56fd9e7cfab99e3b25c6555f",
+  "object_of_study": "atomic_claim_boundary_segmentation_under_compact_operation_only_representation",
+  "boundary_semantics_unchanged_from_v1": true,
+  "representation": {
+    "root_field": "operations",
+    "operation_only": true,
+    "rationale_removed": true,
+    "confidence_removed": true,
+    "model_returns_exact_excerpt": false,
+    "adapter_reconstructs_exact_excerpt": true,
+    "operations": [
+      "merge_units",
+      "new_span",
+      "reuse_unit",
+      "slice_unit"
+    ]
+  },
+  "controlled_invariants": {
+    "worklist_sha256": "13656be468d8c48c36967c689de4d0fdad09cd7f9ba9efe619682863659a2405",
+    "reviewer_models": {
+      "a": {
+        "model": "gpt-4.1"
+      },
+      "b": {
+        "model": "gemini-2.5-pro"
+      }
+    },
+    "provider": "api.gpt.ge",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 2500,
+    "evidence_visible": false,
+    "other_reviewer_visible": false
+  },
+  "both_v2_manifests_frozen_before_reviewer_a_v2": true,
+  "reviewer_a_v1_reused": false,
+  "next_after_two_completed_v2_submissions": "construct_multi_claim_successor_boundary_agreement_v2"
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 3,
+  "report_id": "phase7.3.3-d1-reference-construction-readiness-v3",
+  "recorded_at": "2026-07-13T10:07:52.166575+00:00",
+  "status": "boundary_agreement_frozen_adjudication_allowed",
+  "state_machine": {
+    "reviewer_a_completed": true,
+    "reviewer_e_completed": true,
+    "two_independent_boundary_submissions_available": true,
+    "boundary_agreement_available": true,
+    "boundary_agreement_frozen_before_adjudication": true,
+    "boundary_adjudication_allowed": true,
+    "boundary_adjudication_completed": false,
+    "coverage_qa_allowed": false,
+    "coverage_qa_blocked_reason": "boundary_adjudication_not_completed",
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false,
+    "support_blocked_reason": "boundary_gold_not_frozen",
+    "compatibility_check_allowed": false,
+    "design_model_execution_allowed": false,
+    "held_out_accessed": false
+  },
+  "artifact_lineage": {
+    "reviewer_a_submission_sha256": "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+    "reviewer_e_submission_sha256": "368972c417fd79818f19beacc4745fbb6e363237e8e0ac7f67f2230222357663",
+    "reviewer_e_outcome_sha256": "7f6b8f718a0e465705e0990ad22d616db5e109661c6180ede299b532b35de6ef",
+    "agreement_protocol_sha256": "8af77821fc4ab50f71dd63ea1f7ac2de6768b15e01e4627992095a5d55ac4597",
+    "agreement_script_sha256": "ad91a9d04ef35780f4a5b9ff2c789d231a2e16f1e9692114d9fcb0bbd3fee90f",
+    "agreement_report_sha256": "0ddb0b873431ddf89b7301f44691b7897a2a36d757f8eace10877a35ed22e6c7",
+    "failure_taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+    "research_routes_v1_sha256": "c4078c0b3cb6fa597e291d87503b7e92873c04cb401213fe2642fb4098dc0601"
+  },
+  "agreement_summary": {
+    "reviewer_a_claim_count": 96,
+    "reviewer_e_claim_count": 147,
+    "matched_pair_count": 85,
+    "exact_span_match_count": 53,
+    "agreement_interpretation_pending_adjudication": true
+  },
+  "next_required_action": "Perform Boundary adjudication using only the frozen Reviewer A submission, Reviewer E submission, and Agreement report identified by these hashes. The adjudication artifact must reference the Agreement report SHA-256.",
+  "provider_called": false,
+  "raw_provider_response_stored": false,
+  "credential_recorded": false,
+  "held_out_accessed": false
+}

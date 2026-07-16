@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "reviewer": "b",
+  "case_id": "extract_01",
+  "manifest_sha256": "4215b4d434a2a8f5e4fbe76fe895377bf0d6fe4f5383b527f7a9ffd5fe201974",
+  "resolved_model": "qwen3.5-plus",
+  "provider_envelope_sha256": "f6c51a7f1592aaabdfd0c070e2dc99ce01c2cdb8b1a3c091930c8acea66d2081",
+  "provider_content_sha256": "48af26d144f9d9477ddfb4b3cf63dcb8dc34a7a86d78a1c0dc2c9f5121c5b0f9",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-001",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-proposition-01",
+      "source_text_sha256": "316e3ad34ad3b7da7df76ea3137aecfa87b6f7b11c4a5fa12997184b97eef0b4",
+      "source_span": {
+        "start": 0,
+        "end": 217
+      },
+      "claim_text": "In software delivery, deploying changes incrementally to a small subset of traffic enables early detection of defects while keeping the old version available, provided the new and old versions are backward compatible.",
+      "claim_type": "proposition",
+      "centrality": "central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "The anchor contains a single compound assertion linking incremental deployment to defect detection and version availability, contingent on backward compatibility. No sub-clauses can be independently evaluated without losing the core logical dependency.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-002",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_statement-01",
+      "source_text_sha256": "24b5b4eddb11826ae1d6515ad671bbb136dbdfda272f79597593fd92c200c40a",
+      "source_span": {
+        "start": 0,
+        "end": 172
+      },
+      "claim_text": "When an incremental rollout with backward compatibility is used for a change, the first cohort will expose any critical regression without affecting the rest of the system.",
+      "claim_type": "prediction",
+      "centrality": "non_central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "The text makes a specific forward-looking assertion about the behavior of the 'first cohort' under defined conditions. It is a single predictive unit.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-003",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_observable-01",
+      "source_text_sha256": "142a0b9f5d5accdd3aea68b50946321da84105648bda201db943ac2c0344b80c",
+      "source_span": {
+        "start": 0,
+        "end": 113
+      },
+      "claim_text": "A defect found in the first cohort does not require rolling back the old version; only the cohort is rolled back.",
+      "claim_type": "prediction",
+      "centrality": "non_central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This asserts a specific observable outcome (scope of rollback) resulting from a defect in the first cohort. It is a distinct prediction from the previous anchor.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-004",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-prediction_success_criterion-01",
+      "source_text_sha256": "a743b533b84b7d73f25e02c887deb510dfa71492b47653344cddf1d19ed80f07",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "claim_text": "The old version remains fully operational during the entire rollout phase.",
+      "claim_type": "prediction",
+      "centrality": "non_central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This defines a specific state (operational status of the old version) expected to hold true throughout a defined period, serving as a success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-005",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_statement-01",
+      "source_text_sha256": "fecb88bef32b0476d78d8bc57f80c5a056622ca1e72706d0b927d0857f2272a0",
+      "source_span": {
+        "start": 0,
+        "end": 152
+      },
+      "claim_text": "If an incremental rollout with backward compatibility still causes a system-wide outage or forces rollback of the old version, the pattern is falsified.",
+      "claim_type": "falsifiability",
+      "centrality": "non_central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "The text explicitly defines the conditions under which the pattern would be considered false (system-wide outage or old version rollback).",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_01-claim-006",
+      "case_id": "extract_01",
+      "response_sha256": "f21f65dd18bb72121a1e1ba0ce54c875953c4b99f789f7373ed573a83878ad3b",
+      "anchor_id": "extract_01-falsification_observable-01",
+      "source_text_sha256": "0db869a5fe5a94cc60315c3a2d832d5f42234000fff46ba9f35999d9b24e02fc",
+      "source_span": {
+        "start": 0,
+        "end": 115
+      },
+      "claim_text": "The entire system becomes unavailable or the old version is rolled back due to issues from the incremental rollout.",
+      "claim_type": "falsifiability",
+      "centrality": "non_central",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "This excerpt describes the specific observable events that constitute the falsification condition mentioned in the related statement.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_01",
+    "status": "completed",
+    "claim_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

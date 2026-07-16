@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "receipt_id": "phase7.3.3-d-independent-pilot-analysis-freeze-receipt-v2",
+  "status": "frozen_exploratory_pilot_analysis_completed_corrective_successor",
+  "artifact_sha256": {
+    "analysis_protocol": "9a89dc20a269faffddd1751c878b64c6cdac5d275f7363767fe6472722f4fa94",
+    "freeze_manifest": "16d62c030a824307ac27d071bd740931c167906a40435c79af5dca06ec671c7d",
+    "execution_manifest": "8ff1a6d342207050814a7dccb1036030d5fe769e4df7f920fc54edc959a3cddb",
+    "paired_analysis_cases": "47e3230ef7fc5bb9f81960368feba8a8d10e4369827ffd14e829c25893387336",
+    "analysis_report": "2e641f82f11c4543a4b86418c4255c6397cef15da11d8d717acd289f81611406",
+    "reference": "ef2f4aa6e1ceb0a1a4a12dc67c4e8e37c41839d69a60425a197fef13ef1f00e9",
+    "candidate_submission": "36f3d513ad951c3a8b1aae1581342d2fa190e71a1438f9a323413d267349d851",
+    "atomic_submission": "e08d5b8e3de53d97a4a670eadfd4941d9a324461e88f0c862782a02d98d75a85",
+    "analysis_v1_negative_result": "db4339d36e276570e267d3ce0bba4eadb8189acbac3a3f71e60b22b4f2426261"
+  },
+  "paired_primary_effect": {
+    "estimand": "exact_accuracy_atomic_minus_candidate",
+    "estimate": 0.0,
+    "discordant_pairs": {
+      "both_correct": 19,
+      "candidate_only_correct": 3,
+      "atomic_only_correct": 3,
+      "both_wrong": 15
+    },
+    "cluster_bootstrap_95_interval": {
+      "method": "candidate_sha256_cluster_bootstrap",
+      "seed": 733041,
+      "replicates": 20000,
+      "lower_2_5": -0.075,
+      "upper_97_5": 0.075
+    },
+    "case_bootstrap_95_interval_secondary": {
+      "method": "case_bootstrap",
+      "seed": 733042,
+      "replicates": 20000,
+      "lower_2_5": -0.125,
+      "upper_97_5": 0.125
+    },
+    "confirmatory_p_value": null
+  },
+  "missingness_and_failures": {
+    "selected_cases": 40,
+    "candidate_final_missing": 0,
+    "atomic_final_missing": 0,
+    "paired_cases_dropped": 0,
+    "final_version_failure_rate": {
+      "candidate": 0.0,
+      "atomic": 0.0
+    },
+    "predecessor_dual_arm_partial_outputs_used": false,
+    "predecessor_analysis_v1_outputs_used": false
+  },
+  "structural_diagnostics": {
+    "reference_claim_count": 40,
+    "atomic_claim_count": 40,
+    "all_atomic_operations_whole_candidate": true,
+    "general_atomic_localization_superiority_estimable": false,
+    "localization_estimand_status": "degenerate_representation_equivalent_single_claim_frame",
+    "partial_localization_estimable": false
+  },
+  "reference_prefreeze_json_content_parsed": false,
+  "predecessor_analysis_v1_outputs_used": false,
+  "confirmatory_content_opened": false,
+  "runtime_integration_authorized": false
+}

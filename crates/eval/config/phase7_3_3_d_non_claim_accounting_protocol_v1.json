@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b2-explicit-non-claim-accounting-v1",
+  "phase": "Phase 7.3.3-D1-B2 Explicit Non-Claim Accounting and Boundary-Omission Triage",
+  "research_object": "semantic accounting of frozen eligible Boundary coverage gaps",
+  "core_principle": "not_covered_by_claim_does_not_imply_non_claim",
+  "frozen_input": {
+    "gap_ids_and_spans_protocol_owned": true,
+    "gap_count": 84,
+    "eligible_non_whitespace_character_count": 206,
+    "reviewer_may_edit_or_create_spans": false,
+    "whitespace_already_deterministically_excluded": true,
+    "protocol_excluded_is_not_an_allowed_reviewer_outcome": true
+  },
+  "allowed_outcomes": {
+    "explicit_non_claim": {
+      "definition": "The complete frozen Gap carries no independently assertive semantic content and may be explicitly accounted as non-Claim.",
+      "reason_code_required": true,
+      "allowed_reason_codes": [
+        "formatting_only",
+        "list_delimiter",
+        "metadata_not_a_claim",
+        "non_assertive_connector",
+        "other_explained_non_claim",
+        "punctuation_only"
+      ],
+      "nonempty_rationale_required": true
+    },
+    "boundary_omission_candidate": {
+      "definition": "Some or all of the frozen Gap may carry claim-bearing, qualifying, conditional, limiting, falsifying, predictive, or otherwise assertive content omitted by the current Boundary Reference Candidate.",
+      "reason_code_must_be_null": true,
+      "nonempty_rationale_required": true,
+      "automatic_boundary_correction_authorized": false
+    }
+  },
+  "review_design": {
+    "dual_blind_ai_review": true,
+    "reviewers": [
+      "qwen3.5-plus",
+      "gemini-2.5-pro"
+    ],
+    "same_prompt_and_packet": true,
+    "case_isolation": true,
+    "reviewer_outputs_mutually_hidden": true,
+    "support_labels_visible": false,
+    "candidate_gold_or_silver_visible": false,
+    "evidence_visible": false,
+    "historical_judge_visible": false,
+    "held_out_visible": false
+  },
+  "agreement_statuses": [
+    "exact_agreement",
+    "classification_agreement_reason_disagreement",
+    "classification_disagreement"
+  ],
+  "post_review_policy": {
+    "automatic_adjudication": false,
+    "automatic_boundary_repair": false,
+    "coverage_rerun_before_resolution": false,
+    "boundary_gold_freeze_before_coverage_pass": false,
+    "support_review_before_boundary_gold_freeze": false
+  }
+}

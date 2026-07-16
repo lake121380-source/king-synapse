@@ -1,0 +1,103 @@
+{
+  "schema_version": 2,
+  "taxonomy_id": "phase7.3.3-d-reviewer-failure-taxonomy-v2",
+  "status": "frozen_for_prospective_use_before_reviewer_e",
+  "supersedes_for_future_classification": "phase7.3.3-d-reviewer-failure-taxonomy-v1",
+  "preserves_v1_sha256": "4605a1dedcb0ad4432c67267220b82f3da23917ebe6b3726355fa8677accf4c2",
+  "change_from_v1": "Adds an orthogonal Failure Attribution dimension; level definitions and failure precedence are unchanged.",
+  "scope": "Phase 7.3.3-D Boundary reference construction and downstream gates",
+  "dimensions": {
+    "failure_level": {
+      "meaning": "Where in the experimental pipeline the earliest failure occurred.",
+      "values": [
+        {
+          "level": 0,
+          "code": "delivery_transport"
+        },
+        {
+          "level": 1,
+          "code": "provider_representation_contract"
+        },
+        {
+          "level": 2,
+          "code": "boundary_semantic_contract"
+        },
+        {
+          "level": 3,
+          "code": "inter_reviewer_agreement"
+        },
+        {
+          "level": 4,
+          "code": "support_reference_contract"
+        }
+      ]
+    },
+    "failure_attribution": {
+      "meaning": "Which component current evidence most strongly supports as the source of the observed failure. Attribution is evidential, revisable, and not moral blame.",
+      "primary_values": [
+        {
+          "code": "protocol",
+          "definition": "The public task contract is hidden, ambiguous, incomplete, or internally inconsistent."
+        },
+        {
+          "code": "implementation",
+          "definition": "Parser, adapter, canonicalization, persistence, or other executable machinery rejects or transforms an otherwise admissible result."
+        },
+        {
+          "code": "provider",
+          "definition": "Returned Provider content or metadata does not satisfy a public frozen contract."
+        },
+        {
+          "code": "reviewer",
+          "definition": "A representation-valid reviewer judgment fails the substantive annotation task despite an adequate protocol and implementation."
+        },
+        {
+          "code": "unknown",
+          "definition": "Available evidence cannot distinguish the responsible component."
+        }
+      ],
+      "required_fields": [
+        "primary",
+        "subtype",
+        "confidence",
+        "evidence",
+        "counterevidence"
+      ],
+      "confidence_values": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "secondary_attribution_allowed": true
+    }
+  },
+  "level_definitions_sha256_source": "4605a1dedcb0ad4432c67267220b82f3da23917ebe6b3726355fa8677accf4c2",
+  "classification_rules": {
+    "primary_failure_is_earliest_failed_level": true,
+    "downstream_levels_after_failure_are": "not_assessable",
+    "level_and_attribution_are_orthogonal": true,
+    "same_level_may_have_different_attribution": true,
+    "same_attribution_may_occur_at_different_levels": true,
+    "attribution_requires_artifact_evidence": true,
+    "unknown_required_when_evidence_is_insufficient": true,
+    "new_level_or_primary_attribution_requires_new_taxonomy_version": true,
+    "new_subtype_may_be_recorded_only_if_existing_primary_category_remains valid": true
+  },
+  "capability_reporting": {
+    "level_0_or_1_failure_means_boundary_capability": "not_assessable",
+    "level_2_failure_means_boundary_capability": "assessable_and_failed_for_frozen_contract",
+    "end_to_end_provider_compliance_requires_levels_0_1_2_pass": true,
+    "agreement_requires_two_completed_level_2_pass_submissions": true
+  },
+  "experimental_discipline": {
+    "v1_modified": false,
+    "reviewer_a_through_d_mapping": "retrospective_descriptive",
+    "v2_prospectively_frozen_before_reviewer_e": true,
+    "reviewer_e_started": false,
+    "v4_execution_started": false,
+    "prompt_modified": false,
+    "protocol_modified": false,
+    "parser_modified": false,
+    "held_out_accessed": false
+  }
+}

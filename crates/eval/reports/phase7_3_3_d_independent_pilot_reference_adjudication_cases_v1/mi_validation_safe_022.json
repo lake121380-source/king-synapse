@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "manifest_sha256": "9f3dbde7011894456bb73e71986a8d139e5d0c652cc7a049d5613e5becbea0bf",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "99fb68bec299dacc3c18681a0788231ce7865c98dfed93fa8e987906d64ae6d4",
+  "content_sha256": "2f08e4c6efc78593101fa7e647546a023ff5db87833dbcd8dcd056338ce4f3bd",
+  "usage": {
+    "prompt_tokens": 1442,
+    "completion_tokens": 104,
+    "total_tokens": 1546,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 853,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1693,
+      "total_duration_ms": 1617,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "result": {
+    "case_id": "mi_validation_safe_022",
+    "adjudication_item_id": "independent-pilot-reference-adjudication-006",
+    "operation": "select_option_1",
+    "adjudicator_rationale": "Evidence 06 supports that there is a clear current confirmed answer that should remain first, but it does not explicitly entail the full candidate proposition that no cognitive intervention is needed. Under conservative entailment, the intervention-need portion is unsupported, so the candidate as a whole is not established.",
+    "status": "selected_frozen_reviewer_decision",
+    "selected_option": "option_1",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "support_label": "unsupported",
+      "material": true,
+      "claim_type": "selection_rule",
+      "cited_evidence_ids": [
+        "mi_validation_safe_022-evidence-06"
+      ],
+      "reason_codes": [
+        "conflicting_evidence"
+      ],
+      "rationale": "The Candidate claims that baseline evidence is clear and no cognitive intervention is needed. However, Evidence 06 (ground truth) states that a clear current confirmed answer should remain first, implying that there is a clear answer but does not address whether cognitive intervention is needed. The other evidence items are either irrelevant or weak. No evidence supports the claim that no cognitive intervention is needed; in fact, the context involves competing signals and conflict evaluation, suggesting intervention may be required. Therefore, the claim is unsupported.",
+      "confidence": "high"
+    },
+    "boundary_mutation_performed": false,
+    "candidate_mutation_performed": false,
+    "evidence_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_frozen_decision_sha256": "1247a4d75bfcf14da3ff1ed91272770826fb06de6ba1f338dca75b410e2055ed"
+  }
+}

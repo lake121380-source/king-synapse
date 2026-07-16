@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-023-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_09",
+  "adjudication_item_id": "support-adjudication-023",
+  "boundary_claim_id": "adjudicated-extract_09-claim-001",
+  "provider_envelope_sha256": "719af056672a84075b8303e666deec96d76d91c6f8941aef4bf632898ff64b17",
+  "provider_content_sha256": "f03e314926ad99ef9b24fe2135ecc7b10176780393c2827c54987bc9aeda782a",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "b6eb4f43b5f32554cfeba8076d72c4b9c2437a4ffc3989335c21bea107ea5631",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-023",
+    "case_id": "extract_09",
+    "boundary_claim_id": "adjudicated-extract_09-claim-001",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The evidence shows two examples where independent sources converged on the same estimate/conclusion, but it does not directly observe or establish the broader causal/general claim that such convergence makes the result robust in general. The support requires an inferential step from convergence to robustness.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_09-claim-001",
+      "cited_evidence_ids": [
+        "px_09_support_1",
+        "px_09_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "causal_leap",
+        "certainty_escalation"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "Evidence shows independent sources (labs, methods) converging on the same estimate or conclusion, but does not directly establish that all such convergences are robust in general or causally; 'robustness' is inferred and causality is stronger than observed."
+    },
+    "selected_frozen_decision_sha256": "b370632d01f6121fc3326ecb52bb7c1a6f706de424ca45a4fe0c48789cbce9a0",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

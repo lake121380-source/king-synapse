@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "outcome_id": "phase7.3.3-d1-b-support-review-execution-outcome-v2",
+  "status": "completed_with_two_independent_support_submissions",
+  "v1_outcome_preserved": true,
+  "v1_request_configuration_audit_sha256": "7f94aa28f9e6f011e61c28739b23c92edac92c95f85d0d92ec2a295601a5be2d",
+  "controlled_change_from_v1": {
+    "field": "credential_env_name",
+    "from": "DEEPSEEK_API_KEY",
+    "to": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "provider_base_url_changed": false,
+    "reviewer_models_changed": false,
+    "prompt_changed": false,
+    "packets_changed": false,
+    "boundary_gold_changed": false,
+    "support_contract_changed": false
+  },
+  "protocol_sha256": "e556a70e109842eb5dedc8a1dc5798f2857b0df6e20ebdc616af76edf760dad7",
+  "execution_policy_sha256": "c87d01e5131971140d71a7a871d24578db5908c21fc5b947283d006c6da55477",
+  "prompt_sha256": "d659c31bbe2180420102f1134f7d414800740b587e2b7b7a2407802a4684a912",
+  "contract_fixtures_sha256": "cf13d6c77bf164eeef2f151bd89e5c24e6ff6972cb5714b999bbaee1ef432907",
+  "reviewers": {
+    "a": {
+      "manifest_sha256": "ddd1d47277da2e875a2002d3362ea8812dee0fa5a14215d9a45e416bd55ff4e5",
+      "attempt_log_sha256": "abbd5b07eda0be6224aa4ec73c4a5f148406e3224d3ff3bb87b9d4c639965438",
+      "submission_sha256": "2449858a296e48bd761686263dddaf4f90afdcdbc874b588e68f92c4f141c896",
+      "execution_result_sha256": "6192407ad21307d12eb77f0109f249c38b49d424a8ea2d7c9c18847dc648df9e",
+      "terminal_outcome": "completed",
+      "model_requested": "gpt-4.1",
+      "canonical_model_family": "gpt-4.1",
+      "provider_reported_models": [
+        "gpt-4.1",
+        "gpt-4.1-2025-04-14"
+      ],
+      "completed_case_count": 10,
+      "decision_count": 118,
+      "support_label_counts": {
+        "partially_supported": 27,
+        "supported": 84,
+        "unsupported": 7
+      },
+      "confidence_counts": {
+        "high": 106,
+        "medium": 12
+      },
+      "held_out_accessed": false
+    },
+    "b": {
+      "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+      "attempt_log_sha256": "c918f4333f692b3c90b81bff1ac1f8508e1da5fa001c934260d3b7c8e1cf3f94",
+      "submission_sha256": "0e82057a80b67a7e0f7e389f6febd5d4f1379f7bbdc364eab344fb65d41c8db0",
+      "execution_result_sha256": "858d1c1dc4413660b2de84d7e3ab5dfa2d618f31dd13ec26e070081ee26f1463",
+      "terminal_outcome": "completed",
+      "model_requested": "qwen3.5-plus",
+      "canonical_model_family": "qwen3.5-plus",
+      "provider_reported_models": [
+        "qwen3.5-plus"
+      ],
+      "completed_case_count": 10,
+      "decision_count": 118,
+      "support_label_counts": {
+        "partially_supported": 18,
+        "supported": 95,
+        "unsupported": 5
+      },
+      "confidence_counts": {
+        "high": 94,
+        "medium": 24
+      },
+      "held_out_accessed": false
+    }
+  },
+  "completion_checks": {
+    "audit_confirmed": true,
+    "protocol_v2": true,
+    "fixtures_14_pass": true,
+    "a_completed": true,
+    "b_completed": true,
+    "a_118": true,
+    "b_118": true,
+    "claim_ids_identical": true,
+    "result_hashes": true,
+    "held_out_false": true,
+    "agreement_not_computed": true,
+    "support_gold_not_frozen": true
+  },
+  "two_completed_support_submissions": true,
+  "support_agreement_allowed": true,
+  "support_agreement_computed": false,
+  "support_adjudication_allowed": false,
+  "support_gold_frozen": false,
+  "held_out_accessed": false,
+  "interpretation": "Correct gateway credential routing allowed both frozen independent reviewers to complete 10/10 cases and 118/118 Support decisions. This authorizes construction and freezing of the Support Agreement protocol; it does not itself establish agreement or Support Gold.",
+  "next_required_stage": "freeze_support_agreement_protocol_v1"
+}

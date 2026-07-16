@@ -1,0 +1,65 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rel_024",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "89198b91979de2ee66f7c1370c32014cbc7922742c5c6d323bfd9e8d90ad727d",
+  "content_sha256": "e9d5a973344a212f69aacd812b53ebe74165f94975e8aa7d1335238a87f40597",
+  "latency_ms": 6549.993099994026,
+  "usage": {
+    "prompt_tokens": 1196,
+    "completion_tokens": 112,
+    "total_tokens": 1308,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3225,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4065,
+      "total_duration_ms": 3989,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rel_024",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rel_024-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence supports that direct user confirmation establishes a reliable fact, and separately that an unverified third-party report remains unreliable. However, it does not explicitly establish the comparative ranking claim that direct user confirmation outranks a lexically stronger unverified report, because lexical strength and the precise priority rule are not stated."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_rel_024-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

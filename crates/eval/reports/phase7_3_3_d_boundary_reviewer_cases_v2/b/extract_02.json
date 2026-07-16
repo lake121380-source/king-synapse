@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "reviewer": "b",
+  "case_id": "extract_02",
+  "manifest_sha256": "2539753cb619b74c31e178ce02533b6c64331c64cc79d5972660b7d0f8feaec4",
+  "resolved_model": "qwen3.5-plus",
+  "provider_envelope_sha256": "b8a5a87252485c965769c7875b7f485540b37803d146892cdcb6963cf1ed3450",
+  "provider_content_sha256": "6ec053832379fd94975ccd0bb39a3bf82bffd56d2730175478bf674b7a1f36f6",
+  "claims": [
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-001",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "source_span": {
+        "start": 28,
+        "end": 170
+      },
+      "claim_text": "labeling cases by customer impact and time sensitivity before assignment ensures that high-impact time-sensitive issues are addressed promptly",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_02::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "Isolates the positive causal mechanism asserted in the first half of the proposition.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-002",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "288e3a47e9e77ac1ab156679cdcaebca75a96b5d0d916180298301f2f5b704f4",
+      "source_span": {
+        "start": 178,
+        "end": 268
+      },
+      "claim_text": "labeling solely by requester status (e.g., VIP) can cause critical issues to be overlooked",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_02::proposition",
+      "material": true,
+      "claim_origin": "synthesized",
+      "boundary_rationale": "Isolates the negative causal mechanism asserted in the second half of the proposition, split from the first due to distinct truth conditions.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-003",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "a62889cbc587254fc226c9ee61c318cd5e3c992c8356346ec3210592a0ddf7ee",
+      "source_span": {
+        "start": 102,
+        "end": 198
+      },
+      "claim_text": "high-impact time-sensitive issues will be addressed before lower-impact less-time-sensitive ones",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_02::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Extracts the specific predicted outcome sequence from the conditional statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-004",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "4b8921a381974effdf86eafce37c7b50dcfce708eee5c132d669ee8fad7ef7ef",
+      "source_span": {
+        "start": 0,
+        "end": 98
+      },
+      "claim_text": "The order of case resolution in the queue reflects the combined impact and time-sensitivity labels",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_02::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Captures the primary observable relationship regarding resolution order.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-005",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "4b8921a381974effdf86eafce37c7b50dcfce708eee5c132d669ee8fad7ef7ef",
+      "source_span": {
+        "start": 100,
+        "end": 146
+      },
+      "claim_text": "with the highest combined score resolved first",
+      "claim_type": "prediction",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_02::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Isolates the specific sorting rule component of the observable prediction.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-006",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "499b3ca8791efee3092716545d886ae4e14ca9eb3246162c6a54502f0bae67fc",
+      "source_span": {
+        "start": 0,
+        "end": 171
+      },
+      "claim_text": "At least 90% of cases labeled as high-impact and high-time-sensitivity are resolved before any cases labeled as low-impact and low-time-sensitivity in the same time window",
+      "claim_type": "prediction",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_02::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Extracts the full quantitative success criterion as a single atomic claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-007",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "2f2aef78a6c49326802d7299a873959f091e84aedba7a822f1356ff6b65f3599",
+      "source_span": {
+        "start": 0,
+        "end": 170
+      },
+      "claim_text": "If a customer support queue with impact and time-sensitivity labeling experiences a critical outage being delayed behind low-impact VIP requests, the pattern is falsified",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_02::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Captures the complete conditional statement defining the falsification condition.",
+      "annotation_confidence": "high"
+    },
+    {
+      "reviewer_claim_id": "reviewer-b-extract_02-claim-008",
+      "case_id": "extract_02",
+      "response_sha256": "fc962969eba7a96d7c07ccabc65cc69c708268002945811b339f15e42d19e090",
+      "anchor_id": "extract_02-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "39637bdb0ca74786044f092df64ee8b41077ff6576b598488a531cca1d7c1a15",
+      "source_span": {
+        "start": 0,
+        "end": 97
+      },
+      "claim_text": "A critical outage case receives a lower priority than a low-impact VIP case and is resolved later",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_02::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_rationale": "Extracts the specific observable event that constitutes falsification.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_02",
+    "status": "completed",
+    "claim_count": 8
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

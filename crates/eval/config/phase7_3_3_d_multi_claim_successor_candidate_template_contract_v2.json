@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "contract_id": "phase7.3.3-d-multi-claim-successor-candidate-template-contract-v2",
+  "status": "frozen_before_parameter_instantiation",
+  "serialization": {
+    "unit_separator": "LF",
+    "unit_count": 6,
+    "normalization": "none_after_deterministic_format",
+    "semantic_rewrite_allowed": false
+  },
+  "slot_contracts": [
+    {
+      "slot": "direct_support_a",
+      "candidate_form": "case_{n}_observed_signal_alpha",
+      "evidence_form": "case_{n}_observed_signal_alpha"
+    },
+    {
+      "slot": "direct_support_b",
+      "candidate_form": "case_{n}_observed_signal_beta",
+      "evidence_form": "case_{n}_observed_signal_beta"
+    },
+    {
+      "slot": "unsupported_contrast",
+      "candidate_form": "case_{n}_observed_signal_gamma",
+      "evidence_form": "case_{n}_no_observation_of_signal_gamma"
+    },
+    {
+      "slot": "unsupported_causal",
+      "candidate_form": "case_{n}_signal_alpha_proves_cause_delta",
+      "evidence_form": "case_{n}_cause_delta_not_established"
+    },
+    {
+      "slot": "partial_scope_pressure",
+      "candidate_form": "case_{n}_signal_beta_holds_across_all_contexts",
+      "evidence_form": "case_{n}_signal_beta_observed_in_context_one"
+    },
+    {
+      "slot": "partial_temporal_pressure",
+      "candidate_form": "case_{n}_signal_alpha_remains_permanent",
+      "evidence_form": "case_{n}_signal_alpha_observed_during_recent_window"
+    }
+  ],
+  "pressure_slot_intended_behavior_is_not_gold": true,
+  "reviewers_must_apply_frozen_support_contract_independently": true,
+  "boundary_units_not_predeclared_as_atomic_gold": true,
+  "candidate_count_parameters": 48,
+  "confirmatory_content": false
+}

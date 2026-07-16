@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "routes_id": "phase7.3.3-d-research-object-separation-v1",
+  "status": "frozen_route_boundary_declaration",
+  "failure_taxonomy_v2_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+  "route_a": {
+    "name": "End-to-End Provider Compliance",
+    "protocol": "V3",
+    "status": "active_frozen",
+    "estimand": "Probability that a Provider completes delivery, representation, and Boundary semantic contracts without repair under the frozen V3 execution policy.",
+    "included_levels": [
+      0,
+      1,
+      2
+    ],
+    "normalization": {
+      "markdown_fence_stripping": false,
+      "json_repair": false,
+      "model_identity_case_folding": false,
+      "schema_repair": false,
+      "semantic_repair": false
+    },
+    "valid_comparison": "Models or Providers executed under byte-identical V3 Prompt, Protocol, Parser, and policy.",
+    "prohibited_interpretation": "A Level 0 or Level 1 failure must not be reported as Boundary inability."
+  },
+  "route_b": {
+    "name": "Boundary Extraction Capability",
+    "future_protocol": "V4",
+    "status": "design_not_started",
+    "estimand": "Boundary semantic performance after a separately frozen deterministic representation-normalization layer.",
+    "allowed_future_normalization_constraints": [
+      "Deterministic only; no model call or semantic rewriting.",
+      "Model identity aliases must be enumerated before execution.",
+      "Markdown fence removal may be allowed only when exactly one unambiguous JSON payload exists.",
+      "No missing-field invention, excerpt rewriting, span repair, label repair, or selective retry.",
+      "Normalized and original content hashes must both be recorded even when raw content retention remains prohibited."
+    ],
+    "frozen_boundary_semantics_required": true,
+    "v4_prompt_created": false,
+    "v4_parser_created": false,
+    "v4_manifest_created": false,
+    "v4_execution_started": false,
+    "prohibited_comparison": "Route B normalized success rates must not be pooled with or presented as Route A V3 end-to-end compliance rates."
+  },
+  "shared_constraints": {
+    "no_held_out_access": true,
+    "no_support_review_before_boundary_gold": true,
+    "no_same_manifest_retry_after_provider_content": true,
+    "no_result_driven_tuning": true,
+    "route_must_be_declared_before_future_execution": true
+  },
+  "reviewer_e_status": "not_authorized_not_started",
+  "held_out_accessed": false
+}

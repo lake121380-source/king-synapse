@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_frr_023",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "2ce199136c4431f59fff665420567c3890e7d1839e0683380ea8256d7dcfc7bf",
+  "provider_content_sha256": "13caa2c0febac35b13d53d074cb2fb089a4f6d1151166e77dc882c5ee25f2b53",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "44041ea245d46a906b52b0343f829c78bf47bc25b228042c5370019020b7b747",
+  "normalized_case": {
+    "case_id": "mi_validation_frr_023",
+    "candidate_sha256": "024bcc7a1e0e695a298e310b8c7a8dfb3ae437fbfe71882f0aa8d66aee48547c",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_frr_023-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 73
+        },
+        "source_text_sha256": "024bcc7a1e0e695a298e310b8c7a8dfb3ae437fbfe71882f0aa8d66aee48547c",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_frr_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 06 directly states that a later verified recovery playbook is active after the historical failure was resolved, which matches the candidate's claim that a later verified recovery supersedes resolved historical failure evidence.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

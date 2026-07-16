@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_ctx_018",
+  "manifest_sha256": "0f1b6fe0b37b4c8262ae682ecac72e8fcaf8842991d332bba3c427de8ebd6b97",
+  "provider_envelope_sha256": "69c700c9cf8c64c3a5278e064239365481170f314ca359c59fb5a07e23ef5789",
+  "provider_content_sha256": "30836faa3332cb434df85e7a37dad2806223a51c8c307ff23aa96c99dbacc316",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_case_sha256": "46c365aa5bdf8fdf6f6725d7dfc50d38249a03b384c7818ccf2da8684a4b611f",
+  "normalized_case": {
+    "case_id": "mi_validation_ctx_018",
+    "candidate_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_ctx_018-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "source_text_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_ctx_018-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the active task constraint selects the context-compatible playbook. Evidence-06 explicitly states that the 'playbook satisfies the active safety and scope constraint,' which directly confirms the selection mechanism described in the candidate. Evidence-01 further supports this by noting that a generic playbook was rejected for violating the active constraint, reinforcing that the constraint drives the selection.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

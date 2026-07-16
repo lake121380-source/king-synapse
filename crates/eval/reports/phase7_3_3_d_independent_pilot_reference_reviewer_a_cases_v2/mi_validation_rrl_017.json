@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_rrl_017",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "b6779eba10a96fcf99a37f56e7aa79a299d2daf13b521c9f38ccffe8379c4d48",
+  "provider_content_sha256": "c55b223c853ba3f48d260a8690236c3bbfc6b61dd340e951bdfcdebc59cabeca",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "1470fd7ae7aab9a8fb53bbb8d7e5dde0385167a3b7ec40c57339c2ca6eab2709",
+  "normalized_case": {
+    "case_id": "mi_validation_rrl_017",
+    "candidate_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rrl_017-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 64
+        },
+        "source_text_sha256": "83f208e7dc83e4ca2fc1c004788dd70a7bdeaf3b7b3c4cf0a9a0f0b8c8c559e6",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rrl_017-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that a high-confidence confirmation should take precedence over a recent but weak observation. Evidence 06 directly states that 'high confidence confirmation remains authoritative,' which matches the selection rule described in the candidate. The evidence is recent, relevant, and of high confidence, supporting the claim's comparative and selection aspects. No evidence contradicts this rule, and the scope and certainty are fully addressed.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

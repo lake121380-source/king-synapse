@@ -1,0 +1,47 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_fail_018",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "06219cf9028bc1508dd60ca67b71417483f98ba5dd65c10374e176eed5c6a29e",
+  "content_sha256": "a7387a5cbffdafe4571b112e033f0d8d7e3783b984a7fa742cc99aaf4d5fd958",
+  "latency_ms": 4255.874299968127,
+  "usage": {
+    "prompt_tokens": 1014,
+    "completion_tokens": 71,
+    "total_tokens": 1085,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1231,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2071,
+      "total_duration_ms": 1995,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_fail_018",
+    "support_label": "supported",
+    "rationale": "The evidence directly states that an older successful playbook recommends repeating the approach, and separately that verified failure evidence says the approach caused harm and must not be repeated. This entails that verified failure evidence overrides the previously successful playbook.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": []
+  }
+}

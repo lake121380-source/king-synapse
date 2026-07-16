@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-support-review-v2-entry-protocol-v1",
+  "status": "prospectively_frozen_successor_authorization",
+  "predecessor_result": "reviewer_b_v1_authoritative_level_2_provenance_failure",
+  "predecessor_negative_result_sha256": "7e0f646b498b23a6ab06ee572ed781f49107645217992911a13dfb8dab2c1a93",
+  "same_version_retry_authorized": false,
+  "successor_version": "support_review_v2",
+  "successor_hypothesis": "a fixed-length positionwise evidence-citation mask can remove the v1 out-of-range sparse-index provenance failure without changing Support semantics",
+  "controlled_invariants": [
+    "selected_40_cases",
+    "sealed_240_claim_reference_candidate",
+    "support_packets",
+    "support_labels",
+    "reason_codes",
+    "support_semantics",
+    "provider",
+    "reviewer_models",
+    "temperature",
+    "top_p",
+    "max_tokens",
+    "blindness"
+  ],
+  "single_intended_experimental_change": "replace model-generated sparse cited_evidence_indices with a fixed-length binary evidence_citation_mask that the adapter deterministically maps to immutable evidence IDs",
+  "nonsemantic_instrumentation_correction": "propagate already-computed provider envelope/content/model hashes into any post-parse contract failure artifact",
+  "reviewer_a_v1_reused_as_v2_submission": false,
+  "reviewer_a_and_b_v2_both_must_run_under_v2": true,
+  "v1_artifacts_modified": false,
+  "confirmatory_opening_authorized": false,
+  "runtime_integration_authorized": false
+}

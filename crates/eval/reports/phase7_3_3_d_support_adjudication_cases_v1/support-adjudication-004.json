@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-004-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_04",
+  "adjudication_item_id": "support-adjudication-004",
+  "boundary_claim_id": "adjudicated-extract_04-claim-017",
+  "provider_envelope_sha256": "61c275a6bdddfd42ef1345eb01fac7ed124d23cb09d6b6b1539311dd4a28abfb",
+  "provider_content_sha256": "0a6c8d5e74518f154f107fd8e8ea12352daf9a579c7839ad9b33017b7a9a674a",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "766ce8fe237c3397bdc69ce5a2edcb121f3334acc2e8aba37f906349d5677885",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-004",
+    "case_id": "extract_04",
+    "boundary_claim_id": "adjudicated-extract_04-claim-017",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The claim is a falsification observable: support is shown by evidence where that observable does not occur. In both support experiences, the root cause was found using the specified evidence classes, directly showing that 'root cause not found within those evidence classes' did not happen.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_b",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_04-claim-017",
+      "cited_evidence_ids": [
+        "px_04_support_1",
+        "px_04_support_2"
+      ],
+      "reason_codes": [
+        "counterexample_preserved"
+      ],
+      "support_label": "supported",
+      "support_rationale": "In the support cases, the root cause was found within the evidence classes, meaning the falsification observable (root cause not found) did not occur."
+    },
+    "selected_frozen_decision_sha256": "6b860551b833bb89c163c839785c96c32d106b431dd57a9cbd72e0da552d9622",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

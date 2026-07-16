@@ -1,0 +1,135 @@
+﻿{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d1-b-support-review-packet-construction-protocol-v1",
+  "stage": "Phase 7.3.3-D1-B Support Review Packet Construction",
+  "purpose": "Construct two identical, reviewer-isolated blind Support Review packets from frozen Boundary Gold and the frozen evidence bundle without executing Support Review.",
+  "execution_mode": "offline_deterministic",
+  "entry_gates": {
+    "boundary_gold_status": "frozen_project_boundary_gold",
+    "boundary_gold_frozen": true,
+    "support_review_allowed": true,
+    "support_review_started": false,
+    "support_gold_frozen": false,
+    "held_out_accessed": false,
+    "provider_called": false,
+    "boundary_claim_count": 118,
+    "case_count": 10,
+    "explicit_non_claim_span_count": 84,
+    "coverage_accounting_ratio": 1.0
+  },
+  "packet_construction_contract": {
+    "evidence_source": "phase7_3_1_blind_review_packet.json:evidence_input_only",
+    "boundary_source": "phase7_3_3_d_boundary_gold_v1.json:claims_only",
+    "boundary_claim_identity": "Copy boundary_claim_id and all visible immutable boundary fields without semantic transformation.",
+    "evidence_bundle_identity": "Copy each frozen evidence_input object byte-for-byte as the reviewer-visible evidence bundle.",
+    "reviewer_copy_rule": "Generate one clean, independently hashed packet for Reviewer A and one clean, independently hashed packet for Reviewer B.",
+    "prelabel_rule": "No support label, citation, rationale, confidence, agreement result, or adjudication result may be present in a review packet.",
+    "packet_order_rule": "Cases and claims are emitted in frozen source order; no randomization is applied at construction time.",
+    "claim_visible_fields": [
+      "boundary_claim_id",
+      "case_id",
+      "response_sha256",
+      "anchor_id",
+      "source_field",
+      "source_index",
+      "source_span",
+      "claim_text",
+      "claim_type",
+      "claim_role",
+      "anchor_group",
+      "material",
+      "claim_origin"
+    ],
+    "omitted_boundary_fields": [
+      "boundary_decision_rationale",
+      "type_decision_rationale",
+      "reason_codes",
+      "source_reviewer_claim_ids",
+      "boundary_operation_kind",
+      "source_adjudicated_claim_id"
+    ]
+  },
+  "support_label_definitions": {
+    "supported": "Claim strength, scope, and causal language are supported by the frozen evidence.",
+    "partially_supported": "The core direction is supported but scope, prediction, certainty, causality, or detail is stronger than the evidence.",
+    "unsupported": "The material claim cannot be established from the frozen evidence.",
+    "not_assessable": "The evidence or claim boundary is insufficient for stable adjudication."
+  },
+  "reason_code_definitions": {
+    "direct_evidence_match": "The cited evidence directly states the material claim at the same scope and strength.",
+    "conservative_entailment": "The claim follows conservatively from the supplied evidence without adding material force.",
+    "reasonable_bridging_inference": "A finite, traceable combination of supplied evidence supports the claim without external knowledge or escalation.",
+    "scope_preserved": "The claim's scope is bounded by the supplied evidence.",
+    "counterexample_preserved": "Relevant counterexample evidence is represented or appropriately accounted for.",
+    "scope_expansion": "The claim generalizes beyond the scope of the supplied evidence.",
+    "certainty_escalation": "The claim expresses more certainty than the supplied evidence warrants.",
+    "causal_leap": "The claim asserts causality not established by the supplied evidence.",
+    "prediction_overcommitment": "The claim makes a prediction stronger or more specific than the supplied evidence supports.",
+    "unsupported_detail": "A material detail is not established by the supplied evidence.",
+    "counterexample_ignored": "A relevant supplied counterexample is ignored or contradicted.",
+    "central_proposition_unsupported": "The core proposition is not established by the supplied evidence.",
+    "insufficient_evidence": "The supplied evidence is insufficient for a stable support judgment."
+  },
+  "reviewer_output_contract": {
+    "required_support_fields": [
+      "boundary_claim_id",
+      "support_label",
+      "cited_evidence_ids",
+      "reason_codes",
+      "support_rationale",
+      "annotation_confidence"
+    ],
+    "support_label_enum": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_assessable"
+    ],
+    "confidence_enum": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "citation_rule": "Every cited evidence ID must be a memory_id in the same case's frozen evidence bundle.",
+    "no_unknown_claim_rule": "A reviewer may submit exactly one decision for each frozen boundary_claim_id and may not create, delete, split, or merge claims."
+  },
+  "reviewer_visible": [
+    "frozen_evidence_bundle",
+    "frozen_boundary_claims",
+    "support_label_definitions",
+    "reason_code_definitions",
+    "reviewer_output_contract"
+  ],
+  "reviewer_prohibited": [
+    "candidate_gold_or_silver_labels",
+    "historical_or_new_judge_outputs",
+    "other_reviewer_submission",
+    "phase7_3_aggregate_metrics",
+    "reference_candidate",
+    "provider_raw_responses",
+    "held_out_cases",
+    "boundary_adjudication_rationales",
+    "boundary_reviewer_claim_ids"
+  ],
+  "allowed_actions": [
+    "verify_boundary_gold_hash_and_entry_gates",
+    "copy_frozen_evidence_input_objects",
+    "copy_frozen_boundary_claims_to_reviewer_visible_fields",
+    "freeze_support_label_and_reason_code_definitions",
+    "write_two_reviewer_isolated_packets_once",
+    "write_empty_support_submission_templates_once",
+    "authorize_independent_support_review_execution"
+  ],
+  "forbidden_actions": [
+    "call_provider",
+    "execute_support_review",
+    "prepopulate_support_labels_or_citations",
+    "expose_candidate_gold_or_silver_labels",
+    "expose_other_reviewer_data",
+    "mutate_boundary_gold",
+    "add_delete_split_or_merge_boundary_claims",
+    "access_held_out_data",
+    "freeze_support_gold"
+  ],
+  "success_effect": "Two immutable blind Support Review packets and empty reviewer submission templates are frozen; independent Support Review execution becomes authorized but is not started."
+}

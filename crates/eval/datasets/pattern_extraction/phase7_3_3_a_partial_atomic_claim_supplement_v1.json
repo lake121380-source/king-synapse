@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "dataset_id": "phase7.3.3-a-partial-atomic-claim-diagnostics-supplement-v1",
+  "purpose": "Diagnostics-only supplement that adds unambiguous partially_supported local Atomic Claims. It does not replace or rebalance the frozen 16-case Candidate control set and must not be used as held-out capability evidence.",
+  "label_balance": {
+    "partially_supported": 4
+  },
+  "control_cases": [
+    {
+      "control_id": "diag_partial_01_proposition",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Pilot teams A, B, and C completed the task faster after the workflow change."
+        },
+        {
+          "evidence_id": "e2",
+          "text": "Pilot team D showed no measurable change in completion time."
+        }
+      ],
+      "candidate_text": "The pilot teams completed the task faster after the workflow change.",
+      "claims": [
+        {
+          "claim_id": "diag_partial_01_proposition_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 68
+          },
+          "claim_text": "The pilot teams completed the task faster after the workflow change.",
+          "claim_type": "proposition",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred",
+          "expected_support_label": "partially_supported",
+          "evidence_ids": [
+            "e1",
+            "e2"
+          ]
+        }
+      ],
+      "expected_candidate_label": "partially_supported"
+    },
+    {
+      "control_id": "diag_partial_02_scope",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Two early-stage startups in one accelerator reduced rework after weekly customer interviews."
+        }
+      ],
+      "candidate_text": "Early-stage startups generally reduce rework through weekly customer interviews.",
+      "claims": [
+        {
+          "claim_id": "diag_partial_02_scope_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 80
+          },
+          "claim_text": "Early-stage startups generally reduce rework through weekly customer interviews.",
+          "claim_type": "scope",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized",
+          "expected_support_label": "partially_supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "expected_candidate_label": "partially_supported"
+    },
+    {
+      "control_id": "diag_partial_03_causal",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "Teams using smaller batches received feedback sooner, but those teams also had dedicated reviewers."
+        }
+      ],
+      "candidate_text": "Smaller batch size caused the teams to receive feedback sooner.",
+      "claims": [
+        {
+          "claim_id": "diag_partial_03_causal_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 63
+          },
+          "claim_text": "Smaller batch size caused the teams to receive feedback sooner.",
+          "claim_type": "causal",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "inferred",
+          "expected_support_label": "partially_supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "expected_candidate_label": "partially_supported"
+    },
+    {
+      "control_id": "diag_partial_04_prediction",
+      "evidence": [
+        {
+          "evidence_id": "e1",
+          "text": "In two prior canary deployments, rollback remained isolated to the canary cohort."
+        }
+      ],
+      "candidate_text": "The next canary deployment will keep any rollback isolated to the canary cohort.",
+      "claims": [
+        {
+          "claim_id": "diag_partial_04_prediction_claim_01",
+          "source_span": {
+            "start": 0,
+            "end": 80
+          },
+          "claim_text": "The next canary deployment will keep any rollback isolated to the canary cohort.",
+          "claim_type": "prediction",
+          "centrality": "central",
+          "material": true,
+          "claim_origin": "synthesized",
+          "expected_support_label": "partially_supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "expected_candidate_label": "partially_supported"
+    }
+  ],
+  "guards": {
+    "provider_training_authorized": false,
+    "prompt_tuning_authorized": false,
+    "held_out_member": false,
+    "human_gold_claimed_for_real_candidates": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false
+  }
+}

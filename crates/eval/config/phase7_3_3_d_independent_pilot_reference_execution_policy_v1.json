@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-independent-pilot-reference-execution-policy-v1",
+  "status": "frozen",
+  "case_count": 40,
+  "reviewer_count": 2,
+  "one_provider_request_per_case_per_reviewer": true,
+  "attempts_per_case": 1,
+  "first_content_authoritative": true,
+  "infrastructure_retry_before_content_only": true,
+  "semantic_retry": false,
+  "output_repair": false,
+  "required_top_level_keys": [
+    "case_id",
+    "segments"
+  ],
+  "required_segment_keys": [
+    "cited_evidence_ids",
+    "claim_type",
+    "confidence",
+    "end_token_index_exclusive",
+    "material",
+    "rationale",
+    "reason_codes",
+    "segment_kind",
+    "start_token_index",
+    "support_label"
+  ],
+  "segment_kind_enum": [
+    "atomic_claim",
+    "explicit_non_claim"
+  ],
+  "claim_type_enum": [
+    "boundary",
+    "causal",
+    "falsifiability",
+    "other",
+    "prediction",
+    "preference",
+    "proposition",
+    "qualification",
+    "scope",
+    "selection_rule",
+    "temporal_update"
+  ],
+  "support_label_enum": [
+    "not_assessable",
+    "partially_supported",
+    "supported",
+    "unsupported"
+  ],
+  "confidence_enum": [
+    "high",
+    "low",
+    "medium"
+  ],
+  "support_reason_enum": [
+    "causal_leap",
+    "certainty_escalation",
+    "conflicting_evidence",
+    "conservative_entailment",
+    "context_constraint_match",
+    "counterexample_ignored",
+    "direct_evidence_match",
+    "insufficient_evidence",
+    "prediction_overcommitment",
+    "reasonable_bridging_inference",
+    "reliability_resolution",
+    "scope_expansion",
+    "scope_preserved",
+    "temporal_resolution",
+    "unsupported_detail"
+  ],
+  "nonclaim_reason_enum": [
+    "connector_only",
+    "discourse_marker",
+    "non_assertive_fragment",
+    "other_non_claim",
+    "punctuation_or_formatting"
+  ],
+  "all_tokens_partitioned_exactly_once": true,
+  "same_case_citations_only": true,
+  "raw_provider_response_stored": false,
+  "provider_envelope_hash_stored": true,
+  "provider_content_hash_stored": true,
+  "arm_outputs_visible": false,
+  "confirmatory_visible": false
+}

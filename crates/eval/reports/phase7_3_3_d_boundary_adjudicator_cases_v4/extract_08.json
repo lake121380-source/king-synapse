@@ -1,0 +1,307 @@
+{
+  "schema_version": 4,
+  "case_id": "extract_08",
+  "status": "completed",
+  "manifest_sha256": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+  "provider_envelope_sha256": "bf1c41278c827d3aceeb9cd777a0bfa437f165eaccccc9b2be53bc8748b25f1c",
+  "provider_content_sha256": "62b6b0acddf9e7d5389663e27ea616f9ee72ead231c45222befad2be662d4086",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "2d332e00a8d8eee4c3b858092e0494f15eb8663dc3f30dcb5b33793ef938593c",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-001",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 0,
+        "end": 303
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "In clinical safety settings with uncertainty before high-risk procedures, employing a reversible lower-risk intervention while collecting evidence, and linking escalation to both independent confirmation and worsening signs, is associated with stabilization and avoidance of unnecessary invasive action.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The context phrase and the associated-outcome clause together form one atomic causal-style assertion scoped to a specific setting; merging preserves the full single assertion without splitting off a non-independent introductory scope from its host proposition.",
+      "type_decision_rationale": "The merged span asserts an association between an intervention/escalation pattern and downstream outcomes, so it is best typed as causal.",
+      "reason_codes": [
+        "scope_modifier",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-001",
+        "reviewer-e-extract_08-claim-002"
+      ],
+      "boundary_operation_kind": "merge_spans"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-002",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "1e35b86a08b2fdb67ce34d781b09874bdf5facdb7ad572a65e67092f75398d6a",
+      "source_span": {
+        "start": 313,
+        "end": 431
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "this pattern fails when vital signs are rapidly worsening, requiring immediate action with a lower evidence threshold.",
+      "claim_type": "limitation",
+      "claim_role": "anchor",
+      "anchor_group": "extract_08::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The failure clause and the following participial requirement are part of one indivisible limitation statement describing when the prior pattern breaks down and what that entails; merging captures the full single assertion.",
+      "type_decision_rationale": "The statement specifies a condition under which the prior pattern fails, which is a limitation.",
+      "reason_codes": [
+        "limitation_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-003",
+        "reviewer-e-extract_08-claim-004"
+      ],
+      "boundary_operation_kind": "merge_spans"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-003",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "c93de5ce8e8670d943efc2528aa15b0ff25f8e2979bfc31732a98c1ce7f43659",
+      "source_span": {
+        "start": 3,
+        "end": 266
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "a reversible lower-risk intervention is used while tests are pending before a high-risk procedure, and escalation is conditioned on both independent confirmation and worsening signs, then the patient's condition will stabilize and invasive action will be avoided.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_08::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The antecedent conditions and coordinated consequent outcomes are linked by a single if-then structure, so the whole sentence is one atomic prediction rather than separable standalone claims within this anchor.",
+      "type_decision_rationale": "This span forecasts what will occur under stated conditions, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-005",
+        "reviewer-e-extract_08-claim-006",
+        "reviewer-e-extract_08-claim-007",
+        "reviewer-e-extract_08-claim-008"
+      ],
+      "boundary_operation_kind": "merge_spans"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-004",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "8d6d9beb3e3efad7a0f506aceee63142c701f2fc0bbbfb4a6203dc78a19d9a58",
+      "source_span": {
+        "start": 0,
+        "end": 28
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Patient condition stabilizes",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_08::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This span is one complete observable assertion and is independently truth-evaluable apart from the later coordinated clause, so it should stand alone.",
+      "type_decision_rationale": "It states an observed outcome directly rather than a conditional forecast, so proposition fits best.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-009"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-005",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "8d6d9beb3e3efad7a0f506aceee63142c701f2fc0bbbfb4a6203dc78a19d9a58",
+      "source_span": {
+        "start": 33,
+        "end": 112
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "later evidence rules out the need for the initially considered invasive action.",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_08::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This second coordinated outcome is independently truth-evaluable and non-overlapping with the first, so reusing the reviewer span yields one atomic assertion.",
+      "type_decision_rationale": "It directly asserts an observable evidentiary outcome, so it is a proposition.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value",
+        "evidence_attribution"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-010"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-006",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "d5c396c28be9c796a7c0bb3094d70a101db78951dd52efe674d1b9a41f8b11ab",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Outcome matches the observed outcome in memory px_08_support_1.",
+      "claim_type": "proposition",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_08::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers identify the same full span, which expresses one indivisible assertion and needs no further splitting or trimming.",
+      "type_decision_rationale": "The sentence directly asserts a match relation, making it a proposition rather than a mere scope marker.",
+      "reason_codes": [
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_08-claim-005",
+        "reviewer-e-extract_08-claim-011"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-007",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "29997b935ecc492914fdbe72989aa535eaa2c3e0938b5545fe3aa01f11e99f5a",
+      "source_span": {
+        "start": 3,
+        "end": 173
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "vital signs are rapidly worsening, applying the staged approach with reversible lower-risk intervention and conditioned escalation results in increased harm due to delay.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_08::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The worsening-vitals condition and the harm-from-delay clause are bound in one if-then falsification statement; merging preserves the single atomic assertion rather than separating a dependent condition from its tested outcome.",
+      "type_decision_rationale": "The merged statement specifies a condition under which the target pattern would yield disconfirming harmful results, which is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-012",
+        "reviewer-e-extract_08-claim-013"
+      ],
+      "boundary_operation_kind": "merge_spans"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-008",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "6f56fffa2317e904dcaa7de7b325894f8a9d4a0cfff542fe0442e9434f00f019",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Delay in emergency action leads to measurable worsening of patient outcome",
+      "claim_type": "causal",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_08::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This initial clause is a complete causal assertion and is independently truth-evaluable apart from the following consistency-with-evidence clause, so it should be kept separate.",
+      "type_decision_rationale": "It explicitly links delay to worsening outcome, so causal is the best type.",
+      "reason_codes": [
+        "causal_relation",
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-014"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_08-claim-009",
+      "case_id": "extract_08",
+      "response_sha256": "006c7bf9e5666f2ed7c602555f3d213584bcfdf02b85b4e9e32d81c4e64675c1",
+      "anchor_id": "extract_08-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "6f56fffa2317e904dcaa7de7b325894f8a9d4a0cfff542fe0442e9434f00f019",
+      "source_span": {
+        "start": 76,
+        "end": 123
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "consistent with counterexample px_08_counter_3.",
+      "claim_type": "counterexample",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_08::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The trailing clause separately asserts consistency with a designated counterexample and can be evaluated independently of the preceding causal statement, so it is retained as its own non-overlapping span.",
+      "type_decision_rationale": "Because the clause centers on consistency with a named counterexample, counterexample is the most fitting type.",
+      "reason_codes": [
+        "counterexample_clause",
+        "evidence_attribution",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_08-claim-015"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "anchor_count": 6,
+    "claim_count": 9,
+    "provider_content_sha256": "62b6b0acddf9e7d5389663e27ea616f9ee72ead231c45222befad2be662d4086"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

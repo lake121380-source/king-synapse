@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_ctx_020",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "df7dce971687ce2f4d98e4b9772f75855eef4e99f9f7e5a24fad1766a8cde3c0",
+  "provider_content_sha256": "f02118f0c8046665df6e34e9cceafd3d9adbe9e25d351e4389fe87e2d07776e6",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "262431cb7c90e46022bf08e5295501f22fa67066b962c4ecd3383f9e16e9908a",
+  "normalized_case": {
+    "case_id": "mi_validation_ctx_020",
+    "candidate_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_ctx_020-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 66
+        },
+        "source_text_sha256": "3fb819b0dedb946dec3e6ba34f0074c1376f02edf39977bb263bad6a70154cb3",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_ctx_020-evidence-01",
+          "mi_validation_ctx_020-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "Evidence 01 states that the generic playbook has stronger overlap but violates the active constraint, implying that the active constraint is decisive in selection. Evidence 06 directly confirms that the playbook satisfies the active safety and scope constraint, supporting the claim that the active task constraint selects the context-compatible playbook. Both pieces of evidence together directly support the selection rule described in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

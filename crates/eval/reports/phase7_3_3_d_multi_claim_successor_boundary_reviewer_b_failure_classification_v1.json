@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "classification_id": "phase7.3.3-d-multi-claim-successor-boundary-reviewer-b-failure-classification-v1",
+  "status": "frozen_authoritative_negative_result_classification",
+  "taxonomy_sha256": "5def03716fc695e4165682cfa6dbb1c9c5400764ecad7e181812b72261e1f24a",
+  "negative_result_sha256": "c37e599bf0d006f90ca239dfdda7d2258fb630eceadcee811337689b3374e608",
+  "primary_failure": {
+    "level": 1,
+    "code": "provider_representation_contract",
+    "subclass": "serialization",
+    "subtype": "invalid_json_unterminated_string"
+  },
+  "failure_attribution": {
+    "primary": "provider",
+    "subtype": "returned_content_invalid_under_frozen_json_contract",
+    "confidence": "high",
+    "evidence": [
+      "provider content bytes were received and hashed before content JSON parsing",
+      "JSONDecodeError: Unterminated string starting at: line 30 column 29 (char 1024)",
+      "17 prior v1 cases completed before the failing case"
+    ],
+    "counterevidence": [
+      "raw provider content is intentionally not stored, so model generation versus intermediary truncation cannot be distinguished",
+      "char 1024 is suggestive but does not prove a fixed provider character cap"
+    ]
+  },
+  "delivery_transport": "PASS",
+  "boundary_capability": "not_assessable",
+  "agreement": "not_authorized",
+  "same_version_retry_authorized": false
+}

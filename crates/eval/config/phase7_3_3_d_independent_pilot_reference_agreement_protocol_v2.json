@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-independent-pilot-reference-agreement-protocol-v2",
+  "status": "frozen_successor_after_v1_implementation_negative",
+  "predecessor_negative_result_sha256": "982ab48101b18b5cd0078809dd0ba5d13ccae7ab5d1f2746c4b5aa3a6fdd276b",
+  "controlled_change": "correct selected-dataset field mapping only; metrics and decision rules unchanged",
+  "purpose": "Compare the two completed blind independent Pilot reference submissions and create a minimal disagreement-only adjudication worklist without using either arm or Route A Gold.",
+  "inputs": {
+    "reviewer_a": {
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_independent_pilot_reference_reviewer_a_submission_v2.json",
+      "sha256": "0bef9a3cb9627d7779ad660bd0adea717e3f1afa9adaeda91a945aefc325f091"
+    },
+    "reviewer_b": {
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_independent_pilot_reference_reviewer_b_submission_v3.json",
+      "sha256": "7931750271f8bfc433547ba789a70a1c51c02ce3e6fba6c7dbddeb56b431656a"
+    },
+    "selected_dataset": {
+      "path": "crates/eval/datasets/pattern_extraction/phase7_3_3_d_independent_pilot_selected_dataset_v1.json",
+      "sha256": "f278c5a27f9c241e306cc1200e3224deb3b3ea4bdff71b6490525218fd1eab62"
+    },
+    "independent_reference_policy_sha256": "df65f6adb8ab243cecfd2d88b8e92d81afdeafdee8bf5d6197b5268f983e5959"
+  },
+  "primary_fields": [
+    "candidate_reference_label",
+    "material",
+    "claim_type"
+  ],
+  "structural_checks": [
+    "one_whole_candidate_claim_per_case",
+    "exact_candidate_span",
+    "candidate_hash_replay",
+    "coverage_complete",
+    "zero_non_claim_spans"
+  ],
+  "diagnostic_fields": [
+    "cited_evidence_ids",
+    "reason_codes",
+    "confidence"
+  ],
+  "metrics": {
+    "exact_agreement": true,
+    "unweighted_cohen_kappa_when_defined": true,
+    "confusion_matrix": true,
+    "citation_exact_and_jaccard": true,
+    "reason_exact_and_jaccard": true,
+    "confidence_exact": true,
+    "domain_concentration": true,
+    "severity_policy": {
+      "adjacent_label_distance": 1,
+      "supported_vs_unsupported": 2,
+      "not_assessable_mismatch": 3,
+      "maximum": 3
+    }
+  },
+  "worklist": {
+    "include_only_primary_field_disagreements": true,
+    "diagnostic_disagreement_cannot_change_label": true,
+    "boundary_mutation": false,
+    "candidate_mutation": false,
+    "evidence_mutation": false,
+    "arm_visibility": false,
+    "route_a_gold_visibility": false
+  },
+  "guards": {
+    "raw_completed_submissions_only": true,
+    "reviewer_b_v2_partial_outputs_excluded": true,
+    "provider_calls": 0,
+    "held_out_accessed": false,
+    "confirmatory_opened": false
+  }
+}

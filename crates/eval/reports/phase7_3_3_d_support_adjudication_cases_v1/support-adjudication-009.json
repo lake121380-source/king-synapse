@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-009-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_01",
+  "adjudication_item_id": "support-adjudication-009",
+  "boundary_claim_id": "adjudicated-extract_01-claim-004",
+  "provider_envelope_sha256": "9765b475c660176f254ac718a4a404127a3c9c2000a263246fb0961df50d092c",
+  "provider_content_sha256": "441bdfe4051113aa528fa063719905c60345069c199651cd52f43fea858ddc02",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "10522998c98532163759f38a39daeee927af9a094e51c922d28c967cc7e29451",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-009",
+    "case_id": "extract_01",
+    "boundary_claim_id": "adjudicated-extract_01-claim-004",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The claim specifically asserts the condition of backward compatibility. The supplied positive cases show partial rollout and rollback behavior, but do not directly state old/new versions were backward compatible. The counterexample supports necessity when compatibility is absent, so the evidence is weaker than full support for the exact conditional claim.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "medium",
+      "boundary_claim_id": "adjudicated-extract_01-claim-004",
+      "cited_evidence_ids": [
+        "px_01_counter_3"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference",
+        "scope_expansion"
+      ],
+      "support_label": "partially_supported",
+      "support_rationale": "The atomic schema counterexample shows failure when backward compatibility is absent, supporting the necessity of compatibility, but no direct evidence confirms that compatibility was present in the positive cases."
+    },
+    "selected_frozen_decision_sha256": "309a949da9e642255b6cb0820af704ae6ba04f5d70132f3ac5cbb4184182533e",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

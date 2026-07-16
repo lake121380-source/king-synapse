@@ -1,0 +1,450 @@
+{
+  "schema_version": 4,
+  "result_id": "phase7.3.3-d-independent-pilot-dual-arm-execution-result-v4",
+  "status": "completed_equal_resource_paired_pilot_unscored",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "candidate_submission_sha256": "36f3d513ad951c3a8b1aae1581342d2fa190e71a1438f9a323413d267349d851",
+  "atomic_submission_sha256": "e08d5b8e3de53d97a4a670eadfd4941d9a324461e88f0c862782a02d98d75a85",
+  "attempt_log_sha256": "ba8873d23bfb26cf331573b597a01071ef4c6676d5b9104a32be9fcaeca67b69",
+  "attempt_entry_count": 82,
+  "case_count": 40,
+  "request_count": 80,
+  "candidate_request_count": 40,
+  "atomic_request_count": 40,
+  "provider_reported_models": [
+    "gpt-5.4"
+  ],
+  "counterbalance_first_arm_counts": {
+    "candidate": 20,
+    "atomic": 20
+  },
+  "resource_usage": {
+    "candidate": {
+      "prompt_tokens": 42794,
+      "completion_tokens": 3595,
+      "total_tokens": 46389,
+      "latency_ms_total": 194173.10590000125,
+      "latency_ms_mean": 4854.327647500031,
+      "cost_usd": null,
+      "cost_status": "provider_billing_price_not_frozen"
+    },
+    "atomic": {
+      "prompt_tokens": 48274,
+      "completion_tokens": 4127,
+      "total_tokens": 52401,
+      "latency_ms_total": 282487.2925002128,
+      "latency_ms_mean": 7062.18231250532,
+      "cost_usd": null,
+      "cost_status": "provider_billing_price_not_frozen"
+    }
+  },
+  "execution_order": [
+    {
+      "case_id": "mi_validation_ctx_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "afa8df5e7fb37bcc017112e0c0fc95e341027197f968c3ee651d365cb4def619"
+    },
+    {
+      "case_id": "mi_validation_ctx_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "871d15063b596b5c9ea2b5c4a5c2745d27ac6c3140a5dc17dc5f33519aeaef60"
+    },
+    {
+      "case_id": "mi_validation_ctx_020",
+      "arm": "atomic",
+      "checkpoint_sha256": "237b4e3e6f9dbcb61e264b7d69036bacf54abb969031c400bdcfaf7deec902c1"
+    },
+    {
+      "case_id": "mi_validation_ctx_020",
+      "arm": "candidate",
+      "checkpoint_sha256": "ecd6d7c4c9583cf6cc2804966e090eed0974aaccaa46493411028adea5696e14"
+    },
+    {
+      "case_id": "mi_validation_ctx_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "faa74b8a2af30f84b44df8f2a71c1832498a1b391d6d50233b331a967d1523f7"
+    },
+    {
+      "case_id": "mi_validation_ctx_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "e1043e7b152b0b1dccf34a84c8dfd64999d16425bda6a79375b1ad4e869d2c9f"
+    },
+    {
+      "case_id": "mi_validation_ctx_018",
+      "arm": "atomic",
+      "checkpoint_sha256": "bb5268d26d4c70920c70f0bfa18940a755ed8deb29c4e1cddd4f6cbb09b46a35"
+    },
+    {
+      "case_id": "mi_validation_ctx_018",
+      "arm": "candidate",
+      "checkpoint_sha256": "c348061616681bbacf447e5dfa654676c481d885cd802de8070829d2f38cc4ef"
+    },
+    {
+      "case_id": "mi_validation_fail_018",
+      "arm": "candidate",
+      "checkpoint_sha256": "94fcbe16d2d890c650b603918c66e8f1e162f756069f3137aa36b834069fd97b"
+    },
+    {
+      "case_id": "mi_validation_fail_018",
+      "arm": "atomic",
+      "checkpoint_sha256": "333d9922815c73b3b20b3684bfdb0baa10b38db6ee3c7282c6e3071922e55661"
+    },
+    {
+      "case_id": "mi_validation_fail_017",
+      "arm": "atomic",
+      "checkpoint_sha256": "39d8e745222034b1e43d6328d94b55531c459eac88c2aa8706939e868b9f366e"
+    },
+    {
+      "case_id": "mi_validation_fail_017",
+      "arm": "candidate",
+      "checkpoint_sha256": "b737a47db636e1d6b89403055ef255ee969cd140961f14944238001f387583ed"
+    },
+    {
+      "case_id": "mi_validation_fail_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "ec1bb7e115b509acfd3a5f82e63aaf07a759d505ca527f061dd9562183c9cb33"
+    },
+    {
+      "case_id": "mi_validation_fail_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "1b732ec412ce72ce970c892da4f105c7f21cc4a72fbf884cfaf8b31dcce29744"
+    },
+    {
+      "case_id": "mi_validation_fail_023",
+      "arm": "atomic",
+      "checkpoint_sha256": "4bb90c4015c2ffa324692f44ad7ad4ffbd891276a46568d611750fa0e66d968a"
+    },
+    {
+      "case_id": "mi_validation_fail_023",
+      "arm": "candidate",
+      "checkpoint_sha256": "2c6aeca08d9a7c316f4b8039a5d2f6abf6629e7a5a16bff98936e51a73347f56"
+    },
+    {
+      "case_id": "mi_validation_frf_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "24fa43335bf3280565ae64964cbb7685ac39929e32ca3491139bcbc6856856cb"
+    },
+    {
+      "case_id": "mi_validation_frf_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "fcd0a3db95f408e02a04d7c74dd7e7a7ae0169d9ac6b5d9ab337a55c5369d106"
+    },
+    {
+      "case_id": "mi_validation_frf_020",
+      "arm": "atomic",
+      "checkpoint_sha256": "e6d2f0a32b0c8b9de884afd5910c35d63a458f72c2ed83fceed421275ece337f"
+    },
+    {
+      "case_id": "mi_validation_frf_020",
+      "arm": "candidate",
+      "checkpoint_sha256": "2677e87c39855ad26014a53bbbca3ddcd5b214a13cfdc362fa022dbd6e791830"
+    },
+    {
+      "case_id": "mi_validation_frf_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "e8509b040a40991eec320f5cbd151646ff2e33314579fd6a87b33f39bdb8cbab"
+    },
+    {
+      "case_id": "mi_validation_frf_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "1efc22f6ff546b7f07bc841f06d36f0e594d0fdaa79ce652b479bc3118846796"
+    },
+    {
+      "case_id": "mi_validation_frf_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "31e8ffbbd9dcac03ed51db2af77fa78e12f9a2c74ffc5dca05f42dc75660289c"
+    },
+    {
+      "case_id": "mi_validation_frf_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "dd95c97f9f81fadbcd61bb100c67faa5e071cdf243ed6306c60b377fad9da8d7"
+    },
+    {
+      "case_id": "mi_validation_frr_017",
+      "arm": "candidate",
+      "checkpoint_sha256": "3ab2d907f07ebb167d282c453675c43af25effe6f93719ca1d02bc5be5205165"
+    },
+    {
+      "case_id": "mi_validation_frr_017",
+      "arm": "atomic",
+      "checkpoint_sha256": "bc58ed15fca56bdacd838c19256fde9293527ce40fe4321bfaf24fc33ed7e005"
+    },
+    {
+      "case_id": "mi_validation_frr_023",
+      "arm": "atomic",
+      "checkpoint_sha256": "59bdb49ac7c1e19848ad9f5c2853a7722a4edb324ece38bb474a14fa1d77f324"
+    },
+    {
+      "case_id": "mi_validation_frr_023",
+      "arm": "candidate",
+      "checkpoint_sha256": "3f9364a7e2a929afeec752e44bdbf59cc482090faf43e97e9d047a2e7dbd36d8"
+    },
+    {
+      "case_id": "mi_validation_frr_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "145efbf9d4b1977ce0725670db1e8419ff00f95d69e613f179154fbb3210d5a2"
+    },
+    {
+      "case_id": "mi_validation_frr_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "410cf62b717109d67ea201b1d0476365cba9be89bddfa224eff728496a56dba7"
+    },
+    {
+      "case_id": "mi_validation_frr_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "da8bfd16ebdff10d7a59cf34958e2bd3fc34fd44d2c2e7d0a36885161ebacd2c"
+    },
+    {
+      "case_id": "mi_validation_frr_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "c6993ae7e9d73593cd7dbadada5924afbd4a90b435bc6bd43aac26049823a7a0"
+    },
+    {
+      "case_id": "mi_validation_safe_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "adb4b8b3d6532c9f86523679ecbc8d7efe24ec784847c577597dc2cc7fe1fa39"
+    },
+    {
+      "case_id": "mi_validation_safe_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "5f4bc9022e393e0bc9c7c69ad8095dddcb6860882a7310a42a8b9cb25b0d6857"
+    },
+    {
+      "case_id": "mi_validation_safe_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "7d3fc922d4883e7721a3964a3426bf46427897bf3093b00a3d5079a9c847dd03"
+    },
+    {
+      "case_id": "mi_validation_safe_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "b0c107f74267748d8cea70251dc5442ce07aca9ef13e1f92384c43fd852ed60e"
+    },
+    {
+      "case_id": "mi_validation_safe_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "693a36d32e47eff9bba0d02242ec89ecf09965d6cdd8d6aa81366220737883fe"
+    },
+    {
+      "case_id": "mi_validation_safe_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "dfd075affeb68b9ac8ab135ac8df30cc04204716efa409e5e292a0374eade45b"
+    },
+    {
+      "case_id": "mi_validation_safe_023",
+      "arm": "atomic",
+      "checkpoint_sha256": "24f0813641ec0e4b2b280c76754a73095746fc7f8085e5d1f247c099cb3988f5"
+    },
+    {
+      "case_id": "mi_validation_safe_023",
+      "arm": "candidate",
+      "checkpoint_sha256": "4cda507637da1a30eb8d77977d2b28a43f59929d4b8c15e9eb5ad2240ce0a768"
+    },
+    {
+      "case_id": "mi_validation_pref_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "1de255ed888db8650caac65134741ad1b5e5b269ff6a3170beeb49daf6c38edc"
+    },
+    {
+      "case_id": "mi_validation_pref_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "cc9e99445380d1fad7116a1787041693d410c80a4589005d3ee7c015038cfbf6"
+    },
+    {
+      "case_id": "mi_validation_pref_017",
+      "arm": "atomic",
+      "checkpoint_sha256": "4560379dfb886566f80204d17d25e424c87e9d48c1e37eba30258872d11451a0"
+    },
+    {
+      "case_id": "mi_validation_pref_017",
+      "arm": "candidate",
+      "checkpoint_sha256": "b9ce5e496c2fc38ff6b871b8f3626b6d003368273a8a5117af36e66adc4363a5"
+    },
+    {
+      "case_id": "mi_validation_pref_020",
+      "arm": "candidate",
+      "checkpoint_sha256": "9561dae2e6fcd21b21cbb4c28e00c73fe9a50e2ba12bc2d33a362067ec4e052f"
+    },
+    {
+      "case_id": "mi_validation_pref_020",
+      "arm": "atomic",
+      "checkpoint_sha256": "ce020b7e3f06ce0a7636a10db2b3accd52234b34e76a25ac59e7b683942c2477"
+    },
+    {
+      "case_id": "mi_validation_pref_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "2754379e0b47a6369b66f63180a7cfc73793f5980bc1db4fbecd888a4bceae4a"
+    },
+    {
+      "case_id": "mi_validation_pref_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "22664cdce07739a8201b32445e4ad9f228041aab0fe018a44624981020a8653b"
+    },
+    {
+      "case_id": "mi_validation_rel_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "78cba3d275733910002badbd3d7f76845155acb524fe6d4748ae615d8663c6d4"
+    },
+    {
+      "case_id": "mi_validation_rel_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "4bc6a922372fd8aa5e52dfeaf2dc0068ec680740a61bbd3c694e32fecb8df3b3"
+    },
+    {
+      "case_id": "mi_validation_rel_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "cccf5b447c9a2cbe76f6118fa81e66d264742fec20d62e0ed340ca123fe13b80"
+    },
+    {
+      "case_id": "mi_validation_rel_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "eae72cab07aefbfc7158a56b4019e487fb8624d13c1e77ca29a5ff3fd311b6d1"
+    },
+    {
+      "case_id": "mi_validation_rel_024",
+      "arm": "candidate",
+      "checkpoint_sha256": "3de76638c3b4a3dabe0c46e774bd16c4b34718c46b6c8732d102a326b299a972"
+    },
+    {
+      "case_id": "mi_validation_rel_024",
+      "arm": "atomic",
+      "checkpoint_sha256": "56adf3096223d0e1f8163c682fc23200abc5c8335f1a782bb6ac3aa66cac6671"
+    },
+    {
+      "case_id": "mi_validation_rel_023",
+      "arm": "atomic",
+      "checkpoint_sha256": "952160bb0a9bc1890d12a25c7896b3fa7529bfba5713fdfcb8e8d22f98d716c9"
+    },
+    {
+      "case_id": "mi_validation_rel_023",
+      "arm": "candidate",
+      "checkpoint_sha256": "afbfe36e0412807d8ad1bfb8d991d523cb22724350b1690dd511f7e06e16c917"
+    },
+    {
+      "case_id": "mi_validation_rrr_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "9adfe4cf3bfcfec1a5a04287c9f9bad7445bb849fca14752a5051c15a773d42e"
+    },
+    {
+      "case_id": "mi_validation_rrr_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "f7195782e4f2fe574275957632c40e0d49480305a736eb475fbca85acbc5c794"
+    },
+    {
+      "case_id": "mi_validation_rrr_020",
+      "arm": "atomic",
+      "checkpoint_sha256": "e8e79b241cd08fb75f7072d090a63313cee279281ad93292a27755722ed1a5c4"
+    },
+    {
+      "case_id": "mi_validation_rrr_020",
+      "arm": "candidate",
+      "checkpoint_sha256": "54b46967631b23a728fe0162762e24e75a96b44913d2c8bec3de90b1b2afa57a"
+    },
+    {
+      "case_id": "mi_validation_rrr_021",
+      "arm": "candidate",
+      "checkpoint_sha256": "dbd7ed844a2f05035117933a737ff6e335b529a2c6ace2f87834f1668fc6c137"
+    },
+    {
+      "case_id": "mi_validation_rrr_021",
+      "arm": "atomic",
+      "checkpoint_sha256": "cbba6a353adb159039480bdb6595b1fbc2712c6b02b52d7346aee775c715d7e9"
+    },
+    {
+      "case_id": "mi_validation_rrr_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "fd933ced44179a71a1b0d6a689ccf579f37c0a2b69e5d4616dd68d61997252ef"
+    },
+    {
+      "case_id": "mi_validation_rrr_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "9e3facff7fbaa1adf6628e016c112638d2a60547af84fffbc5ad1fee482b1999"
+    },
+    {
+      "case_id": "mi_validation_rrl_018",
+      "arm": "candidate",
+      "checkpoint_sha256": "fe414ea09b5623956d0d996647b4aa00101d730ec20b9ab742c34cc13b7c2497"
+    },
+    {
+      "case_id": "mi_validation_rrl_018",
+      "arm": "atomic",
+      "checkpoint_sha256": "cfe649cb8f9916feae8ef7a3f2ea8fb4ac7cfdecc64bd7b31beaa7c056c90dbe"
+    },
+    {
+      "case_id": "mi_validation_rrl_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "c395a1bcb0d6d39a5837ffa293b2b884e733ac391a9f655fee68fdd67dd3c745"
+    },
+    {
+      "case_id": "mi_validation_rrl_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "a94ec2b83693769e516a605ed17a0954c006c8380a44b87cd77bc81980165e4c"
+    },
+    {
+      "case_id": "mi_validation_rrl_021",
+      "arm": "candidate",
+      "checkpoint_sha256": "ade1a77cab39d7927ea6ebe77bb9311c1439d68ca2cfd8fccac2b1d439f1c090"
+    },
+    {
+      "case_id": "mi_validation_rrl_021",
+      "arm": "atomic",
+      "checkpoint_sha256": "927800cfee2dc1f558a5c6c2af09b104801bf3017b34ede3c6c6b52b523ee61b"
+    },
+    {
+      "case_id": "mi_validation_rrl_017",
+      "arm": "atomic",
+      "checkpoint_sha256": "3ca5ee1ee940770e9da02e6468a5e8b2efca7b48303271d373c7751d04052858"
+    },
+    {
+      "case_id": "mi_validation_rrl_017",
+      "arm": "candidate",
+      "checkpoint_sha256": "e13fa380729b3f30b1b9cc8cac6dbd276e18ed4b60be7cb4894e6906fff5ae37"
+    },
+    {
+      "case_id": "mi_validation_tmp_018",
+      "arm": "candidate",
+      "checkpoint_sha256": "a53fb0afe529ca0d67daad604158490a1c786501368370c75a06ce21f848c7cf"
+    },
+    {
+      "case_id": "mi_validation_tmp_018",
+      "arm": "atomic",
+      "checkpoint_sha256": "23b9dc6f3fd2947bf6beb82c81234feb398438da52c20029805371c41450e6bb"
+    },
+    {
+      "case_id": "mi_validation_tmp_021",
+      "arm": "atomic",
+      "checkpoint_sha256": "27e5a61849907e5c77c3593531caf471689797d402fe0778703d34df718d44e6"
+    },
+    {
+      "case_id": "mi_validation_tmp_021",
+      "arm": "candidate",
+      "checkpoint_sha256": "13ccf84ef033ad6d581c1e36a495db87f3bcbe9f627ef05e1c5919abdfd9cd94"
+    },
+    {
+      "case_id": "mi_validation_tmp_022",
+      "arm": "candidate",
+      "checkpoint_sha256": "9e9e053b91cfbca0b9f6edae7da335935f8c00d6b841b73ac971e46ac15743ab"
+    },
+    {
+      "case_id": "mi_validation_tmp_022",
+      "arm": "atomic",
+      "checkpoint_sha256": "c83b2c94385cc01d54dc6edcafeb21b715ab6b203abacdbe465d9e27d13b5a0c"
+    },
+    {
+      "case_id": "mi_validation_tmp_019",
+      "arm": "atomic",
+      "checkpoint_sha256": "634097b6e8912a10f184ecb9e733c2b63823b4c46516c1f27e127a2119ee9e9d"
+    },
+    {
+      "case_id": "mi_validation_tmp_019",
+      "arm": "candidate",
+      "checkpoint_sha256": "4fb3a57168b1226d84f6856f0f8526b3fddf868803c02803945e14df2e0732d7"
+    }
+  ],
+  "resource_equality_verified": true,
+  "single_proposition_frame": true,
+  "general_atomic_localization_superiority_estimable": false,
+  "reference_content_loaded": false,
+  "reference_labels_loaded": false,
+  "pilot_scored": false,
+  "confirmatory_content_opened": false
+}

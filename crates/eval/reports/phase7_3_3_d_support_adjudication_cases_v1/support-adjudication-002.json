@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d3-support-adjudication-002-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "96fef1548dc16374ce3bec63f732c67c51c08ac3aed4223661a2676d23967a8b",
+  "case_id": "extract_04",
+  "adjudication_item_id": "support-adjudication-002",
+  "boundary_claim_id": "adjudicated-extract_04-claim-014",
+  "provider_envelope_sha256": "28fc39c415226f38cb1789c13672b705cf4f1495dac9d9a3dabcfc3506d37c06",
+  "provider_content_sha256": "15778b0aa7d08ecafd5025b3a446b30e8f4998a2d233baef108d63ac078a69fb",
+  "provider_reported_model": "gpt-5.4",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_output_sha256": "3bac54d84fd30958da5bb42f96bf3a79a7d0052bb0c55c10de1bae5a46d9c17c",
+  "adjudication": {
+    "adjudication_item_id": "support-adjudication-002",
+    "case_id": "extract_04",
+    "boundary_claim_id": "adjudicated-extract_04-claim-014",
+    "operation": "select_option_2",
+    "adjudicator_rationale": "The claim asserts a failure to identify a root cause from evidence, but the supplied support cases show successful root-cause identification, and the counterexample concerns ongoing harm rather than inability to identify cause. The stated failure condition is not evidenced.",
+    "final_label_authorized": true,
+    "boundary_mutation_performed": false,
+    "reviewer_submission_mutation_performed": false,
+    "selected_option": "option_2",
+    "selected_source_reviewer": "reviewer_a",
+    "selected_frozen_decision": {
+      "annotation_confidence": "high",
+      "boundary_claim_id": "adjudicated-extract_04-claim-014",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "central_proposition_unsupported"
+      ],
+      "support_label": "unsupported",
+      "support_rationale": "No evidence shows failure to identify a root cause from the evidence when no active corruption is present; all observed cases succeeded."
+    },
+    "selected_frozen_decision_sha256": "4077c6caf426c1a0681c158e789f81bd833067300b811ecfc35ecc923708f82f",
+    "status": "selected_frozen_reviewer_decision"
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

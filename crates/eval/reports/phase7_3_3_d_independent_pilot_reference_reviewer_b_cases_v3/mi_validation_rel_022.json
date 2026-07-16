@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_rel_022",
+  "manifest_sha256": "6887c836161b39ec5ae63979ab0839d805dd4a40012a41f08b3a8595ffc7f5af",
+  "provider_envelope_sha256": "a5e62ec84556d3fa849bb0b475370423b95ad6f4edfef5725c9419af02900d1c",
+  "provider_content_sha256": "95898c3db3b01d97ced7f9a343bebd4f3432ec1a4333991d14ec5a4ae116c152",
+  "provider_reported_model": "deepseek-v4-flash",
+  "canonical_model_family": "deepseek-chat",
+  "normalized_case_sha256": "005e4f11b76dea22b1d6358ef8a7ec2c53290b70fa796dc887b7b750629be0b1",
+  "normalized_case": {
+    "case_id": "mi_validation_rel_022",
+    "candidate_sha256": "1d37893169637061e3b1d28093067d49f87982ea3953a4fe488e1b181088283c",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rel_022-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "source_text_sha256": "1d37893169637061e3b1d28093067d49f87982ea3953a4fe488e1b181088283c",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rel_022-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate states a selection rule: direct user confirmation outranks a lexically stronger unverified report. Evidence 6 provides a direct user confirmation with high confidence (0.99) and importance (0.98), establishing it as the reliable fact. The other evidence items are unverified or weak, consistent with the rule that direct confirmation outranks them.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

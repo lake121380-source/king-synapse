@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.3.3-d-multi-claim-reference-schema-v1",
+  "title": "Phase 7.3.3-D Multi-claim Successor Reference",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "reference_id",
+    "status",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "reference_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "frozen_and_sealed"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "candidate_text",
+          "candidate_sha256",
+          "eligible_start_char",
+          "eligible_end_char",
+          "evidence_items",
+          "reference_claims",
+          "explicit_non_claim_spans",
+          "protocol_excluded_spans",
+          "coverage_accounting"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidate_text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidate_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "eligible_start_char": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "eligible_end_char": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "evidence_id",
+                "evidence_text",
+                "evidence_sha256"
+              ],
+              "properties": {
+                "evidence_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence_text": {
+                  "type": "string"
+                },
+                "evidence_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "reference_claims": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "claim_id",
+                "start_char",
+                "end_char",
+                "source_excerpt",
+                "occurrence_index",
+                "claim_role",
+                "claim_type",
+                "support_label",
+                "material_error",
+                "cited_evidence_ids",
+                "boundary_decision_reason",
+                "support_decision_reason"
+              ],
+              "properties": {
+                "claim_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "start_char": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end_char": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "source_excerpt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "occurrence_index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "claim_role": {
+                  "enum": [
+                    "anchor",
+                    "support",
+                    "qualification",
+                    "boundary",
+                    "prediction",
+                    "exception"
+                  ]
+                },
+                "claim_type": {
+                  "enum": [
+                    "proposition",
+                    "causal",
+                    "prediction",
+                    "scope",
+                    "falsifiability",
+                    "limitation",
+                    "condition",
+                    "exception"
+                  ]
+                },
+                "support_label": {
+                  "enum": [
+                    "supported",
+                    "partially_supported",
+                    "unsupported"
+                  ]
+                },
+                "material_error": {
+                  "type": "boolean"
+                },
+                "cited_evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "uniqueItems": true
+                },
+                "boundary_decision_reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "support_decision_reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "explicit_non_claim_spans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/accounted_span"
+            }
+          },
+          "protocol_excluded_spans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/accounted_span"
+            }
+          },
+          "coverage_accounting": {
+            "type": "object",
+            "required": [
+              "eligible_gap_characters",
+              "overlap_characters",
+              "all_eligible_characters_accounted"
+            ],
+            "properties": {
+              "eligible_gap_characters": {
+                "const": 0
+              },
+              "overlap_characters": {
+                "const": 0
+              },
+              "all_eligible_characters_accounted": {
+                "const": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "accounted_span": {
+      "type": "object",
+      "required": [
+        "start_char",
+        "end_char",
+        "source_excerpt",
+        "reason_code"
+      ],
+      "properties": {
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_excerpt": {
+          "type": "string"
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "source_excerpt equals candidate_text[start_char:end_char] exactly",
+    "candidate_sha256 hashes exact UTF-8 candidate_text bytes",
+    "each cited_evidence_id exists in evidence_items",
+    "material_error is true exactly when support_label is partially_supported or unsupported",
+    "claim, explicit-non-claim, and protocol-excluded spans account for every eligible character exactly once",
+    "claim IDs and case IDs are unique"
+  ]
+}

@@ -1,0 +1,943 @@
+{
+  "schema_version": 3,
+  "report_id": "phase7.3.3-d1-a-boundary-agreement-a-e-v3",
+  "recorded_at": "2026-07-13T10:06:46.551830+00:00",
+  "status": "completed_frozen_before_adjudication",
+  "protocol_id": "phase7.3.3-d1-a-boundary-agreement-a-e-v3",
+  "agreement_protocol_sha256": "8af77821fc4ab50f71dd63ea1f7ac2de6768b15e01e4627992095a5d55ac4597",
+  "inputs": {
+    "reviewer_a_submission_sha256": "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+    "reviewer_e_submission_sha256": "368972c417fd79818f19beacc4745fbb6e363237e8e0ac7f67f2230222357663",
+    "boundary_packet_sha256": "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+    "agreement_script_sha256": "ad91a9d04ef35780f4a5b9ff2c789d231a2e16f1e9692114d9fcb0bbd3fee90f"
+  },
+  "alignment_summary": {
+    "grouping_keys": [
+      "case_id",
+      "anchor_id"
+    ],
+    "pair_score": "character_span_intersection_over_union",
+    "matching": "deterministic_greedy_descending_iou_then_reviewer_a_claim_id_then_reviewer_e_claim_id",
+    "minimum_iou": 0.5,
+    "claim_text_similarity_used": false,
+    "matched_pair_count": 85,
+    "exact_span_match_count": 53
+  },
+  "claim_count_metrics": {
+    "reviewer_a_claim_count": 96,
+    "reviewer_e_claim_count": 147,
+    "absolute_claim_count_difference": 51,
+    "claim_count_ratio_min_over_max": 0.6530612244897959,
+    "per_case_exact_claim_count_agreement_rate": 0.0,
+    "per_case_claim_count_pearson_correlation": {
+      "defined": true,
+      "value": 0.34591876328249194,
+      "reason": null
+    }
+  },
+  "segmentation_metrics": {
+    "exact_boundary_agreement_rate_among_matched": 0.6235294117647059,
+    "matched_span_mean_iou": 0.9022018259445432,
+    "overlap_alignment_rate_symmetric": 0.6995884773662552,
+    "unmatched_claim_rate_symmetric": 0.3004115226337449,
+    "reviewer_a_matched_claim_rate": 0.8854166666666666,
+    "reviewer_e_matched_claim_rate": 0.5782312925170068,
+    "unmatched_reviewer_a_claim_count": 11,
+    "unmatched_reviewer_e_claim_count": 62,
+    "a_one_to_many_e_count": 31,
+    "e_one_to_many_a_count": 1,
+    "a_one_to_many_e_claim_ids": [
+      "reviewer-a-extract_01-claim-004",
+      "reviewer-a-extract_02-claim-007",
+      "reviewer-a-extract_02-claim-003",
+      "reviewer-a-extract_02-claim-001",
+      "reviewer-a-extract_04-claim-003",
+      "reviewer-a-extract_04-claim-001",
+      "reviewer-a-extract_05-claim-009",
+      "reviewer-a-extract_06-claim-004",
+      "reviewer-a-extract_06-claim-005",
+      "reviewer-a-extract_06-claim-001",
+      "reviewer-a-extract_07-claim-010",
+      "reviewer-a-extract_07-claim-009",
+      "reviewer-a-extract_07-claim-004",
+      "reviewer-a-extract_07-claim-003",
+      "reviewer-a-extract_07-claim-006",
+      "reviewer-a-extract_07-claim-005",
+      "reviewer-a-extract_07-claim-008",
+      "reviewer-a-extract_07-claim-001",
+      "reviewer-a-extract_07-claim-002",
+      "reviewer-a-extract_08-claim-007",
+      "reviewer-a-extract_08-claim-006",
+      "reviewer-a-extract_08-claim-004",
+      "reviewer-a-extract_08-claim-003",
+      "reviewer-a-extract_08-claim-001",
+      "reviewer-a-extract_08-claim-002",
+      "reviewer-a-extract_09-claim-002",
+      "reviewer-a-extract_10-claim-008",
+      "reviewer-a-extract_10-claim-003",
+      "reviewer-a-extract_10-claim-006",
+      "reviewer-a-extract_10-claim-001",
+      "reviewer-a-extract_10-claim-002"
+    ],
+    "e_one_to_many_a_claim_ids": [
+      "reviewer-e-extract_03-claim-009"
+    ]
+  },
+  "attribute_agreement_on_matched_pairs": {
+    "claim_type": {
+      "field": "claim_type",
+      "matched_pair_count": 85,
+      "agreement_count": 51,
+      "raw_agreement": 0.6,
+      "cohen_kappa": {
+        "defined": true,
+        "value": 0.5053910662330994,
+        "reason": null
+      },
+      "confusion": [
+        {
+          "reviewer_a": "causal",
+          "reviewer_e": "causal",
+          "count": 9
+        },
+        {
+          "reviewer_a": "causal",
+          "reviewer_e": "counterexample",
+          "count": 1
+        },
+        {
+          "reviewer_a": "causal",
+          "reviewer_e": "proposition",
+          "count": 1
+        },
+        {
+          "reviewer_a": "counterexample",
+          "reviewer_e": "causal",
+          "count": 1
+        },
+        {
+          "reviewer_a": "counterexample",
+          "reviewer_e": "falsifiability",
+          "count": 1
+        },
+        {
+          "reviewer_a": "falsifiability",
+          "reviewer_e": "causal",
+          "count": 1
+        },
+        {
+          "reviewer_a": "falsifiability",
+          "reviewer_e": "falsifiability",
+          "count": 20
+        },
+        {
+          "reviewer_a": "falsifiability",
+          "reviewer_e": "proposition",
+          "count": 4
+        },
+        {
+          "reviewer_a": "limitation",
+          "reviewer_e": "causal",
+          "count": 1
+        },
+        {
+          "reviewer_a": "limitation",
+          "reviewer_e": "limitation",
+          "count": 1
+        },
+        {
+          "reviewer_a": "prediction",
+          "reviewer_e": "prediction",
+          "count": 16
+        },
+        {
+          "reviewer_a": "prediction",
+          "reviewer_e": "proposition",
+          "count": 10
+        },
+        {
+          "reviewer_a": "prediction",
+          "reviewer_e": "scope",
+          "count": 3
+        },
+        {
+          "reviewer_a": "proposition",
+          "reviewer_e": "causal",
+          "count": 3
+        },
+        {
+          "reviewer_a": "proposition",
+          "reviewer_e": "proposition",
+          "count": 1
+        },
+        {
+          "reviewer_a": "scope",
+          "reviewer_e": "limitation",
+          "count": 3
+        },
+        {
+          "reviewer_a": "scope",
+          "reviewer_e": "prediction",
+          "count": 2
+        },
+        {
+          "reviewer_a": "scope",
+          "reviewer_e": "proposition",
+          "count": 3
+        },
+        {
+          "reviewer_a": "scope",
+          "reviewer_e": "scope",
+          "count": 4
+        }
+      ]
+    },
+    "material": {
+      "field": "material",
+      "matched_pair_count": 85,
+      "agreement_count": 85,
+      "raw_agreement": 1.0,
+      "cohen_kappa": {
+        "defined": false,
+        "value": null,
+        "reason": "degenerate_marginals"
+      },
+      "confusion": [
+        {
+          "reviewer_a": true,
+          "reviewer_e": true,
+          "count": 85
+        }
+      ]
+    },
+    "claim_origin": {
+      "field": "claim_origin",
+      "matched_pair_count": 85,
+      "agreement_count": 85,
+      "raw_agreement": 1.0,
+      "cohen_kappa": {
+        "defined": false,
+        "value": null,
+        "reason": "degenerate_marginals"
+      },
+      "confusion": [
+        {
+          "reviewer_a": "explicit",
+          "reviewer_e": "explicit",
+          "count": 85
+        }
+      ]
+    },
+    "claim_role": {
+      "field": "claim_role",
+      "matched_pair_count": 85,
+      "agreement_count": 85,
+      "raw_agreement": 1.0,
+      "cohen_kappa": {
+        "defined": true,
+        "value": 1.0,
+        "reason": null
+      },
+      "confusion": [
+        {
+          "reviewer_a": "anchor",
+          "reviewer_e": "anchor",
+          "count": 20
+        },
+        {
+          "reviewer_a": "falsification",
+          "reviewer_e": "falsification",
+          "count": 14
+        },
+        {
+          "reviewer_a": "falsification_observable",
+          "reviewer_e": "falsification_observable",
+          "count": 13
+        },
+        {
+          "reviewer_a": "prediction",
+          "reviewer_e": "prediction",
+          "count": 13
+        },
+        {
+          "reviewer_a": "prediction_criterion",
+          "reviewer_e": "prediction_criterion",
+          "count": 11
+        },
+        {
+          "reviewer_a": "prediction_observable",
+          "reviewer_e": "prediction_observable",
+          "count": 14
+        }
+      ]
+    },
+    "anchor_group": {
+      "field": "anchor_group",
+      "matched_pair_count": 85,
+      "agreement_count": 85,
+      "raw_agreement": 1.0,
+      "cohen_kappa": {
+        "defined": true,
+        "value": 1.0,
+        "reason": null
+      },
+      "confusion": [
+        {
+          "reviewer_a": "extract_01::falsification_observable",
+          "reviewer_e": "extract_01::falsification_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_01::falsification_statement",
+          "reviewer_e": "extract_01::falsification_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_01::prediction_observable",
+          "reviewer_e": "extract_01::prediction_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_01::prediction_statement",
+          "reviewer_e": "extract_01::prediction_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_01::prediction_success_criterion",
+          "reviewer_e": "extract_01::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_01::proposition",
+          "reviewer_e": "extract_01::proposition",
+          "count": 3
+        },
+        {
+          "reviewer_a": "extract_02::falsification_observable",
+          "reviewer_e": "extract_02::falsification_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_02::falsification_statement",
+          "reviewer_e": "extract_02::falsification_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_02::prediction_observable",
+          "reviewer_e": "extract_02::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_02::prediction_statement",
+          "reviewer_e": "extract_02::prediction_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_02::prediction_success_criterion",
+          "reviewer_e": "extract_02::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_02::proposition",
+          "reviewer_e": "extract_02::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_03::falsification_observable",
+          "reviewer_e": "extract_03::falsification_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_03::prediction_observable",
+          "reviewer_e": "extract_03::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_03::prediction_statement",
+          "reviewer_e": "extract_03::prediction_statement",
+          "count": 3
+        },
+        {
+          "reviewer_a": "extract_03::prediction_success_criterion",
+          "reviewer_e": "extract_03::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_03::proposition",
+          "reviewer_e": "extract_03::proposition",
+          "count": 3
+        },
+        {
+          "reviewer_a": "extract_04::falsification_observable",
+          "reviewer_e": "extract_04::falsification_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_04::falsification_statement",
+          "reviewer_e": "extract_04::falsification_statement",
+          "count": 3
+        },
+        {
+          "reviewer_a": "extract_04::prediction_observable",
+          "reviewer_e": "extract_04::prediction_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_04::prediction_statement",
+          "reviewer_e": "extract_04::prediction_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_04::prediction_success_criterion",
+          "reviewer_e": "extract_04::prediction_success_criterion",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_04::proposition",
+          "reviewer_e": "extract_04::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_05::falsification_observable",
+          "reviewer_e": "extract_05::falsification_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_05::falsification_statement",
+          "reviewer_e": "extract_05::falsification_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_05::prediction_observable",
+          "reviewer_e": "extract_05::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_05::prediction_statement",
+          "reviewer_e": "extract_05::prediction_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_05::prediction_success_criterion",
+          "reviewer_e": "extract_05::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_05::proposition",
+          "reviewer_e": "extract_05::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_06::falsification_observable",
+          "reviewer_e": "extract_06::falsification_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_06::falsification_statement",
+          "reviewer_e": "extract_06::falsification_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_06::prediction_observable",
+          "reviewer_e": "extract_06::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_06::prediction_statement",
+          "reviewer_e": "extract_06::prediction_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_06::proposition",
+          "reviewer_e": "extract_06::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_07::prediction_observable",
+          "reviewer_e": "extract_07::prediction_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_07::prediction_statement",
+          "reviewer_e": "extract_07::prediction_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_07::prediction_success_criterion",
+          "reviewer_e": "extract_07::prediction_success_criterion",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_07::proposition",
+          "reviewer_e": "extract_07::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_08::falsification_observable",
+          "reviewer_e": "extract_08::falsification_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_08::falsification_statement",
+          "reviewer_e": "extract_08::falsification_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_08::prediction_observable",
+          "reviewer_e": "extract_08::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_08::prediction_success_criterion",
+          "reviewer_e": "extract_08::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_08::proposition",
+          "reviewer_e": "extract_08::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_09::falsification_observable",
+          "reviewer_e": "extract_09::falsification_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_09::falsification_statement",
+          "reviewer_e": "extract_09::falsification_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_09::prediction_observable",
+          "reviewer_e": "extract_09::prediction_observable",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_09::prediction_statement",
+          "reviewer_e": "extract_09::prediction_statement",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_09::prediction_success_criterion",
+          "reviewer_e": "extract_09::prediction_success_criterion",
+          "count": 1
+        },
+        {
+          "reviewer_a": "extract_09::proposition",
+          "reviewer_e": "extract_09::proposition",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_10::falsification_observable",
+          "reviewer_e": "extract_10::falsification_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_10::falsification_statement",
+          "reviewer_e": "extract_10::falsification_statement",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_10::prediction_observable",
+          "reviewer_e": "extract_10::prediction_observable",
+          "count": 2
+        },
+        {
+          "reviewer_a": "extract_10::prediction_success_criterion",
+          "reviewer_e": "extract_10::prediction_success_criterion",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "per_case_diagnostics": [
+    {
+      "case_id": "extract_01",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 11,
+      "reviewer_e_claim_count": 14,
+      "absolute_claim_count_difference": 3,
+      "matched_pair_count": 11,
+      "exact_span_match_count": 8,
+      "exact_boundary_agreement_rate_among_matched": 0.7272727272727273,
+      "matched_span_mean_iou": 0.9424329354075855,
+      "unmatched_reviewer_a_count": 0,
+      "unmatched_reviewer_e_count": 3,
+      "a_one_to_many_e_count": 1,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 1.0,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_01-claim-005",
+        "reviewer-e-extract_01-claim-007",
+        "reviewer-e-extract_01-claim-001"
+      ]
+    },
+    {
+      "case_id": "extract_02",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 7,
+      "reviewer_e_claim_count": 10,
+      "absolute_claim_count_difference": 3,
+      "matched_pair_count": 7,
+      "exact_span_match_count": 3,
+      "exact_boundary_agreement_rate_among_matched": 0.42857142857142855,
+      "matched_span_mean_iou": 0.870303398845871,
+      "unmatched_reviewer_a_count": 0,
+      "unmatched_reviewer_e_count": 3,
+      "a_one_to_many_e_count": 3,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.5714285714285714,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_02-claim-010",
+        "reviewer-e-extract_02-claim-005",
+        "reviewer-e-extract_02-claim-001"
+      ]
+    },
+    {
+      "case_id": "extract_03",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 12,
+      "reviewer_e_claim_count": 10,
+      "absolute_claim_count_difference": 2,
+      "matched_pair_count": 9,
+      "exact_span_match_count": 9,
+      "exact_boundary_agreement_rate_among_matched": 1.0,
+      "matched_span_mean_iou": 1.0,
+      "unmatched_reviewer_a_count": 3,
+      "unmatched_reviewer_e_count": 1,
+      "a_one_to_many_e_count": 0,
+      "e_one_to_many_a_count": 1,
+      "claim_type_raw_agreement": 0.7777777777777778,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [
+        "reviewer-a-extract_03-claim-009",
+        "reviewer-a-extract_03-claim-010",
+        "reviewer-a-extract_03-claim-011"
+      ],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_03-claim-009"
+      ]
+    },
+    {
+      "case_id": "extract_04",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 13,
+      "reviewer_e_claim_count": 17,
+      "absolute_claim_count_difference": 4,
+      "matched_pair_count": 13,
+      "exact_span_match_count": 9,
+      "exact_boundary_agreement_rate_among_matched": 0.6923076923076923,
+      "matched_span_mean_iou": 0.9433122542104015,
+      "unmatched_reviewer_a_count": 0,
+      "unmatched_reviewer_e_count": 4,
+      "a_one_to_many_e_count": 2,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.38461538461538464,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_04-claim-005",
+        "reviewer-e-extract_04-claim-007",
+        "reviewer-e-extract_04-claim-001",
+        "reviewer-e-extract_04-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_05",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 9,
+      "reviewer_e_claim_count": 11,
+      "absolute_claim_count_difference": 2,
+      "matched_pair_count": 9,
+      "exact_span_match_count": 8,
+      "exact_boundary_agreement_rate_among_matched": 0.8888888888888888,
+      "matched_span_mean_iou": 0.9658119658119657,
+      "unmatched_reviewer_a_count": 0,
+      "unmatched_reviewer_e_count": 2,
+      "a_one_to_many_e_count": 1,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.6666666666666666,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_05-claim-010",
+        "reviewer-e-extract_05-claim-001"
+      ]
+    },
+    {
+      "case_id": "extract_06",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 7,
+      "reviewer_e_claim_count": 10,
+      "absolute_claim_count_difference": 3,
+      "matched_pair_count": 6,
+      "exact_span_match_count": 4,
+      "exact_boundary_agreement_rate_among_matched": 0.6666666666666666,
+      "matched_span_mean_iou": 0.9233496999454447,
+      "unmatched_reviewer_a_count": 1,
+      "unmatched_reviewer_e_count": 4,
+      "a_one_to_many_e_count": 3,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.5,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [
+        "reviewer-a-extract_06-claim-005"
+      ],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_06-claim-006",
+        "reviewer-e-extract_06-claim-007",
+        "reviewer-e-extract_06-claim-008",
+        "reviewer-e-extract_06-claim-001"
+      ]
+    },
+    {
+      "case_id": "extract_07",
+      "anchor_count": 9,
+      "reviewer_a_claim_count": 10,
+      "reviewer_e_claim_count": 27,
+      "absolute_claim_count_difference": 17,
+      "matched_pair_count": 8,
+      "exact_span_match_count": 1,
+      "exact_boundary_agreement_rate_among_matched": 0.125,
+      "matched_span_mean_iou": 0.6608597030834998,
+      "unmatched_reviewer_a_count": 2,
+      "unmatched_reviewer_e_count": 19,
+      "a_one_to_many_e_count": 9,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.25,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [
+        "reviewer-a-extract_07-claim-010",
+        "reviewer-a-extract_07-claim-009"
+      ],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_07-claim-024",
+        "reviewer-e-extract_07-claim-025",
+        "reviewer-e-extract_07-claim-026",
+        "reviewer-e-extract_07-claim-027",
+        "reviewer-e-extract_07-claim-019",
+        "reviewer-e-extract_07-claim-020",
+        "reviewer-e-extract_07-claim-021",
+        "reviewer-e-extract_07-claim-022",
+        "reviewer-e-extract_07-claim-023",
+        "reviewer-e-extract_07-claim-011",
+        "reviewer-e-extract_07-claim-008",
+        "reviewer-e-extract_07-claim-009",
+        "reviewer-e-extract_07-claim-015",
+        "reviewer-e-extract_07-claim-013",
+        "reviewer-e-extract_07-claim-017",
+        "reviewer-e-extract_07-claim-001",
+        "reviewer-e-extract_07-claim-003",
+        "reviewer-e-extract_07-claim-005",
+        "reviewer-e-extract_07-claim-006"
+      ]
+    },
+    {
+      "case_id": "extract_08",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 7,
+      "reviewer_e_claim_count": 15,
+      "absolute_claim_count_difference": 8,
+      "matched_pair_count": 6,
+      "exact_span_match_count": 1,
+      "exact_boundary_agreement_rate_among_matched": 0.16666666666666666,
+      "matched_span_mean_iou": 0.723850926247385,
+      "unmatched_reviewer_a_count": 1,
+      "unmatched_reviewer_e_count": 9,
+      "a_one_to_many_e_count": 6,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.3333333333333333,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [
+        "reviewer-a-extract_08-claim-003"
+      ],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_08-claim-015",
+        "reviewer-e-extract_08-claim-012",
+        "reviewer-e-extract_08-claim-009",
+        "reviewer-e-extract_08-claim-005",
+        "reviewer-e-extract_08-claim-006",
+        "reviewer-e-extract_08-claim-007",
+        "reviewer-e-extract_08-claim-008",
+        "reviewer-e-extract_08-claim-001",
+        "reviewer-e-extract_08-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_09",
+      "anchor_count": 8,
+      "reviewer_a_claim_count": 9,
+      "reviewer_e_claim_count": 10,
+      "absolute_claim_count_difference": 1,
+      "matched_pair_count": 9,
+      "exact_span_match_count": 8,
+      "exact_boundary_agreement_rate_among_matched": 0.8888888888888888,
+      "matched_span_mean_iou": 0.9612229679343773,
+      "unmatched_reviewer_a_count": 0,
+      "unmatched_reviewer_e_count": 1,
+      "a_one_to_many_e_count": 1,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 0.4444444444444444,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_09-claim-003"
+      ]
+    },
+    {
+      "case_id": "extract_10",
+      "anchor_count": 6,
+      "reviewer_a_claim_count": 11,
+      "reviewer_e_claim_count": 23,
+      "absolute_claim_count_difference": 12,
+      "matched_pair_count": 7,
+      "exact_span_match_count": 2,
+      "exact_boundary_agreement_rate_among_matched": 0.2857142857142857,
+      "matched_span_mean_iou": 0.9216877190863363,
+      "unmatched_reviewer_a_count": 4,
+      "unmatched_reviewer_e_count": 16,
+      "a_one_to_many_e_count": 5,
+      "e_one_to_many_a_count": 0,
+      "claim_type_raw_agreement": 1.0,
+      "material_raw_agreement": 1.0,
+      "claim_origin_raw_agreement": 1.0,
+      "claim_role_raw_agreement": 1.0,
+      "unmatched_reviewer_a_claim_ids": [
+        "reviewer-a-extract_10-claim-003",
+        "reviewer-a-extract_10-claim-006",
+        "reviewer-a-extract_10-claim-001",
+        "reviewer-a-extract_10-claim-002"
+      ],
+      "unmatched_reviewer_e_claim_ids": [
+        "reviewer-e-extract_10-claim-018",
+        "reviewer-e-extract_10-claim-019",
+        "reviewer-e-extract_10-claim-009",
+        "reviewer-e-extract_10-claim-010",
+        "reviewer-e-extract_10-claim-011",
+        "reviewer-e-extract_10-claim-012",
+        "reviewer-e-extract_10-claim-015",
+        "reviewer-e-extract_10-claim-016",
+        "reviewer-e-extract_10-claim-001",
+        "reviewer-e-extract_10-claim-002",
+        "reviewer-e-extract_10-claim-003",
+        "reviewer-e-extract_10-claim-004",
+        "reviewer-e-extract_10-claim-005",
+        "reviewer-e-extract_10-claim-006",
+        "reviewer-e-extract_10-claim-007",
+        "reviewer-e-extract_10-claim-008"
+      ]
+    }
+  ],
+  "unmatched_claims": {
+    "reviewer_a_claim_ids": [
+      "reviewer-a-extract_03-claim-009",
+      "reviewer-a-extract_03-claim-010",
+      "reviewer-a-extract_03-claim-011",
+      "reviewer-a-extract_06-claim-005",
+      "reviewer-a-extract_07-claim-010",
+      "reviewer-a-extract_07-claim-009",
+      "reviewer-a-extract_08-claim-003",
+      "reviewer-a-extract_10-claim-003",
+      "reviewer-a-extract_10-claim-006",
+      "reviewer-a-extract_10-claim-001",
+      "reviewer-a-extract_10-claim-002"
+    ],
+    "reviewer_e_claim_ids": [
+      "reviewer-e-extract_01-claim-005",
+      "reviewer-e-extract_01-claim-007",
+      "reviewer-e-extract_01-claim-001",
+      "reviewer-e-extract_02-claim-010",
+      "reviewer-e-extract_02-claim-005",
+      "reviewer-e-extract_02-claim-001",
+      "reviewer-e-extract_03-claim-009",
+      "reviewer-e-extract_04-claim-005",
+      "reviewer-e-extract_04-claim-007",
+      "reviewer-e-extract_04-claim-001",
+      "reviewer-e-extract_04-claim-003",
+      "reviewer-e-extract_05-claim-010",
+      "reviewer-e-extract_05-claim-001",
+      "reviewer-e-extract_06-claim-006",
+      "reviewer-e-extract_06-claim-007",
+      "reviewer-e-extract_06-claim-008",
+      "reviewer-e-extract_06-claim-001",
+      "reviewer-e-extract_07-claim-024",
+      "reviewer-e-extract_07-claim-025",
+      "reviewer-e-extract_07-claim-026",
+      "reviewer-e-extract_07-claim-027",
+      "reviewer-e-extract_07-claim-019",
+      "reviewer-e-extract_07-claim-020",
+      "reviewer-e-extract_07-claim-021",
+      "reviewer-e-extract_07-claim-022",
+      "reviewer-e-extract_07-claim-023",
+      "reviewer-e-extract_07-claim-011",
+      "reviewer-e-extract_07-claim-008",
+      "reviewer-e-extract_07-claim-009",
+      "reviewer-e-extract_07-claim-015",
+      "reviewer-e-extract_07-claim-013",
+      "reviewer-e-extract_07-claim-017",
+      "reviewer-e-extract_07-claim-001",
+      "reviewer-e-extract_07-claim-003",
+      "reviewer-e-extract_07-claim-005",
+      "reviewer-e-extract_07-claim-006",
+      "reviewer-e-extract_08-claim-015",
+      "reviewer-e-extract_08-claim-012",
+      "reviewer-e-extract_08-claim-009",
+      "reviewer-e-extract_08-claim-005",
+      "reviewer-e-extract_08-claim-006",
+      "reviewer-e-extract_08-claim-007",
+      "reviewer-e-extract_08-claim-008",
+      "reviewer-e-extract_08-claim-001",
+      "reviewer-e-extract_08-claim-003",
+      "reviewer-e-extract_09-claim-003",
+      "reviewer-e-extract_10-claim-018",
+      "reviewer-e-extract_10-claim-019",
+      "reviewer-e-extract_10-claim-009",
+      "reviewer-e-extract_10-claim-010",
+      "reviewer-e-extract_10-claim-011",
+      "reviewer-e-extract_10-claim-012",
+      "reviewer-e-extract_10-claim-015",
+      "reviewer-e-extract_10-claim-016",
+      "reviewer-e-extract_10-claim-001",
+      "reviewer-e-extract_10-claim-002",
+      "reviewer-e-extract_10-claim-003",
+      "reviewer-e-extract_10-claim-004",
+      "reviewer-e-extract_10-claim-005",
+      "reviewer-e-extract_10-claim-006",
+      "reviewer-e-extract_10-claim-007",
+      "reviewer-e-extract_10-claim-008"
+    ]
+  },
+  "measurement_limits": [
+    "Attribute agreement is conditional on deterministic IoU-aligned pairs and does not erase unmatched segmentation disagreements.",
+    "One-to-many and many-to-one overlap structures are reported independently of one-to-one matching.",
+    "No adjudicated label, Support label, Candidate gold/silver label, or held-out case was used.",
+    "This report measures independent Boundary agreement; it does not freeze Boundary Gold."
+  ],
+  "agreement_computed_before_adjudication": true,
+  "adjudication_used": false,
+  "coverage_qa_used": false,
+  "support_labels_used": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-confirmatory-paired-analysis-v1",
+  "status": "frozen_before_reference_json_parsing_and_confirmatory_scoring",
+  "preregistration_sha256": "d9e69bf221d8db0898551bbfaec91d28d14acb62403a1a467e1d195edcefab33",
+  "primary_estimand": "paired_mean_material_error_span_iou_atomic_minus_candidate",
+  "paired_unit": "unique_candidate",
+  "case_count": 40,
+  "hypotheses": {
+    "null": "mean_atomic_minus_candidate_lte_0",
+    "alternative": "mean_atomic_minus_candidate_gt_0"
+  },
+  "alpha_one_sided": 0.05,
+  "primary_test": {
+    "method": "one_sided_paired_sign_flip_randomization_monte_carlo",
+    "replicates": 200000,
+    "seed": 733071,
+    "p_value": "(one_plus_count_permuted_mean_gte_observed_mean)/(replicates_plus_one)"
+  },
+  "uncertainty": {
+    "method": "unique_candidate_nonparametric_bootstrap",
+    "replicates": 20000,
+    "seed": 733072,
+    "interval": 0.95
+  },
+  "success_gate": {
+    "structural_identifiability_pass": true,
+    "realized_identifiability_pass": true,
+    "paired_cases_dropped": 0,
+    "estimate_gt_zero": true,
+    "one_sided_p_value_lt_alpha": true
+  },
+  "no_silent_drop": true,
+  "reference_visible_during_arm_execution": false,
+  "provider_calls": 0,
+  "unselected_content_opened": false,
+  "runtime_integration_authorized": false
+}

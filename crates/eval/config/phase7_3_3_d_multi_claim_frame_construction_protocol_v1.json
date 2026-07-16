@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-frame-construction-protocol-v1",
+  "status": "frozen_before_successor_content_open",
+  "purpose": "Construct a new independent multi-claim Reference that makes the target localization estimand structurally identifiable.",
+  "stages": [
+    "entry_protocol_freeze",
+    "metadata_first_source_inventory",
+    "deterministic_sampling_frame_freeze",
+    "selected_content_open",
+    "candidate_multi_claim_prescreen",
+    "independent_boundary_review_a",
+    "independent_boundary_review_b",
+    "boundary_agreement",
+    "boundary_adjudication",
+    "independent_support_review_a",
+    "independent_support_review_b",
+    "support_agreement",
+    "support_adjudication",
+    "character_accounting_and_coverage_qa",
+    "reference_freeze_and_seal",
+    "structural_identifiability_gate",
+    "equal_resource_dual_arm_execution",
+    "realized_representation_identifiability_gate",
+    "exploratory_scoring",
+    "power_and_sample_size_gate"
+  ],
+  "independence_contract": {
+    "new_source_inventory_required": true,
+    "exclude_route_a_candidate_hash_overlap": true,
+    "exclude_predecessor_pilot_candidate_hash_overlap": true,
+    "exclude_evidence_hash_overlap_with_prior_gold_when_available": true,
+    "old_boundary_or_support_gold_may_seed_new_labels": false,
+    "old_arm_outputs_visible_to_reference_reviewers": false,
+    "new_reference_visible_to_arms": false,
+    "arms_visible_to_each_other": false
+  },
+  "review_separation": {
+    "boundary_decision_separate_from_support_decision": true,
+    "claim_type_separate_from_boundary": true,
+    "structural_metadata_separate_from_support_label": true,
+    "coverage_gaps_explicitly_classified": true,
+    "uncovered_eligible_characters_allowed_at_freeze": 0
+  },
+  "candidate_contract": {
+    "one_candidate_record_per_unique_candidate_text": true,
+    "candidate_must_support_multiple_independently_adjudicable_claims": true,
+    "coordination_or_clause_count_is_only_prescreen_not_gold": true,
+    "within_candidate_support_heterogeneity_required_at_frame_level": true
+  },
+  "failure_governance": {
+    "first_provider_content_authoritative": true,
+    "same_version_semantic_retry_allowed": false,
+    "silent_repair_allowed": false,
+    "failed_version_retained": true,
+    "successor_version_required_for_contract_change": true,
+    "gate_skipping_allowed": false
+  },
+  "current_scope": "design_only_no_successor_dataset_content_open_no_provider_call",
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

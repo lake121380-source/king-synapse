@@ -1,0 +1,55 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_safe_024",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "f3811b01c01009390042ccffb68d4440876a2ffe00175e1507487237c9e7289b",
+  "content_sha256": "f79b68b70d438523e85041f0e3a13d80f1960b97ab3830d7f1bbda08426905ba",
+  "latency_ms": 4057.862500019837,
+  "usage": {
+    "prompt_tokens": 1052,
+    "completion_tokens": 95,
+    "total_tokens": 1147,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 974,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 1814,
+      "total_duration_ms": 1738,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_safe_024",
+    "support_label": "partially_supported",
+    "rationale": "The evidence clearly supports that there is a current confirmed answer that should remain first, which aligns with baseline evidence being clear. However, none of the supplied evidence explicitly addresses the second part of the candidate claim, namely that no cognitive intervention is needed. Because only a subset of the full proposition is entailed, support is partial.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": [
+      {
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "partially_supported"
+      }
+    ]
+  }
+}

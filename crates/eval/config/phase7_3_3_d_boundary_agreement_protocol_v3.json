@@ -1,0 +1,83 @@
+{
+    "schema_version":  3,
+    "protocol_id":  "phase7.3.3-d1-a-boundary-agreement-a-e-v3",
+    "phase":  "Phase 7.3.3-D1-A Boundary Agreement (Reviewer A vs Reviewer E)",
+    "status":  "frozen_before_agreement_computation",
+    "frozen_at":  "2026-07-13T10:06:31.6578526Z",
+    "purpose":  "Measure independent Boundary segmentation and attribute agreement before adjudication, Coverage QA, Boundary Gold, or Support Review.",
+    "parent_alignment_protocol_id":  "phase7.3.1-inter-reviewer-agreement-gate-v1",
+    "parent_alignment_protocol_sha256":  "0653e6a273f63f4982e02b91ae519bf9f96d901669592129f547b64f9f88e257",
+    "boundary_reference_protocol_id":  "phase7.3.3-d1-a-boundary-reference-protocol-v3",
+    "boundary_reference_protocol_sha256":  "859438f8610eb5c1018b7f35181785fb83d4fa8483156d93eb128268349e5964",
+    "source_span_unit":  "unicode_scalar_index_half_open",
+    "inputs":  {
+                   "reviewer_a_submission_sha256":  "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+                   "reviewer_e_submission_sha256":  "368972c417fd79818f19beacc4745fbb6e363237e8e0ac7f67f2230222357663",
+                   "boundary_packet_sha256":  "38fba5a20c560704c7aedfd441c39c428dcdb4774cc0395d51d84b33c507197a",
+                   "agreement_script_sha256":  "ad91a9d04ef35780f4a5b9ff2c789d231a2e16f1e9692114d9fcb0bbd3fee90f"
+               },
+    "measurement_order":  [
+                              "independent_reviewer_a",
+                              "independent_reviewer_e",
+                              "agreement_report",
+                              "adjudication",
+                              "boundary_gold",
+                              "coverage_qa",
+                              "support_review"
+                          ],
+    "alignment_policy":  {
+                             "grouping_keys":  [
+                                                   "case_id",
+                                                   "anchor_id"
+                                               ],
+                             "pair_score":  "character_span_intersection_over_union",
+                             "matching":  "deterministic_greedy_descending_iou_then_reviewer_a_claim_id_then_reviewer_e_claim_id",
+                             "minimum_iou":  0.5,
+                             "exact_boundary_requires_identical_start_and_end":  true,
+                             "claim_text_similarity_used":  false,
+                             "cross_group_matching_allowed":  false
+                         },
+    "structural_disagreement_policy":  {
+                                           "overlap_definition":  "positive_character_intersection",
+                                           "a_one_to_many_e":  "Count each Reviewer A Claim that positively overlaps at least two Reviewer E Claims in the same case_id + anchor_id group.",
+                                           "e_one_to_many_a":  "Count each Reviewer E Claim that positively overlaps at least two Reviewer A Claims in the same case_id + anchor_id group.",
+                                           "structural_counts_independent_of_iou_matching":  true
+                                       },
+    "metric_definitions":  {
+                               "exact_boundary_agreement_rate_among_matched":  "exact matched pairs / all IoU-matched pairs",
+                               "matched_span_mean_iou":  "arithmetic mean IoU over matched pairs",
+                               "overlap_alignment_rate_symmetric":  "2 * matched pairs / (Reviewer A Claims + Reviewer E Claims)",
+                               "unmatched_claim_rate_symmetric":  "(unmatched A Claims + unmatched E Claims) / total Claims from both reviewers",
+                               "claim_count_ratio_min_over_max":  "min(total A Claims,total E Claims) / max(total A Claims,total E Claims)",
+                               "per_case_exact_claim_count_agreement_rate":  "cases with equal A/E Claim counts / all cases",
+                               "attribute_agreement":  "raw agreement and unweighted Cohen kappa on matched pairs only"
+                           },
+    "compared_attributes":  [
+                                "claim_type",
+                                "material",
+                                "claim_origin",
+                                "claim_role",
+                                "anchor_group"
+                            ],
+    "required_outputs":  [
+                             "claim_count_metrics",
+                             "segmentation_metrics",
+                             "attribute_agreement_on_matched_pairs",
+                             "structural_split_merge_counts",
+                             "unmatched_claims",
+                             "per_case_diagnostics"
+                         ],
+    "agreement_input":  "raw_blind_reviewer_submissions_only",
+    "adjudicated_labels_allowed":  false,
+    "support_labels_allowed":  false,
+    "candidate_gold_or_silver_allowed":  false,
+    "held_out_accessed":  false,
+    "runtime_authorized":  false,
+    "hermes_authorized":  false,
+    "interpretation_constraints":  [
+                                       "Agreement must be frozen before adjudication.",
+                                       "Attribute agreement is conditional on aligned spans and must not mask unmatched Claims.",
+                                       "Claim-count differences are descriptive and must not be interpreted before deterministic alignment.",
+                                       "No threshold, matching rule, or metric definition may change after Agreement computation under this protocol."
+                                   ]
+}

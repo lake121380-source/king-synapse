@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-b-mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "9ace1ed064a907755c38d2712a2238f12bce72238a2e846550b91499ae15cc44",
+  "reviewer_id": "b",
+  "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+  "provider_envelope_sha256": "aa8e78f9b1801b364aa0d013da6f08eabed25e1160ea703b3746c9baea18eb36",
+  "provider_content_sha256": "8aee2a79479d53eb288c358e5949526b4be355e14c158d830c296906fe54d939",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "operation_packet_sha256": "bb1e5e77695e4b706fe31a3eb1919b673c6d85bdd4d3affa0210489646acb75e",
+  "normalized_decisions_sha256": "cc2b7f71d08ef8f98cc1c84fd7453d18bf5110fcf73587730307679e4638a802",
+  "decision_count": 6,
+  "decisions": [
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-001",
+      "claim_index": 1,
+      "support_label": "unsupported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-003"
+      ],
+      "reason_codes": [
+        "counterexample_ignored"
+      ],
+      "support_rationale": "Evidence 3 explicitly states the cheap queue missed the SLA, directly contradicting the proposition to reuse it as a viable solution.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-002",
+      "claim_index": 2,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        3
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-003"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence 3 provides a direct textual match confirming the cheap queue missed the SLA.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-003",
+      "claim_index": 3,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-002"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence 2 directly confirms the strict latency SLA qualification.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-004",
+      "claim_index": 4,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-004"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence 4 directly confirms the targeted component met the SLA.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-005",
+      "claim_index": 5,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        2,
+        4
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-002",
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-004"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "Evidence 2 establishes the strict requirement and Evidence 4 confirms the targeted component met it, supporting the proposition to use this component.",
+      "annotation_confidence": "high"
+    },
+    {
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-boundary-reference-claim-006",
+      "claim_index": 6,
+      "support_label": "supported",
+      "cited_evidence_indices": [
+        1
+      ],
+      "cited_evidence_ids": [
+        "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla-evidence-001"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Evidence 1 directly confirms the budget limitation qualification.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_007_budget_high_latency_strict_sla",
+    "status": "completed",
+    "decision_count": 6
+  },
+  "raw_provider_response_stored": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

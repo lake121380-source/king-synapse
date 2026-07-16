@@ -1,0 +1,47 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "candidate",
+  "case_id": "mi_validation_fail_024",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "928edce1a28b989e6df9351931d9e25992128f916815048c848ee7ec9bca99cc",
+  "content_sha256": "24900c9e039536ae5a2551bc7b9cbbe22e35b316608b622c677ab5cbcec1493f",
+  "latency_ms": 4737.932299962267,
+  "usage": {
+    "prompt_tokens": 1072,
+    "completion_tokens": 73,
+    "total_tokens": 1145,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 1574,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 2414,
+      "total_duration_ms": 2338,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_fail_024",
+    "support_label": "supported",
+    "rationale": "The evidence includes a prior successful playbook recommending repetition and a later verified failure record stating the approach caused harm and must not be repeated. This supports that verified failure evidence takes precedence over the earlier successful playbook in this case.",
+    "source_span": {
+      "start": 0,
+      "end": 74
+    },
+    "material_error_spans": []
+  }
+}

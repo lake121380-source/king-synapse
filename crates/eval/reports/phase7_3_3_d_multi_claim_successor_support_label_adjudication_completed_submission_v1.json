@@ -1,0 +1,929 @@
+{
+  "schema_version": 1,
+  "submission_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-completed-submission-v1",
+  "status": "completed_with_no_deferrals",
+  "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+  "item_count": 28,
+  "selected_count": 28,
+  "deferred_count": 0,
+  "operation_counts": {
+    "select_option_1": 15,
+    "select_option_2": 13
+  },
+  "selected_source_reviewer_counts": {
+    "reviewer_a": 13,
+    "reviewer_b": 15
+  },
+  "adjudications": [
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-001",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality",
+      "work_item_id": "support-label-disagreement-001",
+      "reference_claim_id": "mc-adversarial-adversarial_001_keyword_overlap_no_causality-boundary-reference-claim-005",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence includes 'no_shared_outcome' and 'current_context_requires_evidence', which weighs directly against inferring strategy from mere keyword overlap. This makes the claim better supported as unsupported than as not assessable.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "counterexample_ignored"
+        ],
+        "support_rationale": "Evidence item 3 explicitly states 'no_shared_outcome', contradicting the inference of strategy from keyword overlap.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "bc43880923b78081b4bdc2d91e9ebd62776e547634a35c1e582d60854f798e54",
+      "provider_content_sha256": "dbcd87701dc0ea95435fef281e21c5d79fa9f068a0a1573f032765b01e36e11c",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-002",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-causal-causal_expanded_005",
+      "work_item_id": "support-label-disagreement-002",
+      "reference_claim_id": "mc-causal-causal_expanded_005-boundary-reference-claim-005",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence that a rollback plan unblocked the next release most conservatively supports that a rollback plan was included. This directly supports the claim better than the assertion that no supporting evidence exists.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-causal-causal_expanded_005-evidence-003"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence item 3 explicitly mentions a 'rollback_plan' that unblocked the release, entailing the inclusion of such a plan.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "4998216ca7ce3eabeb6d98f7920af05affa82f258ab434c064b38e66c46824e7",
+      "provider_content_sha256": "b4af8f733c449a3c813895bf2a8dc4236493c25e168376599291876a11d18486",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-003",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-contradiction-contradiction_001_fast_vs_stable",
+      "work_item_id": "support-label-disagreement-003",
+      "reference_claim_id": "mc-contradiction-contradiction_001_fast_vs_stable-boundary-reference-claim-003",
+      "operation": "select_option_1",
+      "decision_rationale": "Option 1 is better supported because the cited evidence only shows an old fast-delivery preference, while the bundle also indicates a newer stability policy and a current high-risk context, so the present-tense support claim cannot be conservatively established.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-contradiction-contradiction_001_fast_vs_stable-evidence-001"
+        ],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "Evidence of old fast delivery preference does not establish current preference for fast delivery, especially given new stability policy and high-risk context.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "74cc4e2b63e559bd8050bc56d9fe152f7fdffa3f3cb2cd2eb3d9890780b97793",
+      "provider_content_sha256": "198f39e155b1a06ef8705f40ee38fb2c646af3bee9d4bdb8b72ae10cdb241c45",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-004",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-failure_learning-failure_005_index_change",
+      "work_item_id": "support-label-disagreement-004",
+      "reference_claim_id": "mc-failure_learning-failure_005_index_change-boundary-reference-claim-003",
+      "operation": "select_option_2",
+      "decision_rationale": "The claim is simply \"benchmark_read_write_tradeoff,\" and the evidence includes \"benchmark_balanced_tradeoff\" plus read improvement and write regression, which directly supports that a read/write tradeoff exists. Option 2 is better supported than partial support.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-failure_learning-failure_005_index_change-evidence-003"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Evidence explicitly states benchmark_balanced_tradeoff, which entails a read/write tradeoff.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "1257f2585b4b2b832109371e5324e52c7a7cb6e353852d8da28f9483737423d1",
+      "provider_content_sha256": "0d3996384cd5d774fc016c9772381127addfd7e340c7ebac8cdd05c6cbb7c61c",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-005",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure",
+      "work_item_id": "support-label-disagreement-005",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-boundary-reference-claim-003",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle includes items explicitly described as a guarded strategy update and architecture context, which conservatively supports part of the proposition via reasonable bridging, while still falling short of explicit confirmation of a completed choice of guarded architecture. This fits partial support better than complete lack of support.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-003",
+          "mc-longitudinal_memory-longitudinal_memory_001_fast_preference_after_failure-evidence-004"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence 3 and 4 together suggest guarded strategy and architecture context, but do not explicitly confirm the choice of guarded architecture.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "b96030010104580909b033e7aa0c2dac49b4f900ef4509f488c5f831ac573599",
+      "provider_content_sha256": "650782d045ac57252ff10b2ab09ccfc145a59d0130dbb50e9726c8421d6e1f0c",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-006",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design",
+      "work_item_id": "support-label-disagreement-006",
+      "reference_claim_id": "mc-longitudinal_memory-longitudinal_memory_008_single_database_to_partitioned_design-boundary-reference-claim-004",
+      "operation": "select_option_2",
+      "decision_rationale": "The claim is a proposition to keep a single database. The cited evidence only indicates an earlier preference for a single database, while later evidence references scale-test failure, partitioned-design success, and an architecture request, so conservative entailment does not support the proposition as stated.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports the proposition to keep a single database; only a preference is noted, not a decision or action.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "62fdb33e7f79b0f7b3a01eb663b4c253f63adb1a4d13e15a03d79834b7396344",
+      "provider_content_sha256": "e7e75300d1f2e880ed9ec8e5241ff9db289e2ac43cba3be79af4d6ae480a0833",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-007",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted",
+      "work_item_id": "support-label-disagreement-007",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-boundary-reference-claim-002",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle provides only opaque identifiers without semantic content, so the proposition cannot be responsibly assessed from the supplied evidence. Option 1 better matches this lack of assessable evidence than Option 2's more specific unsupported determination.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence items are opaque identifiers; no semantic content establishes the proposition of preserving preference.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "b416ff22a807e1df9ec8a587653a6749159a833a565dbefe2e140302c83fdcfe",
+      "provider_content_sha256": "ef356e0df57e3991ae1d21ff69f3f20f6eaca0cbb743e46e394c6447a69507ad",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-008",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted",
+      "work_item_id": "support-label-disagreement-008",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_030_old_preference_preserved_but_reweighted-boundary-reference-claim-003",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle contains only opaque identifier strings and no substantive content that could conservatively establish or refute the proposition. Option 2 better reflects that the claim is not assessable from the provided evidence as-is.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence items are opaque identifiers; no semantic content establishes the exception proposition.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "ddc468efdcd5e54c6ed90a3592a23893abbaf86741f9a9bdd05011324683ada1",
+      "provider_content_sha256": "ba9cba5859f3f471c1c774e8e902600734eaa2f24b846f98b81b3280baa00b7b",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-009",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region",
+      "work_item_id": "support-label-disagreement-009",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-boundary-reference-claim-003",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle indicates a new region launch and that localization is required for that region, which conservatively supports an implied prioritization of region localization, though the precise prioritization statement is not explicit. This fits partial support better than unsupported.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-002",
+          "mc-memory_conflict-memory_conflict_026_old_localization_priority_new_region-evidence-003"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference",
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence shows new region launch and localization requirement, implying prioritization, but does not explicitly state prioritization is necessary.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "ca3038c974a40e4a04eeea2464e8b3c72f1386778288c75d7c1cb4fcb1278db2",
+      "provider_content_sha256": "05a8864e5164989dcf87e9b53db588c8f9c81a88576c521569df3d61df8af4fc",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-010",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression",
+      "work_item_id": "support-label-disagreement-010",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-boundary-reference-claim-005",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle includes both a new regression and a current investigation need for the same mc_029 context, which conservatively supports the anchor claim 'investigate_new_regression' better than unsupported.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-002",
+          "mc-memory_conflict-memory_conflict_029_old_incident_fixed_new_regression-evidence-004"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence of a new regression (item 2) and a stated need for current investigation (item 4) jointly establish the necessity to investigate the new regression.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "9b8e530a64f222ec462198b50c4685ae2f1171553c29420a0fa519fd68577adc",
+      "provider_content_sha256": "831aeaffcc8be265e65196819ed3ebbe713b8ce449b600eb008cec04fdcae94f",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-011",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike",
+      "work_item_id": "support-label-disagreement-011",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-boundary-reference-claim-003",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle does address the proposition’s topic via multiple modal- and UI-workflow-related items, so it is assessable. However, the supplied evidence does not conservatively establish the proposition 'use_modal_workflow' as supported. Therefore 'unsupported' is better supported than 'not_assessable'.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "central_proposition_unsupported"
+        ],
+        "support_rationale": "No evidence item contains the text 'use_modal_workflow' or establishes this proposition.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "e6bf13b83042528df11081c9060c185ef2356b528b3a013026be9779b1e68d2c",
+      "provider_content_sha256": "4a9c7afb4c82278706b92fa6da408bca0e046f3cb018427345629ed2d8415997",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-012",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike",
+      "work_item_id": "support-label-disagreement-012",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_004_old_user_like_new_dislike-boundary-reference-claim-004",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle identifiers indicate the topic is addressed by multiple items about modal preference, later modal complaint, inline flow success, and a current UI request. That means the claim is assessable from the supplied evidence set, but the provided item text does not conservatively establish the exact proposition. Therefore 'not_assessable' is better supported than 'unsupported' as written in option 1.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence establishes or addresses this claim.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "595a5b70b3b8ff166e3b5182b41ef501069d3f367fbaad3ef80f7b94f068b328",
+      "provider_content_sha256": "e106bc4deab2e96ef4b3d72bd6706a9c55e859e93adac27d01cb420367811259",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-013",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success",
+      "work_item_id": "support-label-disagreement-013",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-boundary-reference-claim-001",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle contains only opaque identifiers and no substantive descriptions, so the claim cannot be evaluated from the supplied evidence. That makes not_assessable better supported than unsupported.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "The evidence items are opaque identifiers without descriptive text, making it impossible to verify the proposition 'build_diy_component'.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "9f083af5543167c53c94944c3c7c2a0a0196c9877b61ee2a13c42936bb7a01b0",
+      "provider_content_sha256": "6b6adbd4fc93275b53c069f783a12ac9b1011824d87add4563244103ec6431b2",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-014",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success",
+      "work_item_id": "support-label-disagreement-014",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_022_old_diy_preference_new_vendor_success-boundary-reference-claim-006",
+      "operation": "select_option_2",
+      "decision_rationale": "The supplied evidence consists only of opaque identifiers/titles rather than substantive evidence text, so the proposition cannot be verified from the bundle itself. That makes the claim not assessable from the provided evidence, which is better captured by option 2 than by asserting unsupported on the merits.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "The evidence items are opaque identifiers without descriptive text, making it impossible to verify the proposition 'use_vendor_managed_component'.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "4f7d150294028944ef2166970c109e38e09558afbd1b92279bd8bcab6e7ff90b",
+      "provider_content_sha256": "5b85f8075f1e711ea25eeadb77948df71d8dd806eb81f44549480c37789071a4",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-015",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support",
+      "work_item_id": "support-label-disagreement-015",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-boundary-reference-claim-004",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle names suggest onboarding-related context but, as provided, does not directly establish whether the proposition 'reuse_fast_onboarding' is supported or contradicted. Under conservative entailment, the claim is not assessable from the supplied evidence, making option 1 better supported than labeling it unsupported solely because exact text is absent.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly addresses or supports the reuse of fast onboarding.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "e6c82eadc52f6bf0c53afc4154a63560e381c1cb4fb89bc0a1f2954c62d836be",
+      "provider_content_sha256": "da165a2a9db409b61db137757d054e3b818cfca2bbbc67ada96b5d517f0c76de",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-016",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support",
+      "work_item_id": "support-label-disagreement-016",
+      "reference_claim_id": "mc-memory_conflict-memory_conflict_013_old_fast_onboarding_new_support-boundary-reference-claim-006",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle titles include items suggesting guided onboarding success and a current onboarding plan, so option 2's rationale is too strict in requiring the exact text and asserting no support. But the provided evidence contents are only opaque identifiers, not substantive evidence establishing the proposition, so not_assessable is the more conservatively supported choice.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly addresses or supports the use of guided onboarding.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "3438af2fa11807e1b9e1c3ce30c8c8bb041463234bcfd6ed2e30c9a6c9734e4f",
+      "provider_content_sha256": "8c386e373af5016e3ae5bc908d0e410167710344ce21b924891b1c8673e1b700",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-017",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team",
+      "work_item_id": "support-label-disagreement-017",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-boundary-reference-claim-004",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle only lists high-level item names and does not provide content establishing whether the proposition is supported or contradicted. Under conservative entailment, the claim cannot be assessed from the supplied evidence, so not_assessable is better supported than unsupported.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item explicitly contains or establishes the proposition 'use_managed_audit_logging'.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "c683100cabd1e3ce435311c28cf3e1942a7391df2ea53aacf3ce1e5466659f92",
+      "provider_content_sha256": "e13f647f0cd0dee7b05bcb7154ebbeec5b187488545960f3a74ba3d0f9638736",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-018",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team",
+      "work_item_id": "support-label-disagreement-018",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_002_enterprise_policy_small_team-boundary-reference-claim-005",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle names related factors like simplicity preference, audit policy, small team constraint, and custom compliance cost, but it does not explicitly state or responsibly entail the specific proposition to build custom minimal logging. Given the lack of assessable content beyond evidence titles, not_assessable is better supported than unsupported.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "not_assessable",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item explicitly contains or establishes the proposition 'build_custom_minimal_logging'.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "17fd11c99bac149c558a20f121b10e4932e63ef1e9c97a67053800d0342f892d",
+      "provider_content_sha256": "0fcbabc59b7391f308725437c3bd8bd42bca11aabcbf58776c17b945a21e1d63",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-019",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure",
+      "work_item_id": "support-label-disagreement-019",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-boundary-reference-claim-006",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence supports an inferred preference for a lower-ops, incremental approach based on low ops capacity, tight budget, and failure of a fast rollout, but it does not explicitly state the choice of the specific 'low_ops_incremental_plan.' Partial support is therefore better justified than full support.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-002",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-003",
+          "mc-multi_entity_reasoning-multi_entity_reasoning_001_preference_team_budget_failure-evidence-004"
+        ],
+        "reason_codes": [
+          "reasonable_bridging_inference"
+        ],
+        "support_rationale": "While no evidence explicitly names the 'low_ops_incremental_plan', the combination of low ops capacity (Evidence 2), tight budget (Evidence 3), and the failure of the fast rollout (Evidence 4) logically supports the direction of choosing a lower-ops, incremental approach, though the specific label is an inference.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "5881c75b636b0dc3112cd7ed6de33ccb8c277660545f9871d27a8c02c76fbb00",
+      "provider_content_sha256": "34adbaf3ec46a83f9553ca2f6b97a86dcfcbaaf24c506a92b24ce58b0b42b61f",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-020",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture",
+      "work_item_id": "support-label-disagreement-020",
+      "reference_claim_id": "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-boundary-reference-claim-002",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle includes a directly matching item about the teachable design succeeding, which supports the claim to choose a teachable simple architecture; option 2 incorrectly states there is no direct supporting evidence.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-multi_entity_reasoning-multi_entity_reasoning_006_team_junior_complex_architecture-evidence-004"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "The claim text exactly matches the content of evidence item 4, which describes the successful outcome of the teachable design.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "ca710c3b4aaeb38de432124f3fa7aa6e869742941247d9fe5bbaddb1423aaf45",
+      "provider_content_sha256": "b199943aed2df4aa12dce9df18bccf306d5264cb46a62cdeca5421ccba1c5be6",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-021",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-preference-preference_005_verbose_to_concise_with_links",
+      "work_item_id": "support-label-disagreement-021",
+      "reference_claim_id": "mc-preference-preference_005_verbose_to_concise_with_links-boundary-reference-claim-004",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle includes later feedback that prior responses were too verbose and that a concise reference style was accepted, which provides some support for the claim. However, the evidence does not clearly establish an explicit required format of always answering concisely with references, so partial support is better justified than unsupported.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "partially_supported",
+        "cited_evidence_ids": [
+          "mc-preference-preference_005_verbose_to_concise_with_links-evidence-003"
+        ],
+        "reason_codes": [
+          "unsupported_detail"
+        ],
+        "support_rationale": "Evidence confirms concise reference style is accepted but does not explicitly mandate it as the required answer format.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "e0c9496ed81b13958f3f9828ef5d2032d9ea4a3df99730281688b0468e0ff64a",
+      "provider_content_sha256": "82bec48abad2352e4a6ada05481389d3b331e0800bef530c7bda73ef8e03cf85",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-022",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training",
+      "work_item_id": "support-label-disagreement-022",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_012_partial_order_support_training-boundary-reference-claim-002",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle includes a current cause review item explicitly indicating training is credited as the primary candidate, which directly supports the claim more strongly than the unsupported option.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_012_partial_order_support_training-evidence-004"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Current cause review credits training as primary candidate, directly supporting the claim.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "9f85287d87a7a7d2a603013e1abb56e0eb7eda21f5bc97d17980ada0576061ca",
+      "provider_content_sha256": "840ee706690078364217cfb0b715d0bc70af3d25c8222df4eeee6d2cc5ac54a0",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-023",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support",
+      "work_item_id": "support-label-disagreement-023",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_009_early_success_late_support-boundary-reference-claim-001",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence shows early adoption was high, but it does not directly support the proposition that expansion should occur based on that early adoption. Later evidence about support burden and current iteration does not fill that gap and may cut against expansion. Unsupported is therefore better supported than partially supported.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_009_early_success_late_support-evidence-001"
+        ],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "Evidence confirms high early adoption but does not establish expansion based on it.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "5366b0e64519b751989333e9e8dba42750e09f7b05303b018750a2e205b60ee2",
+      "provider_content_sha256": "af7e9393b14e9da9669de2d1f2dfda6014baddbbbc90f68156eb307dbfa0bb42",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-024",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement",
+      "work_item_id": "support-label-disagreement-024",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-boundary-reference-claim-003",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence shows policy announcement, a pre-enforcement grace period, enforcement start, and a current post-enforcement decision, but none directly states that pre-enforcement behavior was followed. A grace period alone does not entail the claimed behavior, so unsupported is better supported than partially_supported.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item describes following pre-enforcement behavior; evidence only notes a grace period, not behavior adherence.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "8fb36cd3f944cff2789f6805f13d039bf60b4fc54ec581de7d1c18863ca610ae",
+      "provider_content_sha256": "9592b56a4ef1c9f91ee92690cce868f86cc8abc107b42839fccbfec1652aabfc",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-025",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement",
+      "work_item_id": "support-label-disagreement-025",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_017_delayed_policy_enforcement-boundary-reference-claim-004",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence shows announcement, a grace period, enforcement starting, and a current decision after enforcement, but it does not directly establish that the enforced policy was actually followed. Since the claim is specifically \"follow_enforced_policy,\" option 1 is the more conservatively supported choice.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence item confirms following the enforced policy; evidence only notes enforcement started, not compliance.",
+        "annotation_confidence": "medium"
+      },
+      "provider_envelope_sha256": "3ac3920d4f7f2746883abf97d786ecb4658af404ff9a33528b9471ee30612eaf",
+      "provider_content_sha256": "33633bc33ebd5fbd2dffb0ea0a44ba2232eb817d5550f2273c8df654e2a0d7bf",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-026",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal",
+      "work_item_id": "support-label-disagreement-026",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-boundary-reference-claim-002",
+      "operation": "select_option_1",
+      "decision_rationale": "The claim is limited to trusting the initial feedback, and the evidence bundle includes a specific item indicating positive initial feedback. Later negative feedback does not negate that earlier trust claim within this temporal scope.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-evidence-001"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "support_rationale": "Claim text corresponds directly to the positive initial feedback in evidence item 1.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "6e70d3fca3961faaa50ee3f75b8dcd43d43af8482ae00d881118ccdddb8e644b",
+      "provider_content_sha256": "5dda3006f90c04c81d27e05af41bc917fc802ad05d4fefb11d41dd8ea5bdff17",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-027",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal",
+      "work_item_id": "support-label-disagreement-027",
+      "reference_claim_id": "mc-temporal_complex-temporal_complex_013_old_feedback_then_reversal-boundary-reference-claim-003",
+      "operation": "select_option_1",
+      "decision_rationale": "The evidence bundle names initial positive feedback, full month usage, later negative feedback, and current planning, but none directly state or describe trust in full month feedback. Full month usage alone does not conservatively entail trust.",
+      "adjudication_confidence": "high",
+      "selected_option": "option_1",
+      "selected_source_reviewer": "reviewer_a",
+      "selected_decision": {
+        "support_label": "unsupported",
+        "cited_evidence_ids": [],
+        "reason_codes": [
+          "insufficient_evidence"
+        ],
+        "support_rationale": "No evidence directly supports or describes trust in full month feedback.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "74402ecbe6e5fde610ed7c4063c82c6a724862c7b360279005213830617cd06d",
+      "provider_content_sha256": "ce718c39a4264d4f1499703fab7a099bcea384ed260afcb406110a61238473ac",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    },
+    {
+      "schema_version": 1,
+      "checkpoint_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-support-label-disagreement-028",
+      "manifest_sha256": "38f4560c61420557eabf9d6b512a3b4b17db9978e0ff85481c2a1759339a8220",
+      "case_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap",
+      "work_item_id": "support-label-disagreement-028",
+      "reference_claim_id": "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-boundary-reference-claim-004",
+      "operation": "select_option_2",
+      "decision_rationale": "The evidence bundle includes not only that the current measurement is missing, but also stale metric/context-changed and a current recommendation need, which together conservatively support the anchor phrase \"request_current_measurement\" better than unsupported. Option 2 is therefore better supported than Option 1.",
+      "adjudication_confidence": "medium",
+      "selected_option": "option_2",
+      "selected_source_reviewer": "reviewer_b",
+      "selected_decision": {
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mc-uncertainty_boundary-uncertainty_boundary_006_stale_metric_gap-evidence-002"
+        ],
+        "reason_codes": [
+          "conservative_entailment"
+        ],
+        "support_rationale": "Evidence stating current measurement is missing logically entails the need to request it.",
+        "annotation_confidence": "high"
+      },
+      "provider_envelope_sha256": "35cc816366c728d61f8a8c9c7fa515599e5d43599f0097b3ac2183a48e5ce5b1",
+      "provider_content_sha256": "f810e44d7faff5a6764c6237463d3900be7cade5bb42146e7322834416e7fcc3",
+      "provider_reported_model": "gpt-5.4-2026-03-05",
+      "canonical_model_family": "gpt-5.4",
+      "boundary_mutation_performed": false,
+      "reviewer_submission_mutation_performed": false,
+      "diagnostic_followup_label_change_performed": false,
+      "support_reference_candidate_created": false,
+      "support_gold_created": false
+    }
+  ],
+  "boundary_mutation_performed": false,
+  "claim_creation_or_deletion_performed": false,
+  "reviewer_submission_mutation_performed": false,
+  "diagnostic_followup_items_processed": 0,
+  "diagnostic_followup_label_change_performed": false,
+  "support_reference_candidate_created": false,
+  "support_gold_created": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

@@ -1,0 +1,66 @@
+﻿{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d1-a-boundary-reference-protocol-v2",
+  "supersedes": "phase7.3.3-d1-a-boundary-reference-protocol-v1",
+  "version_reason": "Remove reviewer-owned semantic centrality and the hidden exactly-one-central cardinality contract.",
+  "purpose": "Independently identify Atomic Claim boundaries and structural metadata while protocol-owned normalization assigns structural roles.",
+  "unit_of_review": "one source anchor within one frozen real-provider Candidate",
+  "reviewer_output_fields": [
+    "anchor_id",
+    "source_excerpt",
+    "claim_type",
+    "material",
+    "claim_origin",
+    "boundary_rationale",
+    "annotation_confidence"
+  ],
+  "protocol_owned_fields": [
+    "reviewer_claim_id",
+    "case_id",
+    "response_sha256",
+    "source_field",
+    "source_index",
+    "source_text_sha256",
+    "source_span",
+    "claim_text",
+    "claim_role",
+    "anchor_group"
+  ],
+  "claim_role_by_source_field": {
+    "proposition": "anchor",
+    "prediction_statement": "prediction",
+    "prediction_observable": "prediction_observable",
+    "prediction_success_criterion": "prediction_criterion",
+    "falsification_statement": "falsification",
+    "falsification_observable": "falsification_observable"
+  },
+  "anchor_group_rule": "case_id + '::' + source_field; all Atomic Claims split from the same structural field share a protocol-owned group.",
+  "cardinality_rules": [
+    "Every source anchor must contain at least one Atomic Claim.",
+    "One source anchor may contain multiple non-overlapping Atomic Claims.",
+    "A proposition anchor may contain multiple anchor-role Atomic Claims.",
+    "No exactly-one-central or exactly-one-anchor-claim constraint exists."
+  ],
+  "claim_type_enum": ["proposition", "scope", "prediction", "causal", "counterexample", "limitation", "falsifiability"],
+  "claim_origin_enum": ["explicit", "inferred", "synthesized"],
+  "span_semantics": "UTF-8 decoded Python string code-point offsets [start,end) within exactly one source_text anchor.",
+  "boundary_rules": [
+    "Every independently truth-evaluable assertion must receive its own non-empty span.",
+    "Claims may not cross source-anchor boundaries.",
+    "Claims may not overlap within an anchor.",
+    "Do not assign support labels or evidence IDs.",
+    "Do not assign centrality, claim_role, or anchor_group.",
+    "Claim origin is structural provenance only and is not a support decision."
+  ],
+  "audit_order": [
+    "hash_provider_envelope_bytes",
+    "extract_and_hash_provider_content_bytes",
+    "append_attempt_log_hashes",
+    "parse_json",
+    "validate_schema",
+    "normalize_protocol_owned_fields",
+    "hash_normalized_output"
+  ],
+  "freeze_rule": "Boundary Gold may freeze only after two completed blind submissions, immutable Agreement, completed adjudication, and passing Boundary Coverage QA.",
+  "held_out_accessed": false
+}

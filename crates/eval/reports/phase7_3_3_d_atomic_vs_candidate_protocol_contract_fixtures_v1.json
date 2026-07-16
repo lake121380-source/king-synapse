@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "fixture_suite_id": "phase7.3.3-d-atomic-vs-candidate-protocol-contract-fixtures-v1",
+  "status": "passed",
+  "fixture_count": 18,
+  "passed_count": 18,
+  "failed_count": 0,
+  "fixtures": [
+    {
+      "fixture_id": "exact_pair_acceptance",
+      "expected": "accept",
+      "passed": true,
+      "observed": "accepted"
+    },
+    {
+      "fixture_id": "missing_candidate_case_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "candidate_completed_case_count_not_10"
+    },
+    {
+      "fixture_id": "extra_candidate_case_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "candidate_completed_case_count_not_10"
+    },
+    {
+      "fixture_id": "duplicate_candidate_case_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "duplicate_candidate_case:extract_01"
+    },
+    {
+      "fixture_id": "case_order_drift_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "case_order_drift"
+    },
+    {
+      "fixture_id": "candidate_sha_drift_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "candidate_response_sha_drift:extract_01:adjudicated-extract_01-claim-001"
+    },
+    {
+      "fixture_id": "all_supported_aggregation",
+      "expected": "supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 2,
+          "partially_supported_count": 0,
+          "unsupported_count": 0,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "supported",
+        "applied_rule": "all_anchors_and_material_secondary_supported"
+      }
+    },
+    {
+      "fixture_id": "anchor_partial_aggregation",
+      "expected": "partially_supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 1,
+          "unsupported_count": 0,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "partially_supported",
+        "applied_rule": "anchor_partially_supported"
+      }
+    },
+    {
+      "fixture_id": "anchor_unsupported_aggregation",
+      "expected": "unsupported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 0,
+          "unsupported_count": 1,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "unsupported",
+        "applied_rule": "anchor_unsupported"
+      }
+    },
+    {
+      "fixture_id": "anchor_not_assessable_aggregation",
+      "expected": "not_assessable",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 0,
+          "unsupported_count": 0,
+          "not_assessable_count": 1
+        },
+        "aggregated_candidate_label": "not_assessable",
+        "applied_rule": "anchor_not_assessable"
+      }
+    },
+    {
+      "fixture_id": "secondary_partial_aggregation",
+      "expected": "partially_supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 1,
+          "unsupported_count": 0,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "partially_supported",
+        "applied_rule": "material_secondary_not_fully_supported"
+      }
+    },
+    {
+      "fixture_id": "secondary_unsupported_maps_to_partial",
+      "expected": "partially_supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 0,
+          "unsupported_count": 1,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "partially_supported",
+        "applied_rule": "material_secondary_not_fully_supported"
+      }
+    },
+    {
+      "fixture_id": "multi_anchor_supported_aggregation",
+      "expected": "supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 3,
+          "partially_supported_count": 0,
+          "unsupported_count": 0,
+          "not_assessable_count": 0
+        },
+        "aggregated_candidate_label": "supported",
+        "applied_rule": "all_anchors_and_material_secondary_supported"
+      }
+    },
+    {
+      "fixture_id": "missing_anchor_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "aggregation_missing_anchor"
+    },
+    {
+      "fixture_id": "non_material_anchor_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "aggregation_non_material_anchor"
+    },
+    {
+      "fixture_id": "invalid_label_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "aggregation_invalid_label:a"
+    },
+    {
+      "fixture_id": "duplicate_claim_rejection",
+      "expected": "reject",
+      "passed": true,
+      "observed": "aggregation_duplicate_claim_id"
+    },
+    {
+      "fixture_id": "four_class_vector_accounting",
+      "expected": "partially_supported",
+      "passed": true,
+      "observed": {
+        "atomic_support_vector": {
+          "supported_count": 1,
+          "partially_supported_count": 1,
+          "unsupported_count": 1,
+          "not_assessable_count": 1
+        },
+        "aggregated_candidate_label": "partially_supported",
+        "applied_rule": "material_secondary_not_fully_supported"
+      }
+    }
+  ],
+  "provider_called": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 3,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_safe_023",
+  "manifest_sha256": "6931de8823a1732b5d1d3822d8ff7c55b4a76d2f906fbe649a8e952b227fb850",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "6941e55012d62088bf433e33f6c766a47488339b9864e81a2d5d83bb111b373e",
+  "content_sha256": "3ce5864e7acfffb458909f8b5efc18d813e6ed564541bb749ee64b57a70d6850",
+  "latency_ms": 6841.722900047898,
+  "usage": {
+    "prompt_tokens": 1080,
+    "completion_tokens": 121,
+    "total_tokens": 1201,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 3734,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 4574,
+      "total_duration_ms": 4498,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_safe_023",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_safe_023-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "material": true,
+        "support_label": "unsupported",
+        "rationale": "The evidence includes a strong statement that a clear current confirmed answer should remain first, which supports clarity of a current answer. However, it does not entail the full proposition that baseline evidence is already clear and that no cognitive intervention is needed. Other supplied evidence is weak, generic, provenance-only, or describes competing/secondary signals, so the no-intervention conclusion is not established by the bundle."
+      }
+    ],
+    "candidate_reference_label": "unsupported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_safe_023-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "support_label": "unsupported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

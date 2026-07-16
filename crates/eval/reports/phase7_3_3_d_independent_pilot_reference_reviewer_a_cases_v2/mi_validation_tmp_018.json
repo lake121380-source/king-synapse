@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_tmp_018",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "656d71261fad7662c11ff79389a7c199fc355c3e10afeddd7b600f27fc22ba34",
+  "provider_content_sha256": "1e069f1224d9715c0c9ff4bb9af53f6660206a927a936fe58b4a16580bf37ab1",
+  "provider_reported_model": "gpt-4.1-2025-04-14",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "10a602bc3f650c5eb0e67b4d104e99f436eee2f99824782c8a905ff7cc5588f6",
+  "normalized_case": {
+    "case_id": "mi_validation_tmp_018",
+    "candidate_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_tmp_018-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "c331057e9c0fd543a8cff2d6310d8ca482af3fdef9867a978e3c9aecb9491b1e",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_tmp_018-evidence-06",
+          "mi_validation_tmp_018-evidence-01"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that the later confirmed state supersedes the older, semantically stronger state. Evidence 06 directly states that the later confirmed state is active and replaces the earlier state, which matches the candidate's claim. Evidence 01 further supports this by noting that the older state is no longer active, despite its strong lexical overlap. Together, these provide direct and reliable support for the selection rule described in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

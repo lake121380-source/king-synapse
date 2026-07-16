@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "a",
+  "case_id": "mi_validation_rel_023",
+  "manifest_sha256": "5ef540177fe5545db1ed4ab68e6145fa8e711f2559c357300543498c192d659b",
+  "provider_envelope_sha256": "5eefc673da58624cd467dd7347c7016e3f9f5882d311d741adfdc889af050ac4",
+  "provider_content_sha256": "3f983b05032cebc13ec40659877523830f7a607167ced138930d0b44ed2b0a6a",
+  "provider_reported_model": "gpt-4.1",
+  "canonical_model_family": "gpt-4.1",
+  "normalized_case_sha256": "d973c69594d55d66ba3f4806858d89199fe1aaf5ee04996182efc374254a755f",
+  "normalized_case": {
+    "case_id": "mi_validation_rel_023",
+    "candidate_sha256": "1d37893169637061e3b1d28093067d49f87982ea3953a4fe488e1b181088283c",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_rel_023-a-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "source_text_sha256": "1d37893169637061e3b1d28093067d49f87982ea3953a4fe488e1b181088283c",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_rel_023-evidence-01",
+          "mi_validation_rel_023-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts that direct user confirmation should be ranked above a lexically stronger but unverified report. Evidence 06 directly states that direct user confirmation establishes the reliable fact, indicating its higher reliability. Evidence 01 describes the unverified third-party report as unreliable, supporting the comparative selection. Thus, the evidence directly matches and supports the selection rule proposed in the candidate.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

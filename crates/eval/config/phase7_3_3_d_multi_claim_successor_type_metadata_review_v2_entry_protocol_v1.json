@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-type-metadata-review-v2-entry-protocol-v1",
+  "status": "frozen_after_v1_authoritative_negative_before_v2_provider_call",
+  "predecessor_protocol_sha256": "75a151448ddafeed4b06a4cf22156d9569c7220c54b9ac5feb50f2d45c10bbe9",
+  "failure_classification_sha256": "ff06ec52418a0c39e7d42fefc670dfbd3b881369f54907842fefeeca6a064b0f",
+  "controlled_hypothesis": "long copied claim identifiers and free object serialization may be a representation bottleneck",
+  "v2_single_changed_factor": "output representation",
+  "v2_representation": {
+    "model_returns_short_claim_index": true,
+    "adapter_maps_claim_index_to_frozen_claim_id": true,
+    "model_copies_claim_id": false,
+    "model_copies_excerpt": false
+  },
+  "semantic_invariants": [
+    "same frozen boundary reference",
+    "same claim_role enum",
+    "same claim_type enum",
+    "same reviewer models",
+    "same provider",
+    "same blind inputs",
+    "same case isolation"
+  ],
+  "reviewer_a_v1_reused": false,
+  "reason": "both reviewers must be measured under the same v2 representation",
+  "same_version_retry": false,
+  "new_version_authorized": true,
+  "next_authorized_stage": "construct_multi_claim_successor_type_metadata_review_v2"
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase7.3.3-a-first-real-atomic-judge-execution-manifest-v1",
+  "execution_id": "phase7.3.3-a-first-real-atomic-judge-controls-v1",
+  "phase": "Phase 7.3.3-A First Real Atomic Judge Control Execution",
+  "status": "frozen_execution_pending",
+  "manifest_frozen_at": "2026-07-12T11:56:28.621717+00:00",
+  "execution_started_at": null,
+  "execution_started_at_recorded_in_final_report": true,
+  "execution_config": {
+    "provider_base_url": "https://api.gpt.ge/v1",
+    "judge_model": "gpt-4.1",
+    "temperature": 0,
+    "top_p": 1,
+    "response_format": "json_object",
+    "case_isolation": true,
+    "original_control_count": 16,
+    "diagnostics_supplement_count": 4
+  },
+  "artifact_sha256": {
+    "execution_policy": "0c90c920cee2a49943837d47b9834a6d3d76c2b080e5d7020da0e67a5b60be92",
+    "protocol": "c2ac9692abca60693b33aeb829364ae97d9a22136f719d998ddd1fcc3f6e837d",
+    "prompt": "88ca6b3e232f0dadde2179932d4b229d8afee912ead773f31975e3f6cda98e23",
+    "original_balanced_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_claim_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd",
+    "partial_claim_supplement_manifest": "083d3f21350ff61a83a52b61400411f2eae5d2c04762d2ee599778f748ccf047",
+    "diagnostics_manifest": "bca2ce42a7162ef005feacf72ec4edc2c129aad19092e24c8c0d74278009a940",
+    "aggregator_policy": "e2eb8695d97d4beb3f20043dec09733a1e9972c73870e75e464538cd37607fe4",
+    "strict_parser_contract": "f68de0fa7c80652a972630533c8ea942591f8d5ac11c0e6119dea3a15247374f",
+    "aggregator_implementation": "1bd0611ea97083251ef070e2c0c3fe1ae397ae979283780a99be3e73f2c31a0f",
+    "diagnostics_evaluator": "506d81e4541a5b80acf3f6692bb6ebb697782063d18168c5975ff1194107b0ea",
+    "execution_adapter": "4c190841c0e6145c40a5d6d37a8876b5e7ac13fbd434e292a1ac81db7446641d"
+  },
+  "authoritative_result_policy": {
+    "first_returned_model_output_per_case_is_authoritative": true,
+    "invalid_json_or_schema_is_recorded_as_negative_result": true,
+    "semantic_retry_after_returned_output_authorized": false,
+    "automatic_repair_authorized": false,
+    "selective_retry_authorized": false,
+    "transport_failure_before_model_output_may_resume": true,
+    "failed_entry_criteria_requires_analysis_not_tuning": true,
+    "failed_entry_criteria_result_name": "negative_result"
+  },
+  "post_execution_prohibitions": [
+    "no_prompt_modification",
+    "no_parser_modification",
+    "no_aggregation_modification",
+    "no_threshold_modification",
+    "no_control_or_supplement_modification",
+    "no_result_replacement",
+    "no_held_out_access",
+    "no_design_case_execution_before_control_decision"
+  ],
+  "entry_criteria": {
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "source_spans_must_be_valid": true,
+    "all_four_candidate_labels_must_be_predicted": true
+  },
+  "data_handling": {
+    "api_key_recorded": false,
+    "raw_provider_responses_stored": false,
+    "response_sha256_recorded": true,
+    "parsed_outputs_stored": true,
+    "gold_labels_sent_to_provider": false,
+    "held_out_loaded": false
+  },
+  "guards": {
+    "protocol_modified": false,
+    "prompt_modified": false,
+    "original_controls_modified": false,
+    "supplement_modified": false,
+    "aggregator_modified": false,
+    "thresholds_modified": false,
+    "design_cases_authorized": false,
+    "held_out_authorized": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false
+  }
+}

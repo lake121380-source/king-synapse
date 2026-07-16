@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "fixture_report_id": "phase7.3.3-d-multi-claim-successor-contract-fixtures-v1",
+  "status": "PASS",
+  "passed": 13,
+  "total": 13,
+  "fixtures": [
+    {
+      "fixture_id": "structural_valid_multi_claim_diverse",
+      "gate": "structural",
+      "expected_pass": true,
+      "observed_pass": true,
+      "observed_failures": [],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_single_claim_collapse",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "median_reference_claims_per_candidate",
+        "multi_claim_candidate_rate",
+        "reference_claim_to_candidate_ratio",
+        "within_candidate_label_heterogeneity_rate",
+        "supported_plus_material_error_candidate_rate",
+        "material_error_claim_rate",
+        "unsupported_claim_rate",
+        "partially_supported_claim_rate",
+        "maximum_single_label_share"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_duplicate_candidate",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "unique_candidate_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_no_within_candidate_heterogeneity",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "within_candidate_label_heterogeneity_rate",
+        "supported_plus_material_error_candidate_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_no_unsupported_claims",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "unsupported_claim_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_no_partial_claims",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "partially_supported_claim_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "structural_reject_unaccounted_character",
+      "gate": "structural",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "eligible_gap_characters"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_valid_localized_atomic_units",
+      "gate": "representation",
+      "expected_pass": true,
+      "observed_pass": true,
+      "observed_failures": [],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_reject_whole_candidate_collapse",
+      "gate": "representation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "atomic_unit_to_candidate_ratio",
+        "atomic_multi_unit_candidate_rate",
+        "atomic_whole_candidate_operation_rate",
+        "atomic_local_span_operation_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_reject_duplicate_spans",
+      "gate": "representation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "atomic_duplicate_span_rate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_reject_missing_candidate_decision",
+      "gate": "representation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "candidate_decisions_per_selected_candidate"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_reject_reference_visibility",
+      "gate": "representation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "reference_blind"
+      ],
+      "contract_pass": true
+    },
+    {
+      "fixture_id": "representation_reject_low_local_span_rate",
+      "gate": "representation",
+      "expected_pass": false,
+      "observed_pass": false,
+      "observed_failures": [
+        "atomic_whole_candidate_operation_rate",
+        "atomic_local_span_operation_rate"
+      ],
+      "contract_pass": true
+    }
+  ],
+  "provider_called": false,
+  "successor_content_opened": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false
+}

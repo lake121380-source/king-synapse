@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_06-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_06",
+  "provider_envelope_sha256": "d20f4c3aa1a31a469d52b60fa768a06901c857a2179f56346074a4008eae9ef5",
+  "provider_content_sha256": "fe5cc7fdf99363ad6deb3f4843ba7f2e463cab73414a99421b46cf910172db36",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "4d7308cf44be09681c3bdf49c2790275e9dad3614c9beff5253a10e863fed841",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-001",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2",
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "scope_preserved"
+      ],
+      "support_rationale": "All three evidence instances (px_06_support_1, px_06_support_2, px_06_counter_3) explicitly occur within the software_delivery domain, matching the claim's scope exactly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "conservative_entailment"
+      ],
+      "support_rationale": "px_06_support_1 confirms exposing a risky feature to one internal group revealed a dependency assumption failure. px_06_support_2 confirms migrating one representative tenant revealed an undocumented data shape. Both align with the claim that representative subsets reveal hidden issues before full rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-003",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "px_06_counter_3 explicitly documents that testing only the smallest tenant (simplest subset) failed to detect data shapes present in complex tenants, causing full rollout failure. This directly supports the counterexample claim.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-004",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "certainty_escalation"
+      ],
+      "support_rationale": "While evidence shows issues were found in two specific cases, the claim predicts that 'at least one hidden issue... will be discovered' as a universal certainty for any risky change exposed to a representative subset. The evidence supports the possibility and occurrence, but not the guaranteed universal prediction implied by 'will'.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-005",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "In px_06_support_1, the dependency failure was found during the internal group exposure. In px_06_support_2, the data shape issue was found during the single tenant migration. Both constitute detection during the limited exposure phase.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "reasonable_bridging_inference"
+      ],
+      "support_rationale": "The outcomes in px_06_support_1 and px_06_support_2 describe findings occurring before the 'full fleet' or 'full rollout' commitment, satisfying the condition of being documented before full rollout.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "Both supporting cases (px_06_support_1, px_06_support_2) resulted in the identification of at least one specific issue (dependency failure, undocumented data shape), meeting the success criterion.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-008",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_06_support_1",
+        "px_06_support_2"
+      ],
+      "reason_codes": [
+        "unsupported_detail"
+      ],
+      "support_rationale": "Evidence confirms issues were identified before rollout. px_06_support_1 notes reversal required a configuration change, implying addressability. However, the evidence does not explicitly confirm that the issues were successfully 'addressed' (fixed/resolved) before rollout, only that they were found and reversible/detected.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-009",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "conservative_entailment"
+      ],
+      "support_rationale": "px_06_counter_3 serves as the falsification instance: a subset was tested (smallest tenant), no issues were found in that specific probe relative to its scope, yet full rollout failed due to issues (data shapes) that existed in the broader population complexity which the subset failed to reflect. This matches the falsification logic.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_06-claim-010",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_06_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "px_06_counter_3 explicitly states the full rollout failed on data shapes absent from the probe (smallest tenant), which aligns with the observable of failure due to assumptions/shapes existing in the complexity but not detected in the subset.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_06",
+    "status": "completed",
+    "decision_count": 10
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

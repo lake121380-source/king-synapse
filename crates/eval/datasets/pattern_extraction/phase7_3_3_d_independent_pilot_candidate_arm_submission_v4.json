@@ -1,0 +1,1772 @@
+{
+  "schema_version": 4,
+  "submission_id": "phase7.3.3-d-independent-pilot-candidate-arm-submission-v4",
+  "status": "completed",
+  "arm": "candidate",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "case_count": 40,
+  "request_count": 40,
+  "label_counts": {
+    "partially_supported": 18,
+    "supported": 22
+  },
+  "resource_usage": {
+    "prompt_tokens": 42794,
+    "completion_tokens": 3595,
+    "total_tokens": 46389,
+    "latency_ms_total": 194173.10590000125,
+    "latency_ms_mean": 4854.327647500031,
+    "cost_usd": null,
+    "cost_status": "provider_billing_price_not_frozen"
+  },
+  "cases": [
+    {
+      "pilot_index": 1,
+      "domain": "contextual_constraint",
+      "case_id": "mi_validation_ctx_022",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that a playbook satisfying the active constraint is preferred over a generic playbook that violates it. Specifically, one note says the generic playbook has stronger overlap but violates the active constraint, and another says a playbook satisfies the active safety and scope constraint. However, the evidence does not explicitly state that the active task constraint itself selects the context-compatible playbook, nor does it explicitly use the context-compatible selection framing.",
+      "source_span": {
+        "start": 0,
+        "end": 66
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 66
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4884.96540003689,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 117,
+        "total_tokens": 1189,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1274,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 2114,
+          "total_duration_ms": 2038,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 2,
+      "domain": "contextual_constraint",
+      "case_id": "mi_validation_ctx_020",
+      "support_label": "partially_supported",
+      "rationale": "Evidence indicates a generic playbook is excluded because it violates the active constraint, and another playbook satisfies the active safety and scope constraint. This supports that the active task/constraint filters for a context-compatible playbook, though the evidence does not explicitly use the exact phrase 'selects the context-compatible playbook.'",
+      "source_span": {
+        "start": 0,
+        "end": 66
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 66
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3511.7501000058837,
+      "usage": {
+        "prompt_tokens": 1073,
+        "completion_tokens": 93,
+        "total_tokens": 1166,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 638,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1478,
+          "total_duration_ms": 1402,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 3,
+      "domain": "contextual_constraint",
+      "case_id": "mi_validation_ctx_024",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that an active constraint rules out a generic playbook and that a playbook satisfies the active safety and scope constraint, implying compatibility with the active context/constraints. However, the evidence does not explicitly state the selection event or that the active task constraint itself selects the playbook; it only shows constraint-based compatibility/exclusion.",
+      "source_span": {
+        "start": 0,
+        "end": 66
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 66
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 5699.350000009872,
+      "usage": {
+        "prompt_tokens": 1073,
+        "completion_tokens": 97,
+        "total_tokens": 1170,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 2580,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 3420,
+          "total_duration_ms": 3344,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 4,
+      "domain": "contextual_constraint",
+      "case_id": "mi_validation_ctx_018",
+      "support_label": "partially_supported",
+      "rationale": "Evidence states that a generic playbook has stronger overlap but violates the active constraint, and that a playbook satisfies the active safety and scope constraint. This supports that the active task/constraint filters out a better-overlap generic option in favor of a context-compatible/scope-compatible playbook. However, the evidence does not explicitly state a selection mechanism or that this is the selected playbook, only that one candidate violates the constraint and another satisfies it.",
+      "source_span": {
+        "start": 0,
+        "end": 66
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 66
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4471.635100024287,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 119,
+        "total_tokens": 1191,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1444,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 2284,
+          "total_duration_ms": 2208,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 5,
+      "domain": "failure_override",
+      "case_id": "mi_validation_fail_018",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that there is an older successful playbook recommending repetition, and also that verified failure evidence says the approach caused harm and must not be repeated. This supports that verified failure evidence takes precedence over the previously successful playbook.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4419.812600011937,
+      "usage": {
+        "prompt_tokens": 1071,
+        "completion_tokens": 75,
+        "total_tokens": 1146,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1134,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1974,
+          "total_duration_ms": 1898,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 6,
+      "domain": "failure_override",
+      "case_id": "mi_validation_fail_017",
+      "support_label": "supported",
+      "rationale": "The evidence explicitly states that an older successful playbook recommends repeating the approach, and separately that verified failure evidence says the approach caused harm and must not be repeated. This supports that verified failure evidence takes precedence over the prior successful playbook in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 6014.247599989176,
+      "usage": {
+        "prompt_tokens": 1064,
+        "completion_tokens": 78,
+        "total_tokens": 1142,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 2494,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 3334,
+          "total_duration_ms": 3258,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 7,
+      "domain": "failure_override",
+      "case_id": "mi_validation_fail_024",
+      "support_label": "supported",
+      "rationale": "The evidence includes a prior successful playbook recommending repetition and a later verified failure record stating the approach caused harm and must not be repeated. This supports that verified failure evidence takes precedence over the earlier successful playbook in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4737.932299962267,
+      "usage": {
+        "prompt_tokens": 1072,
+        "completion_tokens": 73,
+        "total_tokens": 1145,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1574,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 2414,
+          "total_duration_ms": 2338,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 8,
+      "domain": "failure_override",
+      "case_id": "mi_validation_fail_023",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that an older successful playbook recommends repeating the approach, and separately that verified failure evidence says the approach caused harm and must not be repeated. This supports that verified failure evidence should take precedence over the prior successful playbook in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3648.1612999923527,
+      "usage": {
+        "prompt_tokens": 1064,
+        "completion_tokens": 79,
+        "total_tokens": 1143,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 769,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1609,
+          "total_duration_ms": 1533,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 9,
+      "domain": "failure_vs_recency_failure_wins",
+      "case_id": "mi_validation_frf_024",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that unresolved failure evidence remains authoritative even when it was not recently accessed, and it also separately notes that an unsafe playbook was accessed recently and repeats the failed approach. However, the bundle does not explicitly state the comparative decision rule that the unresolved failure evidence must beat the recently accessed unsafe playbook in a direct conflict; that conclusion would require combining separate statements beyond conservative entailment.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 73
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3957.5550999725237,
+      "usage": {
+        "prompt_tokens": 1087,
+        "completion_tokens": 109,
+        "total_tokens": 1196,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 971,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1811,
+          "total_duration_ms": 1735,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 10,
+      "domain": "failure_vs_recency_failure_wins",
+      "case_id": "mi_validation_frf_020",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and separately notes that an unsafe playbook was accessed recently but still repeats the failed approach. Together this supports the candidate’s claim that unresolved failure evidence should take precedence over a recently accessed unsafe playbook.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4201.800699986052,
+      "usage": {
+        "prompt_tokens": 1087,
+        "completion_tokens": 85,
+        "total_tokens": 1172,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 714,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1554,
+          "total_duration_ms": 1478,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 11,
+      "domain": "failure_vs_recency_failure_wins",
+      "case_id": "mi_validation_frf_019",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and separately notes that an unsafe playbook was accessed recently but still repeats the failed approach. Together, this supports the candidate’s claim that unresolved failure evidence takes precedence over a recently accessed unsafe playbook.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4126.540899975225,
+      "usage": {
+        "prompt_tokens": 1079,
+        "completion_tokens": 85,
+        "total_tokens": 1164,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1151,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1991,
+          "total_duration_ms": 1915,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 12,
+      "domain": "failure_vs_recency_failure_wins",
+      "case_id": "mi_validation_frf_022",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that unresolved failure evidence remains authoritative despite not being recently accessed, and also describes a recently accessed unsafe playbook that repeats the failed approach. This supports the candidate’s claim that unresolved failure evidence takes precedence over a recently accessed unsafe playbook.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4042.6799000124447,
+      "usage": {
+        "prompt_tokens": 1086,
+        "completion_tokens": 80,
+        "total_tokens": 1166,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 544,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1384,
+          "total_duration_ms": 1308,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 13,
+      "domain": "failure_vs_recency_recency_wins",
+      "case_id": "mi_validation_frr_017",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that the historical failure was explicitly resolved and that a later verified recovery playbook is active after that resolution. This supports the candidate's full proposition that later verified recovery takes precedence over resolved historical failure evidence.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 23377.169399987906,
+      "usage": {
+        "prompt_tokens": 1077,
+        "completion_tokens": 73,
+        "total_tokens": 1150,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 20290,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 21130,
+          "total_duration_ms": 21054,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 14,
+      "domain": "failure_vs_recency_recency_wins",
+      "case_id": "mi_validation_frr_023",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that the historical failure was explicitly resolved and that a later verified recovery playbook is active afterward. This supports the proposition that later verified recovery takes precedence over resolved historical failure evidence in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3620.815099973697,
+      "usage": {
+        "prompt_tokens": 1077,
+        "completion_tokens": 71,
+        "total_tokens": 1148,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 1,
+          "engine_ttft_ms": 64,
+          "engine_ttlt_ms": 65,
+          "pre_inference_ms": 56,
+          "service_tbt_ms": 7,
+          "service_ttft_ms": 543,
+          "service_ttlt_ms": 543,
+          "total_duration_ms": 495,
+          "user_visible_ttft_ms": 488
+        }
+      }
+    },
+    {
+      "pilot_index": 15,
+      "domain": "failure_vs_recency_recency_wins",
+      "case_id": "mi_validation_frr_019",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that the historical failure was explicitly resolved and that a later verified recovery playbook is active after that resolution. This supports the candidate’s full proposition that a later verified recovery supersedes resolved historical failure evidence.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3851.482899975963,
+      "usage": {
+        "prompt_tokens": 1077,
+        "completion_tokens": 73,
+        "total_tokens": 1150,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 822,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1662,
+          "total_duration_ms": 1586,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 16,
+      "domain": "failure_vs_recency_recency_wins",
+      "case_id": "mi_validation_frr_024",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that a historical failure was explicitly resolved, and later says a later verified recovery playbook is active after that historical failure was resolved. This supports that later verified recovery takes precedence over resolved historical failure evidence in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 73
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3782.2696000221185,
+      "usage": {
+        "prompt_tokens": 1085,
+        "completion_tokens": 76,
+        "total_tokens": 1161,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 1,
+          "engine_ttft_ms": 66,
+          "engine_ttlt_ms": 67,
+          "pre_inference_ms": 58,
+          "service_tbt_ms": 7,
+          "service_ttft_ms": 560,
+          "service_ttlt_ms": 560,
+          "total_duration_ms": 510,
+          "user_visible_ttft_ms": 503
+        }
+      }
+    },
+    {
+      "pilot_index": 17,
+      "domain": "no_intervention",
+      "case_id": "mi_validation_safe_022",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that there is a clear current confirmed answer that should remain first, and notes competing or weaker signals. However, it does not explicitly establish the full candidate claim that the baseline evidence is already clear and that no cognitive intervention is needed. The 'no intervention needed' conclusion is not directly stated.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3867.122199968435,
+      "usage": {
+        "prompt_tokens": 1051,
+        "completion_tokens": 91,
+        "total_tokens": 1142,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 836,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1676,
+          "total_duration_ms": 1600,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 18,
+      "domain": "no_intervention",
+      "case_id": "mi_validation_safe_024",
+      "support_label": "partially_supported",
+      "rationale": "The evidence clearly supports that there is a current confirmed answer that should remain first, which aligns with baseline evidence being clear. However, none of the supplied evidence explicitly addresses the second part of the candidate claim, namely that no cognitive intervention is needed. Because only a subset of the full proposition is entailed, support is partial.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4057.862500019837,
+      "usage": {
+        "prompt_tokens": 1052,
+        "completion_tokens": 95,
+        "total_tokens": 1147,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 974,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1814,
+          "total_duration_ms": 1738,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 19,
+      "domain": "no_intervention",
+      "case_id": "mi_validation_safe_019",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that there is a clear current confirmed answer that should remain first, but it does not state that baseline evidence is clear or explicitly conclude that no cognitive intervention is needed. Other items are weak, generic, or marked not relevant. Thus only a strict subset of the candidate is supported.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4647.077500005253,
+      "usage": {
+        "prompt_tokens": 1051,
+        "completion_tokens": 89,
+        "total_tokens": 1140,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1541,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 2381,
+          "total_duration_ms": 2305,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 20,
+      "domain": "no_intervention",
+      "case_id": "mi_validation_safe_023",
+      "support_label": "partially_supported",
+      "rationale": "The evidence supports that there is a clear current confirmed answer that should remain first, which aligns with baseline clarity. However, it does not explicitly state that no cognitive intervention is needed, so the full proposition is not entailed.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3318.7436000443995,
+      "usage": {
+        "prompt_tokens": 1051,
+        "completion_tokens": 75,
+        "total_tokens": 1126,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 1,
+          "engine_ttft_ms": 71,
+          "engine_ttlt_ms": 72,
+          "pre_inference_ms": 63,
+          "service_tbt_ms": 7,
+          "service_ttft_ms": 609,
+          "service_ttlt_ms": 609,
+          "total_duration_ms": 554,
+          "user_visible_ttft_ms": 547
+        }
+      }
+    },
+    {
+      "pilot_index": 21,
+      "domain": "preference_evolution",
+      "case_id": "mi_validation_pref_022",
+      "support_label": "supported",
+      "rationale": "Evidence 06 directly states that the current explicit preference replaces the earlier choice, which entails that the current explicit preference supersedes the older preference. Evidence 01 is consistent, noting the older preference has been superseded.",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 5691.27650000155,
+      "usage": {
+        "prompt_tokens": 1069,
+        "completion_tokens": 71,
+        "total_tokens": 1140,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 2542,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 3382,
+          "total_duration_ms": 3306,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 22,
+      "domain": "preference_evolution",
+      "case_id": "mi_validation_pref_017",
+      "support_label": "supported",
+      "rationale": "Evidence 06 directly states that the 'current explicit preference replaces the earlier choice,' which entails that the current explicit preference supersedes the older preference. Evidence 01 is also consistent, saying the older preference 'has been superseded.'",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3760.012100043241,
+      "usage": {
+        "prompt_tokens": 1062,
+        "completion_tokens": 75,
+        "total_tokens": 1137,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 659,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1499,
+          "total_duration_ms": 1423,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 23,
+      "domain": "preference_evolution",
+      "case_id": "mi_validation_pref_020",
+      "support_label": "supported",
+      "rationale": "Evidence 06 directly states that the current explicit preference replaces the earlier choice, which entails that the current explicit preference supersedes the older preference. Evidence 01 is also consistent, noting the older preference has been superseded.",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3356.8380000069737,
+      "usage": {
+        "prompt_tokens": 1070,
+        "completion_tokens": 72,
+        "total_tokens": 1142,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 1,
+          "engine_ttft_ms": 67,
+          "engine_ttlt_ms": 68,
+          "pre_inference_ms": 59,
+          "service_tbt_ms": 7,
+          "service_ttft_ms": 574,
+          "service_ttlt_ms": 574,
+          "total_duration_ms": 523,
+          "user_visible_ttft_ms": 516
+        }
+      }
+    },
+    {
+      "pilot_index": 24,
+      "domain": "preference_evolution",
+      "case_id": "mi_validation_pref_019",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that the current explicit preference replaces or has superseded the earlier/older choice or preference. In particular, evidence-06 says 'current explicit preference replaces the earlier choice,' and evidence-01 says the 'older preference ... has been superseded.' Together this entails the candidate proposition.",
+      "source_span": {
+        "start": 0,
+        "end": 63
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3788.5822000098415,
+      "usage": {
+        "prompt_tokens": 1062,
+        "completion_tokens": 88,
+        "total_tokens": 1150,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 752,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1592,
+          "total_duration_ms": 1516,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 25,
+      "domain": "reliability_conflict",
+      "case_id": "mi_validation_rel_019",
+      "support_label": "partially_supported",
+      "rationale": "The evidence states that a direct user confirmation establishes the reliable fact, and separately that an unverified third-party report remains unreliable. This supports preferring direct user confirmation over an unverified report in this case. However, the candidate also claims the unverified report is lexically stronger, and no evidence establishes any lexical-strength comparison or explicit outranking rule beyond this instance.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 72
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3638.9620999689214,
+      "usage": {
+        "prompt_tokens": 1058,
+        "completion_tokens": 103,
+        "total_tokens": 1161,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 732,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1572,
+          "total_duration_ms": 1496,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 26,
+      "domain": "reliability_conflict",
+      "case_id": "mi_validation_rel_022",
+      "support_label": "partially_supported",
+      "rationale": "The evidence directly states that a direct user confirmation 'establishes the reliable fact' and separately that an unverified third-party report 'remains unreliable.' This supports the candidate's ranking that direct user confirmation should take precedence over an unverified report in a conflict. However, the evidence does not establish the specific qualifier 'lexically stronger'; it only says the competing report repeats the claim and is unreliable.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 72
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4096.300199977122,
+      "usage": {
+        "prompt_tokens": 1058,
+        "completion_tokens": 111,
+        "total_tokens": 1169,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 914,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1754,
+          "total_duration_ms": 1678,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 27,
+      "domain": "reliability_conflict",
+      "case_id": "mi_validation_rel_024",
+      "support_label": "partially_supported",
+      "rationale": "The evidence states that an unverified third-party report is unreliable and that direct user confirmation establishes the reliable fact. This supports the relative preference that direct user confirmation should be trusted over an unverified report. However, the candidate adds the specific qualifier 'lexically stronger,' and the supplied evidence does not address lexical strength or show that this factor was present and overridden.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 72
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 5655.697499983944,
+      "usage": {
+        "prompt_tokens": 1059,
+        "completion_tokens": 102,
+        "total_tokens": 1161,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 2787,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 3627,
+          "total_duration_ms": 3551,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 28,
+      "domain": "reliability_conflict",
+      "case_id": "mi_validation_rel_023",
+      "support_label": "partially_supported",
+      "rationale": "The evidence states that an unverified third-party report repeats the claim but remains unreliable, and separately that direct user confirmation establishes the reliable fact. This supports a preference for direct user confirmation over an unverified report in this conflict setting. However, the candidate also requires the competing report to be \"lexically stronger,\" and the supplied evidence does not establish any lexical-strength comparison, so the full proposition is not entailed.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 72
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4140.203499991912,
+      "usage": {
+        "prompt_tokens": 1058,
+        "completion_tokens": 113,
+        "total_tokens": 1171,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 934,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1774,
+          "total_duration_ms": 1698,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 29,
+      "domain": "reliability_vs_recency_recency_wins",
+      "case_id": "mi_validation_rrr_019",
+      "support_label": "supported",
+      "rationale": "The evidence explicitly states that the older fact was highly reliable but is now stale, and that the current observed state is active. This supports the proposition that a current observed state supersedes a reliable but explicitly stale fact in this case.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3578.2826999784447,
+      "usage": {
+        "prompt_tokens": 1083,
+        "completion_tokens": 75,
+        "total_tokens": 1158,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 592,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1432,
+          "total_duration_ms": 1356,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 30,
+      "domain": "reliability_vs_recency_recency_wins",
+      "case_id": "mi_validation_rrr_020",
+      "support_label": "supported",
+      "rationale": "The evidence explicitly states that the older fact was reliable but is now stale, and that the current observed state is active. This supports the proposition that a current observed state takes precedence over a reliable but explicitly stale fact.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3597.4686999688856,
+      "usage": {
+        "prompt_tokens": 1091,
+        "completion_tokens": 72,
+        "total_tokens": 1163,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 542,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1382,
+          "total_duration_ms": 1306,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 31,
+      "domain": "reliability_vs_recency_recency_wins",
+      "case_id": "mi_validation_rrr_021",
+      "support_label": "supported",
+      "rationale": "Evidence 06 explicitly states that the current observed state is active and that the older reliable fact is stale; Evidence 01 also says the older fact was highly reliable when recorded but is explicitly stale now. Together this supports the proposition that a current observed state takes precedence over a reliable but stale fact.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3866.111700015608,
+      "usage": {
+        "prompt_tokens": 1083,
+        "completion_tokens": 88,
+        "total_tokens": 1171,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 884,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1724,
+          "total_duration_ms": 1648,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 32,
+      "domain": "reliability_vs_recency_recency_wins",
+      "case_id": "mi_validation_rrr_022",
+      "support_label": "partially_supported",
+      "rationale": "The evidence explicitly states that the older fact was highly reliable but is now stale, and that a current observed state is active. This supports the core recency-over-stale-reliability pattern in the candidate. However, the evidence does not explicitly state the normative conclusion that the current state 'supersedes' the stale fact, only that both conditions hold.",
+      "source_span": {
+        "start": 0,
+        "end": 72
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 72
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4075.8244000026025,
+      "usage": {
+        "prompt_tokens": 1090,
+        "completion_tokens": 103,
+        "total_tokens": 1193,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1018,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1858,
+          "total_duration_ms": 1782,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 33,
+      "domain": "reliability_vs_recency_reliability_wins",
+      "case_id": "mi_validation_rrl_018",
+      "support_label": "supported",
+      "rationale": "The evidence directly supports the reliability side: a highly confident, authoritative confirmation is stated to remain authoritative. It also separately notes that a recent weak observation exists but is unverified. Together these support the proposition that high-confidence confirmation should outweigh a recent weak observation.",
+      "source_span": {
+        "start": 0,
+        "end": 64
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3919.4788000313565,
+      "usage": {
+        "prompt_tokens": 1063,
+        "completion_tokens": 80,
+        "total_tokens": 1143,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 946,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1786,
+          "total_duration_ms": 1710,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 34,
+      "domain": "reliability_vs_recency_reliability_wins",
+      "case_id": "mi_validation_rrl_022",
+      "support_label": "partially_supported",
+      "rationale": "The evidence directly supports the reliability side: a relevant high-confidence fact states that \"high confidence confirmation remains authoritative.\" It also separately describes a \"recent weak observation\" as accessible but not verified. Taken together, this supports preferring high-confidence confirmation over a recent weak observation. However, the exact comparative claim \"beats\" is not explicitly stated as a decision outcome, so the support is conservative rather than complete.",
+      "source_span": {
+        "start": 0,
+        "end": 64
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 64
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4509.295299998485,
+      "usage": {
+        "prompt_tokens": 1063,
+        "completion_tokens": 112,
+        "total_tokens": 1175,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1672,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 2512,
+          "total_duration_ms": 2436,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 35,
+      "domain": "reliability_vs_recency_reliability_wins",
+      "case_id": "mi_validation_rrl_021",
+      "support_label": "supported",
+      "rationale": "The evidence directly states both sides of the comparison: a 'recent weak observation is accessible but not verified' and a 'high confidence confirmation remains authoritative.' This supports the candidate’s claim that a high-confidence confirmation takes precedence over a recent but weak observation.",
+      "source_span": {
+        "start": 0,
+        "end": 64
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3407.9807000234723,
+      "usage": {
+        "prompt_tokens": 1063,
+        "completion_tokens": 79,
+        "total_tokens": 1142,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 601,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1441,
+          "total_duration_ms": 1365,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 36,
+      "domain": "reliability_vs_recency_reliability_wins",
+      "case_id": "mi_validation_rrl_017",
+      "support_label": "supported",
+      "rationale": "The evidence directly states that a recent weak observation exists but is 'not verified,' while a separate record says 'high confidence confirmation remains authoritative.' This supports the candidate’s preference for high-confidence confirmation over a recent weak observation.",
+      "source_span": {
+        "start": 0,
+        "end": 64
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3614.463899983093,
+      "usage": {
+        "prompt_tokens": 1063,
+        "completion_tokens": 73,
+        "total_tokens": 1136,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 2,
+          "engine_ttft_ms": 72,
+          "engine_ttlt_ms": 74,
+          "pre_inference_ms": 63,
+          "service_tbt_ms": 8,
+          "service_ttft_ms": 612,
+          "service_ttlt_ms": 612,
+          "total_duration_ms": 558,
+          "user_visible_ttft_ms": 550
+        }
+      }
+    },
+    {
+      "pilot_index": 37,
+      "domain": "temporal_update",
+      "case_id": "mi_validation_tmp_018",
+      "support_label": "partially_supported",
+      "rationale": "Evidence 06 directly states that a later confirmed state is active and replaces the earlier state, and Evidence 01 says the older state is no longer active. This supports temporal supersession by the later confirmed state. However, the candidate also specifies that the older state is 'semantically stronger,' while the evidence only says it has 'strong lexical overlap,' which is not the same and does not entail semantic strength.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 6051.044900028501,
+      "usage": {
+        "prompt_tokens": 1073,
+        "completion_tokens": 113,
+        "total_tokens": 1186,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 3052,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 3892,
+          "total_duration_ms": 3816,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 38,
+      "domain": "temporal_update",
+      "case_id": "mi_validation_tmp_021",
+      "support_label": "partially_supported",
+      "rationale": "Evidence 06 directly states that a later confirmed state is active and replaces the earlier state, and Evidence 01 says the older state is no longer active. This supports temporal supersession of the older state by the later confirmed state. However, the candidate also specifies that the older state is 'semantically stronger,' while the evidence only says it has strong lexical overlap, which is not the same and does not entail semantic strength.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 4329.43320000777,
+      "usage": {
+        "prompt_tokens": 1066,
+        "completion_tokens": 115,
+        "total_tokens": 1181,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 1130,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1970,
+          "total_duration_ms": 1894,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 39,
+      "domain": "temporal_update",
+      "case_id": "mi_validation_tmp_022",
+      "support_label": "supported",
+      "rationale": "Evidence 06 directly states that a later confirmed state is active and replaces the earlier state, and Evidence 01 says the older state is no longer active. This supports temporal supersession by the later confirmed state over the older state, including that the older state was semantically stronger. However, the evidence does not explicitly establish a general rule beyond this case-specific replacement.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 3626.104499970097,
+      "usage": {
+        "prompt_tokens": 1073,
+        "completion_tokens": 101,
+        "total_tokens": 1174,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 575,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 1415,
+          "total_duration_ms": 1339,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    },
+    {
+      "pilot_index": 40,
+      "domain": "temporal_update",
+      "case_id": "mi_validation_tmp_019",
+      "support_label": "partially_supported",
+      "rationale": "Evidence 06 directly states that a later confirmed state is active and replaces the earlier state, and Evidence 01 says the older state is no longer active despite strong lexical overlap. This supports temporal supersession by the later confirmed state over the older state. However, the candidate specifically says the older state is semantically stronger, while the evidence only mentions strong lexical overlap, not stronger semantics, so the full proposition is not entailed.",
+      "source_span": {
+        "start": 0,
+        "end": 74
+      },
+      "material_error_spans": [
+        {
+          "source_span": {
+            "start": 0,
+            "end": 74
+          },
+          "support_label": "partially_supported"
+        }
+      ],
+      "provider_reported_model": "gpt-5.4",
+      "latency_ms": 11230.771200032905,
+      "usage": {
+        "prompt_tokens": 1066,
+        "completion_tokens": 116,
+        "total_tokens": 1182,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "latency_checkpoint": {
+          "engine_tbt_ms": 33,
+          "engine_ttft_ms": 156,
+          "engine_ttlt_ms": 8336,
+          "pre_inference_ms": 96,
+          "service_tbt_ms": 33,
+          "service_ttft_ms": 988,
+          "service_ttlt_ms": 9176,
+          "total_duration_ms": 9100,
+          "user_visible_ttft_ms": 892
+        }
+      }
+    }
+  ],
+  "reference_visible": false,
+  "other_arm_visible": false,
+  "route_a_gold_visible": false,
+  "confirmatory_content_opened": false
+}

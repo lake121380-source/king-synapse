@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "status": "authoritative_success",
+  "reviewer": "b",
+  "case_id": "mi_validation_fail_024",
+  "manifest_sha256": "0f1b6fe0b37b4c8262ae682ecac72e8fcaf8842991d332bba3c427de8ebd6b97",
+  "provider_envelope_sha256": "1e5abd4df14198d250e4d0680f5ca587af5813c0a46066aa2da024aa338701ce",
+  "provider_content_sha256": "727cf9a2240ada9e671dcffed5ffdc6c5b38ecb9d9f7bc7bfc26f6660528b089",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_case_sha256": "ee100b83d1cf7c84bb5b97751e9029665521e7d83f2e327750eb58a32741b63b",
+  "normalized_case": {
+    "case_id": "mi_validation_fail_024",
+    "candidate_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+    "atomicity_status": "single_atomic_claim",
+    "claims": [
+      {
+        "reference_claim_id": "mi_validation_fail_024-b-claim-01",
+        "source_span": {
+          "start": 0,
+          "end": 74
+        },
+        "source_text_sha256": "8b12cacc3504a36adfc90b297d7e1eb3b25e02c2049ae8b542d6659696732ffa",
+        "claim_type": "selection_rule",
+        "material": true,
+        "support_label": "supported",
+        "cited_evidence_ids": [
+          "mi_validation_fail_024-evidence-06"
+        ],
+        "reason_codes": [
+          "direct_evidence_match"
+        ],
+        "rationale": "The candidate asserts a selection rule where verified failure evidence must override a previously successful playbook. Evidence-06 explicitly states that 'verified failure evidence says this approach caused harm and must not be repeated,' which directly supports the mandate to override the older successful approach mentioned in Evidence-01 due to the verified failure.",
+        "confidence": "high"
+      }
+    ],
+    "explicit_non_claim_spans": [],
+    "candidate_reference_label": "supported",
+    "material_error_spans": [],
+    "coverage_complete": true
+  },
+  "raw_provider_response_stored": false
+}

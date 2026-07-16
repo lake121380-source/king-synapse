@@ -1,0 +1,65 @@
+{
+  "schema_version": 4,
+  "status": "completed",
+  "arm": "atomic",
+  "case_id": "mi_validation_rrr_020",
+  "manifest_sha256": "658ec4b4e17256e0fa8f8a5cd2c6dd104cd571560c26b256cf2c822196a122ea",
+  "provider_reported_model": "gpt-5.4",
+  "envelope_sha256": "a1f5f3a798ee196ab65544ee005127b9b61f7367be9618723dd2fb1b44a5452a",
+  "content_sha256": "ee6e1b613fc7607719d0b5212edea13a2d881076c2a0c1dca8c99a678c7d55df",
+  "latency_ms": 5646.486099984031,
+  "usage": {
+    "prompt_tokens": 1228,
+    "completion_tokens": 105,
+    "total_tokens": 1333,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "latency_checkpoint": {
+      "engine_tbt_ms": 33,
+      "engine_ttft_ms": 156,
+      "engine_ttlt_ms": 2588,
+      "pre_inference_ms": 96,
+      "service_tbt_ms": 33,
+      "service_ttft_ms": 988,
+      "service_ttlt_ms": 3428,
+      "total_duration_ms": 3352,
+      "user_visible_ttft_ms": 892
+    }
+  },
+  "normalized_result": {
+    "case_id": "mi_validation_rrr_020",
+    "segmentation_operation": "whole_candidate_claim",
+    "claims": [
+      {
+        "claim_id": "mi_validation_rrr_020-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "material": true,
+        "support_label": "partially_supported",
+        "rationale": "The evidence directly supports that there is a current observed state and that an older fact was reliable but is now explicitly stale. However, it does not explicitly state the normative comparison that the current state supersedes the stale fact; it only establishes the conditions for that conclusion."
+      }
+    ],
+    "candidate_reference_label": "partially_supported",
+    "material_error_spans": [
+      {
+        "claim_id": "mi_validation_rrr_020-claim-001",
+        "source_span": {
+          "start": 0,
+          "end": 72
+        },
+        "support_label": "partially_supported"
+      }
+    ],
+    "coverage_complete": true
+  }
+}

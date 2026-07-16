@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-sampling-frame-v2-design-protocol",
+  "status": "frozen_before_v2_candidate_content_construction",
+  "study_role": "new exploratory successor after authoritative v1 structural-identifiability negative",
+  "retrospective_basis": {
+    "v1_negative_result_sha256": "d45e6317c2a147948f907ff46aa2fa88d7b32de15e3522eff189498325f87bbb",
+    "observed_failures": [
+      "material_error_claim_rate_min",
+      "partially_supported_claim_rate_min",
+      "maximum_single_label_share"
+    ],
+    "used_only_to_define_new_generation_pressure_tests": true,
+    "v1_cases_or_labels_eligible_for_v2_reference": false
+  },
+  "prospective_contract": {
+    "new_source_family_required": true,
+    "new_candidate_and_evidence_hashes_required": true,
+    "v1_selected_candidate_reuse_allowed": false,
+    "v1_support_labels_visible_to_v2_reviewers": false,
+    "v1_arm_outputs_visible": false,
+    "thresholds_inherited_without_relaxation": true
+  },
+  "gates": [
+    "deterministic_v2_frame_construction",
+    "content_commitment_and_overlap_qa",
+    "independent_boundary_reference",
+    "independent_type_metadata_reference",
+    "independent_support_reference",
+    "coverage_and_seal",
+    "structural_identifiability_v2"
+  ],
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "construct_multi_claim_successor_sampling_frame_v2"
+}

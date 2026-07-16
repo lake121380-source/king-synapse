@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-c-segmentation-controlled-atomic-claim-classification-v1",
+  "phase": "Phase 7.3.3-C Segmentation-Controlled Atomic Claim Classification",
+  "status": "protocol_frozen_offline_validation_pending",
+  "research_question": "When exact Atomic Claim boundaries and structural annotations are protocol-owned inputs, can the frozen real Judge produce scoreable, non-collapsed four-label local support judgments?",
+  "originating_negative_result": {
+    "analysis_sha256": "90a5c8c944496c705ac0db3f5611b79178d16acc6b617b14633cc18587ba4fbf",
+    "observed_failure": "20_of_20_source_span_text_mismatch",
+    "identified_confound": "segmentation_classification_entanglement",
+    "prior_result_overwritten": false,
+    "same_manifest_retry": false
+  },
+  "measurement_objects": {
+    "evidence_bundle": "frozen_control",
+    "candidate_text": "frozen_control",
+    "atomic_claim_boundaries": "protocol_owned_frozen_control",
+    "claim_type_centrality_material_origin": "protocol_owned_frozen_control",
+    "local_support_judgment": "experimental_variable",
+    "candidate_aggregation": "frozen_from_phase7_3_3_v1",
+    "provider_model": "must_be_frozen_before_execution",
+    "design_cases": "blocked",
+    "held_out": "blocked"
+  },
+  "separation_of_responsibility": {
+    "protocol": "Validate and supply exact Atomic Claim structure; strictly parse one local judgment per supplied Claim; aggregate local labels deterministically.",
+    "judge": "Classify evidence support for each supplied Claim only.",
+    "judge_must_not_segment": true,
+    "judge_must_not_emit_candidate_label": true,
+    "judge_must_not_change_claim_structure": true
+  },
+  "provider_input_schema": {
+    "required_top_fields": ["case_id", "evaluation_lane", "evidence", "candidate_text", "atomic_claims"],
+    "required_atomic_claim_fields": ["claim_id", "source_span", "claim_text", "claim_type", "centrality", "material", "claim_origin"],
+    "gold_support_labels_visible": false,
+    "gold_candidate_labels_visible": false,
+    "gold_evidence_attributions_visible": false
+  },
+  "judge_output_schema": {
+    "required_top_fields": ["case_id", "claim_judgments"],
+    "required_judgment_fields": ["claim_id", "support_label", "evidence_ids", "reason_codes", "rationale"],
+    "support_labels": ["supported", "partially_supported", "unsupported", "not_assessable"],
+    "exactly_one_judgment_per_supplied_claim": true,
+    "supplied_claim_order_must_be_preserved": true,
+    "unknown_or_duplicate_claim_ids_forbidden": true,
+    "automatic_repair": false
+  },
+  "aggregation_policy": {
+    "version": "phase7.3.3-central-claim-gate-v1",
+    "numeric_weights": false,
+    "rules_in_order": [
+      "Exactly one central claim is required.",
+      "If the central claim is unsupported, Candidate is unsupported.",
+      "If the central claim is not_assessable, Candidate is not_assessable.",
+      "If the central claim is partially_supported, Candidate is partially_supported.",
+      "If the central claim is supported but any material secondary claim is partially_supported, unsupported, or not_assessable, Candidate is partially_supported.",
+      "Otherwise Candidate is supported."
+    ]
+  },
+  "evaluation_lanes": {
+    "original_balanced_candidate_controls": {
+      "packet_count": 16,
+      "purpose": "Candidate-level collapse gate and local Claim classification evaluation.",
+      "candidate_gate_owner": true
+    },
+    "partial_atomic_claim_diagnostics_supplement": {
+      "packet_count": 4,
+      "purpose": "Complete local partially_supported Claim coverage only.",
+      "candidate_gate_owner": false
+    }
+  },
+  "offline_entry_requirements": {
+    "all_protocol_owned_spans_exact": true,
+    "provider_packets_contain_no_gold_labels": true,
+    "all_20_packets_unique": true,
+    "all_supplied_claim_ids_unique": true,
+    "strict_parser_accepts_perfect_probe": true,
+    "strict_parser_rejects_missing_duplicate_unknown_or_reordered_claims": true,
+    "deterministic_aggregator_unchanged": true
+  },
+  "real_execution_entry_criteria": {
+    "valid_output_count_required": 20,
+    "candidate_macro_recall_strictly_above": 0.25,
+    "candidate_single_class_prediction_rate_strictly_below": 1.0,
+    "all_four_candidate_labels_must_be_predicted": true,
+    "claim_label_macro_recall_reported": true,
+    "central_and_noncentral_metrics_reported": true,
+    "candidate_error_attribution_reported": true
+  },
+  "negative_result_policy": {
+    "first_returned_output_per_case_authoritative": true,
+    "invalid_json_or_schema_is_negative_result": true,
+    "no_repair_or_semantic_retry": true,
+    "failed_entry_criteria_requires_analysis_not_tuning": true
+  },
+  "frozen_artifact_sha256": {
+    "prior_atomic_measurement_protocol": "c2ac9692abca60693b33aeb829364ae97d9a22136f719d998ddd1fcc3f6e837d",
+    "original_balanced_controls": "075e7983839e9ce4777e96b202bacfc3c555100e4993236711726829e3f8e178",
+    "partial_claim_supplement": "7c53af62b5de965b6d02b62498926acda2a562058eef819cc2b90e8501780bbd",
+    "provider_visible_controls": "ba8cc5843177e400d74cea2e014cea15223ff24cdbb085f29a79f9fe8a7c5d37",
+    "classifier_prompt": "bd9300d38e19cbd1df115ccff8ccb87d9b9fe9068f5bfd6dc8a519bef845eaeb",
+    "originating_negative_result_analysis": "90a5c8c944496c705ac0db3f5611b79178d16acc6b617b14633cc18587ba4fbf"
+  },
+  "guards": {
+    "prior_negative_result_mutation_authorized": false,
+    "prior_manifest_retry_authorized": false,
+    "prompt_tuning_after_execution_authorized": false,
+    "parser_tuning_after_execution_authorized": false,
+    "aggregation_tuning_after_execution_authorized": false,
+    "extractor_modification_authorized": false,
+    "design_case_execution_authorized": false,
+    "held_out_access_authorized": false,
+    "runtime_authorized": false,
+    "memory_write_authorized": false,
+    "pattern_promotion_authorized": false
+  }
+}

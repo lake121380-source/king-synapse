@@ -1,0 +1,329 @@
+{
+  "schema_version": 4,
+  "case_id": "extract_09",
+  "status": "completed",
+  "manifest_sha256": "b6dc0695eb70828d08b456b5429b17d21da1fa91017fd6191210c8f9eadcab73",
+  "provider_envelope_sha256": "5376a0b4a983b2d5bdcdcdb08e91c3c7f23557d47e09e7a30b67a3292814c713",
+  "provider_content_sha256": "49e3fcf1d16ce2698313c5f5d3c82708271abb841fad6168035dcd0007aab059",
+  "provider_reported_model": "gpt-5.4-2026-03-05",
+  "canonical_model_family": "gpt-5.4",
+  "normalized_claims_sha256": "f1823e0610f25f721dd7ba68708966720f43bcf21da6157d533840416eb37b35",
+  "claims": [
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-001",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "source_span": {
+        "start": 0,
+        "end": 154
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "When independent sources (different instruments, methods, or data collection processes) converge on the same estimate or conclusion, the result is robust.",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_09::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers mark the same full first-sentence span, which is one conditional causal assertion and already atomic.",
+      "type_decision_rationale": "The statement links convergence of independent sources to robustness as an if-then relationship, so it is causal.",
+      "reason_codes": [
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-001"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-002",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "source_span": {
+        "start": 168,
+        "end": 265
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "apparent consensus from multiple reports that merely repeat a single unverified source is fragile",
+      "claim_type": "proposition",
+      "claim_role": "anchor",
+      "anchor_group": "extract_09::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The second sentence contains coordinated predicates that can be evaluated separately; this span isolates the first predicate as one atomic assertion without overlap.",
+      "type_decision_rationale": "This span asserts a property of the apparent consensus rather than a conditional or prediction, so it is a proposition.",
+      "reason_codes": [
+        "coordination",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_09-claim-002"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-003",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-proposition-01",
+      "source_field": "proposition",
+      "source_index": 0,
+      "source_text_sha256": "26b0fc16d648e652062d1498b6384694ffd80ca9ab387c003eb1323dd8d92cfe",
+      "source_span": {
+        "start": 270,
+        "end": 317
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "collapses when the original source is corrected",
+      "claim_type": "causal",
+      "claim_role": "anchor",
+      "anchor_group": "extract_09::proposition",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "This span captures the second coordinated predicate from the second sentence as its own independently truth-evaluable assertion, separate from the fragility claim.",
+      "type_decision_rationale": "The clause states collapse occurs when the original source is corrected, expressing a causal/conditional relation.",
+      "reason_codes": [
+        "coordination",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-e-extract_09-claim-003"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-004",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_statement-01",
+      "source_field": "prediction_statement",
+      "source_index": 0,
+      "source_text_sha256": "6a061da0fee71793b9c36f4ab735f18094d984a7244f73b44db2ae00b37ab745",
+      "source_span": {
+        "start": 0,
+        "end": 171
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If two independent laboratories measure the same material property using different instruments and samples, their estimates will converge within a preregistered tolerance.",
+      "claim_type": "prediction",
+      "claim_role": "prediction",
+      "anchor_group": "extract_09::prediction_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers selected the identical full span, which forms one complete conditional predictive assertion.",
+      "type_decision_rationale": "The statement forecasts a future observable convergence under specified conditions, so it is a prediction.",
+      "reason_codes": [
+        "prediction_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-003"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-005",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_observable-01",
+      "source_field": "prediction_observable",
+      "source_index": 0,
+      "source_text_sha256": "0c80332aba9662f9222c2e86bc2f8bc7943a905e260b77438f654640ab7516eb",
+      "source_span": {
+        "start": 0,
+        "end": 71
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The difference between the two estimates is within the tolerance range.",
+      "claim_type": "proposition",
+      "claim_role": "prediction_observable",
+      "anchor_group": "extract_09::prediction_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers use the same entire sentence span, and it expresses one standalone observable assertion with no separable subclaims.",
+      "type_decision_rationale": "This is a direct statement about an observable state of the estimates, so it is a proposition.",
+      "reason_codes": [
+        "independent_truth_value",
+        "quantifier_or_threshold"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-004"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-006",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-prediction_success_criterion-01",
+      "source_field": "prediction_success_criterion",
+      "source_index": 0,
+      "source_text_sha256": "6080eafc39ffd90a8e0fa2f8895ef3a2b9663a9fde118e84b559276041d59b05",
+      "source_span": {
+        "start": 0,
+        "end": 41
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "abs(estimate_1 - estimate_2) <= tolerance",
+      "claim_type": "falsifiability",
+      "claim_role": "prediction_criterion",
+      "anchor_group": "extract_09::prediction_success_criterion",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The mathematical expression is already the minimal complete criterion span and constitutes one atomic evaluable assertion.",
+      "type_decision_rationale": "The expression gives a concrete pass/fail criterion that can test whether the prediction succeeds, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-005"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-007",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-01",
+      "source_field": "falsification_statement",
+      "source_index": 0,
+      "source_text_sha256": "3331b01decfa30e489b97d0348533c00385c2c1b5f4a864c9f9d67e63b9e1a81",
+      "source_span": {
+        "start": 0,
+        "end": 148
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If two independent laboratories measure the same property and their estimates do not converge within the preregistered tolerance, the pattern fails.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_09::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers identify the same complete conditional span, which is one falsification condition and does not require splitting.",
+      "type_decision_rationale": "It specifies a condition under which the pattern fails, so it is a falsifiability statement.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-006"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-008",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-01",
+      "source_field": "falsification_observable",
+      "source_index": 0,
+      "source_text_sha256": "4562df562094c3c2483cd29f81946abc1e76cfed6cbe1a2f9315a7427b704fee",
+      "source_span": {
+        "start": 0,
+        "end": 55
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "The difference between estimates exceeds the tolerance.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_09::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The entire sentence is a single observable threshold-crossing assertion, and both reviewers use the same span.",
+      "type_decision_rationale": "This observable exceeding-threshold condition serves as a test outcome for falsification, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "quantifier_or_threshold",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-007"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-009",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_statement-02",
+      "source_field": "falsification_statement",
+      "source_index": 1,
+      "source_text_sha256": "ea7b347a9bcc955ee4212721f848cde7e94c0768a705f0f79ec51db6abf9e2d4",
+      "source_span": {
+        "start": 0,
+        "end": 142
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "If multiple reports supporting a claim are all traced to a single unverified original source, the pattern of apparent consensus does not hold.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification",
+      "anchor_group": "extract_09::falsification_statement",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "Both reviewers selected the same full conditional sentence, which states one complete falsification condition.",
+      "type_decision_rationale": "The statement defines when the apparent-consensus pattern does not hold, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "condition_or_exception",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-008"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    },
+    {
+      "adjudicated_claim_id": "adjudicated-extract_09-claim-010",
+      "case_id": "extract_09",
+      "response_sha256": "898855bb567285702fcdee567dfa37851989d3a70d65ed251ec87701a69a60b5",
+      "anchor_id": "extract_09-falsification_observable-02",
+      "source_field": "falsification_observable",
+      "source_index": 1,
+      "source_text_sha256": "360e319517e2197858d3fc33e23429e593c1c58db4a4d832c4e1fc91a1009c9f",
+      "source_span": {
+        "start": 0,
+        "end": 68
+      },
+      "source_occurrence_index": 0,
+      "claim_text": "Correction of the original source causes the consensus to disappear.",
+      "claim_type": "falsifiability",
+      "claim_role": "falsification_observable",
+      "anchor_group": "extract_09::falsification_observable",
+      "material": true,
+      "claim_origin": "explicit",
+      "boundary_decision_rationale": "The sentence is one complete observable event statement with no separable internal assertions, and both reviewers use the same span.",
+      "type_decision_rationale": "It describes the observable event that would demonstrate failure of the apparent consensus pattern, so it is falsifiability.",
+      "reason_codes": [
+        "falsifiability_clause",
+        "causal_relation",
+        "independent_truth_value"
+      ],
+      "source_reviewer_claim_ids": [
+        "reviewer-a-extract_09-claim-009"
+      ],
+      "boundary_operation_kind": "reuse_span"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_09",
+    "status": "completed",
+    "anchor_count": 8,
+    "claim_count": 10,
+    "provider_content_sha256": "49e3fcf1d16ce2698313c5f5d3c82708271abb841fad6168035dcd0007aab059"
+  },
+  "raw_provider_content_stored": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b-support-b-extract_02-v2",
+  "status": "authoritative_success",
+  "manifest_sha256": "94ec5f56022c4b7223bcc449c8b3744abd60cb9210b336f19197f887cd97f8b1",
+  "reviewer": "b",
+  "case_id": "extract_02",
+  "provider_envelope_sha256": "d2c1d34505165372c84510c49bfcfbeb1689429933c91edeb7459f901d61e05b",
+  "provider_content_sha256": "024e83010e06144bb6a661433661da8970c8af4d817213e1ce68b71f11176d78",
+  "provider_reported_model": "qwen3.5-plus",
+  "canonical_model_family": "qwen3.5-plus",
+  "normalized_decisions_sha256": "892f8fdd73e8b951cf8e9901a1f154745180f862539935554437b983dc16dfee",
+  "decisions": [
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-001",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1",
+        "px_02_support_2"
+      ],
+      "reason_codes": [
+        "causal_leap",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence shows labeling by impact/sensitivity helped specific cases (outages, deadlines) reach responders or avoid being hidden, but does not support the universal causal claim that it 'ensures' all high-impact issues are addressed promptly.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-002",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The counterexample experience explicitly documents a widespread login failure waiting behind low-impact VIP requests due to ranking solely by requester status, directly supporting the claim that critical issues can be overlooked.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-003",
+      "support_label": "partially_supported",
+      "cited_evidence_ids": [
+        "px_02_support_1"
+      ],
+      "reason_codes": [
+        "prediction_overcommitment",
+        "scope_expansion"
+      ],
+      "support_rationale": "Evidence observes that outages reached responders quickly under this labeling scheme, but does not support the absolute predictive claim that high-impact issues 'will be addressed before' all lower-impact ones in every instance.",
+      "annotation_confidence": "medium"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-004",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "insufficient_evidence"
+      ],
+      "support_rationale": "No evidence in the bundle describes a 'combined score' mechanism or confirms that resolution order strictly reflects such a calculated metric; evidence only notes labeling and general outcomes.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-005",
+      "support_label": "unsupported",
+      "cited_evidence_ids": [],
+      "reason_codes": [
+        "unsupported_detail",
+        "prediction_overcommitment"
+      ],
+      "support_rationale": "The specific quantitative success criterion of 'At least 90%' is entirely absent from the qualitative observational evidence provided in the bundle.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-006",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match",
+        "counterexample_preserved"
+      ],
+      "support_rationale": "The supplied counterexample (px_02_counter_3) exactly matches the falsification condition described: a critical outage delayed behind low-impact VIP requests, validating the logical structure of the falsification statement.",
+      "annotation_confidence": "high"
+    },
+    {
+      "boundary_claim_id": "adjudicated-extract_02-claim-007",
+      "support_label": "supported",
+      "cited_evidence_ids": [
+        "px_02_counter_3"
+      ],
+      "reason_codes": [
+        "direct_evidence_match"
+      ],
+      "support_rationale": "The evidence explicitly states that a widespread login failure (critical outage) waited behind low-impact VIP requests, directly confirming the observable event described in the claim.",
+      "annotation_confidence": "high"
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_02",
+    "status": "completed",
+    "decision_count": 7
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

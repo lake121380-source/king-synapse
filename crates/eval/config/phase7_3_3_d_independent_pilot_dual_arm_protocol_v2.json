@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "protocol_id": "phase7.3.3-d-independent-pilot-dual-arm-protocol-v2",
+  "status": "frozen_successor_after_v1_output_contract_negative",
+  "predecessor_negative_result_sha256": "a56788e98ed746d68286b29a48aed22c08bc79d6f789191a74f33bd822b1e4fd",
+  "v1_same_version_retry": false,
+  "controlled_change": "remove non-primary closed diagnostic taxonomies from Provider output and use minimal operation-based Atomic representation; Support semantics unchanged",
+  "unchanged": {
+    "selected_dataset": true,
+    "candidate_evidence_context": true,
+    "provider": true,
+    "model": true,
+    "temperature_top_p": true,
+    "counterbalance": true,
+    "one_request_per_case_per_arm": true,
+    "reviewer_count": true,
+    "adjudicator_count": true,
+    "support_label_semantics": true,
+    "aggregation": true,
+    "blindness": true,
+    "failure_policy": true
+  },
+  "case_count": 40,
+  "paired": true,
+  "candidate_arm": "one whole-Candidate support label plus rationale",
+  "atomic_arm": "operation-based segmentation, per-claim materiality/support, deterministic aggregation",
+  "atomic_operations": {
+    "whole_candidate_claim": "one claim; adapter assigns exact full span",
+    "custom_claim_spans": "two or more exact non-overlapping spans that partition the Candidate"
+  },
+  "aggregation": {
+    "unsupported": "any material claim unsupported",
+    "partially_supported": "otherwise any material claim partially_supported",
+    "supported": "all material claims supported",
+    "not_assessable": "no assessable material claims"
+  },
+  "resource_equality": {
+    "provider": "api.gpt.ge",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 1600,
+    "request_count_per_case_per_arm": 1,
+    "reviewer_count_per_arm": 1,
+    "adjudicator_count_per_arm": 0,
+    "same_payload": true,
+    "same_failure_policy": true
+  },
+  "counterbalance": "reuse frozen v1 20/20 worklist order",
+  "visibility": {
+    "reference_content": false,
+    "reference_labels": false,
+    "route_a_gold": false,
+    "other_arm": false
+  },
+  "failure_policy": {
+    "first_provider_content_authoritative": true,
+    "semantic_retry": false,
+    "repair": false,
+    "paired_failures_not_dropped": true,
+    "failure_is_immutable": true,
+    "change_requires_successor": true
+  }
+}

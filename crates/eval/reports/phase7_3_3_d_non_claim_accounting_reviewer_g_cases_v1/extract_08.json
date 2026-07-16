@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "phase7.3.3-d1-b2-g-extract_08-v1",
+  "status": "authoritative_success",
+  "manifest_sha256": "ffdeb9eed08c7341f2f655811115100afab2603bae21e8bf7edc2cd11a86e9fc",
+  "reviewer": "g",
+  "case_id": "extract_08",
+  "provider_envelope_sha256": "0e30f74c6f33fdf0a4487a65a30864e0550ff458f5e90c8575e7445d78ba0d5f",
+  "provider_content_sha256": "cfff73241f8f6be4a85747c94f6f8aed74930cdc60313a34957cd1ec9b7adfe2",
+  "provider_reported_model": "gemini-2.5-pro",
+  "canonical_model_family": "gemini-2.5-pro",
+  "normalized_decisions_sha256": "d78cc9bfe3f443a1d734a3b1f09dc371840884fdf614c72d4ea97a4c325124a9",
+  "decisions": [
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-066",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap text \" However, \" is a non-assertive adversative conjunction that connects two contrasting claims. Its semantic function is captured by the relationship between the two adjacent claims."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-067",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The word \"If\" establishes the conditional nature of the entire prediction statement. Its omission from the claim boundary means this crucial conditional framing is lost, representing a potential semantic omission."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-068",
+      "classification": "explicit_non_claim",
+      "reason_code": "non_assertive_connector",
+      "rationale": "The gap text \" and \" is a non-assertive coordinating conjunction that links two separate claims. Its semantic function is to connect the two propositions, which are already captured as distinct claims."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-069",
+      "classification": "boundary_omission_candidate",
+      "reason_code": null,
+      "rationale": "The word \"If\" establishes the conditional nature of the entire falsification statement. Its omission from the claim boundary means this crucial conditional framing is lost, representing a potential semantic omission."
+    },
+    {
+      "case_id": "extract_08",
+      "gap_id": "coverage-gap-070",
+      "classification": "explicit_non_claim",
+      "reason_code": "punctuation_only",
+      "rationale": "The gap consists only of a comma and a space, which are punctuation used to separate two clauses captured as distinct claims. It carries no independent semantic content."
+    }
+  ],
+  "case_result": {
+    "case_id": "extract_08",
+    "status": "completed",
+    "decision_count": 5
+  },
+  "raw_provider_response_stored": false,
+  "held_out_accessed": false
+}

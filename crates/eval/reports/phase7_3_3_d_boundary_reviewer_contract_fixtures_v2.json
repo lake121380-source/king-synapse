@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.3.3-d1-a-boundary-reviewer-contract-fixtures-v2",
+  "protocol_sha256": "3e95c1fb06836b8bc9bbbab703cb40e26da9b3c706764c9d3d60788831272661",
+  "prompt_sha256": "13d50c51a4aa2b635fbe61f0ade504305b64d52290dc3aa17b06b05fea8901fc",
+  "adapter_sha256": "3a08abce3aa2cd929f7cbfb0bae1af2f558a577af30993df769d811ea8885383",
+  "fixture_count": 4,
+  "passed_fixture_count": 4,
+  "all_fixtures_passed": true,
+  "fixtures": [
+    {
+      "fixture_id": "one_proposition_one_anchor_claim",
+      "expected": "pass",
+      "actual": "pass",
+      "claim_count": 1
+    },
+    {
+      "fixture_id": "one_proposition_multiple_anchor_claims",
+      "expected": "pass",
+      "actual": "pass",
+      "claim_count": 2,
+      "claim_roles": [
+        "anchor"
+      ],
+      "anchor_group_count": 1
+    },
+    {
+      "fixture_id": "claim_crossing_anchors",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "source_excerpt_not_exact_unique:fixture-proposition-00:1"
+    },
+    {
+      "fixture_id": "overlapping_claims_within_anchor",
+      "expected": "reject",
+      "actual": "reject",
+      "error_code": "overlapping_claim_spans:fixture-proposition-00:2"
+    }
+  ],
+  "provider_called": false,
+  "held_out_accessed": false
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-boundary-review-protocol-v1",
+  "status": "frozen_before_any_boundary_provider_call",
+  "object_of_study": "atomic_claim_boundary_segmentation_under_operation_based_span_representation",
+  "boundary_semantics": {
+    "independently_truth_evaluable_assertions": true,
+    "different_possible_truth_values_require_split": true,
+    "relatedness_alone_does_not_authorize_merge": true,
+    "symbolic_snake_case_identifiers_are_not_automatically_non_claim": true,
+    "at_least_one_claim_per_candidate": true,
+    "no_overlapping_final_spans": true
+  },
+  "representation": {
+    "route": "operation_based_deterministic_reconstruction",
+    "offset_unit": "zero_based_unicode_code_point_end_exclusive",
+    "operations": [
+      "merge_units",
+      "new_span",
+      "reuse_unit",
+      "slice_unit"
+    ],
+    "model_returns_exact_excerpt": false,
+    "adapter_derives_exact_excerpt": true,
+    "adapter_derives_occurrence_index": true,
+    "offset_clamping_allowed": false,
+    "excerpt_repair_allowed": false
+  },
+  "review_separation": {
+    "boundary_only": true,
+    "claim_type_in_same_review": false,
+    "structural_metadata_in_same_review": false,
+    "support_in_same_review": false
+  },
+  "visibility": {
+    "candidate_text": true,
+    "source_units": true,
+    "evidence": false,
+    "source_component_roles": false,
+    "support_labels": false,
+    "old_gold": false,
+    "other_reviewer_output": false,
+    "arm_outputs": false,
+    "confirmatory_content": false
+  },
+  "independence": {
+    "reviewers": [
+      "a",
+      "b"
+    ],
+    "same_prompt": true,
+    "same_worklist": true,
+    "different_requested_models": true,
+    "both_manifests_frozen_before_reviewer_a_execution": true
+  },
+  "next_after_two_completed_submissions": "construct_multi_claim_successor_boundary_agreement_v1"
+}

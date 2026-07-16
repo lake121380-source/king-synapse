@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "report_id": "phase7.3.3-d-reviewer-failure-taxonomy-application-v1",
+  "recorded_at": "2026-07-13T09:10:30.461784+00:00",
+  "status": "frozen_retrospective_mapping_a_through_d",
+  "taxonomy_sha256": "4605a1dedcb0ad4432c67267220b82f3da23917ebe6b3726355fa8677accf4c2",
+  "methodological_status": {
+    "reviewers_a_through_d_mapping": "retrospective_descriptive",
+    "reviewer_e_and_later_mapping": "prospective_frozen",
+    "taxonomy_tuned_against_future_reviewer_results": false
+  },
+  "reviewers": [
+    {
+      "reviewer": "a",
+      "model": "gpt-4.1",
+      "overall_status": "completed",
+      "delivery_compliance": "pass",
+      "representation_compliance": "pass",
+      "boundary_compliance": "pass",
+      "primary_failure_level": null,
+      "primary_failure_class": null,
+      "agreement_eligibility": true,
+      "boundary_capability_assessable": true,
+      "artifact_sha256": {
+        "submission": "8bc7633afc0eb9a76a11c9152ad7960e28469062d91583a163620de2d141bb0d",
+        "execution_result": "1fb21c296338cefd467fcc30c0122ee2a52b9b707fa430725838f77165711e0d"
+      }
+    },
+    {
+      "reviewer": "b",
+      "model": "qwen3.5-plus",
+      "overall_status": "authoritative_negative_result",
+      "delivery_compliance": "pass",
+      "representation_compliance": "pass",
+      "boundary_compliance": "fail",
+      "primary_failure_level": 2,
+      "primary_failure_class": "boundary_semantic_contract.verbatim_span",
+      "failure_code": "source_excerpt_not_found:extract_10-proposition-01:2",
+      "agreement_eligibility": false,
+      "boundary_capability_assessable": true,
+      "interpretation": "The reviewer reached the Boundary task and failed the exact-verbatim span contract on one case.",
+      "artifact_sha256": {
+        "negative_result": "84315e13748b14bc0f235410d7d1e3d2fbae90afd7c929ffe315e6e77095b4a7",
+        "v3_outcome": "665c46c5aa874e090577ce513470805ad7e5eadb968997e28c74547abb41118a"
+      }
+    },
+    {
+      "reviewer": "c",
+      "model": "DeepSeek-V3.2",
+      "overall_status": "authoritative_negative_result",
+      "delivery_compliance": "pass",
+      "representation_compliance": "fail",
+      "boundary_compliance": "not_assessable",
+      "primary_failure_level": 1,
+      "primary_failure_class": "provider_representation_contract.identity_canonicalization",
+      "failure_code": "provider_reported_model_outside_requested_family:DeepSeek-V3.2:deepseek-v3.2",
+      "agreement_eligibility": false,
+      "boundary_capability_assessable": false,
+      "diagnostic_note": "JSON parsing and strict Boundary normalization completed transiently, but no submission could be frozen under the identity contract.",
+      "artifact_sha256": {
+        "negative_result": "cd92309d047c6f15875455a0ef1758bb15b963511527cee2c3dae4a379d53e79",
+        "outcome": "300632662a78946e9f456b0578f9710ab924fa2d93066d713e65c99392fa9340"
+      }
+    },
+    {
+      "reviewer": "d",
+      "model": "claude-sonnet-4-6",
+      "overall_status": "authoritative_negative_result",
+      "delivery_compliance": "pass",
+      "representation_compliance": "fail",
+      "boundary_compliance": "not_assessable",
+      "primary_failure_level": 1,
+      "primary_failure_class": "provider_representation_contract.serialization",
+      "failure_code": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+      "agreement_eligibility": false,
+      "boundary_capability_assessable": false,
+      "diagnostic_note": "Non-empty Provider content was returned, but strict JSON parsing failed before Boundary normalization.",
+      "artifact_sha256": {
+        "negative_result": "60e2791f0610acf298938ca3446a8e46873d8b30e10e41d489374e819b1eff3d",
+        "outcome": "adfe8ab707fe8bf2421e1651a069eb6523ce85bacb299a6e2d5b3a22b97e92e3"
+      }
+    }
+  ],
+  "summary": {
+    "reviewer_count": 4,
+    "completed_boundary_submission_count": 1,
+    "level_0_failures": 0,
+    "level_1_failures": 2,
+    "level_2_failures": 1,
+    "level_3_failures": 0,
+    "level_4_failures": 0,
+    "level_3_status": "not_reached",
+    "level_4_status": "blocked",
+    "new_failure_classes_observed": [
+      "provider_representation_contract.identity_canonicalization",
+      "provider_representation_contract.serialization",
+      "boundary_semantic_contract.verbatim_span"
+    ],
+    "two_completed_blind_submissions_available": false,
+    "boundary_agreement_available": false,
+    "boundary_gold_frozen": false,
+    "support_review_allowed": false
+  },
+  "next_experiment_rule": {
+    "reviewer_e_is_not_authorized_by_this_report": true,
+    "if_later_authorized_classify_against_frozen_taxonomy_before_interpretation": true,
+    "new_failure_class_requires_new_taxonomy_version_not_in_place_edit": true
+  },
+  "raw_provider_responses_stored": false,
+  "credential_recorded": false,
+  "held_out_accessed": false
+}

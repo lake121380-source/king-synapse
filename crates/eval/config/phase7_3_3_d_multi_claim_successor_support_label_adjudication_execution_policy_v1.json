@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.3.3-d-multi-claim-successor-support-label-adjudication-execution-policy-v1",
+  "authoritative_result_policy": {
+    "first_provider_content_authoritative": true,
+    "invalid_json_schema_or_semantics_authoritative_negative": true,
+    "post_content_same_version_retry_allowed": false,
+    "transport_failure_before_content_resume_same_manifest": true
+  },
+  "execution_controls": {
+    "one_isolated_claim_per_request": true,
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4000,
+    "response_format": {
+      "type": "json_object"
+    },
+    "timeout_seconds": 600
+  },
+  "minimal_authorization": {
+    "allowed_operations": [
+      "defer_for_human_review",
+      "select_option_1",
+      "select_option_2"
+    ],
+    "replacement_label_allowed": false,
+    "selected_decision_reconstructed_by_adapter": true,
+    "diagnostic_followup_label_change_allowed": false
+  },
+  "data_handling": {
+    "credential_env_name": "PHASE7_ATOMIC_JUDGE_API_KEY",
+    "raw_provider_response_stored": false,
+    "envelope_hash_recorded": true,
+    "content_hash_recorded_before_parse": true,
+    "support_gold_visible": false,
+    "held_out_loaded": false
+  },
+  "execution_not_authorized_by_prepare_alone": true
+}

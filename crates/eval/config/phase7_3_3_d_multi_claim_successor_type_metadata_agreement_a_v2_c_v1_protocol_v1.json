@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.3.3-d-multi-claim-successor-type-metadata-agreement-a-v2-c-v1-protocol-v1",
+  "status": "frozen_before_deterministic_agreement",
+  "agreement_pair": [
+    "reviewer_a_v2",
+    "reviewer_c_v1"
+  ],
+  "reviewer_b_included": false,
+  "reviewer_b_negative_results_preserved": true,
+  "unit": "frozen_boundary_reference_claim",
+  "claim_count": 240,
+  "fields": [
+    "claim_role",
+    "claim_type"
+  ],
+  "primary_metrics": [
+    "claim_role_exact_agreement",
+    "claim_type_exact_agreement",
+    "joint_exact_agreement"
+  ],
+  "secondary_metrics": [
+    "cohen_kappa",
+    "confusion_matrix",
+    "marginal_distribution"
+  ],
+  "alignment": "exact_claim_id",
+  "adjudication_worklist_rule": "include each claim with disagreement in claim_role or claim_type exactly once",
+  "blind_worklist_excludes": [
+    "evidence",
+    "support_labels",
+    "old_gold",
+    "arm_outputs",
+    "reviewer_identity_model_names"
+  ],
+  "boundary_mutation_authorized": false,
+  "claim_text_mutation_authorized": false,
+  "provider_called": false,
+  "confirmatory_dataset_opened": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "construct_multi_claim_successor_type_metadata_adjudication_a_v2_c_v1"
+}
