@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase7.4-selected-source-authoring-contract-v1",
+  "status": "frozen_before_selected_source_content_authoring",
+  "entry_gate": "freeze_phase7_4_selected_source_authoring_contract_v1",
+  "contract_document": {
+    "path": "docs/eval/PHASE7_4_2_SELECTED_SOURCE_AUTHORING_PROTOCOL.md",
+    "sha256": "3d74f71073702db6f6eac073108ac17efedc26e449beca0f20293ab55849276a"
+  },
+  "source_case_schema": {
+    "path": "crates/eval/config/phase7_4_source_authoring_case_schema_v1.json",
+    "sha256": "4ff8342c706bd779e761ce7278556e173c7b8b612cc7150eea23deffbb346630"
+  },
+  "frozen_inputs": {
+    "crates/eval/config/phase7_4_offline_retrieval_evaluation_protocol_v1.json": "adc48017a40a1ae7685ce5b8868f2bdff623cf845aa845c8ca7e7986ecdac8fb",
+    "crates/eval/config/phase7_4_offline_retrieval_case_schema_v1.json": "d2a89998a154b0c6e58d10309b263f1199fd1e4efef2cb239243490e4731481f",
+    "crates/eval/datasets/pattern_extraction/phase7_4_stage_state_v5.json": "36cfa8219a155886b88945f3f5d2ee0e78c121e703e3a564e78510a594944e68",
+    "crates/eval/reports/phase7_4_readiness_v5.json": "9b3a7e2b9b22f62922a4a2192ede7cc5bbd2340fbff338cc274f279352585a3c",
+    "crates/eval/reports/phase7_4_source_inventory_sampling_receipt_v1.json": "26474a1e68f39bcb7de69e0a08fa768a93ebc07652426750099be5fc05b3c997",
+    "crates/eval/datasets/phase7_4/phase7_4_sampling_frame_v1.json": "11c6f245abcf71e566775d74026bc8df0ea7482e149186ec5dd6c16f9b63349b",
+    "crates/eval/datasets/phase7_4/phase7_4_selected_slot_worklist_v1.json": "c4a080694d5b12d12694a7bb2084d486a02a2c690f90e6b07cf1326a198afcfa"
+  },
+  "selected_case_design": {
+    "selected_case_count": 168,
+    "stratum_count": 8,
+    "selected_cases_per_stratum": 21,
+    "domains": [
+      "software_delivery",
+      "data_operations",
+      "customer_support",
+      "procurement",
+      "team_process",
+      "research_planning",
+      "personal_workflow"
+    ],
+    "domains_per_stratum": 7,
+    "cases_per_domain_per_stratum": 3,
+    "scenario_variants": [
+      1,
+      2,
+      3
+    ],
+    "domain_assignment": "domains[(selection_rank_within_stratum - 1) mod 7]",
+    "scenario_variant_assignment": "floor((selection_rank_within_stratum - 1) / 7) + 1",
+    "content_driven_reassignment_allowed": false,
+    "reserve_case_use_allowed": false
+  },
+  "blank_case_slots": {
+    "query_count_per_case": 1,
+    "entity_count_per_case": 4,
+    "source_event_count_per_case": 6,
+    "source_evidence_count_per_case": 8,
+    "candidate_memory_count_per_case": 10,
+    "memory_kind_counts_per_case": {
+      "fact": 2,
+      "preference": 2,
+      "failure": 2,
+      "playbook": 2,
+      "state": 2
+    },
+    "memory_kind_rotation": "kinds[(memory_authoring_ordinal - 1 + selection_rank_within_stratum - 1) mod 5]",
+    "candidate_pool_seed": 7402201,
+    "candidate_pool_material": "phase7.4|7402201|<case_id>|<source_memory_id>",
+    "candidate_pool_order": [
+      "candidate_pool_digest_ascending",
+      "source_memory_id_ascending"
+    ],
+    "candidate_pool_content_independent": true
+  },
+  "identity_patterns": {
+    "query": "<case_id>-query-01",
+    "entity": "<case_id>-entity-<two-digit-ordinal>",
+    "source_event": "<case_id>-event-<two-digit-ordinal>",
+    "source_evidence": "<case_id>-evidence-<two-digit-ordinal>",
+    "source_memory": "<case_id>-memory-<two-digit-ordinal>"
+  },
+  "content_constraints": {
+    "content_language": "en",
+    "synthetic_repository_owned_content_required": true,
+    "query_char_length_min": 20,
+    "query_char_length_max": 240,
+    "event_description_char_length_min": 20,
+    "event_description_char_length_max": 320,
+    "evidence_text_char_length_min": 20,
+    "evidence_text_char_length_max": 320,
+    "memory_content_char_length_min": 80,
+    "memory_content_char_length_max": 640,
+    "memory_source_evidence_reference_count_min": 1,
+    "memory_source_evidence_reference_count_max": 3,
+    "memory_source_event_reference_count_min": 1,
+    "memory_source_event_reference_count_max": 3,
+    "all_source_evidence_referenced_by_memory_required": true,
+    "exact_utf8_sha256_required": true,
+    "unicode_normalization_before_hash": "none",
+    "canonical_source_memory_hash_projection": [
+      "source_memory_id",
+      "source_memory_kind",
+      "source_memory_content_sha256",
+      "source_evidence_ids_sorted",
+      "source_event_ids_sorted"
+    ]
+  },
+  "stratum_construction_requirements": {
+    "temporal_update": "multiple logical times and plausible stale information",
+    "contradiction": "provenance-bearing statements that cannot all be accepted simultaneously",
+    "preference_evolution": "preference evidence before and after an outcome or decision",
+    "failure_learning": "attempt, observed outcome, and contextual alternatives without authored lesson label",
+    "causal_reasoning": "separate association, intervention, and outcome evidence",
+    "multi_entity_reasoning": "at least three active entities and plausible cross-entity attribution distractors",
+    "uncertainty_boundary": "calibrated uncertainty evidence and plausible overstatement",
+    "adversarial_lexical_overlap": "high-overlap irrelevant material and lower-overlap relevant evidence without role labels"
+  },
+  "forbidden_authored_fields": [
+    "relevant_memory_ids",
+    "support_state",
+    "query_relevant",
+    "evidence_spans",
+    "expected_answer",
+    "gold_label",
+    "atomic_claim_id",
+    "atomic_overlay_id",
+    "atomic_overlay_sha256",
+    "arm_score",
+    "arm_rank",
+    "arm_output",
+    "analysis_result",
+    "author_rationale",
+    "intended_answer"
+  ],
+  "blindness": {
+    "phase7_3_3_d_effect_content_loaded_by_authoring_lane": false,
+    "future_reference_or_gold_loaded_by_authoring_lane": false,
+    "atomic_segmentation_loaded_by_authoring_lane": false,
+    "arm_output_or_analysis_loaded_by_authoring_lane": false,
+    "future_atomic_segmentation_input_includes_query": false,
+    "future_atomic_segmentation_input_includes_gold": false,
+    "provider_allowed": false,
+    "network_required": false,
+    "store_handle_allowed": false,
+    "recall_engine_handle_allowed": false,
+    "runtime_configuration_access_allowed": false
+  },
+  "authoring_freeze_checks": {
+    "selected_worklist_exact": true,
+    "reserve_use_count_max": 0,
+    "schema_validity_required": true,
+    "blank_plan_identity_exact": true,
+    "all_text_hashes_replay_required": true,
+    "all_references_case_local_and_resolved": true,
+    "forbidden_field_count_max": 0,
+    "exact_cross_case_normalized_text_duplicate_count_max": 0,
+    "normalized_five_gram_jaccard_manual_review_threshold": 0.85,
+    "unresolved_high_similarity_pair_count_max": 0,
+    "phase7_3_3_d_overlap_gate_deferred_to_dedicated_leakage_audit": true,
+    "provider_call_count_max": 0,
+    "same_version_content_driven_reselection_allowed": false,
+    "silent_case_deletion_allowed": false
+  },
+  "failure_taxonomy": [
+    "input_lineage_failure",
+    "authoring_plan_mismatch",
+    "case_schema_failure",
+    "identity_or_hash_failure",
+    "content_completeness_failure",
+    "reference_resolution_failure",
+    "forbidden_label_or_rationale_failure",
+    "duplicate_or_similarity_failure",
+    "stratum_construction_failure",
+    "leakage_boundary_failure",
+    "provider_or_environment_failure",
+    "authority_boundary_failure",
+    "audit_failure"
+  ],
+  "authority": {
+    "authoring_contract_freeze_authorized": true,
+    "selected_source_content_authoring_authorized_after_pass": true,
+    "selected_source_content_authored": false,
+    "selected_effect_dataset_opening_for_arm_execution_authorized": false,
+    "atomic_segmentation_authorized": false,
+    "reference_review_authorized": false,
+    "gold_freeze_authorized": false,
+    "arm_execution_authorized": false,
+    "effect_scoring_authorized": false,
+    "provider_call_authorized": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_write_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_pass": "author_phase7_4_selected_source_cases_v1"
+}
