@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.4.1-replay-portability-policy-v2",
+  "status": "successor_frozen_after_classified_pre_freeze_eol_mismatch",
+  "supersedes_for_m0_freeze": "phase7.4.1-replay-portability-policy-v1",
+  "v1_policy_retained": true,
+  "v1_verifier_retained": true,
+  "v1_authoritative_outputs_written": false,
+  "v1_failure_classification": "checkpoint_context_eol_normalization_mismatch",
+  "v1_lineage": {
+    "crates/eval/config/phase7_4_replay_portability_policy_v1.json": "fa60781834ef98e8985f962f81cab7deb0a2f8e62924585968ca25d583e93a9d",
+    "scripts/eval/phase7_4_replay_portability_audit_v1.py": "121675feba5b937c3b8d8bab6e8425521b49765742a30eada08a903c5181dcd4",
+    "crates/eval/reports/phase7_4_replay_portability_preflight_attempts_v1.jsonl": "8eddff7cc391793bdf2144001c33bd35db8c8078cbd4e57fc9ebeed0eba506be"
+  },
+  "recorded_execution_head": "3c99170854743f65bd1d5334aeaea94f748c1809",
+  "phase7_4_1_checkpoint_head": "d289c3aa019f37a9de19e57de3870ff32ffaca74",
+  "frozen_m0_inputs": {
+    "docs/KING_SYNAPSE_LONG_TERM_COMPLETION_PLAN.md": "eb20101e78f01726a3d9ebe5ce7f7ec2777c300647cf52aae98936ddeb9602bf",
+    "crates/eval/config/project_completion_contract_v1.json": "63831b2886346d047413656155eb95a960e04061eb5f161992439c1081d1f924"
+  },
+  "raw_exact_checkpoint_paths": [
+    "scripts/eval/phase7_4_atomic_evidence_shadow_v1.py",
+    "crates/eval/src/lib.rs",
+    "crates/eval/src/phase7_4_atomic_evidence_shadow.rs",
+    "crates/eval/src/bin/phase7_4_atomic_evidence_shadow.rs",
+    "crates/eval/tests/phase7_4_atomic_evidence_shadow_test.rs",
+    "Cargo.lock"
+  ],
+  "git_eol_normalized_checkpoint_paths": [
+    "crates/eval/Cargo.toml"
+  ],
+  "git_eol_normalization_rule": {
+    "allowed_only_for_checkpoint_context_paths": true,
+    "recorded_working_bytes_must_normalize_crlf_to_lf_exactly": true,
+    "normalized_bytes_must_equal_checkpoint_git_blob": true,
+    "recorded_head_to_checkpoint_path_diff_must_be_empty": true,
+    "semantic_toml_rewrite_allowed": false,
+    "rule_expansion_to_owned_phase7_4_1_paths_allowed": false
+  },
+  "future_exact_owned_implementation_paths": [
+    "scripts/eval/phase7_4_atomic_evidence_shadow_v1.py",
+    "crates/eval/src/phase7_4_atomic_evidence_shadow.rs",
+    "crates/eval/src/bin/phase7_4_atomic_evidence_shadow.rs",
+    "crates/eval/tests/phase7_4_atomic_evidence_shadow_test.rs"
+  ],
+  "future_evolving_context_paths": [
+    "crates/eval/src/lib.rs",
+    "crates/eval/Cargo.toml",
+    "Cargo.lock"
+  ],
+  "future_replay_rules": {
+    "verifier_head_must_equal_checkpoint_or_be_descendant": true,
+    "recorded_execution_head_need_not_equal_verifier_head": true,
+    "checkpoint_tree_remains_authoritative": true,
+    "owned_phase7_4_1_working_bytes_remain_exact": true,
+    "phase7_4_1_governance_roots_remain_exact": true,
+    "completion_plan_and_contract_remain_exact": true,
+    "append_only_failed_attempt_retained": true,
+    "same_version_semantic_retry_allowed": false
+  },
+  "authority": {
+    "phase7_4_effect_dataset_opened": false,
+    "phase7_4_effect_provider_called": false,
+    "phase7_3_3_d_effect_data_loaded": false,
+    "memory_kind_modified": false,
+    "memory_schema_modified": false,
+    "recall_engine_modified": false,
+    "production_write_path_modified": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_m0_pass": "freeze_phase7_4_offline_retrieval_evaluation_protocol_v1"
+}

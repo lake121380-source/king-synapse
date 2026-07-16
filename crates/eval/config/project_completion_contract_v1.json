@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "contract_id": "king-synapse-project-completion-contract-v1",
+  "status": "m0_governance_baseline_pending_freeze",
+  "canonical_product_name": "King Synapse",
+  "historical_aliases": [
+    "King Recall"
+  ],
+  "primary_product_surfaces": [
+    "synapse-core",
+    "kr_cli",
+    "stdio_mcp_server"
+  ],
+  "completion_plan": {
+    "path": "docs/KING_SYNAPSE_LONG_TERM_COMPLETION_PLAN.md",
+    "sha256": "eb20101e78f01726a3d9ebe5ce7f7ec2777c300647cf52aae98936ddeb9602bf"
+  },
+  "completion_definition": "releasable_upgradeable_recoverable_rollback_safe_cross_platform_validated_local_memory_system",
+  "atomic_runtime_is_required_for_project_completion": false,
+  "target_completion_release": "1.0.0",
+  "target_release_authorized": false,
+  "workspace_version_change_authorized": false,
+  "mandatory_scope": [
+    "local_memory_engine",
+    "sqlite_storage_migration_backup_restore_recovery",
+    "deterministic_recall_trace_prediction_reinforcement_boundaries",
+    "kr_cli",
+    "stdio_mcp_server",
+    "reproducible_evaluation_and_audit",
+    "release_upgrade_rollback_security_compatibility_documentation"
+  ],
+  "excluded_from_mandatory_v1_scope": [
+    "web_ui",
+    "hosted_http_api",
+    "docker_product_surface",
+    "hosted_saas",
+    "autonomous_memory_or_lesson_write",
+    "default_on_atomic_ranking",
+    "default_on_cognitive_ranking"
+  ],
+  "governance_invariants": {
+    "frozen_artifacts_write_once": true,
+    "semantic_change_requires_successor_version": true,
+    "exact_file_sha256_lineage_required": true,
+    "deterministic_canonical_replay_required": true,
+    "append_only_audit_required": true,
+    "pre_effect_protocol_freeze_required": true,
+    "phase7_3_3_d_effect_data_reuse_allowed": false,
+    "credentials_or_raw_provider_responses_committed_allowed": false,
+    "runtime_authority_default": false,
+    "persistence_authority_default": false,
+    "promotion_authority_default": false,
+    "learning_authority_default": false,
+    "autonomous_write_authority_default": false,
+    "same_version_semantic_retry_after_authoritative_failure_allowed": false,
+    "gate_authorizes_only_exact_named_successor": true
+  },
+  "current_baseline": {
+    "phase7_3_3_d_terminal_gate": "confirmatory_success_frozen_runtime_integration_not_authorized",
+    "phase7_4_state": "phase7_4_1_shadow_prototype_gate_passed_offline_retrieval_protocol_authorized",
+    "phase7_4_effect_dataset_opened": false,
+    "phase7_4_effect_provider_called": false,
+    "runtime_integration_authorized": false,
+    "productization_decision": "no_go_validation_only"
+  },
+  "milestones": [
+    {
+      "id": "M0",
+      "name": "governance_baseline_and_version_checkpoint",
+      "entry_gate": "phase7_4_1_shadow_prototype_gate_passed_offline_retrieval_protocol_authorized",
+      "required_outputs": [
+        "completion_plan_freeze",
+        "machine_readable_completion_contract",
+        "phase7_4_1_replay_portability_successor",
+        "phase7_4_1_git_checkpoint",
+        "m0_state_readiness_audit_receipt"
+      ],
+      "exit_gate": "m0_governance_baseline_frozen_phase7_4_2_protocol_freeze_authorized"
+    },
+    {
+      "id": "M1",
+      "name": "phase7_4_2_offline_retrieval_protocol_freeze",
+      "entry_gate": "m0_governance_baseline_frozen_phase7_4_2_protocol_freeze_authorized",
+      "required_outputs": [
+        "rq1_rq2_preregistration",
+        "arm_a_arm_b_contract",
+        "statistical_and_multiplicity_plan",
+        "cost_and_regression_thresholds",
+        "environment_and_failure_contract",
+        "protocol_state_readiness_audit_receipt"
+      ],
+      "exit_gate": "phase7_4_2_protocol_frozen_pre_effect_dataset_construction_authorized"
+    },
+    {
+      "id": "M2",
+      "name": "dataset_reference_and_pre_effect_gates",
+      "entry_gate": "phase7_4_2_protocol_frozen_pre_effect_dataset_construction_authorized",
+      "required_outputs": [
+        "independent_source_inventory",
+        "sampling_frame_and_selection_freeze",
+        "blind_reference_and_adjudication",
+        "gold_freeze",
+        "leakage_audit",
+        "representation_coverage_structural_identifiability_and_opening_gates"
+      ],
+      "exit_gate": "phase7_4_effect_execution_authorized_or_authoritative_pre_effect_negative_frozen"
+    },
+    {
+      "id": "M3",
+      "name": "rq1_rq2_formal_paired_execution",
+      "entry_gate": "phase7_4_effect_execution_authorized",
+      "required_outputs": [
+        "equal_resource_arm_a_arm_b_execution",
+        "deterministic_replay",
+        "realized_identifiability_gate",
+        "paired_analysis",
+        "power_and_multiplicity_audit",
+        "regression_and_cost_gate"
+      ],
+      "exit_gate": "rq1_rq2_result_frozen_rq3_protocol_or_final_audit_authorized"
+    },
+    {
+      "id": "M4",
+      "name": "rq3_competition_and_reflection_evaluation",
+      "entry_gate": "rq1_rq2_result_frozen_rq3_protocol_authorized",
+      "required_outputs": [
+        "arm_c_arm_d_protocol",
+        "competition_evaluation",
+        "reflection_evaluation",
+        "rq3_identifiability_and_audit"
+      ],
+      "exit_gate": "rq3_result_frozen_phase7_4_final_audit_authorized"
+    },
+    {
+      "id": "M5",
+      "name": "phase7_4_final_audit",
+      "entry_gate": "phase7_4_final_audit_authorized",
+      "required_outputs": [
+        "capability_gate",
+        "no_severe_regression_gate",
+        "acceptable_cost_gate",
+        "final_lineage_and_audit_gate"
+      ],
+      "terminal_dispositions": [
+        "positive_capability_transfer_phase7_5_design_review_authorized",
+        "diagnostic_value_only_runtime_integration_not_authorized",
+        "authoritative_negative_result_runtime_integration_not_authorized"
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "phase7_5_runtime_integration_design",
+      "conditional_entry_gate": "positive_capability_transfer_phase7_5_design_review_authorized",
+      "required_outputs": [
+        "rfc_adr",
+        "api_compatibility_audit",
+        "default_off_rollout_and_rollback_contract",
+        "latency_memory_and_failure_budget",
+        "incident_taxonomy"
+      ],
+      "exit_gate": "default_off_runtime_shadow_implementation_authorized"
+    },
+    {
+      "id": "M7",
+      "name": "runtime_shadow_dogfood_and_canary",
+      "conditional_entry_gate": "default_off_runtime_shadow_implementation_authorized",
+      "required_outputs": [
+        "runtime_shadow",
+        "explicit_opt_in",
+        "bounded_canary",
+        "automatic_rollback_validation"
+      ],
+      "exit_gate": "runtime_disposition_frozen_productization_gate_reaudit_authorized"
+    },
+    {
+      "id": "M8",
+      "name": "productization_gate_closure",
+      "required_outputs": [
+        "supported_task_boundary",
+        "competitor_weakness_boundary",
+        "cpu_gpu_latency_acceptance",
+        "published_comparable_dmr_or_narrowed_claims",
+        "stable_public_local_demo",
+        "safe_runtime_default_policy"
+      ],
+      "exit_gate": "productization_go_engineering_hardening_authorized"
+    },
+    {
+      "id": "M9",
+      "name": "engineering_and_operations_hardening",
+      "entry_gate": "productization_go_engineering_hardening_authorized",
+      "required_outputs": [
+        "cross_platform_ci",
+        "workspace_tests_release_build_clippy_and_replay",
+        "sqlite_migration_backup_restore_and_recovery",
+        "security_and_dependency_audits",
+        "robustness_matrix",
+        "performance_and_scale_matrix"
+      ],
+      "exit_gate": "release_candidate_authorized"
+    },
+    {
+      "id": "M10",
+      "name": "release_candidate_and_1_0",
+      "entry_gate": "release_candidate_authorized",
+      "required_outputs": [
+        "version_and_brand_alignment",
+        "release_and_security_documentation",
+        "installation_upgrade_backup_restore_uninstall_rollback",
+        "cli_and_mcp_contract_snapshots",
+        "clean_machine_demo",
+        "two_release_candidate_cycles",
+        "readme_claims_support_audit",
+        "reproducible_release_receipt"
+      ],
+      "exit_gate": "king_synapse_1_0_complete"
+    }
+  ],
+  "phase7_4_capability_entry_rule": {
+    "rq1_or_rq2_must_pass_under_frozen_familywise_rule": true,
+    "rq3_alone_sufficient": false,
+    "no_severe_regression_required": true,
+    "acceptable_cost_required": true,
+    "final_audit_required": true,
+    "positive_result_authorizes_runtime_code": false,
+    "positive_result_authorizes_phase7_5_design_review_only": true
+  },
+  "project_completion_matrix": {
+    "atomic_research_terminal_result_frozen": false,
+    "runtime_authority_gate_compliant_and_rollback_safe": false,
+    "core_contracts_stable": true,
+    "cli_mcp_parity_and_compatibility_pass": false,
+    "migration_backup_restore_corruption_recovery_pass": false,
+    "workspace_test_clippy_release_build_replay_pass": false,
+    "preregistered_performance_budgets_pass": false,
+    "security_audits_and_documentation_pass": false,
+    "readme_claims_fully_supported": false,
+    "productization_gate_go": false,
+    "release_candidate_cycles_pass": false,
+    "king_synapse_1_0_released": false
+  },
+  "current_authority": {
+    "authorized_stage": "freeze_m0_governance_and_replay_portability_v1",
+    "phase7_4_effect_dataset_opening_authorized": false,
+    "phase7_4_provider_call_authorized": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_write_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  }
+}
