@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase7.4.2-source-inventory-sampling-contract-v1",
+  "status": "frozen_before_content_blind_inventory_construction",
+  "entry_gate": "construct_phase7_4_independent_source_inventory_and_sampling_frame_v1",
+  "contract_document": {
+    "path": "docs/eval/PHASE7_4_2_SOURCE_INVENTORY_AND_SAMPLING_FRAME.md",
+    "sha256": "9de3e0339d8897ba1b22c60fbb74078a01caa2cd31141e34f6a3414e57e19a54"
+  },
+  "frozen_protocol_inputs": {
+    "crates/eval/config/phase7_4_offline_retrieval_evaluation_protocol_v1.json": "adc48017a40a1ae7685ce5b8868f2bdff623cf845aa845c8ca7e7986ecdac8fb",
+    "crates/eval/datasets/pattern_extraction/phase7_4_stage_state_v4.json": "85350ee78464988545d08c450dbce61f34508f4349a3d7fee87f8367d7f1db08",
+    "crates/eval/reports/phase7_4_readiness_v4.json": "4fff7fb54306e58b8ed06c369768a8ea9894d81c265e4887db7c9266ccab2cc8",
+    "crates/eval/reports/phase7_4_offline_retrieval_protocol_freeze_receipt_v1.json": "5a9d2897a3a9dbadc0a87c67798bda821c5bc24578176b1fdada7c08770ffda5"
+  },
+  "inventory": {
+    "inventory_id": "phase7.4-independent-source-slot-inventory-v1",
+    "source_namespace": "phase7_4_independent_v1",
+    "case_id_pattern": "p74-<stratum-code>-<three-digit-ordinal>",
+    "total_slot_count": 240,
+    "slot_count_per_stratum": 30,
+    "content_fields_present": false,
+    "label_fields_present": false
+  },
+  "strata": [
+    {
+      "stratum": "temporal_update",
+      "code": "tu"
+    },
+    {
+      "stratum": "contradiction",
+      "code": "co"
+    },
+    {
+      "stratum": "preference_evolution",
+      "code": "pe"
+    },
+    {
+      "stratum": "failure_learning",
+      "code": "fl"
+    },
+    {
+      "stratum": "causal_reasoning",
+      "code": "cr"
+    },
+    {
+      "stratum": "multi_entity_reasoning",
+      "code": "me"
+    },
+    {
+      "stratum": "uncertainty_boundary",
+      "code": "ub"
+    },
+    {
+      "stratum": "adversarial_lexical_overlap",
+      "code": "al"
+    }
+  ],
+  "selection": {
+    "seed": 7402101,
+    "selection_material": "phase7.4|7402101|<stratum>|<case_id>",
+    "digest": "sha256_utf8",
+    "within_stratum_order": [
+      "selection_digest_ascending",
+      "case_id_ascending"
+    ],
+    "selected_count_per_stratum": 21,
+    "reserve_count_per_stratum": 9,
+    "total_selected_count": 168,
+    "total_reserve_count": 72,
+    "reserve_replacement_after_content_authoring_allowed": false,
+    "same_version_reselection_allowed": false
+  },
+  "slot_content_status": {
+    "query_authored": false,
+    "memory_content_authored": false,
+    "evidence_content_authored": false,
+    "atomic_overlay_constructed": false,
+    "reference_review_started": false,
+    "gold_frozen": false,
+    "selected_effect_content_opened": false
+  },
+  "independence": {
+    "phase7_3_3_d_dataset_loaded": false,
+    "phase7_3_3_d_worklist_loaded": false,
+    "phase7_3_3_d_gold_loaded": false,
+    "phase7_3_3_d_arm_output_loaded": false,
+    "phase7_3_3_d_analysis_loaded": false,
+    "phase7_3_3_d_confirmatory_content_loaded": false,
+    "new_case_namespace_required": true,
+    "full_text_hash_leakage_audit_deferred_until_new_content_exists": true
+  },
+  "next_stage_authoring_requirements": {
+    "query_count_per_selected_slot": 1,
+    "memory_count_per_selected_slot": 10,
+    "minimum_support_bearing_memories": 1,
+    "minimum_hard_distractors": 1,
+    "source_evidence_and_event_ids_required": true,
+    "query_blind_atomic_segmentation_required": true,
+    "separate_authoring_contract_freeze_required": true
+  },
+  "failure_taxonomy": [
+    "input_lineage_failure",
+    "inventory_identity_failure",
+    "stratum_count_failure",
+    "selection_digest_failure",
+    "selection_count_failure",
+    "determinism_failure",
+    "content_blindness_failure",
+    "leakage_boundary_failure",
+    "authority_boundary_failure",
+    "audit_failure"
+  ],
+  "authority": {
+    "source_slot_inventory_construction_authorized": true,
+    "sampling_frame_construction_authorized": true,
+    "source_content_authoring_authorized": false,
+    "selected_effect_content_opening_authorized": false,
+    "reference_review_authorized": false,
+    "gold_freeze_authorized": false,
+    "arm_execution_authorized": false,
+    "effect_scoring_authorized": false,
+    "provider_call_authorized": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_write_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_pass": "freeze_phase7_4_selected_source_authoring_contract_v1"
+}
