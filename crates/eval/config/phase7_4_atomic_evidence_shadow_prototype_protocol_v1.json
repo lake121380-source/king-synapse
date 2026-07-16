@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.4.1-atomic-evidence-shadow-prototype-protocol-v1",
+  "status": "frozen_before_shadow_overlay_implementation",
+  "entry_gate": "phase7_4_1_design_frozen_shadow_prototype_pending",
+  "stage_role": "structural_eval_only_overlay_protocol_not_effect_evaluation",
+  "frozen_design_inputs": {
+    "docs/PHASE7_4_ATOMIC_EVIDENCE_SUBSTRATE_DESIGN.md": "ec193194e37fcbf7e0074e9ed6db17910ecde45da74fa8f3d8fe29a178934a03",
+    "crates/eval/config/phase7_4_design_contract_v1.json": "7e3680b434458f70c4ccff114b3d05db1a52348207e662ac4f65d48d80d6da91"
+  },
+  "protocol_document": {
+    "path": "docs/eval/PHASE7_4_1_ATOMIC_EVIDENCE_SHADOW_PROTOTYPE_PROTOCOL.md",
+    "sha256": "eda349de723c15ae7ff528554bde1ff6de39bc2cffd2fd398c033bb7382a81a7"
+  },
+  "output_schema": {
+    "path": "crates/eval/config/phase7_4_atomic_evidence_shadow_overlay_schema_v1.json",
+    "sha256": "daa5b77f6b922180d5c60f480f594e6274e7ae8dd75e747ded26c442e2de0af7",
+    "json_schema_draft": "2020-12"
+  },
+  "authorized_prototype": {
+    "operation": "construct_and_validate_in_memory_atomic_evidence_shadow_overlay",
+    "claim_extraction": false,
+    "provider_call": false,
+    "memory_retrieval": false,
+    "candidate_ranking": false,
+    "competition_bonus": false,
+    "reflection_generation": false,
+    "effect_evaluation": false,
+    "persistence": false,
+    "runtime_application": false
+  },
+  "implementation_boundary": {
+    "allowed_paths": [
+      "crates/eval/src/phase7_4_atomic_evidence_shadow.rs",
+      "crates/eval/src/bin/phase7_4_atomic_evidence_shadow.rs",
+      "crates/eval/tests/phase7_4_atomic_evidence_shadow_test.rs",
+      "scripts/eval/phase7_4_atomic_evidence_shadow_v1.py",
+      "crates/eval/datasets/phase7_4/",
+      "crates/eval/reports/phase7_4_"
+    ],
+    "minimal_eval_lib_wiring_allowed": true,
+    "forbidden_paths_or_surfaces": [
+      "crates/core/",
+      "RecallEngine",
+      "RecallBooster",
+      "Memory_definition",
+      "MemoryKind_definition",
+      "Store",
+      "storage_adapter",
+      "production_write_path",
+      "runtime_configuration",
+      "runtime_feature_flag"
+    ],
+    "mutable_memory_input_allowed": false,
+    "mutable_recall_hit_input_allowed": false,
+    "store_handle_allowed": false,
+    "recall_engine_handle_allowed": false
+  },
+  "input_contract": {
+    "frozen_memory_snapshot": {
+      "required_fields": [
+        "source_memory_id",
+        "source_memory_kind",
+        "source_memory_content",
+        "source_memory_sha256",
+        "source_memory_content_sha256",
+        "source_evidence_ids",
+        "source_event_ids"
+      ],
+      "allowed_memory_kinds": [
+        "fact",
+        "preference",
+        "failure",
+        "playbook",
+        "state"
+      ],
+      "atomic_claim_memory_kind_allowed": false
+    },
+    "prospective_atomic_unit": {
+      "required_fields": [
+        "ordinal",
+        "claim_text",
+        "source_locator",
+        "support_state",
+        "source_evidence_provenance",
+        "source_event_provenance",
+        "extraction_confidence",
+        "support_confidence",
+        "confidence_calibration_status",
+        "contradiction_links"
+      ],
+      "support_state_vocabulary": [
+        "supported",
+        "partially_supported",
+        "unsupported",
+        "not_assessable"
+      ],
+      "constructor_infers_or_repairs_units": false
+    }
+  },
+  "deterministic_identity": {
+    "separator": "|",
+    "text_encoding": "UTF-8",
+    "text_normalization": "none",
+    "ordinal_encoding": "base10_ascii_without_padding",
+    "overlay_id": "aes-v1-<sha256(phase7.4|source_memory_id|source_memory_sha256|segmentation_contract_version)>",
+    "atomic_claim_id": "aes-claim-v1-<sha256(overlay_id|ordinal|claim_text_sha256)>",
+    "canonical_json": "UTF-8 JSON with sorted keys and separators comma-colon",
+    "same_input_byte_identical_output": true
+  },
+  "validation_rules": {
+    "reject": [
+      "source_memory_hash_mismatch",
+      "source_memory_content_hash_mismatch",
+      "unsupported_memory_kind",
+      "zero_atomic_units",
+      "duplicate_or_noncontiguous_ordinals",
+      "duplicate_atomic_claim_ids",
+      "empty_claim_text",
+      "claim_text_hash_mismatch",
+      "invalid_or_out_of_bounds_span",
+      "source_excerpt_mismatch",
+      "overlapping_source_spans",
+      "unknown_evidence_locator",
+      "unknown_provenance_evidence_or_event_id",
+      "provenance_owner_mismatch",
+      "nonfinite_or_out_of_bounds_confidence",
+      "invalid_support_state",
+      "reconstruction_order_mismatch",
+      "undeclared_reconstruction_gap_or_overlap",
+      "runtime_or_mutation_authority_claim"
+    ],
+    "repair_allowed": false,
+    "truncation_allowed": false,
+    "resegmentation_allowed": false,
+    "relabeling_allowed": false,
+    "silent_drop_allowed": false
+  },
+  "output_authority": {
+    "constructor_controlled": true,
+    "eval_only": true,
+    "runtime_applied": false,
+    "memory_mutated": false,
+    "store_written": false,
+    "recall_engine_mutated": false,
+    "promotion_authorized": false
+  },
+  "reconstruction_contract": {
+    "creates_replacement_memory": false,
+    "statuses": [
+      "complete",
+      "partial",
+      "not_reconstructable"
+    ],
+    "order_matches_atomic_ordinals": true,
+    "undeclared_overlap_allowed": false,
+    "unresolved_gaps_explicit": true,
+    "partial_silently_promoted_to_complete": false
+  },
+  "implementation_fixtures": {
+    "freeze_before_effect_dataset": true,
+    "positive": [
+      "two_unit_exact_nonoverlapping_spans",
+      "evidence_id_locator_with_complete_provenance",
+      "byte_identical_deterministic_replay",
+      "explicit_partial_reconstruction",
+      "all_five_existing_memory_kinds"
+    ],
+    "rejection": [
+      "source_memory_hash_mismatch",
+      "claim_text_hash_mismatch",
+      "out_of_bounds_span",
+      "overlapping_spans",
+      "duplicate_or_skipped_ordinal",
+      "unknown_provenance_id",
+      "invalid_or_nonfinite_confidence",
+      "atomic_claim_memory_kind",
+      "attempted_runtime_or_mutation_authority",
+      "whole_memory_single_unit_representation_degeneracy"
+    ]
+  },
+  "prototype_gate": {
+    "all_checks_required": true,
+    "checks": [
+      "schema_conformance",
+      "deterministic_ids_and_serialization",
+      "positive_fixtures_accepted",
+      "rejection_fixtures_rejected_with_frozen_reason_codes",
+      "no_store_recall_engine_runtime_or_write_dependency",
+      "no_new_memory_kind",
+      "no_provider_call",
+      "no_phase7_3_3_d_effect_data_access",
+      "zero_runtime_persistence_mutation_promotion_and_learning_authority",
+      "source_reconstruction_lineage_complete",
+      "version_isolated_sha256_manifest",
+      "deterministic_replay_and_receipt_pass"
+    ],
+    "on_failure": "freeze_authoritative_prototype_contract_negative_result",
+    "same_version_semantic_retry_allowed": false
+  },
+  "failure_taxonomy": [
+    "input_lineage_failure",
+    "source_hash_failure",
+    "claim_hash_failure",
+    "span_boundary_failure",
+    "span_overlap_failure",
+    "ordinal_failure",
+    "provenance_failure",
+    "support_state_failure",
+    "confidence_failure",
+    "reconstruction_failure",
+    "representation_degeneracy",
+    "schema_contract_failure",
+    "authority_boundary_failure",
+    "implementation_dependency_failure",
+    "determinism_failure",
+    "leakage_failure"
+  ],
+  "freeze_status": {
+    "phase7_4_effect_dataset_opened": false,
+    "phase7_4_effect_provider_called": false,
+    "phase7_3_3_d_effect_data_loaded": false,
+    "prototype_implementation_started": false,
+    "memory_kind_modified": false,
+    "memory_schema_modified": false,
+    "recall_engine_modified": false,
+    "production_write_path_modified": false,
+    "runtime_integration_authorized": false
+  },
+  "next_authorized_stage": "implement_phase7_4_eval_only_shadow_overlay_v1"
+}

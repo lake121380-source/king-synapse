@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "fixtures_id": "phase7.4.1-atomic-evidence-shadow-implementation-fixtures-v1",
+  "status": "PASS",
+  "synthetic_only": true,
+  "fixture_count": 22,
+  "passed_fixture_count": 22,
+  "failed_fixture_count": 0,
+  "observed_test_count": 22,
+  "expected_test_count": 22,
+  "observed_tests_exact": true,
+  "fixtures": [
+    {
+      "fixture_id": "all_five_existing_memory_kinds",
+      "test_name": "all_existing_memory_kinds_are_accepted",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "canonical_json_schema_shape",
+      "test_name": "canonical_json_has_sorted_root_keys_and_schema_shape",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "serialized_integrity_round_trip",
+      "test_name": "emitted_overlay_passes_serialized_integrity_validation",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "evidence_id_locator_with_complete_provenance",
+      "test_name": "evidence_id_locator_with_complete_provenance_is_valid",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "two_unit_exact_nonoverlapping_spans",
+      "test_name": "exact_two_unit_overlay_is_valid_and_eval_only",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "explicit_partial_reconstruction",
+      "test_name": "explicit_partial_reconstruction_preserves_gap_count",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "byte_identical_deterministic_replay",
+      "test_name": "identical_input_replays_byte_identically",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "representation_gate_positive",
+      "test_name": "multi_unit_overlay_passes_prototype_representation_gate",
+      "fixture_class": "positive",
+      "expected_outcome": "accepted_or_gate_pass_recorded",
+      "passed": true
+    },
+    {
+      "fixture_id": "atomic_claim_memory_kind",
+      "test_name": "atomic_claim_memory_kind_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "input_lineage_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "claimed_source_hash_mismatch",
+      "test_name": "claimed_source_hash_mismatch_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "source_hash_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "duplicate_ordinal",
+      "test_name": "duplicate_ordinal_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "ordinal_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "inconsistent_reconstruction_status",
+      "test_name": "inconsistent_reconstruction_status_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "reconstruction_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "nonfinite_or_out_of_bounds_confidence",
+      "test_name": "nonfinite_or_out_of_bounds_confidence_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "confidence_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "out_of_bounds_span",
+      "test_name": "out_of_bounds_span_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "span_boundary_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "overlapping_spans_are_rejected",
+      "test_name": "overlapping_spans_are_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "span_overlap_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "serialized_claim_text_hash_mismatch",
+      "test_name": "serialized_claim_text_hash_mismatch_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "claim_hash_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "serialized_runtime_authority_claim",
+      "test_name": "serialized_runtime_authority_claim_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "authority_boundary_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "skipped_ordinal",
+      "test_name": "skipped_ordinal_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "ordinal_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "source_excerpt_mismatch",
+      "test_name": "source_excerpt_mismatch_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "span_boundary_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "undeclared_text_span_gap",
+      "test_name": "undeclared_text_span_gap_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "reconstruction_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "unknown_provenance",
+      "test_name": "unknown_provenance_is_rejected",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "provenance_failure",
+      "passed": true
+    },
+    {
+      "fixture_id": "whole_memory_single_unit_is_recorded_but_fails_representation_gate",
+      "test_name": "whole_memory_single_unit_is_recorded_but_fails_representation_gate",
+      "fixture_class": "rejection",
+      "expected_failure_kind": "representation_degeneracy",
+      "passed": true
+    }
+  ],
+  "commands": {
+    "cargo_fmt_check": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    "targeted_contract_tests": {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "synapse-eval",
+        "--test",
+        "phase7_4_atomic_evidence_shadow_test",
+        "--",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    "targeted_contract_test_inventory": {
+      "command": [
+        "cargo",
+        "test",
+        "-q",
+        "-p",
+        "synapse-eval",
+        "--test",
+        "phase7_4_atomic_evidence_shadow_test",
+        "--",
+        "--list"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    "cargo_check_synapse_eval": {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "synapse-eval"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    "synthetic_runner_first": {
+      "command": [
+        "cargo",
+        "run",
+        "-q",
+        "-p",
+        "synapse-eval",
+        "--bin",
+        "phase7_4_atomic_evidence_shadow",
+        "--",
+        "--emit-fixture"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    "synthetic_runner_replay": {
+      "command": [
+        "cargo",
+        "run",
+        "-q",
+        "-p",
+        "synapse-eval",
+        "--bin",
+        "phase7_4_atomic_evidence_shadow",
+        "--",
+        "--emit-fixture"
+      ],
+      "exit_code": 0,
+      "passed": true
+    }
+  },
+  "synthetic_validation": {
+    "checks": {
+      "runner_outputs_present": true,
+      "runner_replay_byte_identical": true,
+      "schema_conformance": true,
+      "canonical_overlay_hash": true,
+      "deterministic_identity": true,
+      "authority_zero": true,
+      "reconstruction_lineage_complete": true,
+      "representation_gate_pass": true,
+      "synthetic_only_no_effect_access": true
+    },
+    "schema_errors": []
+  },
+  "implementation_boundary": {
+    "all_changed_paths_version_isolated": true,
+    "no_core_path_changed": true,
+    "no_phase7_3_3_d_path_changed": true,
+    "no_core_crate_import": true,
+    "no_network_or_provider_call_surface": true,
+    "no_phase7_3_3_d_effect_path_literal": true,
+    "eval_cargo_manifest_unchanged": true,
+    "cargo_lock_unchanged": true
+  },
+  "synthetic_runner_output": {
+    "canonical_overlay_json_sha256": "c339a33f6fc4ed1102afae9f4f39d466e6954cccf6a438915aff9e00f0521f9e",
+    "effect_dataset_opened": false,
+    "fixture_run_id": "phase7.4.1-atomic-evidence-shadow-synthetic-run-v1",
+    "overlay": {
+      "atomic_units": [
+        {
+          "atomic_claim_id": "aes-claim-v1-a29167495d33e80ff47ad694359ee43b622f73cb5f102c4107e0be9db880e553",
+          "claim_text": "alpha",
+          "claim_text_sha256": "8ed3f6ad685b959ead7022518e1af76cd816f8e8ec7ccdda1ed4018e8f2223f8",
+          "confidence": {
+            "calibration_status": "unvalidated_diagnostic",
+            "extraction_confidence": 0.9,
+            "support_confidence": 0.8
+          },
+          "contradiction_links": [],
+          "ordinal": 0,
+          "provenance": {
+            "source_event_ids": [
+              "synthetic-event-001"
+            ],
+            "source_evidence_ids": [
+              "synthetic-evidence-001"
+            ],
+            "source_memory_id": "synthetic-memory-001",
+            "source_memory_sha256": "42783e53741b2a2d8aef9635ed3d8e8674d9c1e9fb3f04b125aee958a290fa62"
+          },
+          "source_locator": {
+            "end_char": 5,
+            "locator_type": "source_memory_text_span",
+            "start_char": 0
+          },
+          "support_state": "supported"
+        },
+        {
+          "atomic_claim_id": "aes-claim-v1-bb37227f3b31f1c22acd95458128639750f0fe4110f1c56829158a7b725b069e",
+          "claim_text": "beta",
+          "claim_text_sha256": "f44e64e75f3948e9f73f8dfa94721c4ce8cbb4f265c4790c702b2d41cfbf2753",
+          "confidence": {
+            "calibration_status": "unvalidated_diagnostic",
+            "extraction_confidence": 0.9,
+            "support_confidence": 0.8
+          },
+          "contradiction_links": [],
+          "ordinal": 1,
+          "provenance": {
+            "source_event_ids": [
+              "synthetic-event-001"
+            ],
+            "source_evidence_ids": [
+              "synthetic-evidence-001"
+            ],
+            "source_memory_id": "synthetic-memory-001",
+            "source_memory_sha256": "42783e53741b2a2d8aef9635ed3d8e8674d9c1e9fb3f04b125aee958a290fa62"
+          },
+          "source_locator": {
+            "end_char": 9,
+            "locator_type": "source_memory_text_span",
+            "start_char": 5
+          },
+          "support_state": "supported"
+        }
+      ],
+      "authority": {
+        "eval_only": true,
+        "memory_mutated": false,
+        "promotion_authorized": false,
+        "recall_engine_mutated": false,
+        "runtime_applied": false,
+        "store_written": false
+      },
+      "overlay_id": "aes-v1-f8511c1dadc9ccce65724cd7bd4a685911b6225d23b92319db91956ef11f6550",
+      "reconstruction": {
+        "deterministic": true,
+        "ordered_atomic_claim_ids": [
+          "aes-claim-v1-a29167495d33e80ff47ad694359ee43b622f73cb5f102c4107e0be9db880e553",
+          "aes-claim-v1-bb37227f3b31f1c22acd95458128639750f0fe4110f1c56829158a7b725b069e"
+        ],
+        "overlap_characters": 0,
+        "source_memory_id": "synthetic-memory-001",
+        "status": "complete",
+        "unresolved_gap_count": 0
+      },
+      "schema_version": 1,
+      "segmentation_contract_version": "phase7.4-atomic-evidence-shadow-prototype-v1",
+      "source_memory_content_sha256": "a4c4aeb92c20500f364b12b3771ef3a11193e2cf04d0f28956a829749993b39f",
+      "source_memory_id": "synthetic-memory-001",
+      "source_memory_kind": "fact",
+      "source_memory_sha256": "42783e53741b2a2d8aef9635ed3d8e8674d9c1e9fb3f04b125aee958a290fa62",
+      "status": "eval_only_shadow_overlay"
+    },
+    "provider_called": false,
+    "replay_byte_identical": true,
+    "representation": {
+      "atomic_unit_count": 2,
+      "atomic_unit_count_gt_memory_chunk_count": true,
+      "memory_chunk_count": 1,
+      "passed": true,
+      "whole_memory_single_unit_degeneracy": false,
+      "whole_memory_unit_count": 0
+    },
+    "runtime_integration_authorized": false,
+    "schema_version": 1,
+    "status": "PASS",
+    "synthetic_only": true
+  },
+  "phase7_4_effect_dataset_opened": false,
+  "phase7_4_effect_provider_called": false,
+  "phase7_3_3_d_effect_data_loaded": false,
+  "runtime_integration_authorized": false,
+  "all_fixtures_passed": true
+}

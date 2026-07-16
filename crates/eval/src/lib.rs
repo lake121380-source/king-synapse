@@ -39,6 +39,7 @@ pub mod phase5_trace_quality;
 pub mod phase6_cognitive_baseline_comparison;
 pub mod phase6_memory_intelligence_benchmark;
 pub mod phase6_recall_score_distribution;
+pub mod phase7_4_atomic_evidence_shadow;
 pub mod phase7_artifact_lineage_transition_gate;
 pub mod phase7_atomic_claim_diagnostics;
 pub mod phase7_atomic_claim_measurement;
@@ -211,6 +212,14 @@ pub use phase6_recall_score_distribution::{
     MarginCoverage, Phase6RecallScoreDistributionEvaluator, Phase6RecallScoreDistributionReport,
     RankScoreDistribution, RecallScoreDistributionDecision, RecallScoreDistributionGuards,
     RecallScoreDistributionProtocol, RecallScoreScenarioReport, ScoreDistributionReport,
+};
+pub use phase7_4_atomic_evidence_shadow::{
+    construct_shadow_overlay, evaluate_prototype_representation,
+    validate_serialized_shadow_overlay_integrity, AtomicEvidenceShadowOverlay, AtomicEvidenceUnit,
+    ConfidenceCalibrationStatus, ExistingMemoryKind, FrozenMemorySnapshot, ProspectiveAtomicUnit,
+    PrototypeRepresentationCheck, Reconstruction, ReconstructionInput, ReconstructionStatus,
+    ShadowAuthority, ShadowFailureKind, ShadowOverlayError, SourceLocator, SupportState,
+    SEGMENTATION_CONTRACT_VERSION,
 };
 pub use phase7_artifact_lineage_transition_gate::{
     derive_phase7_workflow_state, exact_file_sha256, independent_review_progress,

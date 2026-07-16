@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase7.4.1-atomic-evidence-substrate-design-contract-v1",
+  "status": "phase7_4_1_design_frozen_shadow_prototype_pending",
+  "freeze_date": "2026-07-16",
+  "stage_role": "new_capability_transfer_validation_stage_not_phase7_3_3_d_extension",
+  "design_document": {
+    "path": "docs/PHASE7_4_ATOMIC_EVIDENCE_SUBSTRATE_DESIGN.md",
+    "sha256": "ec193194e37fcbf7e0074e9ed6db17910ecde45da74fa8f3d8fe29a178934a03"
+  },
+  "predecessor_freeze": {
+    "phase": "Phase 7.3.3-D Multi-claim Successor Confirmatory",
+    "terminal_gate": "confirmatory_success_frozen_runtime_integration_not_authorized",
+    "git_commit": "3c99170854743f65bd1d5334aeaea94f748c1809",
+    "read_only": true,
+    "mutation_allowed": false,
+    "effect_data_reuse_allowed": false,
+    "artifacts": {
+      "crates/eval/datasets/pattern_extraction/phase7_3_3_d_support_stage_state_v111.json": "bcd96ad07f1d64fe5b08ce2c28bb45b1f0a6e63bf35128cb034129e8c09a5d88",
+      "crates/eval/reports/phase7_3_3_d1_reference_construction_readiness_v122.json": "42a4bc3a5202a16c30e9615d3a9bf4f35d1fda619f6edea6b84b2b0d4ee64bf8",
+      "crates/eval/reports/phase7_3_3_d_multi_claim_successor_confirmatory_final_audit_report_v1.json": "8f08360a85e164e19fadae13f77cf5eb67b73607f0344d2a4d8cf53475f6d0c7",
+      "crates/eval/reports/phase7_3_3_d_multi_claim_successor_confirmatory_final_audit_receipt_v1.json": "e5f1c8f32b079c9c4b62047afa225a0942d37b2c9d75b91883824b58faf9c694"
+    }
+  },
+  "capability_transfer_boundary": {
+    "established": "Atomic representation improved the frozen Support Localization task",
+    "unknown": "Atomic representation value for Memory Retrieval, Competition, and Reflection",
+    "phase7_4_objective": "determine whether Atomic Evidence transfers from an evaluation capability into a useful offline system capability",
+    "positive_result_assumed": false,
+    "general_runtime_value_claim_authorized": false
+  },
+  "scope": {
+    "allowed": [
+      "eval_only_shadow_overlay",
+      "offline_paired_comparison",
+      "new_independent_evaluation_datasets",
+      "new_frozen_metrics",
+      "read_only_existing_evaluation_interfaces",
+      "bounded_non_runtime_prototype"
+    ],
+    "prohibited": [
+      "memory_kind_modification",
+      "memory_schema_migration",
+      "recall_engine_behavior_change",
+      "runtime_activation",
+      "production_memory_write",
+      "production_persistence",
+      "atomic_claim_as_first_class_memory",
+      "base_ranking_overwrite",
+      "learning_or_promotion_authority",
+      "phase7_3_3_d_artifact_mutation"
+    ]
+  },
+  "architecture": {
+    "role": "evidence_substrate_overlay_owned_by_existing_memory",
+    "not_a_memory_kind": true,
+    "replaces_memory": false,
+    "production_identity": false,
+    "storage_authority": false,
+    "promotion_authority": false,
+    "required_overlay_fields": [
+      "overlay_id",
+      "source_memory_id",
+      "source_memory_sha256",
+      "segmentation_contract_version",
+      "ordered_atomic_units",
+      "claim_span_or_locator",
+      "support_state",
+      "claim_provenance",
+      "extraction_confidence",
+      "support_confidence",
+      "reconstruction_disposition"
+    ],
+    "support_state_vocabulary": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_assessable"
+    ],
+    "shadow_score": {
+      "diagnostic_only": true,
+      "bounded": true,
+      "formula_frozen_before_effect_data": true,
+      "base_score_mutation_allowed": false,
+      "base_winner_mutation_allowed": false
+    }
+  },
+  "research_questions": {
+    "rq1_evidence_localization": {
+      "question": "Does Atomic Evidence improve retrieval and localization of correct supporting evidence?",
+      "comparison": "arm_b_minus_arm_a",
+      "primary_estimand": "paired_mean_evidence_localization_f1_at_frozen_k_atomic_minus_chunk",
+      "direction": "greater_than_zero_favors_atomic",
+      "required_secondary_metrics": [
+        "recall_at_k",
+        "precision_at_k",
+        "mrr",
+        "span_iou_or_exact_localization_accuracy",
+        "reconstruction_completeness",
+        "missingness_and_failures"
+      ]
+    },
+    "rq2_unsupported_activation": {
+      "question": "Does Atomic Evidence reduce unsupported, contradictory, or obsolete memory activation?",
+      "comparison": "arm_a_minus_arm_b",
+      "primary_estimand": "paired_mean_unsupported_activation_rate_chunk_minus_atomic",
+      "direction": "greater_than_zero_favors_atomic",
+      "supported_evidence_retention_noninferiority_required": true,
+      "required_secondary_metrics": [
+        "contradiction_exposure_rate",
+        "obsolete_evidence_activation_rate",
+        "false_confidence_rate",
+        "supported_evidence_retention",
+        "unsupported_masking_rate",
+        "missingness_and_failures"
+      ]
+    },
+    "rq3_cognitive_improvement": {
+      "question": "Does Atomic Evidence improve memory competition and downstream reflection diagnostics?",
+      "comparison": "arm_d_minus_arm_c",
+      "competition_primary_estimand": "paired_winner_correctness_atomic_shadow_minus_existing_competition",
+      "direction": "greater_than_zero_favors_atomic",
+      "competition_metrics": [
+        "winner_correctness",
+        "conflict_resolution_accuracy",
+        "harmful_winner_rate",
+        "ranking_stability",
+        "unsupported_winner_activation",
+        "score_bound_compliance"
+      ],
+      "reflection_metrics": [
+        "lesson_quality",
+        "failure_avoidance",
+        "future_influence_accuracy",
+        "unsupported_lesson_rate",
+        "provenance_completeness"
+      ],
+      "rq3_alone_sufficient_for_phase7_5": false
+    }
+  },
+  "experimental_arms": {
+    "arm_a": {
+      "name": "Chunk Retrieval",
+      "role": "existing_offline_retrieval_baseline",
+      "runtime_mutation": false
+    },
+    "arm_b": {
+      "name": "Atomic Retrieval plus Evidence Reconstruction",
+      "role": "eval_only_atomic_shadow_retrieval",
+      "reconstruction_failure_explicit": true,
+      "runtime_mutation": false
+    },
+    "arm_c": {
+      "name": "Existing Memory Competition",
+      "role": "existing_offline_competition_baseline",
+      "runtime_mutation": false
+    },
+    "arm_d": {
+      "name": "Memory plus Atomic Evidence Competition",
+      "role": "bounded_atomic_evidence_shadow_score",
+      "separate_shadow_ranking_required": true,
+      "base_ranking_overwrite": false,
+      "runtime_mutation": false
+    },
+    "paired_equality": [
+      "same_query",
+      "same_source_memory_snapshot",
+      "same_candidate_pool",
+      "same_frozen_cutoff",
+      "same_evaluation_labels",
+      "same_missingness_denominator",
+      "equivalent_resource_accounting",
+      "frozen_deterministic_seeds",
+      "equal_non_arm_specific_visibility"
+    ]
+  },
+  "gates": {
+    "representation_gate": {
+      "required": true,
+      "checks": [
+        "atomic_unit_count_gt_memory_chunk_count",
+        "minimum_multi_unit_memory_rate",
+        "maximum_whole_memory_span_rate",
+        "unique_ordered_nonduplicated_spans",
+        "deterministic_source_reconstruction",
+        "zero_unexplained_overlap_or_coverage_gap"
+      ],
+      "on_failure": "authoritative_structural_negative_block_effect_scoring"
+    },
+    "evidence_coverage_gate": {
+      "required": true,
+      "checks": [
+        "claim_span_or_locator_present",
+        "support_state_present",
+        "source_provenance_present",
+        "source_memory_lineage_present",
+        "confidence_interpretation_frozen",
+        "reconstruction_disposition_present"
+      ],
+      "post_execution_imputation_allowed": false
+    },
+    "leakage_gate": {
+      "required": true,
+      "phase7_3_3_d_confirmatory_gold_effect_data_use_allowed": false,
+      "permitted_upstream_use": [
+        "parser_fixture",
+        "schema_fixture",
+        "protocol_vocabulary",
+        "boundary_contract_test",
+        "support_state_contract_test",
+        "design_motivation"
+      ],
+      "required_independence": [
+        "case_ids",
+        "source_identities",
+        "candidate_hashes",
+        "evidence_hashes",
+        "effect_labels"
+      ],
+      "overlap_checked_before_content_open": true
+    },
+    "dataset_opening_gate": {
+      "required": true,
+      "freeze_before_open": [
+        "source_inventory_and_eligibility",
+        "overlap_audit_corpus",
+        "selected_ids_and_hashes",
+        "primary_estimands_and_directions",
+        "sample_size_and_power_method",
+        "arm_implementations_and_configurations",
+        "missingness_and_failure_handling",
+        "cost_accounting",
+        "analysis_seeds_and_uncertainty_method"
+      ],
+      "same_version_manual_backfill_allowed": false
+    },
+    "realized_identifiability_gate": {
+      "required": true,
+      "before_effect_scoring": true,
+      "checks": [
+        "paired_retrieval_representations_realized",
+        "competition_candidate_pools_equal",
+        "atomic_decisions_local_not_whole_memory_fallbacks",
+        "source_reconstruction_deterministic",
+        "no_silent_pair_drop",
+        "gold_and_outcomes_invisible_during_execution"
+      ],
+      "on_failure": "authoritative_negative_block_affected_estimand"
+    }
+  },
+  "statistics": {
+    "rq1_rq2_phase7_5_entry_family": true,
+    "familywise_alpha_one_sided": 0.05,
+    "default_multiplicity_procedure": "holm_bonferroni",
+    "procedure_frozen_before_content_open": true,
+    "sample_size_frozen_before_content_open": true,
+    "observed_effect_replanning_allowed": false,
+    "rq3_compensates_for_rq1_and_rq2_failure": false
+  },
+  "negative_result_discipline": {
+    "positive": "capability_gate_passes_with_regression_cost_and_audit_gates; phase7_5_design_review_only",
+    "neutral": "diagnostic_or_explainability_value_without_powered_capability_gain; remain_diagnostic_only",
+    "negative": "complexity_cost_or_regression_without_measurable_gain; freeze_authoritative_negative",
+    "invalid_or_unidentifiable": "block_effect_claim_and_freeze_failure_classification",
+    "first_provider_content_authoritative": true,
+    "transport_failure_resume_same_manifest": true,
+    "semantic_retry": false,
+    "repair": false,
+    "selective_rerun": false,
+    "outcome_dependent_successor": false
+  },
+  "phase7_5_entry": {
+    "gate_a": "rq1_or_rq2_passes_under_frozen_familywise_error_procedure",
+    "gate_b": "all_frozen_safety_and_noninferiority_bounds_pass",
+    "gate_c": "latency_storage_compute_reconstruction_and_complexity_costs_acceptable",
+    "gate_d": "final_audit_passes",
+    "all_mandatory": true,
+    "passing_authorizes": "phase7_5_design_review_only",
+    "passing_does_not_authorize": [
+      "runtime_code",
+      "storage_migration",
+      "production_memory_write",
+      "rollout"
+    ],
+    "failure_disposition": "runtime_integration_not_authorized"
+  },
+  "governance": {
+    "version_isolation": true,
+    "frozen_artifacts_write_once": true,
+    "semantic_change_requires_successor_version": true,
+    "sha256_lineage_required": true,
+    "deterministic_replay_required": true,
+    "append_only_hash_chained_audit_required": true,
+    "provider_visibility_and_call_count_required": true,
+    "failure_classification_required": true,
+    "same_version_retry_disposition_required": true,
+    "state_and_readiness_transition_required": true
+  },
+  "current_authority": {
+    "authorized_stage": "construct_phase7_4_eval_only_shadow_prototype_protocol_v1",
+    "prototype_implementation_started": false,
+    "effect_dataset_opened": false,
+    "effect_provider_called": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_memory_write_authorized": false,
+    "runtime_integration_authorized": false
+  }
+}

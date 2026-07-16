@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "policy_id": "phase7.4.1-replay-portability-policy-v1",
+  "status": "frozen_before_phase7_4_1_git_checkpoint",
+  "purpose": "preserve_phase7_4_1_replay_across_descendant_git_commits_without_mutating_v1_artifacts",
+  "entry_state": "phase7_4_1_shadow_prototype_gate_passed_offline_retrieval_protocol_authorized",
+  "recorded_execution_head": "3c99170854743f65bd1d5334aeaea94f748c1809",
+  "frozen_m0_inputs": {
+    "docs/KING_SYNAPSE_LONG_TERM_COMPLETION_PLAN.md": "eb20101e78f01726a3d9ebe5ce7f7ec2777c300647cf52aae98936ddeb9602bf",
+    "crates/eval/config/project_completion_contract_v1.json": "63831b2886346d047413656155eb95a960e04061eb5f161992439c1081d1f924"
+  },
+  "frozen_phase7_4_1_roots": {
+    "crates/eval/reports/phase7_4_atomic_evidence_shadow_prototype_protocol_freeze_receipt_v1.json": "88b564d65e436cbc10eb76f3022686196a3c0ca7ef6c46e7f2891e142727202c",
+    "crates/eval/reports/phase7_4_atomic_evidence_shadow_implementation_manifest_v1.json": "448a7384d6108c1ff7c2b774f907f16a804883c8cceb772af95e47b76b46eb04",
+    "crates/eval/reports/phase7_4_atomic_evidence_shadow_prototype_gate_report_v1.json": "55fc9d0f0f7b2037a27371c49be6afbe117b4123552afa5a3fc5017bb4b8bcf6",
+    "crates/eval/reports/phase7_4_atomic_evidence_shadow_prototype_gate_audit_v1.jsonl": "f91f38c63bd95c941c87725fdc003cdded7123e54593a875f8cc4307462e88c6",
+    "crates/eval/datasets/pattern_extraction/phase7_4_stage_state_v2.json": "85d46f0de581fdc4e87e30695614cd760a0c63e09a1bac7320f6aaae86279e58",
+    "crates/eval/reports/phase7_4_readiness_v2.json": "222da9722dfb8d97cb82ea013c28c03522ffede1b17e6dbef1f13fa90d017748",
+    "crates/eval/reports/phase7_4_atomic_evidence_shadow_prototype_gate_receipt_v1.json": "a7ab56c1fb9f064143cd8a07932bef968d8c1fe66cc014c695efd97b404816c6"
+  },
+  "checkpoint_requirements": {
+    "checkpoint_must_be_descendant_of_recorded_execution_head": true,
+    "checkpoint_must_contain_all_v1_governance_roots": true,
+    "checkpoint_must_contain_exact_implementation_bytes_from_v1_manifest": true,
+    "checkpoint_must_contain_portability_policy_and_verifier": true,
+    "checkpoint_may_not_modify_phase7_3_3_d": true,
+    "checkpoint_may_not_modify_crates_core": true,
+    "checkpoint_may_not_authorize_runtime_or_effect_data": true
+  },
+  "future_replay_rules": {
+    "verifier_head_must_equal_checkpoint_or_be_descendant": true,
+    "recorded_execution_head_need_not_equal_verifier_head": true,
+    "checkpoint_tree_is_authoritative_for_frozen_implementation_bytes": true,
+    "working_tree_frozen_phase7_4_1_owned_bytes_must_match_checkpoint": true,
+    "future_exact_owned_implementation_paths": [
+      "scripts/eval/phase7_4_atomic_evidence_shadow_v1.py",
+      "crates/eval/src/phase7_4_atomic_evidence_shadow.rs",
+      "crates/eval/src/bin/phase7_4_atomic_evidence_shadow.rs",
+      "crates/eval/tests/phase7_4_atomic_evidence_shadow_test.rs"
+    ],
+    "checkpoint_only_evolving_context_paths": [
+      "crates/eval/src/lib.rs",
+      "crates/eval/Cargo.toml",
+      "Cargo.lock"
+    ],
+    "m0_plan_and_contract_bytes_must_remain_exact": true,
+    "append_only_audit_must_replay_exactly": true,
+    "same_version_semantic_retry_allowed": false
+  },
+  "authority": {
+    "phase7_4_effect_dataset_opened": false,
+    "phase7_4_effect_provider_called": false,
+    "phase7_3_3_d_effect_data_loaded": false,
+    "memory_kind_modified": false,
+    "memory_schema_modified": false,
+    "recall_engine_modified": false,
+    "production_write_path_modified": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_m0_pass": "freeze_phase7_4_offline_retrieval_evaluation_protocol_v1"
+}
