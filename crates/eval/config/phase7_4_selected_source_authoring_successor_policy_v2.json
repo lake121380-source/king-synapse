@@ -1,0 +1,83 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.4-selected-source-authoring-successor-policy-v2",
+  "status": "successor_pending_freeze_after_classified_v1_pre_freeze_draft_failure",
+  "entry_gate": "classify_phase7_4_selected_source_authoring_v1_preflight_failure_and_freeze_v2_successor",
+  "policy_document": {
+    "path": "docs/eval/PHASE7_4_2_SELECTED_SOURCE_AUTHORING_SUCCESSOR_V2.md",
+    "sha256": "eda7c71fad0afeeb1dae7952d28f7cad77e691147de5ebc82b35c2c7b3fa366a"
+  },
+  "retained_v1": {
+    "adapter_path": "scripts/eval/phase7_4_selected_source_authoring_v1.py",
+    "adapter_sha256": "2afdfc696775f23d3b8e024e7d936010086837781fd09d1e6a6b907f1e68458e",
+    "attempt_log_path": "crates/eval/reports/phase7_4_selected_source_authoring_preflight_attempts_v1.jsonl",
+    "attempt_log_sha256": "9e9a8d317d7b204598849d677c15201aa52efdbd4a2567db146fa5dc3e240aad",
+    "attempt_event_count": 1,
+    "classified_failure": "duplicate_or_similarity_failure",
+    "exact_normalized_text_duplicate_count": 452,
+    "high_similarity_pair_count": 2792,
+    "authoritative_dataset_written": false,
+    "authoritative_outputs_written": false,
+    "reference_or_gold_written": false,
+    "atomic_or_arm_output_written": false,
+    "provider_called": false,
+    "selected_effect_dataset_opened_for_arm_execution": false,
+    "runtime_integration_authorized": false,
+    "same_version_retry_allowed": false
+  },
+  "unchanged_frozen_design": {
+    "selected_case_count": 168,
+    "selected_case_ids_and_order_unchanged": true,
+    "strata_domains_variants_unchanged": true,
+    "slot_ids_and_counts_unchanged": true,
+    "memory_kind_assignments_unchanged": true,
+    "candidate_pool_ordinals_unchanged": true,
+    "source_case_schema_unchanged": true,
+    "authoring_contract_unchanged": true,
+    "scenario_facts_may_not_be_changed_to_favor_an_arm": true,
+    "exact_normalized_text_duplicate_count_max": 0,
+    "normalized_five_gram_jaccard_manual_review_threshold": 0.85,
+    "unresolved_high_similarity_pair_count_max": 0
+  },
+  "v2_allowed_changes": [
+    "deterministic_case_specific_lexical_anchors",
+    "deterministic_sentence_order_or_connective_variation",
+    "domain_and_variant_specific_surface_wording",
+    "generic_repeated_phrase_removal",
+    "v2_output_namespace"
+  ],
+  "v2_forbidden_changes": [
+    "case_reselection",
+    "reserve_case_substitution",
+    "stratum_or_domain_reassignment",
+    "slot_or_pool_order_change",
+    "threshold_relaxation",
+    "gold_or_reference_label_injection",
+    "atomic_segmentation_or_arm_output_access",
+    "phase7_3_3_d_effect_content_access",
+    "provider_access",
+    "runtime_or_production_write_change"
+  ],
+  "v2_output_namespace": {
+    "dataset": "crates/eval/datasets/phase7_4/phase7_4_selected_source_cases_v2.json",
+    "artifact_suffix": "v2",
+    "v1_output_paths_must_remain_absent": true
+  },
+  "authority": {
+    "v2_authoring_authorized_after_successor_freeze": true,
+    "atomic_segmentation_authorized": false,
+    "reference_review_authorized": false,
+    "gold_freeze_authorized": false,
+    "arm_execution_authorized": false,
+    "effect_scoring_authorized": false,
+    "provider_call_authorized": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_write_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_pass": "author_phase7_4_selected_source_cases_v2"
+}
