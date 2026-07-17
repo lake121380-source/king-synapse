@@ -1,0 +1,191 @@
+{
+  "schema_version": 2,
+  "report_id": "phase7.4-atomic-segmentation-representation-coverage-gate-v2",
+  "status": "PASS",
+  "segmentation_algorithm_id": "phase7.4-query-blind-sentence-segmentation-v1",
+  "formal_overlay_contract_version": "phase7.4-query-blind-sentence-segmentation-overlay-v2",
+  "input_projection_sha256": "c27d60e89e273962b0b32bd4496fed1cac56d1009d8c65d002f5b50ff33cc07b",
+  "overlay_dataset_sha256": "5930c2582ce8ba1cf433567c2b170524b2c8748bd7eaf1f7f0d20e624acc7601",
+  "retained_v1_attempt_log_sha256": "7de5b1f1017fa1f481b62e9ad0f8017cb7852478bd0c96c799fc660707002193",
+  "checks": [
+    {
+      "gate_check": "rust_unit_tests_passed",
+      "passed": true
+    },
+    {
+      "gate_check": "rust_stdout_replay_byte_identical",
+      "passed": true
+    },
+    {
+      "gate_check": "rust_stdout_hash_replays",
+      "passed": true
+    },
+    {
+      "gate_check": "projection_hash_exact",
+      "passed": true
+    },
+    {
+      "gate_check": "algorithm_and_constructor_exact",
+      "passed": true
+    },
+    {
+      "gate_check": "case_count_168",
+      "passed": true
+    },
+    {
+      "gate_check": "eight_strata_twenty_one_each",
+      "passed": true
+    },
+    {
+      "gate_check": "case_memory_alignment_exact",
+      "passed": true
+    },
+    {
+      "gate_check": "memory_count_1680",
+      "passed": true
+    },
+    {
+      "gate_check": "atomic_unit_count_3360",
+      "passed": true
+    },
+    {
+      "gate_check": "exactly_two_units_per_memory",
+      "passed": true
+    },
+    {
+      "gate_check": "atomic_units_gt_memory_chunks",
+      "passed": true
+    },
+    {
+      "gate_check": "whole_memory_single_unit_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "zero_unit_memory_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "span_out_of_bounds_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "span_overlap_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "uncovered_character_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "reconstruction_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "overlay_schema_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "provenance_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "identity_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "placeholder_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "authority_failure_count_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "overlay_ids_unique",
+      "passed": true
+    },
+    {
+      "gate_check": "atomic_claim_ids_unique",
+      "passed": true
+    },
+    {
+      "gate_check": "no_query_gold_arm_or_analysis_fields",
+      "passed": true
+    },
+    {
+      "gate_check": "blindness_access_counts_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "provider_network_runtime_write_counts_zero",
+      "passed": true
+    },
+    {
+      "gate_check": "effect_dataset_closed_to_arms",
+      "passed": true
+    },
+    {
+      "gate_check": "runtime_not_authorized",
+      "passed": true
+    },
+    {
+      "gate_check": "v1_authoritative_outputs_absent",
+      "passed": true
+    },
+    {
+      "gate_check": "v1_attempt_retained",
+      "passed": true
+    },
+    {
+      "gate_check": "formal_schema_hash_exact",
+      "passed": true
+    },
+    {
+      "gate_check": "dataset_schema_version_v2",
+      "passed": true
+    },
+    {
+      "gate_check": "formal_overlay_roots_exact",
+      "passed": true
+    },
+    {
+      "gate_check": "source_projection_unchanged",
+      "passed": true
+    },
+    {
+      "gate_check": "prototype_unchanged",
+      "passed": true
+    },
+    {
+      "gate_check": "sentence_algorithm_unchanged",
+      "passed": true
+    },
+    {
+      "gate_check": "v1_authoritative_outputs_written_false",
+      "passed": true
+    }
+  ],
+  "diagnostics": {
+    "case_count": 168,
+    "memory_count": 1680,
+    "atomic_unit_count": 3360,
+    "whole_memory_single_unit_count": 0,
+    "zero_unit_memory_count": 0,
+    "span_out_of_bounds_count": 0,
+    "span_overlap_count": 0,
+    "uncovered_character_count": 0,
+    "reconstruction_failure_count": 0,
+    "overlay_schema_failure_count": 0,
+    "provenance_failure_count": 0,
+    "identity_failure_count": 0,
+    "placeholder_failure_count": 0,
+    "authority_failure_count": 0
+  },
+  "all_checks_passed": true,
+  "reference_protocol_freeze_authorized": true,
+  "reference_review_authorized": false,
+  "selected_effect_dataset_opened_for_arm_execution": false,
+  "provider_called": false,
+  "runtime_integration_authorized": false,
+  "next_authorized_stage": "freeze_phase7_4_independent_reference_protocol_v1"
+}
