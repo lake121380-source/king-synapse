@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.4-independent-reference-submission-schema-v1",
+  "title": "Phase 7.4 Independent Reference Submission",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "submission_id",
+    "reviewer_role",
+    "reviewer_identity_declaration_sha256",
+    "packet_sha256",
+    "worklist_sha256",
+    "case_count",
+    "claim_annotation_count",
+    "deferred_count",
+    "cases",
+    "other_reviewer_output_accessed",
+    "authoring_or_arm_output_accessed",
+    "provider_called"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "submission_id": {
+      "type": "string",
+      "pattern": "^phase7\\.4-independent-reference-reviewer-[ab]-submission-v1$"
+    },
+    "reviewer_role": {
+      "enum": [
+        "reviewer_a",
+        "reviewer_b"
+      ]
+    },
+    "reviewer_identity_declaration_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "packet_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "worklist_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "case_count": {
+      "const": 168
+    },
+    "claim_annotation_count": {
+      "const": 3360
+    },
+    "deferred_count": {
+      "const": 0
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 168,
+      "maxItems": 168,
+      "items": {
+        "$ref": "#/$defs/case_annotation"
+      }
+    },
+    "other_reviewer_output_accessed": {
+      "const": false
+    },
+    "authoring_or_arm_output_accessed": {
+      "const": false
+    },
+    "provider_called": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "span": {
+      "type": "object",
+      "required": [
+        "start_char",
+        "end_char"
+      ],
+      "properties": {
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_annotation": {
+      "type": "object",
+      "required": [
+        "atomic_claim_id",
+        "source_memory_id",
+        "support_state",
+        "query_relevant",
+        "evidence_spans"
+      ],
+      "properties": {
+        "atomic_claim_id": {
+          "type": "string",
+          "pattern": "^aes-claim-v1-[0-9a-f]{64}$"
+        },
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "support_state": {
+          "enum": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "contradictory",
+            "not_assessable"
+          ]
+        },
+        "query_relevant": {
+          "type": "boolean"
+        },
+        "evidence_spans": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/span"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "case_annotation": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "claim_annotations"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^p74-(tu|co|pe|fl|cr|me|ub|al)-[0-9]{3}$"
+        },
+        "claim_annotations": {
+          "type": "array",
+          "minItems": 20,
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/claim_annotation"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "case and claim identities exactly match the assigned frozen worklist order",
+    "every formal Atomic claim is annotated exactly once",
+    "reviewer A and reviewer B identity declarations establish distinct independent reviewers",
+    "spans are ordered, non-overlapping, in bounds, and contained by the Atomic source span",
+    "spans are nonempty only for query-relevant supported or partially_supported claims",
+    "submission is frozen before agreement or other-reviewer output is visible"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "protocol_id": "phase7.4-independent-reference-protocol-v1",
+  "status": "frozen_before_reviewer_assignment_and_reference_execution",
+  "entry_gate": "freeze_phase7_4_independent_reference_protocol_v1",
+  "protocol_document": {
+    "path": "docs/eval/PHASE7_4_2_INDEPENDENT_REFERENCE_PROTOCOL.md",
+    "sha256": "51d5c84e0e7bda32885869cdc0fb022fec4ac0bd144c2694e70aae84f66cfffd"
+  },
+  "reviewer_prompt": {
+    "path": "crates/eval/config/phase7_4_independent_reference_reviewer_prompt_v1.md",
+    "sha256": "319e6e5737bf4e4fab4a82f197ae18a17a8a152d38d3485f43c5b4dd3311f904"
+  },
+  "submission_schema": {
+    "path": "crates/eval/config/phase7_4_independent_reference_submission_schema_v1.json",
+    "sha256": "91b59082d39422ab1e9701e5224191eb9c77583cea20cc836da4fb4c198db915"
+  },
+  "gold_schema": {
+    "path": "crates/eval/config/phase7_4_offline_retrieval_gold_schema_v1.json",
+    "sha256": "7c96fbd29e11b755dd932a0e81348305e40f4d22aabbbf41ec438b8252239f1d"
+  },
+  "frozen_inputs": {
+    "crates/eval/datasets/phase7_4/phase7_4_selected_source_cases_v2.json": "b06ff2ceb1d300561df937f73a1e9de9d8f5c9d6ca19cb57069b63acc834256d",
+    "crates/eval/datasets/phase7_4/phase7_4_atomic_overlay_dataset_v2.json": "5930c2582ce8ba1cf433567c2b170524b2c8748bd7eaf1f7f0d20e624acc7601",
+    "crates/eval/reports/phase7_4_atomic_segmentation_representation_coverage_gate_v2.json": "10c53aabde6a5d7ac9b9b4552efe6cf3cc7b1d5ccbe379fa04659a7bcde57102",
+    "crates/eval/reports/phase7_4_query_blind_atomic_segmentation_receipt_v2.json": "5f603efb77c8f4250366cc96896b4216b58c8855fe88d79ea60f3d3209c7f2e6",
+    "crates/eval/datasets/pattern_extraction/phase7_4_stage_state_v11.json": "131e8d340849580a2cbced92ba9b148905d7f7062292f15e42f3d82a9a80c983",
+    "crates/eval/reports/phase7_4_readiness_v11.json": "44edb29c0658684e03a2c0950e68ac081c1fc39bfe9071c49139ef64270f3d52",
+    "crates/eval/config/phase7_4_offline_retrieval_evaluation_protocol_v1.json": "adc48017a40a1ae7685ce5b8868f2bdff623cf845aa845c8ca7e7986ecdac8fb"
+  },
+  "blind_packet": {
+    "packet_id": "phase7.4-independent-reference-blind-packet-v1",
+    "case_count": 168,
+    "memory_count": 1680,
+    "atomic_claim_count": 3360,
+    "case_fields_included": [
+      "case_id",
+      "query",
+      "source_events",
+      "source_evidence",
+      "candidate_memories"
+    ],
+    "memory_fields_included": [
+      "pool_ordinal",
+      "source_memory_id",
+      "source_memory_kind",
+      "source_memory_content",
+      "source_memory_content_sha256",
+      "source_memory_sha256",
+      "source_evidence_ids",
+      "source_event_ids",
+      "atomic_units"
+    ],
+    "atomic_fields_included": [
+      "atomic_claim_id",
+      "ordinal",
+      "claim_text",
+      "claim_text_sha256",
+      "source_locator",
+      "provenance"
+    ],
+    "forbidden_fields": [
+      "domain",
+      "scenario_variant",
+      "support_state",
+      "confidence",
+      "contradiction_links",
+      "author_rationale",
+      "intended_answer",
+      "relevant_memory_ids",
+      "query_relevant",
+      "evidence_spans",
+      "gold_label",
+      "arm_score",
+      "arm_rank",
+      "arm_output",
+      "analysis_result"
+    ],
+    "candidate_memory_order": "pool_ordinal_ascending",
+    "atomic_unit_order": "ordinal_ascending"
+  },
+  "reviewer_worklists": {
+    "reviewer_a_seed": 7402301,
+    "reviewer_b_seed": 7402302,
+    "case_order_material": "phase7.4-reference|<seed>|<case_id>",
+    "case_order": [
+      "sha256_digest_ascending",
+      "case_id_ascending"
+    ],
+    "same_case_set_required": true,
+    "distinct_case_order_required": true,
+    "memory_and_claim_order_unchanged_within_case": true
+  },
+  "independence": {
+    "reviewer_count": 2,
+    "adjudicator_count": 1,
+    "distinct_people_or_independent_review_entities_required": 3,
+    "source_author_may_review": false,
+    "arm_implementer_may_review": false,
+    "same_person_or_model_session_for_a_and_b_allowed": false,
+    "copied_or_coordinated_submissions_allowed": false,
+    "other_reviewer_output_visible_before_both_freezes": false,
+    "agreement_visible_before_both_freezes": false,
+    "adjudicator_visible_before_both_freezes": false,
+    "local_identity_declaration_receipt_required": true,
+    "personal_data_or_credentials_committed": false
+  },
+  "annotation": {
+    "case_count": 168,
+    "claim_count_per_case": 20,
+    "claim_annotation_count": 3360,
+    "support_states": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "contradictory",
+      "not_assessable"
+    ],
+    "query_relevance_independent_of_support_state": true,
+    "all_claims_annotated_exactly_once": true,
+    "deferred_count": 0,
+    "relevant_memory_derivation": "has_query_relevant_supported_or_partially_supported_claim",
+    "reviewer_enters_relevant_memory_ids": false
+  },
+  "span_rules": {
+    "unit": "zero_based_half_open_unicode_scalar_offset_in_source_memory_content",
+    "must_be_within_atomic_source_span": true,
+    "ordered_nonoverlapping_unique_required": true,
+    "query_relevant_supported_or_partial_min_spans": 1,
+    "query_irrelevant_span_count": 0,
+    "unsupported_span_count": 0,
+    "contradictory_span_count": 0,
+    "not_assessable_span_count": 0
+  },
+  "agreement_gate": {
+    "minimum_aggregate_span_f1": 0.8,
+    "minimum_aggregate_support_state_cohen_kappa": 0.7,
+    "minimum_stratum_support_state_cohen_kappa": 0.6,
+    "query_relevance_exact_agreement_reported": true,
+    "all_disagreements_adjudicated_required": true,
+    "missing_duplicate_or_deferred_count_max": 0,
+    "threshold_relaxation_after_submission_allowed": false,
+    "on_failure": "freeze_authoritative_reference_failure_gold_not_authorized"
+  },
+  "adjudication": {
+    "input_scope": "disagreement_items_only",
+    "third_distinct_adjudicator_required": true,
+    "same_blind_packet_only": true,
+    "arm_or_analysis_access_allowed": false,
+    "all_items_resolved_required": true,
+    "deferred_count": 0,
+    "gold_edit_for_effect_improvement_allowed": false
+  },
+  "failure_taxonomy": [
+    "reviewer_independence_failure",
+    "reviewer_assignment_failure",
+    "packet_lineage_failure",
+    "submission_schema_failure",
+    "annotation_coverage_failure",
+    "claim_identity_failure",
+    "span_boundary_failure",
+    "label_rule_failure",
+    "missing_or_duplicate_annotation_failure",
+    "agreement_threshold_failure",
+    "adjudication_failure",
+    "deferred_item_failure",
+    "blindness_failure",
+    "provider_or_environment_failure",
+    "authority_boundary_failure",
+    "audit_failure"
+  ],
+  "authority": {
+    "blind_packet_construction_authorized": true,
+    "reviewer_worklist_construction_authorized": true,
+    "independent_reference_submission_collection_authorized_after_pass": true,
+    "agreement_execution_authorized": false,
+    "adjudication_authorized": false,
+    "gold_freeze_authorized": false,
+    "selected_effect_dataset_opening_for_arm_execution_authorized": false,
+    "arm_execution_authorized": false,
+    "effect_scoring_authorized": false,
+    "provider_call_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_pass": "collect_phase7_4_independent_reference_submissions_v1"
+}
