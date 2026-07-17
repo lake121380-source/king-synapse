@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.4-independent-reference-identity-declaration-schema-v1",
+  "title": "Phase 7.4 Independent Reference Identity Declaration",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "declaration_id",
+    "reference_protocol_receipt_sha256",
+    "packet_sha256",
+    "review_entities",
+    "identity_commitments_distinct",
+    "personal_data_present",
+    "credentials_present"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "declaration_id": {
+      "const": "phase7.4-independent-reference-identity-declaration-v1"
+    },
+    "reference_protocol_receipt_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "packet_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "review_entities": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/review_entity"
+      }
+    },
+    "identity_commitments_distinct": {
+      "const": true
+    },
+    "personal_data_present": {
+      "const": false
+    },
+    "credentials_present": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "review_entity": {
+      "type": "object",
+      "required": [
+        "role",
+        "identity_commitment_sha256",
+        "assignment_accepted",
+        "is_source_author",
+        "is_arm_implementer",
+        "shares_person_or_model_session_with_other_review_entity",
+        "other_reviewer_output_accessed",
+        "agreement_or_gold_accessed",
+        "provider_called"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "reviewer_a",
+            "reviewer_b",
+            "adjudicator"
+          ]
+        },
+        "identity_commitment_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "assignment_accepted": {
+          "const": true
+        },
+        "is_source_author": {
+          "const": false
+        },
+        "is_arm_implementer": {
+          "const": false
+        },
+        "shares_person_or_model_session_with_other_review_entity": {
+          "const": false
+        },
+        "other_reviewer_output_accessed": {
+          "const": false
+        },
+        "agreement_or_gold_accessed": {
+          "const": false
+        },
+        "provider_called": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "roles are exactly reviewer_a, reviewer_b, and adjudicator with no duplicate role",
+    "all three identity commitment SHA256 values are distinct",
+    "identity commitments are generated and retained by the external coordinator without committing personal data",
+    "Reviewer A and Reviewer B submissions were produced independently before either output or agreement was visible"
+  ]
+}
