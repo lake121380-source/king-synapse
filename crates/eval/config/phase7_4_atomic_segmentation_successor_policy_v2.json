@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "policy_id": "phase7.4-atomic-segmentation-successor-policy-v2",
+  "status": "successor_pending_freeze_after_v1_source_hash_contract_failure",
+  "entry_gate": "classify_phase7_4_atomic_segmentation_v1_failure_and_freeze_v2_successor",
+  "policy_document": {
+    "path": "docs/eval/PHASE7_4_2_ATOMIC_SEGMENTATION_SUCCESSOR_V2.md",
+    "sha256": "0b49c07f3d0c15a5dfd52b9b7a89bf87b312fc85915e370be8be7335a9377c92"
+  },
+  "formal_overlay_schema": {
+    "path": "crates/eval/config/phase7_4_atomic_evidence_overlay_schema_v2.json",
+    "sha256": "865e5b4f9bf1bf49ce1d38d4b5084c307d3975382cc28195a8c30cd01750f790"
+  },
+  "retained_v1": {
+    "python_adapter_path": "scripts/eval/phase7_4_query_blind_atomic_segmentation_v1.py",
+    "python_adapter_sha256": "50cc5e69cd0f5e82ae85ea7bfc5ad04263a64b71f97ed8c6b0cd12b8a2400ec2",
+    "rust_adapter_path": "crates/eval/src/bin/phase7_4_atomic_segmentation_v1.rs",
+    "rust_adapter_sha256": "9b65f3077b40f47c3d76c27414243d68cb67b79dcddd8bdd5abf776c6aeea57d",
+    "attempt_log_path": "crates/eval/reports/phase7_4_query_blind_atomic_segmentation_attempts_v1.jsonl",
+    "attempt_log_sha256": "7de5b1f1017fa1f481b62e9ad0f8017cb7852478bd0c96c799fc660707002193",
+    "attempt_event_count": 1,
+    "classified_failure": "source_memory_hash_contract_mismatch",
+    "failure_taxonomy": "input_lineage_failure",
+    "authoritative_outputs_written": false,
+    "atomic_or_arm_output_written": false,
+    "reference_or_gold_output_written": false,
+    "query_access_count": 0,
+    "provider_called": false,
+    "selected_effect_dataset_opened_for_arm_execution": false,
+    "runtime_integration_authorized": false,
+    "same_version_retry_allowed": false
+  },
+  "source_hash_contract": {
+    "source_dataset_and_projection_unchanged": true,
+    "canonical_json_key_order": "lexicographic",
+    "projection_fields": [
+      "source_memory_content_sha256",
+      "source_memory_id",
+      "source_memory_kind",
+      "source_evidence_ids_sorted",
+      "source_event_ids_sorted"
+    ],
+    "evidence_and_event_values_sorted_ascending": true,
+    "source_memory_sha256_must_equal_frozen_input": true,
+    "source_memory_hash_rewrite_allowed": false
+  },
+  "formal_overlay_contract": {
+    "segmentation_contract_version": "phase7.4-query-blind-sentence-segmentation-overlay-v2",
+    "schema_version": 2,
+    "status": "eval_only_formal_atomic_overlay",
+    "overlay_id_prefix": "aes-v1-",
+    "atomic_claim_id_prefix": "aes-claim-v1-",
+    "overlay_id_material": "phase7.4|<source_memory_id>|<source_memory_sha256>|phase7.4-query-blind-sentence-segmentation-overlay-v2",
+    "atomic_claim_id_material": "<overlay_id>|<ordinal>|<claim_text_sha256>",
+    "prototype_schema_or_constructor_modified": false,
+    "formal_v2_constructor_and_validator_required": true
+  },
+  "unchanged_segmentation_design": {
+    "query_blind_projection_sha256": "c27d60e89e273962b0b32bd4496fed1cac56d1009d8c65d002f5b50ff33cc07b",
+    "sentence_algorithm_id": "phase7.4-query-blind-sentence-segmentation-v1",
+    "selected_case_count": 168,
+    "memory_count": 1680,
+    "atomic_unit_count": 3360,
+    "atomic_units_per_memory": 2,
+    "span_coverage_complete_required": true,
+    "unresolved_gap_count_max": 0,
+    "support_state_placeholder": "not_assessable",
+    "support_confidence_placeholder": 0,
+    "extraction_confidence": 1,
+    "query_gold_reference_or_arm_access_allowed": false,
+    "representation_and_coverage_threshold_relaxation_allowed": false
+  },
+  "v2_allowed_changes": [
+    "new_formal_overlay_schema_v2",
+    "new_eval_only_rust_v2_constructor_and_validator",
+    "authoring_source_hash_contract_validation",
+    "new_contract_version_in_overlay_identity_material",
+    "v2_output_namespace"
+  ],
+  "v2_forbidden_changes": [
+    "source_dataset_or_projection_mutation",
+    "prototype_constructor_or_schema_mutation",
+    "sentence_algorithm_change",
+    "span_or_unit_count_change",
+    "support_placeholder_or_provenance_change",
+    "case_reselection_or_pool_order_change",
+    "threshold_relaxation",
+    "query_gold_reference_or_arm_access",
+    "phase7_3_3_d_effect_content_access",
+    "provider_access",
+    "runtime_or_production_write_change"
+  ],
+  "v2_output_namespace": {
+    "overlay_dataset": "crates/eval/datasets/phase7_4/phase7_4_atomic_overlay_dataset_v2.json",
+    "artifact_suffix": "v2",
+    "v1_authoritative_output_paths_must_remain_absent": true
+  },
+  "authority": {
+    "v2_segmentation_execution_authorized_after_successor_freeze": true,
+    "reference_protocol_freeze_authorized": false,
+    "reference_review_authorized": false,
+    "gold_freeze_authorized": false,
+    "selected_effect_dataset_opening_for_arm_execution_authorized": false,
+    "arm_execution_authorized": false,
+    "effect_scoring_authorized": false,
+    "provider_call_authorized": false,
+    "memory_kind_modification_authorized": false,
+    "memory_schema_modification_authorized": false,
+    "recall_engine_modification_authorized": false,
+    "production_write_authorized": false,
+    "runtime_integration_authorized": false,
+    "productization_authorized": false,
+    "release_authorized": false
+  },
+  "next_authorized_stage_after_pass": "execute_phase7_4_query_blind_atomic_segmentation_v2"
+}

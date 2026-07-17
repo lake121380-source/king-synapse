@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase7.4-atomic-evidence-overlay-schema-v2",
+  "title": "Phase 7.4 Formal Atomic Evidence Overlay v2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "overlay_id",
+    "status",
+    "source_memory_id",
+    "source_memory_sha256",
+    "source_memory_content_sha256",
+    "source_memory_kind",
+    "segmentation_contract_version",
+    "atomic_units",
+    "reconstruction",
+    "authority"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "overlay_id": {
+      "type": "string",
+      "pattern": "^aes-v1-[0-9a-f]{64}$"
+    },
+    "status": {
+      "const": "eval_only_formal_atomic_overlay"
+    },
+    "source_memory_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_memory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_memory_content_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_memory_kind": {
+      "enum": [
+        "fact",
+        "preference",
+        "failure",
+        "playbook",
+        "state"
+      ]
+    },
+    "segmentation_contract_version": {
+      "const": "phase7.4-query-blind-sentence-segmentation-overlay-v2"
+    },
+    "atomic_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/atomic_unit"
+      }
+    },
+    "reconstruction": {
+      "$ref": "#/$defs/reconstruction"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "atomic_unit": {
+      "type": "object",
+      "required": [
+        "atomic_claim_id",
+        "ordinal",
+        "claim_text",
+        "claim_text_sha256",
+        "source_locator",
+        "support_state",
+        "provenance",
+        "confidence",
+        "contradiction_links"
+      ],
+      "properties": {
+        "atomic_claim_id": {
+          "type": "string",
+          "pattern": "^aes-claim-v1-[0-9a-f]{64}$"
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claim_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_text_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/text_span_locator"
+        },
+        "support_state": {
+          "const": "not_assessable"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "contradiction_links": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "text_span_locator": {
+      "type": "object",
+      "required": [
+        "locator_type",
+        "start_char",
+        "end_char"
+      ],
+      "properties": {
+        "locator_type": {
+          "const": "source_memory_text_span"
+        },
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_memory_id",
+        "source_memory_sha256",
+        "source_evidence_ids",
+        "source_event_ids"
+      ],
+      "properties": {
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_memory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_event_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "confidence": {
+      "type": "object",
+      "required": [
+        "extraction_confidence",
+        "support_confidence",
+        "calibration_status"
+      ],
+      "properties": {
+        "extraction_confidence": {
+          "const": 1
+        },
+        "support_confidence": {
+          "const": 0
+        },
+        "calibration_status": {
+          "const": "not_assessable"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reconstruction": {
+      "type": "object",
+      "required": [
+        "source_memory_id",
+        "ordered_atomic_claim_ids",
+        "status",
+        "deterministic",
+        "overlap_characters",
+        "unresolved_gap_count"
+      ],
+      "properties": {
+        "source_memory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordered_atomic_claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^aes-claim-v1-[0-9a-f]{64}$"
+          }
+        },
+        "status": {
+          "const": "complete"
+        },
+        "deterministic": {
+          "const": true
+        },
+        "overlap_characters": {
+          "const": 0
+        },
+        "unresolved_gap_count": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "eval_only",
+        "runtime_applied",
+        "memory_mutated",
+        "store_written",
+        "recall_engine_mutated",
+        "promotion_authorized"
+      ],
+      "properties": {
+        "eval_only": {
+          "const": true
+        },
+        "runtime_applied": {
+          "const": false
+        },
+        "memory_mutated": {
+          "const": false
+        },
+        "store_written": {
+          "const": false
+        },
+        "recall_engine_mutated": {
+          "const": false
+        },
+        "promotion_authorized": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "semantic_invariants_not_expressible_in_json_schema": [
+    "source_memory_sha256 replays the frozen authoring projection with source_evidence_ids_sorted and source_event_ids_sorted",
+    "overlay_id hashes phase7.4, source Memory identity and hash, and the formal v2 contract version",
+    "atomic_claim_id hashes overlay ID, ordinal, and exact claim text SHA256",
+    "source spans are ordered, non-overlapping, in bounds, and cover every Unicode scalar exactly once",
+    "provenance IDs exactly equal the owning frozen source Memory references",
+    "support and confidence fields are non-Gold segmentation placeholders",
+    "authority remains eval-only and cannot be promoted by serialized input"
+  ]
+}
