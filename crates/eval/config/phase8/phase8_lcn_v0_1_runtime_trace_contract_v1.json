@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase8-lcn-v0.1-runtime-trace-contract-v1",
+  "phase": "Phase 8.2-D0-E3/E4",
+  "objective": "make_read_only_knowledge_execution_explainable_and_regression_observable",
+  "canonical_entry_runtime_projection": {
+    "required_fields": [
+      "entry_id",
+      "key",
+      "status",
+      "evidence_basis",
+      "retrieval_eligible"
+    ],
+    "evidence_basis_enum": [
+      "owner_confirmation",
+      "owner_attestation",
+      "source_assertion",
+      "external_reference",
+      "multiple_sources",
+      "unknown"
+    ],
+    "authority_mapping": {
+      "owner_confirmed": "owner_confirmation",
+      "owner_confirmed_qualified": "owner_confirmation",
+      "owner_confirmed_phrase": "owner_confirmation",
+      "owner_confirmed_current_as_of_date": "owner_confirmation",
+      "owner_attestation": "owner_attestation"
+    }
+  },
+  "runtime_trace_required_fields": [
+    "schema_version",
+    "task_id",
+    "packet_sha256",
+    "candidate_entries",
+    "selected_entries",
+    "excluded_entries",
+    "applied_guards",
+    "evidence_basis",
+    "answer_mode",
+    "lineage",
+    "runtime_write"
+  ],
+  "closed_authority": {
+    "source_document_read": false,
+    "external_provider_called": false,
+    "runtime_write": false,
+    "candidate_or_network_modified": false,
+    "learning_or_reflection": false
+  }
+}

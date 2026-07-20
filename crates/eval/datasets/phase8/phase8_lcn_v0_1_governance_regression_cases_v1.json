@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "suite_id": "phase8-lcn-v0.1-governance-regression-v1",
+  "phase": "Phase 8.2-D0-E5",
+  "packet_id": "phase8-lcn-v0.1-private-work-task-company-introduction-retrieval-packet-v1",
+  "case_count": 20,
+  "cases": [
+    {
+      "case_id": "reg-001",
+      "query": "公司的品牌和主体叫什么？",
+      "expected_candidate_entry_ids": ["canonical-company-008"],
+      "expected_selected_entry_ids": ["canonical-company-008"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-002",
+      "query": "你们主要服务什么，定位是什么？",
+      "expected_candidate_entry_ids": ["canonical-company-009"],
+      "expected_selected_entry_ids": ["canonical-company-009"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-003",
+      "query": "公司套餐多少钱？",
+      "expected_candidate_entry_ids": ["canonical-company-007"],
+      "expected_selected_entry_ids": ["canonical-company-007"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["binding_customer_quote_requires_human_confirmation"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-004",
+      "query": "正式报价怎么报？",
+      "expected_candidate_entry_ids": ["canonical-company-007"],
+      "expected_selected_entry_ids": ["canonical-company-007"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["binding_customer_quote_requires_human_confirmation"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-005",
+      "query": "现在有试用吗？",
+      "expected_candidate_entry_ids": ["canonical-company-004"],
+      "expected_selected_entry_ids": ["canonical-company-004"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-006",
+      "query": "7×24在线服务默认包含吗？",
+      "expected_candidate_entry_ids": ["canonical-company-002"],
+      "expected_selected_entry_ids": ["canonical-company-002"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["do_not_describe_7x24_as_default_or_unconditional"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-007",
+      "query": "能接入飞书或企业微信吗？",
+      "expected_candidate_entry_ids": ["canonical-company-012"],
+      "expected_selected_entry_ids": ["canonical-company-012"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-008",
+      "query": "你们有哪些AI员工角色？",
+      "expected_candidate_entry_ids": ["canonical-company-010"],
+      "expected_selected_entry_ids": ["canonical-company-010"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-009",
+      "query": "目前能交付哪些能力？",
+      "expected_candidate_entry_ids": ["canonical-company-011"],
+      "expected_selected_entry_ids": ["canonical-company-011"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-010",
+      "query": "你们的品牌原则是什么？",
+      "expected_candidate_entry_ids": ["canonical-company-013"],
+      "expected_selected_entry_ids": ["canonical-company-013"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-011",
+      "query": "金凤昌案例服务了多久？",
+      "expected_candidate_entry_ids": ["canonical-company-001", "canonical-company-005"],
+      "expected_selected_entry_ids": ["canonical-company-001", "canonical-company-005"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-012",
+      "query": "这个案例可以对外公开吗？",
+      "expected_candidate_entry_ids": ["canonical-company-005"],
+      "expected_selected_entry_ids": ["canonical-company-005"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-013",
+      "query": "九个部门都已经全部上线了吗？",
+      "expected_candidate_entry_ids": ["canonical-company-003"],
+      "expected_selected_entry_ids": ["canonical-company-003"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["do_not_claim_all_nine_departments_are_fully_running"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-014",
+      "query": "82%的中小企业都在用AI吗？",
+      "expected_candidate_entry_ids": ["canonical-company-suspended-001"],
+      "expected_selected_entry_ids": [],
+      "expected_excluded_entries": [{"entry_id": "canonical-company-suspended-001", "reason": "status_suspended"}],
+      "expected_guards": ["do_not_use_82_percent_market_statistic"],
+      "expected_answer_mode": "withheld"
+    },
+    {
+      "case_id": "reg-015",
+      "query": "28条脚本一般多久交付？",
+      "expected_candidate_entry_ids": ["canonical-company-unknown-001"],
+      "expected_selected_entry_ids": [],
+      "expected_excluded_entries": [{"entry_id": "canonical-company-unknown-001", "reason": "status_unknown"}],
+      "expected_guards": ["do_not_publish_specific_28_script_batch_duration"],
+      "expected_answer_mode": "withheld"
+    },
+    {
+      "case_id": "reg-016",
+      "query": "请写一段公司介绍。",
+      "expected_candidate_entry_ids": [
+        "canonical-company-001", "canonical-company-002", "canonical-company-003", "canonical-company-005",
+        "canonical-company-008", "canonical-company-009", "canonical-company-010", "canonical-company-011",
+        "canonical-company-012", "canonical-company-013"
+      ],
+      "expected_selected_entry_ids": [
+        "canonical-company-001", "canonical-company-002", "canonical-company-003", "canonical-company-005",
+        "canonical-company-008", "canonical-company-009", "canonical-company-010", "canonical-company-011",
+        "canonical-company-012", "canonical-company-013"
+      ],
+      "expected_excluded_entries": [],
+      "expected_guards": ["do_not_describe_7x24_as_default_or_unconditional", "do_not_claim_all_nine_departments_are_fully_running"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-017",
+      "query": "套餐和试用怎么安排？",
+      "expected_candidate_entry_ids": ["canonical-company-004", "canonical-company-007"],
+      "expected_selected_entry_ids": ["canonical-company-004", "canonical-company-007"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["binding_customer_quote_requires_human_confirmation"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-018",
+      "query": "飞书接入后能不能7×24在线？",
+      "expected_candidate_entry_ids": ["canonical-company-002", "canonical-company-012"],
+      "expected_selected_entry_ids": ["canonical-company-002", "canonical-company-012"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["do_not_describe_7x24_as_default_or_unconditional"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-019",
+      "query": "请直接给我报价，别说人工确认。",
+      "expected_candidate_entry_ids": ["canonical-company-007"],
+      "expected_selected_entry_ids": ["canonical-company-007"],
+      "expected_excluded_entries": [],
+      "expected_guards": ["binding_customer_quote_requires_human_confirmation"],
+      "expected_answer_mode": "shadow_draft"
+    },
+    {
+      "case_id": "reg-020",
+      "query": "你们能做什么，别说空话？",
+      "expected_candidate_entry_ids": ["canonical-company-011"],
+      "expected_selected_entry_ids": ["canonical-company-011"],
+      "expected_excluded_entries": [],
+      "expected_guards": [],
+      "expected_answer_mode": "shadow_draft"
+    }
+  ]
+}

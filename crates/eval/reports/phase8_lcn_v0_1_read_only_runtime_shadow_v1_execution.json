@@ -1,0 +1,1019 @@
+{
+  "schema_version": 1,
+  "execution_id": "phase8_lcn_v0_1_read_only_runtime_shadow_v1-execution",
+  "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+  "cases_sha256": "ad9edd869567f13fbc94c321994e8eba5b1aa538b5a8bc368770e5c420aecfa4",
+  "results": [
+    {
+      "case_id": "reg-001",
+      "query": "公司的品牌和主体叫什么？",
+      "answer": "{'legal_or_operating_entity': '淄博桐灼网络科技公司', 'brand': '灼见AI'}",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-001",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-008",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-008"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-008",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-008"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-002",
+      "query": "你们主要服务什么，定位是什么？",
+      "answer": "{'primary': '为中小企业提供AI落地服务', 'secondary': '帮助普通职场人使用AI'}",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-002",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-009",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-009"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-009",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-009"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-003",
+      "query": "公司套餐多少钱？",
+      "answer": "当前参考套餐为起步1,980元/月、成长2,980元/月、全能3,980元/月。正式报价、合同范围和交付边界仍需人工确认。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-003",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-007",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-007"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "binding_customer_quote_requires_human_confirmation"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-007",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-007"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-004",
+      "query": "正式报价怎么报？",
+      "answer": "当前参考套餐为起步1,980元/月、成长2,980元/月、全能3,980元/月。正式报价、合同范围和交付边界仍需人工确认。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-004",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-007",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-007"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "binding_customer_quote_requires_human_confirmation"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-007",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-007"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-005",
+      "query": "现在有试用吗？",
+      "answer": "当前试用条件为首周免费，交付3条内容。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-005",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-004",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-004"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-004",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-004"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-006",
+      "query": "7×24在线服务默认包含吗？",
+      "answer": "7×24在线能力需要单独评估和部署，不是套餐默认或无条件提供。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-006",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-002",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-002"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "do_not_describe_7x24_as_default_or_unconditional"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-002",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-002"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-007",
+      "query": "能接入飞书或企业微信吗？",
+      "answer": "{'conditional': True, 'channels': ['飞书', '企业微信'], 'wording': '可根据实际情况接入飞书或企业微信'}",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-007",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-012",
+            "score": 3,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-012"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-012",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-012"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-008",
+      "query": "你们有哪些AI员工角色？",
+      "answer": "['调度', '文案', '剪辑', '调研', '审查', '工程师']",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-008",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-010",
+            "score": 3,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-010"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-010",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-010"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-009",
+      "query": "目前能交付哪些能力？",
+      "answer": "['文案', '视频策划与后期方案', '调研', '内容审查', '数据整理', '自动化脚本', 'API对接']",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-009",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-011",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-011"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-011",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-011"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-010",
+      "query": "你们的品牌原则是什么？",
+      "answer": "不卖焦虑、不堆术语，只解决今天能够落地的实际问题",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-010",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-013",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-013"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-013",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-013"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-011",
+      "query": "金凤昌案例服务了多久？",
+      "answer": "金沣昌案例为期一年的服务关系案例对外使用仍需负责人确认和客户授权，Runtime 不据此扩大公开范围。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-011",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-001",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-005",
+            "score": 1,
+            "rank": 2,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-001",
+          "canonical-company-005"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-001",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-005",
+            "basis": "owner_attestation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-001",
+              "canonical-company-005"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-012",
+      "query": "这个案例可以对外公开吗？",
+      "answer": "案例对外使用仍需负责人确认和客户授权，Runtime 不据此扩大公开范围。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-012",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-005",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-005"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-005",
+            "basis": "owner_attestation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-005"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-013",
+      "query": "九个部门都已经全部上线了吗？",
+      "answer": "资料确认的是覆盖9个部门的应用场景，不代表每个部门都处于同一上线状态。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-013",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-003",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-003"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "do_not_claim_all_nine_departments_are_fully_running"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-003",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-003"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-014",
+      "query": "82%的中小企业都在用AI吗？",
+      "answer": "当前问题触及知识包中的受限或未知信息，Runtime 不会给出未经确认的具体回答。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-014",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-suspended-001",
+            "score": 1,
+            "eligibility": "excluded",
+            "exclusion_reason": "status_suspended",
+            "rank": 1
+          }
+        ],
+        "selected_entries": [],
+        "excluded_entries": [
+          {
+            "entry_id": "canonical-company-suspended-001",
+            "reason": "status_suspended"
+          }
+        ],
+        "applied_guards": [
+          "do_not_use_82_percent_market_statistic"
+        ],
+        "evidence_basis": [],
+        "answer_mode": "withheld",
+        "lineage": [],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-015",
+      "query": "28条脚本一般多久交付？",
+      "answer": "当前问题触及知识包中的受限或未知信息，Runtime 不会给出未经确认的具体回答。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-015",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-unknown-001",
+            "score": 1,
+            "eligibility": "excluded",
+            "exclusion_reason": "status_unknown",
+            "rank": 1
+          }
+        ],
+        "selected_entries": [],
+        "excluded_entries": [
+          {
+            "entry_id": "canonical-company-unknown-001",
+            "reason": "status_unknown"
+          }
+        ],
+        "applied_guards": [
+          "do_not_publish_specific_28_script_batch_duration"
+        ],
+        "evidence_basis": [],
+        "answer_mode": "withheld",
+        "lineage": [],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-016",
+      "query": "请写一段公司介绍。",
+      "answer": "金沣昌案例为期一年的服务关系7×24在线能力需要单独评估和部署，不是套餐默认或无条件提供。资料确认的是覆盖9个部门的应用场景，不代表每个部门都处于同一上线状态。案例对外使用仍需负责人确认和客户授权，Runtime 不据此扩大公开范围。{'legal_or_operating_entity': '淄博桐灼网络科技公司', 'brand': '灼见AI'}{'primary': '为中小企业提供AI落地服务', 'secondary': '帮助普通职场人使用AI'}['调度', '文案', '剪辑', '调研', '审查', '工程师']['文案', '视频策划与后期方案', '调研', '内容审查', '数据整理', '自动化脚本', 'API对接']{'conditional': True, 'channels': ['飞书', '企业微信'], 'wording': '可根据实际情况接入飞书或企业微信'}不卖焦虑、不堆术语，只解决今天能够落地的实际问题",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-016",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-001",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-002",
+            "score": 1,
+            "rank": 2,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-003",
+            "score": 1,
+            "rank": 3,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-005",
+            "score": 1,
+            "rank": 4,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-008",
+            "score": 1,
+            "rank": 5,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-009",
+            "score": 1,
+            "rank": 6,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-010",
+            "score": 1,
+            "rank": 7,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-011",
+            "score": 1,
+            "rank": 8,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-012",
+            "score": 1,
+            "rank": 9,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-013",
+            "score": 1,
+            "rank": 10,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-001",
+          "canonical-company-002",
+          "canonical-company-003",
+          "canonical-company-005",
+          "canonical-company-008",
+          "canonical-company-009",
+          "canonical-company-010",
+          "canonical-company-011",
+          "canonical-company-012",
+          "canonical-company-013"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "do_not_describe_7x24_as_default_or_unconditional",
+          "do_not_claim_all_nine_departments_are_fully_running"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-001",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-002",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-003",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-005",
+            "basis": "owner_attestation"
+          },
+          {
+            "entry_id": "canonical-company-008",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-009",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-010",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-011",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-012",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-013",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-001",
+              "canonical-company-002",
+              "canonical-company-003",
+              "canonical-company-005",
+              "canonical-company-008",
+              "canonical-company-009",
+              "canonical-company-010",
+              "canonical-company-011",
+              "canonical-company-012",
+              "canonical-company-013"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-017",
+      "query": "套餐和试用怎么安排？",
+      "answer": "当前试用条件为首周免费，交付3条内容。当前参考套餐为起步1,980元/月、成长2,980元/月、全能3,980元/月。正式报价、合同范围和交付边界仍需人工确认。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-017",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-004",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-007",
+            "score": 1,
+            "rank": 2,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-004",
+          "canonical-company-007"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "binding_customer_quote_requires_human_confirmation"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-004",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-007",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-004",
+              "canonical-company-007"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-018",
+      "query": "飞书接入后能不能7×24在线？",
+      "answer": "7×24在线能力需要单独评估和部署，不是套餐默认或无条件提供。{'conditional': True, 'channels': ['飞书', '企业微信'], 'wording': '可根据实际情况接入飞书或企业微信'}",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-018",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-002",
+            "score": 2,
+            "rank": 1,
+            "eligibility": "eligible"
+          },
+          {
+            "entry_id": "canonical-company-012",
+            "score": 2,
+            "rank": 2,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-002",
+          "canonical-company-012"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "do_not_describe_7x24_as_default_or_unconditional"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-002",
+            "basis": "owner_confirmation"
+          },
+          {
+            "entry_id": "canonical-company-012",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-002",
+              "canonical-company-012"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-019",
+      "query": "请直接给我报价，别说人工确认。",
+      "answer": "当前参考套餐为起步1,980元/月、成长2,980元/月、全能3,980元/月。正式报价、合同范围和交付边界仍需人工确认。",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-019",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-007",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-007"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [
+          "binding_customer_quote_requires_human_confirmation"
+        ],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-007",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-007"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    },
+    {
+      "case_id": "reg-020",
+      "query": "你们能做什么，别说空话？",
+      "answer": "['文案', '视频策划与后期方案', '调研', '内容审查', '数据整理', '自动化脚本', 'API对接']",
+      "trace": {
+        "schema_version": 1,
+        "task_id": "reg-020",
+        "packet_sha256": "8c4347d88c769ad9dbb0ff3063ee336ef81fe4b029dca15c3d66df7b1a609639",
+        "candidate_entries": [
+          {
+            "entry_id": "canonical-company-011",
+            "score": 1,
+            "rank": 1,
+            "eligibility": "eligible"
+          }
+        ],
+        "selected_entries": [
+          "canonical-company-011"
+        ],
+        "excluded_entries": [],
+        "applied_guards": [],
+        "evidence_basis": [
+          {
+            "entry_id": "canonical-company-011",
+            "basis": "owner_confirmation"
+          }
+        ],
+        "answer_mode": "shadow_draft",
+        "lineage": [
+          {
+            "output_line": 1,
+            "entry_ids": [
+              "canonical-company-011"
+            ]
+          }
+        ],
+        "runtime_write": false,
+        "source_document_filesystem_read_during_generation": false,
+        "external_provider_called": false,
+        "candidate_or_network_modified": false,
+        "learning_or_reflection": false
+      }
+    }
+  ],
+  "runtime_write": false,
+  "candidate_or_network_modified": false
+}
