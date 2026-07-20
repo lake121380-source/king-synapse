@@ -155,7 +155,34 @@ King Synapse includes a stdio MCP server.
 
 The MCP server exposes tools for write, recall, recent-list, forget,
 entity-list, neighbor lookup, edge inspection, reinforcement, latent activation,
-latent query, and cognitive trace.
+latent query, cognitive trace, and read-only governed enterprise answers.
+
+To enable `synapse_enterprise_shadow`, point the server at a frozen Canonical
+Packet before startup:
+
+```powershell
+$env:KING_SYNAPSE_ENTERPRISE_PACKET = "path/to/canonical-retrieval-packet.json"
+```
+
+The tool returns an answer plus candidate, selected, excluded, guard,
+evidence-basis, and lineage trace fields. It never writes memory, learns,
+admits knowledge, or modifies the cognitive network. See
+[docs/ENTERPRISE_AGENT.md](docs/ENTERPRISE_AGENT.md).
+
+For a daily-use Agent, the repository includes a pinned Hermes host integration.
+It creates an isolated Profile and exposes only the three governed read tools:
+
+```powershell
+.\scripts\agent\setup_hermes_synapse.ps1
+cargo run -p synapse-cli -- chat "公司套餐多少钱？"
+```
+
+The setup pins Hermes Agent `0.18.2` with the MCP extra under
+`%LOCALAPPDATA%\king-synapse`; it does not replace an existing Hermes install
+or restart the default gateway. The Agent host sends prompts and tool results
+to the configured inference provider, so use a provider and Packet appropriate
+for the privacy level of the data. See
+[docs/agent/HERMES_INTEGRATION.md](docs/agent/HERMES_INTEGRATION.md).
 
 ## How It Is Different
 

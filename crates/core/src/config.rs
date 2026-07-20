@@ -5,6 +5,7 @@ use std::path::PathBuf;
 
 const CONFIG_ENV: &str = "KING_SYNAPSE_CONFIG";
 const DB_ENV: &str = "KING_SYNAPSE_DB";
+const ENTERPRISE_PACKET_ENV: &str = "KING_SYNAPSE_ENTERPRISE_PACKET";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
@@ -16,6 +17,9 @@ pub struct Config {
 
     #[serde(default)]
     pub require_confirm_writes: bool,
+
+    #[serde(default = "default_enterprise_packet_path")]
+    pub enterprise_packet_path: Option<PathBuf>,
 }
 
 fn default_recall_k() -> usize {
@@ -29,12 +33,17 @@ fn default_db_path() -> PathBuf {
     data_dir().join("synapse.sqlite")
 }
 
+fn default_enterprise_packet_path() -> Option<PathBuf> {
+    env_path(ENTERPRISE_PACKET_ENV)
+}
+
 impl Default for Config {
     fn default() -> Self {
         Config {
             db_path: default_db_path(),
             default_recall_k: default_recall_k(),
             require_confirm_writes: false,
+            enterprise_packet_path: default_enterprise_packet_path(),
         }
     }
 }
@@ -130,6 +139,22 @@ mod tests {
         );
 
         restore_env(DB_ENV, previous);
+    }
+
+    #[test]
+    fn enterprise_packet_path_can_be_overridden_for_validation() {
+        let previous = std::env::var_os(ENTERPRISE_PACKET_ENV);
+        std::env::set_var(
+            ENTERPRISE_PACKET_ENV,
+            "target/manual/enterprise-packet.json",
+        );
+
+        assert_eq!(
+            default_enterprise_packet_path(),
+            Some(Path::new("target/manual/enterprise-packet.json").to_path_buf())
+        );
+
+        restore_env(ENTERPRISE_PACKET_ENV, previous);
     }
 
     fn restore_env(name: &str, previous: Option<std::ffi::OsString>) {

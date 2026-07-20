@@ -974,6 +974,35 @@ Current result:
 
 Next gate: freeze and compare a stronger or model-backed provider on the same design cases. Do not open held-out transfer cases until provider/model/prompt/decoding/repair policy and quality scoring are frozen.
 
+## Product Line: Hermes Agent Host A0/A1
+
+Status: **A0 Rust Runtime Shadow and MCP tool complete; A1 isolated Hermes host complete; write authority remains closed.**
+
+The product line is now separate from the historical Phase 7 research gates.
+King Synapse owns the Canonical Packet, governance decisions, Runtime Trace,
+and all memory authority. Hermes Agent 0.18.2 is a replaceable host that calls
+the local stdio MCP server and presents the result to a user.
+
+```text
+Canonical Packet
+    -> Rust Runtime Shadow
+    -> read-only MCP profile
+    -> Hermes Agent tool loop
+    -> answer + Evidence + Guards + Trace
+```
+
+The A1 integration is pinned under `%LOCALAPPDATA%\king-synapse` and uses a
+separate `kingsynapse` Hermes Profile. The server-side `agent_read_only` policy
+exposes only `synapse_recall`, `synapse_trace`, and
+`synapse_enterprise_shadow`; all direct write/reinforce/forget calls are
+rejected. The frozen 20-case suite is exercised through the actual MCP stdio
+binary, and two live Agent conversations cover one confirmed answer and one
+withheld suspended statistic.
+
+Next product gate: a small controlled user pilot. Do not add web/browser tools,
+observation intake, autonomous learning, or durable writes until Agent traces
+show that the host preserves the Runtime decisions over repeated use.
+
 ## Phase 7.2.2 Frozen Provider Capability Matrix
 
 Status: **protocol frozen; weak baseline complete; model-backed execution blocked by authorization.**

@@ -9,6 +9,7 @@ pub(crate) mod accelerator;
 pub mod adaptive;
 pub mod config;
 pub(crate) mod embed;
+pub mod enterprise_shadow;
 pub(crate) mod entity;
 pub(crate) mod error;
 pub(crate) mod extract;
@@ -34,6 +35,10 @@ pub use adaptive::{
     UniformImportanceEstimator, MAX_COGNITIVE_BOOSTER_BONUS,
 };
 pub use embed::Embedder;
+pub use enterprise_shadow::{
+    EnterpriseCandidateEntry, EnterpriseEvidenceBasis, EnterpriseExcludedEntry, EnterpriseLineage,
+    EnterpriseRuntimeTrace, EnterpriseShadowEngine, EnterpriseShadowResponse,
+};
 pub use entity::{Entity, EntityRef, EntityType};
 pub use error::{Error, Result};
 pub use model::{Memory, MemoryKind, RecallQuery, Scope, Source, WriteInput};

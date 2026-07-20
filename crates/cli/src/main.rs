@@ -1,6 +1,8 @@
 use anyhow::{Context, Result};
 use chrono::{TimeZone, Utc};
 use clap::{Parser, Subcommand, ValueEnum};
+use std::path::PathBuf;
+use std::process::Command;
 use std::str::FromStr;
 use synapse_core::{
     config::Config, AlgorithmContext, CognitiveCompetitionTrace, CognitiveTraceConfig,
@@ -278,6 +280,17 @@ enum Cmd {
         #[arg(long)]
         json: bool,
     },
+    /// Chat through the isolated Hermes Agent host using only governed Synapse tools.
+    Chat {
+        /// Optional one-shot question. Omit it to start an interactive chat.
+        prompt: Option<String>,
+        /// Isolated Hermes Profile created by setup_hermes_synapse.ps1.
+        #[arg(long, default_value = "kingsynapse")]
+        profile: String,
+        /// Maximum Agent tool-call iterations per turn.
+        #[arg(long, default_value = "12")]
+        max_turns: usize,
+    },
     /// Show daemon stats.
     Stats,
     /// Show where the database is.
@@ -322,6 +335,14 @@ fn main() -> Result<()> {
         .init();
 
     let cli = Cli::parse();
+    if let Cmd::Chat {
+        prompt,
+        profile,
+        max_turns,
+    } = &cli.cmd
+    {
+        return launch_hermes_chat(prompt.as_deref(), profile, *max_turns);
+    }
     let cfg = Config::load_or_default().context("loading config")?;
     cfg.ensure_db_dir()?;
     let mut store = Store::open(&cfg.db_path).context("opening store")?;
@@ -722,6 +743,7 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Cmd::Chat { .. } => unreachable!("chat is handled before the memory store is opened"),
         Cmd::Stats => {
             let n = store.count()?;
             let (done, pending) = store.embedding_stats()?;
@@ -776,6 +798,96 @@ fn main() -> Result<()> {
         }
     }
     Ok(())
+}
+
+fn launch_hermes_chat(prompt: Option<&str>, profile: &str, max_turns: usize) -> Result<()> {
+    if profile.is_empty()
+        || !profile
+            .chars()
+            .all(|character| character.is_ascii_lowercase() || character.is_ascii_digit())
+    {
+        anyhow::bail!("Hermes profile must contain only lowercase ASCII letters and digits");
+    }
+
+    let local_app_data = std::env::var_os("LOCALAPPDATA")
+        .map(PathBuf::from)
+        .context("LOCALAPPDATA is required; run scripts/agent/setup_hermes_synapse.ps1")?;
+    let hermes = local_app_data
+        .join("king-synapse")
+        .join("bin")
+        .join(if cfg!(windows) {
+            "hermes.exe"
+        } else {
+            "hermes"
+        });
+    if !hermes.is_file() {
+        anyhow::bail!(
+            "isolated Hermes runtime not found at {}; run scripts/agent/setup_hermes_synapse.ps1",
+            hermes.display()
+        );
+    }
+
+    let user_home = std::env::var_os("USERPROFILE")
+        .or_else(|| std::env::var_os("HOME"))
+        .map(PathBuf::from)
+        .context("user home directory is unavailable")?;
+    let profile_home = user_home.join(".hermes").join("profiles").join(profile);
+    if !profile_home.join("config.yaml").is_file() {
+        anyhow::bail!(
+            "Hermes profile {profile} is not configured; run scripts/agent/setup_hermes_synapse.ps1"
+        );
+    }
+
+    let integration_root = find_agent_integration_root()?;
+    let mut command = Command::new(&hermes);
+    command
+        .current_dir(integration_root)
+        .env("HERMES_HOME", profile_home)
+        .args([
+            "chat",
+            "--toolsets",
+            "king-synapse",
+            "--max-turns",
+            &max_turns.max(1).to_string(),
+            "--source",
+            "king-synapse",
+        ]);
+    if let Some(prompt) = prompt {
+        command.args(["--query", prompt, "--quiet"]);
+    }
+
+    let status = command.status().context("starting isolated Hermes Agent")?;
+    if !status.success() {
+        anyhow::bail!("Hermes Agent exited with status {status}");
+    }
+    Ok(())
+}
+
+fn find_agent_integration_root() -> Result<PathBuf> {
+    if let Some(root) = std::env::var_os("KING_SYNAPSE_HOME").map(PathBuf::from) {
+        let integration = root.join("integrations").join("hermes");
+        if integration.join("AGENTS.md").is_file() {
+            return Ok(integration);
+        }
+    }
+
+    let mut search_roots = vec![std::env::current_dir()?];
+    if let Ok(executable) = std::env::current_exe() {
+        if let Some(parent) = executable.parent() {
+            search_roots.push(parent.to_path_buf());
+        }
+    }
+    for search_root in search_roots {
+        for ancestor in search_root.ancestors() {
+            let integration = ancestor.join("integrations").join("hermes");
+            if integration.join("AGENTS.md").is_file() {
+                return Ok(integration);
+            }
+        }
+    }
+    anyhow::bail!(
+        "cannot locate integrations/hermes/AGENTS.md; run from the King Synapse repository or set KING_SYNAPSE_HOME"
+    )
 }
 
 fn reinforce_memories(

@@ -5,19 +5,66 @@ use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use synapse_core::{
     AlgorithmContext, CognitiveTraceConfig, CognitiveTraceProbe,
-    DeterministicHebbianStoreMutationDispatcher, GraphActivationBooster, HebbianAlgorithm,
-    HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream, LatentActivationBooster,
-    LatentActivationContext, LatentActivationProbe, MemoryEvent, MemoryEventId, MemoryEventKind,
-    MemoryEventPayload, MemoryEventStream, MemoryKind, PersistentStoreExecutor,
-    PlanOnlyHebbianExecutor, QueryLatentActivationProbe, RecallEngine, RecallQuery,
-    RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
+    DeterministicHebbianStoreMutationDispatcher, EnterpriseShadowEngine, GraphActivationBooster,
+    HebbianAlgorithm, HebbianExecutor, HebbianTarget, InMemoryMemoryEventStream,
+    LatentActivationBooster, LatentActivationContext, LatentActivationProbe, MemoryEvent,
+    MemoryEventId, MemoryEventKind, MemoryEventPayload, MemoryEventStream, MemoryKind,
+    PersistentStoreExecutor, PlanOnlyHebbianExecutor, QueryLatentActivationProbe, RecallEngine,
+    RecallQuery, RuleBasedHebbianAlgorithm, SQLitePersistentStoreExecutor, Scope, Source, Store,
     StoreMutationDispatcher, UniformImportanceEstimator, WriteInput,
 };
 
 pub type StoreHandle = Arc<Mutex<Store>>;
 
-pub fn descriptors() -> Vec<Value> {
-    vec![
+const AGENT_READ_ONLY_TOOLS: &[&str] = &[
+    "synapse_recall",
+    "synapse_trace",
+    "synapse_enterprise_shadow",
+];
+
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum ToolProfile {
+    #[default]
+    Full,
+    AgentReadOnly,
+}
+
+impl ToolProfile {
+    pub fn from_env() -> Result<Self> {
+        match std::env::var("KING_SYNAPSE_MCP_TOOL_PROFILE") {
+            Ok(value) => Self::parse(&value),
+            Err(std::env::VarError::NotPresent) => Ok(Self::Full),
+            Err(error) => Err(error.into()),
+        }
+    }
+
+    fn parse(value: &str) -> Result<Self> {
+        match value.trim().to_ascii_lowercase().as_str() {
+            "" | "full" => Ok(Self::Full),
+            "agent_read_only" => Ok(Self::AgentReadOnly),
+            other => anyhow::bail!(
+                "unsupported KING_SYNAPSE_MCP_TOOL_PROFILE: {other}; expected full or agent_read_only"
+            ),
+        }
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Full => "full",
+            Self::AgentReadOnly => "agent_read_only",
+        }
+    }
+
+    fn allows(self, name: &str) -> bool {
+        match self {
+            Self::Full => true,
+            Self::AgentReadOnly => AGENT_READ_ONLY_TOOLS.contains(&name),
+        }
+    }
+}
+
+pub fn descriptors(profile: ToolProfile) -> Vec<Value> {
+    let descriptors = vec![
         descriptor_write(),
         descriptor_recall(),
         descriptor_list(),
@@ -29,7 +76,16 @@ pub fn descriptors() -> Vec<Value> {
         descriptor_latent_activation(),
         descriptor_latent_query(),
         descriptor_trace(),
-    ]
+        descriptor_enterprise_shadow(),
+    ];
+    descriptors
+        .into_iter()
+        .filter(|descriptor| {
+            descriptor["name"]
+                .as_str()
+                .is_some_and(|name| profile.allows(name))
+        })
+        .collect()
 }
 
 fn descriptor_write() -> Value {
@@ -250,11 +306,37 @@ fn descriptor_trace() -> Value {
     })
 }
 
-pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
+fn descriptor_enterprise_shadow() -> Value {
+    json!({
+        "name": "synapse_enterprise_shadow",
+        "description": "Answer one enterprise knowledge question from the configured frozen Canonical Packet. Returns candidate, selected, excluded, guard, evidence-basis, and lineage trace fields. Read-only: no memory write, learning, admission, or network mutation.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["question"],
+            "properties": {
+                "question": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+        }
+    })
+}
+
+pub fn call(
+    store: &StoreHandle,
+    enterprise: Option<&EnterpriseShadowEngine>,
+    profile: ToolProfile,
+    params: &Value,
+) -> Result<Value> {
     let name = params
         .get("name")
         .and_then(|v| v.as_str())
         .ok_or_else(|| anyhow::anyhow!("missing tool name"))?;
+    if !profile.allows(name) {
+        anyhow::bail!(
+            "tool {name} is not permitted by MCP tool profile {}",
+            profile.as_str()
+        );
+    }
     let args = params.get("arguments").cloned().unwrap_or(json!({}));
 
     let result = match name {
@@ -269,6 +351,7 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "synapse_latent_activation" => do_latent_activation(store, &args)?,
         "synapse_latent_query" => do_latent_query(store, &args)?,
         "synapse_trace" => do_trace(store, &args)?,
+        "synapse_enterprise_shadow" => do_enterprise_shadow(enterprise, &args)?,
         other => anyhow::bail!("unknown tool: {other}"),
     };
     Ok(json!({
@@ -276,6 +359,22 @@ pub fn call(store: &StoreHandle, params: &Value) -> Result<Value> {
         "structuredContent": result,
         "isError": false
     }))
+}
+
+fn do_enterprise_shadow(
+    enterprise: Option<&EnterpriseShadowEngine>,
+    args: &Value,
+) -> Result<Value> {
+    let question = args
+        .get("question")
+        .and_then(Value::as_str)
+        .ok_or_else(|| anyhow::anyhow!("question required"))?;
+    let engine = enterprise.ok_or_else(|| {
+        anyhow::anyhow!(
+            "enterprise shadow is not configured; set KING_SYNAPSE_ENTERPRISE_PACKET or enterprise_packet_path"
+        )
+    })?;
+    Ok(serde_json::to_value(engine.execute(question)?)?)
 }
 
 fn do_write(store: &StoreHandle, args: &Value) -> Result<Value> {
@@ -921,5 +1020,119 @@ fn reinforce_payload(
         }),
         "written" | "updated" | "reflected" => Ok(MemoryEventPayload::Empty),
         other => anyhow::bail!("unsupported reinforce event: {other}"),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::PathBuf;
+
+    fn enterprise_engine() -> EnterpriseShadowEngine {
+        EnterpriseShadowEngine::from_path(
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(
+                "../eval/datasets/phase8/phase8_lcn_v0_1_private_work_task_company_introduction_retrieval_packet_v1.json",
+            ),
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn descriptors_expose_read_only_enterprise_shadow_tool() {
+        let descriptor = descriptors(ToolProfile::Full)
+            .into_iter()
+            .find(|item| item["name"] == "synapse_enterprise_shadow")
+            .expect("enterprise descriptor");
+        assert_eq!(descriptor["inputSchema"]["required"], json!(["question"]));
+        assert_eq!(
+            descriptor["inputSchema"]["additionalProperties"],
+            json!(false)
+        );
+        assert!(descriptor["description"]
+            .as_str()
+            .unwrap()
+            .contains("Read-only"));
+    }
+
+    #[test]
+    fn enterprise_shadow_tool_returns_structured_governance_trace() {
+        let store = Arc::new(Mutex::new(Store::open_in_memory().unwrap()));
+        let engine = enterprise_engine();
+        let result = call(
+            &store,
+            Some(&engine),
+            ToolProfile::Full,
+            &json!({
+                "name": "synapse_enterprise_shadow",
+                "arguments": { "question": "公司套餐多少钱？" }
+            }),
+        )
+        .unwrap();
+        let structured = &result["structuredContent"];
+        assert!(structured["answer"]
+            .as_str()
+            .unwrap()
+            .contains("1,980元/月"));
+        assert_eq!(
+            structured["trace"]["selected_entries"],
+            json!(["canonical-company-007"])
+        );
+        assert_eq!(
+            structured["trace"]["applied_guards"],
+            json!(["binding_customer_quote_requires_human_confirmation"])
+        );
+        assert_eq!(structured["trace"]["runtime_write"], json!(false));
+    }
+
+    #[test]
+    fn enterprise_shadow_tool_requires_configured_packet() {
+        let store = Arc::new(Mutex::new(Store::open_in_memory().unwrap()));
+        let error = call(
+            &store,
+            None,
+            ToolProfile::Full,
+            &json!({
+                "name": "synapse_enterprise_shadow",
+                "arguments": { "question": "公司套餐多少钱？" }
+            }),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("not configured"));
+    }
+
+    #[test]
+    fn agent_read_only_profile_exposes_only_governed_read_tools() {
+        let names = descriptors(ToolProfile::AgentReadOnly)
+            .into_iter()
+            .map(|descriptor| descriptor["name"].as_str().unwrap().to_string())
+            .collect::<Vec<_>>();
+        assert_eq!(names, AGENT_READ_ONLY_TOOLS);
+    }
+
+    #[test]
+    fn agent_read_only_profile_rejects_write_calls_even_when_called_directly() {
+        let store = Arc::new(Mutex::new(Store::open_in_memory().unwrap()));
+        let error = call(
+            &store,
+            Some(&enterprise_engine()),
+            ToolProfile::AgentReadOnly,
+            &json!({
+                "name": "synapse_write",
+                "arguments": { "content": "must not be stored" }
+            }),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("not permitted"));
+        assert_eq!(store.lock().unwrap().list_recent(10).unwrap().len(), 0);
+    }
+
+    #[test]
+    fn tool_profile_parser_is_strict() {
+        assert_eq!(ToolProfile::parse("full").unwrap(), ToolProfile::Full);
+        assert_eq!(
+            ToolProfile::parse("agent_read_only").unwrap(),
+            ToolProfile::AgentReadOnly
+        );
+        assert!(ToolProfile::parse("readonly-ish").is_err());
     }
 }

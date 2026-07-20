@@ -1,0 +1,12 @@
+mcp_servers:
+  king-synapse:
+    command: "D:/absolute/path/to/king_recall/target/debug/synapse-mcp.exe"
+    env:
+      KING_SYNAPSE_MCP_TOOL_PROFILE: agent_read_only
+      KING_SYNAPSE_ENTERPRISE_PACKET: "D:/absolute/path/to/canonical-retrieval-packet.json"
+      KING_SYNAPSE_DB: "C:/Users/you/.hermes/profiles/kingsynapse/king-synapse.sqlite"
+    tools:
+      include:
+        - synapse_recall
+        - synapse_trace
+        - synapse_enterprise_shadow

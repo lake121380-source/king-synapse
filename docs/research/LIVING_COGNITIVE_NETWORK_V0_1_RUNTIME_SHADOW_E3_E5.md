@@ -2,6 +2,12 @@
 
 Status: **E3 packet-only isolation PASS; E4 read-only execution PASS; E5 trace regression PASS**
 
+Product promotion update: the E4 execution behavior is now implemented in
+`synapse-core` and exposed through the local stdio MCP tool
+`synapse_enterprise_shadow`. The Rust implementation passes the same 20 frozen
+governance cases and keeps every write, learning, admission, and network
+modification boundary closed.
+
 ## Scope
 
 This stage proves that the existing Canonical Company Profile packet can be

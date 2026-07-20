@@ -10,7 +10,7 @@ use anyhow::Result;
 use rpc::{JsonRpcError, JsonRpcRequest, JsonRpcResponse};
 use serde_json::{json, Value};
 use std::sync::{Arc, Mutex};
-use synapse_core::{config::Config, Store};
+use synapse_core::{config::Config, EnterpriseShadowEngine, Store};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 
 const PROTOCOL_VERSION: &str = "2024-11-05";
@@ -25,23 +25,39 @@ async fn main() -> Result<()> {
         .init();
 
     let cfg = Config::load_or_default()?;
+    let tool_profile = tools::ToolProfile::from_env()?;
     cfg.ensure_db_dir()?;
     let store: tools::StoreHandle = Arc::new(Mutex::new(Store::open(&cfg.db_path)?));
+    let enterprise = cfg
+        .enterprise_packet_path
+        .as_ref()
+        .map(EnterpriseShadowEngine::from_path)
+        .transpose()?
+        .map(Arc::new);
 
     tracing::info!(
-        "king-synapse MCP server starting, db={}",
-        cfg.db_path.display()
+        db = %cfg.db_path.display(),
+        tool_profile = tool_profile.as_str(),
+        "king-synapse MCP server starting"
     );
+    if let Some(engine) = enterprise.as_deref() {
+        tracing::info!(
+            packet_id = engine.packet_id(),
+            packet_sha256 = engine.packet_sha256(),
+            "enterprise shadow packet loaded"
+        );
+    }
 
     let stdin = tokio::io::stdin();
     let mut reader = BufReader::new(stdin).lines();
     let mut stdout = tokio::io::stdout();
 
     while let Some(line) = reader.next_line().await? {
+        let line = line.trim_start_matches('\u{feff}');
         if line.trim().is_empty() {
             continue;
         }
-        let req: JsonRpcRequest = match serde_json::from_str(&line) {
+        let req: JsonRpcRequest = match serde_json::from_str(line) {
             Ok(r) => r,
             Err(e) => {
                 tracing::warn!("bad json-rpc input: {e}");
@@ -52,7 +68,7 @@ async fn main() -> Result<()> {
         let is_notification = req.id.is_none();
         let id = req.id.clone().unwrap_or(Value::Null);
         let method = req.method.clone();
-        let result = handle(&store, &req);
+        let result = handle(&store, enterprise.as_deref(), tool_profile, &req);
 
         if is_notification {
             continue;
@@ -86,7 +102,12 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn handle(store: &tools::StoreHandle, req: &JsonRpcRequest) -> Result<Value> {
+fn handle(
+    store: &tools::StoreHandle,
+    enterprise: Option<&EnterpriseShadowEngine>,
+    tool_profile: tools::ToolProfile,
+    req: &JsonRpcRequest,
+) -> Result<Value> {
     match req.method.as_str() {
         "initialize" => Ok(json!({
             "protocolVersion": PROTOCOL_VERSION,
@@ -94,8 +115,8 @@ fn handle(store: &tools::StoreHandle, req: &JsonRpcRequest) -> Result<Value> {
             "serverInfo": { "name": "king-synapse", "version": env!("CARGO_PKG_VERSION") }
         })),
         "notifications/initialized" => Ok(Value::Null),
-        "tools/list" => Ok(json!({ "tools": tools::descriptors() })),
-        "tools/call" => tools::call(store, &req.params),
+        "tools/list" => Ok(json!({ "tools": tools::descriptors(tool_profile) })),
+        "tools/call" => tools::call(store, enterprise, tool_profile, &req.params),
         "ping" => Ok(json!({})),
         other => anyhow::bail!("method not found: {other}"),
     }
